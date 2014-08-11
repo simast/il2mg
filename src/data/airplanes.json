@@ -1,0 +1,110 @@
+{
+	"Bf109F4": {
+		"name": "Bf 109 F-4",
+		"model": "graphics\\planes\\bf109f4\\bf109f4.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109F4.txt",
+		"countries": [201],
+		"limits": {
+			"speed": 650,
+			"altitude": 12000,
+			"range": 0
+		},
+		"tags": ["fighter"]
+	},
+	"Bf109G2": {
+		"name": "Bf 109 G-2",
+		"model": "graphics\\planes\\bf109g2\\bf109g2.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109G2.txt",
+		"countries": [201],
+		"limits": {
+			"speed": 650,
+			"altitude": 12000,
+			"range": 0
+		},
+		"tags": ["fighter"]
+	},
+	"LaGG3s29": {
+		"name": "LaGG-3 ser.29",
+		"model": "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\LaGG3s29.txt",
+		"countries": [101],
+		"limits": {
+			"speed": 600,
+			"altitude": 10000,
+			"range": 0
+		},
+		"tags": ["fighter"]
+	},
+	"La5s8": {
+		"name": "La-5 ser.8",
+		"model": "graphics\\planes\\la5s8\\la5s8.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\La5s8.txt",
+		"countries": [101],
+		"limits": {
+			"speed": 600,
+			"altitude": 10000,
+			"range": 0
+		},
+		"tags": ["fighter"]
+	},
+	"Yak1s69": {
+		"name": "Yak-1 ser.69",
+		"model": "graphics\\planes\\yak1s69\\yak1s69.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\Yak1s69.txt",
+		"countries": [101],
+		"limits": {
+			"speed": 600,
+			"altitude": 10000,
+			"range": 0
+		},
+		"tags": ["fighter"]
+	},
+	"Fw190A3": {
+		"name": "Fw 190 A-3",
+		"model": "graphics\\planes\\fw190a3\\fw190a3.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\Fw190A3.txt",
+		"countries": [201],
+		"limits": {
+			"speed": 650,
+			"altitude": 12000,
+			"range": 0
+		},
+		"tags": ["fighter"]
+	},
+	"Il2m42": {
+		"name": "Il-2 mod.1942",
+		"model": "graphics\\planes\\il2m42\\il2m42.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\Il2m42.txt",
+		"countries": [101],
+		"limits": {
+			"speed": 400,
+			"altitude": 8000,
+			"range": 0
+		},
+		"tags": ["bomber", "dive"]
+	},
+	"Ju87D3": {
+		"name": "Ju 87 D-3",
+		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\Ju87D3.txt",
+		"countries": [201],
+		"limits": {
+			"speed": 380,
+			"altitude": 6000,
+			"range": 0
+		},
+		"tags": ["bomber", "dive", "recon"]
+	},
+	"Pe2s87": {
+		"name": "Pe-2 ser.87",
+		"model": "graphics\\planes\\pe2s87\\pe2s87.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\Pe2s87.txt",
+		"countries": [101],
+		"limits": {
+			"speed": 500,
+			"altitude": 8000,
+			"range": 0
+		},
+		"tags": ["bomber", "dive", "level", "recon"]
+	}
+}

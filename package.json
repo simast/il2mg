@@ -1,0 +1,11 @@
+{
+	"name": "il2mg",
+	"main": "./src/main.js",
+	"private": true,
+	"devDependencies": {
+		"grunt": "^0.4.5",
+		"commander": "^2.3.0",
+		"moment": "^2.8.1",
+		"nexe": "^0.3.1"
+	}
+}
