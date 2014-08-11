@@ -3,7 +3,7 @@
 
 // Load required data
 var DATA = {
-	clouds: require("../data/clouds")
+	clouds: require("../../data/clouds")
 };
 
 // Make mission clouds

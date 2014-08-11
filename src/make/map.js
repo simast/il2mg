@@ -6,7 +6,7 @@ var Camera = require("../block/camera");
 
 // Load required data
 var DATA = {
-	countries: require("../data/countries"),
+	countries: require("../../data/countries"),
 };
 
 // Generate mission map
@@ -16,7 +16,7 @@ module.exports = function(mission) {
 	var battle = mission.battle;
 
 	// Load battle data
-	DATA.airfields = require("../data/" + mission.battleID + "/airfields");
+	DATA.airfields = require("../../data/" + mission.battleID + "/airfields");
 
 	var activeCoalitions = [];
 

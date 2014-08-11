@@ -6,7 +6,7 @@ var os = require("os");
 
 // Load required data
 var DATA = {
-	languages: require("./data/languages")
+	languages: require("../data/languages")
 };
 
 /**

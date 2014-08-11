@@ -8,11 +8,11 @@ var Mission = require("./mission");
 
 // Load required data
 var DATA = {
-	battles: require("./data/battles"),
-	coalitions: require("./data/coalitions"),
-	countries: require("./data/countries"),
-	time: require("./data/time"),
-	version: require("./data/version")
+	battles: require("../data/battles"),
+	coalitions: require("../data/coalitions"),
+	countries: require("../data/countries"),
+	time: require("../data/time"),
+	version: require("../data/version")
 };
 
 // Setup command line interface

@@ -3,10 +3,10 @@
 
 // Load required data
 var DATA = {
-	battles: require("../data/battles"),
-	countries: require("../data/countries"),
-	version: require("../data/version"),
-	name: require("../data/name")
+	battles: require("../../data/battles"),
+	countries: require("../../data/countries"),
+	version: require("../../data/version"),
+	name: require("../../data/name")
 };
 
 var Block = require("../block");
