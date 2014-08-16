@@ -1,15 +1,12 @@
 /** @copyright Simas Toleikis, 2014 */
 "use strict";
 
-// Load required data
-var DATA = {
-	clouds: require("../../data/clouds")
-};
+var DATA = require("../mission").DATA;
 
 // Make mission clouds
 function makeClouds(mission) {
 
-	var options = mission.blocks.Options;
+	var options = mission.entities.Options;
 
 	var cloudTypes = Object.keys(DATA.clouds);
 	var cloudType = cloudTypes[Math.floor(Math.random() * cloudTypes.length)];
@@ -29,7 +26,7 @@ function makeClouds(mission) {
 // Make mission precipitation
 function makePrecipitation(mission) {
 
-	var options = mission.blocks.Options;
+	var options = mission.entities.Options;
 
 	options.set("PrecLevel", 100);
 	options.set("PrecType", 2);
@@ -38,7 +35,7 @@ function makePrecipitation(mission) {
 // Generate mission weather and atmospheric conditions
 module.exports = function(mission) {
 
-	var options = mission.blocks.Options;
+	var options = mission.entities.Options;
 
 	makeClouds(mission);
 	makePrecipitation(mission);

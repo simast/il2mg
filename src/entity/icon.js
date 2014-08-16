@@ -1,10 +1,10 @@
 /** @copyright Simas Toleikis, 2014 */
 "use strict";
 
-var Block = require("../block");
+var Entity = require("../Entity");
 
 /**
- * Create MCU_Icon block.
+ * Create MCU_Icon entity.
  *
  * @param {number} iconType Icon type/ID.
  * @param {number} lineType Line type/ID.
@@ -22,6 +22,6 @@ function Icon(iconType, lineType) {
 Icon.NONE = 0;
 Icon.POINT = 901;
 
-Icon.prototype = new Block("MCU_Icon");
+Icon.prototype = new Entity("MCU_Icon");
 
 module.exports = Icon;

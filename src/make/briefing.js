@@ -4,29 +4,29 @@
 // Generate mission briefing
 module.exports = function(mission) {
 
-	var options = mission.blocks.Options;
+	var options = mission.entities.Options;
 
 	var briefing = [];
 
-	briefing.push(mission.date.format("MMMM D, YYYY HH:mm"));
+	// Date and time
+	briefing.push(makeDateAndTime(mission));
 
-	// Location info
-	briefing.push("<b>LOCATION</b>");
-	briefing.push("Aliquam rhoncus, dui eu imperdiet commodo, leo orci interdum est, eget varius velit dolor id nulla. Duis ullamcorper, tellus at auctor mattis, turpis ante ultricies risus, id accumsan velit augue in enim.");
+	// TODO: Location info
+	// TODO: Task/objective info
+	// TODO: Flight and payload info
+	// TODO: Battle situation
+	// TODO: Weather report
 
-	// Task/objective info
-	briefing.push("<b>TASK</b>");
-	briefing.push("Aliquam rhoncus, dui eu imperdiet commodo, leo orci interdum est, eget varius velit dolor id nulla. Duis ullamcorper, tellus at auctor mattis, turpis ante ultricies risus, id accumsan velit augue in enim.");
-
-	// Flight and payload info
-	briefing.push("<b>FLIGHT</b>");
-	briefing.push("Aliquam rhoncus, dui eu imperdiet commodo, leo orci interdum est, eget varius velit dolor id nulla. Duis ullamcorper, tellus at auctor mattis, turpis ante ultricies risus, id accumsan velit augue in enim.");
-
-	// Weather and and atmospheric conditions report
-	briefing.push("<b>WEATHER REPORT</b>");
-	briefing.push("Aliquam rhoncus, dui eu imperdiet commodo, leo orci interdum est, eget varius velit dolor id nulla. Duis ullamcorper, tellus at auctor mattis, turpis ante ultricies risus, id accumsan velit augue in enim.");
-
-	briefing = briefing.join("<br><br>");
-
-	options.setDescription(mission.lang(briefing));
+	options.setDescription(mission.lang(briefing.join("<br><br>")));
 };
+
+// Make mission briefing date and time output
+function makeDateAndTime(mission) {
+
+	var output = "";
+
+	output += mission.date.format("MMMM Do, YYYY") + "<br>";
+	output += '<font size="13">' + mission.date.format("HHmm") + " hours</font>";
+
+	return output;
+}

@@ -4,16 +4,8 @@
 var os = require("os");
 var util = require("util");
 var moment = require("moment");
-var Mission = require("./mission");
-
-// Load required data
-var DATA = {
-	battles: require("../data/battles"),
-	coalitions: require("../data/coalitions"),
-	countries: require("../data/countries"),
-	time: require("../data/time"),
-	version: require("../data/version")
-};
+var Mission = require("./Mission");
+var DATA = Mission.DATA;
 
 // Setup command line interface
 var params = require("commander");
@@ -124,6 +116,7 @@ params.option("-D, --debug", "use debug (development) mode");
  *
  * --name - Mission name.
  * --type - Mission type.
+ * --airport - Airport.
  * --unit - Squadron/group/unit/etc.
  * --airplane - Airplane type.
  * --pilot - Pilot name.
@@ -170,12 +163,15 @@ try {
 	// Create a new mission
 	var mission = new Mission(params);
 
-	var fileName = "test";
+	var fileName;
+
+	// Use specified mission file name
+	if (params.args[0] && params.args[0].length) {
+		fileName = params.args[0];
+	}
 
 	// Save mission files
-	mission.saveText(fileName);
-	mission.saveBinary(fileName);
-	mission.saveLang(fileName);
+	mission.save(fileName);
 }
 catch (error) {
 

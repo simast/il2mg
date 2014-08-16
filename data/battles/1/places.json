@@ -1,0 +1,42 @@
+{
+	"1": {
+		"name": "Tatsinskaya",
+		"position": [79400, 0, 13100]
+	},
+	"2": {
+		"name": "Morozovskaya",
+		"position": [100300, 0, 55200]
+	},
+	"3": {
+		"name": "Oblivskaya",
+		"position": [115200, 0, 105000]
+	},
+	"4": {
+		"name": "Kotelnikovo",
+		"position": [16900, 0, 151500]
+	},
+	"5": {
+		"name": "Karpovka",
+		"position": [134000, 0, 214500]
+	},
+	"6": {
+		"name": "Tusov",
+		"position": [119000, 0, 157466]
+	},
+	"7": {
+		"name": "Pitomnik",
+		"position": [135200, 0, 233860]
+	},
+	"8": {
+		"name": "Lipovskiy",
+		"position": [91000, 0, 147900]
+	},
+	"9": {
+		"name": "Gumrak",
+		"position": [139600, 0, 244500]
+	},
+	"10": {
+		"name": "Bolshaya Rossoshka",
+		"position": [146700, 0, 228200]
+	}
+}

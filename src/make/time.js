@@ -8,7 +8,7 @@ var moment = require("moment");
 module.exports = function(mission) {
 
 	var params = mission.params;
-	var options = mission.blocks.Options;
+	var options = mission.entities.Options;
 	var date = mission.date;
 	var time = params.time;
 

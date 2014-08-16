@@ -23,6 +23,7 @@
 		},
 		"tags": ["fighter"]
 	},
+	"Bf109G4": "Bf109G2",
 	"LaGG3s29": {
 		"name": "LaGG-3 ser.29",
 		"model": "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
