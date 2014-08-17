@@ -68,7 +68,7 @@ Mission.DATA = (function() {
 		battle.fronts = require(battlePath + "fronts");
 		battle.map = require(battlePath + "map");
 		battle.places = require(battlePath + "places");
-		battle.time = require(battlePath + "time");
+		battle.sun = require(battlePath + "sun");
 
 		// Load country-specific battle info
 		battle.countries = Object.create(null);

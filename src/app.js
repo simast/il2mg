@@ -19,7 +19,7 @@ params.option("-b, --battle <battle>", (function() {
 	var desc = "select a battle" + os.EOL;
 
 	for (var battleID in DATA.battles) {
-		desc += util.format('\t%s ("%s")\n', DATA.battles[battleID].name, battleID);
+		desc += util.format('\t"%s" - %s\n', battleID, DATA.battles[battleID].name);
 	}
 
 	return desc;
@@ -59,10 +59,10 @@ params.option("-t, --time <HH:MM>", (function() {
 
 	var desc = "select mission time" + os.EOL;
 
-	desc += "\tTime can also be specified using the following special values:" + os.EOL;
+	desc += "\tTime can also be specified using special values:" + os.EOL;
 
 	for (var timeID in DATA.time) {
-		desc += util.format('\t%s ("%s")\n', DATA.time[timeID], timeID);
+		desc += util.format('\t"%s" - %s\n', timeID, DATA.time[timeID].description);
 	}
 
 	return desc;
@@ -84,10 +84,7 @@ params.option("-C, --coalition <coalition>", (function() {
 	var desc = "select a coalition" + os.EOL;
 
 	for (var coalitionID in DATA.coalitions) {
-
-		if (Number(coalitionID)) {
-			desc += util.format('\t%s ("%s")\n', DATA.coalitions[coalitionID], coalitionID);
-		}
+		desc += util.format('\t"%s" - %s\n', coalitionID, DATA.coalitions[coalitionID]);
 	}
 
 	return desc;
@@ -99,10 +96,7 @@ params.option("-c, --country <country>", (function() {
 	var desc = "select a country" + os.EOL;
 
 	for (var countryID in DATA.countries) {
-
-		if (Number(countryID)) {
-			desc += util.format('\t%s ("%s")\n', DATA.countries[countryID].name, countryID);
-		}
+		desc += util.format('\t"%s" - %s\n', countryID, DATA.countries[countryID].name);
 	}
 
 	return desc;
@@ -147,16 +141,12 @@ try {
 	}
 
 	// --coalition
-	if (typeof params.coalition !== "undefined" &&
-			(!Number(params.coalition) || !DATA.coalitions[params.coalition])) {
-
+	if (params.coalition && !DATA.coalitions[params.coalition]) {
 		throw util.format('Unknown coalition: "%s".', params.coalition);
 	}
 
 	// --country
-	if (typeof params.country !== "undefined" &&
-			(!Number(params.country) || !DATA.countries[params.country])) {
-
+	if (params.country && !DATA.countries[params.country]) {
 		throw util.format('Unknown country: "%s".', params.country);
 	}
 
