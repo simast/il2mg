@@ -1,3 +1,21 @@
 {
-	
+	"default": 5,
+	"1": ["Krasnoarmeyets"],
+	"2": ["Yefreytor"],
+	"3": ["Mladshiy Serzhant", "M.Serzh."],
+	"4": ["Serzhant", "Serzh."],
+	"5": ["Starshiy Serzhant", "St.Serzh."],
+	"6": ["Starshina"],
+	"7": ["Mladshiy Leytenant", "M.Lt."],
+	"8": ["Leytenant", "Lt."],
+	"9": ["Starshiy Leytenant", "St.Lt."],
+	"10": ["Kapitan"],
+	"11": ["Mayor"],
+	"12": ["Podpolkovnik"],
+	"13": ["Polkovnik"],
+	"14": ["General-Mayor"],
+	"15": ["General-Leytenant"],
+	"16": ["General-Polkovnik"],
+	"17": ["General Armii"],
+	"18": ["Marchal Sovyetskogo Soyuza"]
 }
