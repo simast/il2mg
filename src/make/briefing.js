@@ -28,7 +28,7 @@ function makeDateAndTime(mission) {
 
 	output += mission.date.format("MMMM Do, YYYY") + "<br>";
 	output += '<font size="13">';
-	output += mission.date.format("HHmm") + " hours";
+	output += mission.date.format("HH.mm") + " hrs";
 
 	// Display time period names
 	if (typeof mission.time === "object") {

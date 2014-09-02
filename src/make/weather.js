@@ -7,11 +7,10 @@ var DATA = require("../mission").DATA;
 function makeClouds(mission) {
 
 	var options = mission.entities.Options;
+	var weather = mission.battle.weather[mission.date.format("YYYY-MM-DD")];
 
 	var cloudTypes = Object.keys(DATA.clouds);
 	var cloudType = cloudTypes[Math.floor(Math.random() * cloudTypes.length)];
-
-	cloudType = "00_Clear_00\\sky.ini";
 
 	var clouds = DATA.clouds[cloudType];
 	var cloudLevel = Math.round(clouds.level[0] + Math.random() * (clouds.level[1] - clouds.level[0]));
@@ -28,7 +27,7 @@ function makePrecipitation(mission) {
 
 	var options = mission.entities.Options;
 
-	options.set("PrecLevel", 100);
+	options.set("PrecLevel", 10);
 	options.set("PrecType", 2);
 }
 

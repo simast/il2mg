@@ -1,4 +1,13 @@
 {
 	"return": {},
-	"rebase": {}
+	"transport": {},
+	"cover": {},
+	"escort": {},
+	"rebase": {},
+	"freeHunt": {},
+	"patrol": {},
+	"intercept": {},
+	"recon": {},
+	"loneWolf": {},
+	"courier": {}
 }

@@ -1,88 +1,95 @@
 {
 	"Bf109F4": {
 		"name": "Bf 109 F-4",
-		"model": "graphics\\planes\\bf109f4\\bf109f4.mgm",
+		"model": "graphics\\planes\\Bf109F4\\Bf109F4.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109F4.txt",
 		"countries": [201],
 		"limits": {
-			"speed": 650,
-			"altitude": 12000,
-			"range": 0
-		},
-		"tags": ["fighter"]
+			"speed": 550, // Max speed (km/h)
+			"climb": [19.5, 280], // Max climb rate (m/s), max climb speed (km/h)
+			"altitude": 11500, // Max altitude, service ceiling (m)
+			"range": 0, // Range with max fuel (km)
+			"wind": 7.5 // Max tolerable wind at ground level (m/s)
+		}
 	},
 	"Bf109G2": {
 		"name": "Bf 109 G-2",
-		"model": "graphics\\planes\\bf109g2\\bf109g2.mgm",
+		"model": "graphics\\planes\\Bf109G2\\Bf109G2.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109G2.txt",
 		"countries": [201],
 		"limits": {
-			"speed": 650,
-			"altitude": 12000,
-			"range": 0
-		},
-		"tags": ["fighter"]
+			"speed": 550,
+			"climb": [19.5, 280],
+			"altitude": 11500,
+			"range": 0,
+			"wind": 7.5
+		}
 	},
 	"Bf109G4": "Bf109G2",
 	"LaGG3s29": {
 		"name": "LaGG-3 ser.29",
-		"model": "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
+		"model": "graphics\\planes\\LaGG3s29\\LaGG3s29.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\LaGG3s29.txt",
 		"countries": [101],
 		"limits": {
-			"speed": 600,
-			"altitude": 10000,
-			"range": 0
-		},
-		"tags": ["fighter"]
+			"speed": 530,
+			"climb": [15.0, 270],
+			"altitude": 9000,
+			"range": 0,
+			"wind": 8.5
+		}
 	},
 	"La5s8": {
 		"name": "La-5 ser.8",
-		"model": "graphics\\planes\\la5s8\\la5s8.mgm",
+		"model": "graphics\\planes\\La5s8\\La5s8.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\La5s8.txt",
 		"countries": [101],
 		"limits": {
-			"speed": 600,
-			"altitude": 10000,
-			"range": 0
-		},
-		"tags": ["fighter"]
+			"speed": 603,
+			"climb": [18.0, 275],
+			"altitude": 9000,
+			"range": 0,
+			"wind": 8.5
+		}
 	},
 	"Yak1s69": {
 		"name": "Yak-1 ser.69",
-		"model": "graphics\\planes\\yak1s69\\yak1s69.mgm",
+		"model": "graphics\\planes\\Yak1s69\\Yak1s69.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\Yak1s69.txt",
 		"countries": [101],
 		"limits": {
-			"speed": 600,
+			"speed": 580,
+			"climb": [17.0, 260],
 			"altitude": 10000,
-			"range": 0
-		},
-		"tags": ["fighter"]
+			"range": 0,
+			"wind": 7.5
+		}
 	},
 	"Fw190A3": {
 		"name": "Fw 190 A-3",
-		"model": "graphics\\planes\\fw190a3\\fw190a3.mgm",
+		"model": "graphics\\planes\\Fw190A3\\Fw190A3.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\Fw190A3.txt",
 		"countries": [201],
 		"limits": {
-			"speed": 650,
-			"altitude": 12000,
-			"range": 0
-		},
-		"tags": ["fighter"]
+			"speed": 548,
+			"climb": [13.5, 295],
+			"altitude": 11300,
+			"range": 0,
+			"wind": 5.5
+		}
 	},
 	"Il2m42": {
 		"name": "Il-2 mod.1942",
-		"model": "graphics\\planes\\il2m42\\il2m42.mgm",
+		"model": "graphics\\planes\\Il2m42\\Il2m42.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\Il2m42.txt",
 		"countries": [101],
 		"limits": {
-			"speed": 400,
-			"altitude": 8000,
-			"range": 0
-		},
-		"tags": ["bomber", "dive"]
+			"speed": 412,
+			"climb": [6.8, 260],
+			"altitude": 6000,
+			"range": 0,
+			"wind": 10.5
+		}
 	},
 	"Ju87D3": {
 		"name": "Ju 87 D-3",
@@ -90,22 +97,37 @@
 		"script": "LuaScripts\\WorldObjects\\Planes\\Ju87D3.txt",
 		"countries": [201],
 		"limits": {
-			"speed": 380,
-			"altitude": 6000,
-			"range": 0
-		},
-		"tags": ["bomber", "dive", "recon"]
+			"speed": 425,
+			"climb": [8.0, 250],
+			"altitude": 6500,
+			"range": 0,
+			"wind": 5.5
+		}
 	},
 	"Pe2s87": {
 		"name": "Pe-2 ser.87",
-		"model": "graphics\\planes\\pe2s87\\pe2s87.mgm",
+		"model": "graphics\\planes\\Pe2s87\\Pe2s87.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\Pe2s87.txt",
 		"countries": [101],
 		"limits": {
-			"speed": 500,
+			"speed": 505,
+			"climb": [10.5, 300],
 			"altitude": 8000,
-			"range": 0
-		},
-		"tags": ["bomber", "dive", "level", "recon"]
+			"range": 0,
+			"wind": 10.5
+		}
+	},
+	"He111H6": {
+		"name": "He 111 H-6",
+		"model": "graphics\\planes\\He111H6\\He111H6.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\He111H6.txt",
+		"countries": [201],
+		"limits": {
+			"speed": 367,
+			"climb": [5.5, 230],
+			"altitude": 6300,
+			"range": 0,
+			"wind": 8.5
+		}
 	}
 }

@@ -24,8 +24,9 @@ module.exports = function(mission) {
 	var options = new Entity("Options");
 
 	options.set("LCAuthor", mission.lang("il2mg " + DATA.version));
-	options.set("PlayerConfig", ""); // TODO: ?
 	options.set("MissionType", 0); // Single-player mission
+	options.set("PlayerConfig", ""); // TODO: ?
+	options.set("AqmId", 0); // TODO: ?
 
 	// Map data
 	options.set("HMap", battle.map.heightmap);

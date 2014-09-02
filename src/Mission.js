@@ -4,6 +4,8 @@
 var fs = require("fs");
 var os = require("os");
 var path = require("path");
+var Module = require("module");
+var stripJSONComments = require("strip-json-comments");
 
 // Mission file extensions
 var FILE_EXT_TEXT = "Mission";
@@ -26,13 +28,24 @@ function Mission(params) {
 	require("./make/date")(this);
 	require("./make/time")(this);
 	require("./make/weather")(this);
+	require("./make/flights")(this);
 	require("./make/name")(this);
 	require("./make/briefing")(this);
-	require("./make/places")(this);
 }
 
 // Get/load all static data
 Mission.DATA = (function() {
+
+	var origJSONLoader = Module._extensions[".json"];
+
+	// Temporary override Node JSON loader to support comments in JSON data files
+	Module._extensions[".json"] = function(module, filename) {
+
+		var json = stripJSONComments(fs.readFileSync(filename, "utf8"));
+		var js = "module.exports = " + json;
+
+		module._compile(js, filename);
+	};
 
 	var DATA = Object.create(null);
 
@@ -52,8 +65,8 @@ Mission.DATA = (function() {
 		var country = DATA.countries[countryID];
 		var countryPath = "../data/countries/" + countryID + "/";
 
-		country.pilots = require(countryPath + "pilots");
 		country.ranks = require(countryPath + "ranks");
+		country.names = require(countryPath + "names");
 	}
 
 	// Load battle info
@@ -69,6 +82,7 @@ Mission.DATA = (function() {
 		battle.map = require(battlePath + "map");
 		battle.places = require(battlePath + "places");
 		battle.sun = require(battlePath + "sun");
+		battle.weather = require(battlePath + "weather");
 
 		// Load country-specific battle info
 		battle.countries = Object.create(null);
@@ -82,6 +96,9 @@ Mission.DATA = (function() {
 			country.units = require(countryPath + "units");
 		});
 	}
+
+	// Restore original Node JSON loader
+	Module._extensions[".json"] = origJSONLoader;
 
 	return DATA;
 }());
