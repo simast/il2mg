@@ -1,0 +1,76 @@
+// Airfield defence squadron for Stalingrad pocket
+{
+	"platzschutzstaffel": {
+		"name": "Platzschutzstaffel Pitomnik",
+		"airfields": {
+			"pitomnik": {
+				"from": "1942-11-23",
+				"to": "1943-01-16"
+			}
+		},
+		"airplanes": {
+			"min": 6,
+			"max": 10,
+			"limit": 3, // Platzschutzstaffel often had only 2 or 3 serviceable Bf 109s
+			"types": {
+				"Bf109G2": 6,
+				"Bf109F4": 2,
+				"Bf109G4": 1
+			}
+		},
+		"missions": {
+
+			// Evacuation mission on the day Pitomnik fell
+			"transfer": {
+				"data": {
+					"airfields": ["morozovskiy_west", "morozovskiy_south"]
+				},
+				"from": "1943-01-16",
+				"to": "1943-01-16",
+				"weight": 10
+			}
+		},
+		"pilots": {
+			"Rudolf Germeroth": {
+				"rank": 14,
+				"commander": true
+			},
+			"Werner Lucas": {
+				"rank": 13,
+				"from": "1942-12-16"
+			},
+			"Georg Schentke": {
+				"rank": 13,
+				"to": "1942-12-25"
+			},
+			"Gustav Frielinghaus": {
+				"rank": 13,
+				"from": "1942-12-15"
+			},
+			"Franz Beyer": 13,
+			"Franz Daspelgruber": 12,
+			"Kurt Ebener": {
+				"rank": 7,
+				"from": "1942-12-15"
+			},
+			"Hans Frese": 7,
+			"Rudolf Traphan": 7,
+			"Gustav Dilling": 7,
+			"Kurt Hofrath": {
+				"rank": 5,
+				"to": "1943-01-03"
+			},
+			"Heinz Obst": {
+				"rank": 5,
+				"to": "1943-01-03"
+			},
+			"Richard Eisele": {
+				"rank": 5,
+				"to": "1943-01-14"
+			},
+			"Georg Pissarski": 5,
+			"Hans Grünberg": 5,
+			"Hans Reiff": 5
+		}
+	}
+}

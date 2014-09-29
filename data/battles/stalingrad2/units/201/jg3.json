@@ -1,0 +1,106 @@
+// Jagdgeschwader 3 "Udet"
+{
+	"jg3": {
+		"name": "Jagdgeschwader 3",
+		"alias": "Udet"
+	},
+	"jg3_stab": {
+		"name": "Stab/JG 3",
+		"parent": "jg3",
+		"airfields": {
+			"pitomnik": {
+				"to": "1942-11-22"
+			},
+			"morozovskiy_west": {
+				"from": "1942-11-22",
+				"to": "1942-12-23"
+			},
+			"morozovskiy_south": {
+				"from": "1942-12-23",
+				"to": "1943-01-03"
+			}
+		},
+		"airplanes": {
+			"min": 3,
+			"max": 7,
+			"limit": 4, // 1 swarm max
+			"types": {
+				"Bf109G2": 2,
+				"Bf109G4": 1
+			}
+		},
+		"pilots": {
+			"Wolf-Dietrich Wilcke": {
+				"rank": {
+					"14": {
+						"to": "1942-12-22"
+					},
+					"15": {
+						"from": "1942-12-23"
+					}
+				},
+				"commander": true
+			}
+		}
+	},
+	"jg3_i": {
+		"name": "I./JG 3",
+		"parent": "jg3"
+	},
+	"jg3_i_stab": {
+		"name": "Stab I./JG3",
+		"parent": "jg3_i"
+	},
+	"jg3_1": {
+		"name": "1./JG3",
+		"parent": "jg3_i"
+	},
+	"jg3_2": {
+		"name": "2./JG3",
+		"parent": "jg3_i"
+	},
+	"jg3_3": {
+		"name": "3./JG3",
+		"parent": "jg3_i"
+	},
+	"jg3_ii": {
+		"name": "II./JG 3",
+		"parent": "jg3"
+	},
+	"jg3_ii_stab": {
+		"name": "Stab II./JG3",
+		"parent": "jg3_ii"
+	},
+	"jg3_4": {
+		"name": "4./JG3",
+		"parent": "jg3_ii"
+	},
+	"jg3_5": {
+		"name": "5./JG3",
+		"parent": "jg3_ii"
+	},
+	"jg3_6": {
+		"name": "6./JG3",
+		"parent": "jg3_ii"
+	},
+	"jg3_iii": {
+		"name": "III./JG 3",
+		"parent": "jg3"
+	},
+	"jg3_iii_stab": {
+		"name": "Stab III./JG3",
+		"parent": "jg3_iii"
+	},
+	"jg3_7": {
+		"name": "7./JG3",
+		"parent": "jg3_iii"
+	},
+	"jg3_8": {
+		"name": "8./JG3",
+		"parent": "jg3_iii"
+	},
+	"jg3_9": {
+		"name": "9./JG3",
+		"parent": "jg3_iii"
+	}
+}
