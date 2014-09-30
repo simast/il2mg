@@ -19,15 +19,17 @@
 			}
 		},
 		"missions": {
+			
+			// Escort in and out missions
+			"escortIn": 1,
+			"escortOut": 1,
 
 			// Evacuation mission on the day Pitomnik fell
 			"transfer": {
-				"data": {
-					"airfields": ["morozovskiy_west", "morozovskiy_south"]
-				},
+				"airfield": "gumrak",
 				"from": "1943-01-16",
 				"to": "1943-01-16",
-				"weight": 10
+				"weight": false
 			}
 		},
 		"pilots": {

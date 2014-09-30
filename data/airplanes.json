@@ -91,6 +91,7 @@
 			"wind": 10.5
 		}
 	},
+	"Ju87D1": "Ju87D3",
 	"Ju87D3": {
 		"name": "Ju 87 D-3",
 		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
