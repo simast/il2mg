@@ -8,7 +8,7 @@ var Module = require("module");
 var stripJSONComments = require("strip-json-comments");
 
 // Mission file extensions
-var FILE_EXT_TEXT = "Mission";
+var FILE_EXT_TEXT = "mission";
 var FILE_EXT_BINARY = "msnbin";
 var FILE_EXT_LIST = "list";
 
@@ -80,20 +80,25 @@ Mission.DATA = (function() {
 		battle.airfields = require(battlePath + "airfields");
 		battle.fronts = require(battlePath + "fronts");
 		battle.map = require(battlePath + "map");
-		battle.places = require(battlePath + "places");
 		battle.sun = require(battlePath + "sun");
 		battle.weather = require(battlePath + "weather");
 
-		// Load country-specific battle info
-		battle.countries = Object.create(null);
+		// Load country-specific battle units
+		battle.units = Object.create(null);
 
 		require(battlePath + "countries").forEach(function(countryID) {
 
-			var country = battle.countries[countryID] = Object.create(null);
-			var countryPath = battlePath + countryID + "/";
+			var countryUnits = battle.units[countryID] = Object.create(null);
+			var countryUnitsPath = battlePath + "units/" + countryID;
 
-			country.pilots = require(countryPath + "pilots");
-			country.units = require(countryPath + "units");
+			require(countryUnitsPath).forEach(function(unitFile) {
+
+				var fileUnits = require(countryUnitsPath + "/" + unitFile);
+
+				for (var unitID in fileUnits) {
+					countryUnits[unitID] = fileUnits[unitID];
+				}
+			});
 		});
 	}
 

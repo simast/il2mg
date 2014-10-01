@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2014 */
 "use strict";
 
-var DATA = require("../mission").DATA;
+var DATA = require("../Mission").DATA;
 
 // Make mission clouds
 function makeClouds(mission) {
@@ -36,7 +36,7 @@ module.exports = function(mission) {
 
 	var options = mission.entities.Options;
 
-	makeClouds(mission);
+	//makeClouds(mission);
 	makePrecipitation(mission);
 
 	options.set("SeaState", 0);

@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2014 */
 "use strict";
 
-var DATA = require("../mission").DATA;
+var DATA = require("../Mission").DATA;
 var Entity = require("../Entity");
 
 /**
