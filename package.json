@@ -4,8 +4,9 @@
 	"private": true,
 	"dependencies": {
 		"commander": "^2.3.0",
-		"moment": "^2.8.2",
-		"strip-json-comments": "^1.0.1"
+		"moment": "^2.8.3",
+		"strip-json-comments": "^1.0.1",
+		"lex": "^1.7.6"
 	},
 	"devDependencies": {
 		"grunt": "^0.4.5",
