@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2014 */
 "use strict";
 
-var DATA = require("../Mission").DATA;
-var Entity = require("../Entity");
+var DATA = require("../mission").DATA;
+var Block = require("../block");
 
 // Generate mission battle info
 module.exports = function(mission) {
@@ -20,36 +20,38 @@ module.exports = function(mission) {
 	mission.battleID = battleID;
 	var battle = mission.battle = DATA.battles[battleID];
 
-	// Create main mission Options entity
-	var options = new Entity("Options");
+	// Create main mission Options block
+	var options = new Block("Options");
 
-	options.set("LCAuthor", mission.lang("il2mg " + DATA.version));
-	options.set("MissionType", 0); // Single-player mission
-	options.set("PlayerConfig", ""); // TODO: ?
-	options.set("AqmId", 0); // TODO: ?
+	options.LCAuthor = mission.getLC("il2mg " + DATA.version);
+	options.MissionType = 0; // Single-player mission
+	options.PlayerConfig = ""; // TODO: ?
+	options.AqmId = 0; // TODO: ?
 
 	// Map data
-	options.set("HMap", battle.map.heightmap);
-	options.set("Textures", battle.map.textures);
-	options.set("Forests", battle.map.forests);
-	options.set("Layers", "");
-	options.set("GuiMap", battle.map.gui);
-	options.set("SeasonPrefix", battle.map.seasonPrefix);
+	options.HMap = battle.map.heightmap;
+	options.Textures = battle.map.textures;
+	options.Forests = battle.map.forests;
+	options.Layers = "";
+	options.GuiMap = battle.map.gui;
+	options.SeasonPrefix = battle.map.seasonPrefix;
 
 	// Set country:coalition list
-	options.set("Countries", (function() {
+	options.Countries = (function() {
 
-		var countries = [];
+		var countries = Object.keys(battle.units).map(Number);
+		var value = [];
 
-		countries.push("0:0"); // Unknown country/coalition
+		value.push("0:0"); // Unknown country/coalition
+		
+		countries.forEach(function(countryID) {
+			value.push(countryID + ":" + DATA.countries[countryID].coalition);
+		});
 
-		for (var countryID in battle.countries) {
-			countries.push(countryID + ":" + DATA.countries[countryID].coalition);
-		}
+		return value;
+	})();
 
-		return countries;
-	})());
-
-	// Add "Options" mission entity
-	mission.entities.Options = options;
+	// Add "Options" mission block
+	mission.blocks.push(options);
+	mission.blocks.Options = options;
 };

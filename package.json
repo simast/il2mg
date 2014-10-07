@@ -9,7 +9,6 @@
 		"lex": "^1.7.6"
 	},
 	"devDependencies": {
-		"grunt": "^0.4.5",
-		"nexe": "^0.3.3"
+		"grunt": "^0.4.5"
 	}
 }

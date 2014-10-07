@@ -4,7 +4,7 @@
 var os = require("os");
 var util = require("util");
 var moment = require("moment");
-var Mission = require("./Mission");
+var Mission = require("./mission");
 var DATA = Mission.DATA;
 
 // Setup command line interface

@@ -4,7 +4,7 @@
 // Generate mission briefing
 module.exports = function(mission) {
 
-	var options = mission.entities.Options;
+	var options = mission.blocks.Options;
 
 	var briefing = [];
 
@@ -17,7 +17,7 @@ module.exports = function(mission) {
 	// TODO: Battle situation
 	// TODO: Weather report
 
-	options.setDescription(mission.lang(briefing.join("<br><br>")));
+	options.setDescription(mission.getLC(briefing.join("<br><br>")));
 };
 
 // Make mission briefing date and time output

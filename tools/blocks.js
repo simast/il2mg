@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2014 */
 "use strict";
 
+// Utility script used to import/convert raw blocks .group to .json file
+
 var fs = require("fs");
 var Block = require("../src/block");
 
@@ -31,9 +33,7 @@ var json = {
 			var modelIndex = json.models.indexOf(block.Model);
 			
 			if (modelIndex === -1) {
-				
-				json.models.push(block.Model);
-				modelIndex = json.models.length - 1;
+				modelIndex = json.models.push(block.Model) - 1;
 			}
 			
 			jsonBlock.model = modelIndex;
@@ -45,9 +45,7 @@ var json = {
 			var scriptIndex = json.scripts.indexOf(block.Script);
 			
 			if (scriptIndex === -1) {
-				
-				json.scripts.push(block.Script);
-				scriptIndex = json.scripts.length - 1;
+				scriptIndex = json.scripts.push(block.Script) - 1;
 			}
 			
 			jsonBlock.script = scriptIndex;

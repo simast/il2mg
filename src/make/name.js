@@ -4,7 +4,7 @@
 // Generate mission name
 module.exports = function(mission) {
 
-	var options = mission.entities.Options;
+	var options = mission.blocks.Options;
 
-	options.setName(mission.lang(mission.battle.name));
+	options.setName(mission.getLC(mission.battle.name));
 };

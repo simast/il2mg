@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2014 */
 "use strict";
 
-// Generate mission flights
+// Generate mission blocks
 module.exports = function(mission) {
 
 };

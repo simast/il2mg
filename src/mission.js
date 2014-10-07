@@ -4,7 +4,6 @@
 var fs = require("fs");
 var os = require("os");
 var path = require("path");
-var Module = require("module");
 var stripJSONComments = require("strip-json-comments");
 
 // Mission file extensions
@@ -19,8 +18,8 @@ var FILE_EXT_LIST = "list";
  */
 function Mission(params) {
 
-	this.entities = Object.create(null); // Active entities list
-	this._lang = []; // Language data
+	this.blocks = []; // Blocks list
+	this.lang = []; // Language data
 	this.params = params; // Desired mission parameters
 
 	// Make mission parts
@@ -28,6 +27,8 @@ function Mission(params) {
 	require("./make/date")(this);
 	require("./make/time")(this);
 	require("./make/weather")(this);
+	require("./make/blocks")(this);
+	require("./make/airfields")(this);
 	require("./make/flights")(this);
 	require("./make/name")(this);
 	require("./make/briefing")(this);
@@ -36,6 +37,7 @@ function Mission(params) {
 // Get/load all static data
 Mission.DATA = (function() {
 
+	var Module = require("module");
 	var origJSONLoader = Module._extensions[".json"];
 
 	// Temporary override Node JSON loader to support comments in JSON data files
@@ -77,6 +79,7 @@ Mission.DATA = (function() {
 		var battle = DATA.battles[battleID];
 		var battlePath = "../data/battles/" + battleID + "/";
 
+		battle.blocks = require(battlePath + "blocks");
 		battle.airfields = require(battlePath + "airfields");
 		battle.fronts = require(battlePath + "fronts");
 		battle.map = require(battlePath + "map");
@@ -109,24 +112,24 @@ Mission.DATA = (function() {
 }());
 
 /**
- * Get localized mission language string index.
+ * Get localized mission language code for a given string.
  *
  * @param {string} text Text string.
- * @returns {number} Localized mission language string index.
+ * @returns {number} Localized mission language code.
  */
-Mission.prototype.lang = function(text) {
+Mission.prototype.getLC = function(text) {
 
 	if (typeof text !== "string" || !text.length) {
 		throw TypeError("Invalid mission language string.");
 	}
 
-	var index = this._lang.indexOf(text);
+	var languageCode = this.lang.indexOf(text);
 
-	if (index < 0) {
-		index = this._lang.push(text) - 1;
+	if (languageCode < 0) {
+		languageCode = this.lang.push(text) - 1;
 	}
 
-	return index;
+	return languageCode;
 };
 
 /**
@@ -156,7 +159,7 @@ Mission.prototype.save = function(fileName) {
 };
 
 /**
- * Save main .Mission file.
+ * Save main .mission file.
  *
  * @param {string} fileName Mission file name (without extension).
  */
@@ -170,19 +173,10 @@ Mission.prototype.saveText = function(fileName) {
 		// Required mission file header
 		fileStream.write("# Mission File Version = 1.0;" + os.EOL);
 
-		// Write mission entities
-		for (var group in mission.entities) {
-
-			var entities = mission.entities[group];
-
-			if (!Array.isArray(entities)) {
-				entities = [entities];
-			}
-
-			entities.forEach(function(entity) {
-				fileStream.write(os.EOL + entity.toString() + os.EOL);
-			});
-		}
+		// Write mission blocks
+		mission.blocks.forEach(function(block) {
+			fileStream.write(os.EOL + block.toString() + os.EOL);
+		});
 
 		// Required mission file footer
 		fileStream.write(os.EOL + "# end of file");
@@ -219,7 +213,7 @@ Mission.prototype.saveLang = function(fileName) {
 			fileStream.write("FFFE", "hex");
 
 			// Write language data
-			mission._lang.forEach(function(value, index) {
+			mission.lang.forEach(function(value, index) {
 				fileStream.write(index + ":" + value + os.EOL, "ucs2");
 			});
 

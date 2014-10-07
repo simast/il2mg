@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2014 */
 "use strict";
 
-var DATA = require("../Mission").DATA;
+var DATA = require("../mission").DATA;
 var moment = require("moment");
 
 // Main period time lengths
@@ -241,6 +241,6 @@ module.exports = function(mission) {
 		timeFlags.midnight = true;
 	}
 
-	// Set mission time
-	mission.entities.Options.set("Time", date.format("H:m:s"), true);
+	// Set mission options time
+	mission.blocks.Options.Time = new String(date.format("H:m:s"));
 };

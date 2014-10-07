@@ -8,7 +8,7 @@ var moment = require("moment");
 module.exports = function(mission) {
 
 	var params = mission.params;
-	var options = mission.entities.Options;
+	var options = mission.blocks.Options;
 	var battle = mission.battle;
 	var battleFrom = mission.battleFrom = moment(battle.from);
 	var battleTo = mission.battleTo = moment(battle.to);
@@ -29,6 +29,6 @@ module.exports = function(mission) {
 
 	mission.date = date;
 
-	// Set mission date
-	options.set("Date", date.format("D.M.YYYY"), true);
+	// Set mission options date
+	options.Date = new String(date.format("D.M.YYYY"));
 };
