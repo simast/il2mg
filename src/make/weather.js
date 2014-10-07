@@ -9,6 +9,13 @@ function makeClouds(mission) {
 	var options = mission.blocks.Options;
 	var weather = mission.battle.weather[mission.date.format("YYYY-MM-DD")];
 
+	options.CloudConfig = "00_Clear_04\\sky.ini";
+	options.CloudLevel = 400;
+	options.CloudHeight = 100;
+
+	// FIXME
+	return;
+
 	var cloudTypes = Object.keys(DATA.clouds);
 	var cloudType = cloudTypes[Math.floor(Math.random() * cloudTypes.length)];
 
@@ -36,7 +43,7 @@ module.exports = function(mission) {
 
 	var options = mission.blocks.Options;
 
-	//makeClouds(mission);
+	makeClouds(mission);
 	makePrecipitation(mission);
 
 	options.SeaState = 0;

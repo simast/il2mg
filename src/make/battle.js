@@ -39,16 +39,15 @@ module.exports = function(mission) {
 	// Set country:coalition list
 	options.Countries = (function() {
 
-		var countries = Object.keys(battle.units).map(Number);
-		var value = [];
+		var countries = [];
 
-		value.push("0:0"); // Unknown country/coalition
-		
-		countries.forEach(function(countryID) {
-			value.push(countryID + ":" + DATA.countries[countryID].coalition);
+		countries.push("50:0"); // Unknown country/coalition
+
+		battle.countries.forEach(function(countryID) {
+			countries.push(countryID + ":" + DATA.countries[countryID].coalition);
 		});
 
-		return value;
+		return countries;
 	})();
 
 	// Add "Options" mission block

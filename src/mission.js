@@ -79,17 +79,22 @@ Mission.DATA = (function() {
 		var battle = DATA.battles[battleID];
 		var battlePath = "../data/battles/" + battleID + "/";
 
+		battle.countries = require(battlePath + "countries");
 		battle.blocks = require(battlePath + "blocks");
-		battle.airfields = require(battlePath + "airfields");
 		battle.fronts = require(battlePath + "fronts");
 		battle.map = require(battlePath + "map");
 		battle.sun = require(battlePath + "sun");
 		battle.weather = require(battlePath + "weather");
-
-		// Load country-specific battle units
+		battle.airfields = Object.create(null);
 		battle.units = Object.create(null);
 
-		require(battlePath + "countries").forEach(function(countryID) {
+		// Load airfields
+		require(battlePath + "airfields").forEach(function(airfieldID) {
+			battle.airfields[airfieldID] = require(battlePath + "airfields/" + airfieldID);
+		});
+
+		// Load country-specific battle units
+		battle.countries.forEach(function(countryID) {
 
 			var countryUnits = battle.units[countryID] = Object.create(null);
 			var countryUnitsPath = battlePath + "units/" + countryID;
