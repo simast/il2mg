@@ -33,7 +33,7 @@ Block.prototype.setName = function(name) {
 		this.Name = name;
 	}
 	else {
-		throw TypeError("Invalid block name value.");
+		throw new TypeError("Invalid block name value.");
 	}
 };
 
@@ -51,25 +51,21 @@ Block.prototype.setDescription = function(desc) {
 		this.Desc = desc;
 	}
 	else {
-		throw TypeError("Invalid block description value.");
+		throw new TypeError("Invalid block description value.");
 	}
 };
 
 /**
  * Set block position.
  *
- * @param {number} posX Position coordinate X value.
- * @param {number} posY Position coordinate Y value.
- * @param {number} posZ Position coordinate Z value.
- * ... or
- * @param {array} position Position array with x, y and z coordinates.
+ * @param {number|array} [...] Position X/Y/Z coordinates as an array or separate arguments.
  */
 Block.prototype.setPosition = function() {
 
 	var position = arguments[0];
 
 	if (!Array.isArray(position)) {
-		position = [arguments[0], arguments[1], arguments[2]]
+		position = [arguments[0], arguments[1], arguments[2]];
 	}
 
 	if (position[0]) {
@@ -88,18 +84,14 @@ Block.prototype.setPosition = function() {
 /**
  * Set block orientation.
  *
- * @param {number} orientX Orientation coordinate X value.
- * @param {number} orientY Orientation coordinate Y value.
- * @param {number} orientZ Orientation coordinate Z value.
- * ... or
- * @param {array} orientation Orientation array with x, y and z coordinates.
+ * @param {number|array} [...] Orientation X/Y/Z coordinates as an array or separate arguments.
  */
 Block.prototype.setOrientation = function() {
 
 	var orientation = arguments[0];
 
 	if (!Array.isArray(orientation)) {
-		orientation = [arguments[0], arguments[1], arguments[2]]
+		orientation = [arguments[0], arguments[1], arguments[2]];
 	}
 
 	if (orientation[0]) {
@@ -123,7 +115,7 @@ Block.prototype.setOrientation = function() {
 Block.prototype.setCoalitions = function(coalitions) {
 
 	if (!Array.isArray(coalitions)) {
-		throw TypeError("Invalid block coalitions value.");
+		throw new TypeError("Invalid block coalitions value.");
 	}
 
 	this.Coalitions = new String(JSON.stringify(coalitions.map(Number)));
@@ -227,7 +219,7 @@ Block.readFile = function(file) {
 		}
 		// Value is a string
 		else if (propValue[0] === '"') {
-			propValue = propValue.replace(/^"(.*(?="$))"$/, '$1');
+			propValue = propValue.replace(/^"(.*(?="$))"$/, "$1");
 		}
 		
 		// TODO: Handle complex property types (like with the Options block)

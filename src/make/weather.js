@@ -13,20 +13,7 @@ function makeClouds(mission) {
 	options.CloudLevel = 400;
 	options.CloudHeight = 100;
 
-	// FIXME
-	return;
-
-	var cloudTypes = Object.keys(DATA.clouds);
-	var cloudType = cloudTypes[Math.floor(Math.random() * cloudTypes.length)];
-
-	var clouds = DATA.clouds[cloudType];
-	var cloudLevel = Math.round(clouds.level[0] + Math.random() * (clouds.level[1] - clouds.level[0]));
-	var cloudHeight = Math.round(clouds.height[0] + Math.random() * (clouds.height[1] - clouds.height[0]));
-
-	// TODO: Weather
-	options.CloudConfig = cloudType;
-	options.CloudLevel = cloudLevel;
-	options.CloudHeight = cloudHeight;
+	// TODO
 }
 
 // Make mission precipitation

@@ -125,7 +125,7 @@ Mission.DATA = (function() {
 Mission.prototype.getLC = function(text) {
 
 	if (typeof text !== "string" || !text.length) {
-		throw TypeError("Invalid mission language string.");
+		throw new TypeError("Invalid mission language string.");
 	}
 
 	var languageCode = this.lang.indexOf(text);
@@ -153,10 +153,8 @@ Mission.prototype.save = function(fileName) {
 
 		fileName = path.join(fileDir, fileBase);
 	}
-	// TODO: Generate mission file path and name
-	else {
-
-	}
+	
+	// TODO: Generate mission file path and name if not specified
 
 	this.saveText(fileName);
 	this.saveBinary(fileName);
