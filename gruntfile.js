@@ -6,7 +6,8 @@ module.exports = function(grunt) {
 	// All source files	used with JSCS and JSHint tasks
 	var sourceFiles = [
 		"gruntfile.js",
-		"src/**/*.js"
+		"src/**/*.js",
+		"tools/**/*.js"
 	];
 	
 	grunt.initConfig({
