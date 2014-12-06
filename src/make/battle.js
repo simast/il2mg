@@ -12,9 +12,7 @@ module.exports = function(mission) {
 
 	// Select random battle
 	if (!battleID) {
-
-		var battleIDs = Object.keys(DATA.battles);
-		battleID = battleIDs[Math.floor(Math.random() * battleIDs.length)];
+		battleID = mission.rand.pick(Object.keys(DATA.battles))
 	}
 
 	mission.battleID = battleID;

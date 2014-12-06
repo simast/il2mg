@@ -18,6 +18,7 @@ module.exports = function(mission) {
 	var date = mission.date.startOf("day");
 	var time = mission.params.time;
 	var sun = mission.battle.sun[date.format("YYYY-MM-DD")];
+	var rand = mission.rand;
 
 	// Sunrise time objects
 	var sunrise = moment(sun[0], "HH:mm", true);
@@ -66,11 +67,13 @@ module.exports = function(mission) {
 		}
 
 		// Select random period from weighted array
-		time = weightedPeriods[Math.floor(Math.random() * weightedPeriods.length)];
+		time = rand.pick(weightedPeriods);
 	}
 
 	// Generate time from a named time period
 	if (typeof time === "string") {
+
+		var randValue = rand.real(0, 1);
 
 		switch (time) {
 
@@ -78,7 +81,7 @@ module.exports = function(mission) {
 			case "dawn": {
 
 				time = moment(dawnTimeStart);
-				time.add(Math.random() * TIME_DAWN, "s");
+				time.add(randValue * TIME_DAWN, "s");
 
 				break;
 			}
@@ -87,7 +90,7 @@ module.exports = function(mission) {
 			case "sunrise": {
 
 				time = moment(sunriseTimeStart);
-				time.add(Math.random() * TIME_SUNRISE, "s");
+				time.add(randValue * TIME_SUNRISE, "s");
 
 				break;
 			}
@@ -96,7 +99,7 @@ module.exports = function(mission) {
 			case "morning": {
 
 				time = moment(sunriseTimeStart);
-				time.add(Math.random() * noonTimeStart.diff(time), "ms");
+				time.add(randValue * noonTimeStart.diff(time), "ms");
 
 				break;
 			}
@@ -105,7 +108,7 @@ module.exports = function(mission) {
 			case "day": {
 
 				time = moment(sunriseTimeStart);
-				time.add(Math.random() * sunsetTimeEnd.diff(time), "ms");
+				time.add(randValue * sunsetTimeEnd.diff(time), "ms");
 
 				break;
 			}
@@ -114,7 +117,7 @@ module.exports = function(mission) {
 			case "noon": {
 
 				time = moment(noonTimeStart);
-				time.add(Math.random() * TIME_NOON, "s");
+				time.add(randValue * TIME_NOON, "s");
 
 				break;
 			}
@@ -123,7 +126,7 @@ module.exports = function(mission) {
 			case "afternoon": {
 
 				time = moment(noonTimeEnd);
-				time.add(Math.random() * eveningTimeStart.diff(time), "ms");
+				time.add(randValue * eveningTimeStart.diff(time), "ms");
 
 				break;
 			}
@@ -132,7 +135,7 @@ module.exports = function(mission) {
 			case "evening": {
 
 				time = moment(eveningTimeStart);
-				time.add(Math.random() * duskTimeEnd.diff(time), "ms");
+				time.add(randValue * duskTimeEnd.diff(time), "ms");
 
 				break;
 			}
@@ -141,7 +144,7 @@ module.exports = function(mission) {
 			case "sunset": {
 
 				time = moment(sunsetTimeStart);
-				time.add(Math.random() * TIME_SUNSET, "s");
+				time.add(randValue * TIME_SUNSET, "s");
 
 				break;
 			}
@@ -150,7 +153,7 @@ module.exports = function(mission) {
 			case "dusk": {
 
 				time = moment(sunsetTimeEnd);
-				time.add(Math.random() * TIME_DUSK, "s");
+				time.add(randValue * TIME_DUSK, "s");
 
 				break;
 			}
@@ -159,7 +162,7 @@ module.exports = function(mission) {
 			case "night": {
 
 				time = moment(dawnTimeStart);
-				time.subtract(Math.random() * duskTimeEnd.diff(time), "ms");
+				time.subtract(randValue * duskTimeEnd.diff(time), "ms");
 
 				break;
 			}
@@ -168,14 +171,14 @@ module.exports = function(mission) {
 			case "midnight": {
 
 				time = moment(midnightTimeStart);
-				time.add(Math.random() * TIME_MIDNIGHT, "s");
+				time.add(randValue * TIME_MIDNIGHT, "s");
 
 				break;
 			}
 		}
 
 		// Always set random seconds
-		time.second(Math.random() * 60);
+		time.second(rand.integer(0, 59));
 	}
 
 	// Apply time to mission date object

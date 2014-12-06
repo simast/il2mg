@@ -4,7 +4,7 @@
 var fs = require("fs");
 var os = require("os");
 var path = require("path");
-var stripJSONComments = require("strip-json-comments");
+var Random = require("random-js");
 
 // Mission file extensions
 var FILE_EXT_TEXT = "mission";
@@ -22,6 +22,9 @@ function Mission(params) {
 	this.lang = []; // Language data
 	this.params = params; // Desired mission parameters
 
+	// Initialize random number generator
+	this.rand = new Random(Random.engines.browserCrypto);
+
 	// Make mission parts
 	require("./make/battle")(this);
 	require("./make/date")(this);
@@ -37,6 +40,7 @@ function Mission(params) {
 // Get/load all static data
 Mission.DATA = (function() {
 
+	var stripJSONComments = require("strip-json-comments");
 	var Module = require("module");
 	var origJSONLoader = Module._extensions[".json"];
 

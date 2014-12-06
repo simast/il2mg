@@ -24,7 +24,7 @@ module.exports = function(mission) {
 	}
 	// Generate a random date
 	else if (!date) {
-		date = battleFrom.add(Math.random() * battleTo.diff(battleFrom), "milliseconds");
+		date = battleFrom.add(mission.rand.real(0, 1) * battleTo.add(1, "d").diff(battleFrom), "milliseconds");
 	}
 
 	mission.date = date;
