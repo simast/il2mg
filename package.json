@@ -3,14 +3,14 @@
 	"main": "./src/app.js",
 	"private": true,
 	"dependencies": {
-		"commander": "^2.4.0",
-		"moment": "^2.8.3",
+		"commander": "^2.5.0",
+		"moment": "^2.8.4",
 		"strip-json-comments": "^1.0.2",
 		"lex": "^1.7.7"
 	},
 	"devDependencies": {
 		"grunt": "^0.4.5",
 		"grunt-contrib-jshint": "^0.10.0",
-		"grunt-jscs": "^0.8.0"
+		"grunt-jscs": "^1.0.0"
 	}
 }
