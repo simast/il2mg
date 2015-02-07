@@ -190,57 +190,57 @@ module.exports = function(mission) {
 	var timeFlags = mission.time = Object.create(null);
 
 	// Dawn flag
-	if (time.isAfter(dawnTimeStart) && time.isBefore(sunriseTimeStart)) {
+	if (date.isAfter(dawnTimeStart) && date.isBefore(sunriseTimeStart)) {
 		timeFlags.dawn = true;
 	}
 
 	// Sunrise flag
-	if (time.isAfter(sunriseTimeStart) && time.isBefore(sunriseTimeEnd)) {
+	if (date.isAfter(sunriseTimeStart) && date.isBefore(sunriseTimeEnd)) {
 		timeFlags.sunrise = true;
 	}
 
 	// Morning flag
-	if (time.isAfter(sunriseTimeStart) && time.isBefore(noonTimeStart)) {
+	if (date.isAfter(sunriseTimeStart) && date.isBefore(noonTimeStart)) {
 		timeFlags.morning = true;
 	}
 
 	// Day flag
-	if (time.isAfter(sunriseTimeStart) && time.isBefore(sunsetTimeEnd)) {
+	if (date.isAfter(sunriseTimeStart) && date.isBefore(sunsetTimeEnd)) {
 		timeFlags.day = true;
 	}
 
 	// Noon flag
-	if (time.isAfter(noonTimeStart) && time.isBefore(noonTimeEnd)) {
+	if (date.isAfter(noonTimeStart) && date.isBefore(noonTimeEnd)) {
 		timeFlags.noon = true;
 	}
 
 	// Afternoon flag
-	if (time.isAfter(noonTimeEnd) && time.isBefore(eveningTimeStart)) {
+	if (date.isAfter(noonTimeEnd) && date.isBefore(eveningTimeStart)) {
 		timeFlags.afternoon = true;
 	}
 
 	// Evening flag
-	if (time.isAfter(eveningTimeStart) && time.isBefore(duskTimeEnd)) {
+	if (date.isAfter(eveningTimeStart) && date.isBefore(duskTimeEnd)) {
 		timeFlags.evening = true;
 	}
 
 	// Sunset flag
-	if (time.isAfter(sunsetTimeStart) && time.isBefore(sunsetTimeEnd)) {
+	if (date.isAfter(sunsetTimeStart) && date.isBefore(sunsetTimeEnd)) {
 		timeFlags.sunset = true;
 	}
 
 	// Dusk flag
-	if (time.isAfter(sunsetTimeEnd) && time.isBefore(duskTimeEnd)) {
+	if (date.isAfter(sunsetTimeEnd) && date.isBefore(duskTimeEnd)) {
 		timeFlags.dusk = true;
 	}
 
 	// Night flag
-	if (time.isAfter(duskTimeEnd) || time.isBefore(dawnTimeStart)) {
+	if (date.isAfter(duskTimeEnd) || date.isBefore(dawnTimeStart)) {
 		timeFlags.night = true;
 	}
 
 	// Midnight flag
-	if (time.isAfter(midnightTimeStart) && time.isBefore(midnightTimeEnd)) {
+	if (date.isAfter(midnightTimeStart) && date.isBefore(midnightTimeEnd)) {
 		timeFlags.midnight = true;
 	}
 
