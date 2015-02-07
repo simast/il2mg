@@ -1,6 +1,8 @@
 /node_modules
 /docs
+/il2mg
 *.mission
 *.eng
 *.msnbin
 *.list
+*.exe

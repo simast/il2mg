@@ -4,14 +4,15 @@
 	"private": true,
 	"dependencies": {
 		"commander": "^2.6.0",
-		"moment": "^2.8.4",
+		"moment": "^2.9.0",
 		"strip-json-comments": "^1.0.2",
 		"lex": "^1.7.8",
 		"random-js": "^1.0.4"
 	},
 	"devDependencies": {
 		"grunt": "^0.4.5",
-		"grunt-contrib-jshint": "^0.10.0",
-		"grunt-jscs": "^1.1.0"
+		"grunt-contrib-jshint": "^0.11.0",
+		"grunt-jscs": "^1.5.0",
+		"enclose": "^0.0.15"
 	}
 }

@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 module.exports = function(grunt) {
@@ -9,9 +9,11 @@ module.exports = function(grunt) {
 		"src/**/*.js",
 		"tools/**/*.js"
 	];
-	
+
 	grunt.initConfig({
-	
+
+		pkg: grunt.file.readJSON("package.json"),
+
 		// JavaScript code style checker task
 		jscs: {
 			all: {
@@ -21,7 +23,7 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		
+
 		// JSHint validator task
 		jshint: {
 			all: {
@@ -35,11 +37,32 @@ module.exports = function(grunt) {
 		}
 	});
 
+	// Grunt compile task
+	grunt.task.registerTask("compile", "Compile a binary executable file.", function() {
+
+		var done = this.async();
+		var encloseExec = require("enclose").exec;
+		var encloseOptions = [];
+		var extension = (process.platform === "win32") ? ".exe" : "";
+
+		if (process.arch === "x64") {
+			encloseOptions.push("--x64");
+		}
+		
+		encloseOptions.push("--output=./" + grunt.config("pkg.name") + extension);
+		encloseOptions.push(grunt.config("pkg.main"));
+
+		var enclose = encloseExec(encloseOptions);
+
+		enclose.on("error", done);
+		enclose.on("exit", done);
+	});
+
 	// Load required NPM grunt task modules
 	grunt.loadNpmTasks("grunt-jscs");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 
 	// Grunt tasks
 	grunt.registerTask("check", ["jscs", "jshint"]);
-	grunt.registerTask("default", ["check"]);
+	grunt.registerTask("default", ["check", "compile"]);
 };
