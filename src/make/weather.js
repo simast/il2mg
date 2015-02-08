@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 var DATA = require("../mission").DATA;
@@ -59,7 +59,7 @@ function makePrecipitation(mission, weather) {
 
 		if (hasPrecipitation) {
 
-			if (mission.battle.map.has.snow) {
+			if (mission.map.season === "winter") {
 				precipitation.type = 2; // Snow
 			}
 			else {

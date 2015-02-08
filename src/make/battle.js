@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 var DATA = require("../mission").DATA;
@@ -25,14 +25,6 @@ module.exports = function(mission) {
 	options.MissionType = 0; // Single-player mission
 	options.PlayerConfig = ""; // TODO: ?
 	options.AqmId = 0; // TODO: ?
-
-	// Map data
-	options.HMap = battle.map.heightmap;
-	options.Textures = battle.map.textures;
-	options.Forests = battle.map.forests;
-	options.Layers = "";
-	options.GuiMap = battle.map.gui;
-	options.SeasonPrefix = battle.map.seasonPrefix;
 
 	// Set country:coalition list
 	options.Countries = (function() {

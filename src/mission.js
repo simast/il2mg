@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 var fs = require("fs");
@@ -29,6 +29,7 @@ function Mission(params) {
 	require("./make/battle")(this);
 	require("./make/date")(this);
 	require("./make/time")(this);
+	require("./make/map")(this);
 	require("./make/weather")(this);
 	require("./make/blocks")(this);
 	require("./make/airfields")(this);
@@ -157,7 +158,7 @@ Mission.prototype.save = function(fileName) {
 
 		fileName = path.join(fileDir, fileBase);
 	}
-	
+
 	// TODO: Generate mission file path and name if not specified
 
 	this.saveText(fileName);

@@ -1,15 +1,38 @@
-{
-	"heightmap": "graphics\\LANDSCAPE_Stalin_w\\height.hini",
-	"textures": "graphics\\LANDSCAPE_Stalin_w\\textures.tini",
-	"forests": "graphics\\LANDSCAPE_Stalin_w\\trees\\woods.wds",
-	"gui": "stalingrad-1942",
-	"seasonPrefix": "wi",
-	"width": 358400,
-	"height": 230400,
-	"has": {
-		"snow": true,
-		"sea": false,
-		"rivers": true,
-		"lakes": true
+[
+	// Summer
+	{
+		"from": "1942-07-24",
+		"to": "1942-09-06",
+		"season": "summer",
+		"width": 358400,
+		"height": 230400,
+		"heightmap": "graphics\\LANDSCAPE_Stalin_w\\height.hini",
+		"textures": "graphics\\LANDSCAPE_Stalin_w\\textures.tini",
+		"forests": "graphics\\LANDSCAPE_Stalin_w\\trees\\woods.wds",
+		"gui": "stalingrad-1942"
+	},
+	// Autumn
+	{
+		"from": "1942-09-07",
+		"to": "1942-11-15",
+		"season": "autumn",
+		"width": 358400,
+		"height": 230400,
+		"heightmap": "graphics\\LANDSCAPE_Stalin_w\\height.hini",
+		"textures": "graphics\\LANDSCAPE_Stalin_w\\textures.tini",
+		"forests": "graphics\\LANDSCAPE_Stalin_w\\trees\\woods.wds",
+		"gui": "stalingrad-1942"
+	},
+	// Winter
+	{
+		"from": "1942-11-16",
+		"to": "1943-02-02",
+		"season": "winter",
+		"width": 358400,
+		"height": 230400,
+		"heightmap": "graphics\\LANDSCAPE_Stalin_w\\height.hini",
+		"textures": "graphics\\LANDSCAPE_Stalin_w\\textures.tini",
+		"forests": "graphics\\LANDSCAPE_Stalin_w\\trees\\woods.wds",
+		"gui": "stalingrad-1942"
 	}
-}
+]
