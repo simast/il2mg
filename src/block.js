@@ -4,20 +4,33 @@
 var fs = require("fs");
 var os = require("os");
 
+// Last block index value
+var lastIndex = 0;
+
 /**
  * Block constructor.
  *
  * @param {string} type Block type.
  */
 function Block(type) {
-	
+
 	if (typeof type !== "string" || !type.length) {
 		throw new TypeError("Invalid block type value.");
 	}
-	
+
 	Object.defineProperty(this, "type", {value: type}); // Block type
 	Object.defineProperty(this, "blocks", {value: []}); // Child blocks list
 }
+
+/**
+ * Set block index (id).
+ */
+Block.prototype.setIndex = function() {
+
+	if (!this.Index) {
+		this.Index = ++lastIndex;
+	}
+};
 
 /**
  * Set block name.
@@ -130,17 +143,17 @@ Block.prototype.toString = function() {
 
 	var self = this;
 	var value = this.type + os.EOL + "{";
-	
+
 	// Build block properties list
 	Object.keys(this).forEach(function(propName) {
-		
+
 		var propValue = self[propName];
-	
+
 		value += os.EOL + "  " + propName;
 
 		var propType = typeof propValue;
 		var isArray = false;
-		
+
 		if (propType === "object") {
 			isArray = Array.isArray(propValue);
 		}
@@ -173,7 +186,7 @@ Block.prototype.toString = function() {
 			value += ";";
 		}
 	});
-	
+
 	value += os.EOL + "}";
 
 	return value;
@@ -190,29 +203,29 @@ Block.readFile = function(file) {
 	var fileContent = fs.readFileSync(file, {
 		encoding: "ascii" // TODO
 	});
-	
+
 	if (!fileContent.length) {
 		throw new Error("Could not read specified block file (no content).");
 	}
-	
+
 	var Lexer = require("lex");
 	var lexer = new Lexer();
 	var blocks = [];
 	var blockStack = [];
-	
+
 	// Rule for the start of block definition
 	lexer.addRule(/\s*(\w+)\s*{\s*/i, function(matched, blockType) {
-		
+
 		// Add new block to active blocks stack
 		blockStack.push(new Block(blockType));
 	});
 
 	// Rule for block property
 	lexer.addRule(/\s*(\w+)\s*=\s*(.+);\s*/i, function(matched, propName, propValue) {
-		
+
 		var block = blockStack[blockStack.length - 1];
 		var propNumber = parseFloat(propValue);
-		
+
 		// Value is a number
 		if (!isNaN(propNumber)) {
 			propValue = propNumber;
@@ -221,18 +234,18 @@ Block.readFile = function(file) {
 		else if (propValue[0] === '"') {
 			propValue = propValue.replace(/^"(.*(?="$))"$/, "$1");
 		}
-		
+
 		// TODO: Handle complex property types (like with the Options block)
-		
+
 		// Add block property
 		block[propName] = propValue;
 	});
-	
+
 	// Rule for the end of block definition
 	lexer.addRule(/\s*}\s*/i, function(matched) {
-		
+
 		var block = blockStack.pop();
-		
+
 		// Root block element
 		if (!blockStack.length) {
 			blocks.push(block);
@@ -242,15 +255,15 @@ Block.readFile = function(file) {
 			blockStack[blockStack.length - 1].blocks.push(block);
 		}
 	});
-	
+
 	lexer.setInput(fileContent);
 	lexer.lex();
-	
+
 	// Make sure the stack is empty
 	if (blockStack.length) {
 		throw new Error();
 	}
-	
+
 	return blocks;
 };
 
@@ -262,7 +275,7 @@ Block.readFile = function(file) {
  * @returns {bool} Success/failure status.
  */
 Block.writeFile = function(file, blocks) {
-	
+
 	// TODO:
 };
 
