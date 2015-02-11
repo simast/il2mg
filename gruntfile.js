@@ -48,7 +48,8 @@ module.exports = function(grunt) {
 		if (process.arch === "x64") {
 			encloseOptions.push("--x64");
 		}
-		
+
+		encloseOptions.push("--config=./enclose.js");
 		encloseOptions.push("--output=./" + grunt.config("pkg.name") + extension);
 		encloseOptions.push(grunt.config("pkg.main"));
 
