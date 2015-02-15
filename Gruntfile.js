@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
 	// All source files	used with JSCS and JSHint tasks
 	var sourceFiles = [
-		"gruntfile.js",
+		"Gruntfile.js",
 		"src/**/*.js",
 		"build/**/*.js"
 	];
@@ -44,5 +44,9 @@ module.exports = function(grunt) {
 
 	// Register Grunt tasks
 	grunt.registerTask("check", ["jscs", "jshint"]);
-	grunt.registerTask("default", ["check", "build:blocks", "build:compile"]);
+	grunt.registerTask("default", [
+		"check",
+		"build:blocks",
+		"build:compile"
+	]);
 };
