@@ -7,7 +7,7 @@ var path = require("path");
 var Random = require("random-js");
 
 // Mission file extensions
-var FILE_EXT_TEXT = "mission";
+var FILE_EXT_TEXT = "Mission";
 var FILE_EXT_BINARY = "msnbin";
 var FILE_EXT_LIST = "list";
 

@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 var DATA = require("../mission").DATA;
@@ -28,7 +28,7 @@ module.exports = function(mission) {
 
 			var airfield = battle.airfields[airfieldID];
 
-			var airfieldIcon = new Block("MCU_Icon");
+			var airfieldIcon = new Block(Block.ICON);
 
 			airfieldIcon.IconId = 903;
 			airfieldIcon.setPosition(airfield.position);

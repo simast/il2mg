@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 var fs = require("fs");
@@ -6,6 +6,15 @@ var os = require("os");
 
 // Last block index value
 var lastIndex = 0;
+
+// Block types
+Block.GROUP = "Group";
+Block.BLOCK = "Block";
+Block.BRIDGE = "Bridge";
+Block.DAMAGED = "Damaged";
+Block.PLANE = "Plane";
+Block.ENTITY = "MCU_TR_Entity";
+Block.ICON = "MCU_Icon";
 
 /**
  * Block constructor.
@@ -137,19 +146,23 @@ Block.prototype.setCoalitions = function(coalitions) {
 /**
  * Get string representation of the block.
  *
+ * @param {number} indentLevel Indentation level.
  * @returns {string} String representation of the block.
  */
-Block.prototype.toString = function() {
+Block.prototype.toString = function(indentLevel) {
+
+	indentLevel = indentLevel || 0;
 
 	var self = this;
-	var value = this.type + os.EOL + "{";
+	var indent = new Array(2 * indentLevel + 1).join(" ");
+	var value = indent + this.type + os.EOL + indent + "{";
 
 	// Build block properties list
 	Object.keys(this).forEach(function(propName) {
 
 		var propValue = self[propName];
 
-		value += os.EOL + "  " + propName;
+		value += os.EOL + indent + "  " + propName;
 
 		var propType = typeof propValue;
 		var isArray = false;
@@ -169,13 +182,13 @@ Block.prototype.toString = function() {
 		// Array output
 		else if (isArray) {
 
-			value += os.EOL + "  {";
+			value += os.EOL + indent + "  {";
 
 			propValue.forEach(function(item) {
-				value += os.EOL + "    " + item + ";";
+				value += os.EOL + indent + "    " + item + ";";
 			});
 
-			value += os.EOL + "  }";
+			value += os.EOL + indent + "  }";
 		}
 		// Other value output
 		else {
@@ -187,7 +200,17 @@ Block.prototype.toString = function() {
 		}
 	});
 
-	value += os.EOL + "}";
+	// Serialize any child blocks
+	if (self.blocks.length) {
+
+		indentLevel++;
+
+		self.blocks.forEach(function(block) {
+			value += os.EOL + block.toString(indentLevel);
+		});
+	}
+
+	value += os.EOL + indent + "}";
 
 	return value;
 };

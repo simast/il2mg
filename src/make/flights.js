@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 var Block = require("../block");
@@ -6,41 +6,41 @@ var Block = require("../block");
 // Generate mission flights
 module.exports = function(mission) {
 
-	var planeObject = new Block("Plane");
-	var planeEntity = new Block("MCU_TR_Entity");
+	var plane = new Block(Block.PLANE);
+	var planeEntity = new Block(Block.ENTITY);
 
-	planeObject.setName("Ju 87 D-3");
-	planeObject.setIndex();
-	planeObject.setPosition(132637.484, 0, 186113.266);
-	planeObject.setOrientation(0, 164, 0);
-	planeObject.Script = "luascripts/worldobjects/planes/ju87d3.txt";
-	planeObject.Model = "graphics/planes/ju87d3/ju87d3.mgm";
-	planeObject.Country = 201;
-	planeObject.Skin = "ju87d3/ju-87d-8 njgs italy swastika.dds";
-	planeObject.AILevel = 5;
-	planeObject.CoopStart = 0;
-	planeObject.NumberInFormation = 0;
-	planeObject.Vulnerable = 1;
-	planeObject.Engageable = 1;
-	planeObject.LimitAmmo = 1;
-	planeObject.StartInAir = 1;
-	planeObject.Callsign = 9;
-	planeObject.Callnum = 1;
-	planeObject.Time = 60;
-	planeObject.DamageReport = 50;
-	planeObject.DamageThreshold = 1;
-	planeObject.PayloadId = 4;
-	planeObject.WMMask = 11;
-	planeObject.AiRTBDecision = 1;
-	planeObject.DeleteAfterDeath = 0;
-	planeObject.Fuel = 1;
+	plane.setName("Ju 87 D-3");
+	plane.setIndex();
+	plane.setPosition(116317.252, 83.238, 102764.117);
+	plane.setOrientation(0, 47.80, 11);
+	plane.Script = "luascripts/worldobjects/planes/ju87d3.txt";
+	plane.Model = "graphics/planes/ju87d3/ju87d3.mgm";
+	plane.Country = 201;
+	plane.Skin = "ju87d3/ju-87d-8 njgs italy swastika.dds";
+	plane.AILevel = 0;
+	plane.CoopStart = 0;
+	plane.NumberInFormation = 0;
+	plane.Vulnerable = 1;
+	plane.Engageable = 1;
+	plane.LimitAmmo = 1;
+	plane.StartInAir = 2;
+	plane.Callsign = 5;
+	plane.Callnum = 2;
+	plane.Time = 20;
+	plane.DamageReport = 50;
+	plane.DamageThreshold = 1;
+	plane.PayloadId = 4;
+	plane.WMMask = 11;
+	plane.AiRTBDecision = 1;
+	plane.DeleteAfterDeath = 0;
+	plane.Fuel = 1;
 
 	planeEntity.setIndex();
 
 	// Link two blocks
-	planeObject.LinkTrId = planeEntity.Index;
-	planeEntity.MisObjID = planeObject.Index;
+	plane.LinkTrId = planeEntity.Index;
+	planeEntity.MisObjID = plane.Index;
 
-	mission.blocks.push(planeObject);
+	mission.blocks.push(plane);
 	mission.blocks.push(planeEntity);
 };
