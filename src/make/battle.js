@@ -21,7 +21,7 @@ module.exports = function(mission) {
 	// Create main mission Options block
 	var options = new Block("Options");
 
-	options.LCAuthor = mission.getLC("il2mg " + DATA.version);
+	options.LCAuthor = mission.getLC(DATA.name + " " + DATA.version);
 	options.MissionType = 0; // Single-player mission
 	options.PlayerConfig = ""; // TODO: ?
 	options.AqmId = 0; // TODO: ?

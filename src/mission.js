@@ -56,13 +56,14 @@ Mission.DATA = (function() {
 
 	var DATA = Object.create(null);
 
+	DATA.name = require("../data/name");
+	DATA.version = require("../data/version");
 	DATA.airplanes = require("../data/airplanes");
 	DATA.clouds = require("../data/clouds");
 	DATA.coalitions = require("../data/coalitions");
 	DATA.languages = require("../data/languages");
 	DATA.missions = require("../data/missions");
 	DATA.time = require("../data/time");
-	DATA.version = require("../data/version");
 
 	// Load country info
 	DATA.countries = require("../data/countries");
