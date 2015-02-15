@@ -1,12 +1,30 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Grunt task used to compile to a single binary executable file
 module.exports = function(grunt) {
 
+	// Grunt task used to compile to a single binary executable file
 	grunt.registerTask("build:compile", "Compile a binary executable file.", function() {
 
 		var done = this.async();
+		var stripJSONComments = require("strip-json-comments");
+		var buildName = grunt.config("pkg.name");
+		var buildDir = "build/" + buildName + "/";
+
+		// Prepare data JSON files for binary executable use
+		grunt.file.expand("data/**/*.json").forEach(function(dataFile) {
+
+			var jsonData = JSON.parse(stripJSONComments(grunt.file.read(dataFile)));
+
+			grunt.file.write(buildDir + dataFile, JSON.stringify(jsonData));
+		});
+
+		// Copy over app source files
+		// TODO: Minify/combine into a single file?
+		grunt.file.expand("src/**/*.js").forEach(function(sourceFile) {
+			grunt.file.copy(sourceFile, buildDir + sourceFile);
+		});
+
 		var encloseExec = require("enclose").exec;
 		var encloseOptions = [];
 		var extension = (process.platform === "win32") ? ".exe" : "";
@@ -15,18 +33,29 @@ module.exports = function(grunt) {
 			encloseOptions.push("--x64");
 		}
 
-		encloseOptions.push("--config=./build/enclose.js");
-		encloseOptions.push("--output=./build/" + grunt.config("pkg.name") + extension);
+		encloseOptions.push("--config=../enclose.js");
+		encloseOptions.push("--output=../" + buildName + extension);
 		encloseOptions.push(grunt.config("pkg.main"));
+
+		grunt.file.setBase(buildDir);
 
 		var enclose = encloseExec(encloseOptions);
 
-		enclose.on("error", done);
+		function onDone(error) {
 
-		enclose.on("exit", function() {
+			grunt.file.setBase("../../");
 
-			grunt.log.ok();
-			done();
-		});
+			if (!error) {
+				grunt.log.ok();
+			}
+
+			// Clean up temporary build directory
+			grunt.file.delete(buildDir);
+
+			done(error);
+		}
+
+		enclose.on("error", onDone);
+		enclose.on("exit", onDone);
 	});
 };

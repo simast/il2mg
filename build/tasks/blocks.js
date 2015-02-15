@@ -1,12 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Grunt task used to import/convert raw blocks .Group to .json file
 module.exports = function(grunt) {
 
+	// Grunt task used to import/convert raw blocks .Group to .json file
 	grunt.registerTask("build:blocks", "Build blocks JSON files.", function() {
 
-		var fs = require("fs");
 		var numeral = require("numeral");
 		var DATA = require("../../src/mission").DATA;
 		var Block = require("../../src/block");
@@ -98,12 +97,9 @@ module.exports = function(grunt) {
 			})(json, blocks);
 
 			// Write output JSON blocks file
-			fs.writeFileSync(
+			grunt.file.write(
 				fileDestination,
-				JSON.stringify(json, null, "\t"),
-				{
-					encoding: "ascii"
-				}
+				JSON.stringify(json, null, "\t")
 			);
 		}
 

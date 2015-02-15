@@ -1,8 +1,11 @@
 /node_modules
 /docs
-/il2mg
+/build/il2mg
+*.exe
 *.mission
 *.eng
+*.ger
+*.pol
+*.rus
 *.msnbin
 *.list
-*.exe
