@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 	var sourceFiles = [
 		"gruntfile.js",
 		"src/**/*.js",
-		"tools/**/*.js"
+		"build/**/*.js"
 	];
 
 	grunt.initConfig({
@@ -37,33 +37,12 @@ module.exports = function(grunt) {
 		}
 	});
 
-	// Grunt compile task
-	grunt.task.registerTask("compile", "Compile a binary executable file.", function() {
-
-		var done = this.async();
-		var encloseExec = require("enclose").exec;
-		var encloseOptions = [];
-		var extension = (process.platform === "win32") ? ".exe" : "";
-
-		if (process.arch === "x64") {
-			encloseOptions.push("--x64");
-		}
-
-		encloseOptions.push("--config=./enclose.js");
-		encloseOptions.push("--output=./" + grunt.config("pkg.name") + extension);
-		encloseOptions.push(grunt.config("pkg.main"));
-
-		var enclose = encloseExec(encloseOptions);
-
-		enclose.on("error", done);
-		enclose.on("exit", done);
-	});
-
-	// Load required NPM grunt task modules
+	// Load required Grunt tasks
 	grunt.loadNpmTasks("grunt-jscs");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadTasks("build/tasks");
 
-	// Grunt tasks
+	// Register Grunt tasks
 	grunt.registerTask("check", ["jscs", "jshint"]);
-	grunt.registerTask("default", ["check", "compile"]);
+	grunt.registerTask("default", ["check", "build:blocks", "build:compile"]);
 };
