@@ -1,16 +1,16 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 var os = require("os");
 var util = require("util");
 var moment = require("moment");
 var Mission = require("./mission");
-var DATA = Mission.DATA;
+var data = require("./data");
 
 // Setup command line interface
 var params = require("commander");
 
-params.version(DATA.version);
+params.version(data.version);
 params.usage("[options] [mission file and/or path]");
 
 // Select desired battle (--battle)
@@ -18,8 +18,8 @@ params.option("-b, --battle <battle>", (function() {
 
 	var desc = "select a battle" + os.EOL;
 
-	for (var battleID in DATA.battles) {
-		desc += util.format('\t"%s" - %s\n', battleID, DATA.battles[battleID].name);
+	for (var battleID in data.battles) {
+		desc += util.format('\t"%s" - %s\n', battleID, data.battles[battleID].name);
 	}
 
 	return desc;
@@ -32,9 +32,9 @@ params.option("-d, --date <YYYY-MM-DD>", (function() {
 
 	desc += "\tValid date values will depend on the selected battle:" + os.EOL;
 
-	for (var battleID in DATA.battles) {
+	for (var battleID in data.battles) {
 
-		var battle = DATA.battles[battleID];
+		var battle = data.battles[battleID];
 		var battleFrom = moment(battle.from).format("YYYY-MM-DD");
 		var battleTo = moment(battle.to).format("YYYY-MM-DD");
 
@@ -61,8 +61,8 @@ params.option("-t, --time <HH:MM>", (function() {
 
 	desc += "\tTime can also be specified using special values:" + os.EOL;
 
-	for (var timeID in DATA.time) {
-		desc += util.format('\t"%s" - %s\n', timeID, DATA.time[timeID].description);
+	for (var timeID in data.time) {
+		desc += util.format('\t"%s" - %s\n', timeID, data.time[timeID].description);
 	}
 
 	return desc;
@@ -83,8 +83,8 @@ params.option("-C, --coalition <coalition>", (function() {
 
 	var desc = "select a coalition" + os.EOL;
 
-	for (var coalitionID in DATA.coalitions) {
-		desc += util.format('\t"%s" - %s\n', coalitionID, DATA.coalitions[coalitionID]);
+	for (var coalitionID in data.coalitions) {
+		desc += util.format('\t"%s" - %s\n', coalitionID, data.coalitions[coalitionID]);
 	}
 
 	return desc;
@@ -95,8 +95,8 @@ params.option("-c, --country <country>", (function() {
 
 	var desc = "select a country" + os.EOL;
 
-	for (var countryID in DATA.countries) {
-		desc += util.format('\t"%s" - %s\n', countryID, DATA.countries[countryID].name);
+	for (var countryID in data.countries) {
+		desc += util.format('\t"%s" - %s\n', countryID, data.countries[countryID].name);
 	}
 
 	return desc;
@@ -107,7 +107,7 @@ params.option("-D, --debug", "use debug (development) mode");
 
 // Modify script path in process.argv (for better enclose and commander support)
 var argv = process.argv.slice();
-argv[1] = DATA.name + ((process.platform === "win32") ? ".exe" : "");
+argv[1] = data.name + ((process.platform === "win32") ? ".exe" : "");
 
 /**
  * TODO: Support other command line params:
@@ -129,7 +129,7 @@ try {
 	// Validate command line params
 
 	// --battle
-	if (params.battle && !DATA.battles[params.battle]) {
+	if (params.battle && !data.battles[params.battle]) {
 		throw util.format('Unknown battle: "%s".', params.battle);
 	}
 
@@ -139,17 +139,17 @@ try {
 	}
 
 	// --time
-	if (params.time && typeof params.time === "string" && !DATA.time[params.time]) {
+	if (params.time && typeof params.time === "string" && !data.time[params.time]) {
 		throw util.format('Invalid mission time value: "%s".', params.time);
 	}
 
 	// --coalition
-	if (params.coalition && !DATA.coalitions[params.coalition]) {
+	if (params.coalition && !data.coalitions[params.coalition]) {
 		throw util.format('Unknown coalition: "%s".', params.coalition);
 	}
 
 	// --country
-	if (params.country && !DATA.countries[params.country]) {
+	if (params.country && !data.countries[params.country]) {
 		throw util.format('Unknown country: "%s".', params.country);
 	}
 

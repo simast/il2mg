@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var DATA = require("../mission").DATA;
+var data = require("../data");
 
 // Make mission clouds
 function makeClouds(mission, weather) {
@@ -14,7 +14,7 @@ function makeClouds(mission, weather) {
 		cloudsType = rand.integer(cloudsType[0], cloudsType[1]);
 	}
 
-	var cloudsData = rand.pick(DATA.clouds[cloudsType]);
+	var cloudsData = rand.pick(data.clouds[cloudsType]);
 
 	var altitude = cloudsData.altitude;
 	if (Array.isArray(altitude)) {

@@ -3,32 +3,41 @@
 
 module.exports = function(grunt) {
 
-	// Grunt task used to import/convert raw blocks .Group to .json files
-	grunt.registerTask("build:blocks", "Build blocks JSON files.", function() {
+	// Grunt task used to import/convert raw airfields .Group to .json files
+	grunt.registerTask("build:airfields", "Build airfields JSON files.", function() {
 
 		var numeral = require("numeral");
 		var data = require("../../src/data");
 		var Block = require("../../src/block");
 
 		var totalBattles = 0;
+		var totalAirfields = 0;
 		var totalBlocks = 0;
 
-		// Process blocks for each battle
+		// Process airfields for each battle
 		for (var battleID in data.battles) {
 
 			var battle = data.battles[battleID];
-			var blocksPath = "data/battles/" + battleID + "/blocks/";
+			var airfieldsPath = "data/battles/" + battleID + "/airfields/";
 
-			// Process all blocks files
-			battle.blocks.forEach(function(blockFile) {
+			// Process all airfields
+			for (var airfieldID in battle.airfields) {
 
-				var fileSource = blocksPath + blockFile + ".Group";
-				var fileDestination = blocksPath + blockFile + ".json";
+				var fileSource = airfieldsPath + airfieldID + ".Group";
+				var fileDestination = airfieldsPath + airfieldID + ".json";
 
-				// Read raw blocks
+				// Ignore airfields without .Group file
+				if (!grunt.file.exists(fileSource)) {
+					continue;
+				}
+
+				// Read raw airfield blocks file
 				var blocks = Block.readFile(fileSource);
 
-				var json = [];
+				// Read airfield JSON data file
+				var json = grunt.file.readJSON(fileDestination);
+
+				json.blocks = [];
 
 				// Build output JSON object with recursion
 				(function buildJSON(json, blocks) {
@@ -68,7 +77,7 @@ module.exports = function(grunt) {
 								jsonBlock.push(block.ZOri || 0);
 							}
 
-							json.push(jsonBlock);
+							json.blocks.push(jsonBlock);
 
 							totalBlocks++;
 						}
@@ -85,7 +94,9 @@ module.exports = function(grunt) {
 					fileDestination,
 					JSON.stringify(json, null, "\t")
 				);
-			});
+
+				totalAirfields++;
+			}
 
 			totalBattles++;
 		}
@@ -101,7 +112,9 @@ module.exports = function(grunt) {
 		okMessage += numeral(totalBlocks).format("0,0") + " ";
 		okMessage += grunt.util.pluralize(totalBlocks, "block/blocks");
 		okMessage += " processed from " + numeral(totalBattles).format("0,0") + " ";
-		okMessage += grunt.util.pluralize(totalBattles, "battle/battles") + ".";
+		okMessage += grunt.util.pluralize(totalBattles, "battle/battles");
+		okMessage += " and " + numeral(totalAirfields).format("0,0") + " ";
+		okMessage += grunt.util.pluralize(totalAirfields, "airfield/airfields") + ".";
 
 		grunt.log.ok(okMessage);
 	});

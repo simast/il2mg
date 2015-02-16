@@ -4,37 +4,43 @@
 var Block = require("../block");
 
 // Generate mission blocks
-module.exports = function(mission) {
+module.exports = function(mission, data) {
 
-	var missionBlocks = mission.battle.blocks;
-	var blockGroup = new Block(Block.GROUP);
+	var blocksFiles = mission.battle.blocks;
+	var blocksGroup = new Block(Block.GROUP);
 
-	blockGroup.setName("Blocks");
+	blocksGroup.setName("Blocks");
 
-	missionBlocks.forEach(function(blockFile) {
+	blocksFiles.forEach(function(blocksFile) {
 
-		var blockData = require("../../data/battles/" + mission.battleID + "/blocks/" + blockFile);
-
-		var types = blockData.types;
-		var models = blockData.models;
-		var scripts = blockData.scripts;
-		var blocks = blockData.blocks;
+		var blocks = require("../../data/battles/" + mission.battleID + "/blocks/" + blocksFile);
 
 		// Add all blocks to a group
 		for (var i = 0; i < blocks.length; i++) {
 
 			var blockItem = blocks[i];
-			var block = new Block(types[blockItem[0]]);
+			var blockType = data.getBlock(blockItem[0]);
+			var block = new Block(blockType.type);
 
-			block.Model = models[blockItem[1]];
-			block.Script = scripts[blockItem[2]];
-			block.setPosition(blockItem[3], blockItem[4], blockItem[5]);
-			block.setOrientation(blockItem[6], blockItem[7], blockItem[8]);
+			block.Model = blockType.model;
+			block.Script = blockType.script;
+			block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
 
-			blockGroup.blocks.push(block);
+			// Compressed orientation value
+			if (blockItem[5] === undefined) {
+				block.setOrientation(0, blockItem[4], 0);
+			}
+			// Normal orientation value
+			else {
+				block.setOrientation(blockItem[4], blockItem[5], blockItem[6]);
+			}
+
+			// TODO: Build a blocks index (to quickly lookup blocks based on position)
+
+			blocksGroup.blocks.push(block);
 		}
 	});
 
-	// Add all blocks as a single group to mission file
-	mission.blocks.push(blockGroup);
+	// Add all blocks as a single group in a mission file
+	mission.blocks.push(blocksGroup);
 };

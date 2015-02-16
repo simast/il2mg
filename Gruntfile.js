@@ -65,6 +65,7 @@ module.exports = function(grunt) {
 		"clean",
 		"check",
 		"build:blocks",
+		"build:airfields",
 		"build:compile"
 	]);
 };

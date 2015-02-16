@@ -1,19 +1,18 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var DATA = require("../mission").DATA;
 var moment = require("moment");
 
-// Main period time lengths
-var TIME_DAWN = DATA.time.dawn.period;
-var TIME_SUNRISE = DATA.time.sunrise.period;
-var TIME_NOON = DATA.time.noon.period;
-var TIME_SUNSET = DATA.time.sunset.period;
-var TIME_DUSK = DATA.time.dusk.period;
-var TIME_MIDNIGHT = DATA.time.midnight.period;
-
 // Generate mission time
-module.exports = function(mission) {
+module.exports = function(mission, data) {
+
+	// Main period time lengths
+	var TIME_DAWN = data.time.dawn.period;
+	var TIME_SUNRISE = data.time.sunrise.period;
+	var TIME_NOON = data.time.noon.period;
+	var TIME_SUNSET = data.time.sunset.period;
+	var TIME_DUSK = data.time.dusk.period;
+	var TIME_MIDNIGHT = data.time.midnight.period;
 
 	var date = mission.date.startOf("day");
 	var time = mission.params.time;
@@ -54,9 +53,9 @@ module.exports = function(mission) {
 		var weightedPeriods = [];
 
 		// Build a weighted period array
-		for (var periodID in DATA.time) {
+		for (var periodID in data.time) {
 
-			var period = DATA.time[periodID];
+			var period = data.time[periodID];
 
 			if (period.weight) {
 

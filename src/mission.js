@@ -5,6 +5,7 @@ var fs = require("fs");
 var os = require("os");
 var path = require("path");
 var Random = require("random-js");
+var data = require("./data");
 
 // Mission file extensions
 var FILE_EXT_TEXT = "Mission";
@@ -26,101 +27,17 @@ function Mission(params) {
 	this.rand = new Random(Random.engines.browserCrypto);
 
 	// Make mission parts
-	require("./make/battle")(this);
-	require("./make/date")(this);
-	require("./make/time")(this);
-	require("./make/map")(this);
-	require("./make/weather")(this);
-	require("./make/blocks")(this);
-	require("./make/airfields")(this);
-	require("./make/flights")(this);
-	require("./make/name")(this);
-	require("./make/briefing")(this);
+	require("./make/battle")(this, data);
+	require("./make/date")(this, data);
+	require("./make/time")(this, data);
+	require("./make/map")(this, data);
+	require("./make/weather")(this, data);
+	require("./make/blocks")(this, data);
+	require("./make/airfields")(this, data);
+	require("./make/flights")(this, data);
+	require("./make/name")(this, data);
+	require("./make/briefing")(this, data);
 }
-
-// Get/load all static data
-Mission.DATA = (function() {
-
-	var stripJSONComments = require("strip-json-comments");
-	var Module = require("module");
-	var origJSONLoader = Module._extensions[".json"];
-
-	// Temporary override Node JSON loader to support comments in JSON data files
-	Module._extensions[".json"] = function(module, filename) {
-
-		var json = stripJSONComments(fs.readFileSync(filename, "utf8"));
-		var js = "module.exports = " + json;
-
-		module._compile(js, filename);
-	};
-
-	var DATA = Object.create(null);
-
-	DATA.name = require("../data/name");
-	DATA.version = require("../data/version");
-	DATA.airplanes = require("../data/airplanes");
-	DATA.clouds = require("../data/clouds");
-	DATA.coalitions = require("../data/coalitions");
-	DATA.languages = require("../data/languages");
-	DATA.missions = require("../data/missions");
-	DATA.time = require("../data/time");
-
-	// Load country info
-	DATA.countries = require("../data/countries");
-
-	for (var countryID in DATA.countries) {
-
-		var country = DATA.countries[countryID];
-		var countryPath = "../data/countries/" + countryID + "/";
-
-		country.ranks = require(countryPath + "ranks");
-		country.names = require(countryPath + "names");
-	}
-
-	// Load battle info
-	DATA.battles = require("../data/battles");
-
-	for (var battleID in DATA.battles) {
-
-		var battle = DATA.battles[battleID];
-		var battlePath = "../data/battles/" + battleID + "/";
-
-		battle.countries = require(battlePath + "countries");
-		battle.blocks = require(battlePath + "blocks");
-		battle.fronts = require(battlePath + "fronts");
-		battle.map = require(battlePath + "map");
-		battle.sun = require(battlePath + "sun");
-		battle.weather = require(battlePath + "weather");
-		battle.airfields = Object.create(null);
-		battle.units = Object.create(null);
-
-		// Load airfields
-		require(battlePath + "airfields").forEach(function(airfieldID) {
-			battle.airfields[airfieldID] = require(battlePath + "airfields/" + airfieldID);
-		});
-
-		// Load country-specific battle units
-		battle.countries.forEach(function(countryID) {
-
-			var countryUnits = battle.units[countryID] = Object.create(null);
-			var countryUnitsPath = battlePath + "units/" + countryID;
-
-			require(countryUnitsPath).forEach(function(unitFile) {
-
-				var fileUnits = require(countryUnitsPath + "/" + unitFile);
-
-				for (var unitID in fileUnits) {
-					countryUnits[unitID] = fileUnits[unitID];
-				}
-			});
-		});
-	}
-
-	// Restore original Node JSON loader
-	Module._extensions[".json"] = origJSONLoader;
-
-	return DATA;
-}());
 
 /**
  * Get localized mission language code for a given string.
@@ -212,7 +129,7 @@ Mission.prototype.saveLang = function(fileName) {
 
 	var mission = this;
 
-	Mission.DATA.languages.forEach(function(lang) {
+	data.languages.forEach(function(lang) {
 
 		var fileStream = fs.createWriteStream(fileName + "." + lang);
 

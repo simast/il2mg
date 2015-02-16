@@ -4,7 +4,7 @@
 var Block = require("../block");
 
 // Generate mission flights
-module.exports = function(mission) {
+module.exports = function(mission, data) {
 
 	var plane = new Block(Block.PLANE);
 	var planeEntity = new Block(Block.ENTITY);

@@ -5,7 +5,7 @@ var util = require("util");
 var moment = require("moment");
 
 // Generate mission map data
-module.exports = function(mission) {
+module.exports = function(mission, data) {
 
 	var options = mission.blocks.Options;
 	var map = mission.battle.map;

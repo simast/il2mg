@@ -1,8 +1,8 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 // Generate mission briefing
-module.exports = function(mission) {
+module.exports = function(mission, data) {
 
 	var options = mission.blocks.Options;
 

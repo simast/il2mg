@@ -1,0 +1,1205 @@
+{
+	"blocks": [
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\tacinskaya_1.txt",
+			"model": "graphics\\blocks\\tacinskaya_1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\tacinskaya_2.txt",
+			"model": "graphics\\blocks\\tacinskaya_2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\tacinskaya_3.txt",
+			"model": "graphics\\blocks\\tacinskaya_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_1_v_5.txt",
+			"model": "graphics\\blocks\\arf_caponiers_1_v_5.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_8_h_4.txt",
+			"model": "graphics\\blocks\\arf_caponiers_8_h_4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_tower_2.txt",
+			"model": "graphics\\blocks\\arf_tower_2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_gsm_2.txt",
+			"model": "graphics\\blocks\\arf_gsm_2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_ammo_2.txt",
+			"model": "graphics\\blocks\\arf_ammo_2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_4_r_6.txt",
+			"model": "graphics\\blocks\\arf_caponiers_4_r_6.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_ammo_3.txt",
+			"model": "graphics\\blocks\\arf_ammo_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_ammo_1.txt",
+			"model": "graphics\\blocks\\arf_ammo_1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_10_h_3.txt",
+			"model": "graphics\\blocks\\arf_caponiers_10_h_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_gsm_1.txt",
+			"model": "graphics\\blocks\\arf_gsm_1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_9_h_3.txt",
+			"model": "graphics\\blocks\\arf_caponiers_9_h_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_2_v_5.txt",
+			"model": "graphics\\blocks\\arf_caponiers_2_v_5.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_tower_1.txt",
+			"model": "graphics\\blocks\\arf_tower_1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_5_r_7.txt",
+			"model": "graphics\\blocks\\arf_caponiers_5_r_7.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_7_h_4.txt",
+			"model": "graphics\\blocks\\arf_caponiers_7_h_4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_6_h_4.txt",
+			"model": "graphics\\blocks\\arf_caponiers_6_h_4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_nets_3_3.txt",
+			"model": "graphics\\blocks\\arf_nets_3_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_12_h_5.txt",
+			"model": "graphics\\blocks\\arf_caponiers_12_h_5.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_3_v_5.txt",
+			"model": "graphics\\blocks\\arf_caponiers_3_v_5.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_ammo_4.txt",
+			"model": "graphics\\blocks\\arf_ammo_4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_dugouts_3.txt",
+			"model": "graphics\\blocks\\arf_dugouts_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_nets_2_5.txt",
+			"model": "graphics\\blocks\\arf_nets_2_5.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_dugouts_2.txt",
+			"model": "graphics\\blocks\\arf_dugouts_2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_nets_1_4.txt",
+			"model": "graphics\\blocks\\arf_nets_1_4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_dugouts_1.txt",
+			"model": "graphics\\blocks\\arf_dugouts_1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_11_h_5.txt",
+			"model": "graphics\\blocks\\arf_caponiers_11_h_5.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_hangars_1.txt",
+			"model": "graphics\\blocks\\arf_hangars_1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\gumrak.txt",
+			"model": "graphics\\blocks\\gumrak.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\arf_hangars_3.txt",
+			"model": "graphics\\blocks\\arf_hangars_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\sklad_01.txt",
+			"model": "graphics\\blocks\\sklad_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_100x100_3.txt",
+			"model": "graphics\\blocks\\country_100x100_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_100x100_1.txt",
+			"model": "graphics\\blocks\\country_100x100_1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_200x100_2.txt",
+			"model": "graphics\\blocks\\country_200x100_2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_200x100_4.txt",
+			"model": "graphics\\blocks\\country_200x100_4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_200x100_6.txt",
+			"model": "graphics\\blocks\\country_200x100_6.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_400_block1.txt",
+			"model": "graphics\\blocks\\village_400_block1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block5.txt",
+			"model": "graphics\\blocks\\country_m_corner_block5.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block6.txt",
+			"model": "graphics\\blocks\\country_m_corner_block6.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_200x100_3.txt",
+			"model": "graphics\\blocks\\country_200x100_3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_200x100_1.txt",
+			"model": "graphics\\blocks\\country_200x100_1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_100x100_2.txt",
+			"model": "graphics\\blocks\\country_100x100_2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block7.txt",
+			"model": "graphics\\blocks\\country_m_corner_block7.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_b_block4.txt",
+			"model": "graphics\\blocks\\country_b_block4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_block1.txt",
+			"model": "graphics\\blocks\\country_m_block1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_block2.txt",
+			"model": "graphics\\blocks\\country_m_block2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_block3.txt",
+			"model": "graphics\\blocks\\country_m_block3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_b_block3.txt",
+			"model": "graphics\\blocks\\country_b_block3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_b_block2.txt",
+			"model": "graphics\\blocks\\country_b_block2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_b_block1.txt",
+			"model": "graphics\\blocks\\country_b_block1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block4.txt",
+			"model": "graphics\\blocks\\country_m_corner_block4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_block4.txt",
+			"model": "graphics\\blocks\\country_m_block4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_cross_200_block1.txt",
+			"model": "graphics\\blocks\\village_cross_200_block1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_cross_200_block2.txt",
+			"model": "graphics\\blocks\\village_cross_200_block2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_200_block3.txt",
+			"model": "graphics\\blocks\\village_200_block3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_tcross_200_block1.txt",
+			"model": "graphics\\blocks\\village_tcross_200_block1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_tcross_200_block2.txt",
+			"model": "graphics\\blocks\\village_tcross_200_block2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_200_block2.txt",
+			"model": "graphics\\blocks\\village_200_block2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_200_block1.txt",
+			"model": "graphics\\blocks\\village_200_block1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\meh_01.txt",
+			"model": "graphics\\blocks\\meh_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block8.txt",
+			"model": "graphics\\blocks\\country_m_corner_block8.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block2.txt",
+			"model": "graphics\\blocks\\country_m_corner_block2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\country_100x100_4.txt",
+			"model": "graphics\\blocks\\country_100x100_4.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\village_400_block3.txt",
+			"model": "graphics\\blocks\\village_400_block3.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\scot_01.txt",
+			"model": "graphics\\blocks\\scot_01.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_road_100.txt",
+			"model": "graphics\\bridges\\bridge_road_100.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_road_150.txt",
+			"model": "graphics\\bridges\\bridge_road_150.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_road_200.txt",
+			"model": "graphics\\bridges\\bridge_road_200.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_pontoon_100.txt",
+			"model": "graphics\\bridges\\bridge_pontoon_100.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_road_250.txt",
+			"model": "graphics\\bridges\\bridge_road_250.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_big_1.txt",
+			"model": "graphics\\bridges\\bridge_big_1.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_big_2.txt",
+			"model": "graphics\\bridges\\bridge_big_2.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_railroad_200.txt",
+			"model": "graphics\\bridges\\bridge_railroad_200.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\ferry.txt",
+			"model": "graphics\\bridges\\ferry.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\ferry2.txt",
+			"model": "graphics\\bridges\\ferry2.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\ferryfloat.txt",
+			"model": "graphics\\bridges\\ferryfloat.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\ferry_pontoon_end.txt",
+			"model": "graphics\\bridges\\ferry_pontoon_end.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\ferry_pontoon_part.txt",
+			"model": "graphics\\bridges\\ferry_pontoon_part.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\vl_tupik.txt",
+			"model": "graphics\\blocks\\vl_tupik.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\rwstation_s1.txt",
+			"model": "graphics\\blocks\\rwstation_s1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\rwstation_s2.txt",
+			"model": "graphics\\blocks\\rwstation_s2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\rwstation_b.txt",
+			"model": "graphics\\blocks\\rwstation_b.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_54.txt",
+			"model": "graphics\\buildings\\stalingrad_54.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\okt_01.txt",
+			"model": "graphics\\buildings\\okt_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\okt_02.txt",
+			"model": "graphics\\buildings\\okt_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\okt_03.txt",
+			"model": "graphics\\buildings\\okt_03.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\okt_04.txt",
+			"model": "graphics\\buildings\\okt_04.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\okt_05.txt",
+			"model": "graphics\\buildings\\okt_05.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\okt_06.txt",
+			"model": "graphics\\buildings\\okt_06.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\okt_07.txt",
+			"model": "graphics\\buildings\\okt_07.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\okt_08.txt",
+			"model": "graphics\\buildings\\okt_08.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\bar_01.txt",
+			"model": "graphics\\buildings\\bar_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\bar_02.txt",
+			"model": "graphics\\buildings\\bar_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\bar_03.txt",
+			"model": "graphics\\buildings\\bar_03.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\bar_04.txt",
+			"model": "graphics\\buildings\\bar_04.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\bar_05.txt",
+			"model": "graphics\\buildings\\bar_05.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\bar_06.txt",
+			"model": "graphics\\buildings\\bar_06.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\bar_07.txt",
+			"model": "graphics\\buildings\\bar_07.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\bar_09.txt",
+			"model": "graphics\\buildings\\bar_09.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_01.txt",
+			"model": "graphics\\buildings\\stz_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_02.txt",
+			"model": "graphics\\buildings\\stz_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_03.txt",
+			"model": "graphics\\buildings\\stz_03.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_04.txt",
+			"model": "graphics\\buildings\\stz_04.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_05.txt",
+			"model": "graphics\\buildings\\stz_05.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_06.txt",
+			"model": "graphics\\buildings\\stz_06.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_07.txt",
+			"model": "graphics\\buildings\\stz_07.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_08.txt",
+			"model": "graphics\\buildings\\stz_08.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_09.txt",
+			"model": "graphics\\buildings\\stz_09.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_10.txt",
+			"model": "graphics\\buildings\\stz_10.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_11.txt",
+			"model": "graphics\\buildings\\stz_11.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\fountain.txt",
+			"model": "graphics\\buildings\\fountain.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stz_12.txt",
+			"model": "graphics\\buildings\\stz_12.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stalingrad_01.txt",
+			"model": "graphics\\buildings\\stalingrad_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\stalingrad_02.txt",
+			"model": "graphics\\buildings\\stalingrad_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_03.txt",
+			"model": "graphics\\buildings\\stalingrad_03.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_04.txt",
+			"model": "graphics\\buildings\\stalingrad_04.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_05.txt",
+			"model": "graphics\\buildings\\stalingrad_05.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_06.txt",
+			"model": "graphics\\buildings\\stalingrad_06.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_07.txt",
+			"model": "graphics\\buildings\\stalingrad_07.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_08.txt",
+			"model": "graphics\\buildings\\stalingrad_08.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_09.txt",
+			"model": "graphics\\buildings\\stalingrad_09.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_10.txt",
+			"model": "graphics\\buildings\\stalingrad_10.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_11.txt",
+			"model": "graphics\\buildings\\stalingrad_11.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_12.txt",
+			"model": "graphics\\buildings\\stalingrad_12.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_13.txt",
+			"model": "graphics\\buildings\\stalingrad_13.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_14.txt",
+			"model": "graphics\\buildings\\stalingrad_14.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_15.txt",
+			"model": "graphics\\buildings\\stalingrad_15.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_16.txt",
+			"model": "graphics\\buildings\\stalingrad_16.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_17.txt",
+			"model": "graphics\\buildings\\stalingrad_17.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock250x250u_01.txt",
+			"model": "graphics\\buildings\\townblock250x250u_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock250x250_01.txt",
+			"model": "graphics\\buildings\\townblock250x250_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock250x250_02.txt",
+			"model": "graphics\\buildings\\townblock250x250_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock250x500_01.txt",
+			"model": "graphics\\buildings\\townblock250x500_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock250x500_02.txt",
+			"model": "graphics\\buildings\\townblock250x500_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock250x500_03.txt",
+			"model": "graphics\\buildings\\townblock250x500_03.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_01.txt",
+			"model": "graphics\\buildings\\townblock500x250u_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_02.txt",
+			"model": "graphics\\buildings\\townblock500x250u_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_03.txt",
+			"model": "graphics\\buildings\\townblock500x250u_03.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_04.txt",
+			"model": "graphics\\buildings\\townblock500x250u_04.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_05.txt",
+			"model": "graphics\\buildings\\townblock500x250u_05.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_06.txt",
+			"model": "graphics\\buildings\\townblock500x250u_06.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x500u_01.txt",
+			"model": "graphics\\buildings\\townblock500x500u_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x500u_02.txt",
+			"model": "graphics\\buildings\\townblock500x500u_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x500u_03.txt",
+			"model": "graphics\\buildings\\townblock500x500u_03.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x500u_04.txt",
+			"model": "graphics\\buildings\\townblock500x500u_04.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x500_01.txt",
+			"model": "graphics\\buildings\\townblock500x500_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock500x500_02.txt",
+			"model": "graphics\\buildings\\townblock500x500_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock250x100_01.txt",
+			"model": "graphics\\buildings\\townblock250x100_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\townblock250x100_02.txt",
+			"model": "graphics\\buildings\\townblock250x100_02.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_18.txt",
+			"model": "graphics\\buildings\\stalingrad_18.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_19.txt",
+			"model": "graphics\\buildings\\stalingrad_19.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_20.txt",
+			"model": "graphics\\buildings\\stalingrad_20.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_21.txt",
+			"model": "graphics\\buildings\\stalingrad_21.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_22.txt",
+			"model": "graphics\\buildings\\stalingrad_22.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_23.txt",
+			"model": "graphics\\buildings\\stalingrad_23.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_24.txt",
+			"model": "graphics\\buildings\\stalingrad_24.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_25.txt",
+			"model": "graphics\\buildings\\stalingrad_25.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_26.txt",
+			"model": "graphics\\buildings\\stalingrad_26.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_27.txt",
+			"model": "graphics\\buildings\\stalingrad_27.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_28.txt",
+			"model": "graphics\\buildings\\stalingrad_28.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_29.txt",
+			"model": "graphics\\buildings\\stalingrad_29.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_30.txt",
+			"model": "graphics\\buildings\\stalingrad_30.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_31.txt",
+			"model": "graphics\\buildings\\stalingrad_31.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_32.txt",
+			"model": "graphics\\buildings\\stalingrad_32.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_33.txt",
+			"model": "graphics\\buildings\\stalingrad_33.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_34.txt",
+			"model": "graphics\\buildings\\stalingrad_34.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_35.txt",
+			"model": "graphics\\buildings\\stalingrad_35.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_36.txt",
+			"model": "graphics\\buildings\\stalingrad_36.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_37.txt",
+			"model": "graphics\\buildings\\stalingrad_37.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_38.txt",
+			"model": "graphics\\buildings\\stalingrad_38.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_39.txt",
+			"model": "graphics\\buildings\\stalingrad_39.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_40.txt",
+			"model": "graphics\\buildings\\stalingrad_40.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_41.txt",
+			"model": "graphics\\buildings\\stalingrad_41.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_42.txt",
+			"model": "graphics\\buildings\\stalingrad_42.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_43.txt",
+			"model": "graphics\\buildings\\stalingrad_43.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_44.txt",
+			"model": "graphics\\buildings\\stalingrad_44.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_45.txt",
+			"model": "graphics\\buildings\\stalingrad_45.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_46.txt",
+			"model": "graphics\\buildings\\stalingrad_46.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_00.txt",
+			"model": "graphics\\buildings\\stalingrad_00.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_47.txt",
+			"model": "graphics\\buildings\\stalingrad_47.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_48.txt",
+			"model": "graphics\\buildings\\stalingrad_48.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_49.txt",
+			"model": "graphics\\buildings\\stalingrad_49.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_50.txt",
+			"model": "graphics\\buildings\\stalingrad_50.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_51.txt",
+			"model": "graphics\\buildings\\stalingrad_51.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_52.txt",
+			"model": "graphics\\buildings\\stalingrad_52.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_53.txt",
+			"model": "graphics\\buildings\\stalingrad_53.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_bridge_01.txt",
+			"model": "graphics\\buildings\\stalingrad_bridge_01.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\stalingrad_bridge_02.txt",
+			"model": "graphics\\buildings\\stalingrad_bridge_02.mgm"
+		},
+		{
+			"type": "Bridge",
+			"script": "LuaScripts\\WorldObjects\\Bridges\\bridge_section_dmg.txt",
+			"model": "graphics\\bridges\\bridge_section_dmg.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\art_position_amb1.txt",
+			"model": "graphics\\blocks\\art_position_amb1.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\art_position_amb2.txt",
+			"model": "graphics\\blocks\\art_position_amb2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\dugout.txt",
+			"model": "graphics\\blocks\\dugout.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\watertower.txt",
+			"model": "graphics\\blocks\\watertower.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\static_opel.txt",
+			"model": "graphics\\blocks\\static_opel.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\static_opel_fuel.txt",
+			"model": "graphics\\blocks\\static_opel_fuel.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\mg_position.txt",
+			"model": "graphics\\blocks\\mg_position.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\static_ju87.txt",
+			"model": "graphics\\blocks\\static_ju87.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "LuaScripts\\WorldObjects\\Blocks\\tacinskaya_1.txt",
+			"model": "graphics\\blocks\\tacinskaya_1.mgm"
+		}
+	],
+	"index": {
+		"LuaScripts\\WorldObjects\\Blocks\\tacinskaya_1.txt": 199,
+		"LuaScripts\\WorldObjects\\Blocks\\tacinskaya_2.txt": 1,
+		"LuaScripts\\WorldObjects\\Blocks\\tacinskaya_3.txt": 2,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_1_v_5.txt": 3,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_8_h_4.txt": 4,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_tower_2.txt": 5,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_gsm_2.txt": 6,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_ammo_2.txt": 7,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_4_r_6.txt": 8,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_ammo_3.txt": 9,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_ammo_1.txt": 10,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_10_h_3.txt": 11,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_gsm_1.txt": 12,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_9_h_3.txt": 13,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_2_v_5.txt": 14,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_tower_1.txt": 15,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_5_r_7.txt": 16,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_7_h_4.txt": 17,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_6_h_4.txt": 18,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_nets_3_3.txt": 19,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_12_h_5.txt": 20,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_3_v_5.txt": 21,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_ammo_4.txt": 22,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_dugouts_3.txt": 23,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_nets_2_5.txt": 24,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_dugouts_2.txt": 25,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_nets_1_4.txt": 26,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_dugouts_1.txt": 27,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_caponiers_11_h_5.txt": 28,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_hangars_1.txt": 29,
+		"LuaScripts\\WorldObjects\\Blocks\\gumrak.txt": 30,
+		"LuaScripts\\WorldObjects\\Blocks\\arf_hangars_3.txt": 31,
+		"LuaScripts\\WorldObjects\\Blocks\\sklad_01.txt": 32,
+		"LuaScripts\\WorldObjects\\Blocks\\country_100x100_3.txt": 33,
+		"LuaScripts\\WorldObjects\\Blocks\\country_100x100_1.txt": 34,
+		"LuaScripts\\WorldObjects\\Blocks\\country_200x100_2.txt": 35,
+		"LuaScripts\\WorldObjects\\Blocks\\country_200x100_4.txt": 36,
+		"LuaScripts\\WorldObjects\\Blocks\\country_200x100_6.txt": 37,
+		"LuaScripts\\WorldObjects\\Blocks\\village_400_block1.txt": 38,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block5.txt": 39,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block6.txt": 40,
+		"LuaScripts\\WorldObjects\\Blocks\\country_200x100_3.txt": 41,
+		"LuaScripts\\WorldObjects\\Blocks\\country_200x100_1.txt": 42,
+		"LuaScripts\\WorldObjects\\Blocks\\country_100x100_2.txt": 43,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block7.txt": 44,
+		"LuaScripts\\WorldObjects\\Blocks\\country_b_block4.txt": 45,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_block1.txt": 46,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_block2.txt": 47,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_block3.txt": 48,
+		"LuaScripts\\WorldObjects\\Blocks\\country_b_block3.txt": 49,
+		"LuaScripts\\WorldObjects\\Blocks\\country_b_block2.txt": 50,
+		"LuaScripts\\WorldObjects\\Blocks\\country_b_block1.txt": 51,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block4.txt": 52,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_block4.txt": 53,
+		"LuaScripts\\WorldObjects\\Blocks\\village_cross_200_block1.txt": 54,
+		"LuaScripts\\WorldObjects\\Blocks\\village_cross_200_block2.txt": 55,
+		"LuaScripts\\WorldObjects\\Blocks\\village_200_block3.txt": 56,
+		"LuaScripts\\WorldObjects\\Blocks\\village_tcross_200_block1.txt": 57,
+		"LuaScripts\\WorldObjects\\Blocks\\village_tcross_200_block2.txt": 58,
+		"LuaScripts\\WorldObjects\\Blocks\\village_200_block2.txt": 59,
+		"LuaScripts\\WorldObjects\\Blocks\\village_200_block1.txt": 60,
+		"LuaScripts\\WorldObjects\\Blocks\\meh_01.txt": 61,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block8.txt": 62,
+		"LuaScripts\\WorldObjects\\Blocks\\country_m_corner_block2.txt": 63,
+		"LuaScripts\\WorldObjects\\Blocks\\country_100x100_4.txt": 64,
+		"LuaScripts\\WorldObjects\\Blocks\\village_400_block3.txt": 65,
+		"LuaScripts\\WorldObjects\\Blocks\\scot_01.txt": 66,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_road_100.txt": 67,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_road_150.txt": 68,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_road_200.txt": 69,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_pontoon_100.txt": 70,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_road_250.txt": 71,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_big_1.txt": 72,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_big_2.txt": 73,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_railroad_200.txt": 74,
+		"LuaScripts\\WorldObjects\\Bridges\\ferry.txt": 75,
+		"LuaScripts\\WorldObjects\\Bridges\\ferry2.txt": 76,
+		"LuaScripts\\WorldObjects\\Bridges\\ferryfloat.txt": 77,
+		"LuaScripts\\WorldObjects\\Bridges\\ferry_pontoon_end.txt": 78,
+		"LuaScripts\\WorldObjects\\Bridges\\ferry_pontoon_part.txt": 79,
+		"LuaScripts\\WorldObjects\\Blocks\\vl_tupik.txt": 80,
+		"LuaScripts\\WorldObjects\\Blocks\\rwstation_s1.txt": 81,
+		"LuaScripts\\WorldObjects\\Blocks\\rwstation_s2.txt": 82,
+		"LuaScripts\\WorldObjects\\Blocks\\rwstation_b.txt": 83,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_54.txt": 84,
+		"LuaScripts\\WorldObjects\\okt_01.txt": 85,
+		"LuaScripts\\WorldObjects\\okt_02.txt": 86,
+		"LuaScripts\\WorldObjects\\okt_03.txt": 87,
+		"LuaScripts\\WorldObjects\\okt_04.txt": 88,
+		"LuaScripts\\WorldObjects\\okt_05.txt": 89,
+		"LuaScripts\\WorldObjects\\okt_06.txt": 90,
+		"LuaScripts\\WorldObjects\\okt_07.txt": 91,
+		"LuaScripts\\WorldObjects\\okt_08.txt": 92,
+		"LuaScripts\\WorldObjects\\bar_01.txt": 93,
+		"LuaScripts\\WorldObjects\\bar_02.txt": 94,
+		"LuaScripts\\WorldObjects\\bar_03.txt": 95,
+		"LuaScripts\\WorldObjects\\bar_04.txt": 96,
+		"LuaScripts\\WorldObjects\\bar_05.txt": 97,
+		"LuaScripts\\WorldObjects\\bar_06.txt": 98,
+		"LuaScripts\\WorldObjects\\bar_07.txt": 99,
+		"LuaScripts\\WorldObjects\\bar_09.txt": 100,
+		"LuaScripts\\WorldObjects\\stz_01.txt": 101,
+		"LuaScripts\\WorldObjects\\stz_02.txt": 102,
+		"LuaScripts\\WorldObjects\\stz_03.txt": 103,
+		"LuaScripts\\WorldObjects\\stz_04.txt": 104,
+		"LuaScripts\\WorldObjects\\stz_05.txt": 105,
+		"LuaScripts\\WorldObjects\\stz_06.txt": 106,
+		"LuaScripts\\WorldObjects\\stz_07.txt": 107,
+		"LuaScripts\\WorldObjects\\stz_08.txt": 108,
+		"LuaScripts\\WorldObjects\\stz_09.txt": 109,
+		"LuaScripts\\WorldObjects\\stz_10.txt": 110,
+		"LuaScripts\\WorldObjects\\stz_11.txt": 111,
+		"LuaScripts\\WorldObjects\\fountain.txt": 112,
+		"LuaScripts\\WorldObjects\\stz_12.txt": 113,
+		"LuaScripts\\WorldObjects\\stalingrad_01.txt": 114,
+		"LuaScripts\\WorldObjects\\stalingrad_02.txt": 115,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_03.txt": 116,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_04.txt": 117,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_05.txt": 118,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_06.txt": 119,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_07.txt": 120,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_08.txt": 121,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_09.txt": 122,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_10.txt": 123,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_11.txt": 124,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_12.txt": 125,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_13.txt": 126,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_14.txt": 127,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_15.txt": 128,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_16.txt": 129,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_17.txt": 130,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock250x250u_01.txt": 131,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock250x250_01.txt": 132,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock250x250_02.txt": 133,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock250x500_01.txt": 134,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock250x500_02.txt": 135,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock250x500_03.txt": 136,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_01.txt": 137,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_02.txt": 138,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_03.txt": 139,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_04.txt": 140,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_05.txt": 141,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x250u_06.txt": 142,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x500u_01.txt": 143,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x500u_02.txt": 144,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x500u_03.txt": 145,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x500u_04.txt": 146,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x500_01.txt": 147,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock500x500_02.txt": 148,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock250x100_01.txt": 149,
+		"LuaScripts\\WorldObjects\\Blocks\\townblock250x100_02.txt": 150,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_18.txt": 151,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_19.txt": 152,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_20.txt": 153,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_21.txt": 154,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_22.txt": 155,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_23.txt": 156,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_24.txt": 157,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_25.txt": 158,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_26.txt": 159,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_27.txt": 160,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_28.txt": 161,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_29.txt": 162,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_30.txt": 163,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_31.txt": 164,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_32.txt": 165,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_33.txt": 166,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_34.txt": 167,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_35.txt": 168,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_36.txt": 169,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_37.txt": 170,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_38.txt": 171,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_39.txt": 172,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_40.txt": 173,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_41.txt": 174,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_42.txt": 175,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_43.txt": 176,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_44.txt": 177,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_45.txt": 178,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_46.txt": 179,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_00.txt": 180,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_47.txt": 181,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_48.txt": 182,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_49.txt": 183,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_50.txt": 184,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_51.txt": 185,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_52.txt": 186,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_53.txt": 187,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_bridge_01.txt": 188,
+		"LuaScripts\\WorldObjects\\Blocks\\stalingrad_bridge_02.txt": 189,
+		"LuaScripts\\WorldObjects\\Bridges\\bridge_section_dmg.txt": 190,
+		"LuaScripts\\WorldObjects\\Blocks\\art_position_amb1.txt": 191,
+		"LuaScripts\\WorldObjects\\Blocks\\art_position_amb2.txt": 192,
+		"LuaScripts\\WorldObjects\\Blocks\\dugout.txt": 193,
+		"LuaScripts\\WorldObjects\\Blocks\\watertower.txt": 194,
+		"LuaScripts\\WorldObjects\\Blocks\\static_opel.txt": 195,
+		"LuaScripts\\WorldObjects\\Blocks\\static_opel_fuel.txt": 196,
+		"LuaScripts\\WorldObjects\\Blocks\\mg_position.txt": 197,
+		"LuaScripts\\WorldObjects\\Blocks\\static_ju87.txt": 198
+	}
+}

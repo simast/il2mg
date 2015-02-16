@@ -1,27 +1,26 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var DATA = require("../mission").DATA;
 var Block = require("../block");
 
 // Generate mission battle info
-module.exports = function(mission) {
+module.exports = function(mission, data) {
 
 	var params = mission.params;
 	var battleID = params.battle;
 
 	// Select random battle
 	if (!battleID) {
-		battleID = mission.rand.pick(Object.keys(DATA.battles));
+		battleID = mission.rand.pick(Object.keys(data.battles));
 	}
 
 	mission.battleID = battleID;
-	var battle = mission.battle = DATA.battles[battleID];
+	var battle = mission.battle = data.battles[battleID];
 
 	// Create main mission Options block
 	var options = new Block("Options");
 
-	options.LCAuthor = mission.getLC(DATA.name + " " + DATA.version);
+	options.LCAuthor = mission.getLC(data.name + " " + data.version);
 	options.MissionType = 0; // Single-player mission
 	options.PlayerConfig = ""; // TODO: ?
 	options.AqmId = 0; // TODO: ?
@@ -34,7 +33,7 @@ module.exports = function(mission) {
 		countries.push("50:0"); // Unknown country/coalition
 
 		battle.countries.forEach(function(countryID) {
-			countries.push(countryID + ":" + DATA.countries[countryID].coalition);
+			countries.push(countryID + ":" + data.countries[countryID].coalition);
 		});
 
 		return countries;

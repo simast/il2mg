@@ -5,7 +5,7 @@ var util = require("util");
 var moment = require("moment");
 
 // Generate mission date
-module.exports = function(mission) {
+module.exports = function(mission, data) {
 
 	var params = mission.params;
 	var options = mission.blocks.Options;
