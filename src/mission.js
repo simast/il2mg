@@ -101,11 +101,11 @@ Mission.prototype.saveText = function(fileName) {
 
 		// Write mission blocks
 		mission.blocks.forEach(function(block) {
-			fileStream.write(os.EOL + block.toString() + os.EOL);
+			fileStream.write(os.EOL + block.toString());
 		});
 
 		// Required mission file footer
-		fileStream.write(os.EOL + "# end of file");
+		fileStream.write(os.EOL + os.EOL + "# end of file");
 
 		fileStream.end();
 	});

@@ -7,10 +7,8 @@ var Block = require("../block");
 module.exports = function(mission, data) {
 
 	var plane = new Block(Block.PLANE);
-	var planeEntity = new Block(Block.ENTITY);
 
 	plane.setName("Ju 87 D-3");
-	plane.setIndex();
 	plane.setPosition(116317.252, 83.238, 102764.117);
 	plane.setOrientation(0, 47.80, 11);
 	plane.Script = "luascripts/worldobjects/planes/ju87d3.txt";
@@ -35,12 +33,8 @@ module.exports = function(mission, data) {
 	plane.DeleteAfterDeath = 0;
 	plane.Fuel = 1;
 
-	planeEntity.setIndex();
-
-	// Link two blocks
-	plane.LinkTrId = planeEntity.Index;
-	planeEntity.MisObjID = plane.Index;
+	// Create plane entity
+	plane.createEntity();
 
 	mission.blocks.push(plane);
-	mission.blocks.push(planeEntity);
 };

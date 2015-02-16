@@ -60,6 +60,7 @@ module.exports = function(mission, data) {
 				if (blockItem[0] >= 0) {
 
 					var blockType = data.getBlock(blockItem[0]);
+					var blockData = blockItem[5];
 					var block = new Block(blockType.type);
 
 					block.Model = blockType.model;
@@ -67,12 +68,16 @@ module.exports = function(mission, data) {
 					block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
 					block.setOrientation(0, blockItem[4], 0);
 
+					// Windsock tag
+					if (blockData === 3) {
+						block.createEntity();
+					}
+
 					// TODO: Build a blocks index (to quickly lookup blocks based on position)
 
 					blocksGroup.blocks.push(block);
 				}
 			});
-
 		})(airfield.blocks);
 
 		// Add all blocks as a single airfield group in a mission file

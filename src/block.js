@@ -146,6 +146,27 @@ Block.prototype.setCoalitions = function(coalitions) {
 };
 
 /**
+ * Create a linked block entity.
+ */
+Block.prototype.createEntity = function() {
+
+	if (this.entity) {
+		throw new Error("Block is already linked to an entity.");
+	}
+
+	var entity = new Block(Block.ENTITY);
+
+	this.setIndex();
+	entity.setIndex();
+
+	// Link the block with entity
+	this.LinkTrId = entity.Index;
+	entity.MisObjID = this.Index;
+
+	Object.defineProperty(this, "entity", {value: entity});
+};
+
+/**
  * Get string representation of the block.
  *
  * @param {number} indentLevel Indentation level.
@@ -213,6 +234,11 @@ Block.prototype.toString = function(indentLevel) {
 	}
 
 	value += os.EOL + indent + "}";
+
+	// Include linked block entity
+	if (this.entity) {
+		value += os.EOL + this.entity.toString(indentLevel);
+	}
 
 	return value;
 };
