@@ -46,28 +46,34 @@ module.exports = function(mission, data) {
 
 		blocksGroup.setName(airfield.name);
 
-		airfield.blocks.forEach(function(blockItem) {
+		// Walk/process each airfield block
+		(function walkBlocks(blocks) {
 
-			var blockType = data.getBlock(blockItem[0]);
-			var block = new Block(blockType.type);
+			blocks.forEach(function(blockItem) {
 
-			block.Model = blockType.model;
-			block.Script = blockType.script;
-			block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
+				// Process block group
+				if (Array.isArray(blockItem[0])) {
+					walkBlocks(blockItem);
+				}
 
-			// Compressed orientation value
-			if (blockItem[5] === undefined) {
-				block.setOrientation(0, blockItem[4], 0);
-			}
-			// Normal orientation value
-			else {
-				block.setOrientation(blockItem[4], blockItem[5], blockItem[6]);
-			}
+				// Normal blocks only
+				if (blockItem[0] >= 0) {
 
-			// TODO: Build a blocks index (to quickly lookup blocks based on position)
+					var blockType = data.getBlock(blockItem[0]);
+					var block = new Block(blockType.type);
 
-			blocksGroup.blocks.push(block);
-		});
+					block.Model = blockType.model;
+					block.Script = blockType.script;
+					block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
+					block.setOrientation(0, blockItem[4], 0);
+
+					// TODO: Build a blocks index (to quickly lookup blocks based on position)
+
+					blocksGroup.blocks.push(block);
+				}
+			});
+
+		})(airfield.blocks);
 
 		// Add all blocks as a single airfield group in a mission file
 		mission.blocks.push(blocksGroup);

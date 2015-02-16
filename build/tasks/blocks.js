@@ -56,25 +56,14 @@ module.exports = function(grunt) {
 							jsonBlock.push(block.ZPos || 0);
 
 							// Block orientation
-							if (!block.XOri && !block.ZOri) {
-
-								// NOTE: Since most blocks only bave one orientation value - we
-								// save some space by serializing only the single value.
-								jsonBlock.push(block.YOri || 0);
-							}
-							else {
-								jsonBlock.push(block.XOri || 0);
-								jsonBlock.push(block.YOri || 0);
-								jsonBlock.push(block.ZOri || 0);
-							}
+							jsonBlock.push(block.YOri || 0);
 
 							json.push(jsonBlock);
 
 							totalBlocks++;
 						}
-
 						// Process any child blocks
-						if (block.blocks.length) {
+						else if (block.type === Block.GROUP && block.blocks.length) {
 							buildJSON(json, block.blocks);
 						}
 					});

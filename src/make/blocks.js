@@ -25,15 +25,7 @@ module.exports = function(mission, data) {
 			block.Model = blockType.model;
 			block.Script = blockType.script;
 			block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
-
-			// Compressed orientation value
-			if (blockItem[5] === undefined) {
-				block.setOrientation(0, blockItem[4], 0);
-			}
-			// Normal orientation value
-			else {
-				block.setOrientation(blockItem[4], blockItem[5], blockItem[6]);
-			}
+			block.setOrientation(0, blockItem[4], 0);
 
 			// TODO: Build a blocks index (to quickly lookup blocks based on position)
 

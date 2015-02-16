@@ -15,6 +15,8 @@ Block.DAMAGED = "Damaged";
 Block.PLANE = "Plane";
 Block.ENTITY = "MCU_TR_Entity";
 Block.ICON = "MCU_Icon";
+Block.VEHICLE = "Vehicle";
+Block.FLAG = "Flag";
 
 /**
  * Block constructor.

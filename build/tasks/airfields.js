@@ -34,6 +34,13 @@ module.exports = function(grunt) {
 				// Read raw airfield blocks file
 				var blocks = Block.readFile(fileSource);
 
+				// Blocks file should have a non-empty single Group block
+				if (!blocks || !blocks.length || blocks.length !== 1 ||
+						blocks[0].type !== Block.GROUP) {
+
+					continue;
+				}
+
 				// Read airfield JSON data file
 				var json = grunt.file.readJSON(fileDestination);
 
@@ -44,15 +51,66 @@ module.exports = function(grunt) {
 
 					blocks.forEach(function(block) {
 
-						// Only import Block and Bridge type blocks
-						// TODO: Also import block damage (from Damaged child blocks)
-						if (block.type === Block.BLOCK || block.type === Block.BRIDGE) {
+						// Only scan supported block types
+						if (block.type === Block.BLOCK || block.type === Block.BRIDGE ||
+								block.type === Block.VEHICLE || block.type === Block.FLAG) {
 
-							var blockType = data.registerBlock({
-								type: block.type,
-								script: block.Script,
-								model: block.Model
-							});
+							var blockType = null;
+							var blockData = null;
+
+							// Plane spot
+							if (/^PLANE/.test(block.Name)) {
+
+								blockType = -1;
+
+								// TODO: Parse plane spot data
+							}
+							// Cargo truck
+							else if (block.Name === "TRUCK:CARGO") {
+								blockType = -2;
+							}
+							// Fuel truck
+							else if (block.Name === "TRUCK:FUEL") {
+								blockType = -3;
+							}
+							// Car
+							else if (block.Name === "CAR") {
+								blockType = -4;
+							}
+							// Anti-aircraft position (MG)
+							else if (block.Name === "AA:MG") {
+								blockType = -5;
+							}
+							// Anti-aircraft position (Flak)
+							else if (block.Name === "AA:FLAK") {
+								blockType = -6;
+							}
+							// Normal block
+							else {
+
+								blockType = data.registerBlock({
+									type: block.type,
+									script: block.Script,
+									model: block.Model
+								});
+
+								// Decoration block tag
+								if (block.Name === "DECO") {
+									blockData = 1;
+								}
+								// Fuel block tag
+								else if (block.Name === "FUEL") {
+									blockData = 2;
+								}
+								// Windsock tag
+								else if (block.Name === "WINDSOCK") {
+									blockData = 3;
+								}
+								// Beacon tag
+								else if (block.Name === "BEACON") {
+									blockData = 4;
+								}
+							}
 
 							var jsonBlock = [];
 
@@ -65,29 +123,28 @@ module.exports = function(grunt) {
 							jsonBlock.push(block.ZPos || 0);
 
 							// Block orientation
-							if (!block.XOri && !block.ZOri) {
+							jsonBlock.push(block.YOri || 0);
 
-								// NOTE: Since most blocks only bave one orientation value - we
-								// save some space by serializing only the single value.
-								jsonBlock.push(block.YOri || 0);
-							}
-							else {
-								jsonBlock.push(block.XOri || 0);
-								jsonBlock.push(block.YOri || 0);
-								jsonBlock.push(block.ZOri || 0);
+							// Block data
+							if (blockData !== null) {
+								jsonBlock.push(blockData);
 							}
 
-							json.blocks.push(jsonBlock);
+							json.push(jsonBlock);
 
 							totalBlocks++;
 						}
-
 						// Process any child blocks
-						if (block.blocks.length) {
-							buildJSON(json, block.blocks);
+						else if (block.type === Block.GROUP && block.blocks.length) {
+
+							var childBlocks = [];
+
+							json.push(childBlocks);
+
+							buildJSON(childBlocks, block.blocks);
 						}
 					});
-				})(json, blocks);
+				})(json.blocks, blocks[0].blocks);
 
 				// Write output JSON blocks file
 				grunt.file.write(

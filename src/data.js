@@ -110,6 +110,10 @@ data.registerBlock = function(block) {
 	var blocks = this.blocks.blocks;
 	var index = this.blocks.index;
 
+	// Lowercase and trim script/model paths
+	block.script = block.script.trim().toLowerCase();
+	block.model = block.model.trim().toLowerCase();
+
 	// Try to find existing block type by script index
 	var blockType = index[block.script] || null;
 
@@ -142,7 +146,7 @@ data.getBlock = function(blockID) {
 
 	// Look up block ID by script name
 	if (typeof blockID === "string") {
-		blockID = this.blocks.index[blockID];
+		blockID = this.blocks.index[blockID.trim().toLowerCase()];
 	}
 
 	var blockType = this.blocks.blocks[blockID];
