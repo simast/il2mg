@@ -115,10 +115,10 @@ data.registerBlock = function(block) {
 	block.model = block.model.trim().toLowerCase();
 
 	// Try to find existing block type by script index
-	var blockType = index[block.script] || null;
+	var blockType = index[block.script];
 
 	// Update existing block type data
-	if (blockType !== null) {
+	if (blockType !== undefined) {
 
 		blocks[blockType].type = block.type;
 		blocks[blockType].script = block.script;

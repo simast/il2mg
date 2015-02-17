@@ -3,6 +3,20 @@
 
 var Block = require("../block");
 
+// Data tags for airfield blocks
+var blockTags = {
+	AA_FLAK: -6, // Anti-aircraft (Flak)
+	AA_MG: -5, // Anti-aircraft (MG)
+	CAR: -4, // Car vehicle
+	TRUCK_FUEL: -3, // Fuel truck
+	TRUCK_CARGO: -2, // Cargo truck
+	PLANE: -1, // Plane spot
+	DECO: 1, // Decoration
+	FUEL: 2, // Fuel block
+	WINDSOCK: 3, // Windsock
+	BEACON: 4 // Beacon
+};
+
 // Generate mission airfields
 module.exports = function(mission, data) {
 
@@ -51,15 +65,17 @@ module.exports = function(mission, data) {
 
 			blocks.forEach(function(blockItem) {
 
+				var blockTypeID = blockItem[0];
+
 				// Process block group
-				if (Array.isArray(blockItem[0])) {
+				if (Array.isArray(blockTypeID)) {
 					walkBlocks(blockItem);
 				}
 
 				// Normal blocks only
-				if (blockItem[0] >= 0) {
+				if (blockTypeID >= 0) {
 
-					var blockType = data.getBlock(blockItem[0]);
+					var blockType = data.getBlock(blockTypeID);
 					var blockData = blockItem[5];
 					var block = new Block(blockType.type);
 
@@ -69,7 +85,7 @@ module.exports = function(mission, data) {
 					block.setOrientation(0, blockItem[4], 0);
 
 					// Windsock tag
-					if (blockData === 3) {
+					if (blockData === blockTags.WINDSOCK) {
 						block.createEntity();
 					}
 
@@ -84,3 +100,5 @@ module.exports = function(mission, data) {
 		mission.blocks.push(blocksGroup);
 	}
 };
+
+module.exports.blockTags = blockTags;

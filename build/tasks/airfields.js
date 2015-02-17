@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 		var numeral = require("numeral");
 		var data = require("../../src/data");
 		var Block = require("../../src/block");
+		var blockTags = require("../../src/make/airfields").blockTags;
 
 		var totalBattles = 0;
 		var totalAirfields = 0;
@@ -61,29 +62,29 @@ module.exports = function(grunt) {
 							// Plane spot
 							if (/^PLANE/.test(block.Name)) {
 
-								blockType = -1;
+								blockType = blockTags.PLANE;
 
 								// TODO: Parse plane spot data
 							}
 							// Cargo truck
 							else if (block.Name === "TRUCK:CARGO") {
-								blockType = -2;
+								blockType = blockTags.TRUCK_CARGO;
 							}
 							// Fuel truck
 							else if (block.Name === "TRUCK:FUEL") {
-								blockType = -3;
+								blockType = blockTags.TRUCK_FUEL;
 							}
-							// Car
+							// Car vehicle
 							else if (block.Name === "CAR") {
-								blockType = -4;
+								blockType = blockTags.CAR;
 							}
 							// Anti-aircraft position (MG)
 							else if (block.Name === "AA:MG") {
-								blockType = -5;
+								blockType = blockTags.AA_MG;
 							}
 							// Anti-aircraft position (Flak)
 							else if (block.Name === "AA:FLAK") {
-								blockType = -6;
+								blockType = blockTags.AA_FLAK;
 							}
 							// Normal block
 							else {
@@ -96,19 +97,19 @@ module.exports = function(grunt) {
 
 								// Decoration block tag
 								if (block.Name === "DECO") {
-									blockData = 1;
+									blockData = blockTags.DECO;
 								}
 								// Fuel block tag
 								else if (block.Name === "FUEL") {
-									blockData = 2;
+									blockData = blockTags.FUEL;
 								}
 								// Windsock tag
 								else if (block.Name === "WINDSOCK") {
-									blockData = 3;
+									blockData = blockTags.WINDSOCK;
 								}
 								// Beacon tag
 								else if (block.Name === "BEACON") {
-									blockData = 4;
+									blockData = blockTags.BEACON;
 								}
 							}
 
