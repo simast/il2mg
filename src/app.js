@@ -105,10 +105,6 @@ params.option("-c, --country <country>", (function() {
 // Turn on debug mode (--debug)
 params.option("-D, --debug", "use debug (development) mode");
 
-// Modify script path in process.argv (for better enclose and commander support)
-var argv = process.argv.slice();
-argv[1] = data.name + ((process.platform === "win32") ? ".exe" : "");
-
 /**
  * TODO: Support other command line params:
  *
@@ -122,7 +118,7 @@ argv[1] = data.name + ((process.platform === "win32") ? ".exe" : "");
  * --complexity - Mission complexity (detail level).
  * --difficulty - Mission difficulty level.
  */
-params.parse(argv);
+params.parse(process.argv);
 
 try {
 
