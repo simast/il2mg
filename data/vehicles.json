@@ -1,0 +1,42 @@
+[
+	{
+		"name": "Opel Blitz",
+		"type": "truck_cargo",
+		"countries": [201],
+		"model": "graphics\\vehicles\\opel\\opel-blitz.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\opel-blitz.txt",
+		"static": {
+			"model": "graphics\\blocks\\static_opel.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_opel.txt"
+		}
+	},
+	{
+		"name": "Opel Blitz (Fuel)",
+		"type": "truck_fuel",
+		"countries": [201],
+		"static": {
+			"model": "graphics\\blocks\\static_opel_fuel.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_opel_fuel.txt"
+		}
+	},
+	{
+		"name": "ZIS-5",
+		"type": "truck_cargo",
+		"countries": [101],
+		"model": "graphics\\vehicles\\zis5\\zis5.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\zis5.txt",
+		"static": {
+			"model": "graphics\\blocks\\static_zis.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_zis.txt"
+		}
+	},
+	{
+		"name": "ZIS-5 (Fuel)",
+		"type": "truck_fuel",
+		"countries": [101],
+		"static": {
+			"model": "graphics\\blocks\\static_zis_fuel.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_zis_fuel.txt"
+		}
+	}
+]

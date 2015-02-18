@@ -24,6 +24,7 @@ var data = (function() {
 	data.name = require("../data/name");
 	data.version = require("../data/version");
 	data.airplanes = require("../data/airplanes");
+	data.vehicles = require("../data/vehicles");
 	data.clouds = require("../data/clouds");
 	data.coalitions = require("../data/coalitions");
 	data.languages = require("../data/languages");

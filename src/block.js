@@ -18,6 +18,9 @@ Block.ICON = "MCU_Icon";
 Block.VEHICLE = "Vehicle";
 Block.FLAG = "Flag";
 
+// Block position and orientation precision (number of decimal digits)
+Block.precisionDigits = 2;
+
 /**
  * Block constructor.
  *
@@ -86,19 +89,34 @@ Block.prototype.setDescription = function(desc) {
  */
 Block.prototype.setPosition = function() {
 
+	// Array position version: setPosition([X, Y, Z])
 	var position = arguments[0];
 
 	if (!Array.isArray(position)) {
-		position = [arguments[0], arguments[1], arguments[2]];
+
+		// Short X/Z position version: setPosition(X, Z)
+		if (arguments.length === 2) {
+			position = [arguments[0], 0, arguments[1]];
+		}
+		// Argument position version: setPosition(X, Y, Z)
+		else {
+			position = [arguments[0], arguments[1], arguments[2]];
+		}
 	}
+
+	position[0] = Number(Number(position[0]).toFixed(Block.precisionDigits));
 
 	if (position[0]) {
 		this.XPos = position[0];
 	}
 
+	position[1] = Number(Number(position[1]).toFixed(Block.precisionDigits));
+
 	if (position[1]) {
 		this.YPos = position[1];
 	}
+
+	position[2] = Number(Number(position[2]).toFixed(Block.precisionDigits));
 
 	if (position[2]) {
 		this.ZPos = position[2];
@@ -112,19 +130,34 @@ Block.prototype.setPosition = function() {
  */
 Block.prototype.setOrientation = function() {
 
+	// Array orientation version: setOrientation([X, Y, Z])
 	var orientation = arguments[0];
 
 	if (!Array.isArray(orientation)) {
-		orientation = [arguments[0], arguments[1], arguments[2]];
+
+		// Short Y orientation version: setOrientation(Y)
+		if (arguments.length === 1) {
+			orientation = [0, arguments[0], 0];
+		}
+		// Argument orientation version: setOrientation(X, Y, Z)
+		else {
+			orientation = [arguments[0], arguments[1], arguments[2]];
+		}
 	}
+
+	orientation[0] = Number(Number(orientation[0]).toFixed(Block.precisionDigits));
 
 	if (orientation[0]) {
 		this.XOri = orientation[0];
 	}
 
+	orientation[1] = Number(Number(orientation[1]).toFixed(Block.precisionDigits));
+
 	if (orientation[1]) {
 		this.YOri = orientation[1];
 	}
+
+	orientation[2] = Number(Number(orientation[2]).toFixed(Block.precisionDigits));
 
 	if (orientation[2]) {
 		this.ZOri = orientation[2];

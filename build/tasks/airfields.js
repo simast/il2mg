@@ -119,12 +119,11 @@ module.exports = function(grunt) {
 							jsonBlock.push(blockType);
 
 							// Block position
-							jsonBlock.push(block.XPos || 0);
-							jsonBlock.push(block.YPos || 0);
-							jsonBlock.push(block.ZPos || 0);
+							jsonBlock.push(Number(block.XPos.toFixed(Block.precisionDigits)) || 0);
+							jsonBlock.push(Number(block.ZPos.toFixed(Block.precisionDigits)) || 0);
 
 							// Block orientation
-							jsonBlock.push(block.YOri || 0);
+							jsonBlock.push(Number(block.YOri.toFixed(Block.precisionDigits)) || 0);
 
 							// Block data
 							if (blockData !== null) {

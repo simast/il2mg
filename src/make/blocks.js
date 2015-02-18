@@ -24,8 +24,8 @@ module.exports = function(mission, data) {
 
 			block.Model = blockType.model;
 			block.Script = blockType.script;
-			block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
-			block.setOrientation(0, blockItem[4], 0);
+			block.setPosition(blockItem[1], blockItem[2]);
+			block.setOrientation(blockItem[3]);
 
 			// TODO: Build a blocks index (to quickly lookup blocks based on position)
 
