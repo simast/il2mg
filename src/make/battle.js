@@ -18,7 +18,7 @@ module.exports = function(mission, data) {
 	var battle = mission.battle = data.battles[battleID];
 
 	// Create main mission Options block
-	var options = new Block("Options");
+	var options = new Block.Options();
 
 	options.LCAuthor = mission.getLC(data.name + " " + data.version);
 	options.MissionType = 0; // Single-player mission
@@ -40,6 +40,6 @@ module.exports = function(mission, data) {
 	})();
 
 	// Add "Options" mission block
-	mission.blocks.push(options);
+	mission.addBlock(options);
 	mission.blocks.Options = options;
 };

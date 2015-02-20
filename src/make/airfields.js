@@ -32,7 +32,7 @@ module.exports = function(mission, data) {
 			continue;
 		}
 
-		var blocksGroup = new Block(Block.GROUP);
+		var blocksGroup = new Block.Group();
 
 		blocksGroup.setName(airfield.name);
 
@@ -104,7 +104,7 @@ module.exports = function(mission, data) {
 					blockObjects.forEach(function(blockObject) {
 
 						// TODO: Build a blocks index (to quickly lookup blocks based on position)
-						blocksGroup.blocks.push(blockObject);
+						blocksGroup.addBlock(blockObject);
 					});
 				}
 			});
@@ -117,7 +117,7 @@ module.exports = function(mission, data) {
 		})(mission.rand.shuffle(airfield.blocks), false);
 
 		// Add all blocks as a single airfield group in a mission file
-		mission.blocks.push(blocksGroup);
+		mission.addBlock(blocksGroup);
 	}
 
 	// Make a normal static block
@@ -125,7 +125,7 @@ module.exports = function(mission, data) {
 
 		var blockType = data.getBlock(block[0]);
 		var blockData = block[4];
-		var blockObject = new Block(blockType.type);
+		var blockObject = new Block[blockType.type]();
 
 		blockObject.Model = blockType.model;
 		blockObject.Script = blockType.script;
@@ -197,7 +197,7 @@ module.exports = function(mission, data) {
 		var randVehicle = mission.rand.pick(staticVehicles[countryID][vehicleType]);
 
 		// Create static vehicle block
-		var blockObject = new Block(Block.BLOCK);
+		var blockObject = new Block.Block();
 
 		// Slightly vary/randomize static vehicle position
 		var positionX = block[1] + mission.rand.real(-1, 1);
@@ -217,7 +217,7 @@ module.exports = function(mission, data) {
 	// Make anti-aircraft vehicle block
 	function makeAAVehicle(block) {
 
-		var blockObject = new Block(Block.VEHICLE);
+		var blockObject = new Block.Vehicle();
 
 		blockObject.Model = "graphics\\artillery\\mg34-aa\\mg34-aa.mgm";
 		blockObject.Script = "LuaScripts\\WorldObjects\\vehicles\\mg34-aa.txt";

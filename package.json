@@ -7,7 +7,8 @@
 		"moment": "^2.9.0",
 		"strip-json-comments": "^1.0.2",
 		"lex": "^1.7.8",
-		"random-js": "^1.0.4"
+		"random-js": "^1.0.4",
+		"require-dir": "^0.1.0"
 	},
 	"devDependencies": {
 		"grunt": "^0.4.5",

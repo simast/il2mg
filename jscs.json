@@ -33,7 +33,6 @@
 	"disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
 	"requireSpaceBeforeBinaryOperators": ["=", "+", "-", "/", "*", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
 	"requireSpaceAfterBinaryOperators": ["=", "+", "-", "/", "*", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
-	"requireCamelCaseOrUpperCaseIdentifiers": true,
 	"disallowKeywords": ["with"],
 	"disallowMultipleLineStrings": true,
 	"validateQuoteMarks": {
@@ -44,7 +43,6 @@
 	"disallowMixedSpacesAndTabs": true,
 	"disallowTrailingComma": true,
 	"requireKeywordsOnNewLine": ["else", "while", "catch"],
-	"requireCapitalizedConstructors": true,
 	"requireDotNotation": true,
 	"disallowYodaConditions": true,
 	"validateJSDoc": {

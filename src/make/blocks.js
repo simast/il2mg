@@ -7,7 +7,7 @@ var Block = require("../block");
 module.exports = function(mission, data) {
 
 	var blocksFiles = mission.battle.blocks;
-	var blocksGroup = new Block(Block.GROUP);
+	var blocksGroup = new Block.Group();
 
 	blocksGroup.setName("Blocks");
 
@@ -20,7 +20,7 @@ module.exports = function(mission, data) {
 
 			var blockItem = blocks[i];
 			var blockType = data.getBlock(blockItem[0]);
-			var block = new Block(blockType.type);
+			var block = new Block[blockType.type]();
 
 			block.Model = blockType.model;
 			block.Script = blockType.script;
@@ -29,10 +29,10 @@ module.exports = function(mission, data) {
 
 			// TODO: Build a blocks index (to quickly lookup blocks based on position)
 
-			blocksGroup.blocks.push(block);
+			blocksGroup.addBlock(block);
 		}
 	});
 
 	// Add all blocks as a single group in a mission file
-	mission.blocks.push(blocksGroup);
+	mission.addBlock(blocksGroup);
 };

@@ -7,31 +7,31 @@ var os = require("os");
 // Last block index value
 var lastIndex = 0;
 
-// Block types
-Block.GROUP = "Group";
-Block.BLOCK = "Block";
-Block.BRIDGE = "Bridge";
-Block.DAMAGED = "Damaged";
-Block.PLANE = "Plane";
-Block.ENTITY = "MCU_TR_Entity";
-Block.ICON = "MCU_Icon";
-Block.VEHICLE = "Vehicle";
-Block.FLAG = "Flag";
+/**
+ * Base Block constructor.
+ */
+function Block() {
+
+}
 
 /**
- * Block constructor.
+ * Add a new child block.
  *
- * @param {string} type Block type.
+ * @param {Block} block Child block object.
  */
-function Block(type) {
+Block.prototype.addBlock = function(block) {
 
-	if (typeof type !== "string" || !type.length) {
-		throw new TypeError("Invalid block type value.");
+	if (!(block instanceof Block)) {
+		throw new TypeError("Invalid child block value.");
 	}
 
-	Object.defineProperty(this, "type", {value: type}); // Block type
-	Object.defineProperty(this, "blocks", {value: []}); // Child blocks list
-}
+	// Initialize child blocks list
+	if (!this.blocks) {
+		Object.defineProperty(this, "blocks", {value: []});
+	}
+
+	this.blocks.push(block);
+};
 
 /**
  * Set block index (id).
@@ -172,7 +172,7 @@ Block.prototype.createEntity = function() {
 		throw new Error("Block is already linked to an entity.");
 	}
 
-	var entity = new Block(Block.ENTITY);
+	var entity = new Block.MCU_TR_Entity();
 
 	this.setIndex();
 	entity.setIndex();
@@ -242,7 +242,7 @@ Block.prototype.toString = function(indentLevel) {
 	});
 
 	// Serialize any child blocks
-	if (self.blocks.length) {
+	if (self.blocks && self.blocks.length) {
 
 		indentLevel++;
 
@@ -286,7 +286,7 @@ Block.readFile = function(file) {
 	lexer.addRule(/\s*(\w+)\s*{\s*/i, function(matched, blockType) {
 
 		// Add new block to active blocks stack
-		blockStack.push(new Block(blockType));
+		blockStack.push(new Block[blockType]());
 	});
 
 	// Rule for block property
@@ -321,7 +321,7 @@ Block.readFile = function(file) {
 		}
 		// Child block element
 		else {
-			blockStack[blockStack.length - 1].blocks.push(block);
+			blockStack[blockStack.length - 1].addBlock(block);
 		}
 	});
 
@@ -349,3 +349,12 @@ Block.writeFile = function(file, blocks) {
 };
 
 module.exports = Block;
+
+// Load all supported blocks
+var blocks = require("require-dir")("./block");
+
+Object.keys(blocks).forEach(function(blockType) {
+
+	Block[blockType] = blocks[blockType];
+	Object.defineProperty(Block[blockType].prototype, "type", {value: blockType});
+});

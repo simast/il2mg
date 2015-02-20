@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 
 						// Only import Block and Bridge type blocks
 						// TODO: Also import block damage (from Damaged child blocks)
-						if (block.type === Block.BLOCK || block.type === Block.BRIDGE) {
+						if (block instanceof Block.Block || block instanceof Block.Bridge) {
 
 							var blockType = data.registerBlock({
 								type: block.type,
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
 							totalBlocks++;
 						}
 						// Process any child blocks
-						else if (block.type === Block.GROUP && block.blocks.length) {
+						else if (block instanceof Block.Group && block.blocks.length) {
 							buildJSON(json, block.blocks);
 						}
 					});

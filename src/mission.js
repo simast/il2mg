@@ -6,6 +6,7 @@ var os = require("os");
 var path = require("path");
 var Random = require("random-js");
 var data = require("./data");
+var Block = require("./block");
 
 // Mission file extensions
 var FILE_EXT_TEXT = "Mission";
@@ -38,6 +39,20 @@ function Mission(params) {
 	require("./make/name")(this, data);
 	require("./make/briefing")(this, data);
 }
+
+/**
+ * Add a new block to the mission.
+ *
+ * @param {Block} block Block object.
+ */
+Mission.prototype.addBlock = function(block) {
+
+	if (!(block instanceof Block)) {
+		throw new TypeError("Invalid mission block value.");
+	}
+
+	this.blocks.push(block);
+};
 
 /**
  * Get localized mission language code for a given string.

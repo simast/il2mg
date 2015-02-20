@@ -6,7 +6,7 @@ var Block = require("../block");
 // Generate mission flights
 module.exports = function(mission, data) {
 
-	var plane = new Block(Block.PLANE);
+	var plane = new Block.Plane();
 
 	plane.setName("Ju 87 D-3");
 	plane.setPosition(116317.252, 83.238, 102764.117);
@@ -36,5 +36,5 @@ module.exports = function(mission, data) {
 	// Create plane entity
 	plane.createEntity();
 
-	mission.blocks.push(plane);
+	mission.addBlock(plane);
 };

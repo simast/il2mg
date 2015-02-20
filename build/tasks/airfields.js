@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 
 				// Blocks file should have a non-empty single Group block
 				if (!blocks || !blocks.length || blocks.length !== 1 ||
-						blocks[0].type !== Block.GROUP) {
+						!(blocks[0] instanceof Block.Group)) {
 
 					continue;
 				}
@@ -53,8 +53,8 @@ module.exports = function(grunt) {
 					blocks.forEach(function(block) {
 
 						// Only scan supported block types
-						if (block.type === Block.BLOCK || block.type === Block.BRIDGE ||
-								block.type === Block.VEHICLE || block.type === Block.FLAG) {
+						if (block instanceof Block.Block || block instanceof Block.Bridge ||
+								block instanceof Block.Vehicle || block instanceof Block.Flag) {
 
 							var blockType = null;
 							var blockData = null;
@@ -135,7 +135,7 @@ module.exports = function(grunt) {
 							totalBlocks++;
 						}
 						// Process any child blocks
-						else if (block.type === Block.GROUP && block.blocks.length) {
+						else if (block instanceof Block.Group && block.blocks.length) {
 
 							var childBlocks = [];
 
