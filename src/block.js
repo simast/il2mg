@@ -18,9 +18,6 @@ Block.ICON = "MCU_Icon";
 Block.VEHICLE = "Vehicle";
 Block.FLAG = "Flag";
 
-// Block position and orientation precision (number of decimal digits)
-Block.precisionDigits = 2;
-
 /**
  * Block constructor.
  *
@@ -104,19 +101,13 @@ Block.prototype.setPosition = function() {
 		}
 	}
 
-	position[0] = Number(Number(position[0]).toFixed(Block.precisionDigits));
-
 	if (position[0]) {
 		this.XPos = position[0];
 	}
 
-	position[1] = Number(Number(position[1]).toFixed(Block.precisionDigits));
-
 	if (position[1]) {
 		this.YPos = position[1];
 	}
-
-	position[2] = Number(Number(position[2]).toFixed(Block.precisionDigits));
 
 	if (position[2]) {
 		this.ZPos = position[2];
@@ -145,19 +136,13 @@ Block.prototype.setOrientation = function() {
 		}
 	}
 
-	orientation[0] = Number(Number(orientation[0]).toFixed(Block.precisionDigits));
-
 	if (orientation[0]) {
 		this.XOri = orientation[0];
 	}
 
-	orientation[1] = Number(Number(orientation[1]).toFixed(Block.precisionDigits));
-
 	if (orientation[1]) {
 		this.YOri = orientation[1];
 	}
-
-	orientation[2] = Number(Number(orientation[2]).toFixed(Block.precisionDigits));
 
 	if (orientation[2]) {
 		this.ZOri = orientation[2];
@@ -262,7 +247,7 @@ Block.prototype.toString = function(indentLevel) {
 		indentLevel++;
 
 		self.blocks.forEach(function(block) {
-			value += os.EOL + block.toString(indentLevel);
+			value += os.EOL + os.EOL + block.toString(indentLevel);
 		});
 	}
 
@@ -270,7 +255,7 @@ Block.prototype.toString = function(indentLevel) {
 
 	// Include linked block entity
 	if (this.entity) {
-		value += os.EOL + this.entity.toString(indentLevel);
+		value += os.EOL + os.EOL + this.entity.toString(indentLevel);
 	}
 
 	return value;
