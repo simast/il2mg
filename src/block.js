@@ -351,10 +351,23 @@ Block.writeFile = function(file, blocks) {
 module.exports = Block;
 
 // Load all supported blocks
-var blocks = require("require-dir")("./block");
+[
+	require("./block/Airfield"),
+	require("./block/Block"),
+	require("./block/Bridge"),
+	require("./block/Chart"),
+	require("./block/Damaged"),
+	require("./block/Flag"),
+	require("./block/Group"),
+	require("./block/MCU_Icon"),
+	require("./block/MCU_TR_Entity"),
+	require("./block/Options"),
+	require("./block/Plane"),
+	require("./block/Point"),
+	require("./block/Vehicle")
+]
+.forEach(function(block) {
 
-Object.keys(blocks).forEach(function(blockType) {
-
-	Block[blockType] = blocks[blockType];
-	Object.defineProperty(Block[blockType].prototype, "type", {value: blockType});
+	Object.defineProperty(block.prototype, "type", {value: block.name});
+	Block[block.name] = block;
 });
