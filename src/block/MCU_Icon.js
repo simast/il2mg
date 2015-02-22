@@ -19,17 +19,13 @@ MCU_Icon.prototype.id = 35;
  */
 MCU_Icon.prototype.toBinary = function(index) {
 
-	var size = 45;
+	var size = 41;
 
 	if (Array.isArray(this.Coalitions)) {
 		size += this.Coalitions.length * 4;
 	}
 
 	var buffer = new Buffer(size);
-
-	// Unknown data
-	this.writeUInt16(buffer, 0xFFFF);
-	this.writeUInt16(buffer, 0xFFFF);
 
 	// Enabled
 	this.writeUInt8(buffer, this.Enabled !== undefined ? this.Enabled : 1);

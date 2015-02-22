@@ -15,6 +15,11 @@ function Block() {
 // Used for auto buffer write cursor tracking
 Buffer.prototype._offset = 0;
 
+// Default block data values
+Block.DEFAULT_COUNTRY = 50; // Neutral country ID
+Block.DEFAULT_DAMAGE_REPORT = 50;
+Block.DEFAULT_DURABILITY = 25000;
+
 /**
  * Add a new child block.
  *
@@ -268,7 +273,7 @@ Block.prototype.toBinary = function(index) {
 	}
 
 	// Write base block binary information
-	var buffer = new Buffer(42);
+	var buffer = new Buffer(46);
 
 	// Block ID
 	this.writeUInt32(buffer, this.id);
@@ -287,6 +292,12 @@ Block.prototype.toBinary = function(index) {
 
 	// Desc string table index
 	this.writeUInt16(buffer, index.desc.stringValue(this.Desc));
+
+	// Model string table index
+	this.writeUInt16(buffer, index.model.stringValue(this.Model));
+
+	// Skin string table index
+	this.writeUInt16(buffer, index.skin.stringValue(this.Skin));
 
 	return buffer;
 };

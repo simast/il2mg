@@ -16,21 +16,11 @@ module.exports = function(mission, data) {
 	plane.Country = 201;
 	plane.Skin = "ju87d3/ju-87d-8 njgs italy swastika.dds";
 	plane.AILevel = 0;
-	plane.CoopStart = 0;
-	plane.NumberInFormation = 0;
-	plane.Vulnerable = 1;
-	plane.Engageable = 1;
-	plane.LimitAmmo = 1;
 	plane.StartInAir = 2;
-	plane.Callsign = 5;
+	plane.Callsign = 6;
 	plane.Callnum = 2;
-	plane.Time = 20;
-	plane.DamageReport = 50;
-	plane.DamageThreshold = 1;
 	plane.PayloadId = 4;
-	plane.WMMask = 11;
-	plane.AiRTBDecision = 1;
-	plane.DeleteAfterDeath = 0;
+	plane.WMMask = 0;
 	plane.Fuel = 1;
 
 	// Create plane entity

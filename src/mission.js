@@ -38,8 +38,8 @@ function Mission(params) {
 	require("./make/map")(this, data);
 	require("./make/weather")(this, data);
 	require("./make/blocks")(this, data);
-	// require("./make/airfields")(this, data);
-	// require("./make/flights")(this, data);
+	require("./make/airfields")(this, data);
+	require("./make/flights")(this, data);
 	require("./make/name")(this, data);
 	require("./make/briefing")(this, data);
 }
@@ -144,13 +144,14 @@ Mission.prototype.saveBinary = function(fileName) {
 
 	var optionsBuffer;
 	var blockBuffers = [];
+	var numBlocks = 0;
 
 	// Create index tables
 	var indexTables = {
 		name: new BinaryIndexTable(32, 100),
 		desc: new BinaryIndexTable(32, 100),
 		model: new BinaryIndexTable(64, 100),
-		skin: new BinaryIndexTable(128, 0),
+		skin: new BinaryIndexTable(128, 100),
 		script: new BinaryIndexTable(128, 100),
 		damaged: new BinaryIndexTable(32, 0)
 	};
@@ -178,7 +179,17 @@ Mission.prototype.saveBinary = function(fileName) {
 				}
 				// Process normal block buffers
 				else if (buffer.length) {
+
 					blockBuffers.push(buffer);
+
+					// Process linked block entity
+					if (block.entity) {
+
+						blockBuffers.push(block.entity.toBinary(indexTables));
+						numBlocks++;
+					}
+
+					numBlocks++;
 				}
 			}
 		});
@@ -211,7 +222,7 @@ Mission.prototype.saveBinary = function(fileName) {
 		});
 
 		// Write blocks size buffer
-		bsBuffer.writeUInt32LE(blockBuffers.length, 0);
+		bsBuffer.writeUInt32LE(numBlocks, 0);
 		fileStream.write(bsBuffer);
 
 		// Write block buffers

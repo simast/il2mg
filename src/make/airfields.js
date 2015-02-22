@@ -125,6 +125,7 @@ module.exports = function(mission, data) {
 
 		var blockType = data.getBlock(block[0]);
 		var blockData = block[4];
+
 		var blockObject = new Block[blockType.type]();
 
 		blockObject.Model = blockType.model;
@@ -134,6 +135,10 @@ module.exports = function(mission, data) {
 
 		// Windsock tag
 		if (blockData === blockTags.WINDSOCK) {
+			blockObject.createEntity();
+		}
+		// Beacon tag
+		else if (blockData === blockTags.BEACON) {
 			blockObject.createEntity();
 		}
 
@@ -200,11 +205,11 @@ module.exports = function(mission, data) {
 		var blockObject = new Block.Block();
 
 		// Slightly vary/randomize static vehicle position
-		var positionX = block[1] + mission.rand.real(-1, 1);
-		var positionZ = block[2] + mission.rand.real(-1, 1);
+		var positionX = Math.max(block[1] + mission.rand.real(-1, 1), 0);
+		var positionZ = Math.max(block[2] + mission.rand.real(-1, 1), 0);
 
 		// Slightly vary/randomize static vehicle orientation
-		var orientation = (block[3] + mission.rand.real(-20, 20)) % 360;
+		var orientation = Math.max((block[3] + mission.rand.real(-20, 20) + 360) % 360, 0);
 
 		blockObject.Model = randVehicle.static.model;
 		blockObject.Script = randVehicle.static.script;

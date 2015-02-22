@@ -5,7 +5,9 @@ var Block = require("./Block");
 
 // Bridge block
 function Bridge() {
-	
+
+	// Call parent Block constructor
+	Block.apply(this, arguments);
 }
 
 Bridge.prototype = Object.create(Block.prototype);
