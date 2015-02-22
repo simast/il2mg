@@ -7,12 +7,13 @@ var os = require("os");
 // Last block index value
 var lastIndex = 0;
 
-/**
- * Base Block constructor.
- */
+// Abstract base Block class
 function Block() {
-
+	throw new Error();
 }
+
+// Used for auto buffer write cursor tracking
+Buffer.prototype._offset = 0;
 
 /**
  * Add a new child block.
@@ -150,20 +151,6 @@ Block.prototype.setOrientation = function() {
 };
 
 /**
- * Set block coalitions.
- *
- * @param {array} coalitions List of coalitions IDs.
- */
-Block.prototype.setCoalitions = function(coalitions) {
-
-	if (!Array.isArray(coalitions)) {
-		throw new TypeError("Invalid block coalitions value.");
-	}
-
-	this.Coalitions = new String(JSON.stringify(coalitions.map(Number)));
-};
-
-/**
  * Create a linked block entity.
  */
 Block.prototype.createEntity = function() {
@@ -194,25 +181,27 @@ Block.prototype.toString = function(indentLevel) {
 
 	indentLevel = indentLevel || 0;
 
-	var self = this;
 	var indent = new Array(2 * indentLevel + 1).join(" ");
 	var value = indent + this.type + os.EOL + indent + "{";
 
 	// Build block properties list
 	Object.keys(this).forEach(function(propName) {
 
-		var propValue = self[propName];
+		var propValue = this[propName];
 
 		value += os.EOL + indent + "  " + propName;
 
 		var propType = typeof propValue;
 		var isArray = false;
+		var isArrayComplex = false;
 
 		if (propType === "object") {
+
 			isArray = Array.isArray(propValue);
+			isArrayComplex = isArray && Array.isArray(propValue[0]);
 		}
 
-		if (!isArray) {
+		if (!isArrayComplex) {
 			value += " = ";
 		}
 
@@ -220,33 +209,38 @@ Block.prototype.toString = function(indentLevel) {
 		if (propType === "string" && !(propValue instanceof String)) {
 			value += '"' + propValue + '"';
 		}
-		// Array output
-		else if (isArray) {
+		// Complex array output
+		else if (isArrayComplex) {
 
 			value += os.EOL + indent + "  {";
 
-			propValue.forEach(function(item) {
-				value += os.EOL + indent + "    " + item + ";";
+			propValue.forEach(function(itemValue) {
+				value += os.EOL + indent + "    " + itemValue.join(":") + ";";
 			});
 
 			value += os.EOL + indent + "  }";
+		}
+		// Simple array output
+		else if (isArray) {
+			value += JSON.stringify(propValue);
 		}
 		// Other value output
 		else {
 			value += propValue;
 		}
 
-		if (!isArray) {
+		if (!isArrayComplex) {
 			value += ";";
 		}
-	});
+
+	}, this);
 
 	// Serialize any child blocks
-	if (self.blocks && self.blocks.length) {
+	if (this.blocks && this.blocks.length) {
 
 		indentLevel++;
 
-		self.blocks.forEach(function(block) {
+		this.blocks.forEach(function(block) {
 			value += os.EOL + os.EOL + block.toString(indentLevel);
 		});
 	}
@@ -262,12 +256,184 @@ Block.prototype.toString = function(indentLevel) {
 };
 
 /**
- * Read a list of blocks from a file.
+ * Get base binary representation of the block.
  *
- * @param {string} file Block file name/path.
+ * @param {object} index Binary data index object.
+ * @returns {Buffer} Base binary representation of the block.
+ */
+Block.prototype.toBinary = function(index) {
+
+	if (!this.id) {
+		throw new Error("Invalid block binary type ID.");
+	}
+
+	// Write base block binary information
+	var buffer = new Buffer(42);
+
+	// Block ID
+	this.writeUInt32(buffer, this.id);
+
+	// Index
+	this.writeUInt32(buffer, this.Index || 0);
+
+	// Position
+	this.writePosition(buffer);
+
+	// Orientation
+	this.writeOrientation(buffer);
+
+	// Name string table index
+	this.writeUInt16(buffer, index.name.stringValue(this.Name));
+
+	// Desc string table index
+	this.writeUInt16(buffer, index.desc.stringValue(this.Desc));
+
+	return buffer;
+};
+
+/**
+ * Write XPos/YPos/ZPos to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ */
+Block.prototype.writePosition = function(buffer) {
+
+	this.writeDouble(buffer, this.XPos || 0);
+	this.writeDouble(buffer, this.YPos || 0);
+	this.writeDouble(buffer, this.ZPos || 0);
+};
+
+/**
+ * Write XOri/YOri/ZOri to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ */
+Block.prototype.writeOrientation = function(buffer) {
+
+	// NOTE: Orientation in binary file is represented as a 16 bit unsigned integer
+	// number between 0 (equal to 0 degrees) and 60000 (equal to 360 degrees).
+	var degreeValue = 60000 / 360;
+
+	this.writeUInt16(buffer, Math.round(degreeValue * (this.XOri ? this.XOri : 0)));
+	this.writeUInt16(buffer, Math.round(degreeValue * (this.YOri ? this.YOri : 0)));
+	this.writeUInt16(buffer, Math.round(degreeValue * (this.ZOri ? this.ZOri : 0)));
+};
+
+/**
+ * Write a string value to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ * @param {number} stringLength String value length in bytes.
+ * @param {string} stringValue String value to write.
+ */
+Block.prototype.writeString = function(buffer, stringLength, stringValue) {
+
+	// NOTE: String values are represented in binary files as a length (32 bit
+	// unsigned integer) followed by an array of string byte characters.
+
+	// String length
+	this.writeUInt32(buffer, stringLength);
+
+	// String value
+	if (stringLength > 0) {
+
+		buffer.write(stringValue, buffer._offset, stringLength);
+		buffer._offset += stringLength;
+	}
+};
+
+/**
+ * Write a 32 bit unsigned integer value to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ * @param {number} numberValue Number value to write.
+ */
+Block.prototype.writeUInt32 = function(buffer, numberValue) {
+
+	buffer.writeUInt32LE(numberValue, buffer._offset);
+	buffer._offset += 4;
+};
+
+/**
+ * Write a 16 bit unsigned integer value to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ * @param {number} numberValue Number value to write.
+ */
+Block.prototype.writeUInt16 = function(buffer, numberValue) {
+
+	buffer.writeUInt16LE(numberValue, buffer._offset);
+	buffer._offset += 2;
+};
+
+/**
+ * Write a 8 bit unsigned integer value to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ * @param {number} numberValue Number value to write.
+ */
+Block.prototype.writeUInt8 = function(buffer, numberValue) {
+
+	buffer.writeUInt8(numberValue, buffer._offset);
+	buffer._offset += 1;
+};
+
+/**
+ * Write a double-precision floating-point value to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ * @param {number} numberValue Number value to write.
+ */
+Block.prototype.writeDouble = function(buffer, numberValue) {
+
+	buffer.writeDoubleLE(numberValue, buffer._offset);
+	buffer._offset += 8;
+};
+
+/**
+ * Write a single-precision floating-point value to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ * @param {number} numberValue Number value to write.
+ */
+Block.prototype.writeFloat = function(buffer, numberValue) {
+
+	buffer.writeFloatLE(numberValue, buffer._offset);
+	buffer._offset += 4;
+};
+
+/**
+ * Write an array of 32 bit unsigned integer values to the given Buffer object.
+ *
+ * @param {Buffer} buffer Target buffer object.
+ * @param {number} arrayValue Array value to write.
+ */
+Block.prototype.writeUInt32Array = function(buffer, arrayValue) {
+
+	// Array length
+	this.writeUInt32(buffer, arrayValue.length);
+
+	// Array values
+	for (var i = 0; i < arrayValue.length; i++) {
+
+		var value = arrayValue[i];
+
+		// Check for valid integer value
+		if (Number(value) !== value || value % 1 !== 0) {
+			throw new Error("Invalid block array value.");
+		}
+
+		this.writeUInt32(buffer, value);
+	}
+};
+
+/**
+ * Read a list of blocks from a text file.
+ *
+ * @param {string} file Block text file name/path.
  * @returns {array} List of blocks.
  */
-Block.readFile = function(file) {
+Block.readTextFile = function(file) {
 
 	var fileContent = fs.readFileSync(file, {
 		encoding: "ascii" // TODO
@@ -334,18 +500,6 @@ Block.readFile = function(file) {
 	}
 
 	return blocks;
-};
-
-/**
- * Write a list of blocks to a file.
- *
- * @param {string} file Block file name/path.
- * @param {array} blocks List of blocks.
- * @returns {bool} Success/failure status.
- */
-Block.writeFile = function(file, blocks) {
-
-	// TODO:
 };
 
 module.exports = Block;

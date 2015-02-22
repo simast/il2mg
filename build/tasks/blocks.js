@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 				var fileDestination = blocksPath + blockFile + ".json";
 
 				// Read raw blocks
-				var blocks = Block.readFile(fileSource);
+				var blocks = Block.readTextFile(fileSource);
 
 				var json = [];
 

@@ -27,6 +27,10 @@ function Mission(params) {
 	// Initialize random number generator
 	this.rand = new Random(Random.engines.browserCrypto);
 
+	// Reserve an empty localization string (used in binary mission generation for
+	// blocks without LCName or LCDesc properties).
+	this.getLC("");
+
 	// Make mission parts
 	require("./make/battle")(this, data);
 	require("./make/date")(this, data);
@@ -34,8 +38,8 @@ function Mission(params) {
 	require("./make/map")(this, data);
 	require("./make/weather")(this, data);
 	require("./make/blocks")(this, data);
-	require("./make/airfields")(this, data);
-	require("./make/flights")(this, data);
+	// require("./make/airfields")(this, data);
+	// require("./make/flights")(this, data);
 	require("./make/name")(this, data);
 	require("./make/briefing")(this, data);
 }
@@ -62,9 +66,11 @@ Mission.prototype.addBlock = function(block) {
  */
 Mission.prototype.getLC = function(text) {
 
-	if (typeof text !== "string" || !text.length) {
+	if (typeof text !== "string") {
 		throw new TypeError("Invalid mission language string.");
 	}
+
+	text = text.trim();
 
 	var languageCode = this.lang.indexOf(text);
 
@@ -94,13 +100,16 @@ Mission.prototype.save = function(fileName) {
 
 	// TODO: Generate mission file path and name if not specified
 
-	this.saveText(fileName);
+	if (this.params.debug) {
+		this.saveText(fileName);
+	}
+
 	this.saveBinary(fileName);
 	this.saveLang(fileName);
 };
 
 /**
- * Save main .mission file.
+ * Save text .Mission file.
  *
  * @param {string} fileName Mission file name (without extension).
  */
@@ -133,6 +142,96 @@ Mission.prototype.saveText = function(fileName) {
  */
 Mission.prototype.saveBinary = function(fileName) {
 
+	var optionsBuffer;
+	var blockBuffers = [];
+
+	// Create index tables
+	var indexTables = {
+		name: new BinaryIndexTable(32, 100),
+		desc: new BinaryIndexTable(32, 100),
+		model: new BinaryIndexTable(64, 100),
+		skin: new BinaryIndexTable(128, 0),
+		script: new BinaryIndexTable(128, 100),
+		damaged: new BinaryIndexTable(32, 0)
+	};
+
+	// Collect binary representation of all mission blocks
+	(function walkBlocks(blocks) {
+
+		blocks.forEach(function(block) {
+
+			// Process Group block child blocks
+			if (block instanceof Block.Group) {
+
+				if (block.blocks && block.blocks.length) {
+					walkBlocks(block.blocks);
+				}
+			}
+			// Get block binary representation (data buffers)
+			else {
+
+				var buffer = block.toBinary(indexTables);
+
+				// Find Options block buffer
+				if (block instanceof Block.Options) {
+					optionsBuffer = buffer;
+				}
+				// Process normal block buffers
+				else if (buffer.length) {
+					blockBuffers.push(buffer);
+				}
+			}
+		});
+
+	})(this.blocks);
+
+	if (!optionsBuffer) {
+		throw new Error();
+	}
+
+	var fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY);
+
+	fileStream.once("open", function(fd) {
+
+		// Write Options block buffer (has to be the first one in the file)
+		fileStream.write(optionsBuffer);
+
+		var indexTableNames = Object.keys(indexTables);
+		var itlhBuffer = new Buffer(7); // Index table list header buffer
+		var bsBuffer = new Buffer(4); // Block size buffer
+
+		// Write index table list header (number of index tables + 3 unknown bytes)
+		itlhBuffer.writeUInt32LE(indexTableNames.length, 0);
+		itlhBuffer.fill(0, 4);
+		fileStream.write(itlhBuffer);
+
+		// Write index tables
+		indexTableNames.forEach(function(tableName) {
+			fileStream.write(indexTables[tableName].toBinary());
+		});
+
+		// Write blocks size buffer
+		bsBuffer.writeUInt32LE(blockBuffers.length, 0);
+		fileStream.write(bsBuffer);
+
+		// Write block buffers
+		blockBuffers.forEach(function(buffer) {
+
+			// Single block buffer
+			if (Buffer.isBuffer(buffer)) {
+				fileStream.write(buffer);
+			}
+			// Multiple block buffers
+			else if (Array.isArray(buffer)) {
+
+				buffer.forEach(function(buffer) {
+					fileStream.write(buffer);
+				});
+			}
+		});
+
+		fileStream.end();
+	});
 };
 
 /**
@@ -161,6 +260,98 @@ Mission.prototype.saveLang = function(fileName) {
 			fileStream.end();
 		});
 	});
+};
+
+/**
+ * Binary data index table constructor (used in saving .msnbin file).
+ *
+ * @param {number} maxDataLength Index table maximum data item size.
+ * @param {number} minItemsCount Index table minimum items count.
+ */
+function BinaryIndexTable(maxDataLength, minItemsCount) {
+
+	this.header = [];
+	this.data = [];
+	this.maxDataLength = maxDataLength;
+	this.minItemsCount = minItemsCount;
+}
+
+/**
+ * Manage a string index table.
+ *
+ * @param {string} value String value to set in the index table.
+ * @returns {number} Index table address/index (16 bit unsigned integer).
+ */
+BinaryIndexTable.prototype.stringValue = function(value) {
+
+	// No index
+	if (typeof value !== "string") {
+		return 0xFFFF;
+	}
+
+	var index = this.data.indexOf(value);
+
+	// Add a new string item
+	if (index < 0) {
+
+		this.data.push(value);
+		this.header.push(0);
+
+		index = this.data.length - 1;
+	}
+
+	// Update string usage (in the header of index table)
+	this.header[index]++;
+
+	// No index
+	return index;
+};
+
+/**
+ * Get a binary representation of this index table.
+ *
+ * @returns {Buffer} Binary representation of the index table.
+ */
+BinaryIndexTable.prototype.toBinary = function() {
+
+	var dataLength = this.maxDataLength;
+	var itemsCount = Math.max(this.minItemsCount, this.data.length);
+	var offset = 0;
+	var size = 6;
+
+	size += itemsCount * 2;
+	size += itemsCount * dataLength;
+
+	var buffer = new Buffer(size);
+
+	// Max size of item
+	buffer.writeUInt32LE(dataLength, offset);
+	offset += 4;
+
+	// Number of items
+	buffer.writeUInt16LE(itemsCount, offset);
+	offset += 2;
+
+	// Header items
+	for (var h = 0; h < itemsCount; h++) {
+
+		var headerItem = this.header[h] || 0;
+
+		buffer.writeUInt16LE(headerItem, offset);
+		offset += 2;
+	}
+
+	// Data items
+	for (var d = 0; d < itemsCount; d++) {
+
+		var dataItem = this.data[d] || "";
+
+		buffer.fill(0, offset, offset + dataLength);
+		buffer.write(dataItem, offset);
+		offset += dataLength;
+	}
+
+	return buffer;
 };
 
 module.exports = Mission;

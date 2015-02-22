@@ -30,10 +30,10 @@ module.exports = function(mission, data) {
 
 		var countries = [];
 
-		countries.push("50:0"); // Unknown country/coalition
+		countries.push([50, 0]); // Unknown country/coalition
 
 		battle.countries.forEach(function(countryID) {
-			countries.push(countryID + ":" + data.countries[countryID].coalition);
+			countries.push([countryID, data.countries[countryID].coalition]);
 		});
 
 		return countries;

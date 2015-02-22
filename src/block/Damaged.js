@@ -1,13 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Block = require("../block");
+var BlockParent = require("../block");
 
 // Damaged block
 function Damaged() {
 
 }
 
-Damaged.prototype = new Block();
+Damaged.prototype = Object.create(BlockParent.prototype);
 
 module.exports = Damaged;

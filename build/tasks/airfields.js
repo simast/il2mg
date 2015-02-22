@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 				}
 
 				// Read raw airfield blocks file
-				var blocks = Block.readFile(fileSource);
+				var blocks = Block.readTextFile(fileSource);
 
 				// Blocks file should have a non-empty single Group block
 				if (!blocks || !blocks.length || blocks.length !== 1 ||

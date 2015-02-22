@@ -1,14 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Block = require("../block");
+var BlockParent = require("../block");
 
 // Airfield block
 function Airfield() {
 
 }
 
-Airfield.prototype = new Block();
-Airfield.prototype.id = 123;
+Airfield.prototype = Object.create(BlockParent.prototype);
 
 module.exports = Airfield;
