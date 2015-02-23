@@ -8,12 +8,12 @@ module.exports = function(grunt) {
 
 		var numeral = require("numeral");
 		var data = require("../../src/data");
-		var Block = require("../../src/block");
-		var blockTags = require("../../src/make/airfields").blockTags;
+		var Item = require("../../src/item");
+		var itemTags = require("../../src/make/airfields").itemTags;
 
 		var totalBattles = 0;
 		var totalAirfields = 0;
-		var totalBlocks = 0;
+		var totalItems = 0;
 
 		// Process airfields for each battle
 		for (var battleID in data.battles) {
@@ -32,12 +32,12 @@ module.exports = function(grunt) {
 					continue;
 				}
 
-				// Read raw airfield blocks file
-				var blocks = Block.readTextFile(fileSource);
+				// Read raw airfield Group text file
+				var items = Item.readTextFile(fileSource);
 
-				// Blocks file should have a non-empty single Group block
-				if (!blocks || !blocks.length || blocks.length !== 1 ||
-						!(blocks[0] instanceof Block.Group)) {
+				// Group file should have a non-empty single Group item
+				if (!items || !items.length || items.length !== 1 ||
+						!(items[0] instanceof Item.Group)) {
 
 					continue;
 				}
@@ -45,108 +45,108 @@ module.exports = function(grunt) {
 				// Read airfield JSON data file
 				var json = grunt.file.readJSON(fileDestination);
 
-				json.blocks = [];
+				json.items = [];
 
 				// Build output JSON object with recursion
-				(function buildJSON(json, blocks) {
+				(function buildJSON(json, items) {
 
-					blocks.forEach(function(block) {
+					items.forEach(function(item) {
 
-						// Only scan supported block types
-						if (block instanceof Block.Block || block instanceof Block.Bridge ||
-								block instanceof Block.Vehicle || block instanceof Block.Flag) {
+						// Only scan supported item types
+						if (item instanceof Item.Block || item instanceof Item.Bridge ||
+								item instanceof Item.Vehicle || item instanceof Item.Flag) {
 
-							var blockType = null;
-							var blockData = null;
+							var itemTypeID = null;
+							var itemData = null;
 
 							// Plane spot
-							if (/^PLANE/.test(block.Name)) {
+							if (/^PLANE/.test(item.Name)) {
 
-								blockType = blockTags.PLANE;
+								itemTypeID = itemTags.PLANE;
 
 								// TODO: Parse plane spot data
 							}
 							// Cargo truck
-							else if (block.Name === "TRUCK:CARGO") {
-								blockType = blockTags.TRUCK_CARGO;
+							else if (item.Name === "TRUCK:CARGO") {
+								itemTypeID = itemTags.TRUCK_CARGO;
 							}
 							// Fuel truck
-							else if (block.Name === "TRUCK:FUEL") {
-								blockType = blockTags.TRUCK_FUEL;
+							else if (item.Name === "TRUCK:FUEL") {
+								itemTypeID = itemTags.TRUCK_FUEL;
 							}
 							// Car vehicle
-							else if (block.Name === "CAR") {
-								blockType = blockTags.CAR;
+							else if (item.Name === "CAR") {
+								itemTypeID = itemTags.CAR;
 							}
 							// Anti-aircraft position (MG)
-							else if (block.Name === "AA:MG") {
-								blockType = blockTags.AA_MG;
+							else if (item.Name === "AA:MG") {
+								itemTypeID = itemTags.AA_MG;
 							}
 							// Anti-aircraft position (Flak)
-							else if (block.Name === "AA:FLAK") {
-								blockType = blockTags.AA_FLAK;
+							else if (item.Name === "AA:FLAK") {
+								itemTypeID = itemTags.AA_FLAK;
 							}
-							// Normal block
+							// Normal item
 							else {
 
-								blockType = data.registerBlock({
-									type: block.type,
-									script: block.Script,
-									model: block.Model
+								itemTypeID = data.registerItemType({
+									type: item.type,
+									script: item.Script,
+									model: item.Model
 								});
 
-								// Decoration block tag
-								if (block.Name === "DECO") {
-									blockData = blockTags.DECO;
+								// Decoration item tag
+								if (item.Name === "DECO") {
+									itemData = itemTags.DECO;
 								}
-								// Fuel block tag
-								else if (block.Name === "FUEL") {
-									blockData = blockTags.FUEL;
+								// Fuel item tag
+								else if (item.Name === "FUEL") {
+									itemData = itemTags.FUEL;
 								}
 								// Windsock tag
-								else if (block.Name === "WINDSOCK") {
-									blockData = blockTags.WINDSOCK;
+								else if (item.Name === "WINDSOCK") {
+									itemData = itemTags.WINDSOCK;
 								}
 								// Beacon tag
-								else if (block.Name === "BEACON") {
-									blockData = blockTags.BEACON;
+								else if (item.Name === "BEACON") {
+									itemData = itemTags.BEACON;
 								}
 							}
 
-							var jsonBlock = [];
+							var jsonItem = [];
 
-							// Block type
-							jsonBlock.push(blockType);
+							// Item type ID
+							jsonItem.push(itemTypeID);
 
-							// Block position
-							jsonBlock.push(block.XPos || 0);
-							jsonBlock.push(block.ZPos || 0);
+							// Item position
+							jsonItem.push(item.XPos || 0);
+							jsonItem.push(item.ZPos || 0);
 
-							// Block orientation
-							jsonBlock.push(block.YOri || 0);
+							// Item orientation
+							jsonItem.push(item.YOri || 0);
 
-							// Block data
-							if (blockData !== null) {
-								jsonBlock.push(blockData);
+							// Item data
+							if (itemData !== null) {
+								jsonItem.push(itemData);
 							}
 
-							json.push(jsonBlock);
+							json.push(jsonItem);
 
-							totalBlocks++;
+							totalItems++;
 						}
-						// Process any child blocks
-						else if (block instanceof Block.Group && block.blocks.length) {
+						// Process any child items
+						else if (item instanceof Item.Group && item.items.length) {
 
-							var childBlocks = [];
+							var childItems = [];
 
-							json.push(childBlocks);
+							json.push(childItems);
 
-							buildJSON(childBlocks, block.blocks);
+							buildJSON(childItems, item.items);
 						}
 					});
-				})(json.blocks, blocks[0].blocks);
+				})(json.items, items[0].items);
 
-				// Write output JSON blocks file
+				// Write output JSON items file
 				grunt.file.write(
 					fileDestination,
 					JSON.stringify(json, null, "\t")
@@ -158,16 +158,16 @@ module.exports = function(grunt) {
 			totalBattles++;
 		}
 
-		// Write blocks type JSON data file
+		// Write items type JSON data file
 		grunt.file.write(
-			"data/blocks.json",
-			JSON.stringify(data.blocks, null, "\t")
+			"data/items.json",
+			JSON.stringify(data.items, null, "\t")
 		);
 
 		var okMessage = "";
 
-		okMessage += numeral(totalBlocks).format("0,0") + " ";
-		okMessage += grunt.util.pluralize(totalBlocks, "block/blocks");
+		okMessage += numeral(totalItems).format("0,0") + " ";
+		okMessage += grunt.util.pluralize(totalItems, "item/items");
 		okMessage += " processed from " + numeral(totalBattles).format("0,0") + " ";
 		okMessage += grunt.util.pluralize(totalBattles, "battle/battles");
 		okMessage += " and " + numeral(totalAirfields).format("0,0") + " ";

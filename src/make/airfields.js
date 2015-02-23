@@ -1,10 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Block = require("../block");
+var Item = require("../item");
 
-// Data tags for airfield blocks
-var blockTags = {
+// Data tags for airfield items
+var itemTags = {
 	AA_FLAK: -6, // Anti-aircraft (Flak)
 	AA_MG: -5, // Anti-aircraft (MG)
 	CAR: -4, // Car vehicle
@@ -12,7 +12,7 @@ var blockTags = {
 	TRUCK_CARGO: -2, // Cargo truck
 	PLANE: -1, // Plane spot
 	DECO: 1, // Decoration
-	FUEL: 2, // Fuel block
+	FUEL: 2, // Fuel item
 	WINDSOCK: 3, // Windsock
 	BEACON: 4 // Beacon
 };
@@ -28,125 +28,125 @@ module.exports = function(mission, data) {
 
 		var airfield = airfields[airfieldID];
 
-		if (!airfield.blocks || !airfield.blocks.length) {
+		if (!airfield.items || !airfield.items.length) {
 			continue;
 		}
 
-		var blocksGroup = new Block.Group();
+		var itemsGroup = new Item.Group();
 
-		blocksGroup.setName(airfield.name);
+		itemsGroup.setName(airfield.name);
 
-		// Walk/process each airfield block
-		(function walkBlocks(blocks, isGroup) {
+		// Walk/process each airfield item
+		(function walkItems(items, isGroup) {
 
-			// Used to delay normal block insertion until any of the special blocks
-			// were included in a group. If no special blocks are used - all normal
-			// blocks in a group are also not included. This allows to group, for
-			// example, an anti-aircraft special block together with a normal decoration
-			// block, but if the AA special block is not used - the AA decoration block
+			// Used to delay normal item insertion until any of the special items
+			// were included in a group. If no special items are used - all normal
+			// items in a group are also not included. This allows to group, for
+			// example, an anti-aircraft special item together with a normal decoration
+			// item, but if the AA special item is not used - the AA decoration item
 			// is also not included.
-			var extraBlocks = [];
-			var useExtraBlocks = false;
+			var extraItems = [];
+			var useExtraItems = false;
 
-			blocks.forEach(function(block) {
+			items.forEach(function(item) {
 
-				var blockTypeID = block[0];
+				var itemTypeID = item[0];
 
-				// Process block group
-				if (Array.isArray(blockTypeID)) {
-					walkBlocks(block, true);
+				// Process item group
+				if (Array.isArray(itemTypeID)) {
+					walkItems(item, true);
 				}
 
-				var blockObjects = [];
+				var itemObjects = [];
 
-				// Normal static block
-				if (blockTypeID >= 0) {
+				// Normal static item
+				if (itemTypeID >= 0) {
 
 					if (isGroup) {
-						extraBlocks.push(block);
+						extraItems.push(item);
 					}
 					else {
-						blockObjects = makeStaticBlock(block);
+						itemObjects = makeStaticItem(item);
 					}
 				}
-				// Special block
+				// Special item
 				else {
 
-					switch (blockTypeID) {
+					switch (itemTypeID) {
 
-						// Stationary/static vehicle block
-						case blockTags.TRUCK_CARGO:
-						case blockTags.TRUCK_FUEL:
-						case blockTags.CAR: {
+						// Stationary/static vehicle item
+						case itemTags.TRUCK_CARGO:
+						case itemTags.TRUCK_FUEL:
+						case itemTags.CAR: {
 
-							blockObjects = makeStaticVehicle(block);
+							itemObjects = makeStaticVehicle(item);
 							break;
 						}
 
-						// Anti-aircraft vehicle block
-						case blockTags.AA_FLAK:
-						case blockTags.AA_MG: {
+						// Anti-aircraft vehicle item
+						case itemTags.AA_FLAK:
+						case itemTags.AA_MG: {
 
-							blockObjects = makeAAVehicle(block);
+							itemObjects = makeAAVehicle(item);
 							break;
 						}
 					}
 
-					// Use all extra normal blocks in a group if special block is used
-					if (blockObjects.length) {
-						useExtraBlocks = true;
+					// Use all extra normal items in a group if special item is used
+					if (itemObjects.length) {
+						useExtraItems = true;
 					}
 				}
 
-				// Add generated block objects to airfield group
-				if (Array.isArray(blockObjects) && blockObjects.length) {
+				// Add generated item objects to airfield group
+				if (Array.isArray(itemObjects) && itemObjects.length) {
 
-					blockObjects.forEach(function(blockObject) {
+					itemObjects.forEach(function(itemObject) {
 
-						// TODO: Build a blocks index (to quickly lookup blocks based on position)
-						blocksGroup.addBlock(blockObject);
+						// TODO: Build a items index (to quickly lookup items based on position)
+						itemsGroup.addItem(itemObject);
 					});
 				}
 			});
 
-			// Include extra blocks
-			if (useExtraBlocks && extraBlocks.length) {
-				walkBlocks(extraBlocks, false);
+			// Include extra items
+			if (useExtraItems && extraItems.length) {
+				walkItems(extraItems, false);
 			}
 
-		})(mission.rand.shuffle(airfield.blocks), false);
+		})(mission.rand.shuffle(airfield.items), false);
 
-		// Add all blocks as a single airfield group in a mission file
-		mission.addBlock(blocksGroup);
+		// Add all items as a single airfield group in a mission file
+		mission.addItem(itemsGroup);
 	}
 
-	// Make a normal static block
-	function makeStaticBlock(block) {
+	// Make a normal static item
+	function makeStaticItem(item) {
 
-		var blockType = data.getBlock(block[0]);
-		var blockData = block[4];
+		var itemType = data.getItemType(item[0]);
+		var itemData = item[4];
 
-		var blockObject = new Block[blockType.type]();
+		var itemObject = new Item[itemType.type]();
 
-		blockObject.Model = blockType.model;
-		blockObject.Script = blockType.script;
-		blockObject.setPosition(block[1], block[2]);
-		blockObject.setOrientation(block[3]);
+		itemObject.Model = itemType.model;
+		itemObject.Script = itemType.script;
+		itemObject.setPosition(item[1], item[2]);
+		itemObject.setOrientation(item[3]);
 
 		// Windsock tag
-		if (blockData === blockTags.WINDSOCK) {
-			blockObject.createEntity();
+		if (itemData === itemTags.WINDSOCK) {
+			itemObject.createEntity();
 		}
 		// Beacon tag
-		else if (blockData === blockTags.BEACON) {
-			blockObject.createEntity();
+		else if (itemData === itemTags.BEACON) {
+			itemObject.createEntity();
 		}
 
-		return [blockObject];
+		return [itemObject];
 	}
 
-	// Make a stationary/static vehicle block
-	function makeStaticVehicle(block) {
+	// Make a stationary/static vehicle item
+	function makeStaticVehicle(item) {
 
 		var staticVehicles = makeStaticVehicle.data;
 
@@ -187,10 +187,10 @@ module.exports = function(mission, data) {
 
 		var vehicleType;
 
-		if (block[0] === blockTags.TRUCK_CARGO) {
+		if (item[0] === itemTags.TRUCK_CARGO) {
 			vehicleType = "truck_cargo";
 		}
-		else if (block[0] === blockTags.TRUCK_FUEL) {
+		else if (item[0] === itemTags.TRUCK_FUEL) {
 			vehicleType = "truck_fuel";
 		}
 
@@ -201,40 +201,40 @@ module.exports = function(mission, data) {
 		// TODO: Limit number of static vehicles based on number of units on the airfield
 		var randVehicle = mission.rand.pick(staticVehicles[countryID][vehicleType]);
 
-		// Create static vehicle block
-		var blockObject = new Block.Block();
+		// Create static vehicle block item
+		var itemObject = new Item.Block();
 
 		// Slightly vary/randomize static vehicle position
-		var positionX = Math.max(block[1] + mission.rand.real(-1, 1), 0);
-		var positionZ = Math.max(block[2] + mission.rand.real(-1, 1), 0);
+		var positionX = Math.max(item[1] + mission.rand.real(-1, 1), 0);
+		var positionZ = Math.max(item[2] + mission.rand.real(-1, 1), 0);
 
 		// Slightly vary/randomize static vehicle orientation
-		var orientation = Math.max((block[3] + mission.rand.real(-20, 20) + 360) % 360, 0);
+		var orientation = Math.max((item[3] + mission.rand.real(-20, 20) + 360) % 360, 0);
 
-		blockObject.Model = randVehicle.static.model;
-		blockObject.Script = randVehicle.static.script;
-		blockObject.setPosition(positionX, positionZ);
-		blockObject.setOrientation(orientation);
+		itemObject.Model = randVehicle.static.model;
+		itemObject.Script = randVehicle.static.script;
+		itemObject.setPosition(positionX, positionZ);
+		itemObject.setOrientation(orientation);
 
-		return [blockObject];
+		return [itemObject];
 	}
 
-	// Make anti-aircraft vehicle block
-	function makeAAVehicle(block) {
+	// Make anti-aircraft vehicle item
+	function makeAAVehicle(item) {
 
-		var blockObject = new Block.Vehicle();
+		var itemObject = new Item.Vehicle();
 
-		blockObject.Model = "graphics\\artillery\\mg34-aa\\mg34-aa.mgm";
-		blockObject.Script = "LuaScripts\\WorldObjects\\vehicles\\mg34-aa.txt";
-		// blockObject.Model = "graphics\\characters\\BotField_SoldierGER\\SoldierGER.MGM";
-		// blockObject.Script = "LuaScripts\\WorldObjects\\bots\\botfield_soldierger.txt";
-		blockObject.setPosition(block[1], block[2]);
-		blockObject.setOrientation(block[3]);
+		itemObject.Model = "graphics\\artillery\\mg34-aa\\mg34-aa.mgm";
+		itemObject.Script = "LuaScripts\\WorldObjects\\vehicles\\mg34-aa.txt";
+		// itemObject.Model = "graphics\\characters\\BotField_SoldierGER\\SoldierGER.MGM";
+		// itemObject.Script = "LuaScripts\\WorldObjects\\bots\\botfield_soldierger.txt";
+		itemObject.setPosition(item[1], item[2]);
+		itemObject.setOrientation(item[3]);
 
-		blockObject.createEntity();
+		itemObject.createEntity();
 
-		return [blockObject];
+		return [itemObject];
 	}
 };
 
-module.exports.blockTags = blockTags;
+module.exports.itemTags = itemTags;

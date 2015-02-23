@@ -1,21 +1,21 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var BlockParent = require("../block");
+var Item = require("../item");
 
 // Vehicle
 function Vehicle() {
 
 }
 
-Vehicle.prototype = Object.create(BlockParent.prototype);
-Vehicle.prototype.id = 2;
+Vehicle.prototype = Object.create(Item.prototype);
+Vehicle.prototype.typeID = 2;
 
 /**
- * Get binary representation of the block.
+ * Get binary representation of the item.
  *
  * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the block.
+ * @returns {Buffer} Binary representation of the item.
  */
 Vehicle.prototype.toBinary = function(index) {
 
@@ -33,7 +33,7 @@ Vehicle.prototype.toBinary = function(index) {
 	this.writeUInt8(buffer, this.DamageThreshold !== undefined ? this.DamageThreshold : 1);
 
 	// DamageReport
-	var damageReport = BlockParent.DEFAULT_DAMAGE_REPORT;
+	var damageReport = Item.DEFAULT_DAMAGE_REPORT;
 
 	if (this.DamageReport !== undefined) {
 		damageReport = this.DamageReport;
@@ -50,7 +50,7 @@ Vehicle.prototype.toBinary = function(index) {
 	this.writeString(buffer, scriptLength, this.Script);
 
 	// Country
-	this.writeUInt16(buffer, this.Country || BlockParent.DEFAULT_COUNTRY);
+	this.writeUInt16(buffer, this.Country || Item.DEFAULT_COUNTRY);
 
 	// Unknown data
 	this.writeUInt16(buffer, 0);
@@ -86,7 +86,7 @@ Vehicle.prototype.toBinary = function(index) {
 	this.writeUInt8(buffer, this.CoopStart || 0);
 
 	return [
-		BlockParent.prototype.toBinary.apply(this, arguments),
+		Item.prototype.toBinary.apply(this, arguments),
 		buffer
 	];
 };

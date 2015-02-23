@@ -7,7 +7,7 @@ var moment = require("moment");
 // Generate mission map data
 module.exports = function(mission, data) {
 
-	var options = mission.blocks.Options;
+	var options = mission.items.Options;
 	var map = mission.battle.map;
 
 	// Find matching battle map based on mission date

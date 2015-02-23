@@ -4,7 +4,7 @@
 // Generate mission briefing
 module.exports = function(mission, data) {
 
-	var options = mission.blocks.Options;
+	var options = mission.items.Options;
 
 	var briefing = [];
 

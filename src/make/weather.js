@@ -6,7 +6,7 @@ var data = require("../data");
 // Make mission clouds
 function makeClouds(mission, weather) {
 
-	var options = mission.blocks.Options;
+	var options = mission.items.Options;
 	var rand = mission.rand;
 
 	var cloudsType = weather[1];
@@ -26,7 +26,7 @@ function makeClouds(mission, weather) {
 		thickness = rand.integer(thickness[0], thickness[1]);
 	}
 
-	// Set clouds data for Options block
+	// Set clouds data for Options item
 	options.CloudConfig = cloudsData.config;
 	options.CloudLevel = altitude;
 	options.CloudHeight = thickness;
@@ -42,7 +42,7 @@ function makeClouds(mission, weather) {
 // Make mission precipitation
 function makePrecipitation(mission, weather) {
 
-	var options = mission.blocks.Options;
+	var options = mission.items.Options;
 	var rand = mission.rand;
 
 	var precipitation = {
@@ -71,7 +71,7 @@ function makePrecipitation(mission, weather) {
 		}
 	}
 
-	// Set precipitation data for Options block
+	// Set precipitation data for Options item
 	options.PrecType = precipitation.type;
 	options.PrecLevel = precipitation.level;
 
@@ -83,14 +83,14 @@ function makePrecipitation(mission, weather) {
 function makeSea(mission, weather) {
 
 	// TODO: Not supported/implemented yet
-	mission.blocks.Options.SeaState = 0;
+	mission.items.Options.SeaState = 0;
 	mission.weather.sea = 0;
 }
 
 // Make mission temperature
 function makeTemperature(mission, weather) {
 
-	var options = mission.blocks.Options;
+	var options = mission.items.Options;
 	var rand = mission.rand;
 
 	var temperature = weather[0];
@@ -98,7 +98,7 @@ function makeTemperature(mission, weather) {
 		temperature = rand.integer(temperature[0], temperature[1]);
 	}
 
-	// Set temperature data for Options block
+	// Set temperature data for Options item
 	options.Temperature = temperature;
 	options.TempPressLevel = 0;
 }
@@ -111,14 +111,14 @@ function makePressure(mission, weather) {
 	var pressure = mission.rand.integer(750, 770); // Millimetres of mercury (mmHg)
 
 	// Set pressure data
-	mission.blocks.Options.Pressure = pressure;
+	mission.items.Options.Pressure = pressure;
 	mission.weather.pressure = pressure;
 }
 
 // Generate mission weather and atmospheric conditions
 module.exports = function(mission) {
 
-	var options = mission.blocks.Options;
+	var options = mission.items.Options;
 	var weather = mission.battle.weather[mission.date.format("YYYY-MM-DD")];
 
 	mission.weather = {};

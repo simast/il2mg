@@ -30,7 +30,7 @@ var data = (function() {
 	data.languages = require("../data/languages");
 	data.missions = require("../data/missions");
 	data.time = require("../data/time");
-	data.blocks = require("../data/blocks");
+	data.items = require("../data/items");
 	data.countries = require("../data/countries");
 	data.battles = require("../data/battles");
 
@@ -88,75 +88,75 @@ var data = (function() {
 }());
 
 /**
- * Register a new or update existing block (world object) type.
+ * Register a new or update existing item (world object) type.
  *
- * @param {object} block Block data.
- * @returns {number} Block type ID.
+ * @param {object} item Item data.
+ * @returns {number} Item type ID.
  */
-data.registerBlock = function(block) {
+data.registerItemType = function(item) {
 
-	if (typeof block !== "object" || !block.type || !block.script || !block.model) {
-		throw new TypeError("Invalid block data.");
+	if (typeof item !== "object" || !item.type || !item.script || !item.model) {
+		throw new TypeError("Invalid item data.");
 	}
 
-	// Initialize blocks data
-	if (typeof this.blocks !== "object") {
+	// Initialize items data
+	if (typeof this.items !== "object") {
 
-		this.blocks = {
-			blocks: [],
+		this.items = {
+			items: [],
 			index: {}
 		};
 	}
 
-	var blocks = this.blocks.blocks;
-	var index = this.blocks.index;
+	var items = this.items.items;
+	var index = this.items.index;
 
 	// Lowercase and trim script/model paths
-	block.script = block.script.trim().toLowerCase();
-	block.model = block.model.trim().toLowerCase();
+	item.script = item.script.trim().toLowerCase();
+	item.model = item.model.trim().toLowerCase();
 
-	// Try to find existing block type by script index
-	var blockType = index[block.script];
+	// Try to find existing item type ID by script index
+	var itemTypeID = index[item.script];
 
-	// Update existing block type data
-	if (blockType !== undefined) {
+	// Update existing item type data
+	if (itemTypeID !== undefined) {
 
-		blocks[blockType].type = block.type;
-		blocks[blockType].script = block.script;
-		blocks[blockType].model = block.model;
+		items[itemTypeID].type = item.type;
+		items[itemTypeID].script = item.script;
+		items[itemTypeID].model = item.model;
 	}
-	// Add new block type
+	// Add new item type
 	else {
 
-		blockType = blocks.push(block) - 1;
+		itemTypeID = items.push(item) - 1;
 
 		// Create script index
-		index[block.script] = blockType;
+		index[item.script] = itemTypeID;
 	}
 
-	return blockType;
+	return itemTypeID;
 };
 
 /**
- * Get block (world object) type data.
+ * Get item (world object) type data.
  *
- * @param {number|string} blockID Block ID or script name.
- * @returns {object} Block type data.
+ * @param {number|string} itemTypeID Item type ID or script name.
+ * @returns {object} Item type data.
  */
-data.getBlock = function(blockID) {
+data.getItemType = function(itemTypeID) {
 
-	// Look up block ID by script name
-	if (typeof blockID === "string") {
-		blockID = this.blocks.index[blockID.trim().toLowerCase()];
+	// Look up item type ID by script name
+	if (typeof itemTypeID === "string") {
+		itemTypeID = this.items.index[itemTypeID.trim().toLowerCase()];
 	}
 
-	var blockType = this.blocks.blocks[blockID];
+	var itemType = this.items.items[itemTypeID];
 
-	if (typeof blockType !== "object") {
-		throw new TypeError("Invalid block ID.");
+	if (typeof itemType !== "object") {
+		throw new TypeError("Invalid item type ID.");
 	}
 
-	return blockType;
+	return itemType;
 };
 
 module.exports = data;

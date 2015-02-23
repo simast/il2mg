@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Block = require("../block");
+var Item = require("../item");
 
 // Generate mission flights
 module.exports = function(mission, data) {
 
-	var plane = new Block.Plane();
+	var plane = new Item.Plane();
 
 	plane.setName("Ju 87 D-3");
 	plane.setPosition(116317.252, 83.238, 102764.117);
@@ -26,5 +26,5 @@ module.exports = function(mission, data) {
 	// Create plane entity
 	plane.createEntity();
 
-	mission.addBlock(plane);
+	mission.addItem(plane);
 };

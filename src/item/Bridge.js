@@ -3,14 +3,14 @@
 
 var Block = require("./Block");
 
-// Bridge block
+// Bridge item
 function Bridge() {
 
-	// Call parent Block constructor
+	// Call parent constructor
 	Block.apply(this, arguments);
 }
 
 Bridge.prototype = Object.create(Block.prototype);
-Bridge.prototype.id = 5;
+Bridge.prototype.typeID = 5;
 
 module.exports = Bridge;

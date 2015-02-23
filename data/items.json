@@ -1,5 +1,5 @@
 {
-	"blocks": [
+	"items": [
 		{
 			"type": "Block",
 			"script": "luascripts\\worldobjects\\blocks\\tacinskaya_1.txt",

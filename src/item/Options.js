@@ -2,21 +2,21 @@
 "use strict";
 
 var moment = require("moment");
-var BlockParent = require("../block");
+var Item = require("../item");
 
-// Options block
+// Options item
 function Options() {
 
 }
 
-Options.prototype = Object.create(BlockParent.prototype);
-Options.prototype.id = 25;
+Options.prototype = Object.create(Item.prototype);
+Options.prototype.typeID = 25;
 
 /**
- * Get binary representation of the block.
+ * Get binary representation of the item.
  *
  * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the block.
+ * @returns {Buffer} Binary representation of the item.
  */
 Options.prototype.toBinary = function(index) {
 
@@ -46,8 +46,8 @@ Options.prototype.toBinary = function(index) {
 
 	var buffer = new Buffer(size);
 
-	// Block ID (or file version?)
-	this.writeUInt32(buffer, this.id);
+	// Item binary type ID (or file version?)
+	this.writeUInt32(buffer, this.typeID);
 
 	// MissionType
 	this.writeUInt32(buffer, this.MissionType);

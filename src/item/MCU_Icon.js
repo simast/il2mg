@@ -1,21 +1,21 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var BlockParent = require("../block");
+var Item = require("../item");
 
-// Icon block
+// Icon item
 function MCU_Icon() {
 
 }
 
-MCU_Icon.prototype = Object.create(BlockParent.prototype);
-MCU_Icon.prototype.id = 35;
+MCU_Icon.prototype = Object.create(Item.prototype);
+MCU_Icon.prototype.typeID = 35;
 
 /**
- * Get binary representation of the block.
+ * Get binary representation of the item.
  *
  * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the block.
+ * @returns {Buffer} Binary representation of the item.
  */
 MCU_Icon.prototype.toBinary = function(index) {
 
@@ -59,7 +59,7 @@ MCU_Icon.prototype.toBinary = function(index) {
 	this.writeUInt32Array(buffer, this.Coalitions || []);
 
 	return [
-		BlockParent.prototype.toBinary.apply(this, arguments),
+		Item.prototype.toBinary.apply(this, arguments),
 		buffer
 	];
 };

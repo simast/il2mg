@@ -1,13 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Block = require("../block");
+var Item = require("../item");
 
-// Generate mission blocks
+// Generate mission static blocks
 module.exports = function(mission, data) {
 
 	var blocksFiles = mission.battle.blocks;
-	var blocksGroup = new Block.Group();
+	var blocksGroup = new Item.Group();
 
 	blocksGroup.setName("Blocks");
 
@@ -19,20 +19,20 @@ module.exports = function(mission, data) {
 		for (var i = 0; i < blocks.length; i++) {
 
 			var blockItem = blocks[i];
-			var blockType = data.getBlock(blockItem[0]);
-			var block = new Block[blockType.type]();
+			var itemType = data.getItemType(blockItem[0]);
+			var block = new Item[itemType.type]();
 
-			block.Model = blockType.model;
-			block.Script = blockType.script;
+			block.Model = itemType.model;
+			block.Script = itemType.script;
 			block.setPosition(blockItem[1], blockItem[2]);
 			block.setOrientation(blockItem[3]);
 
 			// TODO: Build a blocks index (to quickly lookup blocks based on position)
 
-			blocksGroup.addBlock(block);
+			blocksGroup.addItem(block);
 		}
 	});
 
 	// Add all blocks as a single group in a mission file
-	mission.addBlock(blocksGroup);
+	mission.addItem(blocksGroup);
 };

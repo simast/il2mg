@@ -1,22 +1,22 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var BlockParent = require("../block");
+var Item = require("../item");
 
-// Static block
+// Block item
 function Block() {
 
 	this.setIndex();
 }
 
-Block.prototype = Object.create(BlockParent.prototype);
-Block.prototype.id = 1;
+Block.prototype = Object.create(Item.prototype);
+Block.prototype.typeID = 1;
 
 /**
- * Get binary representation of the block.
+ * Get binary representation of the item.
  *
  * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the block.
+ * @returns {Buffer} Binary representation of the item.
  */
 Block.prototype.toBinary = function(index) {
 
@@ -42,10 +42,10 @@ Block.prototype.toBinary = function(index) {
 	this.writeUInt8(buffer, flags);
 
 	// Country
-	this.writeUInt16(buffer, this.Country || BlockParent.DEFAULT_COUNTRY);
+	this.writeUInt16(buffer, this.Country || Item.DEFAULT_COUNTRY);
 
 	// DamageReport
-	var damageReport = BlockParent.DEFAULT_DAMAGE_REPORT;
+	var damageReport = Item.DEFAULT_DAMAGE_REPORT;
 
 	if (this.DamageReport !== undefined) {
 		damageReport = this.DamageReport;
@@ -54,7 +54,7 @@ Block.prototype.toBinary = function(index) {
 	this.writeUInt8(buffer, damageReport);
 
 	// Durability
-	var durability = BlockParent.DEFAULT_DURABILITY;
+	var durability = Item.DEFAULT_DURABILITY;
 
 	if (this.Durability !== undefined) {
 		durability = this.Durability;
@@ -73,7 +73,7 @@ Block.prototype.toBinary = function(index) {
 	this.writeUInt16(buffer, 0xFFFF);
 
 	return [
-		BlockParent.prototype.toBinary.apply(this, arguments),
+		Item.prototype.toBinary.apply(this, arguments),
 		buffer
 	];
 };

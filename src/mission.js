@@ -6,7 +6,7 @@ var os = require("os");
 var path = require("path");
 var Random = require("random-js");
 var data = require("./data");
-var Block = require("./block");
+var Item = require("./item");
 
 // Mission file extensions
 var FILE_EXT_TEXT = "Mission";
@@ -20,7 +20,7 @@ var FILE_EXT_LIST = "list";
  */
 function Mission(params) {
 
-	this.blocks = []; // Blocks list
+	this.items = []; // Items list
 	this.lang = []; // Language data
 	this.params = params; // Desired mission parameters
 
@@ -28,7 +28,7 @@ function Mission(params) {
 	this.rand = new Random(Random.engines.browserCrypto);
 
 	// Reserve an empty localization string (used in binary mission generation for
-	// blocks without LCName or LCDesc properties).
+	// items without LCName or LCDesc properties).
 	this.getLC("");
 
 	// Make mission parts
@@ -45,17 +45,17 @@ function Mission(params) {
 }
 
 /**
- * Add a new block to the mission.
+ * Add a new item to the mission.
  *
- * @param {Block} block Block object.
+ * @param {Item} item Item object.
  */
-Mission.prototype.addBlock = function(block) {
+Mission.prototype.addItem = function(item) {
 
-	if (!(block instanceof Block)) {
-		throw new TypeError("Invalid mission block value.");
+	if (!(item instanceof Item)) {
+		throw new TypeError("Invalid mission item value.");
 	}
 
-	this.blocks.push(block);
+	this.items.push(item);
 };
 
 /**
@@ -123,9 +123,9 @@ Mission.prototype.saveText = function(fileName) {
 		// Required mission file header
 		fileStream.write("# Mission File Version = 1.0;" + os.EOL);
 
-		// Write mission blocks
-		mission.blocks.forEach(function(block) {
-			fileStream.write(os.EOL + block.toString() + os.EOL);
+		// Write mission items
+		mission.items.forEach(function(item) {
+			fileStream.write(os.EOL + item.toString() + os.EOL);
 		});
 
 		// Required mission file footer
@@ -143,8 +143,8 @@ Mission.prototype.saveText = function(fileName) {
 Mission.prototype.saveBinary = function(fileName) {
 
 	var optionsBuffer;
-	var blockBuffers = [];
-	var numBlocks = 0;
+	var itemBuffers = [];
+	var numItems = 0;
 
 	// Create index tables
 	var indexTables = {
@@ -156,45 +156,45 @@ Mission.prototype.saveBinary = function(fileName) {
 		damaged: new BinaryIndexTable(32, 0)
 	};
 
-	// Collect binary representation of all mission blocks
-	(function walkBlocks(blocks) {
+	// Collect binary representation of all mission items
+	(function walkItems(items) {
 
-		blocks.forEach(function(block) {
+		items.forEach(function(item) {
 
-			// Process Group block child blocks
-			if (block instanceof Block.Group) {
+			// Process Group item child items
+			if (item instanceof Item.Group) {
 
-				if (block.blocks && block.blocks.length) {
-					walkBlocks(block.blocks);
+				if (item.items && item.items.length) {
+					walkItems(item.items);
 				}
 			}
-			// Get block binary representation (data buffers)
+			// Get item binary representation (data buffers)
 			else {
 
-				var buffer = block.toBinary(indexTables);
+				var buffer = item.toBinary(indexTables);
 
-				// Find Options block buffer
-				if (block instanceof Block.Options) {
+				// Find Options item buffer
+				if (item instanceof Item.Options) {
 					optionsBuffer = buffer;
 				}
-				// Process normal block buffers
+				// Process normal item buffers
 				else if (buffer.length) {
 
-					blockBuffers.push(buffer);
+					itemBuffers.push(buffer);
 
-					// Process linked block entity
-					if (block.entity) {
+					// Process linked item entity
+					if (item.entity) {
 
-						blockBuffers.push(block.entity.toBinary(indexTables));
-						numBlocks++;
+						itemBuffers.push(item.entity.toBinary(indexTables));
+						numItems++;
 					}
 
-					numBlocks++;
+					numItems++;
 				}
 			}
 		});
 
-	})(this.blocks);
+	})(this.items);
 
 	if (!optionsBuffer) {
 		throw new Error();
@@ -204,12 +204,12 @@ Mission.prototype.saveBinary = function(fileName) {
 
 	fileStream.once("open", function(fd) {
 
-		// Write Options block buffer (has to be the first one in the file)
+		// Write Options item buffer (has to be the first one in the file)
 		fileStream.write(optionsBuffer);
 
 		var indexTableNames = Object.keys(indexTables);
 		var itlhBuffer = new Buffer(7); // Index table list header buffer
-		var bsBuffer = new Buffer(4); // Block size buffer
+		var bsBuffer = new Buffer(4); // Item size buffer
 
 		// Write index table list header (number of index tables + 3 unknown bytes)
 		itlhBuffer.writeUInt32LE(indexTableNames.length, 0);
@@ -221,18 +221,18 @@ Mission.prototype.saveBinary = function(fileName) {
 			fileStream.write(indexTables[tableName].toBinary());
 		});
 
-		// Write blocks size buffer
-		bsBuffer.writeUInt32LE(numBlocks, 0);
+		// Write items size buffer
+		bsBuffer.writeUInt32LE(numItems, 0);
 		fileStream.write(bsBuffer);
 
-		// Write block buffers
-		blockBuffers.forEach(function(buffer) {
+		// Write item buffers
+		itemBuffers.forEach(function(buffer) {
 
-			// Single block buffer
+			// Single item buffer
 			if (Buffer.isBuffer(buffer)) {
 				fileStream.write(buffer);
 			}
-			// Multiple block buffers
+			// Multiple item buffers
 			else if (Array.isArray(buffer)) {
 
 				buffer.forEach(function(buffer) {

@@ -244,5 +244,5 @@ module.exports = function(mission, data) {
 	}
 
 	// Set mission options time
-	mission.blocks.Options.Time = new String(date.format("H:m:s"));
+	mission.items.Options.Time = new String(date.format("H:m:s"));
 };

@@ -4,45 +4,46 @@
 var fs = require("fs");
 var os = require("os");
 
-// Last block index value
+// Last item index value
 var lastIndex = 0;
 
-// Abstract base Block class
-function Block() {
+// Abstract base mission Item class
+function Item() {
 	throw new Error();
 }
 
-// Used for auto buffer write cursor tracking
+// Used to automatically track buffer write cursor
 Buffer.prototype._offset = 0;
 
-// Default block data values
-Block.DEFAULT_COUNTRY = 50; // Neutral country ID
-Block.DEFAULT_DAMAGE_REPORT = 50;
-Block.DEFAULT_DURABILITY = 25000;
+// Default item data values
+Item.DEFAULT_COALITION = 0; // Neutral coalition ID
+Item.DEFAULT_COUNTRY = 50; // Neutral country ID
+Item.DEFAULT_DAMAGE_REPORT = 50; // 50% of damage
+Item.DEFAULT_DURABILITY = 25000;
 
 /**
- * Add a new child block.
+ * Add a new child item.
  *
- * @param {Block} block Child block object.
+ * @param {Item} item Child item object.
  */
-Block.prototype.addBlock = function(block) {
+Item.prototype.addItem = function(item) {
 
-	if (!(block instanceof Block)) {
-		throw new TypeError("Invalid child block value.");
+	if (!(item instanceof Item)) {
+		throw new TypeError("Invalid child item value.");
 	}
 
-	// Initialize child blocks list
-	if (!this.blocks) {
-		Object.defineProperty(this, "blocks", {value: []});
+	// Initialize child items list
+	if (!this.items) {
+		Object.defineProperty(this, "items", {value: []});
 	}
 
-	this.blocks.push(block);
+	this.items.push(item);
 };
 
 /**
- * Set block index (id).
+ * Set item index (id).
  */
-Block.prototype.setIndex = function() {
+Item.prototype.setIndex = function() {
 
 	if (!this.Index) {
 		this.Index = ++lastIndex;
@@ -50,11 +51,11 @@ Block.prototype.setIndex = function() {
 };
 
 /**
- * Set block name.
+ * Set item name.
  *
  * @param {mixed} name Localized (number) or non-localized (string) name.
  */
-Block.prototype.setName = function(name) {
+Item.prototype.setName = function(name) {
 
 	if (typeof name === "number") {
 		this.LCName = name;
@@ -63,16 +64,16 @@ Block.prototype.setName = function(name) {
 		this.Name = name;
 	}
 	else {
-		throw new TypeError("Invalid block name value.");
+		throw new TypeError("Invalid item name value.");
 	}
 };
 
 /**
- * Set block description.
+ * Set item description.
  *
  * @param {mixed} desc Localized (number) or non-localized (string) description.
  */
-Block.prototype.setDescription = function(desc) {
+Item.prototype.setDescription = function(desc) {
 
 	if (typeof desc === "number") {
 		this.LCDesc = desc;
@@ -81,16 +82,16 @@ Block.prototype.setDescription = function(desc) {
 		this.Desc = desc;
 	}
 	else {
-		throw new TypeError("Invalid block description value.");
+		throw new TypeError("Invalid item description value.");
 	}
 };
 
 /**
- * Set block position.
+ * Set item position.
  *
  * @param {number|array} [...] Position X/Y/Z coordinates as an array or separate arguments.
  */
-Block.prototype.setPosition = function() {
+Item.prototype.setPosition = function() {
 
 	// Array position version: setPosition([X, Y, Z])
 	var position = arguments[0];
@@ -121,11 +122,11 @@ Block.prototype.setPosition = function() {
 };
 
 /**
- * Set block orientation.
+ * Set item orientation.
  *
  * @param {number|array} [...] Orientation X/Y/Z coordinates as an array or separate arguments.
  */
-Block.prototype.setOrientation = function() {
+Item.prototype.setOrientation = function() {
 
 	// Array orientation version: setOrientation([X, Y, Z])
 	var orientation = arguments[0];
@@ -156,40 +157,44 @@ Block.prototype.setOrientation = function() {
 };
 
 /**
- * Create a linked block entity.
+ * Create a linked item entity.
+ *
+ * @returns {Item} Linked item entity.
  */
-Block.prototype.createEntity = function() {
+Item.prototype.createEntity = function() {
 
 	if (this.entity) {
-		throw new Error("Block is already linked to an entity.");
+		throw new Error("Item is already linked to an entity.");
 	}
 
-	var entity = new Block.MCU_TR_Entity();
+	var entity = new Item.MCU_TR_Entity();
 
 	this.setIndex();
 	entity.setIndex();
 
-	// Link the block with entity
+	// Link the item with entity
 	this.LinkTrId = entity.Index;
 	entity.MisObjID = this.Index;
 
 	Object.defineProperty(this, "entity", {value: entity});
+
+	return entity;
 };
 
 /**
- * Get string representation of the block.
+ * Get string representation of the item.
  *
  * @param {number} indentLevel Indentation level.
- * @returns {string} String representation of the block.
+ * @returns {string} String representation of the item.
  */
-Block.prototype.toString = function(indentLevel) {
+Item.prototype.toString = function(indentLevel) {
 
 	indentLevel = indentLevel || 0;
 
 	var indent = new Array(2 * indentLevel + 1).join(" ");
 	var value = indent + this.type + os.EOL + indent + "{";
 
-	// Build block properties list
+	// Build item properties list
 	Object.keys(this).forEach(function(propName) {
 
 		var propValue = this[propName];
@@ -240,19 +245,19 @@ Block.prototype.toString = function(indentLevel) {
 
 	}, this);
 
-	// Serialize any child blocks
-	if (this.blocks && this.blocks.length) {
+	// Serialize any child items
+	if (this.items && this.items.length) {
 
 		indentLevel++;
 
-		this.blocks.forEach(function(block) {
-			value += os.EOL + os.EOL + block.toString(indentLevel);
+		this.items.forEach(function(item) {
+			value += os.EOL + os.EOL + item.toString(indentLevel);
 		});
 	}
 
 	value += os.EOL + indent + "}";
 
-	// Include linked block entity
+	// Include linked item entity
 	if (this.entity) {
 		value += os.EOL + os.EOL + this.entity.toString(indentLevel);
 	}
@@ -261,22 +266,22 @@ Block.prototype.toString = function(indentLevel) {
 };
 
 /**
- * Get base binary representation of the block.
+ * Get base binary representation of the item.
  *
  * @param {object} index Binary data index object.
- * @returns {Buffer} Base binary representation of the block.
+ * @returns {Buffer} Base binary representation of the item.
  */
-Block.prototype.toBinary = function(index) {
+Item.prototype.toBinary = function(index) {
 
-	if (!this.id) {
-		throw new Error("Invalid block binary type ID.");
+	if (!this.typeID) {
+		throw new Error("Invalid item binary type ID.");
 	}
 
-	// Write base block binary information
+	// Write base item binary information
 	var buffer = new Buffer(46);
 
-	// Block ID
-	this.writeUInt32(buffer, this.id);
+	// Item binary type ID
+	this.writeUInt32(buffer, this.typeID);
 
 	// Index
 	this.writeUInt32(buffer, this.Index || 0);
@@ -307,7 +312,12 @@ Block.prototype.toBinary = function(index) {
  *
  * @param {Buffer} buffer Target buffer object.
  */
-Block.prototype.writePosition = function(buffer) {
+Item.prototype.writePosition = function(buffer) {
+
+	// NOTE: Position in binary file is represented as a 64 bit double-precision
+	// floating-point value.
+
+	// TODO: Validate position values (take into account mission map size)
 
 	this.writeDouble(buffer, this.XPos || 0);
 	this.writeDouble(buffer, this.YPos || 0);
@@ -319,7 +329,7 @@ Block.prototype.writePosition = function(buffer) {
  *
  * @param {Buffer} buffer Target buffer object.
  */
-Block.prototype.writeOrientation = function(buffer) {
+Item.prototype.writeOrientation = function(buffer) {
 
 	// NOTE: Orientation in binary file is represented as a 16 bit unsigned integer
 	// number between 0 (equal to 0 degrees) and 60000 (equal to 360 degrees).
@@ -337,7 +347,7 @@ Block.prototype.writeOrientation = function(buffer) {
  * @param {number} stringLength String value length in bytes.
  * @param {string} stringValue String value to write.
  */
-Block.prototype.writeString = function(buffer, stringLength, stringValue) {
+Item.prototype.writeString = function(buffer, stringLength, stringValue) {
 
 	// NOTE: String values are represented in binary files as a length (32 bit
 	// unsigned integer) followed by an array of string byte characters.
@@ -359,7 +369,7 @@ Block.prototype.writeString = function(buffer, stringLength, stringValue) {
  * @param {Buffer} buffer Target buffer object.
  * @param {number} numberValue Number value to write.
  */
-Block.prototype.writeUInt32 = function(buffer, numberValue) {
+Item.prototype.writeUInt32 = function(buffer, numberValue) {
 
 	buffer.writeUInt32LE(numberValue, buffer._offset);
 	buffer._offset += 4;
@@ -371,7 +381,7 @@ Block.prototype.writeUInt32 = function(buffer, numberValue) {
  * @param {Buffer} buffer Target buffer object.
  * @param {number} numberValue Number value to write.
  */
-Block.prototype.writeUInt16 = function(buffer, numberValue) {
+Item.prototype.writeUInt16 = function(buffer, numberValue) {
 
 	buffer.writeUInt16LE(numberValue, buffer._offset);
 	buffer._offset += 2;
@@ -383,7 +393,7 @@ Block.prototype.writeUInt16 = function(buffer, numberValue) {
  * @param {Buffer} buffer Target buffer object.
  * @param {number} numberValue Number value to write.
  */
-Block.prototype.writeUInt8 = function(buffer, numberValue) {
+Item.prototype.writeUInt8 = function(buffer, numberValue) {
 
 	buffer.writeUInt8(numberValue, buffer._offset);
 	buffer._offset += 1;
@@ -395,7 +405,7 @@ Block.prototype.writeUInt8 = function(buffer, numberValue) {
  * @param {Buffer} buffer Target buffer object.
  * @param {number} numberValue Number value to write.
  */
-Block.prototype.writeDouble = function(buffer, numberValue) {
+Item.prototype.writeDouble = function(buffer, numberValue) {
 
 	buffer.writeDoubleLE(numberValue, buffer._offset);
 	buffer._offset += 8;
@@ -407,7 +417,7 @@ Block.prototype.writeDouble = function(buffer, numberValue) {
  * @param {Buffer} buffer Target buffer object.
  * @param {number} numberValue Number value to write.
  */
-Block.prototype.writeFloat = function(buffer, numberValue) {
+Item.prototype.writeFloat = function(buffer, numberValue) {
 
 	buffer.writeFloatLE(numberValue, buffer._offset);
 	buffer._offset += 4;
@@ -419,7 +429,7 @@ Block.prototype.writeFloat = function(buffer, numberValue) {
  * @param {Buffer} buffer Target buffer object.
  * @param {number} arrayValue Array value to write.
  */
-Block.prototype.writeUInt32Array = function(buffer, arrayValue) {
+Item.prototype.writeUInt32Array = function(buffer, arrayValue) {
 
 	// Array length
 	this.writeUInt32(buffer, arrayValue.length);
@@ -431,7 +441,7 @@ Block.prototype.writeUInt32Array = function(buffer, arrayValue) {
 
 		// Check for valid integer value
 		if (Number(value) !== value || value % 1 !== 0) {
-			throw new Error("Invalid block array value.");
+			throw new Error("Invalid item array value.");
 		}
 
 		this.writeUInt32(buffer, value);
@@ -439,37 +449,37 @@ Block.prototype.writeUInt32Array = function(buffer, arrayValue) {
 };
 
 /**
- * Read a list of blocks from a text file.
+ * Read a list of items from a text file.
  *
- * @param {string} file Block text file name/path.
- * @returns {array} List of blocks.
+ * @param {string} file Item text file name/path.
+ * @returns {array} List of items.
  */
-Block.readTextFile = function(file) {
+Item.readTextFile = function(file) {
 
 	var fileContent = fs.readFileSync(file, {
 		encoding: "ascii" // TODO
 	});
 
 	if (!fileContent.length) {
-		throw new Error("Could not read specified block file (no content).");
+		throw new Error("Could not read specified item file (no content).");
 	}
 
 	var Lexer = require("lex");
 	var lexer = new Lexer();
-	var blocks = [];
-	var blockStack = [];
+	var items = [];
+	var itemStack = [];
 
-	// Rule for the start of block definition
-	lexer.addRule(/\s*(\w+)\s*{\s*/i, function(matched, blockType) {
+	// Rule for the start of item definition
+	lexer.addRule(/\s*(\w+)\s*{\s*/i, function(matched, itemType) {
 
-		// Add new block to active blocks stack
-		blockStack.push(new Block[blockType]());
+		// Add new item to active items stack
+		itemStack.push(new Item[itemType]());
 	});
 
-	// Rule for block property
+	// Rule for item property
 	lexer.addRule(/\s*(\w+)\s*=\s*(.+);\s*/i, function(matched, propName, propValue) {
 
-		var block = blockStack[blockStack.length - 1];
+		var item = itemStack[itemStack.length - 1];
 		var propNumber = parseFloat(propValue);
 
 		// Value is a number
@@ -481,24 +491,24 @@ Block.readTextFile = function(file) {
 			propValue = propValue.replace(/^"(.*(?="$))"$/, "$1");
 		}
 
-		// TODO: Handle complex property types (like with the Options block)
+		// TODO: Handle complex property types (like with the Options item)
 
-		// Add block property
-		block[propName] = propValue;
+		// Add item property
+		item[propName] = propValue;
 	});
 
-	// Rule for the end of block definition
+	// Rule for the end of item definition
 	lexer.addRule(/\s*}\s*/i, function(matched) {
 
-		var block = blockStack.pop();
+		var item = itemStack.pop();
 
-		// Root block element
-		if (!blockStack.length) {
-			blocks.push(block);
+		// Root item element
+		if (!itemStack.length) {
+			items.push(item);
 		}
-		// Child block element
+		// Child item element
 		else {
-			blockStack[blockStack.length - 1].addBlock(block);
+			itemStack[itemStack.length - 1].addItem(item);
 		}
 	});
 
@@ -506,33 +516,33 @@ Block.readTextFile = function(file) {
 	lexer.lex();
 
 	// Make sure the stack is empty
-	if (blockStack.length) {
+	if (itemStack.length) {
 		throw new Error();
 	}
 
-	return blocks;
+	return items;
 };
 
-module.exports = Block;
+module.exports = Item;
 
-// Load all supported blocks
+// Load all supported mission items
 [
-	require("./block/Airfield"),
-	require("./block/Block"),
-	require("./block/Bridge"),
-	require("./block/Chart"),
-	require("./block/Damaged"),
-	require("./block/Flag"),
-	require("./block/Group"),
-	require("./block/MCU_Icon"),
-	require("./block/MCU_TR_Entity"),
-	require("./block/Options"),
-	require("./block/Plane"),
-	require("./block/Point"),
-	require("./block/Vehicle")
+	require("./item/Airfield"),
+	require("./item/Block"),
+	require("./item/Bridge"),
+	require("./item/Chart"),
+	require("./item/Damaged"),
+	require("./item/Flag"),
+	require("./item/Group"),
+	require("./item/MCU_Icon"),
+	require("./item/MCU_TR_Entity"),
+	require("./item/Options"),
+	require("./item/Plane"),
+	require("./item/Point"),
+	require("./item/Vehicle")
 ]
-.forEach(function(block) {
+.forEach(function(item) {
 
-	Object.defineProperty(block.prototype, "type", {value: block.name});
-	Block[block.name] = block;
+	Object.defineProperty(item.prototype, "type", {value: item.name});
+	Item[item.name] = item;
 });

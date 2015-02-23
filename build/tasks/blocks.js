@@ -8,10 +8,10 @@ module.exports = function(grunt) {
 
 		var numeral = require("numeral");
 		var data = require("../../src/data");
-		var Block = require("../../src/block");
+		var Item = require("../../src/item");
 
 		var totalBattles = 0;
-		var totalBlocks = 0;
+		var totalItems = 0;
 
 		// Process blocks for each battle
 		for (var battleID in data.battles) {
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 				var fileDestination = blocksPath + blockFile + ".json";
 
 				// Read raw blocks
-				var blocks = Block.readTextFile(fileSource);
+				var blocks = Item.readTextFile(fileSource);
 
 				var json = [];
 
@@ -35,35 +35,35 @@ module.exports = function(grunt) {
 
 					blocks.forEach(function(block) {
 
-						// Only import Block and Bridge type blocks
-						// TODO: Also import block damage (from Damaged child blocks)
-						if (block instanceof Block.Block || block instanceof Block.Bridge) {
+						// Only import Block and Bridge type items
+						// TODO: Also import block damage (from Damaged child items)
+						if (block instanceof Item.Block || block instanceof Item.Bridge) {
 
-							var blockType = data.registerBlock({
+							var itemTypeID = data.registerItemType({
 								type: block.type,
 								script: block.Script,
 								model: block.Model
 							});
 
-							var jsonBlock = [];
+							var jsonItem = [];
 
-							// Block type
-							jsonBlock.push(blockType);
+							// Item type ID
+							jsonItem.push(itemTypeID);
 
-							// Block position
-							jsonBlock.push(block.XPos || 0);
-							jsonBlock.push(block.ZPos || 0);
+							// Item position
+							jsonItem.push(block.XPos || 0);
+							jsonItem.push(block.ZPos || 0);
 
-							// Block orientation
-							jsonBlock.push(block.YOri || 0);
+							// Item orientation
+							jsonItem.push(block.YOri || 0);
 
-							json.push(jsonBlock);
+							json.push(jsonItem);
 
-							totalBlocks++;
+							totalItems++;
 						}
 						// Process any child blocks
-						else if (block instanceof Block.Group && block.blocks.length) {
-							buildJSON(json, block.blocks);
+						else if (block instanceof Item.Group && block.items.length) {
+							buildJSON(json, block.items);
 						}
 					});
 				})(json, blocks);
@@ -78,16 +78,16 @@ module.exports = function(grunt) {
 			totalBattles++;
 		}
 
-		// Write blocks type JSON data file
+		// Write items type JSON data file
 		grunt.file.write(
-			"data/blocks.json",
+			"data/items.json",
 			JSON.stringify(data.blocks, null, "\t")
 		);
 
 		var okMessage = "";
 
-		okMessage += numeral(totalBlocks).format("0,0") + " ";
-		okMessage += grunt.util.pluralize(totalBlocks, "block/blocks");
+		okMessage += numeral(totalItems).format("0,0") + " ";
+		okMessage += grunt.util.pluralize(totalItems, "item/items");
 		okMessage += " processed from " + numeral(totalBattles).format("0,0") + " ";
 		okMessage += grunt.util.pluralize(totalBattles, "battle/battles") + ".";
 

@@ -1,21 +1,21 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var BlockParent = require("../block");
+var Item = require("../item");
 
 // Entity block
 function MCU_TR_Entity() {
 
 }
 
-MCU_TR_Entity.prototype = Object.create(BlockParent.prototype);
-MCU_TR_Entity.prototype.id = 30;
+MCU_TR_Entity.prototype = Object.create(Item.prototype);
+MCU_TR_Entity.prototype.typeID = 30;
 
 /**
- * Get binary representation of the block.
+ * Get binary representation of the item.
  *
  * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the block.
+ * @returns {Buffer} Binary representation of the item.
  */
 MCU_TR_Entity.prototype.toBinary = function(index) {
 
@@ -38,7 +38,7 @@ MCU_TR_Entity.prototype.toBinary = function(index) {
 	this.writeUInt32(buffer, 0);
 
 	return [
-		BlockParent.prototype.toBinary.apply(this, arguments),
+		Item.prototype.toBinary.apply(this, arguments),
 		buffer
 	];
 };

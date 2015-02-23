@@ -1,21 +1,21 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var BlockParent = require("../block");
+var Item = require("../item");
 
-// Flag block
+// Flag item
 function Flag() {
 
 }
 
-Flag.prototype = Object.create(BlockParent.prototype);
-Flag.prototype.id = 13;
+Flag.prototype = Object.create(Item.prototype);
+Flag.prototype.typeID = 13;
 
 /**
- * Get binary representation of the block.
+ * Get binary representation of the item.
  *
  * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the block.
+ * @returns {Buffer} Binary representation of the item.
  */
 Flag.prototype.toBinary = function(index) {
 
@@ -30,7 +30,7 @@ Flag.prototype.toBinary = function(index) {
 	this.writeUInt32(buffer, this.LinkTrId || 0);
 
 	// Country
-	this.writeUInt16(buffer, this.Country || BlockParent.DEFAULT_COUNTRY);
+	this.writeUInt16(buffer, this.Country || Item.DEFAULT_COUNTRY);
 
 	// Unknown data
 	this.writeUInt16(buffer, 0);
@@ -60,7 +60,7 @@ Flag.prototype.toBinary = function(index) {
 	this.writeString(buffer, scriptLength, this.Script);
 
 	return [
-		BlockParent.prototype.toBinary.apply(this, arguments),
+		Item.prototype.toBinary.apply(this, arguments),
 		buffer
 	];
 };

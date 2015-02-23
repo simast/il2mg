@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2014 */
+/** @copyright Simas Toleikis, 2015 */
 "use strict";
 
 var util = require("util");
@@ -8,7 +8,7 @@ var moment = require("moment");
 module.exports = function(mission, data) {
 
 	var params = mission.params;
-	var options = mission.blocks.Options;
+	var options = mission.items.Options;
 	var battle = mission.battle;
 	var battleFrom = mission.battleFrom = moment(battle.from);
 	var battleTo = mission.battleTo = moment(battle.to);

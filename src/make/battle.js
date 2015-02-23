@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Block = require("../block");
+var Item = require("../item");
 
 // Generate mission battle info
 module.exports = function(mission, data) {
@@ -17,8 +17,8 @@ module.exports = function(mission, data) {
 	mission.battleID = battleID;
 	var battle = mission.battle = data.battles[battleID];
 
-	// Create main mission Options block
-	var options = new Block.Options();
+	// Create main mission Options item
+	var options = new Item.Options();
 
 	options.LCAuthor = mission.getLC(data.name + " " + data.version);
 	options.MissionType = 0; // Single-player mission
@@ -30,7 +30,8 @@ module.exports = function(mission, data) {
 
 		var countries = [];
 
-		countries.push([50, 0]); // Unknown country/coalition
+		// Unknown (neutral) country/coalition
+		countries.push([Item.DEFAULT_COUNTRY, Item.DEFAULT_COALITION]);
 
 		battle.countries.forEach(function(countryID) {
 			countries.push([countryID, data.countries[countryID].coalition]);
@@ -39,7 +40,7 @@ module.exports = function(mission, data) {
 		return countries;
 	})();
 
-	// Add "Options" mission block
-	mission.addBlock(options);
-	mission.blocks.Options = options;
+	// Add "Options" mission item
+	mission.addItem(options);
+	mission.items.Options = options;
 };
