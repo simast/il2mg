@@ -1,7 +1,8 @@
 [
+	// Trucks
 	{
 		"name": "Opel Blitz",
-		"type": "truck_cargo",
+		"type": ["truck", "truck_cargo"],
 		"countries": [201],
 		"model": "graphics\\vehicles\\opel\\opel-blitz.mgm",
 		"script": "luascripts\\worldobjects\\vehicles\\opel-blitz.txt",
@@ -11,17 +12,8 @@
 		}
 	},
 	{
-		"name": "Opel Blitz (Fuel)",
-		"type": "truck_fuel",
-		"countries": [201],
-		"static": {
-			"model": "graphics\\blocks\\static_opel_fuel.mgm",
-			"script": "luascripts\\worldobjects\\blocks\\static_opel_fuel.txt"
-		}
-	},
-	{
 		"name": "ZIS-5",
-		"type": "truck_cargo",
+		"type": ["truck", "truck_cargo"],
 		"countries": [101],
 		"model": "graphics\\vehicles\\zis5\\zis5.mgm",
 		"script": "luascripts\\worldobjects\\vehicles\\zis5.txt",
@@ -31,12 +23,180 @@
 		}
 	},
 	{
+		"name": "Opel Blitz (Fuel)",
+		"type": ["truck", "truck_fuel"],
+		"countries": [201],
+		"static": {
+			"model": "graphics\\blocks\\static_opel_fuel.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_opel_fuel.txt"
+		}
+	},
+	{
 		"name": "ZIS-5 (Fuel)",
-		"type": "truck_fuel",
+		"type": ["truck", "truck_fuel"],
 		"countries": [101],
 		"static": {
 			"model": "graphics\\blocks\\static_zis_fuel.mgm",
 			"script": "luascripts\\worldobjects\\blocks\\static_zis_fuel.txt"
 		}
+	},
+
+	// Anti-aircraft (Flak)
+	{
+		"name": "61-K",
+		"type": ["aa", "aa_flak", "aa_flak_light"],
+		"countries": [101],
+		"model": "graphics\\artillery\\61k\\61k.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\61k.txt"
+	},
+	{
+		"name": "Flak 38",
+		"type": ["aa", "aa_flak", "aa_flak_light"],
+		"countries": [201],
+		"model": "graphics\\artillery\\flak38\\flak38.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\flak38.txt"
+	},
+	{
+		"name": "52-K",
+		"type": ["aa", "aa_flak", "aa_flak_heavy"],
+		"countries": [101],
+		"model": "graphics\\artillery\\52k\\52k.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\52k.txt"
+	},
+	{
+		"name": "Flak 37",
+		"type": ["aa", "aa_flak", "aa_flak_heavy"],
+		"countries": [201],
+		"model": "graphics\\artillery\\flak37\\flak37.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\flak37.txt"
+	},
+
+	// Anti-aircraft (MG)
+	{
+		"name": "Quad Maxim AA",
+		"type": ["aa", "aa_mg"],
+		"countries": [101],
+		"model": "graphics\\artillery\\maksim4-aa\\maksim4-aa.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\maksim4-aa.txt"
+	},
+	{
+		"name": "MG 34 AA",
+		"type": ["aa", "aa_mg"],
+		"countries": [201],
+		"model": "graphics\\artillery\\mg34-aa\\mg34-aa.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\mg34-aa.txt"
+	},
+
+	// Anti-aircraft (Mobile)
+	{
+		"name": "GAZ-AA Quad Maxim AA",
+		"type": ["aa", "aa_mobile"],
+		"countries": [101],
+		"model": "graphics\\artillery\\gaz\\gaz-aa-m4-aa.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\gaz-aa-m4-aa.txt"
+	},
+	{
+		"name": "Sd.Kfz.10 Flak 38",
+		"type": ["aa", "aa_mobile"],
+		"countries": [201],
+		"model": "graphics\\artillery\\sdkfz10-flak38\\sdkfz10-flak38.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\sdkfz10-flak38.txt"
+	},
+
+	// Tanks
+	{
+		"name": "KV-1 mod.1942",
+		"type": ["tank", "tank_heavy"],
+		"countries": [101],
+		"model": "graphics\\vehicles\\kv1-42\\kv1-42.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\kv1-42.txt"
+	},
+	{
+		"name": "Pz.Kpfw.IV Ausf.G",
+		"type": ["tank", "tank_heavy", "tank_medium"],
+		"countries": [201],
+		"model": "graphics\\vehicles\\pziv-g\\pziv-g.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\pziv-g.txt"
+	},
+	{
+		"name": "T-34/76 STZ",
+		"type": ["tank", "tank_medium"],
+		"countries": [101],
+		"model": "graphics\\vehicles\\t34-76stz\\t34-76stz.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\t34-76stz.txt"
+	},
+	{
+		"name": "Pz.Kpfw.III Ausf.L",
+		"type": ["tank", "tank_medium", "tank_light"],
+		"countries": [201],
+		"model": "graphics\\vehicles\\pziii-l\\pziii-l.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\pziii-l.txt"
+	},
+	{
+		"name": "T-70",
+		"type": ["tank", "tank_light"],
+		"countries": [101],
+		"model": "graphics\\vehicles\\t70\\t70.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\t70.txt"
+	},
+	{
+		"name": "StuG III Ausf.C-D",
+		"type": ["tank", "tank_destroyer"],
+		"countries": [201],
+		"model": "graphics\\vehicles\\stug37l24\\stug37l24.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\stug37l24.txt"
+	},
+	{
+		"name": "StuG III Ausf.F",
+		"type": ["tank", "tank_destroyer"],
+		"countries": [201],
+		"model": "graphics\\vehicles\\stug40l43\\stug40l43.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\stug40l43.txt"
+	},
+
+	// APCs and armored cars
+	{
+		"name": "BA-64",
+		"type": ["apc", "scout"],
+		"countries": [101],
+		"model": "graphics\\vehicles\\ba64\\ba64.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\ba64.txt"
+	},
+	{
+		"name": "BA-10M",
+		"type": ["apc", "scout"],
+		"countries": [101],
+		"model": "graphics\\vehicles\\ba10m\\ba10m.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\ba10m.txt"
+	},
+	{
+		"name": "Sd.Kfz.251/1 Ausf.C",
+		"type": ["apc", "scout"],
+		"countries": [201],
+		"model": "graphics\\vehicles\\sdkfz251-1c\\sdkfz251-1c.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\sdkfz251-1c.txt"
+	},
+	{
+		"name": "Sd.Kfz.251 Wurfrahmen 40",
+		"type": ["apc", "rocket_artillery"],
+		"countries": [201],
+		"model": "graphics\\vehicles\\sdkfz251-szf\\sdkfz251-szf.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\sdkfz251-szf.txt"
+	},
+
+	// Staff cars
+	{
+		"name": "GAZ-M1",
+		"type": ["staff_car"],
+		"countries": [101],
+		"model": "graphics\\vehicles\\gaz-m\\gaz-m.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\gaz-m.txt"
+	},
+	{
+		"name": "Horch 830",
+		"type": ["staff_car"],
+		"countries": [201],
+		"model": "graphics\\vehicles\\horch830\\horch830.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\horch830.txt"
 	}
 ]
