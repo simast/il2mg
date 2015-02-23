@@ -1,4 +1,6 @@
 [
-	"base", // Other villages and bridges
-	"city" // Stalingrad city
+	"towns",
+	"bridges",
+	"rwstations",
+	"city"
 ]
