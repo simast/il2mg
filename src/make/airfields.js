@@ -139,7 +139,10 @@ module.exports = function(mission, data) {
 		}
 		// Beacon tag
 		else if (itemData === itemTags.BEACON) {
+
 			itemObject.createEntity();
+			itemObject.Country = 201;
+			itemObject.BeaconChannel = 1;
 		}
 
 		return [itemObject];
@@ -169,11 +172,14 @@ module.exports = function(mission, data) {
 						staticVehicles[countryID] = {};
 					}
 
-					if (!staticVehicles[countryID][vehicle.type]) {
-						staticVehicles[countryID][vehicle.type] = [];
-					}
+					vehicle.type.forEach(function(vehicleType) {
 
-					staticVehicles[countryID][vehicle.type].push(vehicle);
+						if (!staticVehicles[countryID][vehicleType]) {
+							staticVehicles[countryID][vehicleType] = [];
+						}
+
+						staticVehicles[countryID][vehicleType].push(vehicle);
+					});
 				});
 			}
 		}
@@ -226,6 +232,7 @@ module.exports = function(mission, data) {
 
 		itemObject.Model = "graphics\\artillery\\mg34-aa\\mg34-aa.mgm";
 		itemObject.Script = "LuaScripts\\WorldObjects\\vehicles\\mg34-aa.txt";
+		itemObject.Country = 201;
 		// itemObject.Model = "graphics\\characters\\BotField_SoldierGER\\SoldierGER.MGM";
 		// itemObject.Script = "LuaScripts\\WorldObjects\\bots\\botfield_soldierger.txt";
 		itemObject.setPosition(item[1], item[2]);

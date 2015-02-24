@@ -140,6 +140,13 @@
 		"script": "luascripts\\worldobjects\\vehicles\\t70.txt"
 	},
 	{
+		"name": "BT-7M",
+		"type": ["tank", "tank_light"],
+		"countries": [101],
+		"model": "graphics\\vehicles\\bt7m\\bt7m.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\bt7m.txt"
+	},
+	{
 		"name": "StuG III Ausf.C-D",
 		"type": ["tank", "tank_destroyer"],
 		"countries": [201],
