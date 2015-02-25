@@ -23,6 +23,20 @@
 		}
 	},
 	{
+		"name": "Ford G917T",
+		"type": ["truck", "truck_cargo"],
+		"countries": [201],
+		"model": "graphics\\vehicles\\ford-g917\\ford-g917.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\ford-g917.txt"
+	},
+	{
+		"name": "GAZ-AA",
+		"type": ["truck", "truck_cargo"],
+		"countries": [101],
+		"model": "graphics\\vehicles\\gaz-aa\\gaz-aa.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\gaz-aa.txt"
+	},
+	{
 		"name": "Opel Blitz (Fuel)",
 		"type": ["truck", "truck_fuel"],
 		"countries": [201],
@@ -161,17 +175,17 @@
 		"script": "luascripts\\worldobjects\\vehicles\\stug40l43.txt"
 	},
 
-	// APCs and armored cars
+	// APCs, armored cars and rocket artillery
 	{
 		"name": "BA-64",
-		"type": ["apc", "scout"],
+		"type": ["armored_car", "scout"],
 		"countries": [101],
 		"model": "graphics\\vehicles\\ba64\\ba64.mgm",
 		"script": "luascripts\\worldobjects\\vehicles\\ba64.txt"
 	},
 	{
 		"name": "BA-10M",
-		"type": ["apc", "scout"],
+		"type": ["armored_car", "scout"],
 		"countries": [101],
 		"model": "graphics\\vehicles\\ba10m\\ba10m.mgm",
 		"script": "luascripts\\worldobjects\\vehicles\\ba10m.txt"
@@ -190,6 +204,13 @@
 		"model": "graphics\\vehicles\\sdkfz251-szf\\sdkfz251-szf.mgm",
 		"script": "luascripts\\worldobjects\\vehicles\\sdkfz251-szf.txt"
 	},
+	{
+		"name": "BM-13",
+		"type": ["rocket_artillery"],
+		"countries": [101],
+		"model": "graphics\\artillery\\zis\\bm13.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\bm13.txt"
+	},
 
 	// Staff cars
 	{
@@ -205,5 +226,67 @@
 		"countries": [201],
 		"model": "graphics\\vehicles\\horch830\\horch830.mgm",
 		"script": "luascripts\\worldobjects\\vehicles\\horch830.txt"
+	},
+
+	// Machine gun
+	{
+		"name": "MG 34",
+		"type": ["mg"],
+		"countries": [201],
+		"model": "graphics\\artillery\\mg34\\mg34.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\mg34.txt"
+	},
+	{
+		"name": "DShK",
+		"type": ["mg"],
+		"countries": [101],
+		"model": "graphics\\artillery\\dshk\\dshk.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\dshk.txt"
+	},
+
+	// Artillery
+	{
+		"name": "leFH 18",
+		"type": ["artillery", "artillery_howitzer"],
+		"countries": [201],
+		"model": "graphics\\artillery\\lefh18\\lefh18.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\lefh18.txt"
+	},
+	{
+		"name": "ML-20",
+		"type": ["artillery", "artillery_howitzer"],
+		"countries": [101],
+		"model": "graphics\\artillery\\ml20\\ml20.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\ml20.txt"
+	},
+
+	// Anti-tank guns
+	{
+		"name": "Pak 38",
+		"type": ["at_gun"],
+		"countries": [201],
+		"model": "graphics\\artillery\\pak38\\pak38.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\pak38.txt"
+	},
+	{
+		"name": "ZiS-3",
+		"type": ["at_gun"],
+		"countries": [101],
+		"model": "graphics\\artillery\\zis3gun\\zis3gun.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\zis3gun.txt"
+	},
+	{
+		"name": "Pak 40",
+		"type": ["at_gun"],
+		"countries": [201],
+		"model": "graphics\\artillery\\pak40\\pak40.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\pak40.txt"
+	},
+	{
+		"name": "ZiS-2",
+		"type": ["at_gun"],
+		"countries": [101],
+		"model": "graphics\\artillery\\zis2gun\\zis2gun.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\zis2gun.txt"
 	}
 ]

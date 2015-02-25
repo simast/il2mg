@@ -36,6 +36,7 @@ function Mission(params) {
 	require("./make/date")(this, data);
 	require("./make/time")(this, data);
 	require("./make/map")(this, data);
+	require("./make/vehicles")(this, data);
 	require("./make/weather")(this, data);
 	require("./make/blocks")(this, data);
 	require("./make/airfields")(this, data);

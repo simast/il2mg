@@ -34,6 +34,7 @@ module.exports = function(grunt) {
 		}
 
 		encloseOptions.push("--config=../enclose.js");
+		encloseOptions.push("--loglevel=error");
 		encloseOptions.push("--output=../" + buildName + extension);
 		encloseOptions.push(grunt.config("pkg.main"));
 

@@ -151,38 +151,7 @@ module.exports = function(mission, data) {
 	// Make a stationary/static vehicle item
 	function makeStaticVehicle(item) {
 
-		var staticVehicles = makeStaticVehicle.data;
-
-		// Build an indexed list of all static vehicles per country and type
-		if (!makeStaticVehicle.data) {
-
-			staticVehicles = makeStaticVehicle.data = {};
-
-			for (var i = 0; i < data.vehicles.length; i++) {
-
-				var vehicle = data.vehicles[i];
-
-				if (!vehicle.static) {
-					continue;
-				}
-
-				vehicle.countries.forEach(function(countryID) {
-
-					if (!staticVehicles[countryID]) {
-						staticVehicles[countryID] = {};
-					}
-
-					vehicle.type.forEach(function(vehicleType) {
-
-						if (!staticVehicles[countryID][vehicleType]) {
-							staticVehicles[countryID][vehicleType] = [];
-						}
-
-						staticVehicles[countryID][vehicleType].push(vehicle);
-					});
-				});
-			}
-		}
+		var staticVehicles = mission.staticVehicles;
 
 		// TODO: Pick from a list of countries with presence (from units)
 		var countryID = 201;
@@ -228,13 +197,32 @@ module.exports = function(mission, data) {
 	// Make anti-aircraft vehicle item
 	function makeAAVehicle(item) {
 
+		var vehicles = mission.vehicles;
+
+		// TODO: Pick from a list of countries with presence (from units)
+		var countryID = 201;
+
+		if (!vehicles[countryID]) {
+			return;
+		}
+
+		var vehicleType;
+
+		if (item[0] === itemTags.AA_MG) {
+			vehicleType = "aa_mg";
+		}
+		else if (item[0] === itemTags.AA_FLAK) {
+			vehicleType = "aa_flak";
+		}
+
+		// TODO: Limit number of AA vehicles based on number of units on the airfield
+		var randVehicle = mission.rand.pick(vehicles[countryID][vehicleType]);
+
 		var itemObject = new Item.Vehicle();
 
-		itemObject.Model = "graphics\\artillery\\mg34-aa\\mg34-aa.mgm";
-		itemObject.Script = "LuaScripts\\WorldObjects\\vehicles\\mg34-aa.txt";
-		itemObject.Country = 201;
-		// itemObject.Model = "graphics\\characters\\BotField_SoldierGER\\SoldierGER.MGM";
-		// itemObject.Script = "LuaScripts\\WorldObjects\\bots\\botfield_soldierger.txt";
+		itemObject.Model = randVehicle.model;
+		itemObject.Script = randVehicle.script;
+		itemObject.Country = countryID;
 		itemObject.setPosition(item[1], item[2]);
 		itemObject.setOrientation(item[3]);
 
