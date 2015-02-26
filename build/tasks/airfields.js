@@ -86,6 +86,14 @@ module.exports = function(grunt) {
 							else if (item.Name === "AA:FLAK") {
 								itemTypeID = itemTags.AA_FLAK;
 							}
+							// Search light
+							else if (item.Name === "LIGHT:SEARCH") {
+								itemTypeID = itemTags.LIGHT_SEARCH;
+							}
+							// Landing light
+							else if (item.Name === "LIGHT:LANDING") {
+								itemTypeID = itemTags.LIGHT_LANDING;
+							}
 							// Normal item
 							else {
 

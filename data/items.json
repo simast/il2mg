@@ -989,6 +989,31 @@
 			"type": "Block",
 			"script": "luascripts\\worldobjects\\blocks\\mg_position.txt",
 			"model": "graphics\\blocks\\mg_position.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\art_position_small.txt",
+			"model": "graphics\\blocks\\art_position_small.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\art_position_at2.txt",
+			"model": "graphics\\blocks\\art_position_at2.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\art_position_big.txt",
+			"model": "graphics\\blocks\\art_position_big.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\art_position_at.txt",
+			"model": "graphics\\blocks\\art_position_at.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\art_position_medium.txt",
+			"model": "graphics\\blocks\\art_position_medium.mgm"
 		}
 	],
 	"index": {
@@ -1189,6 +1214,11 @@
 		"luascripts\\worldobjects\\blocks\\watertower.txt": 194,
 		"luascripts\\worldobjects\\vehicles\\ndb.txt": 195,
 		"luascripts\\worldobjects\\flags\\windsock.txt": 196,
-		"luascripts\\worldobjects\\blocks\\mg_position.txt": 197
+		"luascripts\\worldobjects\\blocks\\mg_position.txt": 197,
+		"luascripts\\worldobjects\\blocks\\art_position_small.txt": 198,
+		"luascripts\\worldobjects\\blocks\\art_position_at2.txt": 199,
+		"luascripts\\worldobjects\\blocks\\art_position_big.txt": 200,
+		"luascripts\\worldobjects\\blocks\\art_position_at.txt": 201,
+		"luascripts\\worldobjects\\blocks\\art_position_medium.txt": 202
 	}
 }

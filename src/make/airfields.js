@@ -5,6 +5,8 @@ var Item = require("../item");
 
 // Data tags for airfield items
 var itemTags = {
+	LIGHT_LANDING: -8, // Landing light
+	LIGHT_SEARCH: -7, // Search light
 	AA_FLAK: -6, // Anti-aircraft (Flak)
 	AA_MG: -5, // Anti-aircraft (MG)
 	CAR: -4, // Car vehicle
@@ -88,6 +90,12 @@ module.exports = function(mission, data) {
 						case itemTags.AA_MG: {
 
 							itemObjects = makeAAVehicle(item);
+							break;
+						}
+
+						// TODO: Search/landing light item
+						case itemTags.LIGHT_SEARCH:
+						case itemTags.LIGHT_LANDING: {
 							break;
 						}
 					}

@@ -64,7 +64,7 @@
 		"script": "luascripts\\worldobjects\\vehicles\\61k.txt"
 	},
 	{
-		"name": "Flak 38",
+		"name": "FlaK 38",
 		"type": ["aa", "aa_flak", "aa_flak_light"],
 		"countries": [201],
 		"model": "graphics\\artillery\\flak38\\flak38.mgm",
@@ -78,7 +78,7 @@
 		"script": "luascripts\\worldobjects\\vehicles\\52k.txt"
 	},
 	{
-		"name": "Flak 37",
+		"name": "FlaK 37",
 		"type": ["aa", "aa_flak", "aa_flak_heavy"],
 		"countries": [201],
 		"model": "graphics\\artillery\\flak37\\flak37.mgm",
@@ -110,7 +110,7 @@
 		"script": "luascripts\\worldobjects\\vehicles\\gaz-aa-m4-aa.txt"
 	},
 	{
-		"name": "Sd.Kfz.10 Flak 38",
+		"name": "Sd.Kfz.10 FlaK 38",
 		"type": ["aa", "aa_mobile"],
 		"countries": [201],
 		"model": "graphics\\artillery\\sdkfz10-flak38\\sdkfz10-flak38.mgm",
@@ -262,7 +262,7 @@
 
 	// Anti-tank guns
 	{
-		"name": "Pak 38",
+		"name": "PaK 38",
 		"type": ["at_gun"],
 		"countries": [201],
 		"model": "graphics\\artillery\\pak38\\pak38.mgm",
@@ -276,7 +276,7 @@
 		"script": "luascripts\\worldobjects\\vehicles\\zis3gun.txt"
 	},
 	{
-		"name": "Pak 40",
+		"name": "PaK 40",
 		"type": ["at_gun"],
 		"countries": [201],
 		"model": "graphics\\artillery\\pak40\\pak40.mgm",
@@ -288,5 +288,37 @@
 		"countries": [101],
 		"model": "graphics\\artillery\\zis2gun\\zis2gun.mgm",
 		"script": "luascripts\\worldobjects\\vehicles\\zis2gun.txt"
+	},
+
+	// Landing lights
+	{
+		"name": "Landing light",
+		"type": ["landing_light"],
+		"countries": [201],
+		"model": "graphics\\artillery\\searchlightger\\landlightger.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\landlightger.txt"
+	},
+	{
+		"name": "Landing light",
+		"type": ["landing_light"],
+		"countries": [101],
+		"model": "graphics\\artillery\\searchlights\\landlightsu.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\landlightsu.txt"
+	},
+
+	// Search lights
+	{
+		"name": "Search light",
+		"type": ["search_light"],
+		"countries": [201],
+		"model": "graphics\\artillery\\searchlightger\\searchlightger.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\searchlightger.txt"
+	},
+	{
+		"name": "Search light",
+		"type": ["search_light"],
+		"countries": [101],
+		"model": "graphics\\artillery\\searchlights\\searchlightsu.mgm",
+		"script": "luascripts\\worldobjects\\vehicles\\searchlightsu.txt"
 	}
 ]
