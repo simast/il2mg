@@ -1,0 +1,137 @@
+{
+	// Sturzkampfgeschwader 2 "Immelmann"
+	"stg2": {
+		"name": "Sturzkampfgeschwader 2",
+		"alias": "Immelmann"
+	},
+
+	// Stab/StG 2
+	"stg2_stab": {
+		"name": "Stab/StG 2",
+		"parent": "stg2",
+		"active": true,
+		"airfields": [
+			["oblivskaya", "start", "end"]
+		],
+		"planes": [
+			["Fw189A1", 4, "start", "1942-10"],
+			["Bf110F4", 2, "start", "1942-10"],
+			["Bf110E3", 2, "start", "1942-10"],
+			["Ju87D1", 3, "start", "1942-11"],
+			["Bf110F3", 5, "1942-12", "end"],
+			["Ju87D3", 1, "1942-12", "end"],
+			["Bf110G3", 2, "1943-01", "end"]
+		]
+	},
+
+	// I./StG 2
+	"stg2_i": {
+		"name": [
+			["I./StG 2", "start", "1942-11-26"],
+			// NOTE: Known as I.(Eins.)/StG 2 (Eins. for Einsatzgruppe - operational
+			// wing) since 1942-11-27.
+			["I.(Eins.)/StG 2", "1942-11-27", "end"]
+		],
+		"parent": "stg2",
+		"airfields": [
+			["oblivskaya", "start", "end"]
+		],
+		"planes": [
+			["Ju87D1", 23, "1942-07"],
+			["Ju87D3", 15, "1942-07"],
+			["Ju87D1", 17, "1942-08"],
+			["Ju87D3", 15, "1942-08"],
+			// NOTE: Around 1942-09-07 one or two staffeln (2./StG 2 and 3./StG 2?)
+			// were sent north to Krasnogvardeisk (Gatchina) to take part in Operation
+			// Nordlicht. Detachment rejoined the rest of the gruppe at Karpovka-West
+			// around 1942-11-01.
+			["Ju87D1", 11, "1942-09-01", "1942-09-06"],
+			["Ju87D3", 14, "1942-09-01", "1942-09-06"],
+			["Ju87D1", 7, "1942-09-07", "1942-09-end"],
+			["Ju87D3", 6, "1942-09-07", "1942-09-end"],
+			["Ju87D1", 5, "1942-10"],
+			["Ju87D3", 8, "1942-10"],
+			["Ju87D1", 6, "1942-11"],
+			["Ju87D3", 19, "1942-11"],
+			["Ju87D1", 3, "1942-12"],
+			["Ju87D3", 31, "1942-12"],
+			["Ju87D1", 2, "1943-01-01", "end"],
+			["Ju87D3", 33, "1943-01-01", "end"]
+		]
+	},
+	"stg2_i_stab": {
+		"name": [
+			["Stab I./StG 2", "start", "1942-11-26"],
+			["Stab I.(Eins.)/StG 2", "1942-11-27", "end"]
+		],
+		"parent": "stg2_i",
+		"active": true,
+		"maxPlanes": 5
+	},
+	"stg2_1": {
+		"name": "1./StG 2",
+		"parent": "stg2_i",
+		"active": true
+	},
+	"stg2_2": {
+		"name": "2./StG 2",
+		"parent": "stg2_i",
+		"active": true,
+		"airfields": [
+			["gatchina", "1942-09-07", "1942-10-end"]
+		]
+	},
+	"stg2_3": {
+		"name": "3./StG 2",
+		"parent": "stg2_i",
+		"active": true,
+		"airfields": [
+			["gatchina", "1942-09-07", "1942-10-end"]
+		]
+	},
+
+	// II./StG 2
+	"stg2_ii": {
+		"name": "II./StG 2",
+		"parent": "stg2",
+		"airfields": [
+			["oblivskaya", "start", "end"]
+		],
+		"planes": [
+			["Ju87D1", 7, "1942-07"],
+			["Ju87D3", 20, "1942-07"],
+			["Ju87D1", 7, "1942-08"],
+			["Ju87D3", 18, "1942-08"],
+			["Ju87D1", 7, "1942-09"],
+			["Ju87D3", 15, "1942-09"],
+			["Ju87D1", 7, "1942-10"],
+			["Ju87D3", 17, "1942-10"],
+			["Ju87D1", 5, "1942-11-01", "1942-11-23"],
+			["Ju87D3", 18, "1942-11-01", "1942-11-23"]
+		]
+	},
+	"stg2_ii_stab": {
+		"name": "Stab II./StG 2",
+		"parent": "stg2_ii",
+		"active": true,
+		"maxPlanes": 5
+	},
+	"stg2_4": {
+		"name": "4./StG 2",
+		"parent": "stg2_ii",
+		"active": true
+	},
+	"stg2_5": {
+		"name": "5./StG 2",
+		"parent": "stg2_ii",
+		"active": true
+	},
+	"stg2_6": {
+		"name": "6./StG 2",
+		"parent": "stg2_ii",
+		"active": true
+	}
+
+	// NOTE: III./StG 2 operated up north (Kharkov, Voronezh, Vyazma)
+	// NOTE: IV.(Erg.)/StG 2 operated in Crimea/Caucasus
+}

@@ -1,37 +1,6 @@
-// Special Stuka squadron inside the Stalingrad pocket
 {
+	// Special Stuka squadron inside the Stalingrad pocket
 	"sonderstaffel": {
-		"name": "Stuka-Sonderstaffel",
-		"airfields": {
-			"pitomnik": {
-				"from": "1942-11-23",
-				"to": "1943-01-16"
-			}
-		},
-		"airplanes": {
-			"min": 4,
-			"max": 8,
-			"limit": 3, // 1 kette max
-			"types": {
-				"Ju87D3": 6,
-				"Ju87D1": 1
-			}
-		},
-		"missions": {
-
-			// Evacuation mission on the day Pitomnik fell
-			"transfer": {
-				"airfield": "gumrak",
-				"from": "1943-01-16",
-				"to": "1943-01-16",
-				"weight": false
-			}
-		},
-		"pilots": {
-			"Heinz Jungclausen": {
-				"rank": 12,
-				"commander": true
-			}
-		}
+		"name": "Stuka-Sonderstaffel"
 	}
 }

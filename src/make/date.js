@@ -10,8 +10,8 @@ module.exports = function(mission, data) {
 	var params = mission.params;
 	var options = mission.items.Options;
 	var battle = mission.battle;
-	var battleFrom = mission.battleFrom = moment(battle.from);
-	var battleTo = mission.battleTo = moment(battle.to);
+	var battleFrom = moment(battle.from).startOf("day");
+	var battleTo = moment(battle.to).endOf("day");
 	var date = params.date;
 
 	// Validate desired date (from params)
@@ -24,9 +24,11 @@ module.exports = function(mission, data) {
 	}
 	// Generate a random date
 	else if (!date) {
-		date = battleFrom.add(mission.rand.real(0, 1) * battleTo.add(1, "d").diff(battleFrom), "milliseconds");
+		date = moment(battleFrom).add(mission.rand.real(0, 1) * battleTo.diff(battleFrom), "milliseconds");
 	}
 
+	mission.battleFrom = battleFrom;
+	mission.battleTo = battleTo;
 	mission.date = date;
 
 	// Set mission options date

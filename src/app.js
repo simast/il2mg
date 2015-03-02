@@ -112,7 +112,7 @@ params.option("-D, --debug", "use debug (development) mode");
  * --type - Mission type.
  * --airport - Airport.
  * --unit - Squadron/group/unit/etc.
- * --airplane - Airplane type.
+ * --plane - Plane type.
  * --pilot - Pilot name.
  * --players - Number of players.
  * --complexity - Mission complexity (detail level).

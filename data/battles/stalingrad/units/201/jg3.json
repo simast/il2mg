@@ -1,106 +1,143 @@
-// Jagdgeschwader 3 "Udet"
 {
+	// Jagdgeschwader 3 "Udet"
 	"jg3": {
 		"name": "Jagdgeschwader 3",
 		"alias": "Udet"
 	},
+
+	// Stab/JG 3
 	"jg3_stab": {
 		"name": "Stab/JG 3",
 		"parent": "jg3",
-		"airfields": {
-			"pitomnik": {
-				"to": "1942-11-22"
-			},
-			"morozovskiy_west": {
-				"from": "1942-11-22",
-				"to": "1942-12-23"
-			},
-			"morozovskiy_south": {
-				"from": "1942-12-23",
-				"to": "1943-01-03"
-			}
-		},
-		"airplanes": {
-			"min": 3,
-			"max": 7,
-			"limit": 4, // 1 swarm max
-			"types": {
-				"Bf109G2": 2,
-				"Bf109G4": 1
-			}
-		},
-		"pilots": {
-			"Wolf-Dietrich Wilcke": {
-				"rank": {
-					"14": {
-						"to": "1942-12-22"
-					},
-					"15": {
-						"from": "1942-12-23"
-					}
-				},
-				"commander": true
-			}
-		}
+		"active": true,
+		"airfields": [
+			["oblivskaya", "start", "end"]
+		],
+		"planes": [
+			["Bf109F4trop", 5, "1942-07"],
+			["Bf109F4trop", 5, "1942-08"],
+			["Bf109F4trop", 2, "1942-09"],
+			["Bf109G2", 3, "1942-09"],
+			["Bf109G2", 5, "1942-10"],
+			["Bf109G2", 6, "1942-11"],
+			["Bf109G2", 2, "1942-12"],
+			["Bf109G4", 3, "1942-12"],
+			["Bf109G4", 3, "1943-01"]
+		]
 	},
+
+	// I./JG 3
 	"jg3_i": {
 		"name": "I./JG 3",
-		"parent": "jg3"
+		"parent": "jg3",
+		"airfields": [
+			["oblivskaya", "start", "end"]
+		],
+		"planes": [
+			["Bf109F4trop", 32, "1942-07"],
+			["Bf109F4trop", 31, "1942-08"],
+			["Bf109F4trop", 28, "1942-09-01", "1942-09-07"],
+			["Bf109G2", 37, "1942-09-24", "1942-09-end"],
+			["Bf109G2", 32, "1942-10"],
+			["Bf109G2", 34, "1942-11"],
+			["Bf109G2", 26, "1942-12"],
+			["Bf109G2", 17, "1943-01"]
+		]
 	},
 	"jg3_i_stab": {
-		"name": "Stab I./JG3",
-		"parent": "jg3_i"
+		"name": "Stab I./JG 3",
+		"parent": "jg3_i",
+		"active": true,
+		"maxPlanes": 6
 	},
 	"jg3_1": {
-		"name": "1./JG3",
-		"parent": "jg3_i"
+		"name": "1./JG 3",
+		"parent": "jg3_i",
+		"active": true
 	},
 	"jg3_2": {
-		"name": "2./JG3",
-		"parent": "jg3_i"
+		"name": "2./JG 3",
+		"parent": "jg3_i",
+		"active": true
 	},
 	"jg3_3": {
-		"name": "3./JG3",
-		"parent": "jg3_i"
+		"name": "3./JG 3",
+		"parent": "jg3_i",
+		"active": true
 	},
+
+	// II./JG 3
 	"jg3_ii": {
 		"name": "II./JG 3",
-		"parent": "jg3"
+		"parent": "jg3",
+		"airfields": [
+			["oblivskaya", "start", "end"]
+		],
+		"planes": [
+			["Bf109F4trop", 30, "1942-07"],
+			["Bf109F4trop", 28, "1942-08-01", "1942-08-23"],
+			// NOTE: On 1942-08-23 left for Germany, re-equipped with Bf 109 G-2 and then
+			// went up north near Leningrad, then to Smolensk, then returned to Stalingrad.
+			["Bf109G2", 24, "1942-12-12", "1942-12-end"],
+			["Bf109G2", 17, "1943-01-01", "end"]
+		]
 	},
 	"jg3_ii_stab": {
-		"name": "Stab II./JG3",
-		"parent": "jg3_ii"
+		"name": "Stab II./JG 3",
+		"parent": "jg3_ii",
+		"active": true,
+		"maxPlanes": 6
 	},
 	"jg3_4": {
-		"name": "4./JG3",
-		"parent": "jg3_ii"
+		"name": "4./JG 3",
+		"parent": "jg3_ii",
+		"active": true
 	},
 	"jg3_5": {
-		"name": "5./JG3",
-		"parent": "jg3_ii"
+		"name": "5./JG 3",
+		"parent": "jg3_ii",
+		"active": true
 	},
 	"jg3_6": {
-		"name": "6./JG3",
-		"parent": "jg3_ii"
+		"name": "6./JG 3",
+		"parent": "jg3_ii",
+		"active": true
 	},
+
+	// III./JG 3
 	"jg3_iii": {
 		"name": "III./JG 3",
-		"parent": "jg3"
+		"parent": "jg3",
+		"airfields": [
+			["oblivskaya", "start", "end"]
+		],
+		"planes": [
+			["Bf109F4", 30, "1942-07"],
+			["Bf109F4", 29, "1942-08"],
+			["Bf109F4", 25, "1942-09"],
+			["Bf109F4", 24, "1942-10"],
+			["Bf109F4", 15, "1942-11"],
+			["Bf109G2", 8, "1942-11"],
+			["Bf109F4", 11, "1942-12"],
+			["Bf109G2", 10, "1942-12"],
+			["Bf109G2", 15, "1943-01-01", "end"]
+		]
 	},
 	"jg3_iii_stab": {
-		"name": "Stab III./JG3",
-		"parent": "jg3_iii"
+		"name": "Stab III./JG 3",
+		"parent": "jg3_iii",
+		"active": true,
+		"maxPlanes": 6
 	},
-	"jg3_7": {
-		"name": "7./JG3",
-		"parent": "jg3_iii"
-	},
+	// NOTE: 7./JG 3 was temporary disbanded between 1942-08 and 1943-02.
 	"jg3_8": {
-		"name": "8./JG3",
-		"parent": "jg3_iii"
+		"name": "8./JG 3",
+		"parent": "jg3_iii",
+		"active": true
 	},
 	"jg3_9": {
-		"name": "9./JG3",
-		"parent": "jg3_iii"
+		"name": "9./JG 3",
+		"parent": "jg3_iii",
+		"active": true
 	}
 }

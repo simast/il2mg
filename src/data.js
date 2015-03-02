@@ -23,7 +23,7 @@ var data = (function() {
 
 	data.name = require("../data/name");
 	data.version = require("../data/version");
-	data.airplanes = require("../data/airplanes");
+	data.planes = require("../data/planes");
 	data.vehicles = require("../data/vehicles");
 	data.clouds = require("../data/clouds");
 	data.coalitions = require("../data/coalitions");
@@ -67,7 +67,6 @@ var data = (function() {
 		// Load country-specific battle units
 		battle.countries.forEach(function(countryID) {
 
-			var countryUnits = battle.units[countryID] = Object.create(null);
 			var countryUnitsPath = battlePath + "units/" + countryID;
 
 			require(countryUnitsPath).forEach(function(unitFile) {
@@ -75,7 +74,9 @@ var data = (function() {
 				var fileUnits = require(countryUnitsPath + "/" + unitFile);
 
 				for (var unitID in fileUnits) {
-					countryUnits[unitID] = fileUnits[unitID];
+
+					battle.units[unitID] = fileUnits[unitID];
+					battle.units[unitID].country = countryID;
 				}
 			});
 		});

@@ -1,4 +1,5 @@
 {
+	// Bf 109 F-4
 	"Bf109F4": {
 		"name": "Bf 109 F-4",
 		"model": "graphics\\planes\\Bf109F4\\Bf109F4.mgm",
@@ -12,6 +13,14 @@
 			"wind": 7.5 // Max tolerable wind at ground level (m/s)
 		}
 	},
+
+	// Bf 109 F-4/trop
+	"Bf109F4trop": {
+		"name": "Bf 109 F-4/trop",
+		"alias": "Bf109F4"
+	},
+
+	// Bf 109 G-2
 	"Bf109G2": {
 		"name": "Bf 109 G-2",
 		"model": "graphics\\planes\\Bf109G2\\Bf109G2.mgm",
@@ -25,7 +34,14 @@
 			"wind": 7.5
 		}
 	},
-	"Bf109G4": "Bf109G2",
+
+	// Bf 109 G-4
+	"Bf109G4": {
+		"name": "Bf 109 G-4",
+		"alias": "Bf109G2"
+	},
+
+	// LaGG-3 ser.29
 	"LaGG3s29": {
 		"name": "LaGG-3 ser.29",
 		"model": "graphics\\planes\\LaGG3s29\\LaGG3s29.mgm",
@@ -39,6 +55,8 @@
 			"wind": 8.5
 		}
 	},
+
+	// La-5 ser.8
 	"La5s8": {
 		"name": "La-5 ser.8",
 		"model": "graphics\\planes\\La5s8\\La5s8.mgm",
@@ -52,6 +70,8 @@
 			"wind": 8.5
 		}
 	},
+
+	// Yak-1 ser.69
 	"Yak1s69": {
 		"name": "Yak-1 ser.69",
 		"model": "graphics\\planes\\Yak1s69\\Yak1s69.mgm",
@@ -65,6 +85,8 @@
 			"wind": 7.5
 		}
 	},
+
+	// Fw 190 A-3
 	"Fw190A3": {
 		"name": "Fw 190 A-3",
 		"model": "graphics\\planes\\Fw190A3\\Fw190A3.mgm",
@@ -78,6 +100,8 @@
 			"wind": 5.5
 		}
 	},
+
+	// Il-2 mod.1942
 	"Il2m42": {
 		"name": "Il-2 mod.1942",
 		"model": "graphics\\planes\\Il2m42\\Il2m42.mgm",
@@ -91,7 +115,14 @@
 			"wind": 10.5
 		}
 	},
-	"Ju87D1": "Ju87D3",
+
+	// Ju 87 D-1
+	"Ju87D1": {
+		"name": "Ju 87 D-1",
+		"alias": "Ju87D3"
+	},
+
+	// Ju 87 D-3
 	"Ju87D3": {
 		"name": "Ju 87 D-3",
 		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
@@ -105,6 +136,8 @@
 			"wind": 5.5
 		}
 	},
+
+	// Pe-2 ser.87
 	"Pe2s87": {
 		"name": "Pe-2 ser.87",
 		"model": "graphics\\planes\\Pe2s87\\Pe2s87.mgm",
@@ -118,6 +151,8 @@
 			"wind": 10.5
 		}
 	},
+
+	// He 111 H-6
 	"He111H6": {
 		"name": "He 111 H-6",
 		"model": "graphics\\planes\\He111H6\\He111H6.mgm",
@@ -130,5 +165,20 @@
 			"range": 0,
 			"wind": 8.5
 		}
-	}
+	},
+
+	// Fw 189 A-1
+	"Fw189A1": null,
+
+	// Bf 110 F-3
+	"Bf110F3": null,
+
+	// Bf 110 F-4
+	"Bf110F4": null,
+
+	// Bf 110 E-3
+	"Bf110E3": null,
+
+	// Bf 110 G-3
+	"Bf110G3": null
 }

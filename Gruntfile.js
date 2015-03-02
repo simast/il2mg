@@ -19,7 +19,8 @@ module.exports = function(grunt) {
 			all: {
 				src: grunt.file.match("**/*.js", sourceFiles),
 				options: {
-					config: "jscs.json"
+					config: "jscs.json",
+					esnext: true
 				}
 			}
 		},
@@ -30,6 +31,7 @@ module.exports = function(grunt) {
 				src: grunt.file.match("**/*.js", sourceFiles),
 				options: {
 					node: true,
+					esnext: true,
 					"-W053": true, // Do not use {a} as a constructor
 					"-W055": true, // A constructor name should start with an uppercase letter
 					"-W083": true // Don't make functions within a loop
