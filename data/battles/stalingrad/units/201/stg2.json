@@ -66,7 +66,8 @@
 		],
 		"parent": "stg2_i",
 		"active": true,
-		"maxPlanes": 5
+		"planesMin": 3,
+		"planesMax": 6
 	},
 	"stg2_1": {
 		"name": "1./StG 2",
@@ -114,7 +115,8 @@
 		"name": "Stab II./StG 2",
 		"parent": "stg2_ii",
 		"active": true,
-		"maxPlanes": 5
+		"planesMin": 3,
+		"planesMax": 6
 	},
 	"stg2_4": {
 		"name": "4./StG 2",

@@ -48,7 +48,8 @@
 		"name": "Stab I./JG 3",
 		"parent": "jg3_i",
 		"active": true,
-		"maxPlanes": 6
+		"planesMin": 3,
+		"planesMax": 6
 	},
 	"jg3_1": {
 		"name": "1./JG 3",
@@ -86,7 +87,8 @@
 		"name": "Stab II./JG 3",
 		"parent": "jg3_ii",
 		"active": true,
-		"maxPlanes": 6
+		"planesMin": 3,
+		"planesMax": 6
 	},
 	"jg3_4": {
 		"name": "4./JG 3",
@@ -127,7 +129,8 @@
 		"name": "Stab III./JG 3",
 		"parent": "jg3_iii",
 		"active": true,
-		"maxPlanes": 6
+		"planesMin": 3,
+		"planesMax": 6
 	},
 	// NOTE: 7./JG 3 was temporary disbanded between 1942-08 and 1943-02.
 	"jg3_8": {

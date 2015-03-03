@@ -1,170 +1,299 @@
 {
+	// Bf 109
+	"Bf109": {
+		"type": ["fighter", "fighter_light"],
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_bf109.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_bf109.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_bf109_open.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_bf109_open.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_bf109_net.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
+				"outside": true
+			}
+		]
+	},
+
+	// Bf 109 F
+	"Bf109F": {
+		"parent": "Bf109"
+	},
+
 	// Bf 109 F-4
 	"Bf109F4": {
 		"name": "Bf 109 F-4",
+		"parent": "Bf109F",
 		"model": "graphics\\planes\\Bf109F4\\Bf109F4.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109F4.txt",
-		"countries": [201],
-		"limits": {
-			"speed": 550, // Max speed (km/h)
-			"climb": [19.5, 280], // Max climb rate (m/s), max climb speed (km/h)
-			"altitude": 11500, // Max altitude, service ceiling (m)
-			"range": 0, // Range with max fuel (km)
-			"wind": 7.5 // Max tolerable wind at ground level (m/s)
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109F4.txt"
 	},
 
 	// Bf 109 F-4/trop
 	"Bf109F4trop": {
 		"name": "Bf 109 F-4/trop",
-		"alias": "Bf109F4"
+		"parent": "Bf109F4"
+	},
+
+	// Bf 109 G
+	"Bf109G": {
+		"parent": "Bf109"
 	},
 
 	// Bf 109 G-2
 	"Bf109G2": {
 		"name": "Bf 109 G-2",
+		"parent": "Bf109G",
 		"model": "graphics\\planes\\Bf109G2\\Bf109G2.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109G2.txt",
-		"countries": [201],
-		"limits": {
-			"speed": 550,
-			"climb": [19.5, 280],
-			"altitude": 11500,
-			"range": 0,
-			"wind": 7.5
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109G2.txt"
 	},
 
 	// Bf 109 G-4
 	"Bf109G4": {
 		"name": "Bf 109 G-4",
-		"alias": "Bf109G2"
+		"parent": "Bf109G2"
+	},
+
+	// LaGG-3
+	"LaGG3": {
+		"type": ["fighter", "fighter_light"],
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_lagg3.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_lagg3.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_lagg3_w1.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_w1.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_lagg3_w2.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_w2.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_lagg3_net.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
+				"outside": true
+			}
+		]
 	},
 
 	// LaGG-3 ser.29
 	"LaGG3s29": {
 		"name": "LaGG-3 ser.29",
+		"parent": "LaGG3",
 		"model": "graphics\\planes\\LaGG3s29\\LaGG3s29.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\LaGG3s29.txt",
-		"countries": [101],
-		"limits": {
-			"speed": 530,
-			"climb": [15.0, 270],
-			"altitude": 9000,
-			"range": 0,
-			"wind": 8.5
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\LaGG3s29.txt"
+	},
+
+	// La-5
+	"La5": {
+		"type": ["fighter", "fighter_light"],
+		// NOTE: Static La-5 models are not available, using LaGG-3 as a workaround
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_lagg3.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_lagg3.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_lagg3_w1.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_w1.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_lagg3_w2.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_w2.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_lagg3_net.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
+				"outside": true
+			}
+		]
 	},
 
 	// La-5 ser.8
 	"La5s8": {
 		"name": "La-5 ser.8",
+		"parent": "La5",
 		"model": "graphics\\planes\\La5s8\\La5s8.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\La5s8.txt",
-		"countries": [101],
-		"limits": {
-			"speed": 603,
-			"climb": [18.0, 275],
-			"altitude": 9000,
-			"range": 0,
-			"wind": 8.5
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\La5s8.txt"
+	},
+
+	// Yak-1
+	"Yak1": {
+		"type": ["fighter", "fighter_light"],
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_yak1.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_yak1.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_yak1_open.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_yak1_open.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_yak1_net.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_yak1_net.txt",
+				"outside": true
+			}
+		]
 	},
 
 	// Yak-1 ser.69
 	"Yak1s69": {
 		"name": "Yak-1 ser.69",
+		"parent": "Yak1",
 		"model": "graphics\\planes\\Yak1s69\\Yak1s69.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Yak1s69.txt",
-		"countries": [101],
-		"limits": {
-			"speed": 580,
-			"climb": [17.0, 260],
-			"altitude": 10000,
-			"range": 0,
-			"wind": 7.5
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\Yak1s69.txt"
+	},
+
+	// Fw 190
+	"Fw190": {
+		"type": ["fighter", "fighter_light"]
+	},
+
+	// Fw 190 A
+	"Fw190A": {
+		"parent": "Fw190"
 	},
 
 	// Fw 190 A-3
 	"Fw190A3": {
 		"name": "Fw 190 A-3",
+		"parent": "Fw190A",
 		"model": "graphics\\planes\\Fw190A3\\Fw190A3.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Fw190A3.txt",
-		"countries": [201],
-		"limits": {
-			"speed": 548,
-			"climb": [13.5, 295],
-			"altitude": 11300,
-			"range": 0,
-			"wind": 5.5
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\Fw190A3.txt"
+	},
+
+	// Il-2
+	"Il2": {
+		"type": ["ground_attack"],
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_il2.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_il2.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_il2_net.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_il2_net.txt",
+				"outside": true
+			}
+		]
 	},
 
 	// Il-2 mod.1942
 	"Il2m42": {
 		"name": "Il-2 mod.1942",
+		"parent": "Il2",
 		"model": "graphics\\planes\\Il2m42\\Il2m42.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Il2m42.txt",
-		"countries": [101],
-		"limits": {
-			"speed": 412,
-			"climb": [6.8, 260],
-			"altitude": 6000,
-			"range": 0,
-			"wind": 10.5
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\Il2m42.txt"
+	},
+
+	// Ju 87
+	"Ju87": {
+		"type": ["ground_attack", "dive_bomber"],
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_ju87.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_ju87.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_ju87_open.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_ju87_open.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_ju87_net.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_ju87_net.txt",
+				"outside": true
+			}
+		]
+	},
+
+	// Ju 87 D
+	"Ju87D": {
+		"parent": "Ju87"
 	},
 
 	// Ju 87 D-1
 	"Ju87D1": {
 		"name": "Ju 87 D-1",
-		"alias": "Ju87D3"
+		"parent": "Ju87D3"
 	},
 
 	// Ju 87 D-3
 	"Ju87D3": {
 		"name": "Ju 87 D-3",
+		"parent": "Ju87D",
+		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
+		"script": "LuaScripts\\WorldObjects\\Planes\\Ju87D3.txt"
+	},
+
+	// Ju 87 G
+	"Ju87G": {
+		"parent": "Ju87"
+	},
+
+	// Ju 87 G-1
+	"Ju87G1": {
+		"name": "Ju 87 G-1",
+		"parent": "Ju87G",
 		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
 		"script": "LuaScripts\\WorldObjects\\Planes\\Ju87D3.txt",
-		"countries": [201],
-		"limits": {
-			"speed": 425,
-			"climb": [8.0, 250],
-			"altitude": 6500,
-			"range": 0,
-			"wind": 5.5
-		}
+		"type": ["ground_attack"]
+	},
+
+	// Pe-2
+	"Pe2": {
+		"type": ["dive_bomber", "level_bomber"],
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_pe2.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_pe2.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_pe2_open.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_pe2_open.txt"
+			}
+		]
 	},
 
 	// Pe-2 ser.87
 	"Pe2s87": {
 		"name": "Pe-2 ser.87",
+		"parent": "Pe2",
 		"model": "graphics\\planes\\Pe2s87\\Pe2s87.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Pe2s87.txt",
-		"countries": [101],
-		"limits": {
-			"speed": 505,
-			"climb": [10.5, 300],
-			"altitude": 8000,
-			"range": 0,
-			"wind": 10.5
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\Pe2s87.txt"
+	},
+
+	// He 111
+	"He111": {
+		"type": ["level_bomber", "transport"],
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_he111.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_he111.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_he111_open.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_he111_open.txt"
+			}
+		]
+	},
+
+	// He 111 H
+	"He111H": {
+		"parent": "He111"
 	},
 
 	// He 111 H-6
 	"He111H6": {
 		"name": "He 111 H-6",
+		"parent": "He111H",
 		"model": "graphics\\planes\\He111H6\\He111H6.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\He111H6.txt",
-		"countries": [201],
-		"limits": {
-			"speed": 367,
-			"climb": [5.5, 230],
-			"altitude": 6300,
-			"range": 0,
-			"wind": 8.5
-		}
+		"script": "LuaScripts\\WorldObjects\\Planes\\He111H6.txt"
 	},
 
 	// Fw 189 A-1

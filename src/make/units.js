@@ -3,7 +3,7 @@
 
 var moment = require("moment");
 
-// Generate available mission units index
+// Generate available mission units
 module.exports = function(mission, data) {
 
 	var battle = mission.battle;
@@ -14,29 +14,28 @@ module.exports = function(mission, data) {
 	var unitsByID = Object.create(null);
 	var unitsByAirfield = Object.create(null);
 	var unitsByCountry = Object.create(null);
-	var unitsByPlane = Object.create(null);
 
 	// Process all battle units and build index lists
 	for (var unitID in battle.units) {
 
 		var unit = Object.create(null);
-		var dataUnit = battle.units[unitID];
+		var unitData = battle.units[unitID];
 
 		// Ignore not active units (used for organizational data hierarchy only)
-		if (!dataUnit.active) {
+		if (!unitData.active) {
 			continue;
 		}
 
-		var airfields = getAirfields(dataUnit);
+		var airfields = getAirfields(unitData);
 
 		// Ignore units without active airfields
 		if (!airfields.length) {
 			continue;
 		}
 
-		var unitPlaneStorages = getPlaneStorages(dataUnit);
+		var unitPlaneStorages = getPlaneStorages(unitData);
 
-		// Ignore units without active plane storages
+		// Ignore units without active plane storages (no planes)
 		if (!unitPlaneStorages.length) {
 			continue;
 		}
@@ -44,87 +43,126 @@ module.exports = function(mission, data) {
 		// Register unit plane storages
 		unitPlaneStorages.forEach(function(planeStorage) {
 
-			planeStorage.units = planeStorage.units || new Set();
-			planeStorage.units.add(unitID);
+			planeStorage.units = planeStorage.units || [];
+			planeStorage.units.push(unitID);
 
 			planeStorages.add(planeStorage);
 		});
 
-		unit.name = getName(dataUnit);
-		unit.country = dataUnit.country;
+		unit.name = getName(unitData);
+
+		// Unit alias (nickname)
+		var alias = getAlias(unitData);
+
+		if (alias) {
+			unit.alias = alias;
+		}
+
+		unit.country = unitData.country;
 		unit.planes = [];
+
+		// TODO: Add full support for planesMin
+		if (Number.isInteger(unitData.planesMax)) {
+			unit.planes.required = mission.rand.integer(unitData.planesMin || 0, unitData.planesMax);
+		}
 
 		// TODO: Split units with multiple airfields
 		unit.airfield = airfields[0];
 
+		// Register unit to ID index
 		unitsByID[unitID] = unit;
+
+		// Register unit to airfields index
+		unitsByAirfield[unit.airfield] = unitsByAirfield[unit.airfield] || {};
+		unitsByAirfield[unit.airfield][unitID] = unit;
+
+		// Register unit to country index
+		unitsByCountry[unit.country] = unitsByCountry[unit.country] || {};
+		unitsByCountry[unit.country][unitID] = unit;
 	}
 
-	// Distribute planes from plane storages
-	for (var planeStorage of planeStorages) {
+	// Distribute available planes from plane storages
+	planeStorages.forEach(function(planeStorage) {
 
-		var planesCount = planeStorage[1];
+		// TODO: Improve plane distribution algorithm
+		// TODO: Honor min/max plane counts
+		// TODO: Pick planes based on rating
 
-		if (planesCount <= 0) {
-			continue;
-		}
+		while (planeStorage[1] > 0) {
 
-		// TODO: Improve/fix planes distribution algorithm
+			var planeID = planeStorage[0];
+			var plane = mission.planesByID[planeID];
 
-		var planeID = planeStorage[0];
-		var planesPerUnit = Math.round(planesCount / planeStorage.units.size);
-
-		for (unitID of planeStorage.units) {
-
-			for (var i = 0; i < planesPerUnit; i++) {
-				unitsByID[unitID].planes.push(planeID);
+			// Handle plane groups
+			if (Array.isArray(plane)) {
+				planeID = mission.rand.pick(plane);
 			}
+
+			// Pick random unit
+			var unitID = mission.rand.pick(planeStorage.units);
+			var unit = unitsByID[unitID];
+
+			if (unit.planes.required !== undefined && unit.planes.length >= unit.planes.required) {
+				continue;
+			}
+
+			unit.planes.push(planeID);
+			planeStorage[1]--;
 		}
-	}
+	});
 
 	// Get unit airfields
-	function getAirfields(dataUnit) {
+	function getAirfields(unitData) {
 
 		var airfields = [];
 
 		// TODO: Dynamically generate rebase/transfer missions
 
-		// Look up (inherit) airfield data from parent units
-		while (!airfields.length && dataUnit) {
+		// Inherit airfield data from parent unit data
+		while (!airfields.length && unitData) {
 
-			var dataAirfields = dataUnit.airfields;
-			dataUnit = battle.units[dataUnit.parent];
+			var dataAirfields = unitData.airfields;
+			unitData = battle.units[unitData.parent];
 
 			if (!Array.isArray(dataAirfields)) {
 				continue;
 			}
 
 			// Find matching airfields based on to/from date ranges
-			dataAirfields.forEach(function(airfield) {
+			for (var airfield of dataAirfields) {
 
 				var airfieldID = airfield[0];
 
-				if (missionDateIsBetween(airfield[1], airfield[2]) &&
-						airfields.indexOf(airfieldID) === -1) {
+				if (missionDateIsBetween(airfield[1], airfield[2])) {
 
-					airfields.push(airfieldID);
+					// Non-existant airfield
+					if (!battle.airfields[airfieldID]) {
+
+						unitData = null;
+						continue;
+					}
+
+					// Add found airfield entry
+					if (airfields.indexOf(airfieldID) === -1) {
+						airfields.push(airfieldID);
+					}
 				}
-			});
+			}
 		}
 
 		return airfields;
 	}
 
 	// Get unit plane storages
-	function getPlaneStorages(dataUnit) {
+	function getPlaneStorages(unitData) {
 
 		var planeStorages = [];
 
-		// Look up (inherit) plane storage data from parent units
-		while (dataUnit) {
+		// Inherit plane storage data from parent unit data
+		while (unitData) {
 
-			var dataPlanes = dataUnit.planes;
-			dataUnit = battle.units[dataUnit.parent];
+			var dataPlanes = unitData.planes;
+			unitData = battle.units[unitData.parent];
 
 			if (!Array.isArray(dataPlanes)) {
 				continue;
@@ -143,18 +181,18 @@ module.exports = function(mission, data) {
 	}
 
 	// Get unit name
-	function getName(dataUnit) {
+	function getName(unitData) {
 
-		var name = dataUnit.name;
+		var name = unitData.name;
 
 		// Unit name in data files can be an array (to model name changes based on date)
 		if (Array.isArray(name)) {
 
 			name = null;
 
-			for (var i = 0; i < dataUnit.name.length; i++) {
+			for (var i = 0; i < unitData.name.length; i++) {
 
-				var dataName = dataUnit.name[i];
+				var dataName = unitData.name[i];
 
 				if (missionDateIsBetween(dataName[1], dataName[2])) {
 
@@ -172,7 +210,22 @@ module.exports = function(mission, data) {
 		return name;
 	}
 
-	// Utility function used to match mission date with to/from date ranges
+	// Get unit alias
+	function getAlias(unitData) {
+
+		var alias;
+
+		// Inherit unit alias from parent unit data
+		while (unitData) {
+
+			alias = unitData.alias;
+			unitData = battle.units[unitData.parent];
+		}
+
+		return alias;
+	}
+
+	// Utility function used to validate to/from date ranges based on mission date
 	function missionDateIsBetween(dateFrom, dateTo) {
 
 		dateFrom = parseDate(dateFrom).startOf("day");
@@ -207,11 +260,6 @@ module.exports = function(mission, data) {
 		else {
 
 			var dateParts = date.split("-");
-
-			if (dateParts.length < 2 || dateParts.length > 3) {
-				throw new Error("Invalid date format: " + date);
-			}
-
 			var momentDate = moment();
 
 			momentDate.year(dateParts[0]);
@@ -233,4 +281,9 @@ module.exports = function(mission, data) {
 			return momentDate;
 		}
 	}
+
+	// Static unit data index objects
+	mission.unitsByID = Object.freeze(unitsByID);
+	mission.unitsByAirfield = Object.freeze(unitsByAirfield);
+	mission.unitsByCountry = Object.freeze(unitsByCountry);
 };
