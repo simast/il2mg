@@ -15,13 +15,15 @@ module.exports = function(mission, data) {
 
 		var planeData = data.planes[planeID];
 
-		// Ignore dummy plane definitions
-		if (!planeData) {
+		// Ignore dummy plane definitions (and groups used to catalog planes)
+		if (!planeData || !planeData.name) {
 			continue;
 		}
 
-		var plane = {};
+		var plane = Object.create(null);
 		var planeGroupID;
+
+		planeID = planeID.toLowerCase();
 
 		// Build plane data and register plane parent/group hierarchy
 		while (planeData) {
@@ -29,8 +31,15 @@ module.exports = function(mission, data) {
 			// Collect/copy plane data from current hierarchy
 			for (var prop in planeData) {
 
-				if (!plane.hasOwnProperty(prop)) {
-					plane[prop] = planeData[prop];
+				if (plane[prop] === undefined) {
+
+					// NOTE: All plane IDs must be lowercase in index tables
+					if (prop === "parent") {
+						plane[prop] = planeData[prop].toLowerCase();
+					}
+					else {
+						plane[prop] = planeData[prop];
+					}
 				}
 			}
 
@@ -39,6 +48,9 @@ module.exports = function(mission, data) {
 			if (!planeParentID) {
 				break;
 			}
+
+			planeData = data.planes[planeParentID];
+			planeParentID = planeParentID.toLowerCase();
 
 			// Register plane in the parent group hierarchy
 			if (plane.name) {
@@ -53,12 +65,14 @@ module.exports = function(mission, data) {
 				}
 			}
 
-			planeData = data.planes[planeParentID];
 			planeGroupID = planeParentID;
 		}
 
-		// Not a real plane (but a parent hierarchy used to catalog plane groups/types)
-		if (!plane.name || !plane.model || !plane.script) {
+		// Remove invalid plane definition
+		if (!plane.model || !plane.script) {
+
+			// TODO: Clean up parent plane groups
+
 			continue;
 		}
 

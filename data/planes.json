@@ -28,8 +28,8 @@
 	"Bf109F4": {
 		"name": "Bf 109 F-4",
 		"parent": "Bf109F",
-		"model": "graphics\\planes\\Bf109F4\\Bf109F4.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109F4.txt"
+		"model": "graphics\\planes\\bf109f4\\bf109f4.mgm",
+		"script": "luascripts\\worldobjects\\planes\\bf109f4.txt"
 	},
 
 	// Bf 109 F-4/trop
@@ -47,8 +47,8 @@
 	"Bf109G2": {
 		"name": "Bf 109 G-2",
 		"parent": "Bf109G",
-		"model": "graphics\\planes\\Bf109G2\\Bf109G2.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Bf109G2.txt"
+		"model": "graphics\\planes\\bf109g2\\bf109g2.mgm",
+		"script": "luascripts\\worldobjects\\planes\\bf109g2.txt"
 	},
 
 	// Bf 109 G-4
@@ -85,8 +85,8 @@
 	"LaGG3s29": {
 		"name": "LaGG-3 ser.29",
 		"parent": "LaGG3",
-		"model": "graphics\\planes\\LaGG3s29\\LaGG3s29.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\LaGG3s29.txt"
+		"model": "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
+		"script": "luascripts\\worldobjects\\planes\\lagg3s29.txt"
 	},
 
 	// La-5
@@ -118,8 +118,8 @@
 	"La5s8": {
 		"name": "La-5 ser.8",
 		"parent": "La5",
-		"model": "graphics\\planes\\La5s8\\La5s8.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\La5s8.txt"
+		"model": "graphics\\planes\\la5s8\\la5s8.mgm",
+		"script": "luascripts\\worldobjects\\planes\\la5s8.txt"
 	},
 
 	// Yak-1
@@ -146,8 +146,8 @@
 	"Yak1s69": {
 		"name": "Yak-1 ser.69",
 		"parent": "Yak1",
-		"model": "graphics\\planes\\Yak1s69\\Yak1s69.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Yak1s69.txt"
+		"model": "graphics\\planes\\yak1s69\\yak1s69.mgm",
+		"script": "luascripts\\worldobjects\\planes\\yak1s69.txt"
 	},
 
 	// Fw 190
@@ -164,8 +164,8 @@
 	"Fw190A3": {
 		"name": "Fw 190 A-3",
 		"parent": "Fw190A",
-		"model": "graphics\\planes\\Fw190A3\\Fw190A3.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Fw190A3.txt"
+		"model": "graphics\\planes\\fw190a3\\fw190a3.mgm",
+		"script": "luascripts\\worldobjects\\planes\\fw190a3.txt"
 	},
 
 	// Il-2
@@ -188,8 +188,8 @@
 	"Il2m42": {
 		"name": "Il-2 mod.1942",
 		"parent": "Il2",
-		"model": "graphics\\planes\\Il2m42\\Il2m42.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Il2m42.txt"
+		"model": "graphics\\planes\\il2m42\\il2m42.mgm",
+		"script": "luascripts\\worldobjects\\planes\\il2m42.txt"
 	},
 
 	// Ju 87
@@ -228,7 +228,7 @@
 		"name": "Ju 87 D-3",
 		"parent": "Ju87D",
 		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Ju87D3.txt"
+		"script": "luascripts\\worldobjects\\planes\\ju87d3.txt"
 	},
 
 	// Ju 87 G
@@ -241,7 +241,7 @@
 		"name": "Ju 87 G-1",
 		"parent": "Ju87G",
 		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Ju87D3.txt",
+		"script": "luascripts\\worldobjects\\planes\\ju87d3.txt",
 		"type": ["ground_attack"]
 	},
 
@@ -264,8 +264,8 @@
 	"Pe2s87": {
 		"name": "Pe-2 ser.87",
 		"parent": "Pe2",
-		"model": "graphics\\planes\\Pe2s87\\Pe2s87.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\Pe2s87.txt"
+		"model": "graphics\\planes\\pe2s87\\pe2s87.mgm",
+		"script": "luascripts\\worldobjects\\planes\\pe2s87.txt"
 	},
 
 	// He 111
@@ -292,8 +292,8 @@
 	"He111H6": {
 		"name": "He 111 H-6",
 		"parent": "He111H",
-		"model": "graphics\\planes\\He111H6\\He111H6.mgm",
-		"script": "LuaScripts\\WorldObjects\\Planes\\He111H6.txt"
+		"model": "graphics\\planes\\he111h6\\he111h6.mgm",
+		"script": "luascripts\\worldobjects\\planes\\he111h6.txt"
 	},
 
 	// Fw 189 A-1

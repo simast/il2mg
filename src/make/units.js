@@ -7,6 +7,7 @@ var moment = require("moment");
 module.exports = function(mission, data) {
 
 	var battle = mission.battle;
+	var rand = mission.rand;
 	var missionDate = mission.date;
 	var planeStorages = new Set();
 
@@ -18,25 +19,102 @@ module.exports = function(mission, data) {
 	// Process all battle units and build index lists
 	for (var unitID in battle.units) {
 
-		var unit = Object.create(null);
 		var unitData = battle.units[unitID];
 
-		// Ignore not active units (used for organizational data hierarchy only)
-		if (!unitData.active) {
+		// Ignore dummy unit definitions (and groups used to catalog units)
+		if (!unitData || !unitData.name) {
 			continue;
 		}
 
-		var airfields = getAirfields(unitData);
+		var unit = Object.create(null);
+		var unitGroupID;
+		var unitPlaneStorages = [];
 
-		// Ignore units without active airfields
-		if (!airfields.length) {
-			continue;
+		// Build unit data and register unit parent/group hierarchy
+		while (unitData) {
+
+			// Process unit data from current hierarchy
+			for (var prop in unitData) {
+
+				// Collect airfield data
+				if (prop === "airfields") {
+
+					if (unit.airfield) {
+						continue;
+					}
+
+					var airfields = getAirfields(unitData);
+
+					if (airfields.length) {
+						unit.airfield = rand.pick(airfields);
+					}
+				}
+				// Collect plane storage data
+				else if (prop === "planes") {
+					unitPlaneStorages = unitPlaneStorages.concat(getPlaneStorages(unitData));
+				}
+				// Collect other unit data
+				else if (unit[prop] === undefined) {
+
+					// Resolve unit name
+					if (prop === "name") {
+						unit[prop] = getName(unitData);
+					}
+					// Copy other data
+					else {
+						unit[prop] = unitData[prop];
+					}
+				}
+			}
+
+			var unitParentID = unitData.parent;
+
+			if (!unitParentID) {
+				break;
+			}
+
+			// Register unit in the parent group hierarchy
+			if (unit.name) {
+
+				var unitGroup = unitsByID[unitParentID] || [];
+
+				// Register a new child plane in the plane group
+				if (Array.isArray(unitGroup)) {
+
+					unitGroup.push(unitID);
+					unitsByID[unitParentID] = unitGroup;
+				}
+			}
+
+			unitData = battle.units[unitParentID];
+			unitGroupID = unitParentID;
 		}
 
-		var unitPlaneStorages = getPlaneStorages(unitData);
+		// Remove invalid unit definition (without plane storages or invalid airfield)
+		if (!unitPlaneStorages.length || !unit.airfield || !battle.airfields[unit.airfield]) {
 
-		// Ignore units without active plane storages (no planes)
-		if (!unitPlaneStorages.length) {
+			// Clean up parent unit groups
+			var parentID = unit.parent;
+			while (parentID) {
+
+				var parentUnit = unitsByID[parentID];
+
+				if (Array.isArray(parentUnit)) {
+
+					var parentUnitIndex = parentUnit.indexOf(unitID);
+
+					if (parentUnitIndex > -1) {
+						parentUnit.splice(parentUnitIndex, 1);
+					}
+
+					if (!parentUnit.length) {
+						delete unitsByID[parentID];
+					}
+				}
+
+				parentID = battle.units[parentID].parent;
+			}
+
 			continue;
 		}
 
@@ -49,35 +127,30 @@ module.exports = function(mission, data) {
 			planeStorages.add(planeStorage);
 		});
 
-		unit.name = getName(unitData);
-
-		// Unit alias (nickname)
-		var alias = getAlias(unitData);
-
-		if (alias) {
-			unit.alias = alias;
+		// NOTE: Unit group is a top-most parent
+		if (unitGroupID) {
+			unit.group = unitGroupID;
 		}
 
-		unit.country = unitData.country;
 		unit.planes = [];
 
 		// TODO: Add full support for planesMin
-		if (Number.isInteger(unitData.planesMax)) {
-			unit.planes.required = mission.rand.integer(unitData.planesMin || 0, unitData.planesMax);
+		if (Number.isInteger(unit.planesMax)) {
+			unit.planes.max = rand.integer(unit.planesMin || 0, unit.planesMax);
 		}
 
-		// TODO: Split units with multiple airfields
-		unit.airfield = airfields[0];
+		delete unit.planesMax;
+		delete unit.planesMin;
 
 		// Register unit to ID index
 		unitsByID[unitID] = unit;
 
 		// Register unit to airfields index
-		unitsByAirfield[unit.airfield] = unitsByAirfield[unit.airfield] || {};
+		unitsByAirfield[unit.airfield] = unitsByAirfield[unit.airfield] || Object.create(null);
 		unitsByAirfield[unit.airfield][unitID] = unit;
 
 		// Register unit to country index
-		unitsByCountry[unit.country] = unitsByCountry[unit.country] || {};
+		unitsByCountry[unit.country] = unitsByCountry[unit.country] || Object.create(null);
 		unitsByCountry[unit.country][unitID] = unit;
 	}
 
@@ -90,19 +163,19 @@ module.exports = function(mission, data) {
 
 		while (planeStorage[1] > 0) {
 
-			var planeID = planeStorage[0];
+			var planeID = planeStorage[0].toLowerCase();
 			var plane = mission.planesByID[planeID];
 
 			// Handle plane groups
 			if (Array.isArray(plane)) {
-				planeID = mission.rand.pick(plane);
+				planeID = rand.pick(plane);
 			}
 
 			// Pick random unit
-			var unitID = mission.rand.pick(planeStorage.units);
+			var unitID = rand.pick(planeStorage.units);
 			var unit = unitsByID[unitID];
 
-			if (unit.planes.required !== undefined && unit.planes.length >= unit.planes.required) {
+			if (unit.planes.max !== undefined && unit.planes.length >= unit.planes.max) {
 				continue;
 			}
 
@@ -118,34 +191,22 @@ module.exports = function(mission, data) {
 
 		// TODO: Dynamically generate rebase/transfer missions
 
-		// Inherit airfield data from parent unit data
-		while (!airfields.length && unitData) {
+		var dataAirfields = unitData.airfields;
 
-			var dataAirfields = unitData.airfields;
-			unitData = battle.units[unitData.parent];
+		if (!Array.isArray(dataAirfields)) {
+			return airfields;
+		}
 
-			if (!Array.isArray(dataAirfields)) {
-				continue;
-			}
+		// Find matching airfields based on to/from date ranges
+		for (var airfield of dataAirfields) {
 
-			// Find matching airfields based on to/from date ranges
-			for (var airfield of dataAirfields) {
+			var airfieldID = airfield[0];
 
-				var airfieldID = airfield[0];
+			if (missionDateIsBetween(airfield[1], airfield[2])) {
 
-				if (missionDateIsBetween(airfield[1], airfield[2])) {
-
-					// Non-existant airfield
-					if (!battle.airfields[airfieldID]) {
-
-						unitData = null;
-						continue;
-					}
-
-					// Add found airfield entry
-					if (airfields.indexOf(airfieldID) === -1) {
-						airfields.push(airfieldID);
-					}
+				// Add found airfield entry
+				if (airfields.indexOf(airfieldID) === -1) {
+					airfields.push(airfieldID);
 				}
 			}
 		}
@@ -157,25 +218,19 @@ module.exports = function(mission, data) {
 	function getPlaneStorages(unitData) {
 
 		var planeStorages = [];
+		var dataPlanes = unitData.planes;
 
-		// Inherit plane storage data from parent unit data
-		while (unitData) {
-
-			var dataPlanes = unitData.planes;
-			unitData = battle.units[unitData.parent];
-
-			if (!Array.isArray(dataPlanes)) {
-				continue;
-			}
-
-			// Find matching plane storages based on to/from date ranges
-			dataPlanes.forEach(function(planeStorage) {
-
-				if (missionDateIsBetween(planeStorage[2], planeStorage[3])) {
-					planeStorages.push(planeStorage);
-				}
-			});
+		if (!Array.isArray(dataPlanes)) {
+			return planeStorages;
 		}
+
+		// Find matching plane storages based on to/from date ranges
+		dataPlanes.forEach(function(planeStorage) {
+
+			if (missionDateIsBetween(planeStorage[2], planeStorage[3])) {
+				planeStorages.push(planeStorage);
+			}
+		});
 
 		return planeStorages;
 	}
@@ -208,21 +263,6 @@ module.exports = function(mission, data) {
 		}
 
 		return name;
-	}
-
-	// Get unit alias
-	function getAlias(unitData) {
-
-		var alias;
-
-		// Inherit unit alias from parent unit data
-		while (unitData) {
-
-			alias = unitData.alias;
-			unitData = battle.units[unitData.parent];
-		}
-
-		return alias;
 	}
 
 	// Utility function used to validate to/from date ranges based on mission date

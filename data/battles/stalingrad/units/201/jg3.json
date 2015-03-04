@@ -1,7 +1,6 @@
 {
 	// Jagdgeschwader 3 "Udet"
 	"jg3": {
-		"name": "Jagdgeschwader 3",
 		"alias": "Udet"
 	},
 
@@ -9,7 +8,6 @@
 	"jg3_stab": {
 		"name": "Stab/JG 3",
 		"parent": "jg3",
-		"active": true,
 		"airfields": [
 			["oblivskaya", "start", "end"]
 		],
@@ -28,7 +26,6 @@
 
 	// I./JG 3
 	"jg3_i": {
-		"name": "I./JG 3",
 		"parent": "jg3",
 		"airfields": [
 			["oblivskaya", "start", "end"]
@@ -47,29 +44,24 @@
 	"jg3_i_stab": {
 		"name": "Stab I./JG 3",
 		"parent": "jg3_i",
-		"active": true,
 		"planesMin": 3,
 		"planesMax": 6
 	},
 	"jg3_1": {
 		"name": "1./JG 3",
-		"parent": "jg3_i",
-		"active": true
+		"parent": "jg3_i"
 	},
 	"jg3_2": {
 		"name": "2./JG 3",
-		"parent": "jg3_i",
-		"active": true
+		"parent": "jg3_i"
 	},
 	"jg3_3": {
 		"name": "3./JG 3",
-		"parent": "jg3_i",
-		"active": true
+		"parent": "jg3_i"
 	},
 
 	// II./JG 3
 	"jg3_ii": {
-		"name": "II./JG 3",
 		"parent": "jg3",
 		"airfields": [
 			["oblivskaya", "start", "end"]
@@ -86,29 +78,24 @@
 	"jg3_ii_stab": {
 		"name": "Stab II./JG 3",
 		"parent": "jg3_ii",
-		"active": true,
 		"planesMin": 3,
 		"planesMax": 6
 	},
 	"jg3_4": {
 		"name": "4./JG 3",
-		"parent": "jg3_ii",
-		"active": true
+		"parent": "jg3_ii"
 	},
 	"jg3_5": {
 		"name": "5./JG 3",
-		"parent": "jg3_ii",
-		"active": true
+		"parent": "jg3_ii"
 	},
 	"jg3_6": {
 		"name": "6./JG 3",
-		"parent": "jg3_ii",
-		"active": true
+		"parent": "jg3_ii"
 	},
 
 	// III./JG 3
 	"jg3_iii": {
-		"name": "III./JG 3",
 		"parent": "jg3",
 		"airfields": [
 			["oblivskaya", "start", "end"]
@@ -128,19 +115,16 @@
 	"jg3_iii_stab": {
 		"name": "Stab III./JG 3",
 		"parent": "jg3_iii",
-		"active": true,
 		"planesMin": 3,
 		"planesMax": 6
 	},
 	// NOTE: 7./JG 3 was temporary disbanded between 1942-08 and 1943-02.
 	"jg3_8": {
 		"name": "8./JG 3",
-		"parent": "jg3_iii",
-		"active": true
+		"parent": "jg3_iii"
 	},
 	"jg3_9": {
 		"name": "9./JG 3",
-		"parent": "jg3_iii",
-		"active": true
+		"parent": "jg3_iii"
 	}
 }
