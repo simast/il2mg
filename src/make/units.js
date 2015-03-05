@@ -27,7 +27,6 @@ module.exports = function(mission, data) {
 		}
 
 		var unit = Object.create(null);
-		var unitGroupID;
 		var unitPlaneStorages = [];
 
 		// Build unit data and register unit parent/group hierarchy
@@ -72,22 +71,22 @@ module.exports = function(mission, data) {
 			if (!unitParentID) {
 				break;
 			}
+			// NOTE: Set unit group as a top-most parent
+			else {
+				unit.group = unitParentID;
+			}
 
 			// Register unit in the parent group hierarchy
-			if (unit.name) {
+			var unitGroup = unitsByID[unitParentID] || [];
 
-				var unitGroup = unitsByID[unitParentID] || [];
+			// Register a new child plane in the plane group
+			if (Array.isArray(unitGroup)) {
 
-				// Register a new child plane in the plane group
-				if (Array.isArray(unitGroup)) {
-
-					unitGroup.push(unitID);
-					unitsByID[unitParentID] = unitGroup;
-				}
+				unitGroup.push(unitID);
+				unitsByID[unitParentID] = unitGroup;
 			}
 
 			unitData = battle.units[unitParentID];
-			unitGroupID = unitParentID;
 		}
 
 		// Remove invalid unit definition (without plane storages or invalid airfield)
@@ -103,10 +102,12 @@ module.exports = function(mission, data) {
 
 					var parentUnitIndex = parentUnit.indexOf(unitID);
 
+					// Remove unit from group
 					if (parentUnitIndex > -1) {
 						parentUnit.splice(parentUnitIndex, 1);
 					}
 
+					// Remove entire group if empty
 					if (!parentUnit.length) {
 						delete unitsByID[parentID];
 					}
@@ -126,11 +127,6 @@ module.exports = function(mission, data) {
 
 			planeStorages.add(planeStorage);
 		});
-
-		// NOTE: Unit group is a top-most parent
-		if (unitGroupID) {
-			unit.group = unitGroupID;
-		}
 
 		unit.planes = [];
 
@@ -163,7 +159,7 @@ module.exports = function(mission, data) {
 
 		while (planeStorage[1] > 0) {
 
-			var planeID = planeStorage[0].toLowerCase();
+			var planeID = planeStorage[0];
 			var plane = mission.planesByID[planeID];
 
 			// Handle plane groups
@@ -228,7 +224,13 @@ module.exports = function(mission, data) {
 		dataPlanes.forEach(function(planeStorage) {
 
 			if (missionDateIsBetween(planeStorage[2], planeStorage[3])) {
-				planeStorages.push(planeStorage);
+
+				var planeID = planeStorage[0];
+
+				// Only collect storages with valid plane IDs
+				if (mission.planesByID[planeID]) {
+					planeStorages.push(planeStorage);
+				}
 			}
 		});
 

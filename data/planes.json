@@ -1,6 +1,7 @@
 {
 	// Bf 109
-	"Bf109": {
+	"bf109": {
+		"name": "Bf 109",
 		"type": ["fighter", "fighter_light"],
 		"static": [
 			{
@@ -20,45 +21,52 @@
 	},
 
 	// Bf 109 F
-	"Bf109F": {
-		"parent": "Bf109"
+	"bf109f": {
+		"name": "Bf 109 F",
+		"parent": "bf109"
 	},
 
 	// Bf 109 F-4
-	"Bf109F4": {
+	"bf109f4": {
 		"name": "Bf 109 F-4",
-		"parent": "Bf109F",
+		"parent": "bf109f",
 		"model": "graphics\\planes\\bf109f4\\bf109f4.mgm",
 		"script": "luascripts\\worldobjects\\planes\\bf109f4.txt"
 	},
 
 	// Bf 109 F-4/trop
-	"Bf109F4trop": {
+	"bf109f4trop": {
 		"name": "Bf 109 F-4/trop",
-		"parent": "Bf109F4"
+		"parent": "bf109f4",
+		"model": "graphics\\planes\\bf109f4\\bf109f4.mgm",
+		"script": "luascripts\\worldobjects\\planes\\bf109f4.txt"
 	},
 
 	// Bf 109 G
-	"Bf109G": {
-		"parent": "Bf109"
+	"bf109g": {
+		"name": "Bf 109 G",
+		"parent": "bf109"
 	},
 
 	// Bf 109 G-2
-	"Bf109G2": {
+	"bf109g2": {
 		"name": "Bf 109 G-2",
-		"parent": "Bf109G",
+		"parent": "bf109g",
 		"model": "graphics\\planes\\bf109g2\\bf109g2.mgm",
 		"script": "luascripts\\worldobjects\\planes\\bf109g2.txt"
 	},
 
 	// Bf 109 G-4
-	"Bf109G4": {
+	"bf109g4": {
 		"name": "Bf 109 G-4",
-		"parent": "Bf109G2"
+		"parent": "bf109g2",
+		"model": "graphics\\planes\\bf109g2\\bf109g2.mgm",
+		"script": "luascripts\\worldobjects\\planes\\bf109g2.txt"
 	},
 
 	// LaGG-3
-	"LaGG3": {
+	"lagg3": {
+		"name": "LaGG-3",
 		"type": ["fighter", "fighter_light"],
 		"static": [
 			{
@@ -82,15 +90,16 @@
 	},
 
 	// LaGG-3 ser.29
-	"LaGG3s29": {
+	"lagg3s29": {
 		"name": "LaGG-3 ser.29",
-		"parent": "LaGG3",
+		"parent": "lagg3",
 		"model": "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
 		"script": "luascripts\\worldobjects\\planes\\lagg3s29.txt"
 	},
 
 	// La-5
-	"La5": {
+	"la5": {
+		"name": "La-5",
 		"type": ["fighter", "fighter_light"],
 		// NOTE: Static La-5 models are not available, using LaGG-3 as a workaround
 		"static": [
@@ -115,15 +124,16 @@
 	},
 
 	// La-5 ser.8
-	"La5s8": {
+	"la5s8": {
 		"name": "La-5 ser.8",
-		"parent": "La5",
+		"parent": "la5",
 		"model": "graphics\\planes\\la5s8\\la5s8.mgm",
 		"script": "luascripts\\worldobjects\\planes\\la5s8.txt"
 	},
 
 	// Yak-1
-	"Yak1": {
+	"yak1": {
+		"name": "Yak-1",
 		"type": ["fighter", "fighter_light"],
 		"static": [
 			{
@@ -143,33 +153,36 @@
 	},
 
 	// Yak-1 ser.69
-	"Yak1s69": {
+	"yak1s69": {
 		"name": "Yak-1 ser.69",
-		"parent": "Yak1",
+		"parent": "yak1",
 		"model": "graphics\\planes\\yak1s69\\yak1s69.mgm",
 		"script": "luascripts\\worldobjects\\planes\\yak1s69.txt"
 	},
 
 	// Fw 190
-	"Fw190": {
+	"fw190": {
+		"name": "Fw 190",
 		"type": ["fighter", "fighter_light"]
 	},
 
 	// Fw 190 A
-	"Fw190A": {
-		"parent": "Fw190"
+	"fw190a": {
+		"name": "Fw 190 A",
+		"parent": "fw190"
 	},
 
 	// Fw 190 A-3
-	"Fw190A3": {
+	"fw190a3": {
 		"name": "Fw 190 A-3",
-		"parent": "Fw190A",
+		"parent": "fw190a",
 		"model": "graphics\\planes\\fw190a3\\fw190a3.mgm",
 		"script": "luascripts\\worldobjects\\planes\\fw190a3.txt"
 	},
 
 	// Il-2
-	"Il2": {
+	"il2": {
+		"name": "Il-2",
 		"type": ["ground_attack"],
 		"static": [
 			{
@@ -185,15 +198,16 @@
 	},
 
 	// Il-2 mod.1942
-	"Il2m42": {
+	"il2m42": {
 		"name": "Il-2 mod.1942",
-		"parent": "Il2",
+		"parent": "il2",
 		"model": "graphics\\planes\\il2m42\\il2m42.mgm",
 		"script": "luascripts\\worldobjects\\planes\\il2m42.txt"
 	},
 
 	// Ju 87
-	"Ju87": {
+	"ju87": {
+		"name": "Ju 87",
 		"type": ["ground_attack", "dive_bomber"],
 		"static": [
 			{
@@ -213,40 +227,45 @@
 	},
 
 	// Ju 87 D
-	"Ju87D": {
-		"parent": "Ju87"
+	"ju87d": {
+		"name": "Ju 87 D",
+		"parent": "ju87"
 	},
 
 	// Ju 87 D-1
-	"Ju87D1": {
+	"ju87d1": {
 		"name": "Ju 87 D-1",
-		"parent": "Ju87D3"
+		"parent": "ju87d3",
+		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
+		"script": "luascripts\\worldobjects\\planes\\ju87d3.txt"
 	},
 
 	// Ju 87 D-3
-	"Ju87D3": {
+	"ju87d3": {
 		"name": "Ju 87 D-3",
-		"parent": "Ju87D",
+		"parent": "ju87d",
 		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
 		"script": "luascripts\\worldobjects\\planes\\ju87d3.txt"
 	},
 
 	// Ju 87 G
-	"Ju87G": {
-		"parent": "Ju87"
+	"ju87g": {
+		"name": "Ju 87 G",
+		"parent": "ju87"
 	},
 
 	// Ju 87 G-1
-	"Ju87G1": {
+	"ju87g1": {
 		"name": "Ju 87 G-1",
-		"parent": "Ju87G",
+		"parent": "ju87g",
 		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
 		"script": "luascripts\\worldobjects\\planes\\ju87d3.txt",
 		"type": ["ground_attack"]
 	},
 
 	// Pe-2
-	"Pe2": {
+	"pe2": {
+		"name": "Pe-2",
 		"type": ["dive_bomber", "level_bomber"],
 		"static": [
 			{
@@ -261,15 +280,16 @@
 	},
 
 	// Pe-2 ser.87
-	"Pe2s87": {
+	"pe2s87": {
 		"name": "Pe-2 ser.87",
-		"parent": "Pe2",
+		"parent": "pe2",
 		"model": "graphics\\planes\\pe2s87\\pe2s87.mgm",
 		"script": "luascripts\\worldobjects\\planes\\pe2s87.txt"
 	},
 
 	// He 111
-	"He111": {
+	"he111": {
+		"name": "He 111",
 		"type": ["level_bomber", "transport"],
 		"static": [
 			{
@@ -284,30 +304,31 @@
 	},
 
 	// He 111 H
-	"He111H": {
-		"parent": "He111"
+	"he111h": {
+		"name": "He 111 H",
+		"parent": "he111"
 	},
 
 	// He 111 H-6
-	"He111H6": {
+	"he111h6": {
 		"name": "He 111 H-6",
-		"parent": "He111H",
+		"parent": "he111h",
 		"model": "graphics\\planes\\he111h6\\he111h6.mgm",
 		"script": "luascripts\\worldobjects\\planes\\he111h6.txt"
 	},
 
 	// Fw 189 A-1
-	"Fw189A1": null,
+	"fw189a1": null,
 
 	// Bf 110 F-3
-	"Bf110F3": null,
+	"bf110f3": null,
 
 	// Bf 110 F-4
-	"Bf110F4": null,
+	"bf110f4": null,
 
 	// Bf 110 E-3
-	"Bf110E3": null,
+	"bf110e3": null,
 
 	// Bf 110 G-3
-	"Bf110G3": null
+	"bf110g3": null
 }

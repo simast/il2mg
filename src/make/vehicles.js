@@ -5,17 +5,19 @@
 module.exports = function(mission, data) {
 
 	var battle = mission.battle;
-	var vehicles = mission.vehicles = {};
-	var staticVehicles = mission.staticVehicles = {};
+
+	// Vehicle index tables
+	var vehicles = Object.create(null);
+	var staticVehicles = Object.create(null);
 
 	// Vehicle list is indexed by country ID
 	battle.countries.forEach(function(countryID) {
 
-		vehicles[countryID] = {};
-		staticVehicles[countryID] = {};
+		vehicles[countryID] = Object.create(null);
+		staticVehicles[countryID] = Object.create(null);;
 	});
 
-	// Build an indexed list of all vehicles per country and type
+	// Process all vehicles and build index lists per country and type
 	for (var i = 0; i < data.vehicles.length; i++) {
 
 		var vehicle = data.vehicles[i];
@@ -56,4 +58,8 @@ module.exports = function(mission, data) {
 			});
 		}
 	}
+
+	// Static plane data index objects
+	mission.vehicles = Object.freeze(vehicles);
+	mission.staticVehicles = Object.freeze(staticVehicles);
 };

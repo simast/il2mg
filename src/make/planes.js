@@ -16,14 +16,11 @@ module.exports = function(mission, data) {
 		var planeData = data.planes[planeID];
 
 		// Ignore dummy plane definitions (and groups used to catalog planes)
-		if (!planeData || !planeData.name) {
+		if (!planeData || !planeData.name || !planeData.model || !planeData.script) {
 			continue;
 		}
 
 		var plane = Object.create(null);
-		var planeGroupID;
-
-		planeID = planeID.toLowerCase();
 
 		// Build plane data and register plane parent/group hierarchy
 		while (planeData) {
@@ -32,14 +29,7 @@ module.exports = function(mission, data) {
 			for (var prop in planeData) {
 
 				if (plane[prop] === undefined) {
-
-					// NOTE: All plane IDs must be lowercase in index tables
-					if (prop === "parent") {
-						plane[prop] = planeData[prop].toLowerCase();
-					}
-					else {
-						plane[prop] = planeData[prop];
-					}
+					plane[prop] = planeData[prop];
 				}
 			}
 
@@ -48,37 +38,31 @@ module.exports = function(mission, data) {
 			if (!planeParentID) {
 				break;
 			}
-
-			planeData = data.planes[planeParentID];
-			planeParentID = planeParentID.toLowerCase();
-
-			// Register plane in the parent group hierarchy
-			if (plane.name) {
-
-				var planeGroup = planesByID[planeParentID] || [];
-
-				// Register a new child plane in the plane group
-				if (Array.isArray(planeGroup)) {
-
-					planeGroup.push(planeID);
-					planesByID[planeParentID] = planeGroup;
-				}
+			// NOTE: Set plane group as a top-most parent
+			else {
+				plane.group = planeParentID;
 			}
 
-			planeGroupID = planeParentID;
-		}
+			planeData = data.planes[planeParentID];
 
-		// Remove invalid plane definition
-		if (!plane.model || !plane.script) {
+			// Register plane in the parent group hierarchy
+			var planeGroup = planesByID[planeParentID] || [];
 
-			// TODO: Clean up parent plane groups
+			// Register a new child plane in the plane group
+			if (Array.isArray(planeGroup)) {
 
-			continue;
-		}
+				planeGroup.push(planeID);
 
-		// NOTE: Plane group is a top-most parent
-		if (planeGroupID) {
-			plane.group = planeGroupID;
+				if (planeData.name !== undefined) {
+					planeGroup.name = planeData.name;
+				}
+
+				if (planeData.parent !== undefined) {
+					planeGroup.parent = planeData.parent;
+				}
+
+				planesByID[planeParentID] = planeGroup;
+			}
 		}
 
 		// Register plane to ID index
