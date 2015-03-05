@@ -25,6 +25,7 @@ module.exports = function(mission, data) {
 	var params = mission.params;
 	var battle = mission.battle;
 	var airfields = battle.airfields;
+	var rand = mission.rand;
 
 	for (var airfieldID in airfields) {
 
@@ -32,6 +33,22 @@ module.exports = function(mission, data) {
 
 		if (!airfield.items || !airfield.items.length) {
 			continue;
+		}
+
+		var airfieldUnits = mission.unitsByAirfield[airfieldID];
+		var countryPresence = [];
+
+		// Build a list of country presence weighted array
+		if (airfieldUnits) {
+
+			for (var unitID in airfieldUnits) {
+
+				var unit = airfieldUnits[unitID];
+
+				unit.planes.forEach(function(plane) {
+					countryPresence.push(unit.country);
+				});
+			}
 		}
 
 		var itemsGroup = new Item.Group();
@@ -122,7 +139,7 @@ module.exports = function(mission, data) {
 				walkItems(extraItems, false);
 			}
 
-		})(mission.rand.shuffle(airfield.items), false);
+		})(rand.shuffle(airfield.items), false);
 
 		// Add all items as a single airfield group in a mission file
 		mission.addItem(itemsGroup);
@@ -145,12 +162,13 @@ module.exports = function(mission, data) {
 		if (itemData === itemTags.WINDSOCK) {
 			itemObject.createEntity();
 		}
-		// Beacon tag
+		// TODO: Beacon tag
 		else if (itemData === itemTags.BEACON) {
 
-			itemObject.createEntity();
-			itemObject.Country = 201;
+			itemObject.Country = rand.pick(countryPresence);
 			itemObject.BeaconChannel = 1;
+
+			itemObject.createEntity();
 		}
 
 		return [itemObject];
@@ -159,10 +177,20 @@ module.exports = function(mission, data) {
 	// Make a stationary/static vehicle item
 	function makeStaticVehicle(item) {
 
-		var staticVehicles = mission.staticVehicles;
+		if (makeStaticVehicle.maxVehicles === undefined) {
 
-		// TODO: Pick from a list of countries with presence (from units)
-		var countryID = 201;
+			// Limit static vehicles based on number of planes (0.5 per plane)
+			// TODO: Improve this algorithm
+			makeStaticVehicle.maxVehicles = Math.round(countryPresence.length / 2);
+			makeStaticVehicle.numVehicles = 0;
+		}
+
+		if (makeStaticVehicle.numVehicles >= makeStaticVehicle.maxVehicles) {
+			return;
+		}
+
+		var staticVehicles = mission.staticVehicles;
+		var countryID = rand.pick(countryPresence);
 
 		if (!staticVehicles[countryID]) {
 			return;
@@ -181,23 +209,24 @@ module.exports = function(mission, data) {
 			return;
 		}
 
-		// TODO: Limit number of static vehicles based on number of units on the airfield
-		var randVehicle = mission.rand.pick(staticVehicles[countryID][vehicleType]);
+		var randVehicle = rand.pick(staticVehicles[countryID][vehicleType]);
 
 		// Create static vehicle block item
 		var itemObject = new Item.Block();
 
 		// Slightly vary/randomize static vehicle position
-		var positionX = Math.max(item[1] + mission.rand.real(-1, 1), 0);
-		var positionZ = Math.max(item[2] + mission.rand.real(-1, 1), 0);
+		var positionX = Math.max(item[1] + rand.real(-1, 1), 0);
+		var positionZ = Math.max(item[2] + rand.real(-1, 1), 0);
 
 		// Slightly vary/randomize static vehicle orientation
-		var orientation = Math.max((item[3] + mission.rand.real(-20, 20) + 360) % 360, 0);
+		var orientation = Math.max((item[3] + rand.real(-20, 20) + 360) % 360, 0);
 
 		itemObject.Model = randVehicle.static.model;
 		itemObject.Script = randVehicle.static.script;
 		itemObject.setPosition(positionX, positionZ);
 		itemObject.setOrientation(orientation);
+
+		makeStaticVehicle.numVehicles++;
 
 		return [itemObject];
 	}
@@ -205,10 +234,20 @@ module.exports = function(mission, data) {
 	// Make anti-aircraft vehicle item
 	function makeAAVehicle(item) {
 
-		var vehicles = mission.vehicles;
+		if (makeAAVehicle.maxVehicles === undefined) {
 
-		// TODO: Pick from a list of countries with presence (from units)
-		var countryID = 201;
+			// Limit AA vehicles based on number of planes (1 AA per 10 planes)
+			// TODO: Improve this algorithm
+			makeAAVehicle.maxVehicles = Math.round(countryPresence.length / 10);
+			makeAAVehicle.numVehicles = 0;
+		}
+
+		if (makeAAVehicle.numVehicles >= makeAAVehicle.maxVehicles) {
+			return;
+		}
+
+		var vehicles = mission.vehicles;
+		var countryID = rand.pick(countryPresence);
 
 		if (!vehicles[countryID]) {
 			return;
@@ -223,9 +262,9 @@ module.exports = function(mission, data) {
 			vehicleType = "aa_flak";
 		}
 
-		// TODO: Limit number of AA vehicles based on number of units on the airfield
-		var randVehicle = mission.rand.pick(vehicles[countryID][vehicleType]);
+		var randVehicle = rand.pick(vehicles[countryID][vehicleType]);
 
+		// Create AA vehicle item
 		var itemObject = new Item.Vehicle();
 
 		itemObject.Model = randVehicle.model;
@@ -235,6 +274,8 @@ module.exports = function(mission, data) {
 		itemObject.setOrientation(item[3]);
 
 		itemObject.createEntity();
+
+		makeAAVehicle.numVehicles++;
 
 		return [itemObject];
 	}

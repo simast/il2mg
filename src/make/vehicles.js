@@ -14,7 +14,7 @@ module.exports = function(mission, data) {
 	battle.countries.forEach(function(countryID) {
 
 		vehicles[countryID] = Object.create(null);
-		staticVehicles[countryID] = Object.create(null);;
+		staticVehicles[countryID] = Object.create(null);
 	});
 
 	// Process all vehicles and build index lists per country and type
