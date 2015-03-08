@@ -9,7 +9,9 @@ module.exports = function(grunt) {
 		var numeral = require("numeral");
 		var data = require("../../src/data");
 		var Item = require("../../src/item");
-		var itemTags = require("../../src/make/airfields").itemTags;
+		var makeAirfields = require("../../src/make/airfields");
+		var itemTags = makeAirfields.itemTags;
+		var planeSize = makeAirfields.planeSize;
 
 		var totalBattles = 0;
 		var totalAirfields = 0;
@@ -57,14 +59,55 @@ module.exports = function(grunt) {
 								item instanceof Item.Vehicle || item instanceof Item.Flag) {
 
 							var itemTypeID = null;
-							var itemData = null;
+							var itemData = [];
 
 							// Plane spot
 							if (/^PLANE/.test(item.Name)) {
 
 								itemTypeID = itemTags.PLANE;
 
-								// TODO: Parse plane spot data
+								var planeData = item.Name.split(":");
+								var planeDataIndex = 1;
+
+								// Plane sector number
+								var planeSector = +planeData[planeDataIndex++];
+
+								if (!Number.isInteger(planeSector)) {
+									grunt.fail.fatal("Invalid plane sector in PLANE definition: " + planeSector);
+								}
+
+								itemData.push(planeSector);
+
+								// Plane taxi route number
+								var planeTaxiRoute = +planeData[planeDataIndex++];
+
+								if (!Number.isInteger(planeTaxiRoute)) {
+
+									planeTaxiRoute = false;
+									planeDataIndex--;
+								}
+
+								itemData.push(planeTaxiRoute);
+
+								// Plane size
+								var planeSizeType = planeData[planeDataIndex++];
+								var planeSizeID = planeSize[planeSizeType];
+
+								if (!Number.isInteger(planeSizeID)) {
+									grunt.fail.fatal("Invalid plane size in PLANE definition: " + planeSizeType);
+								}
+
+								itemData.push(planeSizeID);
+
+								// Camo plane flag
+								var planeFlag = planeData[planeDataIndex++];
+
+								if (planeFlag === "CAMO") {
+									itemData.push(1);
+								}
+								else if (planeFlag !== undefined) {
+									grunt.fail.fatal("Invalid plane flag in PLANE definition: " + planeFlag);
+								}
 							}
 							// Cargo truck
 							else if (item.Name === "TRUCK:CARGO") {
@@ -105,19 +148,19 @@ module.exports = function(grunt) {
 
 								// Decoration item tag
 								if (item.Name === "DECO") {
-									itemData = itemTags.DECO;
+									itemData.push(itemTags.DECO);
 								}
 								// Fuel item tag
 								else if (item.Name === "FUEL") {
-									itemData = itemTags.FUEL;
+									itemData.push(itemTags.FUEL);
 								}
 								// Windsock tag
 								else if (item.Name === "WINDSOCK") {
-									itemData = itemTags.WINDSOCK;
+									itemData.push(itemTags.WINDSOCK);
 								}
 								// Beacon tag
 								else if (item.Name === "BEACON") {
-									itemData = itemTags.BEACON;
+									itemData.push(itemTags.BEACON);
 								}
 							}
 
@@ -134,9 +177,9 @@ module.exports = function(grunt) {
 							jsonItem.push(item.YOri || 0);
 
 							// Item data
-							if (itemData !== null) {
-								jsonItem.push(itemData);
-							}
+							itemData.forEach(function(data) {
+								jsonItem.push(data);
+							});
 
 							json.push(jsonItem);
 

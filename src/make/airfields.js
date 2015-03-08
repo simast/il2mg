@@ -19,6 +19,14 @@ var itemTags = {
 	BEACON: 4 // Beacon
 };
 
+// Plane size types/IDs
+var planeSize = {
+	SMALL: 1,
+	MEDIUM: 2,
+	LARGE: 3,
+	HUGE: 4
+};
+
 // Generate mission airfields
 module.exports = function(mission, data) {
 
@@ -73,10 +81,16 @@ module.exports = function(mission, data) {
 
 				// Process item group
 				if (Array.isArray(itemTypeID)) {
-					walkItems(item, true);
+
+					if (isGroup) {
+						extraItems.push(item);
+					}
+					else {
+						walkItems(item, true);
+					}
 				}
 
-				var itemObjects = [];
+				var itemObjects = null;
 
 				// Normal static item
 				if (itemTypeID >= 0) {
@@ -91,34 +105,17 @@ module.exports = function(mission, data) {
 				// Special item
 				else {
 
-					switch (itemTypeID) {
-
-						// Stationary/static vehicle item
-						case itemTags.TRUCK_CARGO:
-						case itemTags.TRUCK_FUEL:
-						case itemTags.CAR: {
-
-							itemObjects = makeStaticVehicle(item);
-							break;
-						}
-
-						// Anti-aircraft vehicle item
-						case itemTags.AA_FLAK:
-						case itemTags.AA_MG: {
-
-							itemObjects = makeAAVehicle(item);
-							break;
-						}
-
-						// TODO: Search/landing light item
-						case itemTags.LIGHT_SEARCH:
-						case itemTags.LIGHT_LANDING: {
-							break;
-						}
+					// Plane item
+					if (itemTypeID === itemTags.PLANE) {
+						itemObjects = makePlane(item);
+					}
+					// Vehicle item
+					else {
+						itemObjects = makeVehicle(item);
 					}
 
 					// Use all extra normal items in a group if special item is used
-					if (itemObjects.length) {
+					if (itemObjects && itemObjects.length) {
 						useExtraItems = true;
 					}
 				}
@@ -150,7 +147,6 @@ module.exports = function(mission, data) {
 
 		var itemType = data.getItemType(item[0]);
 		var itemData = item[4];
-
 		var itemObject = new Item[itemType.type]();
 
 		itemObject.Model = itemType.model;
@@ -158,11 +154,11 @@ module.exports = function(mission, data) {
 		itemObject.setPosition(item[1], item[2]);
 		itemObject.setOrientation(item[3]);
 
-		// Windsock tag
+		// Windsock item
 		if (itemData === itemTags.WINDSOCK) {
 			itemObject.createEntity();
 		}
-		// TODO: Beacon tag
+		// TODO: Beacon item
 		else if (itemData === itemTags.BEACON) {
 
 			itemObject.Country = rand.pick(countryPresence);
@@ -174,111 +170,123 @@ module.exports = function(mission, data) {
 		return [itemObject];
 	}
 
-	// Make a stationary/static vehicle item
-	function makeStaticVehicle(item) {
-
-		if (makeStaticVehicle.maxVehicles === undefined) {
-
-			// Limit static vehicles based on number of planes (0.5 per plane)
-			// TODO: Improve this algorithm
-			makeStaticVehicle.maxVehicles = Math.round(countryPresence.length / 2);
-			makeStaticVehicle.numVehicles = 0;
-		}
-
-		if (makeStaticVehicle.numVehicles >= makeStaticVehicle.maxVehicles) {
-			return;
-		}
-
-		var staticVehicles = mission.staticVehicles;
-		var countryID = rand.pick(countryPresence);
-
-		if (!staticVehicles[countryID]) {
-			return;
-		}
+	// Make a vehicle item
+	function makeVehicle(item) {
 
 		var vehicleType;
+		var isStatic = false;
 
-		if (item[0] === itemTags.TRUCK_CARGO) {
-			vehicleType = "truck_cargo";
-		}
-		else if (item[0] === itemTags.TRUCK_FUEL) {
-			vehicleType = "truck_fuel";
+		switch (item[0]) {
+
+			// Cargo truck
+			case itemTags.TRUCK_CARGO: {
+
+				vehicleType = "truck_cargo";
+				isStatic = true;
+				break;
+			}
+			// Fuel truck
+			case itemTags.TRUCK_FUEL: {
+
+				vehicleType = "truck_fuel";
+				isStatic = true;
+				break;
+			}
+			// Anti-aircraft (Flak)
+			case itemTags.AA_FLAK: {
+
+				vehicleType = "aa_flak";
+				break;
+			}
+			// Anti-aircraft (MG)
+			case itemTags.AA_MG: {
+
+				vehicleType = "aa_mg";
+				break;
+			}
+			// Search light
+			case itemTags.LIGHT_SEARCH: {
+
+				vehicleType = "search_light";
+				break;
+			}
 		}
 
-		if (!vehicleType || !staticVehicles[countryID][vehicleType]) {
+		if (!vehicleType) {
 			return;
 		}
 
-		var randVehicle = rand.pick(staticVehicles[countryID][vehicleType]);
+		var vehicles = isStatic ? mission.staticVehicles : mission.vehicles;
+		var countryID = rand.pick(countryPresence);
 
-		// Create static vehicle block item
-		var itemObject = new Item.Block();
+		if (!vehicles[countryID] || !vehicles[countryID][vehicleType]) {
+			return;
+		}
+
+		var vehicle = rand.pick(vehicles[countryID][vehicleType]);
+
+		// Create vehicle item
+		var itemObject = isStatic ? new Item.Block() : new Item.Vehicle();
+
+		var positionX = item[1];
+		var positionZ = item[2];
 
 		// Slightly vary/randomize static vehicle position
-		var positionX = Math.max(item[1] + rand.real(-1, 1), 0);
-		var positionZ = Math.max(item[2] + rand.real(-1, 1), 0);
+		if (isStatic) {
 
-		// Slightly vary/randomize static vehicle orientation
+			positionX = Math.max(positionX + rand.real(-1, 1), 0);
+			positionZ = Math.max(positionZ + rand.real(-1, 1), 0);
+		}
+
+		// Slightly vary/randomize vehicle orientation
 		var orientation = Math.max((item[3] + rand.real(-20, 20) + 360) % 360, 0);
 
-		itemObject.Model = randVehicle.static.model;
-		itemObject.Script = randVehicle.static.script;
+		itemObject.Country = countryID;
+		itemObject.Model = isStatic ? vehicle.static.model : vehicle.model;
+		itemObject.Script = isStatic ? vehicle.static.script : vehicle.script;
 		itemObject.setPosition(positionX, positionZ);
 		itemObject.setOrientation(orientation);
 
-		makeStaticVehicle.numVehicles++;
+		if (!isStatic) {
+			itemObject.createEntity();
+		}
 
 		return [itemObject];
 	}
 
-	// Make anti-aircraft vehicle item
-	function makeAAVehicle(item) {
+	// Make a plane item
+	function makePlane(item) {
 
-		if (makeAAVehicle.maxVehicles === undefined) {
-
-			// Limit AA vehicles based on number of planes (1 AA per 10 planes)
-			// TODO: Improve this algorithm
-			makeAAVehicle.maxVehicles = Math.round(countryPresence.length / 10);
-			makeAAVehicle.numVehicles = 0;
-		}
-
-		if (makeAAVehicle.numVehicles >= makeAAVehicle.maxVehicles) {
-			return;
-		}
-
-		var vehicles = mission.vehicles;
 		var countryID = rand.pick(countryPresence);
+		var itemPlaneSize = item[6];
 
-		if (!vehicles[countryID]) {
-			return;
+		var planeIDs = ["ju87d3", "ju87d1"];
+
+		if (itemPlaneSize === planeSize.SMALL) {
+			planeIDs = ["bf109f4", "bf109g2"];
+		}
+		else if (itemPlaneSize === planeSize.HUGE) {
+			planeIDs = ["he111h6"];
 		}
 
-		var vehicleType;
+		var plane = mission.planesByID[rand.pick(planeIDs)];
+		var planeStatic = rand.pick(plane.static);
 
-		if (item[0] === itemTags.AA_MG) {
-			vehicleType = "aa_mg";
-		}
-		else if (item[0] === itemTags.AA_FLAK) {
-			vehicleType = "aa_flak";
-		}
+		// Create static plane item
+		var itemObject = new Item.Block();
 
-		var randVehicle = rand.pick(vehicles[countryID][vehicleType]);
+		// Slightly vary/randomize plane orientation
+		var orientation = Math.max((item[3] + rand.real(-15, 15) + 360) % 360, 0);
 
-		// Create AA vehicle item
-		var itemObject = new Item.Vehicle();
-
-		itemObject.Model = randVehicle.model;
-		itemObject.Script = randVehicle.script;
 		itemObject.Country = countryID;
+		itemObject.Model = planeStatic.model;
+		itemObject.Script = planeStatic.script;
 		itemObject.setPosition(item[1], item[2]);
-		itemObject.setOrientation(item[3]);
-
-		itemObject.createEntity();
-
-		makeAAVehicle.numVehicles++;
+		itemObject.setOrientation(orientation);
 
 		return [itemObject];
 	}
 };
 
 module.exports.itemTags = itemTags;
+module.exports.planeSize = planeSize;

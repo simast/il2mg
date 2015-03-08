@@ -3,6 +3,7 @@
 	"bf109": {
 		"name": "Bf 109",
 		"type": ["fighter", "fighter_light"],
+		"size": "small",
 		"static": [
 			{
 				"model": "graphics\\blocks\\static_bf109.mgm",
@@ -15,7 +16,7 @@
 			{
 				"model": "graphics\\blocks\\static_bf109_net.mgm",
 				"script": "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
-				"outside": true
+				"camo": true
 			}
 		]
 	},
@@ -68,6 +69,7 @@
 	"lagg3": {
 		"name": "LaGG-3",
 		"type": ["fighter", "fighter_light"],
+		"size": "small",
 		"static": [
 			{
 				"model": "graphics\\blocks\\static_lagg3.mgm",
@@ -84,7 +86,7 @@
 			{
 				"model": "graphics\\blocks\\static_lagg3_net.mgm",
 				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
-				"outside": true
+				"camo": true
 			}
 		]
 	},
@@ -101,6 +103,7 @@
 	"la5": {
 		"name": "La-5",
 		"type": ["fighter", "fighter_light"],
+		"size": "small",
 		// NOTE: Static La-5 models are not available, using LaGG-3 as a workaround
 		"static": [
 			{
@@ -118,7 +121,7 @@
 			{
 				"model": "graphics\\blocks\\static_lagg3_net.mgm",
 				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
-				"outside": true
+				"camo": true
 			}
 		]
 	},
@@ -135,6 +138,7 @@
 	"yak1": {
 		"name": "Yak-1",
 		"type": ["fighter", "fighter_light"],
+		"size": "small",
 		"static": [
 			{
 				"model": "graphics\\blocks\\static_yak1.mgm",
@@ -147,7 +151,7 @@
 			{
 				"model": "graphics\\blocks\\static_yak1_net.mgm",
 				"script": "luascripts\\worldobjects\\blocks\\static_yak1_net.txt",
-				"outside": true
+				"camo": true
 			}
 		]
 	},
@@ -163,7 +167,8 @@
 	// Fw 190
 	"fw190": {
 		"name": "Fw 190",
-		"type": ["fighter", "fighter_light"]
+		"type": ["fighter", "fighter_light"],
+		"size": "small"
 	},
 
 	// Fw 190 A
@@ -184,6 +189,7 @@
 	"il2": {
 		"name": "Il-2",
 		"type": ["ground_attack"],
+		"size": "medium",
 		"static": [
 			{
 				"model": "graphics\\blocks\\static_il2.mgm",
@@ -192,7 +198,7 @@
 			{
 				"model": "graphics\\blocks\\static_il2_net.mgm",
 				"script": "luascripts\\worldobjects\\blocks\\static_il2_net.txt",
-				"outside": true
+				"camo": true
 			}
 		]
 	},
@@ -209,6 +215,7 @@
 	"ju87": {
 		"name": "Ju 87",
 		"type": ["ground_attack", "dive_bomber"],
+		"size": "medium",
 		"static": [
 			{
 				"model": "graphics\\blocks\\static_ju87.mgm",
@@ -221,7 +228,7 @@
 			{
 				"model": "graphics\\blocks\\static_ju87_net.mgm",
 				"script": "luascripts\\worldobjects\\blocks\\static_ju87_net.txt",
-				"outside": true
+				"camo": true
 			}
 		]
 	},
@@ -267,6 +274,7 @@
 	"pe2": {
 		"name": "Pe-2",
 		"type": ["dive_bomber", "level_bomber"],
+		"size": "large",
 		"static": [
 			{
 				"model": "graphics\\blocks\\static_pe2.mgm",
@@ -291,6 +299,7 @@
 	"he111": {
 		"name": "He 111",
 		"type": ["level_bomber", "transport"],
+		"size": "large",
 		"static": [
 			{
 				"model": "graphics\\blocks\\static_he111.mgm",
