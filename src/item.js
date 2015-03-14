@@ -17,7 +17,7 @@ Buffer.prototype._offset = 0;
 
 // Default item data values
 Item.DEFAULT_COALITION = 0; // Neutral coalition ID
-Item.DEFAULT_COUNTRY = 50; // Neutral country ID
+Item.DEFAULT_COUNTRY = 0; // Neutral country ID
 Item.DEFAULT_DAMAGE_REPORT = 50; // 50% of damage
 Item.DEFAULT_DURABILITY = 25000;
 

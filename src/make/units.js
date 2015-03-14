@@ -68,6 +68,11 @@ module.exports = function(mission, data) {
 
 			var unitParentID = unitData.parent;
 
+			// Unit group is the same as unit ID if there is no parent hierarchy
+			if (!unit.group) {
+				unit.group = unitID;
+			}
+
 			if (!unitParentID) {
 				break;
 			}

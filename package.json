@@ -3,7 +3,7 @@
 	"main": "./src/app.js",
 	"private": true,
 	"dependencies": {
-		"commander": "^2.6.0",
+		"commander": "^2.7.1",
 		"moment": "^2.9.0",
 		"strip-json-comments": "^1.0.2",
 		"lex": "^1.7.8",
@@ -14,7 +14,7 @@
 		"grunt-contrib-jshint": "^0.11.0",
 		"grunt-contrib-clean": "^0.6.0",
 		"grunt-jscs": "^1.5.0",
-		"enclose": "^0.2.4",
+		"enclose": "^0.2.5",
 		"numeral": "^1.5.3"
 	}
 }

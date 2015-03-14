@@ -27,6 +27,9 @@ var planeSize = {
 	HUGE: 4
 };
 
+var planeSizeMin = planeSize.SMALL;
+var planeSizeMax = planeSize.HUGE;
+
 // Generate mission airfields
 module.exports = function(mission, data) {
 
@@ -44,19 +47,124 @@ module.exports = function(mission, data) {
 		}
 
 		var airfieldUnits = mission.unitsByAirfield[airfieldID];
-		var countryPresence = [];
+		var countriesWeighted = []; // List of country IDs as a weighted array
+		var planesBySector = {};
 
-		// Build a list of country presence weighted array
+		// Process airfield units
 		if (airfieldUnits) {
 
+			var sectorsIndex = {};
+			var planesIndex = {};
+
+			// Build a list of plane groups indexed by plane size
 			for (var unitID in airfieldUnits) {
 
 				var unit = airfieldUnits[unitID];
+				var groupID = unit.group;
 
-				unit.planes.forEach(function(plane) {
-					countryPresence.push(unit.country);
+				unit.planes.forEach(function(planeID) {
+
+					var plane = mission.planesByID[planeID];
+					var planeSizeID = planeSize[String(plane.size).toUpperCase()];
+
+					if (planeSizeID) {
+
+						countriesWeighted.push(unit.country);
+
+						var planeSizeGroup = planesIndex[planeSizeID] = planesIndex[planeSizeID] || {};
+						var planeGroup = planeSizeGroup[groupID] = planeSizeGroup[groupID] || [];
+
+						planeGroup.push([planeID, unit.country]);
+					}
 				});
 			}
+
+			// Build a list of sectors indexed by plane size
+			for (var sectorID in airfield.sectors) {
+
+				for (var planeSizeID in airfield.sectors[sectorID]) {
+
+					var maxPlanes = getSectorMaxPlanes(sectorID, planeSizeID);
+					var sectorsByPlaneSize = sectorsIndex[planeSizeID] || [];
+
+					if (maxPlanes > 0) {
+						sectorsByPlaneSize.push(sectorID);
+					}
+
+					sectorsIndex[planeSizeID] = sectorsByPlaneSize;
+				}
+			}
+
+			// Assign planes to sectors
+			(function() {
+
+				// NOTE: During distribution large size planes take priority over small size
+				for (var planeSizeID = planeSizeMax; planeSizeID >= planeSizeMin; planeSizeID--) {
+
+					var planesBySize = planesIndex[planeSizeID];
+
+					if (!planesBySize) {
+						continue;
+					}
+
+					// TODO: Sort unit list by plane group size
+					rand.shuffle(Object.keys(planesBySize)).forEach(function(unitID) {
+
+						var planeSizeSectors = sectorsIndex[planeSizeID];
+
+						// Sort indexed list of sectors by best fit for plane size
+						planeSizeSectors.sort(function(a, b) {
+
+							var sectorSizeA = getSectorMaxPlanes(a, planeSizeID);
+							var sectorSizeB = getSectorMaxPlanes(b, planeSizeID);
+
+							return sectorSizeB - sectorSizeA;
+						});
+
+						var unitPlanes = planesBySize[unitID];
+
+						for (var i = 0; i < planeSizeSectors.length; i++) {
+
+							if (!unitPlanes.length) {
+								break;
+							}
+
+							var sectorID = planeSizeSectors[i];
+							var sectorMaxPlanes = getSectorMaxPlanes(sectorID, planeSizeID);
+							var sectorPlanes = planesBySector[sectorID] = planesBySector[sectorID] || {};
+
+							for (var n = 0; n < sectorMaxPlanes; n++) {
+
+								var plane = unitPlanes.shift();
+								var sector = airfield.sectors[sectorID];
+								var sectorPlaneSize = [];
+
+								for (var x = planeSizeID; x <= planeSizeMax; x++) {
+
+									if (sector[x] > 0) {
+										sectorPlaneSize.push(x);
+									}
+								}
+
+								// Assign plane to sector plane parking spot
+								sectorPlaneSize = rand.pick(sectorPlaneSize);
+								sectorPlanes[sectorPlaneSize] = sectorPlanes[sectorPlaneSize] || [];
+								sectorPlanes[sectorPlaneSize].push(plane);
+
+								// Decrease sector plane spot count
+								sector[sectorPlaneSize]--;
+
+								if (!unitPlanes.length) {
+									break;
+								}
+							}
+						}
+
+						// TODO: Log a warning if unitPlanes.length is greater than 0 (could
+						// not distribute all unit planes - not enough parking spots).
+					});
+				}
+			})();
 		}
 
 		var itemsGroup = new Item.Group();
@@ -81,6 +189,8 @@ module.exports = function(mission, data) {
 
 				// Process item group
 				if (Array.isArray(itemTypeID)) {
+
+					rand.shuffle(item);
 
 					if (isGroup) {
 						extraItems.push(item);
@@ -142,6 +252,18 @@ module.exports = function(mission, data) {
 		mission.addItem(itemsGroup);
 	}
 
+	// Get max sector plane count by plane size
+	function getSectorMaxPlanes(sectorID, planeSizeID) {
+
+		var planeCount = 0;
+
+		for (var i = planeSizeID; i <= planeSizeMax; i++) {
+			planeCount += airfield.sectors[sectorID][i];
+		}
+
+		return planeCount;
+	}
+
 	// Make a normal static item
 	function makeStaticItem(item) {
 
@@ -161,7 +283,11 @@ module.exports = function(mission, data) {
 		// TODO: Beacon item
 		else if (itemData === itemTags.BEACON) {
 
-			itemObject.Country = rand.pick(countryPresence);
+			if (!countriesWeighted.length) {
+				return;
+			}
+
+			itemObject.Country = rand.pick(countriesWeighted);
 			itemObject.BeaconChannel = 1;
 
 			itemObject.createEntity();
@@ -217,7 +343,7 @@ module.exports = function(mission, data) {
 		}
 
 		var vehicles = isStatic ? mission.staticVehicles : mission.vehicles;
-		var countryID = rand.pick(countryPresence);
+		var countryID = rand.pick(countriesWeighted);
 
 		if (!vehicles[countryID] || !vehicles[countryID][vehicleType]) {
 			return;
@@ -257,20 +383,44 @@ module.exports = function(mission, data) {
 	// Make a plane item
 	function makePlane(item) {
 
-		var countryID = rand.pick(countryPresence);
-		var itemPlaneSize = item[6];
+		var planeSector = item[4];
+		var planeSize = item[6];
 
-		var planeIDs = ["ju87d3", "ju87d1"];
-
-		if (itemPlaneSize === planeSize.SMALL) {
-			planeIDs = ["bf109f4", "bf109g2"];
-		}
-		else if (itemPlaneSize === planeSize.HUGE) {
-			planeIDs = ["he111h6"];
+		if (!planesBySector[planeSector] || !planesBySector[planeSector][planeSize]) {
+			return;
 		}
 
-		var plane = mission.planesByID[rand.pick(planeIDs)];
-		var planeStatic = rand.pick(plane.static);
+		var planeData = planesBySector[planeSector][planeSize].shift();
+
+		if (!planeData) {
+			return;
+		}
+
+		var plane = mission.planesByID[planeData[0]];
+		var staticPlanes = rand.shuffle(plane.static || []);
+		var planeStatic;
+		var planeCamo = (item[7] > 0);
+
+		// 75% chance to use camouflaged static plane when camo flag is set
+		if (planeCamo) {
+			planeCamo = rand.bool(0.75);
+		}
+
+		// Find static plane model
+		for (var staticPlane of staticPlanes) {
+
+			if ((staticPlane.camo && !planeCamo) || (planeCamo && !staticPlane.camo)) {
+				continue;
+			}
+
+			planeStatic = staticPlane;
+			break;
+		}
+
+		// No matching static planes found
+		if (!planeStatic) {
+			return;
+		}
 
 		// Create static plane item
 		var itemObject = new Item.Block();
@@ -278,7 +428,7 @@ module.exports = function(mission, data) {
 		// Slightly vary/randomize plane orientation
 		var orientation = Math.max((item[3] + rand.real(-15, 15) + 360) % 360, 0);
 
-		itemObject.Country = countryID;
+		itemObject.Country = planeData[1];
 		itemObject.Model = planeStatic.model;
 		itemObject.Script = planeStatic.script;
 		itemObject.setPosition(item[1], item[2]);

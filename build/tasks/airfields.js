@@ -48,9 +48,10 @@ module.exports = function(grunt) {
 				var json = grunt.file.readJSON(fileDestination);
 
 				json.items = [];
+				json.sectors = {};
 
 				// Build output JSON object with recursion
-				(function buildJSON(json, items) {
+				(function buildJSON(jsonItems, items) {
 
 					items.forEach(function(item) {
 
@@ -108,6 +109,20 @@ module.exports = function(grunt) {
 								else if (planeFlag !== undefined) {
 									grunt.fail.fatal("Invalid plane flag in PLANE definition: " + planeFlag);
 								}
+
+								var sector = json.sectors[planeSector];
+
+								// Register airfield sector and parking data
+								if (!sector) {
+
+									sector = json.sectors[planeSector] = {};
+
+									for (var prop in planeSize) {
+										sector[planeSize[prop]] = 0;
+									}
+								}
+
+								sector[planeSizeID]++;
 							}
 							// Cargo truck
 							else if (item.Name === "TRUCK:CARGO") {
@@ -181,7 +196,7 @@ module.exports = function(grunt) {
 								jsonItem.push(data);
 							});
 
-							json.push(jsonItem);
+							jsonItems.push(jsonItem);
 
 							totalItems++;
 						}
@@ -190,7 +205,7 @@ module.exports = function(grunt) {
 
 							var childItems = [];
 
-							json.push(childItems);
+							jsonItems.push(childItems);
 
 							buildJSON(childItems, item.items);
 						}
