@@ -307,8 +307,12 @@ module.exports = function(mission, data) {
 		itemObject.setPosition(item[1], item[2]);
 		itemObject.setOrientation(item[3]);
 
+		// Decoration item
+		if (itemData === itemTags.DECO) {
+			itemObject.Durability = 500;
+		}
 		// Windsock item
-		if (itemData === itemTags.WINDSOCK) {
+		else if (itemData === itemTags.WINDSOCK) {
 			itemObject.createEntity();
 		}
 		// Beacon item
@@ -407,7 +411,10 @@ module.exports = function(mission, data) {
 		itemObject.setPosition(positionX, positionZ);
 		itemObject.setOrientation(orientation);
 
-		if (!isStatic) {
+		if (isStatic) {
+			itemObject.Durability = 5000;
+		}
+		else {
 			itemObject.createEntity();
 		}
 
@@ -419,13 +426,13 @@ module.exports = function(mission, data) {
 
 		var planeSector = item[4];
 		var planeTaxiRoute = item[5];
-		var planeSize = item[6];
+		var planeMaxSize = item[6];
 
-		if (!planesBySector[planeSector] || !planesBySector[planeSector][planeSize]) {
+		if (!planesBySector[planeSector] || !planesBySector[planeSector][planeMaxSize]) {
 			return;
 		}
 
-		var planeData = planesBySector[planeSector][planeSize].shift();
+		var planeData = planesBySector[planeSector][planeMaxSize].shift();
 
 		if (!planeData) {
 			return;
@@ -435,6 +442,7 @@ module.exports = function(mission, data) {
 		var staticPlanes = rand.shuffle(plane.static || []);
 		var planeStatic;
 		var planeCamo = (item[7] > 0);
+		var planeSizeID = planeSize[String(plane.size).toUpperCase()];
 
 		// 75% chance to use camouflaged static plane when camo flag is set
 		if (planeCamo) {
@@ -492,6 +500,7 @@ module.exports = function(mission, data) {
 		orientation = Math.max((orientation + 360) % 360, 0);
 
 		itemObject.Country = planeData[1];
+		itemObject.Durability = 2500 + (planeSizeID * 2500);
 		itemObject.Model = planeStatic.model;
 		itemObject.Script = planeStatic.script;
 		itemObject.setPosition(positionX, positionZ);
