@@ -19,7 +19,7 @@ var itemTags = {
 	BEACON: 4 // Beacon
 };
 
-// Plane size types/IDs
+// Plane size constants (types/IDs)
 var planeSize = {
 	SMALL: 1,
 	MEDIUM: 2,
@@ -27,26 +27,37 @@ var planeSize = {
 	HUGE: 4
 };
 
-var planeSizeMin = planeSize.SMALL;
-var planeSizeMax = planeSize.HUGE;
-
 // Generate mission airfields
 module.exports = function(mission, data) {
 
 	var params = mission.params;
 	var battle = mission.battle;
-	var airfields = battle.airfields;
 	var rand = mission.rand;
 
-	for (var airfieldID in airfields) {
+	// Min and max plane size IDs
+	var planeSizeMin = planeSize.SMALL;
+	var planeSizeMax = planeSize.HUGE;
 
-		var airfield = airfields[airfieldID];
+	// Airfield index tables
+	var airfieldsByID = Object.create(null);
+	var airfieldsByCoalition = Object.create(null);
 
-		if (!airfield.items || !airfield.items.length) {
+	// Process each airfield
+	for (var airfieldID in battle.airfields) {
+
+		var airfieldData = battle.airfields[airfieldID];
+		var airfield = airfieldsByID[airfieldID] = Object.create(null);
+
+		// Copy airfield name and position from data definitions
+		airfield.name = airfieldData.name;
+		airfield.position = airfieldData.position;
+
+		if (!airfieldData.items || !airfieldData.items.length) {
 			continue;
 		}
 
 		var airfieldUnits = mission.unitsByAirfield[airfieldID];
+		var countries = {};
 		var countriesWeighted = []; // List of country IDs as a weighted array
 		var planesBySector = {};
 
@@ -55,6 +66,8 @@ module.exports = function(mission, data) {
 
 			var sectorsIndex = {};
 			var planesIndex = {};
+
+			airfield.countries = {};
 
 			// Build a list of plane groups indexed by plane size
 			for (var unitID in airfieldUnits) {
@@ -70,6 +83,7 @@ module.exports = function(mission, data) {
 					if (planeSizeID) {
 
 						countriesWeighted.push(unit.country);
+						countries[unit.country] = (countries[unit.country] || 0) + 1;
 
 						var planeSizeGroup = planesIndex[planeSizeID] = planesIndex[planeSizeID] || {};
 						var planeGroup = planeSizeGroup[groupID] = planeSizeGroup[groupID] || [];
@@ -79,10 +93,27 @@ module.exports = function(mission, data) {
 				});
 			}
 
-			// Build a list of sectors indexed by plane size
-			for (var sectorID in airfield.sectors) {
+			// Airfield countries list
+			airfield.countries = Object.keys(countries).map(Number);
 
-				for (var planeSizeID in airfield.sectors[sectorID]) {
+			// Sort countries list by number of units present on the airfield
+			airfield.countries.sort(function(a, b) {
+				return countries[b] - countries[a];
+			});
+
+			// Airfield coalition
+			airfield.coalition = data.countries[airfield.countries[0]].coalition;
+
+			if (!airfieldsByCoalition[airfield.coalition]) {
+				airfieldsByCoalition[airfield.coalition] = [];
+			}
+
+			airfieldsByCoalition[airfield.coalition].push(airfield);
+
+			// Build a list of sectors indexed by plane size
+			for (var sectorID in airfieldData.sectors) {
+
+				for (var planeSizeID in airfieldData.sectors[sectorID]) {
 
 					var maxPlanes = getSectorMaxPlanes(sectorID, planeSizeID);
 					var sectorsByPlaneSize = sectorsIndex[planeSizeID] || [];
@@ -136,7 +167,7 @@ module.exports = function(mission, data) {
 							for (var n = 0; n < sectorMaxPlanes; n++) {
 
 								var plane = unitPlanes.shift();
-								var sector = airfield.sectors[sectorID];
+								var sector = airfieldData.sectors[sectorID];
 								var sectorPlaneSize = [];
 
 								for (var x = planeSizeID; x <= planeSizeMax; x++) {
@@ -169,7 +200,7 @@ module.exports = function(mission, data) {
 
 		var itemsGroup = new Item.Group();
 
-		itemsGroup.setName(airfield.name);
+		itemsGroup.setName(airfieldData.name);
 
 		// Walk/process each airfield item
 		(function walkItems(items, isGroup) {
@@ -246,7 +277,7 @@ module.exports = function(mission, data) {
 				walkItems(extraItems, false);
 			}
 
-		})(rand.shuffle(airfield.items), false);
+		})(rand.shuffle(airfieldData.items), false);
 
 		// Add all items as a single airfield group in a mission file
 		mission.addItem(itemsGroup);
@@ -258,7 +289,7 @@ module.exports = function(mission, data) {
 		var planeCount = 0;
 
 		for (var i = planeSizeID; i <= planeSizeMax; i++) {
-			planeCount += airfield.sectors[sectorID][i];
+			planeCount += airfieldData.sectors[sectorID][i];
 		}
 
 		return planeCount;
@@ -280,14 +311,17 @@ module.exports = function(mission, data) {
 		if (itemData === itemTags.WINDSOCK) {
 			itemObject.createEntity();
 		}
-		// TODO: Beacon item
+		// Beacon item
 		else if (itemData === itemTags.BEACON) {
 
-			if (!countriesWeighted.length) {
+			if (!airfield.countries || !airfield.countries.length) {
 				return;
 			}
 
-			itemObject.Country = rand.pick(countriesWeighted);
+			// TODO: Make beacons only for player related airfields
+			// TODO: Set different beacon channels
+
+			itemObject.Country = airfield.countries[0];
 			itemObject.BeaconChannel = 1;
 
 			itemObject.createEntity();
@@ -384,6 +418,7 @@ module.exports = function(mission, data) {
 	function makePlane(item) {
 
 		var planeSector = item[4];
+		var planeTaxiRoute = item[5];
 		var planeSize = item[6];
 
 		if (!planesBySector[planeSector] || !planesBySector[planeSector][planeSize]) {
@@ -425,17 +460,49 @@ module.exports = function(mission, data) {
 		// Create static plane item
 		var itemObject = new Item.Block();
 
+		var positionX = item[1];
+		var positionZ = item[2];
+		var orientation = item[3];
+		var orientationOffset = 15;
+
+		// 25% chance to slightly move plane position forward (with taxi routes only)
+		if (planeTaxiRoute !== false && !planeStatic.camo && rand.bool(0.25)) {
+
+			var positionOffsetMin = 10;
+			var positionOffsetMax = 25;
+
+			// Limit position offset for player-only taxi routes
+			if (planeTaxiRoute === 0) {
+
+				positionOffsetMin = 5;
+				positionOffsetMax = 15;
+			}
+
+			var positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
+			var orientationRad = orientation * (Math.PI / 180);
+
+			positionX += positionOffset * Math.cos(orientationRad);
+			positionZ += positionOffset * Math.sin(orientationRad);
+
+			orientationOffset = 45;
+		}
+
 		// Slightly vary/randomize plane orientation
-		var orientation = Math.max((item[3] + rand.real(-15, 15) + 360) % 360, 0);
+		orientation = orientation + rand.real(-orientationOffset, orientationOffset);
+		orientation = Math.max((orientation + 360) % 360, 0);
 
 		itemObject.Country = planeData[1];
 		itemObject.Model = planeStatic.model;
 		itemObject.Script = planeStatic.script;
-		itemObject.setPosition(item[1], item[2]);
+		itemObject.setPosition(positionX, positionZ);
 		itemObject.setOrientation(orientation);
 
 		return [itemObject];
 	}
+
+	// Static airfield data index objects
+	mission.airfieldsByID = Object.freeze(airfieldsByID);
+	mission.airfieldsByCoalition = Object.freeze(airfieldsByCoalition);
 };
 
 module.exports.itemTags = itemTags;
