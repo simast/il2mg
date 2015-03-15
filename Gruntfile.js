@@ -32,6 +32,9 @@ module.exports = function(grunt) {
 				options: {
 					node: true,
 					esnext: true,
+					globals: {
+						log: true
+					},
 					"-W053": true, // Do not use {a} as a constructor
 					"-W055": true, // A constructor name should start with an uppercase letter
 					"-W083": true // Don't make functions within a loop

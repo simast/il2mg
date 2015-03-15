@@ -1,7 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var util = require("util");
 var moment = require("moment");
 
 // Generate mission map data
@@ -31,10 +30,7 @@ module.exports = function(mission, data) {
 			map = foundMaps[0];
 		}
 		else {
-
-			var dateStr = date.format("YYYY-MM-DD");
-
-			throw util.format('Could not find a map for "%s" mission date.', dateStr);
+			throw new Error("Could not find a valid battle map!");
 		}
 	}
 

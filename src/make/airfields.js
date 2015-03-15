@@ -42,6 +42,10 @@ module.exports = function(mission, data) {
 	var airfieldsByID = Object.create(null);
 	var airfieldsByCoalition = Object.create(null);
 
+	// Total airfield counts
+	var totalAirfields = 0;
+	var totalActive = 0;
+
 	// Process each airfield
 	for (var airfieldID in battle.airfields) {
 
@@ -51,6 +55,8 @@ module.exports = function(mission, data) {
 		// Copy airfield name and position from data definitions
 		airfield.name = airfieldData.name;
 		airfield.position = airfieldData.position;
+
+		totalAirfields++;
 
 		if (!airfieldData.items || !airfieldData.items.length) {
 			continue;
@@ -191,11 +197,20 @@ module.exports = function(mission, data) {
 							}
 						}
 
-						// TODO: Log a warning if unitPlanes.length is greater than 0 (could
-						// not distribute all unit planes - not enough parking spots).
+						// Log a warning if unitPlanes.length is greater than 0 (could not
+						// distribute all unit planes - not enough parking spots).
+						unitPlanes.forEach(function(planeData) {
+
+							log.warn("Not enough parking spots!", {
+								airfield: airfieldID,
+								plane: planeData[0]
+							});
+						});
 					});
 				}
 			})();
+
+			totalActive++;
 		}
 
 		var itemsGroup = new Item.Group();
@@ -512,6 +527,9 @@ module.exports = function(mission, data) {
 	// Static airfield data index objects
 	mission.airfieldsByID = Object.freeze(airfieldsByID);
 	mission.airfieldsByCoalition = Object.freeze(airfieldsByCoalition);
+
+	// Log mission airfields info
+	log.info("Airfields:", totalAirfields, {active: totalActive});
 };
 
 module.exports.itemTags = itemTags;

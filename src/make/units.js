@@ -16,6 +16,10 @@ module.exports = function(mission, data) {
 	var unitsByAirfield = Object.create(null);
 	var unitsByCountry = Object.create(null);
 
+	// Total unit and plane counts
+	var totalUnits = 0;
+	var totalPlanes = 0;
+
 	// Process all battle units and build index lists
 	for (var unitID in battle.units) {
 
@@ -153,6 +157,8 @@ module.exports = function(mission, data) {
 		// Register unit to country index
 		unitsByCountry[unit.country] = unitsByCountry[unit.country] || Object.create(null);
 		unitsByCountry[unit.country][unitID] = unit;
+
+		totalUnits++;
 	}
 
 	// Distribute available planes from plane storages
@@ -181,7 +187,9 @@ module.exports = function(mission, data) {
 			}
 
 			unit.planes.push(planeID);
+
 			planeStorage[1]--;
+			totalPlanes++;
 		}
 	});
 
@@ -333,4 +341,7 @@ module.exports = function(mission, data) {
 	mission.unitsByID = Object.freeze(unitsByID);
 	mission.unitsByAirfield = Object.freeze(unitsByAirfield);
 	mission.unitsByCountry = Object.freeze(unitsByCountry);
+
+	// Log mission units info
+	log.info("Units:", totalUnits, {planes: totalPlanes});
 };

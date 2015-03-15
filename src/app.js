@@ -4,8 +4,51 @@
 var os = require("os");
 var util = require("util");
 var moment = require("moment");
+var winston = require("winston");
 var Mission = require("./mission");
 var data = require("./data");
+
+// Setup winston logger
+var log = global.log = new (winston.Logger)({
+	levels: {
+		info: 0,
+		warn: 1,
+		error: 2,
+		done: 3
+	},
+	transports: [
+		new winston.transports.Console({
+			level: "error",
+			colorize: true
+		})
+	]
+});
+
+winston.addColors({
+	info: "gray",
+	warn: "yellow",
+	error: "red",
+	done: "green"
+});
+
+// NOTE: Intercept all console.error traffic (commander error messages) and log
+// them as winston "error" level log messages.
+console.error = function() {
+
+	if (!arguments.length) {
+		return;
+	}
+
+	var message = String(arguments[0]).trim();
+
+	if (message.length) {
+
+		message = message.replace(/^error:\s*/i, "");
+
+		arguments[0] = message;
+		log.error.apply(log, arguments);
+	}
+};
 
 // Setup command line interface
 var params = require("commander");
@@ -122,31 +165,36 @@ params.parse(process.argv);
 
 try {
 
+	// Turn on verbose log level in debug mode
+	if (params.debug) {
+		log.transports.console.level = "info";
+	}
+
 	// Validate command line params
 
 	// --battle
 	if (params.battle && !data.battles[params.battle]) {
-		throw util.format('Unknown battle: "%s".', params.battle);
+		throw ["Unknown battle!", {battle: params.battle}];
 	}
 
 	// --date
 	if (params.date && typeof params.date !== "object") {
-		throw util.format('Invalid mission date value: "%s".', params.date);
+		throw ["Invalid mission date!", {date: params.date}];
 	}
 
 	// --time
 	if (params.time && typeof params.time === "string" && !data.time[params.time]) {
-		throw util.format('Invalid mission time value: "%s".', params.time);
+		throw ["Invalid mission time!", {time: params.time}];
 	}
 
 	// --coalition
-	if (params.coalition && !data.coalitions[params.coalition]) {
-		throw util.format('Unknown coalition: "%s".', params.coalition);
+	if (params.coalition !== undefined && !data.coalitions[params.coalition]) {
+		throw ["Unknown coalition!", {coalition: params.coalition}];
 	}
 
 	// --country
-	if (params.country && !data.countries[params.country]) {
-		throw util.format('Unknown country: "%s".', params.country);
+	if (params.country !== undefined && !data.countries[params.country]) {
+		throw ["Unknown country!", {country: params.country}];
 	}
 
 	// Create a new mission
@@ -161,14 +209,23 @@ try {
 
 	// Save mission files
 	mission.save(fileName);
+
+	log.done("Success!");
 }
 catch (error) {
 
-	// Only handle simple string errors (not exceptions)
-	if (util.isError(error)) {
+	// Handle simple string errors
+	if (typeof error === "string") {
+		log.error(error);
+	}
+	// Handle array error messages (with extra meta data)
+	else if (Array.isArray(error)) {
+		log.error.apply(log, error);
+	}
+	// Forward other unhandled exceptions to default handler
+	else {
 		throw error;
 	}
 
-	console.error("ERROR: %s", error);
 	process.exit(1);
 }

@@ -1,7 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var util = require("util");
 var moment = require("moment");
 
 // Generate mission date
@@ -17,10 +16,10 @@ module.exports = function(mission, data) {
 	// Validate desired date (from params)
 	if (date && (date.isBefore(battleFrom) || date.isAfter(battleTo))) {
 
-		var dateStr = date.format("YYYY-MM-DD");
-		var battleName = battle.name;
-
-		throw util.format('Invalid mission date value "%s" for battle "%s".', dateStr, battleName);
+		throw ["Invalid mission date!", {
+			date: date.format("YYYY-MM-DD"),
+			battle: battle.name
+		}];
 	}
 	// Generate a random date
 	else if (!date) {
@@ -33,4 +32,7 @@ module.exports = function(mission, data) {
 
 	// Set mission options date
 	options.Date = new String(date.format("D.M.YYYY"));
+
+	// Log mission date
+	log.info("Date:", date.format("YYYY-MM-DD"));
 };

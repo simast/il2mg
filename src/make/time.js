@@ -245,4 +245,13 @@ module.exports = function(mission, data) {
 
 	// Set mission options time
 	mission.items.Options.Time = new String(date.format("H:m:s"));
+
+	// Log mission time info
+	var logData = [];
+
+	logData.push("Time:");
+	logData.push(date.format("HH:mm"));
+	logData = logData.concat(Object.keys(timeFlags));
+
+	log.info.apply(log, logData);
 };

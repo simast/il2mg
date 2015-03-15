@@ -31,6 +31,8 @@ function Mission(params) {
 	// items without LCName or LCDesc properties).
 	this.getLC("");
 
+	log.info("Making mission...");
+
 	// Make mission parts
 	require("./make/battle")(this, data);
 	require("./make/date")(this, data);
@@ -102,6 +104,8 @@ Mission.prototype.save = function(fileName) {
 	}
 
 	// TODO: Generate mission file path and name if not specified
+
+	log.info("Saving mission...", fileName);
 
 	if (this.params.debug) {
 		this.saveText(fileName);
