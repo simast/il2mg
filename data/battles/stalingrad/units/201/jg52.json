@@ -1,0 +1,36 @@
+{
+	// Jagdgeschwader 52
+	"jg52": {},
+
+	// Mixed III./JG 52 "Stalingrad-Kommando" detachment (sent to Stalingrad area)
+	"jg52_iii_sk": {
+		"name": "III./JG 52",
+		"alias": "Stalingrad-Kommando",
+		"parent": "jg52",
+		"airfields": [
+			["tuzov", "1942-08-21", "1942-09-10"],
+			["pitomnik", "1942-09-11", "1942-09-28"]
+		],
+		// NOTE: Each staffel detached one swarm (around 12 planes total)
+		"planes": [
+			["bf109g2", 11, "1942-08"],
+			["bf109g2", 8, "1942-09"]
+		],
+		"pilots": [
+			["Otto Decker", -13, "start", "1942-08-27"],
+			["Hermann Graf", -13, "start", "1942-09-17"],
+			["Hermann Graf", -14, "1942-09-18", "end"],
+			["Heinrich Füllgrabe", -9],
+			["Johann Kalb", 5, "start", "1942-09-16"],
+			["Hermann Wolf", 5],
+			["Werner Höhenberg", 5],
+			["Ernst Süß", -9],
+			["Josef Zwernemann", 9],
+			["Hans Dammers", -7],
+			["Johann-Hermann Meier", 5],
+			["Hans Funcke", 12],
+			["Heinz Ermisch", 5],
+			["Manfred Lotzmann", 5]
+		]
+	}
+}

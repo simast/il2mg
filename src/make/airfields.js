@@ -58,10 +58,6 @@ module.exports = function(mission, data) {
 
 		totalAirfields++;
 
-		if (!airfieldData.items || !airfieldData.items.length) {
-			continue;
-		}
-
 		var airfieldUnits = mission.unitsByAirfield[airfieldID];
 		var countries = {};
 		var countriesWeighted = []; // List of country IDs as a weighted array
@@ -147,52 +143,54 @@ module.exports = function(mission, data) {
 					// TODO: Sort unit list by plane group size
 					rand.shuffle(Object.keys(planesBySize)).forEach(function(unitID) {
 
+						var unitPlanes = planesBySize[unitID];
 						var planeSizeSectors = sectorsIndex[planeSizeID];
 
-						// Sort indexed list of sectors by best fit for plane size
-						planeSizeSectors.sort(function(a, b) {
+						if (planeSizeSectors) {
 
-							var sectorSizeA = getSectorMaxPlanes(a, planeSizeID);
-							var sectorSizeB = getSectorMaxPlanes(b, planeSizeID);
+							// Sort indexed list of sectors by best fit for plane size
+							planeSizeSectors.sort(function(a, b) {
 
-							return sectorSizeB - sectorSizeA;
-						});
+								var sectorSizeA = getSectorMaxPlanes(a, planeSizeID);
+								var sectorSizeB = getSectorMaxPlanes(b, planeSizeID);
 
-						var unitPlanes = planesBySize[unitID];
+								return sectorSizeB - sectorSizeA;
+							});
 
-						for (var i = 0; i < planeSizeSectors.length; i++) {
-
-							if (!unitPlanes.length) {
-								break;
-							}
-
-							var sectorID = planeSizeSectors[i];
-							var sectorMaxPlanes = getSectorMaxPlanes(sectorID, planeSizeID);
-							var sectorPlanes = planesBySector[sectorID] = planesBySector[sectorID] || {};
-
-							for (var n = 0; n < sectorMaxPlanes; n++) {
-
-								var plane = unitPlanes.shift();
-								var sector = airfieldData.sectors[sectorID];
-								var sectorPlaneSize = [];
-
-								for (var x = planeSizeID; x <= planeSizeMax; x++) {
-
-									if (sector[x] > 0) {
-										sectorPlaneSize.push(x);
-									}
-								}
-
-								// Assign plane to sector plane parking spot
-								sectorPlaneSize = rand.pick(sectorPlaneSize);
-								sectorPlanes[sectorPlaneSize] = sectorPlanes[sectorPlaneSize] || [];
-								sectorPlanes[sectorPlaneSize].push(plane);
-
-								// Decrease sector plane spot count
-								sector[sectorPlaneSize]--;
+							for (var i = 0; i < planeSizeSectors.length; i++) {
 
 								if (!unitPlanes.length) {
 									break;
+								}
+
+								var sectorID = planeSizeSectors[i];
+								var sectorMaxPlanes = getSectorMaxPlanes(sectorID, planeSizeID);
+								var sectorPlanes = planesBySector[sectorID] = planesBySector[sectorID] || {};
+
+								for (var n = 0; n < sectorMaxPlanes; n++) {
+
+									var plane = unitPlanes.shift();
+									var sector = airfieldData.sectors[sectorID];
+									var sectorPlaneSize = [];
+
+									for (var x = planeSizeID; x <= planeSizeMax; x++) {
+
+										if (sector[x] > 0) {
+											sectorPlaneSize.push(x);
+										}
+									}
+
+									// Assign plane to sector plane parking spot
+									sectorPlaneSize = rand.pick(sectorPlaneSize);
+									sectorPlanes[sectorPlaneSize] = sectorPlanes[sectorPlaneSize] || [];
+									sectorPlanes[sectorPlaneSize].push(plane);
+
+									// Decrease sector plane spot count
+									sector[sectorPlaneSize]--;
+
+									if (!unitPlanes.length) {
+										break;
+									}
 								}
 							}
 						}
@@ -211,6 +209,11 @@ module.exports = function(mission, data) {
 			})();
 
 			totalActive++;
+		}
+
+		// Skip/continue if airfield has no items available
+		if (!airfieldData.items || !airfieldData.items.length) {
+			continue;
 		}
 
 		var itemsGroup = new Item.Group();
