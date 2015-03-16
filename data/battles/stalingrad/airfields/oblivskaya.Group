@@ -1329,7 +1329,7 @@ Group
     Index = 63;
     LinkTrId = 0;
     XPos = 116404.512;
-    YPos = 81.268;
+    YPos = 81.265;
     ZPos = 102323.236;
     XOri = 0.00;
     YOri = 294.50;
@@ -1351,7 +1351,7 @@ Group
     Index = 64;
     LinkTrId = 0;
     XPos = 116379.059;
-    YPos = 81.268;
+    YPos = 81.145;
     ZPos = 102198.872;
     XOri = 0.00;
     YOri = 329.80;
@@ -1373,7 +1373,7 @@ Group
     Index = 65;
     LinkTrId = 0;
     XPos = 116389.350;
-    YPos = 81.268;
+    YPos = 81.141;
     ZPos = 102158.547;
     XOri = 0.00;
     YOri = 159.10;
@@ -2935,7 +2935,7 @@ Group
     Index = 136;
     LinkTrId = 0;
     XPos = 116404.361;
-    YPos = 81.268;
+    YPos = 81.180;
     ZPos = 102202.843;
     XOri = 0.00;
     YOri = 198.21;
@@ -8900,7 +8900,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 446;
+    Index = 445;
     LinkTrId = 0;
     XPos = 116404.918;
     YPos = 81.268;
@@ -8922,7 +8922,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 450;
+    Index = 446;
     LinkTrId = 0;
     XPos = 117078.560;
     YPos = 81.268;
@@ -8944,12 +8944,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 455;
+    Index = 447;
     Desc = "";
     Block
     {
       Name = "DECO";
-      Index = 453;
+      Index = 448;
       LinkTrId = 0;
       XPos = 117109.788;
       YPos = 81.268;
@@ -8971,7 +8971,7 @@ Group
     Vehicle
     {
       Name = "AA:MG";
-      Index = 454;
+      Index = 449;
       LinkTrId = 0;
       XPos = 117108.264;
       YPos = 81.268;
@@ -9004,12 +9004,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 459;
+    Index = 450;
     Desc = "";
     Block
     {
       Name = "Block";
-      Index = 456;
+      Index = 451;
       LinkTrId = 0;
       XPos = 116365.366;
       YPos = 81.268;
@@ -9031,7 +9031,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 457;
+      Index = 452;
       LinkTrId = 0;
       XPos = 116364.152;
       YPos = 81.268;
@@ -9053,7 +9053,7 @@ Group
     Vehicle
     {
       Name = "AA:MG";
-      Index = 458;
+      Index = 453;
       LinkTrId = 0;
       XPos = 116365.365;
       YPos = 81.268;
@@ -9086,12 +9086,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 464;
+    Index = 454;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 460;
+      Index = 455;
       LinkTrId = 0;
       XPos = 117694.660;
       YPos = 81.592;
@@ -9121,7 +9121,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 461;
+      Index = 456;
       LinkTrId = 0;
       XPos = 117696.123;
       YPos = 81.589;
@@ -9143,7 +9143,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 462;
+      Index = 457;
       LinkTrId = 0;
       XPos = 117697.798;
       YPos = 81.589;
@@ -9165,12 +9165,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 466;
+      Index = 458;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 463;
+        Index = 459;
         LinkTrId = 0;
         XPos = 117674.311;
         YPos = 81.589;
@@ -9198,12 +9198,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 471;
+    Index = 460;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 467;
+      Index = 461;
       LinkTrId = 0;
       XPos = 116073.562;
       YPos = 80.833;
@@ -9233,7 +9233,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 468;
+      Index = 462;
       LinkTrId = 0;
       XPos = 116073.749;
       YPos = 80.834;
@@ -9255,7 +9255,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 469;
+      Index = 463;
       LinkTrId = 0;
       XPos = 116075.227;
       YPos = 80.848;
@@ -9277,7 +9277,7 @@ Group
     Block
     {
       Name = "TRUCK:CARGO";
-      Index = 470;
+      Index = 464;
       LinkTrId = 0;
       XPos = 116085.512;
       YPos = 80.867;
@@ -9301,12 +9301,12 @@ Group
 
   Airfield
   {
-    Name = "TAXI:1";
-    Index = 473;
+    Name = "TAXI:1:1";
+    Index = 465;
     LinkTrId = 0;
-    XPos = 116153.374;
+    XPos = 116192.663;
     YPos = 81.268;
-    ZPos = 103045.544;
+    ZPos = 102987.181;
     XOri = 0.00;
     YOri = 33.00;
     ZOri = 0.00;
@@ -9325,170 +9325,1442 @@ Group
       Point
       {
         Type = 0;
-        X = 18.98;
-        Y = 0.918313;
+        X = 19.1303;
+        Y = 70.5138;
       }
       Point
       {
         Type = 1;
-        X = 44.4827;
-        Y = -10.571;
+        X = 43.9185;
+        Y = 52.6892;
       }
       Point
       {
         Type = 1;
-        X = 63.7706;
-        Y = -34.2671;
+        X = 64.1376;
+        Y = 17.3395;
       }
       Point
       {
         Type = 1;
-        X = 68.5709;
-        Y = -119.629;
+        X = 81.2279;
+        Y = -395.414;
       }
       Point
       {
         Type = 1;
-        X = 91.8132;
-        Y = -712.402;
+        X = 90.6674;
+        Y = -640.851;
       }
       Point
       {
         Type = 1;
-        X = 83.4266;
-        Y = -747.475;
+        X = 84.1573;
+        Y = -672.564;
       }
       Point
       {
         Type = 1;
-        X = 89.9708;
-        Y = -764.221;
+        X = 87.5259;
+        Y = -690.91;
       }
       Point
       {
         Type = 1;
-        X = 101.13;
-        Y = -769.196;
+        X = 100.071;
+        Y = -698.921;
       }
       Point
       {
         Type = 1;
-        X = 167.403;
-        Y = -763.349;
+        X = 136.323;
+        Y = -694.773;
       }
       Point
       {
         Type = 1;
-        X = 406.266;
-        Y = -744.529;
+        X = 404.756;
+        Y = -673.978;
       }
       Point
       {
         Type = 1;
-        X = 425.263;
-        Y = -741.678;
+        X = 426.854;
+        Y = -676.594;
       }
       Point
       {
         Type = 1;
-        X = 442.92;
-        Y = -728.409;
+        X = 442.194;
+        Y = -668.172;
       }
       Point
       {
         Type = 1;
-        X = 452.131;
-        Y = -709.897;
+        X = 450.75;
+        Y = -646.717;
       }
       Point
       {
         Type = 2;
-        X = 450.643;
-        Y = -675.608;
+        X = 448.959;
+        Y = -605.56;
       }
       Point
       {
         Type = 2;
-        X = 380.502;
-        Y = 684.902;
+        X = 376.227;
+        Y = 749.708;
       }
       Point
       {
         Type = 1;
-        X = 369.423;
-        Y = 725.768;
+        X = 372.055;
+        Y = 794.502;
       }
       Point
       {
         Type = 1;
-        X = 356.459;
-        Y = 746.894;
+        X = 356.725;
+        Y = 818.551;
       }
       Point
       {
         Type = 1;
-        X = 334.054;
-        Y = 759.666;
+        X = 336.676;
+        Y = 829.47;
       }
       Point
       {
         Type = 1;
-        X = 304.818;
-        Y = 756.566;
+        X = 302.037;
+        Y = 825.025;
       }
       Point
       {
         Type = 1;
-        X = 221.877;
-        Y = 716.276;
+        X = 227.03;
+        Y = 790.995;
       }
       Point
       {
         Type = 1;
-        X = 157.089;
-        Y = 667.509;
+        X = 164.876;
+        Y = 746.282;
       }
       Point
       {
         Type = 1;
-        X = 114.614;
-        Y = 602.832;
+        X = 124.138;
+        Y = 693.869;
       }
       Point
       {
         Type = 1;
-        X = 93.5616;
-        Y = 531.206;
+        X = 98.4057;
+        Y = 632.589;
       }
       Point
       {
         Type = 1;
-        X = 59.6683;
-        Y = 299.181;
+        X = 57.9685;
+        Y = 363.726;
       }
       Point
       {
         Type = 1;
-        X = 60.0275;
-        Y = 55.1696;
+        X = 59.442;
+        Y = 133.463;
       }
       Point
       {
         Type = 1;
-        X = 51.4628;
-        Y = 30.2447;
+        X = 52.514;
+        Y = 103.859;
       }
       Point
       {
         Type = 1;
-        X = 36.4877;
-        Y = 12.434;
+        X = 37.8808;
+        Y = 83.3827;
       }
       Point
       {
         Type = 0;
-        X = 18.7823;
-        Y = 1.11235;
+        X = 19.0122;
+        Y = 73.4543;
+      }
+    }
+    ReturnPlanes = 0;
+    Hydrodrome = 0;
+    RepairFriendlies = 0;
+    RearmFriendlies = 0;
+    RefuelFriendlies = 0;
+    RepairTime = 0;
+    RearmTime = 0;
+    RefuelTime = 0;
+    MaintenanceRadius = 1000;
+  }
+  
+
+  Airfield
+  {
+    Name = "TAXI:2:1";
+    Index = 495;
+    LinkTrId = 0;
+    XPos = 116340.188;
+    YPos = 81.268;
+    ZPos = 102781.596;
+    XOri = 0.00;
+    YOri = 32.13;
+    ZOri = 0.00;
+    Model = "graphics\airfields\fakefield.mgm";
+    Script = "LuaScripts\WorldObjects\Airfields\fakefield.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+    Callsign = 0;
+    Callnum = 0;
+    Chart
+    {
+      Point
+      {
+        Type = 0;
+        X = 17.8567;
+        Y = 67.0213;
+      }
+      Point
+      {
+        Type = 1;
+        X = 43.6003;
+        Y = 51.3835;
+      }
+      Point
+      {
+        Type = 1;
+        X = 63.0579;
+        Y = 18.0176;
+      }
+      Point
+      {
+        Type = 1;
+        X = 84.5374;
+        Y = -394.261;
+      }
+      Point
+      {
+        Type = 1;
+        X = 80.5862;
+        Y = -424.521;
+      }
+      Point
+      {
+        Type = 1;
+        X = 83.6627;
+        Y = -437.303;
+      }
+      Point
+      {
+        Type = 1;
+        X = 93.5462;
+        Y = -444.344;
+      }
+      Point
+      {
+        Type = 1;
+        X = 126.194;
+        Y = -440.428;
+      }
+      Point
+      {
+        Type = 1;
+        X = 396.993;
+        Y = -415.699;
+      }
+      Point
+      {
+        Type = 1;
+        X = 412.737;
+        Y = -417.543;
+      }
+      Point
+      {
+        Type = 1;
+        X = 431.482;
+        Y = -404.823;
+      }
+      Point
+      {
+        Type = 1;
+        X = 443.047;
+        Y = -381.724;
+      }
+      Point
+      {
+        Type = 2;
+        X = 442.748;
+        Y = -332.358;
+      }
+      Point
+      {
+        Type = 2;
+        X = 350.567;
+        Y = 1008.58;
+      }
+      Point
+      {
+        Type = 1;
+        X = 346.348;
+        Y = 1053.27;
+      }
+      Point
+      {
+        Type = 1;
+        X = 333.423;
+        Y = 1077.09;
+      }
+      Point
+      {
+        Type = 1;
+        X = 311.584;
+        Y = 1087.17;
+      }
+      Point
+      {
+        Type = 1;
+        X = 283.418;
+        Y = 1084.86;
+      }
+      Point
+      {
+        Type = 1;
+        X = 203.885;
+        Y = 1049.21;
+      }
+      Point
+      {
+        Type = 1;
+        X = 132.622;
+        Y = 997.428;
+      }
+      Point
+      {
+        Type = 1;
+        X = 88.1422;
+        Y = 931.11;
+      }
+      Point
+      {
+        Type = 1;
+        X = 68.8597;
+        Y = 863.277;
+      }
+      Point
+      {
+        Type = 1;
+        X = 36.6769;
+        Y = 616.343;
+      }
+      Point
+      {
+        Type = 1;
+        X = 41.3696;
+        Y = 402.324;
+      }
+      Point
+      {
+        Type = 1;
+        X = 55.6675;
+        Y = 132.863;
+      }
+      Point
+      {
+        Type = 1;
+        X = 41.285;
+        Y = 94.9296;
+      }
+      Point
+      {
+        Type = 0;
+        X = 17.7762;
+        Y = 72.1491;
+      }
+    }
+    ReturnPlanes = 0;
+    Hydrodrome = 0;
+    RepairFriendlies = 0;
+    RearmFriendlies = 0;
+    RefuelFriendlies = 0;
+    RepairTime = 0;
+    RearmTime = 0;
+    RefuelTime = 0;
+    MaintenanceRadius = 1000;
+  }
+  
+
+  Airfield
+  {
+    Name = "TAXI:3:1";
+    Index = 496;
+    LinkTrId = 0;
+    XPos = 116511.433;
+    YPos = 81.268;
+    ZPos = 102534.880;
+    XOri = 0.00;
+    YOri = 34.03;
+    ZOri = 0.00;
+    Model = "graphics\airfields\fakefield.mgm";
+    Script = "LuaScripts\WorldObjects\Airfields\fakefield.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+    Callsign = 0;
+    Callnum = 0;
+    Chart
+    {
+      Point
+      {
+        Type = 0;
+        X = 17.8567;
+        Y = 67.0213;
+      }
+      Point
+      {
+        Type = 1;
+        X = 43.6003;
+        Y = 51.3835;
+      }
+      Point
+      {
+        Type = 1;
+        X = 64.3534;
+        Y = 15.7188;
+      }
+      Point
+      {
+        Type = 1;
+        X = 66.6887;
+        Y = -107.85;
+      }
+      Point
+      {
+        Type = 1;
+        X = 62.0274;
+        Y = -129.942;
+      }
+      Point
+      {
+        Type = 1;
+        X = 68.6532;
+        Y = -143.071;
+      }
+      Point
+      {
+        Type = 1;
+        X = 82.3008;
+        Y = -148.473;
+      }
+      Point
+      {
+        Type = 1;
+        X = 119.989;
+        Y = -143.336;
+      }
+      Point
+      {
+        Type = 1;
+        X = 380.111;
+        Y = -127.814;
+      }
+      Point
+      {
+        Type = 1;
+        X = 397.229;
+        Y = -131.864;
+      }
+      Point
+      {
+        Type = 1;
+        X = 414.617;
+        Y = -122.644;
+      }
+      Point
+      {
+        Type = 1;
+        X = 425.068;
+        Y = -101.76;
+      }
+      Point
+      {
+        Type = 2;
+        X = 425.607;
+        Y = -54.4342;
+      }
+      Point
+      {
+        Type = 2;
+        X = 379.971;
+        Y = 1295.59;
+      }
+      Point
+      {
+        Type = 1;
+        X = 377.314;
+        Y = 1342.11;
+      }
+      Point
+      {
+        Type = 1;
+        X = 365.196;
+        Y = 1364.37;
+      }
+      Point
+      {
+        Type = 1;
+        X = 345.116;
+        Y = 1375.75;
+      }
+      Point
+      {
+        Type = 1;
+        X = 323.76;
+        Y = 1376.33;
+      }
+      Point
+      {
+        Type = 1;
+        X = 262.867;
+        Y = 1356.75;
+      }
+      Point
+      {
+        Type = 1;
+        X = 179.133;
+        Y = 1306.52;
+      }
+      Point
+      {
+        Type = 1;
+        X = 141.265;
+        Y = 1268.49;
+      }
+      Point
+      {
+        Type = 1;
+        X = 104.65;
+        Y = 1201.27;
+      }
+      Point
+      {
+        Type = 1;
+        X = 52.0131;
+        Y = 916.931;
+      }
+      Point
+      {
+        Type = 1;
+        X = 53.0041;
+        Y = 557.346;
+      }
+      Point
+      {
+        Type = 1;
+        X = 63.1025;
+        Y = 135.666;
+      }
+      Point
+      {
+        Type = 1;
+        X = 45.7221;
+        Y = 93.7704;
+      }
+      Point
+      {
+        Type = 0;
+        X = 17.7762;
+        Y = 72.1491;
+      }
+    }
+    ReturnPlanes = 0;
+    Hydrodrome = 0;
+    RepairFriendlies = 0;
+    RearmFriendlies = 0;
+    RefuelFriendlies = 0;
+    RepairTime = 0;
+    RearmTime = 0;
+    RefuelTime = 0;
+    MaintenanceRadius = 1000;
+  }
+  
+
+  Airfield
+  {
+    Name = "TAXI:4:1";
+    Index = 497;
+    LinkTrId = 0;
+    XPos = 116669.268;
+    YPos = 81.268;
+    ZPos = 102312.414;
+    XOri = 0.00;
+    YOri = 34.03;
+    ZOri = 0.00;
+    Model = "graphics\airfields\fakefield.mgm";
+    Script = "LuaScripts\WorldObjects\Airfields\fakefield.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+    Callsign = 0;
+    Callnum = 0;
+    Chart
+    {
+      Point
+      {
+        Type = 0;
+        X = 17.8567;
+        Y = 67.0213;
+      }
+      Point
+      {
+        Type = 1;
+        X = 42.5113;
+        Y = 101.924;
+      }
+      Point
+      {
+        Type = 1;
+        X = 61.8448;
+        Y = 123.476;
+      }
+      Point
+      {
+        Type = 1;
+        X = 93.8077;
+        Y = 128.685;
+      }
+      Point
+      {
+        Type = 1;
+        X = 370.306;
+        Y = 144.314;
+      }
+      Point
+      {
+        Type = 1;
+        X = 391.842;
+        Y = 140.809;
+      }
+      Point
+      {
+        Type = 1;
+        X = 408.264;
+        Y = 149.228;
+      }
+      Point
+      {
+        Type = 1;
+        X = 419.292;
+        Y = 168.617;
+      }
+      Point
+      {
+        Type = 2;
+        X = 421.118;
+        Y = 220.856;
+      }
+      Point
+      {
+        Type = 2;
+        X = 373.882;
+        Y = 1564.92;
+      }
+      Point
+      {
+        Type = 1;
+        X = 368.868;
+        Y = 1617.96;
+      }
+      Point
+      {
+        Type = 1;
+        X = 356.954;
+        Y = 1639.02;
+      }
+      Point
+      {
+        Type = 1;
+        X = 334.93;
+        Y = 1650.31;
+      }
+      Point
+      {
+        Type = 1;
+        X = 291.057;
+        Y = 1642.99;
+      }
+      Point
+      {
+        Type = 1;
+        X = 220.345;
+        Y = 1610.08;
+      }
+      Point
+      {
+        Type = 1;
+        X = 152.125;
+        Y = 1562.53;
+      }
+      Point
+      {
+        Type = 1;
+        X = 105.704;
+        Y = 1493.55;
+      }
+      Point
+      {
+        Type = 1;
+        X = 80.8529;
+        Y = 1403.26;
+      }
+      Point
+      {
+        Type = 1;
+        X = 46.5399;
+        Y = 1181.08;
+      }
+      Point
+      {
+        Type = 1;
+        X = 44.2604;
+        Y = 963.497;
+      }
+      Point
+      {
+        Type = 1;
+        X = 62.0954;
+        Y = 135.672;
+      }
+      Point
+      {
+        Type = 1;
+        X = 46.7619;
+        Y = 99.3231;
+      }
+      Point
+      {
+        Type = 0;
+        X = 17.8413;
+        Y = 72.6455;
+      }
+    }
+    ReturnPlanes = 0;
+    Hydrodrome = 0;
+    RepairFriendlies = 0;
+    RearmFriendlies = 0;
+    RefuelFriendlies = 0;
+    RepairTime = 0;
+    RearmTime = 0;
+    RefuelTime = 0;
+    MaintenanceRadius = 1000;
+  }
+  
+
+  Airfield
+  {
+    Name = "TAXI:5:1";
+    Index = 498;
+    LinkTrId = 0;
+    XPos = 116608.203;
+    YPos = 81.268;
+    ZPos = 103625.829;
+    XOri = 0.00;
+    YOri = 124.87;
+    ZOri = 0.00;
+    Model = "graphics\airfields\fakefield.mgm";
+    Script = "LuaScripts\WorldObjects\Airfields\fakefield.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+    Callsign = 0;
+    Callnum = 0;
+    Chart
+    {
+      Point
+      {
+        Type = 0;
+        X = 17.2748;
+        Y = 68.6629;
+      }
+      Point
+      {
+        Type = 1;
+        X = 16.5444;
+        Y = 144.291;
+      }
+      Point
+      {
+        Type = 1;
+        X = 28.9681;
+        Y = 177.399;
+      }
+      Point
+      {
+        Type = 1;
+        X = 55.6275;
+        Y = 199.081;
+      }
+      Point
+      {
+        Type = 1;
+        X = 453.187;
+        Y = 199.649;
+      }
+      Point
+      {
+        Type = 1;
+        X = 488.104;
+        Y = 206.414;
+      }
+      Point
+      {
+        Type = 1;
+        X = 513.96;
+        Y = 224.823;
+      }
+      Point
+      {
+        Type = 1;
+        X = 533.916;
+        Y = 264.517;
+      }
+      Point
+      {
+        Type = 1;
+        X = 529.214;
+        Y = 284.968;
+      }
+      Point
+      {
+        Type = 1;
+        X = 504.712;
+        Y = 302.928;
+      }
+      Point
+      {
+        Type = 2;
+        X = 445.362;
+        Y = 302.493;
+      }
+      Point
+      {
+        Type = 2;
+        X = -899.903;
+        Y = 276.099;
+      }
+      Point
+      {
+        Type = 1;
+        X = -944.915;
+        Y = 277.366;
+      }
+      Point
+      {
+        Type = 1;
+        X = -962.453;
+        Y = 263.917;
+      }
+      Point
+      {
+        Type = 1;
+        X = -971.807;
+        Y = 242.252;
+      }
+      Point
+      {
+        Type = 1;
+        X = -963.288;
+        Y = 216.746;
+      }
+      Point
+      {
+        Type = 1;
+        X = -936.293;
+        Y = 202.207;
+      }
+      Point
+      {
+        Type = 1;
+        X = -855.803;
+        Y = 185.816;
+      }
+      Point
+      {
+        Type = 1;
+        X = -22.9014;
+        Y = 197.073;
+      }
+      Point
+      {
+        Type = 1;
+        X = 5.90743;
+        Y = 177.475;
+      }
+      Point
+      {
+        Type = 1;
+        X = 16.448;
+        Y = 145.106;
+      }
+      Point
+      {
+        Type = 0;
+        X = 19.8899;
+        Y = 68.2945;
+      }
+    }
+    ReturnPlanes = 0;
+    Hydrodrome = 0;
+    RepairFriendlies = 0;
+    RearmFriendlies = 0;
+    RefuelFriendlies = 0;
+    RepairTime = 0;
+    RearmTime = 0;
+    RefuelTime = 0;
+    MaintenanceRadius = 1000;
+  }
+  
+
+  Airfield
+  {
+    Name = "TAXI:6:2";
+    Index = 499;
+    LinkTrId = 0;
+    XPos = 116942.437;
+    YPos = 81.268;
+    ZPos = 103513.820;
+    XOri = 0.00;
+    YOri = 215.12;
+    ZOri = 0.00;
+    Model = "graphics\airfields\fakefield.mgm";
+    Script = "LuaScripts\WorldObjects\Airfields\fakefield.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+    Callsign = 0;
+    Callnum = 0;
+    Chart
+    {
+      Point
+      {
+        Type = 0;
+        X = 12.0843;
+        Y = 71.2632;
+      }
+      Point
+      {
+        Type = 1;
+        X = 35.0263;
+        Y = 85.1248;
+      }
+      Point
+      {
+        Type = 1;
+        X = 52.0514;
+        Y = 124.969;
+      }
+      Point
+      {
+        Type = 1;
+        X = 51.0229;
+        Y = 273.535;
+      }
+      Point
+      {
+        Type = 1;
+        X = 45.2593;
+        Y = 291.268;
+      }
+      Point
+      {
+        Type = 1;
+        X = 49.2605;
+        Y = 304.157;
+      }
+      Point
+      {
+        Type = 1;
+        X = 61.8778;
+        Y = 309.288;
+      }
+      Point
+      {
+        Type = 1;
+        X = 87.4464;
+        Y = 306.854;
+      }
+      Point
+      {
+        Type = 1;
+        X = 268.971;
+        Y = 306.511;
+      }
+      Point
+      {
+        Type = 1;
+        X = 292.255;
+        Y = 316.655;
+      }
+      Point
+      {
+        Type = 1;
+        X = 306.314;
+        Y = 338.192;
+      }
+      Point
+      {
+        Type = 2;
+        X = 310.774;
+        Y = 384.909;
+      }
+      Point
+      {
+        Type = 2;
+        X = 287.183;
+        Y = 1249.57;
+      }
+      Point
+      {
+        Type = 1;
+        X = 282.254;
+        Y = 1288.88;
+      }
+      Point
+      {
+        Type = 1;
+        X = 263.463;
+        Y = 1310.45;
+      }
+      Point
+      {
+        Type = 1;
+        X = 239.222;
+        Y = 1316.49;
+      }
+      Point
+      {
+        Type = 1;
+        X = 143.415;
+        Y = 1301.02;
+      }
+      Point
+      {
+        Type = 1;
+        X = 81.2102;
+        Y = 1260.63;
+      }
+      Point
+      {
+        Type = 1;
+        X = 51.7624;
+        Y = 1228.38;
+      }
+      Point
+      {
+        Type = 1;
+        X = 39.9033;
+        Y = 1193.9;
+      }
+      Point
+      {
+        Type = 1;
+        X = 52.231;
+        Y = 124.978;
+      }
+      Point
+      {
+        Type = 1;
+        X = 34.8838;
+        Y = 85.0037;
+      }
+      Point
+      {
+        Type = 0;
+        X = 11.9837;
+        Y = 71.0906;
+      }
+    }
+    ReturnPlanes = 0;
+    Hydrodrome = 0;
+    RepairFriendlies = 0;
+    RearmFriendlies = 0;
+    RefuelFriendlies = 0;
+    RepairTime = 0;
+    RearmTime = 0;
+    RefuelTime = 0;
+    MaintenanceRadius = 1000;
+  }
+  
+
+  Airfield
+  {
+    Name = "TAXI:7:2";
+    Index = 500;
+    LinkTrId = 0;
+    XPos = 117526.935;
+    YPos = 81.268;
+    ZPos = 102702.972;
+    XOri = 0.00;
+    YOri = 215.12;
+    ZOri = 0.00;
+    Model = "graphics\airfields\fakefield.mgm";
+    Script = "LuaScripts\WorldObjects\Airfields\fakefield.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+    Callsign = 0;
+    Callnum = 0;
+    Chart
+    {
+      Point
+      {
+        Type = 0;
+        X = 12.0843;
+        Y = 71.2632;
+      }
+      Point
+      {
+        Type = 1;
+        X = 35.0263;
+        Y = 85.1248;
+      }
+      Point
+      {
+        Type = 1;
+        X = 52.0514;
+        Y = 124.969;
+      }
+      Point
+      {
+        Type = 1;
+        X = 53.373;
+        Y = 202.418;
+      }
+      Point
+      {
+        Type = 1;
+        X = 68.0527;
+        Y = 234.63;
+      }
+      Point
+      {
+        Type = 1;
+        X = 93.6505;
+        Y = 262.046;
+      }
+      Point
+      {
+        Type = 1;
+        X = 159.533;
+        Y = 303.927;
+      }
+      Point
+      {
+        Type = 1;
+        X = 250.97;
+        Y = 316.155;
+      }
+      Point
+      {
+        Type = 1;
+        X = 272.915;
+        Y = 312.355;
+      }
+      Point
+      {
+        Type = 1;
+        X = 288.462;
+        Y = 300.841;
+      }
+      Point
+      {
+        Type = 1;
+        X = 295.624;
+        Y = 283.575;
+      }
+      Point
+      {
+        Type = 2;
+        X = 296.672;
+        Y = 246.504;
+      }
+      Point
+      {
+        Type = 2;
+        X = 321.222;
+        Y = -609.938;
+      }
+      Point
+      {
+        Type = 1;
+        X = 319.207;
+        Y = -655.076;
+      }
+      Point
+      {
+        Type = 1;
+        X = 307.344;
+        Y = -681.886;
+      }
+      Point
+      {
+        Type = 1;
+        X = 280.564;
+        Y = -694.592;
+      }
+      Point
+      {
+        Type = 1;
+        X = 86.067;
+        Y = -692.988;
+      }
+      Point
+      {
+        Type = 1;
+        X = 72.992;
+        Y = -695.055;
+      }
+      Point
+      {
+        Type = 1;
+        X = 63.5939;
+        Y = -691.321;
+      }
+      Point
+      {
+        Type = 1;
+        X = 59.3356;
+        Y = -680.38;
+      }
+      Point
+      {
+        Type = 1;
+        X = 61.4715;
+        Y = -624.672;
+      }
+      Point
+      {
+        Type = 1;
+        X = 53.6364;
+        Y = 26.107;
+      }
+      Point
+      {
+        Type = 1;
+        X = 34.8816;
+        Y = 58.8634;
+      }
+      Point
+      {
+        Type = 0;
+        X = 11.9837;
+        Y = 71.0906;
+      }
+    }
+    ReturnPlanes = 0;
+    Hydrodrome = 0;
+    RepairFriendlies = 0;
+    RearmFriendlies = 0;
+    RefuelFriendlies = 0;
+    RepairTime = 0;
+    RearmTime = 0;
+    RefuelTime = 0;
+    MaintenanceRadius = 1000;
+  }
+  
+
+  Airfield
+  {
+    Name = "TAXI:8:2";
+    Index = 501;
+    LinkTrId = 0;
+    XPos = 117365.366;
+    YPos = 81.268;
+    ZPos = 102925.970;
+    XOri = 0.00;
+    YOri = 215.12;
+    ZOri = 0.00;
+    Model = "graphics\airfields\fakefield.mgm";
+    Script = "LuaScripts\WorldObjects\Airfields\fakefield.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+    Callsign = 0;
+    Callnum = 0;
+    Chart
+    {
+      Point
+      {
+        Type = 0;
+        X = 12.0843;
+        Y = 71.2632;
+      }
+      Point
+      {
+        Type = 1;
+        X = 35.0263;
+        Y = 85.1248;
+      }
+      Point
+      {
+        Type = 1;
+        X = 52.0514;
+        Y = 124.969;
+      }
+      Point
+      {
+        Type = 1;
+        X = 48.2204;
+        Y = 468.176;
+      }
+      Point
+      {
+        Type = 1;
+        X = 60.0999;
+        Y = 504.361;
+      }
+      Point
+      {
+        Type = 1;
+        X = 93.736;
+        Y = 539.94;
+      }
+      Point
+      {
+        Type = 1;
+        X = 150.262;
+        Y = 576.072;
+      }
+      Point
+      {
+        Type = 1;
+        X = 235.227;
+        Y = 589.614;
+      }
+      Point
+      {
+        Type = 1;
+        X = 262.163;
+        Y = 588.254;
+      }
+      Point
+      {
+        Type = 1;
+        X = 280.841;
+        Y = 576.938;
+      }
+      Point
+      {
+        Type = 1;
+        X = 293.45;
+        Y = 556.791;
+      }
+      Point
+      {
+        Type = 2;
+        X = 294.579;
+        Y = 515.764;
+      }
+      Point
+      {
+        Type = 2;
+        X = 317.948;
+        Y = -338.521;
+      }
+      Point
+      {
+        Type = 1;
+        X = 313.786;
+        Y = -383.508;
+      }
+      Point
+      {
+        Type = 1;
+        X = 300.6;
+        Y = -407.886;
+      }
+      Point
+      {
+        Type = 1;
+        X = 274.5;
+        Y = -418.639;
+      }
+      Point
+      {
+        Type = 1;
+        X = 85.5043;
+        Y = -417.332;
+      }
+      Point
+      {
+        Type = 1;
+        X = 69.1519;
+        Y = -419.993;
+      }
+      Point
+      {
+        Type = 1;
+        X = 58.4253;
+        Y = -413.921;
+      }
+      Point
+      {
+        Type = 1;
+        X = 56.3371;
+        Y = -396.563;
+      }
+      Point
+      {
+        Type = 1;
+        X = 57.0396;
+        Y = -314.534;
+      }
+      Point
+      {
+        Type = 1;
+        X = 52.7095;
+        Y = 25.5349;
+      }
+      Point
+      {
+        Type = 1;
+        X = 34.8816;
+        Y = 58.8634;
+      }
+      Point
+      {
+        Type = 0;
+        X = 11.9837;
+        Y = 71.0906;
       }
     }
     ReturnPlanes = 0;
