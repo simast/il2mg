@@ -161,14 +161,14 @@
 		"script": "luascripts\\worldobjects\\vehicles\\bt7m.txt"
 	},
 	{
-		"name": "StuG III Ausf.C-D",
+		"name": "StuG III Ausf.E",
 		"type": ["tank", "tank_destroyer"],
 		"countries": [201],
 		"model": "graphics\\vehicles\\stug37l24\\stug37l24.mgm",
 		"script": "luascripts\\worldobjects\\vehicles\\stug37l24.txt"
 	},
 	{
-		"name": "StuG III Ausf.F",
+		"name": "StuG III Ausf.F/8",
 		"type": ["tank", "tank_destroyer"],
 		"countries": [201],
 		"model": "graphics\\vehicles\\stug40l43\\stug40l43.mgm",
