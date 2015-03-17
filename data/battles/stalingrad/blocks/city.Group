@@ -31,7 +31,7 @@ Block
   YOri = 32.82;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_01.mgm";
-  Script = "LuaScripts\WorldObjects\okt_01.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_01.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -52,7 +52,7 @@ Block
   YOri = 31.77;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_02.mgm";
-  Script = "LuaScripts\WorldObjects\okt_02.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_02.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -73,7 +73,7 @@ Block
   YOri = 32.44;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_03.mgm";
-  Script = "LuaScripts\WorldObjects\okt_03.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_03.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -94,7 +94,7 @@ Block
   YOri = 32.15;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_04.mgm";
-  Script = "LuaScripts\WorldObjects\okt_04.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_04.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -115,7 +115,7 @@ Block
   YOri = 30.86;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_05.mgm";
-  Script = "LuaScripts\WorldObjects\okt_05.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_05.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -136,7 +136,7 @@ Block
   YOri = 33.32;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_06.mgm";
-  Script = "LuaScripts\WorldObjects\okt_06.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_06.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -157,7 +157,7 @@ Block
   YOri = 33.27;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_07.mgm";
-  Script = "LuaScripts\WorldObjects\okt_07.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_07.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -178,7 +178,7 @@ Block
   YOri = 31.23;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_08.mgm";
-  Script = "LuaScripts\WorldObjects\okt_08.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_08.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -199,7 +199,7 @@ Block
   YOri = 211.60;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_04.mgm";
-  Script = "LuaScripts\WorldObjects\okt_04.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_04.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -220,7 +220,7 @@ Block
   YOri = 213.39;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_05.mgm";
-  Script = "LuaScripts\WorldObjects\okt_05.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_05.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -241,7 +241,7 @@ Block
   YOri = 225.22;
   ZOri = 0.00;
   Model = "graphics\buildings\bar_01.mgm";
-  Script = "LuaScripts\WorldObjects\bar_01.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\bar_01.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -262,7 +262,7 @@ Block
   YOri = 45.80;
   ZOri = 0.00;
   Model = "graphics\buildings\bar_02.mgm";
-  Script = "LuaScripts\WorldObjects\bar_02.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\bar_02.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -283,7 +283,7 @@ Block
   YOri = 47.26;
   ZOri = 0.00;
   Model = "graphics\buildings\bar_03.mgm";
-  Script = "LuaScripts\WorldObjects\bar_03.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\bar_03.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -304,7 +304,7 @@ Block
   YOri = 44.73;
   ZOri = 0.00;
   Model = "graphics\buildings\bar_04.mgm";
-  Script = "LuaScripts\WorldObjects\bar_04.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\bar_04.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -325,7 +325,7 @@ Block
   YOri = 47.10;
   ZOri = 0.00;
   Model = "graphics\buildings\bar_05.mgm";
-  Script = "LuaScripts\WorldObjects\bar_05.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\bar_05.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -346,7 +346,7 @@ Block
   YOri = 44.81;
   ZOri = 0.00;
   Model = "graphics\buildings\bar_06.mgm";
-  Script = "LuaScripts\WorldObjects\bar_06.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\bar_06.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -367,7 +367,7 @@ Block
   YOri = 45.53;
   ZOri = 0.00;
   Model = "graphics\buildings\bar_07.mgm";
-  Script = "LuaScripts\WorldObjects\bar_07.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\bar_07.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -388,7 +388,7 @@ Block
   YOri = 44.21;
   ZOri = 0.00;
   Model = "graphics\buildings\bar_09.mgm";
-  Script = "LuaScripts\WorldObjects\bar_09.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\bar_09.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -409,7 +409,7 @@ Block
   YOri = 225.97;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_04.mgm";
-  Script = "LuaScripts\WorldObjects\okt_04.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_04.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -430,7 +430,7 @@ Block
   YOri = 314.90;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_04.mgm";
-  Script = "LuaScripts\WorldObjects\okt_04.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_04.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -451,7 +451,7 @@ Block
   YOri = 225.68;
   ZOri = 0.00;
   Model = "graphics\buildings\okt_03.mgm";
-  Script = "LuaScripts\WorldObjects\okt_03.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\okt_03.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -472,7 +472,7 @@ Block
   YOri = 27.38;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_01.mgm";
-  Script = "LuaScripts\WorldObjects\stz_01.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_01.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -493,7 +493,7 @@ Block
   YOri = 26.88;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_02.mgm";
-  Script = "LuaScripts\WorldObjects\stz_02.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_02.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -514,7 +514,7 @@ Block
   YOri = 27.05;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_03.mgm";
-  Script = "LuaScripts\WorldObjects\stz_03.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_03.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -535,7 +535,7 @@ Block
   YOri = 26.23;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_04.mgm";
-  Script = "LuaScripts\WorldObjects\stz_04.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_04.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -556,7 +556,7 @@ Block
   YOri = 28.16;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_05.mgm";
-  Script = "LuaScripts\WorldObjects\stz_05.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_05.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -577,7 +577,7 @@ Block
   YOri = 27.41;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_06.mgm";
-  Script = "LuaScripts\WorldObjects\stz_06.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_06.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -598,7 +598,7 @@ Block
   YOri = 29.88;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_07.mgm";
-  Script = "LuaScripts\WorldObjects\stz_07.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_07.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -619,7 +619,7 @@ Block
   YOri = 26.42;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_08.mgm";
-  Script = "LuaScripts\WorldObjects\stz_08.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_08.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -640,7 +640,7 @@ Block
   YOri = 26.60;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_09.mgm";
-  Script = "LuaScripts\WorldObjects\stz_09.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_09.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -661,7 +661,7 @@ Block
   YOri = 25.37;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_10.mgm";
-  Script = "LuaScripts\WorldObjects\stz_10.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_10.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -682,7 +682,7 @@ Block
   YOri = 26.55;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_11.mgm";
-  Script = "LuaScripts\WorldObjects\stz_11.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -703,7 +703,7 @@ Block
   YOri = 50.57;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_11.mgm";
-  Script = "LuaScripts\WorldObjects\stz_11.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -724,7 +724,7 @@ Block
   YOri = 26.55;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_11.mgm";
-  Script = "LuaScripts\WorldObjects\stz_11.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -745,7 +745,7 @@ Block
   YOri = 44.38;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_11.mgm";
-  Script = "LuaScripts\WorldObjects\stz_11.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -766,7 +766,7 @@ Block
   YOri = 121.13;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_11.mgm";
-  Script = "LuaScripts\WorldObjects\stz_11.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -787,7 +787,7 @@ Block
   YOri = 0.00;
   ZOri = 0.00;
   Model = "graphics\buildings\fountain.mgm";
-  Script = "LuaScripts\WorldObjects\fountain.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\fountain.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -808,7 +808,7 @@ Block
   YOri = 26.83;
   ZOri = 0.00;
   Model = "graphics\buildings\stz_12.mgm";
-  Script = "LuaScripts\WorldObjects\stz_12.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stz_12.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -829,7 +829,7 @@ Block
   YOri = 234.09;
   ZOri = 0.00;
   Model = "graphics\buildings\stalingrad_01.mgm";
-  Script = "LuaScripts\WorldObjects\stalingrad_01.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stalingrad_01.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
@@ -850,7 +850,7 @@ Block
   YOri = 235.61;
   ZOri = 0.00;
   Model = "graphics\buildings\stalingrad_02.mgm";
-  Script = "LuaScripts\WorldObjects\stalingrad_02.txt";
+  Script = "LuaScripts\WorldObjects\Blocks\stalingrad_02.txt";
   Country = 0;
   Desc = "";
   Durability = 25000;
