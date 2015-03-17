@@ -3,6 +3,7 @@
 
 var os = require("os");
 var util = require("util");
+var domain = require("domain");
 var moment = require("moment");
 var winston = require("winston");
 var Mission = require("./mission");
@@ -163,12 +164,40 @@ params.option("-D, --debug", "use debug (development) mode");
  */
 params.parse(process.argv);
 
-try {
+// Turn on verbose log level in debug mode
+if (params.debug) {
+	log.transports.console.level = "info";
+}
 
-	// Turn on verbose log level in debug mode
-	if (params.debug) {
-		log.transports.console.level = "info";
+var appDomain = domain.create();
+
+// Handle app domain error events and uncaught exceptions
+appDomain.on("error", function(error) {
+
+	// Handle simple string errors
+	if (typeof error === "string") {
+		log.error(error);
 	}
+	// Handle array error messages (with extra meta data)
+	else if (Array.isArray(error)) {
+		log.error.apply(log, error);
+	}
+	// Log exceptions/errors
+	else if (error instanceof Error) {
+
+		log.error(error.message ? error.message : error);
+
+		// Include stack trace in debug mode
+		if (params.debug && error.stack) {
+			console.log(error.stack);
+		}
+	}
+
+	process.exit(1);
+});
+
+// Run app domain logic
+appDomain.run(function() {
 
 	// Validate command line params
 
@@ -200,32 +229,10 @@ try {
 	// Create a new mission
 	var mission = new Mission(params);
 
-	var fileName;
-
-	// Use specified mission file name
-	if (params.args[0] && params.args[0].length) {
-		fileName = params.args[0];
-	}
-
 	// Save mission files
-	mission.save(fileName).then(function() {
+	mission.save(params.args[0]).then(function() {
 		log.done("Success!");
+	}, function(error) {
+		appDomain.emit("error", error);
 	});
-}
-catch (error) {
-
-	// Handle simple string errors
-	if (typeof error === "string") {
-		log.error(error);
-	}
-	// Handle array error messages (with extra meta data)
-	else if (Array.isArray(error)) {
-		log.error.apply(log, error);
-	}
-	// Forward other unhandled exceptions to default handler
-	else {
-		throw error;
-	}
-
-	process.exit(1);
-}
+});
