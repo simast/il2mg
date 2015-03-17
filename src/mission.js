@@ -32,6 +32,7 @@ function Mission(params) {
 	this.getLC("");
 
 	log.info("Making mission...");
+	log.profile("Making");
 
 	// Make mission parts
 	require("./make/battle")(this, data);
@@ -47,6 +48,8 @@ function Mission(params) {
 	require("./make/flights")(this, data);
 	require("./make/name")(this, data);
 	require("./make/briefing")(this, data);
+
+	log.profile("Making");
 }
 
 /**
@@ -90,8 +93,13 @@ Mission.prototype.getLC = function(text) {
  * Save mission files.
  *
  * @param {string} fileName Mission file name.
+ * @returns {Promise} Promise object.
  */
 Mission.prototype.save = function(fileName) {
+
+	var self = this;
+
+	log.info("Saving mission...");
 
 	// Use specified mission file path and name
 	if (fileName && fileName.length) {
@@ -105,179 +113,246 @@ Mission.prototype.save = function(fileName) {
 
 	// TODO: Generate mission file path and name if not specified
 
-	log.info("Saving mission...", fileName);
+	var promises = [];
 
 	if (this.params.debug) {
-		this.saveText(fileName);
+		promises.push(this.saveText(fileName));
 	}
 
-	this.saveBinary(fileName);
-	this.saveLang(fileName);
+	promises.push(this.saveBinary(fileName));
+	promises.push(this.saveLang(fileName));
+
+	return Promise.all(promises);
 };
 
 /**
  * Save text .Mission file.
  *
  * @param {string} fileName Mission file name (without extension).
+ * @returns {Promise} Promise object.
  */
 Mission.prototype.saveText = function(fileName) {
 
-	var fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT);
-	var mission = this;
+	var self = this;
+	var profileName = "Saving ." + FILE_EXT_TEXT;
 
-	fileStream.once("open", function(fd) {
+	log.profile(profileName);
 
-		// Required mission file header
-		fileStream.write("# Mission File Version = 1.0;" + os.EOL);
+	var promise = new Promise(function(resolve, reject) {
 
-		// Write mission items
-		mission.items.forEach(function(item) {
-			fileStream.write(os.EOL + item.toString() + os.EOL);
+		var fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT);
+
+		// Write .Mission data
+		fileStream.once("open", function(fd) {
+
+			// Required mission file header
+			fileStream.write("# Mission File Version = 1.0;" + os.EOL);
+
+			// Write mission items
+			self.items.forEach(function(item) {
+				fileStream.write(os.EOL + item.toString() + os.EOL);
+			});
+
+			// Required mission file footer
+			fileStream.write(os.EOL + "# end of file");
+
+			fileStream.end();
 		});
 
-		// Required mission file footer
-		fileStream.write(os.EOL + "# end of file");
+		// Resolve promise
+		fileStream.once("finish", resolve);
 
-		fileStream.end();
+		// Reject promise
+		fileStream.once("error", reject);
 	});
+
+	promise.then(function() {
+		log.profile(profileName);
+	});
+
+	return promise;
 };
 
 /**
  * Save binary .msnbin file.
  *
  * @param {string} fileName Mission file name (without extension).
+ * @returns {Promise} Promise object.
  */
 Mission.prototype.saveBinary = function(fileName) {
 
-	var optionsBuffer;
-	var itemBuffers = [];
-	var numItems = 0;
+	var self = this;
+	var profileName = "Saving ." + FILE_EXT_BINARY;
 
-	// Create index tables
-	var indexTables = {
-		name: new BinaryIndexTable(32, 100),
-		desc: new BinaryIndexTable(32, 100),
-		model: new BinaryIndexTable(64, 100),
-		skin: new BinaryIndexTable(128, 100),
-		script: new BinaryIndexTable(128, 100),
-		damaged: new BinaryIndexTable(32, 0)
-	};
+	log.profile(profileName);
 
-	// Collect binary representation of all mission items
-	(function walkItems(items) {
+	var promise = new Promise(function(resolve, reject) {
 
-		items.forEach(function(item) {
+		var optionsBuffer;
+		var itemBuffers = [];
+		var numItems = 0;
 
-			// Process Group item child items
-			if (item instanceof Item.Group) {
+		// Create index tables
+		var indexTables = {
+			name: new BinaryIndexTable(32, 100),
+			desc: new BinaryIndexTable(32, 100),
+			model: new BinaryIndexTable(64, 100),
+			skin: new BinaryIndexTable(128, 100),
+			script: new BinaryIndexTable(128, 100),
+			damaged: new BinaryIndexTable(32, 0)
+		};
 
-				if (item.items && item.items.length) {
-					walkItems(item.items);
+		// Collect binary representation of all mission items
+		(function walkItems(items) {
+
+			items.forEach(function(item) {
+
+				// Process Group item child items
+				if (item instanceof Item.Group) {
+
+					if (item.items && item.items.length) {
+						walkItems(item.items);
+					}
 				}
-			}
-			// Get item binary representation (data buffers)
-			else {
+				// Get item binary representation (data buffers)
+				else {
 
-				var buffer = item.toBinary(indexTables);
+					var buffer = item.toBinary(indexTables);
 
-				// Find Options item buffer
-				if (item instanceof Item.Options) {
-					optionsBuffer = buffer;
-				}
-				// Process normal item buffers
-				else if (buffer.length) {
+					// Find Options item buffer
+					if (item instanceof Item.Options) {
+						optionsBuffer = buffer;
+					}
+					// Process normal item buffers
+					else if (buffer.length) {
 
-					itemBuffers.push(buffer);
+						itemBuffers.push(buffer);
 
-					// Process linked item entity
-					if (item.entity) {
+						// Process linked item entity
+						if (item.entity) {
 
-						itemBuffers.push(item.entity.toBinary(indexTables));
+							itemBuffers.push(item.entity.toBinary(indexTables));
+							numItems++;
+						}
+
 						numItems++;
 					}
-
-					numItems++;
 				}
-			}
-		});
+			});
 
-	})(this.items);
+		})(self.items);
 
-	if (!optionsBuffer) {
-		throw new Error();
-	}
+		if (!optionsBuffer) {
+			throw new Error();
+		}
 
-	var fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY);
+		var fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY);
 
-	fileStream.once("open", function(fd) {
+		fileStream.once("open", function(fd) {
 
-		// Write Options item buffer (has to be the first one in the file)
-		fileStream.write(optionsBuffer);
+			// Write Options item buffer (has to be the first one in the file)
+			fileStream.write(optionsBuffer);
 
-		var indexTableNames = Object.keys(indexTables);
-		var itlhBuffer = new Buffer(7); // Index table list header buffer
-		var bsBuffer = new Buffer(4); // Item size buffer
+			var indexTableNames = Object.keys(indexTables);
+			var itlhBuffer = new Buffer(7); // Index table list header buffer
+			var bsBuffer = new Buffer(4); // Item size buffer
 
-		// Write index table list header (number of index tables + 3 unknown bytes)
-		itlhBuffer.writeUInt32LE(indexTableNames.length, 0);
-		itlhBuffer.fill(0, 4);
-		fileStream.write(itlhBuffer);
+			// Write index table list header (number of index tables + 3 unknown bytes)
+			itlhBuffer.writeUInt32LE(indexTableNames.length, 0);
+			itlhBuffer.fill(0, 4);
+			fileStream.write(itlhBuffer);
 
-		// Write index tables
-		indexTableNames.forEach(function(tableName) {
-			fileStream.write(indexTables[tableName].toBinary());
-		});
+			// Write index tables
+			indexTableNames.forEach(function(tableName) {
+				fileStream.write(indexTables[tableName].toBinary());
+			});
 
-		// Write items size buffer
-		bsBuffer.writeUInt32LE(numItems, 0);
-		fileStream.write(bsBuffer);
+			// Write items size buffer
+			bsBuffer.writeUInt32LE(numItems, 0);
+			fileStream.write(bsBuffer);
 
-		// Write item buffers
-		itemBuffers.forEach(function(buffer) {
+			// Write item buffers
+			itemBuffers.forEach(function(buffer) {
 
-			// Single item buffer
-			if (Buffer.isBuffer(buffer)) {
-				fileStream.write(buffer);
-			}
-			// Multiple item buffers
-			else if (Array.isArray(buffer)) {
-
-				buffer.forEach(function(buffer) {
+				// Single item buffer
+				if (Buffer.isBuffer(buffer)) {
 					fileStream.write(buffer);
-				});
-			}
+				}
+				// Multiple item buffers
+				else if (Array.isArray(buffer)) {
+
+					buffer.forEach(function(buffer) {
+						fileStream.write(buffer);
+					});
+				}
+			});
+
+			fileStream.end();
 		});
 
-		fileStream.end();
+		// Resolve promise
+		fileStream.once("finish", resolve);
+
+		// Reject promise
+		fileStream.once("error", reject);
 	});
+
+	promise.then(function() {
+		log.profile(profileName);
+	});
+
+	return promise;
 };
 
 /**
  * Save .eng and other localisation files.
  *
  * @param {string} fileName Mission file name (without extension).
+ * @returns {Promise} Promise object.
  */
 Mission.prototype.saveLang = function(fileName) {
 
-	var mission = this;
+	var self = this;
+	var promises = [];
 
 	data.languages.forEach(function(lang) {
 
-		var fileStream = fs.createWriteStream(fileName + "." + lang);
+		var profileName = "Saving ." + lang;
 
-		fileStream.once("open", function(fd) {
+		log.profile(profileName);
 
-			// Write UCS2 little-endian BOM
-			fileStream.write("FFFE", "hex");
+		var promise = new Promise(function(resolve, reject) {
 
-			// Write language data
-			mission.lang.forEach(function(value, index) {
-				fileStream.write(index + ":" + value + os.EOL, "ucs2");
+			var fileStream = fs.createWriteStream(fileName + "." + lang);
+
+			fileStream.once("open", function(fd) {
+
+				// Write UCS2 little-endian BOM
+				fileStream.write("FFFE", "hex");
+
+				// Write language data
+				self.lang.forEach(function(value, index) {
+					fileStream.write(index + ":" + value + os.EOL, "ucs2");
+				});
+
+				fileStream.end();
 			});
 
-			fileStream.end();
+			// Resolve promise
+			fileStream.once("finish", resolve);
+
+			// Reject promise
+			fileStream.once("error", reject);
 		});
+
+		promise.then(function() {
+			log.profile(profileName);
+		});
+
+		promises.push(promise);
 	});
+
+	return Promise.all(promises);
 };
 
 /**

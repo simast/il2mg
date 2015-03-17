@@ -208,9 +208,9 @@ try {
 	}
 
 	// Save mission files
-	mission.save(fileName);
-
-	log.done("Success!");
+	mission.save(fileName).then(function() {
+		log.done("Success!");
+	});
 }
 catch (error) {
 
