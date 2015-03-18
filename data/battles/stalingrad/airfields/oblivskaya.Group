@@ -1329,7 +1329,7 @@ Group
     Index = 63;
     LinkTrId = 0;
     XPos = 116404.512;
-    YPos = 81.265;
+    YPos = 81.268;
     ZPos = 102323.236;
     XOri = 0.00;
     YOri = 294.50;
@@ -1351,7 +1351,7 @@ Group
     Index = 64;
     LinkTrId = 0;
     XPos = 116379.059;
-    YPos = 81.145;
+    YPos = 81.268;
     ZPos = 102198.872;
     XOri = 0.00;
     YOri = 329.80;
@@ -1373,7 +1373,7 @@ Group
     Index = 65;
     LinkTrId = 0;
     XPos = 116389.350;
-    YPos = 81.141;
+    YPos = 81.268;
     ZPos = 102158.547;
     XOri = 0.00;
     YOri = 159.10;
@@ -2935,7 +2935,7 @@ Group
     Index = 136;
     LinkTrId = 0;
     XPos = 116404.361;
-    YPos = 81.180;
+    YPos = 81.268;
     ZPos = 102202.843;
     XOri = 0.00;
     YOri = 198.21;
@@ -4250,7 +4250,7 @@ Group
       Index = 206;
       LinkTrId = 0;
       XPos = 116415.075;
-      YPos = 81.176;
+      YPos = 81.268;
       ZPos = 102167.704;
       XOri = 359.93;
       YOri = 310.55;
@@ -4280,7 +4280,7 @@ Group
       Index = 207;
       LinkTrId = 0;
       XPos = 116414.990;
-      YPos = 81.177;
+      YPos = 81.268;
       ZPos = 102168.068;
       XOri = 0.00;
       YOri = 320.80;
@@ -4444,7 +4444,7 @@ Group
       Index = 215;
       LinkTrId = 0;
       XPos = 115630.348;
-      YPos = 80.702;
+      YPos = 80.591;
       ZPos = 103323.009;
       XOri = 0.00;
       YOri = 239.62;
@@ -4578,7 +4578,7 @@ Group
       Index = 222;
       LinkTrId = 0;
       XPos = 118204.240;
-      YPos = 81.334;
+      YPos = 81.327;
       ZPos = 102668.567;
       XOri = 0.00;
       YOri = 341.72;
@@ -4635,7 +4635,7 @@ Group
         Index = 225;
         LinkTrId = 0;
         XPos = 118231.365;
-        YPos = 81.374;
+        YPos = 81.268;
         ZPos = 102664.005;
         XOri = 0.05;
         YOri = 26.17;
@@ -4665,7 +4665,7 @@ Group
         Index = 226;
         LinkTrId = 0;
         XPos = 118224.583;
-        YPos = 81.370;
+        YPos = 81.268;
         ZPos = 102662.383;
         XOri = 0.00;
         YOri = 51.76;
@@ -4695,7 +4695,7 @@ Group
         Index = 228;
         LinkTrId = 0;
         XPos = 118200.528;
-        YPos = 81.334;
+        YPos = 81.268;
         ZPos = 102700.699;
         XOri = 0.00;
         YOri = 84.89;
@@ -4717,7 +4717,7 @@ Group
         Index = 229;
         LinkTrId = 0;
         XPos = 118197.009;
-        YPos = 81.334;
+        YPos = 81.268;
         ZPos = 102707.367;
         XOri = 0.00;
         YOri = 113.17;
@@ -4739,58 +4739,6 @@ Group
   }
   
 
-  Vehicle
-  {
-    Name = "BEACON";
-    Index = 230;
-    LinkTrId = 0;
-    XPos = 117133.763;
-    YPos = 81.268;
-    ZPos = 102277.851;
-    XOri = 0.00;
-    YOri = 145.13;
-    ZOri = 0.00;
-    Script = "LuaScripts\WorldObjects\vehicles\ndb.txt";
-    Model = "graphics\vehicles\ndb\ndb.mgm";
-    Desc = "";
-    Country = 201;
-    NumberInFormation = 0;
-    Vulnerable = 1;
-    Engageable = 0;
-    LimitAmmo = 1;
-    AILevel = 2;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    CoopStart = 0;
-    Spotter = -1;
-    BeaconChannel = 1;
-    Callsign = 0;
-  }
-  
-
-  Block
-  {
-    Name = "DECO";
-    Index = 231;
-    LinkTrId = 0;
-    XPos = 117134.671;
-    YPos = 81.268;
-    ZPos = 102276.377;
-    XOri = 0.00;
-    YOri = 74.81;
-    ZOri = 0.00;
-    Model = "graphics\blocks\art_position_amb1.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
-    Country = 50;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
   Group
   {
     Name = "AA:FLAK";
@@ -4802,7 +4750,7 @@ Group
       Index = 233;
       LinkTrId = 0;
       XPos = 116326.158;
-      YPos = 68.688;
+      YPos = 68.706;
       ZPos = 106681.366;
       XOri = 0.00;
       YOri = 54.95;
@@ -4854,7 +4802,7 @@ Group
       Index = 235;
       LinkTrId = 0;
       XPos = 116344.364;
-      YPos = 68.688;
+      YPos = 68.713;
       ZPos = 106646.639;
       XOri = 0.00;
       YOri = 157.01;
@@ -4881,7 +4829,7 @@ Group
         Index = 237;
         LinkTrId = 0;
         XPos = 116318.331;
-        YPos = 68.666;
+        YPos = 68.668;
         ZPos = 106663.776;
         XOri = 0.00;
         YOri = 301.39;
@@ -4941,7 +4889,7 @@ Group
         Index = 240;
         LinkTrId = 0;
         XPos = 116329.663;
-        YPos = 68.688;
+        YPos = 81.268;
         ZPos = 106637.385;
         XOri = 0.00;
         YOri = 120.16;
@@ -4963,7 +4911,7 @@ Group
         Index = 241;
         LinkTrId = 0;
         XPos = 116336.662;
-        YPos = 68.688;
+        YPos = 81.268;
         ZPos = 106640.982;
         XOri = 0.00;
         YOri = 243.00;
@@ -5026,7 +4974,7 @@ Group
       Index = 244;
       LinkTrId = 0;
       XPos = 115990.504;
-      YPos = 77.719;
+      YPos = 77.602;
       ZPos = 101365.335;
       XOri = 0.00;
       YOri = 272.95;
@@ -5053,7 +5001,7 @@ Group
         Index = 246;
         LinkTrId = 0;
         XPos = 116015.178;
-        YPos = 77.684;
+        YPos = 77.719;
         ZPos = 101377.299;
         XOri = 0.12;
         YOri = 293.93;
@@ -5083,7 +5031,7 @@ Group
         Index = 247;
         LinkTrId = 0;
         XPos = 116012.357;
-        YPos = 77.717;
+        YPos = 77.719;
         ZPos = 101378.415;
         XOri = 0.00;
         YOri = 333.82;
@@ -5105,7 +5053,7 @@ Group
         Index = 248;
         LinkTrId = 0;
         XPos = 116004.248;
-        YPos = 77.717;
+        YPos = 77.719;
         ZPos = 101386.361;
         XOri = 0.00;
         YOri = 67.76;
@@ -5168,7 +5116,7 @@ Group
       Index = 251;
       LinkTrId = 0;
       XPos = 116434.557;
-      YPos = 81.208;
+      YPos = 81.268;
       ZPos = 102200.952;
       XOri = 359.95;
       YOri = 281.63;
@@ -5198,7 +5146,7 @@ Group
       Index = 252;
       LinkTrId = 0;
       XPos = 116426.187;
-      YPos = 81.205;
+      YPos = 81.268;
       ZPos = 102203.778;
       XOri = 0.00;
       YOri = 91.96;
@@ -5228,7 +5176,7 @@ Group
       Index = 254;
       LinkTrId = 0;
       XPos = 118299.325;
-      YPos = 81.648;
+      YPos = 81.666;
       ZPos = 103557.044;
       XOri = 0.00;
       YOri = 348.61;
@@ -5307,7 +5255,7 @@ Group
         Index = 258;
         LinkTrId = 0;
         XPos = 118282.190;
-        YPos = 81.665;
+        YPos = 81.268;
         ZPos = 103563.406;
         XOri = 359.89;
         YOri = 101.59;
@@ -5337,7 +5285,7 @@ Group
         Index = 259;
         LinkTrId = 0;
         XPos = 118284.568;
-        YPos = 81.665;
+        YPos = 81.268;
         ZPos = 103560.701;
         XOri = 0.00;
         YOri = 111.73;
@@ -5367,7 +5315,7 @@ Group
         Index = 261;
         LinkTrId = 0;
         XPos = 118293.893;
-        YPos = 81.648;
+        YPos = 81.268;
         ZPos = 103567.342;
         XOri = 0.00;
         YOri = 219.43;
@@ -5400,7 +5348,7 @@ Group
       Index = 263;
       LinkTrId = 0;
       XPos = 114798.981;
-      YPos = 70.383;
+      YPos = 70.327;
       ZPos = 103067.546;
       XOri = 0.00;
       YOri = 231.05;
@@ -5452,7 +5400,7 @@ Group
       Index = 265;
       LinkTrId = 0;
       XPos = 114786.157;
-      YPos = 70.383;
+      YPos = 70.368;
       ZPos = 103072.764;
       XOri = 0.00;
       YOri = 257.04;
@@ -5561,7 +5509,7 @@ Group
         Index = 271;
         LinkTrId = 0;
         XPos = 114783.923;
-        YPos = 70.383;
+        YPos = 81.268;
         ZPos = 103068.345;
         XOri = 0.00;
         YOri = 246.01;
@@ -5594,7 +5542,7 @@ Group
       Index = 273;
       LinkTrId = 0;
       XPos = 115879.724;
-      YPos = 77.389;
+      YPos = 77.383;
       ZPos = 104396.184;
       XOri = 0.00;
       YOri = 127.27;
@@ -5646,7 +5594,7 @@ Group
       Index = 275;
       LinkTrId = 0;
       XPos = 115882.907;
-      YPos = 77.389;
+      YPos = 77.522;
       ZPos = 104387.212;
       XOri = 0.00;
       YOri = 304.79;
@@ -5673,7 +5621,7 @@ Group
         Index = 277;
         LinkTrId = 0;
         XPos = 115886.093;
-        YPos = 77.389;
+        YPos = 77.644;
         ZPos = 104382.018;
         XOri = 0.00;
         YOri = 278.56;
@@ -5703,7 +5651,7 @@ Group
         Index = 279;
         LinkTrId = 0;
         XPos = 115889.024;
-        YPos = 77.558;
+        YPos = 77.580;
         ZPos = 104414.429;
         XOri = 1.37;
         YOri = 120.72;
@@ -8606,7 +8554,7 @@ Group
           Index = 430;
           LinkTrId = 0;
           XPos = 116067.986;
-          YPos = 81.264;
+          YPos = 81.268;
           ZPos = 102821.125;
           XOri = 0.00;
           YOri = 74.46;
@@ -8631,7 +8579,7 @@ Group
         Index = 431;
         LinkTrId = 0;
         XPos = 116065.880;
-        YPos = 81.261;
+        YPos = 81.268;
         ZPos = 102802.407;
         XOri = 0.00;
         YOri = 223.54;
@@ -9124,7 +9072,7 @@ Group
       Index = 456;
       LinkTrId = 0;
       XPos = 117696.123;
-      YPos = 81.589;
+      YPos = 81.593;
       ZPos = 101594.568;
       XOri = 0.00;
       YOri = 318.73;
@@ -9173,7 +9121,7 @@ Group
         Index = 459;
         LinkTrId = 0;
         XPos = 117674.311;
-        YPos = 81.589;
+        YPos = 81.268;
         ZPos = 101597.646;
         XOri = 0.00;
         YOri = 199.55;
@@ -9506,7 +9454,7 @@ Group
   Airfield
   {
     Name = "TAXI:2:1";
-    Index = 495;
+    Index = 466;
     LinkTrId = 0;
     XPos = 116340.188;
     YPos = 81.268;
@@ -9704,7 +9652,7 @@ Group
   Airfield
   {
     Name = "TAXI:3:1";
-    Index = 496;
+    Index = 467;
     LinkTrId = 0;
     XPos = 116511.433;
     YPos = 81.268;
@@ -9902,7 +9850,7 @@ Group
   Airfield
   {
     Name = "TAXI:4:1";
-    Index = 497;
+    Index = 468;
     LinkTrId = 0;
     XPos = 116669.268;
     YPos = 81.268;
@@ -10076,7 +10024,7 @@ Group
   Airfield
   {
     Name = "TAXI:5:1";
-    Index = 498;
+    Index = 469;
     LinkTrId = 0;
     XPos = 116608.203;
     YPos = 81.268;
@@ -10244,7 +10192,7 @@ Group
   Airfield
   {
     Name = "TAXI:6:2";
-    Index = 499;
+    Index = 470;
     LinkTrId = 0;
     XPos = 116942.437;
     YPos = 81.268;
@@ -10418,7 +10366,7 @@ Group
   Airfield
   {
     Name = "TAXI:7:2";
-    Index = 500;
+    Index = 471;
     LinkTrId = 0;
     XPos = 117526.935;
     YPos = 81.268;
@@ -10598,7 +10546,7 @@ Group
   Airfield
   {
     Name = "TAXI:8:2";
-    Index = 501;
+    Index = 472;
     LinkTrId = 0;
     XPos = 117365.366;
     YPos = 81.268;
@@ -10772,6 +10720,66 @@ Group
     RearmTime = 0;
     RefuelTime = 0;
     MaintenanceRadius = 1000;
+  }
+  
+
+  Group
+  {
+    Name = "BEACON";
+    Index = 663;
+    Desc = "";
+    Vehicle
+    {
+      Name = "BEACON";
+      Index = 230;
+      LinkTrId = 0;
+      XPos = 117133.763;
+      YPos = 81.268;
+      ZPos = 102277.851;
+      XOri = 0.00;
+      YOri = 145.13;
+      ZOri = 0.00;
+      Script = "LuaScripts\WorldObjects\vehicles\ndb.txt";
+      Model = "graphics\vehicles\ndb\ndb.mgm";
+      Desc = "";
+      Country = 201;
+      NumberInFormation = 0;
+      Vulnerable = 1;
+      Engageable = 0;
+      LimitAmmo = 1;
+      AILevel = 2;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      CoopStart = 0;
+      Spotter = -1;
+      BeaconChannel = 1;
+      Callsign = 0;
+    }
+    
+
+    Block
+    {
+      Name = "DECO";
+      Index = 231;
+      LinkTrId = 0;
+      XPos = 117134.671;
+      YPos = 81.268;
+      ZPos = 102276.377;
+      XOri = 0.00;
+      YOri = 74.81;
+      ZOri = 0.00;
+      Model = "graphics\blocks\art_position_amb1.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+      Country = 50;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
   }
   
 
