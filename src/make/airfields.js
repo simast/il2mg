@@ -5,6 +5,8 @@ var Item = require("../item");
 
 // Data tags for airfield items
 var itemTags = {
+	WINDSOCK: -10, // Windsock
+	BEACON: -9, // Beacon
 	LIGHT_LANDING: -8, // Landing light
 	LIGHT_SEARCH: -7, // Search light
 	AA_FLAK: -6, // Anti-aircraft (Flak)
@@ -14,9 +16,7 @@ var itemTags = {
 	TRUCK_CARGO: -2, // Cargo truck
 	PLANE: -1, // Plane spot
 	DECO: 1, // Decoration
-	FUEL: 2, // Fuel item
-	WINDSOCK: 3, // Windsock
-	BEACON: 4 // Beacon
+	FUEL: 2 // Fuel item
 };
 
 // Plane size constants (types/IDs)
@@ -103,8 +103,11 @@ module.exports = function(mission, data) {
 				return countries[b] - countries[a];
 			});
 
+			// Airfield main country
+			airfield.country = airfield.countries[0];
+
 			// Airfield coalition
-			airfield.coalition = data.countries[airfield.countries[0]].coalition;
+			airfield.coalition = data.countries[airfield.country].coalition;
 
 			if (!airfieldsByCoalition[airfield.coalition]) {
 				airfieldsByCoalition[airfield.coalition] = [];
@@ -268,6 +271,14 @@ module.exports = function(mission, data) {
 					if (itemTypeID === itemTags.PLANE) {
 						itemObjects = makePlane(item);
 					}
+					// Beacon item
+					else if (itemTypeID === itemTags.BEACON) {
+						itemObjects = makeBeacon(item);
+					}
+					// Windsock item
+					else if (itemTypeID === itemTags.WINDSOCK) {
+						itemObjects = makeWindsock(item);
+					}
 					// Vehicle item
 					else {
 						itemObjects = makeVehicle(item);
@@ -333,21 +344,54 @@ module.exports = function(mission, data) {
 		else if (itemData === itemTags.WINDSOCK) {
 			itemObject.createEntity();
 		}
-		// Beacon item
-		else if (itemData === itemTags.BEACON) {
 
-			if (!airfield.countries || !airfield.countries.length) {
-				return;
-			}
+		return [itemObject];
+	}
 
-			// TODO: Make beacons only for player related airfields
-			// TODO: Set different beacon channels
+	// Make a beacon item
+	function makeBeacon(item) {
 
-			itemObject.Country = airfield.countries[0];
-			itemObject.BeaconChannel = 1;
-
-			itemObject.createEntity();
+		if (!airfield.country) {
+			return;
 		}
+
+		var itemType = data.getItemType(item[4]);
+		var itemObject = new Item[itemType.type]();
+
+		itemObject.Model = itemType.model;
+		itemObject.Script = itemType.script;
+		itemObject.setPosition(item[1], item[2]);
+		itemObject.setOrientation(item[3]);
+
+		// TODO: Make beacons only for player related airfields
+		// TODO: Set different beacon channels
+
+		itemObject.Country = airfield.country;
+		itemObject.BeaconChannel = 1;
+
+		itemObject.createEntity();
+
+		return [itemObject];
+	}
+
+	// Make a windsock item
+	function makeWindsock(item) {
+		
+		if (!airfield.country) {
+			return;
+		}
+
+		var itemType = data.getItemType(item[4]);
+		var itemObject = new Item[itemType.type]();
+
+		itemObject.Model = itemType.model;
+		itemObject.Script = itemType.script;
+		itemObject.setPosition(item[1], item[2]);
+		itemObject.setOrientation(item[3]);
+
+		itemObject.createEntity();
+
+		// TODO: Attach windsock to airfield bubble
 
 		return [itemObject];
 	}
@@ -435,6 +479,8 @@ module.exports = function(mission, data) {
 		else {
 			itemObject.createEntity();
 		}
+
+		// TODO: Attach vehicle to airfield bubble
 
 		return [itemObject];
 	}

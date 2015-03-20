@@ -61,6 +61,11 @@ module.exports = function(grunt) {
 
 							var itemTypeID = null;
 							var itemData = [];
+							var itemTypeData = {
+								type: item.type,
+								script: item.Script,
+								model: item.Model
+							};
 
 							// Plane spot
 							if (/^PLANE/.test(item.Name)) {
@@ -152,14 +157,16 @@ module.exports = function(grunt) {
 							else if (item.Name === "LIGHT:LANDING") {
 								itemTypeID = itemTags.LIGHT_LANDING;
 							}
+							// Beacon and windsock
+							else if (item.Name === "BEACON" || item.Name === "WINDSOCK") {
+
+								itemTypeID = itemTags[item.Name];
+								itemData.push(data.registerItemType(itemTypeData));
+							}
 							// Normal item
 							else {
 
-								itemTypeID = data.registerItemType({
-									type: item.type,
-									script: item.Script,
-									model: item.Model
-								});
+								itemTypeID = data.registerItemType(itemTypeData);
 
 								// Decoration item tag
 								if (item.Name === "DECO") {
@@ -168,14 +175,6 @@ module.exports = function(grunt) {
 								// Fuel item tag
 								else if (item.Name === "FUEL") {
 									itemData.push(itemTags.FUEL);
-								}
-								// Windsock tag
-								else if (item.Name === "WINDSOCK") {
-									itemData.push(itemTags.WINDSOCK);
-								}
-								// Beacon tag
-								else if (item.Name === "BEACON") {
-									itemData.push(itemTags.BEACON);
 								}
 							}
 
