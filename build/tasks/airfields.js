@@ -49,6 +49,8 @@ module.exports = function(grunt) {
 
 				json.items = [];
 				json.sectors = {};
+				json.runways = {};
+				json.taxiRoutes = {};
 
 				// Build output JSON object with recursion
 				(function buildJSON(jsonItems, items) {
@@ -78,8 +80,9 @@ module.exports = function(grunt) {
 								// Plane sector number
 								var planeSector = +planeData[planeDataIndex++];
 
+								// Validate plane sector number
 								if (!Number.isInteger(planeSector)) {
-									grunt.fail.fatal("Invalid plane sector in PLANE definition: " + planeSector);
+									grunt.fail.fatal("Invalid plane sector in: " + item.Name);
 								}
 
 								itemData.push(planeSector);
@@ -95,12 +98,12 @@ module.exports = function(grunt) {
 
 								itemData.push(planeTaxiRoute);
 
-								// Plane size
-								var planeSizeType = planeData[planeDataIndex++];
-								var planeSizeID = planeSize[planeSizeType];
+								// Plane size ID
+								var planeSizeID = planeSize[planeData[planeDataIndex++]];
 
+								// Validate plane size ID
 								if (!Number.isInteger(planeSizeID)) {
-									grunt.fail.fatal("Invalid plane size in PLANE definition: " + planeSizeType);
+									grunt.fail.fatal("Invalid plane size in: " + item.Name);
 								}
 
 								itemData.push(planeSizeID);
@@ -112,7 +115,7 @@ module.exports = function(grunt) {
 									itemData.push(1);
 								}
 								else if (planeFlag !== undefined) {
-									grunt.fail.fatal("Invalid plane flag in PLANE definition: " + planeFlag);
+									grunt.fail.fatal("Invalid plane flag in: " + item.Name);
 								}
 
 								var sector = json.sectors[planeSector];
@@ -199,6 +202,128 @@ module.exports = function(grunt) {
 
 							totalItems++;
 						}
+						// Process airfield items (taxi routes and runways)
+						else if (item instanceof Item.Airfield) {
+
+							// Runway
+							if (/^RUNWAY/.test(item.Name)) {
+
+								var runwayData = item.Name.split(":");
+								var runwayID = +runwayData[1];
+
+								// Validate runway ID
+								if (!Number.isInteger(runwayID)) {
+									grunt.fail.fatal("Invalid runway ID in: " + item.Name);
+								}
+
+								// Validate required runway child items
+								if (!item.items[0] || item.items[0].type !== "Chart" || !item.items[0].items.length) {
+									grunt.fail.fatal("Missing RUNWAY definition Chart and Point data.");
+								}
+
+								var runway = [];
+
+								// Runway spawn point for coop missions
+								runway.push([
+									item.XPos,
+									item.ZPos,
+									item.YOri
+								]);
+
+								var spawnNormal = [];
+								var spawnInverted = [];
+								var spawnPoints = item.items[0].items;
+								var i;
+
+								// Build normal direction spawn points
+								for (i = 0; i < spawnPoints.length; i++) {
+
+									spawnNormal.push(getPointPosition(item, spawnPoints[i]));
+
+									// VPP point marks end of spawns for this direction
+									if (spawnPoints[i].Type == 2) {
+										break;
+									}
+								}
+
+								// Build inverted direction spawn points
+								for (i = spawnPoints.length - 1; i >= 0; i--) {
+
+									spawnInverted.push(getPointPosition(item, spawnPoints[i]));
+
+									// VPP point marks end of spawns for this direction
+									if (spawnPoints[i].Type == 2) {
+										break;
+									}
+								}
+
+								runway.push(spawnNormal);
+								runway.push(spawnInverted);
+
+								json.runways[runwayID] = runway;
+							}
+							// Taxi route
+							else if (/^TAXI/.test(item.Name)) {
+
+								var taxiData = item.Name.split(":");
+								var taxiID = +taxiData[1];
+
+								// Validate taxi route ID
+								if (!Number.isInteger(taxiID)) {
+									grunt.fail.fatal("Invalid taxi route ID in: " + item.Name);
+								}
+
+								// Validate required taxi route child items
+								if (!item.items[0] || item.items[0].type !== "Chart" || !item.items[0].items.length) {
+									grunt.fail.fatal("Missing TAXI definition Chart and Point data.");
+								}
+
+								var taxiRunwayID = +taxiData[2];
+
+								// Validate taxi runway ID
+								if (!Number.isInteger(taxiRunwayID)) {
+									grunt.fail.fatal("Invalid taxi runway ID in: " + item.Name);
+								}
+
+								// Invert taxi route flag
+								var taxiFlag = taxiData[3];
+								var taxiInvert = 0;
+
+								if (taxiFlag === "INV") {
+									taxiInvert = 1;
+								}
+								else if (taxiFlag !== undefined) {
+									grunt.fail.fatal("Invalid taxi route flag in: " + item.Name);
+								}
+
+								var taxiRoute = [];
+								var taxiPoints = item.items[0].items;
+
+								taxiRoute.push(taxiRunwayID);
+								taxiRoute.push(taxiInvert);
+
+								// Build taxi route waypoint list
+								for (var taxiPoint of taxiPoints) {
+
+									var taxiPointData = getPointPosition(item, taxiPoint);
+
+									// Runway point
+									if (taxiPoint.Type == 2) {
+										taxiPointData.push(1);
+									}
+
+									taxiRoute.push(taxiPointData);
+								}
+
+								json.taxiRoutes[taxiID] = taxiRoute;
+							}
+							// Unknown Airfield item definition
+							else {
+								grunt.fail.fatal("Invalid airfield definition: " + item.Name);
+							}
+
+							totalItems++;
+						}
 						// Process any child items
 						else if (item instanceof Item.Group && item.items.length) {
 
@@ -241,3 +366,15 @@ module.exports = function(grunt) {
 		grunt.log.ok(okMessage);
 	});
 };
+
+// Utility function used to get absolute Point item position
+function getPointPosition(item, point) {
+
+	var pointOrientation = (item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X));
+	var pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X);
+
+	return [
+		Number((item.XPos + pointMagnitude * Math.cos(pointOrientation)).toFixed(2)),
+		Number((item.ZPos + pointMagnitude * Math.sin(pointOrientation)).toFixed(2))
+	];
+}
