@@ -10786,7 +10786,7 @@ Group
   Airfield
   {
     Name = "RUNWAY:1";
-    Index = 744;
+    Index = 474;
     LinkTrId = 0;
     XPos = 116917.214;
     YPos = 81.268;
@@ -10930,7 +10930,7 @@ Group
   Airfield
   {
     Name = "RUNWAY:2";
-    Index = 745;
+    Index = 475;
     LinkTrId = 0;
     XPos = 116887.548;
     YPos = 81.268;
@@ -11068,6 +11068,36 @@ Group
     RearmTime = 0;
     RefuelTime = 0;
     MaintenanceRadius = 1000;
+  }
+  
+
+  Vehicle
+  {
+    Name = "LIGHT:SEARCH";
+    Index = 746;
+    LinkTrId = 0;
+    XPos = 116397.389;
+    YPos = 81.268;
+    ZPos = 104003.240;
+    XOri = 0.00;
+    YOri = 61.25;
+    ZOri = 0.00;
+    Script = "LuaScripts\WorldObjects\vehicles\searchlightger.txt";
+    Model = "graphics\artillery\searchlightger\searchlightger.mgm";
+    Desc = "";
+    Country = 0;
+    NumberInFormation = 0;
+    Vulnerable = 1;
+    Engageable = 1;
+    LimitAmmo = 1;
+    AILevel = 2;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+    CoopStart = 0;
+    Spotter = -1;
+    BeaconChannel = 0;
+    Callsign = 0;
   }
   
 

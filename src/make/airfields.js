@@ -19,6 +19,12 @@ var itemTags = {
 	FUEL: 2 // Fuel item
 };
 
+// Data tag names indexed by data tag ID
+var itemTagNames = {};
+for (var itemTagName in itemTags) {
+	itemTagNames[itemTags[itemTagName]] = itemTagName;
+}
+
 // Plane size constants (types/IDs)
 var planeSize = {
 	SMALL: 1,
@@ -49,6 +55,8 @@ module.exports = function(mission, data) {
 	// Process each airfield
 	for (var airfieldID in battle.airfields) {
 
+		totalAirfields++;
+
 		var airfieldData = battle.airfields[airfieldID];
 		var airfield = airfieldsByID[airfieldID] = Object.create(null);
 
@@ -56,10 +64,7 @@ module.exports = function(mission, data) {
 		airfield.name = airfieldData.name;
 		airfield.position = airfieldData.position;
 
-		totalAirfields++;
-
 		var airfieldUnits = mission.unitsByAirfield[airfieldID];
-		var countries = {};
 		var countriesWeighted = []; // List of country IDs as a weighted array
 		var planesBySector = {};
 
@@ -68,10 +73,12 @@ module.exports = function(mission, data) {
 
 			var sectorsIndex = {};
 			var planesIndex = {};
+			var countries = {};
 
+			airfield.value = 0;
 			airfield.countries = {};
 
-			// Build a list of plane groups indexed by plane size
+			// Process unit planes list
 			for (var unitID in airfieldUnits) {
 
 				var unit = airfieldUnits[unitID];
@@ -84,9 +91,15 @@ module.exports = function(mission, data) {
 
 					if (planeSizeID) {
 
+						// Airfield value is a sum of plane size IDs (with larger planes
+						// adding more value than smaller ones)
+						airfield.value += planeSizeID;
+
+						// Register unit plane country data
 						countriesWeighted.push(unit.country);
 						countries[unit.country] = (countries[unit.country] || 0) + 1;
 
+						// Build a list of plane groups indexed by plane size
 						var planeSizeGroup = planesIndex[planeSizeID] = planesIndex[planeSizeID] || {};
 						var planeGroup = planeSizeGroup[groupID] = planeSizeGroup[groupID] || [];
 
@@ -202,7 +215,7 @@ module.exports = function(mission, data) {
 						// distribute all unit planes - not enough parking spots).
 						unitPlanes.forEach(function(planeData) {
 
-							log.warn("Not enough parking spots!", {
+							log.warn("Not enough plane spots!", {
 								airfield: airfieldID,
 								plane: planeData[0]
 							});
@@ -219,6 +232,7 @@ module.exports = function(mission, data) {
 			continue;
 		}
 
+		var airfieldLimits = getAirfieldLimits();
 		var itemsGroup = new Item.Group();
 
 		itemsGroup.setName(airfieldData.name);
@@ -308,6 +322,26 @@ module.exports = function(mission, data) {
 
 		})(rand.shuffle(airfieldData.items), false);
 
+		// Log warnings in debug mode when not all items required by airfield limits are
+		// included (as a result of not enough item spots in the raw airfield .Group file).
+		if (params.debug) {
+
+			for (var limitTagID in airfieldLimits) {
+
+				var limitValue = airfieldLimits[limitTagID];
+
+				if (limitValue <= 0) {
+					continue;
+				}
+
+				// Log a warning
+				log.warn("Not enough item spots!", {
+					airfield: airfieldID,
+					item: itemTagNames[limitTagID].replace("_", ":")
+				});
+			}
+		}
+
 		// Add all items as a single airfield group in a mission file
 		mission.addItem(itemsGroup);
 	}
@@ -322,6 +356,40 @@ module.exports = function(mission, data) {
 		}
 
 		return planeCount;
+	}
+
+	// Get airfield item limits
+	function getAirfieldLimits() {
+
+		var value = airfield.value || 0;
+		var time = mission.time;
+		var limits = Object.create(null);
+
+		limits[itemTags.TRUCK_CARGO] = 0;
+		limits[itemTags.TRUCK_FUEL] = 0;
+		limits[itemTags.AA_MG] = 0;
+		limits[itemTags.AA_FLAK] = 0;
+		limits[itemTags.LIGHT_SEARCH] = 0;
+
+		if (value > 0) {
+
+			// TODO: Modify TRUCK_CARGO and TRUCK_FUEL limits based on mission complexity param
+			limits[itemTags.TRUCK_CARGO] = Math.round(Math.min(Math.max(value / 8, 4), 32));
+			limits[itemTags.TRUCK_FUEL] = Math.round(Math.min(Math.max(value / 16, 2), 16));
+
+			// Anti-aircraft vehicle limits
+			limits[itemTags.AA_MG] = Math.round(Math.min(Math.max(value / 25, 2), 7));
+			limits[itemTags.AA_FLAK] = Math.round(Math.min(Math.max(value / 40, 0), 5));
+
+			// Only add search lights for night time periods
+			if (time.evening || time.night || time.dawn) {
+				limits[itemTags.LIGHT_SEARCH] = Math.round(Math.min(Math.max(value / 40, 0), 4));
+			}
+		}
+
+		// TODO: Add DECO item limits (based on mission complexity param)
+
+		return limits;
 	}
 
 	// Make a normal static item
@@ -339,10 +407,6 @@ module.exports = function(mission, data) {
 		// Decoration item
 		if (itemData === itemTags.DECO) {
 			itemObject.Durability = 500;
-		}
-		// Windsock item
-		else if (itemData === itemTags.WINDSOCK) {
-			itemObject.createEntity();
 		}
 
 		return [itemObject];
@@ -376,7 +440,7 @@ module.exports = function(mission, data) {
 
 	// Make a windsock item
 	function makeWindsock(item) {
-		
+
 		if (!airfield.country) {
 			return;
 		}
@@ -399,10 +463,21 @@ module.exports = function(mission, data) {
 	// Make a vehicle item
 	function makeVehicle(item) {
 
+		if (!airfield.country) {
+			return;
+		}
+
+		var itemTagID = item[0];
+
+		// Enforce airfield limits
+		if (airfieldLimits[itemTagID] <= 0) {
+			return;
+		}
+
 		var vehicleType;
 		var isStatic = false;
 
-		switch (item[0]) {
+		switch (itemTagID) {
 
 			// Cargo truck
 			case itemTags.TRUCK_CARGO: {
@@ -480,6 +555,11 @@ module.exports = function(mission, data) {
 			itemObject.createEntity();
 		}
 
+		// Update airfield limits
+		if (airfieldLimits[itemTagID]) {
+			airfieldLimits[itemTagID]--;
+		}
+
 		// TODO: Attach vehicle to airfield bubble
 
 		return [itemObject];
@@ -547,7 +627,7 @@ module.exports = function(mission, data) {
 			if (planeTaxiRoute === 0) {
 
 				positionOffsetMin = 5;
-				positionOffsetMax = 15;
+				positionOffsetMax = 12;
 			}
 
 			var positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
