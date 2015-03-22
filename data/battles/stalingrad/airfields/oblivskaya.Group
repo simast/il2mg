@@ -866,11 +866,11 @@ Group
     Name = "DECO";
     Index = 42;
     LinkTrId = 0;
-    XPos = 116657.239;
+    XPos = 116660.694;
     YPos = 81.268;
-    ZPos = 102728.438;
+    ZPos = 102745.090;
     XOri = 0.00;
-    YOri = 266.21;
+    YOri = 57.78;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb1.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
@@ -3830,11 +3830,11 @@ Group
     Name = "TRUCK:CARGO";
     Index = 185;
     LinkTrId = 0;
-    XPos = 116661.480;
+    XPos = 116653.112;
     YPos = 81.268;
-    ZPos = 102736.532;
+    ZPos = 102739.991;
     XOri = 0.00;
-    YOri = 44.99;
+    YOri = 196.56;
     ZOri = 0.00;
     Model = "graphics\blocks\static_opel.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\static_opel.txt";
@@ -11074,7 +11074,7 @@ Group
   Vehicle
   {
     Name = "LIGHT:SEARCH";
-    Index = 746;
+    Index = 476;
     LinkTrId = 0;
     XPos = 116397.389;
     YPos = 81.268;
@@ -11098,6 +11098,592 @@ Group
     Spotter = -1;
     BeaconChannel = 0;
     Callsign = 0;
+  }
+  
+
+  Group
+  {
+    Name = "ROUTE:1";
+    Index = 479;
+    Desc = "";
+    MCU_Waypoint
+    {
+      Index = 477;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [478,491];
+      Objects = [];
+      XPos = 117078.652;
+      YPos = 81.268;
+      ZPos = 102299.192;
+      XOri = 0.00;
+      YOri = 131.94;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 478;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [480,477];
+      Objects = [];
+      XPos = 116901.356;
+      YPos = 81.268;
+      ZPos = 102498.883;
+      XOri = 0.00;
+      YOri = 200.63;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 480;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [481,478];
+      Objects = [];
+      XPos = 116862.679;
+      YPos = 81.268;
+      ZPos = 102484.324;
+      XOri = 0.00;
+      YOri = 257.70;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 481;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [482,480];
+      Objects = [];
+      XPos = 116848.351;
+      YPos = 81.268;
+      ZPos = 102418.256;
+      XOri = 0.00;
+      YOri = 240.95;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 482;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [483,481];
+      Objects = [];
+      XPos = 116745.381;
+      YPos = 81.268;
+      ZPos = 102233.733;
+      XOri = 0.00;
+      YOri = 184.18;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 483;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [484,482];
+      Objects = [];
+      XPos = 116625.096;
+      YPos = 81.268;
+      ZPos = 102225.480;
+      XOri = 0.00;
+      YOri = 128.44;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 484;
+      Name = "ROUTE:STOP";
+      Desc = "";
+      Targets = [485,483];
+      Objects = [];
+      XPos = 116554.139;
+      YPos = 81.268;
+      ZPos = 102316.825;
+      XOri = 0.00;
+      YOri = 123.07;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 485;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [486,484];
+      Objects = [];
+      XPos = 116460.458;
+      YPos = 81.268;
+      ZPos = 102461.361;
+      XOri = 0.00;
+      YOri = 148.46;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 486;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [487,485];
+      Objects = [];
+      XPos = 116285.357;
+      YPos = 81.268;
+      ZPos = 102569.560;
+      XOri = 0.00;
+      YOri = 122.09;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 487;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [488,486];
+      Objects = [];
+      XPos = 116189.878;
+      YPos = 81.268;
+      ZPos = 102729.765;
+      XOri = 0.00;
+      YOri = 161.78;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 488;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [489,487];
+      Objects = [];
+      XPos = 116039.197;
+      YPos = 81.268;
+      ZPos = 102778.346;
+      XOri = 0.00;
+      YOri = 101.53;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 489;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [490,488];
+      Objects = [];
+      XPos = 116017.601;
+      YPos = 81.268;
+      ZPos = 102885.742;
+      XOri = 0.00;
+      YOri = 55.00;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 490;
+      Name = "ROUTE:STOP";
+      Desc = "";
+      Targets = [489];
+      Objects = [];
+      XPos = 116077.860;
+      YPos = 81.268;
+      ZPos = 102971.892;
+      XOri = 0.00;
+      YOri = 235.30;
+      ZOri = 0.00;
+      Area = 20;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 491;
+      Name = "ROUTE:STOP";
+      Desc = "";
+      Targets = [477];
+      Objects = [];
+      XPos = 117100.244;
+      YPos = 81.268;
+      ZPos = 102244.309;
+      XOri = 0.00;
+      YOri = 111.41;
+      ZOri = 0.00;
+      Area = 20;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+  }
+  
+
+  Group
+  {
+    Name = "ROUTE:2";
+    Index = 494;
+    Desc = "";
+    MCU_Waypoint
+    {
+      Index = 492;
+      Name = "ROUTE:STOP";
+      Desc = "";
+      Targets = [493];
+      Objects = [];
+      XPos = 116660.636;
+      YPos = 81.268;
+      ZPos = 102712.427;
+      XOri = 0.00;
+      YOri = 155.56;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 493;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [495];
+      Objects = [];
+      XPos = 116543.625;
+      YPos = 81.268;
+      ZPos = 102765.942;
+      XOri = 0.00;
+      YOri = 140.54;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 495;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [496];
+      Objects = [];
+      XPos = 116474.485;
+      YPos = 81.268;
+      ZPos = 102823.263;
+      XOri = 0.00;
+      YOri = 121.44;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 496;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [497];
+      Objects = [];
+      XPos = 116387.594;
+      YPos = 81.268;
+      ZPos = 102964.094;
+      XOri = 0.00;
+      YOri = 146.14;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 497;
+      Name = "ROUTE:STOP";
+      Desc = "";
+      Targets = [498];
+      Objects = [];
+      XPos = 116341.021;
+      YPos = 81.268;
+      ZPos = 102995.414;
+      XOri = 0.00;
+      YOri = 109.42;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 498;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [499];
+      Objects = [];
+      XPos = 116289.643;
+      YPos = 81.268;
+      ZPos = 103141.543;
+      XOri = 0.00;
+      YOri = 133.37;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 499;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [500];
+      Objects = [];
+      XPos = 116160.198;
+      YPos = 81.268;
+      ZPos = 103278.708;
+      XOri = 0.00;
+      YOri = 159.52;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 500;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [501];
+      Objects = [];
+      XPos = 116114.635;
+      YPos = 81.268;
+      ZPos = 103295.872;
+      XOri = 0.00;
+      YOri = 98.25;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 501;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [502];
+      Objects = [];
+      XPos = 116103.434;
+      YPos = 81.268;
+      ZPos = 103377.313;
+      XOri = 0.00;
+      YOri = 47.71;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 502;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [503];
+      Objects = [];
+      XPos = 116139.201;
+      YPos = 81.268;
+      ZPos = 103416.513;
+      XOri = 0.00;
+      YOri = 348.74;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 503;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [504];
+      Objects = [];
+      XPos = 116194.239;
+      YPos = 81.268;
+      ZPos = 103405.744;
+      XOri = 0.00;
+      YOri = 318.95;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 504;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [505];
+      Objects = [];
+      XPos = 116400.195;
+      YPos = 81.268;
+      ZPos = 103225.885;
+      XOri = 0.00;
+      YOri = 304.29;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 505;
+      Name = "ROUTE:STOP";
+      Desc = "";
+      Targets = [506];
+      Objects = [];
+      XPos = 116512.583;
+      YPos = 81.268;
+      ZPos = 103062.250;
+      XOri = 0.00;
+      YOri = 310.04;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 506;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [507];
+      Objects = [];
+      XPos = 116711.876;
+      YPos = 81.268;
+      ZPos = 102827.154;
+      XOri = 0.00;
+      YOri = 305.80;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 507;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [508];
+      Objects = [];
+      XPos = 116772.161;
+      YPos = 81.268;
+      ZPos = 102743.026;
+      XOri = 0.00;
+      YOri = 240.31;
+      ZOri = 0.00;
+      Area = 10;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
+    MCU_Waypoint
+    {
+      Index = 508;
+      Name = "ROUTE";
+      Desc = "";
+      Targets = [492];
+      Objects = [];
+      XPos = 116739.346;
+      YPos = 81.268;
+      ZPos = 102684.530;
+      XOri = 0.00;
+      YOri = 160.48;
+      ZOri = 0.00;
+      Area = 20;
+      Speed = 100;
+      Priority = 1;
+    }
+    
+
   }
   
 

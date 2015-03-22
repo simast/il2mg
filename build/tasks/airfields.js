@@ -328,10 +328,12 @@ module.exports = function(grunt) {
 						else if (item instanceof Item.Group && item.items.length) {
 
 							var childItems = [];
-
-							jsonItems.push(childItems);
-
+							
 							buildJSON(childItems, item.items);
+
+							if (childItems.length) {
+								jsonItems.push(childItems);
+							}
 						}
 					});
 				})(json.items, items[0].items);

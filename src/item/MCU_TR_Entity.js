@@ -1,14 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+var MCU = require("./MCU");
 
 // Entity block
 function MCU_TR_Entity() {
 
 }
 
-MCU_TR_Entity.prototype = Object.create(Item.prototype);
+MCU_TR_Entity.prototype = Object.create(MCU.prototype);
 MCU_TR_Entity.prototype.typeID = 30;
 
 /**
@@ -19,14 +19,7 @@ MCU_TR_Entity.prototype.typeID = 30;
  */
 MCU_TR_Entity.prototype.toBinary = function(index) {
 
-	var buffer = new Buffer(21);
-
-	// Enabled
-	this.writeUInt8(buffer, this.Enabled !== undefined ? this.Enabled : 1);
-
-	// Unknown data
-	this.writeUInt32(buffer, 0);
-	this.writeUInt32(buffer, 0);
+	var buffer = new Buffer(12);
 
 	// OnEvents length
 	this.writeUInt32(buffer, 0);
@@ -37,10 +30,7 @@ MCU_TR_Entity.prototype.toBinary = function(index) {
 	// Unknown data
 	this.writeUInt32(buffer, 0);
 
-	return [
-		Item.prototype.toBinary.apply(this, arguments),
-		buffer
-	];
+	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };
 
 module.exports = MCU_TR_Entity;

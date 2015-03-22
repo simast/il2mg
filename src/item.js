@@ -440,7 +440,7 @@ Item.prototype.writeUInt32Array = function(buffer, arrayValue) {
 		var value = arrayValue[i];
 
 		// Check for valid integer value
-		if (Number(value) !== value || value % 1 !== 0) {
+		if (!Number.isInteger(value)) {
 			throw new Error("Invalid item array value.");
 		}
 
@@ -535,7 +535,11 @@ module.exports = Item;
 	require("./item/Flag"),
 	require("./item/Group"),
 	require("./item/MCU_Icon"),
+	require("./item/MCU_Timer"),
 	require("./item/MCU_TR_Entity"),
+	require("./item/MCU_TR_MissionBegin"),
+	require("./item/MCU_TR_MissionEnd"),
+	require("./item/MCU_Waypoint"),
 	require("./item/Options"),
 	require("./item/Plane"),
 	require("./item/Point"),

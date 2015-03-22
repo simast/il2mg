@@ -1,14 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+var MCU = require("./MCU");
 
 // Icon item
 function MCU_Icon() {
 
 }
 
-MCU_Icon.prototype = Object.create(Item.prototype);
+MCU_Icon.prototype = Object.create(MCU.prototype);
 MCU_Icon.prototype.typeID = 35;
 
 /**
@@ -19,20 +19,13 @@ MCU_Icon.prototype.typeID = 35;
  */
 MCU_Icon.prototype.toBinary = function(index) {
 
-	var size = 41;
+	var size = 32;
 
 	if (Array.isArray(this.Coalitions)) {
 		size += this.Coalitions.length * 4;
 	}
 
 	var buffer = new Buffer(size);
-
-	// Enabled
-	this.writeUInt8(buffer, this.Enabled !== undefined ? this.Enabled : 1);
-
-	// Targets/objects list length
-	this.writeUInt32(buffer, 0);
-	this.writeUInt32(buffer, 0);
 
 	// IconId
 	this.writeUInt32(buffer, this.IconId || 0);
@@ -58,10 +51,7 @@ MCU_Icon.prototype.toBinary = function(index) {
 	// Coalitions
 	this.writeUInt32Array(buffer, this.Coalitions || []);
 
-	return [
-		Item.prototype.toBinary.apply(this, arguments),
-		buffer
-	];
+	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };
 
 module.exports = MCU_Icon;
