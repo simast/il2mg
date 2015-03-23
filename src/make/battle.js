@@ -45,5 +45,5 @@ module.exports = function(mission, data) {
 	mission.items.Options = options;
 
 	// Log mission battle
-	log.info("Battle:", battle.name);
+	log.I("Battle:", battle.name);
 };

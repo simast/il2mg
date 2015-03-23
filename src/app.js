@@ -9,28 +9,32 @@ var winston = require("winston");
 var Mission = require("./mission");
 var data = require("./data");
 
+var logColors = {
+	I: "gray", // Info
+	W: "yellow", // Warning
+	E: "red", // Error
+	D: "green" // Done
+};
+
+var logLevels = {};
+Object.keys(logColors).forEach(function(value, index) {
+	logLevels[value] = index;
+});
+
 // Setup winston logger
 var log = global.log = new (winston.Logger)({
-	levels: {
-		info: 0,
-		warn: 1,
-		error: 2,
-		done: 3
-	},
+	levels: logLevels,
+	colors: logColors,
 	transports: [
 		new winston.transports.Console({
-			level: "error",
+			level: "E", // Default log reporting level
 			colorize: true
 		})
 	]
 });
 
-winston.addColors({
-	info: "gray",
-	warn: "yellow",
-	error: "red",
-	done: "green"
-});
+// NOTE: Workaround for log.profile()
+log.info = log.I;
 
 // NOTE: Intercept all console.error traffic (commander error messages) and log
 // them as winston "error" level log messages.
@@ -47,7 +51,7 @@ console.error = function() {
 		message = message.replace(/^error:\s*/i, "");
 
 		arguments[0] = message;
-		log.error.apply(log, arguments);
+		log.E.apply(log, arguments);
 	}
 };
 
@@ -166,7 +170,7 @@ params.parse(process.argv);
 
 // Turn on verbose log level in debug mode
 if (params.debug) {
-	log.transports.console.level = "info";
+	log.transports.console.level = "I";
 }
 
 var appDomain = domain.create();
@@ -176,16 +180,16 @@ appDomain.on("error", function(error) {
 
 	// Handle simple string errors
 	if (typeof error === "string") {
-		log.error(error);
+		log.E(error);
 	}
 	// Handle array error messages (with extra meta data)
 	else if (Array.isArray(error)) {
-		log.error.apply(log, error);
+		log.E.apply(log, error);
 	}
 	// Log exceptions/errors
 	else if (error instanceof Error) {
 
-		log.error(error.message ? error.message : error);
+		log.E(error.message ? error.message : error);
 
 		// Include stack trace in debug mode
 		if (params.debug && error.stack) {
@@ -231,7 +235,7 @@ appDomain.run(function() {
 
 	// Save mission files
 	mission.save(params.args[0]).then(function() {
-		log.done("Success!");
+		log.D("Success!");
 	}, function(error) {
 		appDomain.emit("error", error);
 	});

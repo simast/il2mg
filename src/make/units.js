@@ -343,5 +343,5 @@ module.exports = function(mission, data) {
 	mission.unitsByCountry = Object.freeze(unitsByCountry);
 
 	// Log mission units info
-	log.info("Units:", totalUnits, {planes: totalPlanes});
+	log.I("Units:", totalUnits, {planes: totalPlanes});
 };

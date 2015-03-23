@@ -46,5 +46,5 @@ module.exports = function(mission, data) {
 	mission.addItem(blocksGroup);
 
 	// Log mission blocks info
-	log.info("Blocks:", totalBlocks, {bridges: totalBridges});
+	log.I("Blocks:", totalBlocks, {bridges: totalBridges});
 };

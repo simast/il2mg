@@ -215,7 +215,7 @@ module.exports = function(mission, data) {
 						// distribute all unit planes - not enough parking spots).
 						unitPlanes.forEach(function(planeData) {
 
-							log.warn("Not enough plane spots!", {
+							log.W("Not enough plane spots!", {
 								airfield: airfieldID,
 								plane: planeData[0]
 							});
@@ -335,7 +335,7 @@ module.exports = function(mission, data) {
 				}
 
 				// Log a warning
-				log.warn("Not enough item spots!", {
+				log.W("Not enough item spots!", {
 					airfield: airfieldID,
 					item: itemTagNames[limitTagID].replace("_", ":")
 				});
@@ -658,7 +658,7 @@ module.exports = function(mission, data) {
 	mission.airfieldsByCoalition = Object.freeze(airfieldsByCoalition);
 
 	// Log mission airfields info
-	log.info("Airfields:", totalAirfields, {active: totalActive});
+	log.I("Airfields:", totalAirfields, {active: totalActive});
 };
 
 module.exports.itemTags = itemTags;

@@ -31,7 +31,7 @@ function Mission(params) {
 	// items without LCName or LCDesc properties).
 	this.getLC("");
 
-	log.info("Making mission...");
+	log.I("Making mission...");
 	log.profile("Making");
 
 	// Make mission parts
@@ -99,7 +99,7 @@ Mission.prototype.save = function(fileName) {
 
 	var self = this;
 
-	log.info("Saving mission...");
+	log.I("Saving mission...");
 
 	// Use specified mission file path and name
 	if (fileName && fileName.length) {

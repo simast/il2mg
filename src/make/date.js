@@ -34,5 +34,5 @@ module.exports = function(mission, data) {
 	options.Date = new String(date.format("D.M.YYYY"));
 
 	// Log mission date
-	log.info("Date:", date.format("YYYY-MM-DD"));
+	log.I("Date:", date.format("YYYY-MM-DD"));
 };

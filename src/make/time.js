@@ -253,5 +253,5 @@ module.exports = function(mission, data) {
 	logData.push(date.format("HH:mm"));
 	logData = logData.concat(Object.keys(timeFlags));
 
-	log.info.apply(log, logData);
+	log.I.apply(log, logData);
 };
