@@ -12,7 +12,7 @@ MCU_Waypoint.prototype = Object.create(MCU.prototype);
 MCU_Waypoint.prototype.typeID = 42;
 
 // Waypoint priority constants
-var PRIORITY = MCU_Waypoint.PRIORITY = {
+var priority = MCU_Waypoint.priority = {
 	LOW: 0,
 	MEDIUM: 1,
 	HIGH: 2
@@ -35,7 +35,7 @@ MCU_Waypoint.prototype.toBinary = function(index) {
 	this.writeDouble(buffer, this.Speed || 0);
 
 	// Priority
-	this.writeUInt32(buffer, this.Priority !== undefined ? this.Priority : PRIORITY.MEDIUM);
+	this.writeUInt32(buffer, this.Priority !== undefined ? this.Priority : priority.MEDIUM);
 
 	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };

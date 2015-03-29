@@ -6,7 +6,7 @@ var Item = require("../item");
 // Generate mission flights
 module.exports = function(mission, data) {
 
-	var plane = new Item.Plane();
+	var plane = mission.createItem("Plane");
 
 	plane.setName("Ju 87 D-3");
 	plane.setPosition(116323.32, 83.238, 102809.66);

@@ -24,6 +24,9 @@ function Mission(params) {
 	this.lang = []; // Language data
 	this.params = params; // Desired mission parameters
 
+	// Last item index value
+	this.lastIndex = 0;
+
 	// Initialize random number generator
 	this.rand = new Random(Random.engines.browserCrypto);
 
@@ -51,6 +54,33 @@ function Mission(params) {
 
 	log.profile("Making");
 }
+
+/**
+ * Create a new mission item.
+ *
+ * @param {string} itemType Item type name.
+ */
+Mission.prototype.createItem = function(itemType) {
+
+	if (!Item[itemType]) {
+		throw new TypeError("Invalid mission item type value.");
+	}
+
+	var item = new Item[itemType]();
+
+	// Set unique item index
+	Object.defineProperty(item, "Index", {
+		enumerable: true,
+		value: ++this.lastIndex
+	});
+
+	// Set item mission reference
+	Object.defineProperty(item, "mission", {
+		value: this
+	});
+
+	return item;
+};
 
 /**
  * Add a new item to the mission.

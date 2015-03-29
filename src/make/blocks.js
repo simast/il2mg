@@ -24,7 +24,7 @@ module.exports = function(mission, data) {
 
 			var blockItem = blocks[i];
 			var itemType = data.getItemType(blockItem[0]);
-			var block = new Item[itemType.type]();
+			var block = mission.createItem(itemType.type);
 
 			block.Model = itemType.model;
 			block.Script = itemType.script;

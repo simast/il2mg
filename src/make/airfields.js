@@ -19,12 +19,6 @@ var itemTags = {
 	FUEL: 2 // Fuel item
 };
 
-// Data tag names indexed by data tag ID
-var itemTagNames = {};
-for (var itemTagName in itemTags) {
-	itemTagNames[itemTags[itemTagName]] = itemTagName;
-}
-
 // Plane size constants (types/IDs)
 var planeSize = {
 	SMALL: 1,
@@ -237,6 +231,9 @@ module.exports = function(mission, data) {
 
 		itemsGroup.setName(airfieldData.name);
 
+		// Make airfield vehicle routes
+		makeVehicleRoutes();
+
 		// Walk/process each airfield item
 		(function walkItems(items, isGroup) {
 
@@ -264,9 +261,11 @@ module.exports = function(mission, data) {
 					else {
 						walkItems(item, true);
 					}
+
+					return;
 				}
 
-				var itemObjects = null;
+				var itemObject = null;
 
 				// Normal static item
 				if (itemTypeID >= 0) {
@@ -275,7 +274,7 @@ module.exports = function(mission, data) {
 						extraItems.push(item);
 					}
 					else {
-						itemObjects = makeStaticItem(item);
+						itemObject = makeStaticItem(item);
 					}
 				}
 				// Special item
@@ -283,35 +282,31 @@ module.exports = function(mission, data) {
 
 					// Plane item
 					if (itemTypeID === itemTags.PLANE) {
-						itemObjects = makePlane(item);
+						itemObject = makePlane(item);
 					}
 					// Beacon item
 					else if (itemTypeID === itemTags.BEACON) {
-						itemObjects = makeBeacon(item);
+						itemObject = makeBeacon(item);
 					}
 					// Windsock item
 					else if (itemTypeID === itemTags.WINDSOCK) {
-						itemObjects = makeWindsock(item);
+						itemObject = makeWindsock(item);
 					}
 					// Vehicle item
 					else {
-						itemObjects = makeVehicle(item);
+						itemObject = makeVehicle(item);
 					}
 
 					// Use all extra normal items in a group if special item is used
-					if (itemObjects && itemObjects.length) {
+					if (itemObject) {
 						useExtraItems = true;
 					}
 				}
 
-				// Add generated item objects to airfield group
-				if (Array.isArray(itemObjects) && itemObjects.length) {
-
-					itemObjects.forEach(function(itemObject) {
-
-						// TODO: Build a items index (to quickly lookup items based on position)
-						itemsGroup.addItem(itemObject);
-					});
+				// Add generated item object to airfield group
+				// TODO: Build a items index (to quickly lookup items based on position)
+				if (itemObject) {
+					itemsGroup.addItem(itemObject);
 				}
 			});
 
@@ -321,26 +316,6 @@ module.exports = function(mission, data) {
 			}
 
 		})(rand.shuffle(airfieldData.items), false);
-
-		// Log warnings in debug mode when not all items required by airfield limits are
-		// included (as a result of not enough item spots in the raw airfield .Group file).
-		if (params.debug) {
-
-			for (var limitTagID in airfieldLimits) {
-
-				var limitValue = airfieldLimits[limitTagID];
-
-				if (limitValue <= 0) {
-					continue;
-				}
-
-				// Log a warning
-				log.W("Not enough item spots!", {
-					airfield: airfieldID,
-					item: itemTagNames[limitTagID].replace("_", ":")
-				});
-			}
-		}
 
 		// Add all items as a single airfield group in a mission file
 		mission.addItem(itemsGroup);
@@ -367,6 +342,7 @@ module.exports = function(mission, data) {
 
 		limits[itemTags.TRUCK_CARGO] = 0;
 		limits[itemTags.TRUCK_FUEL] = 0;
+		limits[itemTags.CAR] = 0;
 		limits[itemTags.AA_MG] = 0;
 		limits[itemTags.AA_FLAK] = 0;
 		limits[itemTags.LIGHT_SEARCH] = 0;
@@ -385,6 +361,9 @@ module.exports = function(mission, data) {
 			if (time.evening || time.night || time.dawn) {
 				limits[itemTags.LIGHT_SEARCH] = Math.round(Math.min(Math.max(value / 40, 0), 4));
 			}
+
+			// Only max one staff car per airfield
+			limits[itemTags.CAR] = 1;
 		}
 
 		// TODO: Add DECO item limits (based on mission complexity param)
@@ -397,7 +376,7 @@ module.exports = function(mission, data) {
 
 		var itemType = data.getItemType(item[0]);
 		var itemData = item[4];
-		var itemObject = new Item[itemType.type]();
+		var itemObject = mission.createItem(itemType.type);
 
 		itemObject.Model = itemType.model;
 		itemObject.Script = itemType.script;
@@ -409,7 +388,7 @@ module.exports = function(mission, data) {
 			itemObject.Durability = 500;
 		}
 
-		return [itemObject];
+		return itemObject;
 	}
 
 	// Make a beacon item
@@ -420,7 +399,7 @@ module.exports = function(mission, data) {
 		}
 
 		var itemType = data.getItemType(item[4]);
-		var itemObject = new Item[itemType.type]();
+		var itemObject = mission.createItem(itemType.type);
 
 		itemObject.Model = itemType.model;
 		itemObject.Script = itemType.script;
@@ -435,7 +414,7 @@ module.exports = function(mission, data) {
 
 		itemObject.createEntity();
 
-		return [itemObject];
+		return itemObject;
 	}
 
 	// Make a windsock item
@@ -446,7 +425,7 @@ module.exports = function(mission, data) {
 		}
 
 		var itemType = data.getItemType(item[4]);
-		var itemObject = new Item[itemType.type]();
+		var itemObject = mission.createItem(itemType.type);
 
 		itemObject.Model = itemType.model;
 		itemObject.Script = itemType.script;
@@ -457,11 +436,11 @@ module.exports = function(mission, data) {
 
 		// TODO: Attach windsock to airfield bubble
 
-		return [itemObject];
+		return itemObject;
 	}
 
 	// Make a vehicle item
-	function makeVehicle(item) {
+	function makeVehicle(item, isLive) {
 
 		if (!airfield.country) {
 			return;
@@ -483,7 +462,7 @@ module.exports = function(mission, data) {
 			case itemTags.TRUCK_CARGO: {
 
 				vehicleType = "truck_cargo";
-				isStatic = true;
+				isStatic = !isLive;
 				break;
 			}
 			// Fuel truck
@@ -491,6 +470,12 @@ module.exports = function(mission, data) {
 
 				vehicleType = "truck_fuel";
 				isStatic = true;
+				break;
+			}
+			// Car vehicle
+			case itemTags.CAR: {
+
+				vehicleType = "staff_car";
 				break;
 			}
 			// Anti-aircraft (Flak)
@@ -526,8 +511,12 @@ module.exports = function(mission, data) {
 
 		var vehicle = rand.pick(vehicles[countryID][vehicleType]);
 
+		if (isStatic && !vehicle.static) {
+			return;
+		}
+
 		// Create vehicle item
-		var itemObject = isStatic ? new Item.Block() : new Item.Vehicle();
+		var itemObject = mission.createItem(isStatic ? "Block" : "Vehicle");
 
 		var positionX = item[1];
 		var positionZ = item[2];
@@ -545,11 +534,11 @@ module.exports = function(mission, data) {
 		itemObject.Country = countryID;
 		itemObject.Model = isStatic ? vehicle.static.model : vehicle.model;
 		itemObject.Script = isStatic ? vehicle.static.script : vehicle.script;
-		itemObject.setPosition(positionX, positionZ);
-		itemObject.setOrientation(orientation);
+		itemObject.setPosition(Number(positionX.toFixed(2)), Number(positionZ.toFixed(2)));
+		itemObject.setOrientation(Number(orientation.toFixed(2)));
 
 		if (isStatic) {
-			itemObject.Durability = 5000;
+			itemObject.Durability = 1500;
 		}
 		else {
 			itemObject.createEntity();
@@ -562,7 +551,7 @@ module.exports = function(mission, data) {
 
 		// TODO: Attach vehicle to airfield bubble
 
-		return [itemObject];
+		return itemObject;
 	}
 
 	// Make a plane item
@@ -610,7 +599,7 @@ module.exports = function(mission, data) {
 		}
 
 		// Create static plane item
-		var itemObject = new Item.Block();
+		var itemObject = mission.createItem("Block");
 
 		var positionX = item[1];
 		var positionZ = item[2];
@@ -647,10 +636,120 @@ module.exports = function(mission, data) {
 		itemObject.Durability = 2500 + (planeSizeID * 2500);
 		itemObject.Model = planeStatic.model;
 		itemObject.Script = planeStatic.script;
-		itemObject.setPosition(positionX, positionZ);
-		itemObject.setOrientation(orientation);
+		itemObject.setPosition(Number(positionX.toFixed(2)), Number(positionZ.toFixed(2)));
+		itemObject.setOrientation(Number(orientation.toFixed(2)));
 
-		return [itemObject];
+		return itemObject;
+	}
+
+	// Make airfield vehicle routes
+	function makeVehicleRoutes() {
+
+		// TODO: Don't create live vehicle routes during the night
+
+		if (!airfield.country || !airfieldData.routes || !airfieldData.routes.vehicle) {
+			return;
+		}
+
+		// TODO: Limit number of vehicle routes based on airfield value
+		var maxVehicleRoutes = Math.min(2, airfieldData.routes.vehicle.length);
+
+		if (!maxVehicleRoutes) {
+			return;
+		}
+
+		var missionBegin = mission.createItem("MCU_TR_MissionBegin");
+		missionBegin.setPosition(airfield.position);
+		itemsGroup.addItem(missionBegin);
+
+		rand.shuffle(airfieldData.routes.vehicle);
+
+		while (maxVehicleRoutes--) {
+
+			// Weighted vehicle chance array
+			var vehicleChance = rand.shuffle([
+				itemTags.TRUCK_CARGO,
+				itemTags.TRUCK_CARGO,
+				itemTags.CAR
+			]);
+
+			var vehicleObject = null;
+
+			// Create a live vehicle item object for this route
+			while (vehicleChance.length && !vehicleObject) {
+
+				vehicleObject = makeVehicle([
+					vehicleChance.shift(),
+					airfield.position[0],
+					airfield.position[2],
+					0
+				], true);
+			}
+
+			// Most likely a result of airfield vehicle limits
+			if (!vehicleObject) {
+				continue;
+			}
+
+			var route = airfieldData.routes.vehicle.shift();
+			var vehicleWaypointIndex = rand.integer(0, route.length - 1);
+			var waypointFirst = null;
+			var waypointLast = null;
+
+			// 50% chance to reverse/invert the route
+			if (rand.bool()) {
+				route.reverse();
+			}
+
+			// Create route waypoints
+			for (var w = 0; w < route.length; w++) {
+
+				var item = route[w];
+				var nextItem = route[w + 1] || route[0];
+				var waypoint = mission.createItem("MCU_Waypoint");
+
+				if (waypointLast) {
+					waypointLast.addTarget(waypoint);
+				}
+				else {
+					waypointFirst = waypoint;
+				}
+
+				waypoint.addObject(vehicleObject);
+				waypoint.setPosition(item[0], item[1]);
+
+				// Set waypoint orientation (to the direction of next waypoint)
+				var orientation = Math.atan2(nextItem[1] - item[1], nextItem[0] - item[0]);
+				orientation = orientation * (180 / Math.PI);
+
+				if (orientation < 0) {
+					orientation += 360;
+				}
+
+				waypoint.setOrientation(Number(orientation.toFixed(2)));
+
+				// TODO: Compute area and speed based on angles and distance
+				waypoint.Area = 10;
+				waypoint.Speed = 25;
+
+				// Add route vehicle to this waypoint
+				if (w === vehicleWaypointIndex) {
+
+					vehicleObject.setPosition(waypoint.XPos, waypoint.YPos, waypoint.ZPos);
+					vehicleObject.setOrientation(waypoint.YOri);
+
+					itemsGroup.addItem(vehicleObject);
+
+					missionBegin.addTarget(waypoint);
+				}
+
+				itemsGroup.addItem(waypoint);
+				waypointLast = waypoint;
+			}
+
+			// Link last waypoint to the first (creating a loop)
+			waypointLast.addTarget(waypointFirst);
+		}
 	}
 
 	// Static airfield data index objects

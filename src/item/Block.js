@@ -6,7 +6,6 @@ var Item = require("../item");
 // Block item
 function Block() {
 
-	this.setIndex();
 }
 
 Block.prototype = Object.create(Item.prototype);

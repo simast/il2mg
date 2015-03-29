@@ -4,9 +4,6 @@
 var fs = require("fs");
 var os = require("os");
 
-// Last item index value
-var lastIndex = 0;
-
 // Abstract base mission Item class
 function Item() {
 	throw new Error();
@@ -38,16 +35,6 @@ Item.prototype.addItem = function(item) {
 	}
 
 	this.items.push(item);
-};
-
-/**
- * Set item index (id).
- */
-Item.prototype.setIndex = function() {
-
-	if (!this.Index) {
-		this.Index = ++lastIndex;
-	}
 };
 
 /**
@@ -157,6 +144,49 @@ Item.prototype.setOrientation = function() {
 };
 
 /**
+ * Add a new item target link.
+ *
+ * @param {Item} item Target item object to link.
+ */
+Item.prototype.addTarget = function(item) {
+
+	if (!(item instanceof Item)) {
+		throw new TypeError("Invalid target item value.");
+	}
+
+	this.Targets = this.Targets || [];
+
+	// Add a new item target link
+	if (this.Targets.indexOf(item.Index) === -1) {
+		this.Targets.push(item.Index);
+	}
+};
+
+/**
+ * Add a new item object link.
+ *
+ * @param {Item} item Target item object to link.
+ */
+Item.prototype.addObject = function(item) {
+
+	if (!(item instanceof Item)) {
+		throw new TypeError("Invalid object item value.");
+	}
+
+	// Object links are always linked to entities
+	if (!item.entity) {
+		item.createEntity();
+	}
+
+	this.Objects = this.Objects || [];
+
+	// Add a new item object link
+	if (this.Objects.indexOf(item.entity.Index) === -1) {
+		this.Objects.push(item.entity.Index);
+	}
+};
+
+/**
  * Create a linked item entity.
  *
  * @returns {Item} Linked item entity.
@@ -167,10 +197,7 @@ Item.prototype.createEntity = function() {
 		throw new Error("Item is already linked to an entity.");
 	}
 
-	var entity = new Item.MCU_TR_Entity();
-
-	this.setIndex();
-	entity.setIndex();
+	var entity = this.mission.createItem("MCU_TR_Entity");
 
 	// Link the item with entity
 	this.LinkTrId = entity.Index;
@@ -480,21 +507,14 @@ Item.readTextFile = function(file) {
 	lexer.addRule(/\s*(\w+)\s*=\s*(.+);\s*/i, function(matched, propName, propValue) {
 
 		var item = itemStack[itemStack.length - 1];
-		var propNumber = parseFloat(propValue);
 
-		// Value is a number
-		if (!isNaN(propNumber)) {
-			propValue = propNumber;
-		}
-		// Value is a string
-		else if (propValue[0] === '"') {
-			propValue = propValue.replace(/^"(.*(?="$))"$/, "$1");
-		}
+		// Escape backslash (\) character for JavaScript strings
+		propValue = propValue.replace(/\\/g, "\\\\");
 
 		// TODO: Handle complex property types (like with the Options item)
 
 		// Add item property
-		item[propName] = propValue;
+		item[propName] = JSON.parse(propValue);
 	});
 
 	// Rule for the end of item definition
@@ -534,6 +554,7 @@ module.exports = Item;
 	require("./item/Damaged"),
 	require("./item/Flag"),
 	require("./item/Group"),
+	require("./item/MCU_CMD_Formation"),
 	require("./item/MCU_Icon"),
 	require("./item/MCU_Timer"),
 	require("./item/MCU_TR_Entity"),
