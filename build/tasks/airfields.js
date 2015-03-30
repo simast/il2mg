@@ -419,13 +419,14 @@ module.exports = function(grunt) {
 
 						var routeData = routesData[routeID];
 						var jsonRoute = [];
-						var waypoint = routeData[routeData.first];
+						var nextWaypoint = routeData.first;
 
-						while (waypoint.target !== routeData.first) {
+						do {
 
-							jsonRoute.push(waypoint.data);
-							waypoint = routeData[waypoint.target];
+							jsonRoute.push(routeData[nextWaypoint].data);
+							nextWaypoint = routeData[nextWaypoint].target;
 						}
+						while (nextWaypoint !== routeData.first);
 
 						json.routes[routeData.type] = json.routes[routeData.type] || [];
 						json.routes[routeData.type].push(jsonRoute);
@@ -466,7 +467,7 @@ module.exports = function(grunt) {
 // Utility function used to get absolute Point item position
 function getPointPosition(item, point) {
 
-	var pointOrientation = (item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X));
+	var pointOrientation = item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X);
 	var pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X);
 
 	return [

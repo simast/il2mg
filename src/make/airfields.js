@@ -541,6 +541,8 @@ module.exports = function(mission, data) {
 			itemObject.Durability = 1500;
 		}
 		else {
+
+			itemObject.setName(vehicle.name);
 			itemObject.createEntity();
 		}
 
@@ -645,26 +647,29 @@ module.exports = function(mission, data) {
 	// Make airfield vehicle routes
 	function makeVehicleRoutes() {
 
-		// TODO: Don't create live vehicle routes during the night
+		// TODO: Create only max one live vehicle route during the night
 
-		if (!airfield.country || !airfieldData.routes || !airfieldData.routes.vehicle) {
+		if (!airfield.value || !airfield.country || !airfieldData.routes ||
+				!airfieldData.routes.vehicle) {
+
 			return;
 		}
 
-		// TODO: Limit number of vehicle routes based on airfield value
-		var maxVehicleRoutes = Math.min(2, airfieldData.routes.vehicle.length);
+		var vehicleRoutes = airfieldData.routes.vehicle;
+		var vehicleRoutesMax = 0;
 
-		if (!maxVehicleRoutes) {
+		// Limit number of vehicle routes based on airfield value and available routes
+		vehicleRoutesMax = Math.max(Math.round(airfield.value / 28), 1);
+		vehicleRoutesMax = Math.min(vehicleRoutesMax, 5);
+		vehicleRoutesMax = Math.min(vehicleRoutesMax, vehicleRoutes.length);
+
+		if (!vehicleRoutesMax) {
 			return;
 		}
 
-		var missionBegin = mission.createItem("MCU_TR_MissionBegin");
-		missionBegin.setPosition(airfield.position);
-		itemsGroup.addItem(missionBegin);
+		rand.shuffle(vehicleRoutes);
 
-		rand.shuffle(airfieldData.routes.vehicle);
-
-		while (maxVehicleRoutes--) {
+		while (vehicleRoutesMax--) {
 
 			// Weighted vehicle chance array
 			var vehicleChance = rand.shuffle([
@@ -673,12 +678,12 @@ module.exports = function(mission, data) {
 				itemTags.CAR
 			]);
 
-			var vehicleObject = null;
+			var vehicle = null;
 
 			// Create a live vehicle item object for this route
-			while (vehicleChance.length && !vehicleObject) {
+			while (vehicleChance.length && !vehicle) {
 
-				vehicleObject = makeVehicle([
+				vehicle = makeVehicle([
 					vehicleChance.shift(),
 					airfield.position[0],
 					airfield.position[2],
@@ -687,25 +692,36 @@ module.exports = function(mission, data) {
 			}
 
 			// Most likely a result of airfield vehicle limits
-			if (!vehicleObject) {
+			if (!vehicle) {
 				continue;
 			}
 
-			var route = airfieldData.routes.vehicle.shift();
-			var vehicleWaypointIndex = rand.integer(0, route.length - 1);
+			var route = vehicleRoutes.shift();
+			var routeGroup = new Item.Group();
+			var vehicleIndex = rand.integer(0, route.length - 1);
 			var waypointFirst = null;
 			var waypointLast = null;
+
+			routeGroup.setName(vehicle.Name);
 
 			// 50% chance to reverse/invert the route
 			if (rand.bool()) {
 				route.reverse();
 			}
 
+			// TODO: Replace mission begin MCU with further/closer trigger
+			var missionBegin = mission.createItem("MCU_TR_MissionBegin");
+			routeGroup.addItem(missionBegin);
+
 			// Create route waypoints
 			for (var w = 0; w < route.length; w++) {
 
 				var item = route[w];
 				var nextItem = route[w + 1] || route[0];
+				var isStop = (item[2] === 1);
+				var isRoad = (item[2] === 2);
+
+				// Create waypoint MCU item
 				var waypoint = mission.createItem("MCU_Waypoint");
 
 				if (waypointLast) {
@@ -715,7 +731,7 @@ module.exports = function(mission, data) {
 					waypointFirst = waypoint;
 				}
 
-				waypoint.addObject(vehicleObject);
+				waypoint.addObject(vehicle);
 				waypoint.setPosition(item[0], item[1]);
 
 				// Set waypoint orientation (to the direction of next waypoint)
@@ -730,25 +746,43 @@ module.exports = function(mission, data) {
 
 				// TODO: Compute area and speed based on angles and distance
 				waypoint.Area = 10;
-				waypoint.Speed = 25;
+				waypoint.Speed = 40;
 
-				// Add route vehicle to this waypoint
-				if (w === vehicleWaypointIndex) {
+				routeGroup.addItem(waypoint);
+				waypointLast = waypoint;
 
-					vehicleObject.setPosition(waypoint.XPos, waypoint.YPos, waypoint.ZPos);
-					vehicleObject.setOrientation(waypoint.YOri);
+				// Create a random stop waypoint timer
+				if (isStop) {
 
-					itemsGroup.addItem(vehicleObject);
+					var stopTimer = mission.createItem("MCU_Timer");
 
-					missionBegin.addTarget(waypoint);
+					stopTimer.Time = Number(rand.real(20, 60).toFixed(3));
+					stopTimer.setPositionNear(waypoint);
+
+					waypoint.addTarget(stopTimer);
+
+					waypointLast = stopTimer;
+					routeGroup.addItem(stopTimer);
 				}
 
-				itemsGroup.addItem(waypoint);
-				waypointLast = waypoint;
+				// Add route vehicle to this waypoint
+				if (w === vehicleIndex) {
+
+					vehicle.setPosition(waypoint.XPos, waypoint.YPos, waypoint.ZPos);
+					vehicle.setOrientation(waypoint.YOri);
+
+					routeGroup.addItem(vehicle);
+
+					missionBegin.setPositionNear(vehicle);
+					missionBegin.addTarget(waypoint);
+				}
 			}
 
 			// Link last waypoint to the first (creating a loop)
 			waypointLast.addTarget(waypointFirst);
+
+			// Add vehicle route items group to airfield group
+			itemsGroup.addItem(routeGroup);
 		}
 	}
 

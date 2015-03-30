@@ -109,6 +109,29 @@ Item.prototype.setPosition = function() {
 };
 
 /**
+ * Set item position close to another nearby item.
+ *
+ * @param {Item} item Nearby item object.
+ */
+Item.prototype.setPositionNear = function(item) {
+
+	if (!(item instanceof Item)) {
+		throw new TypeError("Invalid nearby item value.");
+	}
+
+	// TODO: Improve nearby item positioning algorithm
+
+	var rand = item.mission.rand;
+	var orientation = rand.integer(0, 360) * (Math.PI / 180);
+	var magnitude = rand.integer(20, 40);
+
+	var posX = Number((item.XPos + magnitude * Math.cos(orientation)).toFixed(2));
+	var posZ = Number((item.ZPos + magnitude * Math.sin(orientation)).toFixed(2));
+
+	this.setPosition(posX, item.posY, posZ);
+};
+
+/**
  * Set item orientation.
  *
  * @param {number|array} [...] Orientation X/Y/Z coordinates as an array or separate arguments.
