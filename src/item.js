@@ -80,6 +80,9 @@ Item.prototype.setDescription = function(desc) {
  */
 Item.prototype.setPosition = function() {
 
+	// Position precision decimal places
+	var PRECISION = 3;
+
 	// Array position version: setPosition([X, Y, Z])
 	var position = arguments[0];
 
@@ -96,15 +99,15 @@ Item.prototype.setPosition = function() {
 	}
 
 	if (position[0]) {
-		this.XPos = position[0];
+		this.XPos = Number(position[0].toFixed(PRECISION));
 	}
 
 	if (position[1]) {
-		this.YPos = position[1];
+		this.YPos = Number(position[1].toFixed(PRECISION));
 	}
 
 	if (position[2]) {
-		this.ZPos = position[2];
+		this.ZPos = Number(position[2].toFixed(PRECISION));
 	}
 };
 
@@ -125,8 +128,8 @@ Item.prototype.setPositionNear = function(item) {
 	var orientation = rand.integer(0, 360) * (Math.PI / 180);
 	var magnitude = rand.integer(20, 40);
 
-	var posX = Number((item.XPos + magnitude * Math.cos(orientation)).toFixed(2));
-	var posZ = Number((item.ZPos + magnitude * Math.sin(orientation)).toFixed(2));
+	var posX = item.XPos + magnitude * Math.cos(orientation);
+	var posZ = item.ZPos + magnitude * Math.sin(orientation);
 
 	this.setPosition(posX, item.posY, posZ);
 };
@@ -137,6 +140,9 @@ Item.prototype.setPositionNear = function(item) {
  * @param {number|array} [...] Orientation X/Y/Z coordinates as an array or separate arguments.
  */
 Item.prototype.setOrientation = function() {
+
+	// Orientation precision decimal places
+	var PRECISION = 2;
 
 	// Array orientation version: setOrientation([X, Y, Z])
 	var orientation = arguments[0];
@@ -154,15 +160,15 @@ Item.prototype.setOrientation = function() {
 	}
 
 	if (orientation[0]) {
-		this.XOri = orientation[0];
+		this.XOri = Number(orientation[0].toFixed(PRECISION));
 	}
 
 	if (orientation[1]) {
-		this.YOri = orientation[1];
+		this.YOri = Number(orientation[1].toFixed(PRECISION));
 	}
 
 	if (orientation[2]) {
-		this.ZOri = orientation[2];
+		this.ZOri = Number(orientation[2].toFixed(PRECISION));
 	}
 };
 

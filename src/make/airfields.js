@@ -350,8 +350,8 @@ module.exports = function(mission, data) {
 		if (value > 0) {
 
 			// TODO: Modify TRUCK_CARGO and TRUCK_FUEL limits based on mission complexity param
-			limits[itemTags.TRUCK_CARGO] = Math.round(Math.min(Math.max(value / 8, 4), 32));
-			limits[itemTags.TRUCK_FUEL] = Math.round(Math.min(Math.max(value / 16, 2), 16));
+			limits[itemTags.TRUCK_CARGO] = Math.round(Math.min(Math.max(value / 10, 4), 24));
+			limits[itemTags.TRUCK_FUEL] = Math.round(Math.min(Math.max(value / 20, 2), 12));
 
 			// Anti-aircraft vehicle limits
 			limits[itemTags.AA_MG] = Math.round(Math.min(Math.max(value / 25, 2), 7));
@@ -534,8 +534,8 @@ module.exports = function(mission, data) {
 		itemObject.Country = countryID;
 		itemObject.Model = isStatic ? vehicle.static.model : vehicle.model;
 		itemObject.Script = isStatic ? vehicle.static.script : vehicle.script;
-		itemObject.setPosition(Number(positionX.toFixed(2)), Number(positionZ.toFixed(2)));
-		itemObject.setOrientation(Number(orientation.toFixed(2)));
+		itemObject.setPosition(positionX, positionZ);
+		itemObject.setOrientation(orientation);
 
 		if (isStatic) {
 			itemObject.Durability = 1500;
@@ -638,8 +638,8 @@ module.exports = function(mission, data) {
 		itemObject.Durability = 2500 + (planeSizeID * 2500);
 		itemObject.Model = planeStatic.model;
 		itemObject.Script = planeStatic.script;
-		itemObject.setPosition(Number(positionX.toFixed(2)), Number(positionZ.toFixed(2)));
-		itemObject.setOrientation(Number(orientation.toFixed(2)));
+		itemObject.setPosition(positionX, positionZ);
+		itemObject.setOrientation(orientation);
 
 		return itemObject;
 	}
@@ -698,9 +698,12 @@ module.exports = function(mission, data) {
 
 			var route = vehicleRoutes.shift();
 			var routeGroup = new Item.Group();
-			var vehicleIndex = rand.integer(0, route.length - 1);
+			var waypointVehicle = rand.integer(0, route.length - 1);
 			var waypointFirst = null;
 			var waypointLast = null;
+			var isRoadFormation = false; // Default is offroad formation
+			var waypointPriority = Item.MCU_Waypoint.priority;
+			var formationType = Item.MCU_CMD_Formation.type;
 
 			routeGroup.setName(vehicle.Name);
 
@@ -717,9 +720,10 @@ module.exports = function(mission, data) {
 			for (var w = 0; w < route.length; w++) {
 
 				var item = route[w];
-				var nextItem = route[w + 1] || route[0];
+				var itemNext = route[w + 1] || route[0];
 				var isStop = (item[2] === 1);
 				var isRoad = (item[2] === 2);
+				var isRoadNext = (itemNext[2] === 2);
 
 				// Create waypoint MCU item
 				var waypoint = mission.createItem("MCU_Waypoint");
@@ -735,18 +739,19 @@ module.exports = function(mission, data) {
 				waypoint.setPosition(item[0], item[1]);
 
 				// Set waypoint orientation (to the direction of next waypoint)
-				var orientation = Math.atan2(nextItem[1] - item[1], nextItem[0] - item[0]);
+				var orientation = Math.atan2(itemNext[1] - item[1], itemNext[0] - item[0]);
 				orientation = orientation * (180 / Math.PI);
 
 				if (orientation < 0) {
 					orientation += 360;
 				}
 
-				waypoint.setOrientation(Number(orientation.toFixed(2)));
+				waypoint.setOrientation(orientation);
 
 				// TODO: Compute area and speed based on angles and distance
 				waypoint.Area = 10;
 				waypoint.Speed = 40;
+				waypoint.Priority = waypointPriority.LOW;
 
 				routeGroup.addItem(waypoint);
 				waypointLast = waypoint;
@@ -765,21 +770,62 @@ module.exports = function(mission, data) {
 					routeGroup.addItem(stopTimer);
 				}
 
-				// Add route vehicle to this waypoint
-				if (w === vehicleIndex) {
+				var formation = null;
 
-					vehicle.setPosition(waypoint.XPos, waypoint.YPos, waypoint.ZPos);
-					vehicle.setOrientation(waypoint.YOri);
+				// Road vehicle formation
+				if (isRoad && !isRoadFormation) {
 
-					routeGroup.addItem(vehicle);
+					formation = formationType.VEHICLE_COLUMN_ROAD;
+					isRoadFormation = true;
+				}
+				// Offroad vehicle formation
+				else if (!isRoad && isRoadFormation) {
 
-					missionBegin.setPositionNear(vehicle);
-					missionBegin.addTarget(waypoint);
+					formation = formationType.VEHICLE_COLUMN;
+					isRoadFormation = false;
+				}
+				// Offroad (exit current road) vehicle formation
+				else if (isRoad && !isRoadNext) {
+
+					formation = formationType.VEHICLE_COLUMN;
+					isRoadFormation = false;
+				}
+
+				// Create formation command item
+				if (formation !== null) {
+
+					var formationCommand = mission.createItem("MCU_CMD_Formation");
+
+					formationCommand.FormationType = formation;
+					formationCommand.addObject(vehicle);
+					formationCommand.setPositionNear(waypoint);
+
+					waypoint.addTarget(formationCommand);
+					routeGroup.addItem(formationCommand);
+				}
+
+				// 25% chance to use each stop waypoint as vehicle starting point
+				if (isStop && rand.bool(0.25)) {
+					waypointVehicle = waypoint;
+				}
+
+				// Set random/assigned vehicle waypoint
+				if (waypointVehicle === w) {
+					waypointVehicle = waypoint;
 				}
 			}
 
 			// Link last waypoint to the first (creating a loop)
 			waypointLast.addTarget(waypointFirst);
+
+			// Add vehicle
+			vehicle.setPosition(waypointVehicle.XPos, waypointVehicle.YPos, waypointVehicle.ZPos);
+			vehicle.setOrientation((vehicle.YOri + waypointVehicle.YOri) % 360);
+
+			routeGroup.addItem(vehicle);
+
+			missionBegin.setPositionNear(vehicle);
+			missionBegin.addTarget(waypointVehicle);
 
 			// Add vehicle route items group to airfield group
 			itemsGroup.addItem(routeGroup);
