@@ -9,5 +9,6 @@ function Damaged() {
 }
 
 Damaged.prototype = Object.create(Item.prototype);
+Damaged.prototype.hasIndex = false;
 
 module.exports = Damaged;

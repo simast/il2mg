@@ -11,6 +11,7 @@ function Options() {
 
 Options.prototype = Object.create(Item.prototype);
 Options.prototype.typeID = 25;
+Options.prototype.hasIndex = false;
 
 /**
  * Get binary representation of the item.

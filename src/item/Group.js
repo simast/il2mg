@@ -10,6 +10,7 @@ function Group() {
 
 Group.prototype = Object.create(Item.prototype);
 Group.prototype.typeID = 6;
+Group.prototype.hasIndex = false;
 
 /**
  * Get binary representation of the item.

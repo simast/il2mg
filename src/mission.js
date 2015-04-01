@@ -59,25 +59,39 @@ function Mission(params) {
  * Create a new mission item.
  *
  * @param {string} itemType Item type name.
+ * @param {mixed} [parent] Add to the mission (true) or parent item (object).
  */
-Mission.prototype.createItem = function(itemType) {
+Mission.prototype.createItem = function(itemType, parent) {
 
 	if (!Item[itemType]) {
-		throw new TypeError("Invalid mission item type value.");
+		throw new TypeError("Invalid item type value.");
 	}
-
+	
+	// Add item to mission if parent is not specified
+	if (parent !== false && !(parent instanceof Item)) {
+		parent = this;
+	}
+	
 	var item = new Item[itemType]();
-
-	// Set unique item index
-	Object.defineProperty(item, "Index", {
-		enumerable: true,
-		value: ++this.lastIndex
-	});
+	
+	if (item.hasIndex) {
+		
+		// Set unique item index
+		Object.defineProperty(item, "Index", {
+			enumerable: true,
+			value: ++this.lastIndex
+		});
+	}
 
 	// Set item mission reference
 	Object.defineProperty(item, "mission", {
 		value: this
 	});
+	
+	// Add item to parent item object
+	if (parent) {
+		parent.addItem(item);
+	}
 
 	return item;
 };
@@ -90,7 +104,7 @@ Mission.prototype.createItem = function(itemType) {
 Mission.prototype.addItem = function(item) {
 
 	if (!(item instanceof Item)) {
-		throw new TypeError("Invalid mission item value.");
+		throw new TypeError("Invalid item value.");
 	}
 
 	this.items.push(item);

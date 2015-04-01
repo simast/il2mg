@@ -25,6 +25,4 @@ module.exports = function(mission, data) {
 
 	// Create plane entity
 	plane.createEntity();
-
-	mission.addItem(plane);
 };

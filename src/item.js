@@ -9,6 +9,9 @@ function Item() {
 	throw new Error();
 }
 
+// By default all items have "Index" field
+Item.prototype.hasIndex = true;
+
 // Used to automatically track buffer write cursor
 Buffer.prototype._offset = 0;
 
@@ -17,6 +20,20 @@ Item.DEFAULT_COALITION = 0; // Neutral coalition ID
 Item.DEFAULT_COUNTRY = 0; // Neutral country ID
 Item.DEFAULT_DAMAGE_REPORT = 50; // 50% of damage
 Item.DEFAULT_DURABILITY = 25000;
+
+/**
+ * Create a new child item (linked to current item mission).
+ *
+ * @param {string} itemType Item type name.
+ */
+Item.prototype.createItem = function(itemType) {
+
+	if (!this.mission) {
+		throw new TypeError("Item is not part of a mission.");
+	}
+	
+	return this.mission.createItem(itemType, this);
+};
 
 /**
  * Add a new child item.
@@ -79,6 +96,9 @@ Item.prototype.setDescription = function(desc) {
  * @param {number|array} [...] Position X/Y/Z coordinates as an array or separate arguments.
  */
 Item.prototype.setPosition = function() {
+	
+	// TODO: Validate item position in context of mission map size
+	// TODO: Build a items index (to quickly lookup items based on position)
 
 	// Position precision decimal places
 	var PRECISION = 3;
@@ -226,7 +246,7 @@ Item.prototype.createEntity = function() {
 		throw new Error("Item is already linked to an entity.");
 	}
 
-	var entity = this.mission.createItem("MCU_TR_Entity");
+	var entity = this.mission.createItem("MCU_TR_Entity", false);
 
 	// Link the item with entity
 	this.LinkTrId = entity.Index;

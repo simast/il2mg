@@ -9,5 +9,6 @@ function Point() {
 }
 
 Point.prototype = Object.create(Item.prototype);
+Point.prototype.hasIndex = false;
 
 module.exports = Point;

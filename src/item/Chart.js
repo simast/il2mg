@@ -9,5 +9,6 @@ function Chart() {
 }
 
 Chart.prototype = Object.create(Item.prototype);
+Chart.prototype.hasIndex = false;
 
 module.exports = Chart;
