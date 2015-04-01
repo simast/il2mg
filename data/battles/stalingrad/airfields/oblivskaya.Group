@@ -12441,7 +12441,7 @@ Group
       YPos = 81.268;
       ZPos = 104127.860;
       XOri = 0.00;
-      YOri = 255.78;
+      YOri = 255.30;
       ZOri = 0.00;
       Area = 10;
       Speed = 100;
@@ -12456,11 +12456,11 @@ Group
       Desc = "";
       Targets = [613];
       Objects = [];
-      XPos = 116528.526;
+      XPos = 116521.873;
       YPos = 81.268;
-      ZPos = 104041.305;
+      ZPos = 104018.969;
       XOri = 0.00;
-      YOri = 326.00;
+      YOri = 327.38;
       ZOri = 0.00;
       Area = 10;
       Speed = 100;

@@ -66,16 +66,16 @@ Mission.prototype.createItem = function(itemType, parent) {
 	if (!Item[itemType]) {
 		throw new TypeError("Invalid item type value.");
 	}
-	
+
 	// Add item to mission if parent is not specified
 	if (parent !== false && !(parent instanceof Item)) {
 		parent = this;
 	}
-	
+
 	var item = new Item[itemType]();
-	
+
 	if (item.hasIndex) {
-		
+
 		// Set unique item index
 		Object.defineProperty(item, "Index", {
 			enumerable: true,
@@ -87,7 +87,7 @@ Mission.prototype.createItem = function(itemType, parent) {
 	Object.defineProperty(item, "mission", {
 		value: this
 	});
-	
+
 	// Add item to parent item object
 	if (parent) {
 		parent.addItem(item);

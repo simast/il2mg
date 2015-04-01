@@ -667,8 +667,9 @@ module.exports = function(mission, data) {
 
 		while (vehicleRoutesMax--) {
 
-			// Weighted vehicle chance array
-			var vehicleChance = rand.shuffle([
+			// Weighted vehicle pool (chance) array
+			var vehiclePool = rand.shuffle([
+				itemTags.TRUCK_CARGO,
 				itemTags.TRUCK_CARGO,
 				itemTags.TRUCK_CARGO,
 				itemTags.CAR
@@ -677,10 +678,10 @@ module.exports = function(mission, data) {
 			var vehicle = null;
 
 			// Create a live vehicle item object for this route
-			while (vehicleChance.length && !vehicle) {
+			while (vehiclePool.length && !vehicle) {
 
 				vehicle = makeVehicle([
-					vehicleChance.shift(),
+					vehiclePool.shift(),
 					airfield.position[0],
 					airfield.position[2],
 					0
@@ -717,9 +718,11 @@ module.exports = function(mission, data) {
 
 				var item = route[w];
 				var itemNext = route[w + 1] || route[0];
+				var itemPrev = route[w - 1] || route[route.length - 1];
 				var isStop = (item[2] === 1);
 				var isRoad = (item[2] === 2);
 				var isRoadNext = (itemNext[2] === 2);
+				var isRoadPrev = (itemPrev[2] === 2);
 
 				// Create waypoint MCU item
 				var waypoint = routeGroup.createItem("MCU_Waypoint");
@@ -744,9 +747,45 @@ module.exports = function(mission, data) {
 
 				waypoint.setOrientation(orientation);
 
-				// TODO: Compute area and speed based on angles and distance
-				waypoint.Area = 10;
-				waypoint.Speed = 40;
+				// Compute waypoint speed
+				var distance = Math.sqrt(Math.pow(item[0] - itemPrev[0], 2) + Math.pow(item[1] - itemPrev[1], 2));
+
+				// Waypoint distance where speed is maximum
+				var distanceMax = 180;
+
+				// Offroad speed limits
+				var speedMin = 25;
+				var speedMax = 45;
+
+				// Onroad speed limits
+				if (isRoad && isRoadPrev) {
+					speedMin = 40;
+					speedMax = 65;
+				}
+
+				var speed = (distance / distanceMax) * speedMax;
+
+				speed = Math.max(speed, speedMin);
+				speed = Math.min(speed, speedMax);
+
+				// A bit of randomness
+				speed += rand.real(-3, 3);
+
+				waypoint.Speed = Math.round(speed);
+
+				// Compute waypoint area
+				var b = Math.pow(item[0] - itemPrev[0], 2) + Math.pow(item[1] - itemPrev[1], 2);
+				var a = Math.pow(item[0] - itemNext[0], 2) + Math.pow(item[1] - itemNext[1], 2);
+				var c = Math.pow(itemNext[0] - itemPrev[0], 2) + Math.pow(itemNext[1] - itemPrev[1], 2);
+
+				var angle = Math.acos((a + b - c) / Math.sqrt(4 * a * b));
+				var angleDiff = Math.abs(angle * (180 / Math.PI) - 180);
+				var area = angleDiff / 180 * 40;
+
+				// Waypoint area radius limits (10 ... 20 meters)
+				area = Math.min(Math.max(area, 10), 20);
+
+				waypoint.Area = Math.round(area);
 				waypoint.Priority = waypointPriority.LOW;
 
 				waypointLast = waypoint;
@@ -773,13 +812,7 @@ module.exports = function(mission, data) {
 					isRoadFormation = true;
 				}
 				// Offroad vehicle formation
-				else if (!isRoad && isRoadFormation) {
-
-					formation = formationType.VEHICLE_COLUMN;
-					isRoadFormation = false;
-				}
-				// Offroad (exit current road) vehicle formation
-				else if (isRoad && !isRoadNext) {
+				else if ((!isRoad && isRoadFormation) || (isRoad && !isRoadNext)) {
 
 					formation = formationType.VEHICLE_COLUMN;
 					isRoadFormation = false;
