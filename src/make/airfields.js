@@ -782,7 +782,7 @@ module.exports = function(mission, data) {
 				var angleDiff = Math.abs(angle * (180 / Math.PI) - 180);
 				var area = angleDiff / 180 * 40;
 
-				// Waypoint area radius limits (10 ... 20 meters)
+				// Waypoint area radius limits (from 10 to 20 meters)
 				area = Math.min(Math.max(area, 10), 20);
 
 				waypoint.Area = Math.round(area);
