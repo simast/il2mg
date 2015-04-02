@@ -6,6 +6,11 @@ module.exports = function(grunt) {
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", function() {
 
+		// TODO: Add support for EFFECT:FIRE:LAND
+		// TODO: Add support for EFFECT:FIRE:CAMP
+		// TODO: Add support for EFFECT:SIREN
+		// TODO: Add support for EFFECT:SMOKE:HOUSE
+
 		var numeral = require("numeral");
 		var data = require("../../src/data");
 		var Item = require("../../src/item");

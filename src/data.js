@@ -31,6 +31,7 @@ var data = (function() {
 	data.missions = require("../data/missions");
 	data.time = require("../data/time");
 	data.items = require("../data/items");
+	data.effects = require("../data/effects");
 	data.countries = require("../data/countries");
 	data.battles = require("../data/battles");
 
