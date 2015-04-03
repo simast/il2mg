@@ -31,7 +31,7 @@ Item.prototype.createItem = function(itemType) {
 	if (!this.mission) {
 		throw new TypeError("Item is not part of a mission.");
 	}
-	
+
 	return this.mission.createItem(itemType, this);
 };
 
@@ -96,7 +96,7 @@ Item.prototype.setDescription = function(desc) {
  * @param {number|array} [...] Position X/Y/Z coordinates as an array or separate arguments.
  */
 Item.prototype.setPosition = function() {
-	
+
 	// TODO: Validate item position in context of mission map size
 	// TODO: Build a items index (to quickly lookup items based on position)
 
@@ -601,9 +601,13 @@ module.exports = Item;
 	require("./item/Bridge"),
 	require("./item/Chart"),
 	require("./item/Damaged"),
+	require("./item/Effect"),
 	require("./item/Flag"),
 	require("./item/Group"),
+	require("./item/MCU_CMD_Effect"),
 	require("./item/MCU_CMD_Formation"),
+	require("./item/MCU_CMD_Land"),
+	require("./item/MCU_CMD_TakeOff"),
 	require("./item/MCU_Icon"),
 	require("./item/MCU_Timer"),
 	require("./item/MCU_TR_Entity"),

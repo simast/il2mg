@@ -12,7 +12,7 @@ MCU_CMD_Formation.prototype = Object.create(MCU.prototype);
 MCU_CMD_Formation.prototype.typeID = 19;
 
 // Formation command type constants
-var type = MCU_CMD_Formation.type = {
+var TYPE = MCU_CMD_Formation.TYPE = {
 	PLANE_NONE: 0, // Plane: None
 	PLANE_V: 1, // Plane: V-Form
 	PLANE_EDGE_LEFT: 2, // Plane: Left Edge Form
@@ -29,7 +29,7 @@ var type = MCU_CMD_Formation.type = {
 };
 
 // Formation command density constants
-var density = MCU_CMD_Formation.density = {
+var DENSITY = MCU_CMD_Formation.DENSITY = {
 	DENSE: 0,
 	SAFE: 1,
 	LOOSE: 2
@@ -46,10 +46,10 @@ MCU_CMD_Formation.prototype.toBinary = function(index) {
 	var buffer = new Buffer(8);
 
 	// FormationType
-	this.writeUInt32(buffer, this.FormationType !== undefined ? this.FormationType : type.PLANE_NONE);
+	this.writeUInt32(buffer, this.FormationType !== undefined ? this.FormationType : TYPE.PLANE_NONE);
 
 	// FormationDensity
-	this.writeUInt32(buffer, this.FormationDensity !== undefined ? this.FormationDensity : density.SAFE);
+	this.writeUInt32(buffer, this.FormationDensity !== undefined ? this.FormationDensity : DENSITY.SAFE);
 
 	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };

@@ -700,7 +700,7 @@ module.exports = function(mission, data) {
 			var waypointLast = null;
 			var isRoadFormation = false; // Default is offroad formation
 			var waypointPriority = Item.MCU_Waypoint.priority;
-			var formationType = Item.MCU_CMD_Formation.type;
+			var formationType = Item.MCU_CMD_Formation.TYPE;
 
 			routeGroup.setName(vehicle.Name);
 			routeGroup.addItem(vehicle);
