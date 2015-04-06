@@ -2,14 +2,14 @@
 "use strict";
 
 // Generate mission briefing
-module.exports = function(mission, data) {
+module.exports = function() {
 
-	var options = mission.items.Options;
+	var options = this.items.Options;
 
 	var briefing = [];
 
 	// Date and time
-	briefing.push(makeDateAndTime(mission));
+	briefing.push(makeDateAndTime.call(this));
 
 	// TODO: Location info
 	// TODO: Task/objective info
@@ -17,21 +17,21 @@ module.exports = function(mission, data) {
 	// TODO: Battle situation
 	// TODO: Weather report
 
-	options.setDescription(mission.getLC(briefing.join("<br><br>")));
+	options.setDescription(this.getLC(briefing.join("<br><br>")));
 };
 
 // Make mission briefing date and time output
-function makeDateAndTime(mission) {
+function makeDateAndTime() {
 
-	var time = mission.time;
+	var time = this.time;
 	var output = "";
 
-	output += mission.date.format("MMMM Do, YYYY") + "<br>";
+	output += this.date.format("MMMM Do, YYYY") + "<br>";
 	output += '<font size="13">';
-	output += mission.date.format("HH.mm") + " hrs";
+	output += this.date.format("HH.mm") + " hrs";
 
 	// Display time period names
-	if (typeof mission.time === "object") {
+	if (typeof this.time === "object") {
 
 		var timePeriods = Object.keys(time);
 

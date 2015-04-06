@@ -4,7 +4,10 @@
 var moment = require("moment");
 
 // Generate mission time
-module.exports = function(mission, data) {
+module.exports = function() {
+
+	var mission = this;
+	var data = mission.data;
 
 	// Main period time lengths
 	var TIME_DAWN = data.time.dawn.period;

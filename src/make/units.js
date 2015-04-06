@@ -4,8 +4,10 @@
 var moment = require("moment");
 
 // Generate available mission units
-module.exports = function(mission, data) {
+module.exports = function() {
 
+	var mission = this;
+	var data = mission.data;
 	var battle = mission.battle;
 	var rand = mission.rand;
 	var missionDate = mission.date;

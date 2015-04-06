@@ -2,8 +2,10 @@
 "use strict";
 
 // Generate available mission vehicles index
-module.exports = function(mission, data) {
+module.exports = function() {
 
+	var mission = this;
+	var data = mission.data;
 	var battle = mission.battle;
 
 	// Vehicle index tables

@@ -2,8 +2,10 @@
 "use strict";
 
 // Generate available mission planes
-module.exports = function(mission, data) {
+module.exports = function() {
 
+	var mission = this;
+	var data = mission.data;
 	var battle = mission.battle;
 
 	// Plane index tables

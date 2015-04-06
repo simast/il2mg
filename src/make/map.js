@@ -4,15 +4,15 @@
 var moment = require("moment");
 
 // Generate mission map data
-module.exports = function(mission, data) {
+module.exports = function() {
 
-	var options = mission.items.Options;
-	var map = mission.battle.map;
+	var options = this.items.Options;
+	var map = this.battle.map;
 
 	// Find matching battle map based on mission date
 	if (Array.isArray(map)) {
 
-		var date = mission.date;
+		var date = this.date;
 
 		var foundMaps = map.filter(function(map) {
 
@@ -43,5 +43,5 @@ module.exports = function(mission, data) {
 	options.SeasonPrefix = ""; // TODO: Required?
 
 	// Set active mission map
-	mission.map = map;
+	this.map = map;
 };

@@ -951,14 +951,14 @@
 			"model": "graphics\\blocks\\art_position_medium.mgm"
 		},
 		{
-			"type": "Vehicle",
-			"script": "luascripts\\worldobjects\\vehicles\\ndb.txt",
-			"model": "graphics\\vehicles\\ndb\\ndb.mgm"
-		},
-		{
 			"type": "Block",
 			"script": "luascripts\\worldobjects\\blocks\\arf_hangars_1.txt",
 			"model": "graphics\\blocks\\arf_hangars_1.mgm"
+		},
+		{
+			"type": "Vehicle",
+			"script": "luascripts\\worldobjects\\vehicles\\ndb.txt",
+			"model": "graphics\\vehicles\\ndb\\ndb.mgm"
 		},
 		{
 			"type": "Block",
@@ -1157,8 +1157,8 @@
 		"luascripts\\worldobjects\\blocks\\art_position_big.txt": 187,
 		"luascripts\\worldobjects\\blocks\\art_position_at.txt": 188,
 		"luascripts\\worldobjects\\blocks\\art_position_medium.txt": 189,
-		"luascripts\\worldobjects\\vehicles\\ndb.txt": 190,
-		"luascripts\\worldobjects\\blocks\\arf_hangars_1.txt": 191,
+		"luascripts\\worldobjects\\blocks\\arf_hangars_1.txt": 190,
+		"luascripts\\worldobjects\\vehicles\\ndb.txt": 191,
 		"luascripts\\worldobjects\\blocks\\arf_caponiers_1_v_5.txt": 192
 	}
 }

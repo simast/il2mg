@@ -34,23 +34,27 @@ function Mission(params) {
 	// items without LCName or LCDesc properties).
 	this.getLC("");
 
+	// Set mission related static data
+	// TODO: Load only mission related data (and not all battles)
+	this.data = data;
+
 	log.I("Making mission...");
 	log.profile("Making");
 
 	// Make mission parts
-	require("./make/battle")(this, data);
-	require("./make/date")(this, data);
-	require("./make/time")(this, data);
-	require("./make/planes")(this, data);
-	require("./make/units")(this, data);
-	require("./make/map")(this, data);
-	require("./make/vehicles")(this, data);
-	require("./make/weather")(this, data);
-	require("./make/blocks")(this, data);
-	require("./make/airfields")(this, data);
-	require("./make/flights")(this, data);
-	require("./make/name")(this, data);
-	require("./make/briefing")(this, data);
+	require("./make/battle").call(this);
+	require("./make/date").call(this);
+	require("./make/time").call(this);
+	require("./make/planes").call(this);
+	require("./make/units").call(this);
+	require("./make/map").call(this);
+	require("./make/vehicles").call(this);
+	require("./make/weather").call(this);
+	require("./make/blocks").call(this);
+	require("./make/airfields").call(this);
+	require("./make/flights").call(this);
+	require("./make/name").call(this);
+	require("./make/briefing").call(this);
 
 	log.profile("Making");
 }

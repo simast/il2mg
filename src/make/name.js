@@ -2,9 +2,9 @@
 "use strict";
 
 // Generate mission name
-module.exports = function(mission, data) {
+module.exports = function() {
 
-	var options = mission.items.Options;
+	var options = this.items.Options;
 
-	options.setName(mission.getLC(mission.battle.name));
+	options.setName(this.getLC(this.battle.name));
 };

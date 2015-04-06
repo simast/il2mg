@@ -11103,13 +11103,13 @@ Group
 
   Group
   {
-    Name = "ROUTE:1:VEHICLE";
+    Name = "ROUTE:1";
     Index = 477;
     Desc = "";
     MCU_Waypoint
     {
       Index = 478;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [479];
       Objects = [];
@@ -11128,7 +11128,7 @@ Group
     MCU_Waypoint
     {
       Index = 479;
-      Name = "ROUTE:1:VEHICLE:STOP";
+      Name = "ROUTE:1:STOP";
       Desc = "";
       Targets = [481];
       Objects = [];
@@ -11147,7 +11147,7 @@ Group
     MCU_Waypoint
     {
       Index = 481;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [483];
       Objects = [];
@@ -11166,7 +11166,7 @@ Group
     MCU_Waypoint
     {
       Index = 483;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [485];
       Objects = [];
@@ -11185,7 +11185,7 @@ Group
     MCU_Waypoint
     {
       Index = 485;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [487];
       Objects = [];
@@ -11204,7 +11204,7 @@ Group
     MCU_Waypoint
     {
       Index = 487;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [489];
       Objects = [];
@@ -11223,7 +11223,7 @@ Group
     MCU_Waypoint
     {
       Index = 489;
-      Name = "ROUTE:1:VEHICLE:STOP";
+      Name = "ROUTE:1:STOP";
       Desc = "";
       Targets = [491];
       Objects = [];
@@ -11242,7 +11242,7 @@ Group
     MCU_Waypoint
     {
       Index = 491;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [493];
       Objects = [];
@@ -11261,7 +11261,7 @@ Group
     MCU_Waypoint
     {
       Index = 493;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [495];
       Objects = [];
@@ -11280,7 +11280,7 @@ Group
     MCU_Waypoint
     {
       Index = 496;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [497];
       Objects = [];
@@ -11299,7 +11299,7 @@ Group
     MCU_Waypoint
     {
       Index = 495;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [496];
       Objects = [];
@@ -11318,7 +11318,7 @@ Group
     MCU_Waypoint
     {
       Index = 497;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [500];
       Objects = [];
@@ -11337,7 +11337,7 @@ Group
     MCU_Waypoint
     {
       Index = 500;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [502];
       Objects = [];
@@ -11356,7 +11356,7 @@ Group
     MCU_Waypoint
     {
       Index = 502;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [504];
       Objects = [];
@@ -11375,7 +11375,7 @@ Group
     MCU_Waypoint
     {
       Index = 504;
-      Name = "ROUTE:1:VEHICLE";
+      Name = "ROUTE:1";
       Desc = "";
       Targets = [478];
       Objects = [];
@@ -11396,13 +11396,13 @@ Group
 
   Group
   {
-    Name = "ROUTE:2:VEHICLE";
+    Name = "ROUTE:2";
     Index = 506;
     Desc = "";
     MCU_Waypoint
     {
       Index = 507;
-      Name = "ROUTE:2:VEHICLE:STOP";
+      Name = "ROUTE:2:STOP";
       Desc = "";
       Targets = [508];
       Objects = [];
@@ -11421,7 +11421,7 @@ Group
     MCU_Waypoint
     {
       Index = 508;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [510];
       Objects = [];
@@ -11440,7 +11440,7 @@ Group
     MCU_Waypoint
     {
       Index = 510;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [512];
       Objects = [];
@@ -11459,7 +11459,7 @@ Group
     MCU_Waypoint
     {
       Index = 512;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [514];
       Objects = [];
@@ -11478,7 +11478,7 @@ Group
     MCU_Waypoint
     {
       Index = 514;
-      Name = "ROUTE:2:VEHICLE:STOP";
+      Name = "ROUTE:2:STOP";
       Desc = "";
       Targets = [516];
       Objects = [];
@@ -11497,7 +11497,7 @@ Group
     MCU_Waypoint
     {
       Index = 516;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [518];
       Objects = [];
@@ -11516,7 +11516,7 @@ Group
     MCU_Waypoint
     {
       Index = 518;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [520];
       Objects = [];
@@ -11535,7 +11535,7 @@ Group
     MCU_Waypoint
     {
       Index = 520;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [522];
       Objects = [];
@@ -11554,7 +11554,7 @@ Group
     MCU_Waypoint
     {
       Index = 522;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [524];
       Objects = [];
@@ -11573,7 +11573,7 @@ Group
     MCU_Waypoint
     {
       Index = 524;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [526];
       Objects = [];
@@ -11592,7 +11592,7 @@ Group
     MCU_Waypoint
     {
       Index = 526;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [528];
       Objects = [];
@@ -11611,7 +11611,7 @@ Group
     MCU_Waypoint
     {
       Index = 528;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [530];
       Objects = [];
@@ -11630,7 +11630,7 @@ Group
     MCU_Waypoint
     {
       Index = 530;
-      Name = "ROUTE:2:VEHICLE:STOP";
+      Name = "ROUTE:2:STOP";
       Desc = "";
       Targets = [532];
       Objects = [];
@@ -11649,7 +11649,7 @@ Group
     MCU_Waypoint
     {
       Index = 532;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [534];
       Objects = [];
@@ -11668,7 +11668,7 @@ Group
     MCU_Waypoint
     {
       Index = 534;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [536];
       Objects = [];
@@ -11687,7 +11687,7 @@ Group
     MCU_Waypoint
     {
       Index = 536;
-      Name = "ROUTE:2:VEHICLE";
+      Name = "ROUTE:2";
       Desc = "";
       Targets = [507];
       Objects = [];
@@ -11708,13 +11708,13 @@ Group
 
   Group
   {
-    Name = "ROUTE:3:VEHICLE";
+    Name = "ROUTE:3";
     Index = 538;
     Desc = "";
     MCU_Waypoint
     {
       Index = 539;
-      Name = "ROUTE:3:VEHICLE:STOP";
+      Name = "ROUTE:3:STOP";
       Desc = "";
       Targets = [540];
       Objects = [];
@@ -11733,7 +11733,7 @@ Group
     MCU_Waypoint
     {
       Index = 540;
-      Name = "ROUTE:3:VEHICLE";
+      Name = "ROUTE:3";
       Desc = "";
       Targets = [542];
       Objects = [];
@@ -11752,7 +11752,7 @@ Group
     MCU_Waypoint
     {
       Index = 542;
-      Name = "ROUTE:3:VEHICLE:STOP";
+      Name = "ROUTE:3:STOP";
       Desc = "";
       Targets = [544];
       Objects = [];
@@ -11771,7 +11771,7 @@ Group
     MCU_Waypoint
     {
       Index = 544;
-      Name = "ROUTE:3:VEHICLE";
+      Name = "ROUTE:3";
       Desc = "";
       Targets = [546];
       Objects = [];
@@ -11790,7 +11790,7 @@ Group
     MCU_Waypoint
     {
       Index = 546;
-      Name = "ROUTE:3:VEHICLE";
+      Name = "ROUTE:3";
       Desc = "";
       Targets = [548];
       Objects = [];
@@ -11809,7 +11809,7 @@ Group
     MCU_Waypoint
     {
       Index = 548;
-      Name = "ROUTE:3:VEHICLE";
+      Name = "ROUTE:3";
       Desc = "";
       Targets = [550];
       Objects = [];
@@ -11828,7 +11828,7 @@ Group
     MCU_Waypoint
     {
       Index = 550;
-      Name = "ROUTE:3:VEHICLE";
+      Name = "ROUTE:3";
       Desc = "";
       Targets = [539];
       Objects = [];
@@ -11849,13 +11849,13 @@ Group
 
   Group
   {
-    Name = "ROUTE:4:VEHICLE";
+    Name = "ROUTE:4";
     Index = 552;
     Desc = "";
     MCU_Waypoint
     {
       Index = 553;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [554];
       Objects = [];
@@ -11874,7 +11874,7 @@ Group
     MCU_Waypoint
     {
       Index = 555;
-      Name = "ROUTE:4:VEHICLE:STOP";
+      Name = "ROUTE:4:STOP";
       Desc = "";
       Targets = [553];
       Objects = [];
@@ -11893,7 +11893,7 @@ Group
     MCU_Waypoint
     {
       Index = 554;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [557];
       Objects = [];
@@ -11912,7 +11912,7 @@ Group
     MCU_Waypoint
     {
       Index = 557;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [559];
       Objects = [];
@@ -11931,7 +11931,7 @@ Group
     MCU_Waypoint
     {
       Index = 559;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [561];
       Objects = [];
@@ -11950,7 +11950,7 @@ Group
     MCU_Waypoint
     {
       Index = 561;
-      Name = "ROUTE:4:VEHICLE:STOP";
+      Name = "ROUTE:4:STOP";
       Desc = "";
       Targets = [563];
       Objects = [];
@@ -11969,7 +11969,7 @@ Group
     MCU_Waypoint
     {
       Index = 563;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [565];
       Objects = [];
@@ -11988,7 +11988,7 @@ Group
     MCU_Waypoint
     {
       Index = 565;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [567];
       Objects = [];
@@ -12007,7 +12007,7 @@ Group
     MCU_Waypoint
     {
       Index = 567;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [569];
       Objects = [];
@@ -12026,7 +12026,7 @@ Group
     MCU_Waypoint
     {
       Index = 569;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [571];
       Objects = [];
@@ -12045,7 +12045,7 @@ Group
     MCU_Waypoint
     {
       Index = 571;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [573];
       Objects = [];
@@ -12064,7 +12064,7 @@ Group
     MCU_Waypoint
     {
       Index = 573;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [575];
       Objects = [];
@@ -12083,7 +12083,7 @@ Group
     MCU_Waypoint
     {
       Index = 575;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [577];
       Objects = [];
@@ -12102,7 +12102,7 @@ Group
     MCU_Waypoint
     {
       Index = 577;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [579];
       Objects = [];
@@ -12121,7 +12121,7 @@ Group
     MCU_Waypoint
     {
       Index = 579;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [581];
       Objects = [];
@@ -12140,7 +12140,7 @@ Group
     MCU_Waypoint
     {
       Index = 581;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [583];
       Objects = [];
@@ -12159,7 +12159,7 @@ Group
     MCU_Waypoint
     {
       Index = 583;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [585];
       Objects = [];
@@ -12178,7 +12178,7 @@ Group
     MCU_Waypoint
     {
       Index = 585;
-      Name = "ROUTE:4:VEHICLE";
+      Name = "ROUTE:4";
       Desc = "";
       Targets = [555];
       Objects = [];
@@ -12199,13 +12199,13 @@ Group
 
   Group
   {
-    Name = "ROUTE:5:VEHICLE";
+    Name = "ROUTE:5";
     Index = 587;
     Desc = "";
     MCU_Waypoint
     {
       Index = 588;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [589];
       Objects = [];
@@ -12224,7 +12224,7 @@ Group
     MCU_Waypoint
     {
       Index = 590;
-      Name = "ROUTE:5:VEHICLE:STOP";
+      Name = "ROUTE:5:STOP";
       Desc = "";
       Targets = [588];
       Objects = [];
@@ -12243,7 +12243,7 @@ Group
     MCU_Waypoint
     {
       Index = 591;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [590];
       Objects = [];
@@ -12262,7 +12262,7 @@ Group
     MCU_Waypoint
     {
       Index = 589;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [593];
       Objects = [];
@@ -12281,7 +12281,7 @@ Group
     MCU_Waypoint
     {
       Index = 593;
-      Name = "ROUTE:5:VEHICLE:ROAD";
+      Name = "ROUTE:5:ROAD";
       Desc = "";
       Targets = [595];
       Objects = [];
@@ -12300,7 +12300,7 @@ Group
     MCU_Waypoint
     {
       Index = 595;
-      Name = "ROUTE:5:VEHICLE:ROAD";
+      Name = "ROUTE:5:ROAD";
       Desc = "";
       Targets = [597];
       Objects = [];
@@ -12319,7 +12319,7 @@ Group
     MCU_Waypoint
     {
       Index = 597;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [599];
       Objects = [];
@@ -12338,7 +12338,7 @@ Group
     MCU_Waypoint
     {
       Index = 599;
-      Name = "ROUTE:5:VEHICLE:STOP";
+      Name = "ROUTE:5:STOP";
       Desc = "";
       Targets = [601];
       Objects = [];
@@ -12357,7 +12357,7 @@ Group
     MCU_Waypoint
     {
       Index = 601;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [603];
       Objects = [];
@@ -12376,7 +12376,7 @@ Group
     MCU_Waypoint
     {
       Index = 603;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [605];
       Objects = [];
@@ -12395,7 +12395,7 @@ Group
     MCU_Waypoint
     {
       Index = 606;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [607];
       Objects = [];
@@ -12414,7 +12414,7 @@ Group
     MCU_Waypoint
     {
       Index = 608;
-      Name = "ROUTE:5:VEHICLE:STOP";
+      Name = "ROUTE:5:STOP";
       Desc = "";
       Targets = [609];
       Objects = [];
@@ -12433,7 +12433,7 @@ Group
     MCU_Waypoint
     {
       Index = 609;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [611];
       Objects = [];
@@ -12452,7 +12452,7 @@ Group
     MCU_Waypoint
     {
       Index = 611;
-      Name = "ROUTE:5:VEHICLE:ROAD";
+      Name = "ROUTE:5:ROAD";
       Desc = "";
       Targets = [613];
       Objects = [];
@@ -12471,7 +12471,7 @@ Group
     MCU_Waypoint
     {
       Index = 613;
-      Name = "ROUTE:5:VEHICLE:ROAD";
+      Name = "ROUTE:5:ROAD";
       Desc = "";
       Targets = [615];
       Objects = [];
@@ -12490,7 +12490,7 @@ Group
     MCU_Waypoint
     {
       Index = 615;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [591];
       Objects = [];
@@ -12509,7 +12509,7 @@ Group
     MCU_Waypoint
     {
       Index = 605;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [618];
       Objects = [];
@@ -12528,7 +12528,7 @@ Group
     MCU_Waypoint
     {
       Index = 618;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [606];
       Objects = [];
@@ -12547,7 +12547,7 @@ Group
     MCU_Waypoint
     {
       Index = 607;
-      Name = "ROUTE:5:VEHICLE";
+      Name = "ROUTE:5";
       Desc = "";
       Targets = [608];
       Objects = [];

@@ -4,9 +4,9 @@
 var Item = require("../item");
 
 // Generate mission flights
-module.exports = function(mission, data) {
+module.exports = function() {
 
-	var plane = mission.createItem("Plane");
+	var plane = this.createItem("Plane");
 
 	plane.setName("Ju 87 D-3");
 	plane.setPosition(116323.32, 83.238, 102809.66);
@@ -14,7 +14,7 @@ module.exports = function(mission, data) {
 	plane.Script = "luascripts/worldobjects/planes/ju87d3.txt";
 	plane.Model = "graphics/planes/ju87d3/ju87d3.mgm";
 	plane.Country = 201;
-	plane.Skin = "ju87d3/ju-87d-8 njgs italy swastika.dds";
+	plane.Skin = "ju87d3/StabI-SG5.dds";
 	plane.AILevel = 0;
 	plane.StartInAir = 2;
 	plane.Callsign = 6;

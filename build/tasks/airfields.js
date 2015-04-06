@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 				json.sectors = {};
 				json.runways = {};
 				json.taxi = {};
-				json.routes = {};
+				json.routes = [];
 
 				// Collected airfield routes data index
 				var routesData = {};
@@ -383,19 +383,12 @@ module.exports = function(grunt) {
 									grunt.fail.fatal("Invalid route ID in: " + item.Name);
 								}
 
-								var routeType = String(waypointData[1]).toLowerCase();
-
-								// Validate route type
-								if (routeType !== "vehicle") {
-									grunt.fail.fatal("Invalid route type in: " + item.Name);
-								}
-
 								// Validate waypoint target
 								if (item.Targets.length !== 1) {
 									grunt.fail.fatal("Invalid route waypoint target in: " + item.Name);
 								}
 
-								var waypointFlag = waypointData[2];
+								var waypointFlag = waypointData[1];
 
 								// Stop point flag
 								if (waypointFlag === "STOP") {
@@ -423,8 +416,7 @@ module.exports = function(grunt) {
 
 								// Register route waypoint data
 								var routeData = routesData[routeID] = routesData[routeID] || {
-									first: waypointIndex,
-									type: routeType
+									first: waypointIndex
 								};
 
 								routeData[waypointIndex] = {
@@ -469,8 +461,7 @@ module.exports = function(grunt) {
 						}
 						while (nextWaypoint !== routeData.first);
 
-						json.routes[routeData.type] = json.routes[routeData.type] || [];
-						json.routes[routeData.type].push(jsonRoute);
+						json.routes.push(jsonRoute);
 					}
 				})();
 

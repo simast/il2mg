@@ -4,11 +4,11 @@
 var moment = require("moment");
 
 // Generate mission date
-module.exports = function(mission, data) {
+module.exports = function() {
 
-	var params = mission.params;
-	var options = mission.items.Options;
-	var battle = mission.battle;
+	var params = this.params;
+	var options = this.items.Options;
+	var battle = this.battle;
 	var battleFrom = moment(battle.from).startOf("day");
 	var battleTo = moment(battle.to).endOf("day");
 	var date = params.date;
@@ -23,12 +23,12 @@ module.exports = function(mission, data) {
 	}
 	// Generate a random date
 	else if (!date) {
-		date = moment(battleFrom).add(mission.rand.real(0, 1) * battleTo.diff(battleFrom), "milliseconds");
+		date = moment(battleFrom).add(this.rand.real(0, 1) * battleTo.diff(battleFrom), "milliseconds");
 	}
 
-	mission.battleFrom = battleFrom;
-	mission.battleTo = battleTo;
-	mission.date = date;
+	this.battleFrom = battleFrom;
+	this.battleTo = battleTo;
+	this.date = date;
 
 	// Set mission options date
 	options.Date = new String(date.format("D.M.YYYY"));

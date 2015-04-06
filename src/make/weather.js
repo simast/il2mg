@@ -1,20 +1,18 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var data = require("../data");
-
 // Make mission clouds
-function makeClouds(mission, weather) {
+function makeClouds(weather) {
 
-	var options = mission.items.Options;
-	var rand = mission.rand;
+	var options = this.items.Options;
+	var rand = this.rand;
 
 	var cloudsType = weather[1];
 	if (Array.isArray(cloudsType)) {
 		cloudsType = rand.integer(cloudsType[0], cloudsType[1]);
 	}
 
-	var cloudsData = rand.pick(data.clouds[cloudsType]);
+	var cloudsData = rand.pick(this.data.clouds[cloudsType]);
 
 	var altitude = cloudsData.altitude;
 	if (Array.isArray(altitude)) {
@@ -32,7 +30,7 @@ function makeClouds(mission, weather) {
 	options.CloudHeight = thickness;
 
 	// Save generated mission clouds data
-	mission.weather.clouds = {
+	this.weather.clouds = {
 		type: cloudsType,
 		altitude: altitude,
 		thickness: thickness
@@ -40,10 +38,10 @@ function makeClouds(mission, weather) {
 }
 
 // Make mission precipitation
-function makePrecipitation(mission, weather) {
+function makePrecipitation(weather) {
 
-	var options = mission.items.Options;
-	var rand = mission.rand;
+	var options = this.items.Options;
+	var rand = this.rand;
 
 	var precipitation = {
 		type: 0, // None
@@ -51,7 +49,7 @@ function makePrecipitation(mission, weather) {
 	};
 
 	// Add precipitation only for overcast weather condition
-	if (mission.weather.clouds.type == 4) {
+	if (this.weather.clouds.type == 4) {
 
 		// 80% chance for precipitation when overcast
 		// TODO: Make the logic a bit more interesting
@@ -59,7 +57,7 @@ function makePrecipitation(mission, weather) {
 
 		if (hasPrecipitation) {
 
-			if (mission.map.season === "winter") {
+			if (this.map.season === "winter") {
 				precipitation.type = 2; // Snow
 			}
 			else {
@@ -76,22 +74,22 @@ function makePrecipitation(mission, weather) {
 	options.PrecLevel = precipitation.level;
 
 	// Save generated mission precipitation data
-	mission.weather.precipitation = precipitation;
+	this.weather.precipitation = precipitation;
 }
 
 // Make mission sea state
-function makeSea(mission, weather) {
+function makeSea(weather) {
 
 	// TODO: Not supported/implemented yet
-	mission.items.Options.SeaState = 0;
-	mission.weather.sea = 0;
+	this.items.Options.SeaState = 0;
+	this.weather.sea = 0;
 }
 
 // Make mission temperature
-function makeTemperature(mission, weather) {
+function makeTemperature(weather) {
 
-	var options = mission.items.Options;
-	var rand = mission.rand;
+	var options = this.items.Options;
+	var rand = this.rand;
 
 	var temperature = weather[0];
 	if (Array.isArray(temperature)) {
@@ -104,32 +102,32 @@ function makeTemperature(mission, weather) {
 }
 
 // Make mission atmospheric pressure
-function makePressure(mission, weather) {
+function makePressure(weather) {
 
 	// TODO: Improve atmospheric pressure selection logic (temperature and humidity
 	// affect the atmospheric pressure).
-	var pressure = mission.rand.integer(750, 770); // Millimetres of mercury (mmHg)
+	var pressure = this.rand.integer(750, 770); // Millimetres of mercury (mmHg)
 
 	// Set pressure data
-	mission.items.Options.Pressure = pressure;
-	mission.weather.pressure = pressure;
+	this.items.Options.Pressure = pressure;
+	this.weather.pressure = pressure;
 }
 
 // Generate mission weather and atmospheric conditions
-module.exports = function(mission) {
+module.exports = function() {
 
-	var options = mission.items.Options;
-	var weather = mission.battle.weather[mission.date.format("YYYY-MM-DD")];
+	var options = this.items.Options;
+	var weather = this.battle.weather[this.date.format("YYYY-MM-DD")];
 
-	mission.weather = {};
+	this.weather = {};
 
-	makeClouds(mission, weather);
-	makePrecipitation(mission, weather);
-	makeSea(mission, weather);
-	makeTemperature(mission, weather);
-	makePressure(mission, weather);
+	makeClouds.call(this, weather);
+	makePrecipitation.call(this, weather);
+	makeSea.call(this, weather);
+	makeTemperature.call(this, weather);
+	makePressure.call(this, weather);
 
-	options.Turbulence = 0;
+	options.Turbulence = 1;
 	options.WindLayers = [
 		[0, 126, 3],
 		[500, 120.147, 7.27],

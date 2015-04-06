@@ -4,8 +4,10 @@
 var Item = require("../item");
 
 // Generate mission battle info
-module.exports = function(mission, data) {
+module.exports = function() {
 
+	var mission = this;
+	var data = mission.data;
 	var params = mission.params;
 	var battleID = params.battle;
 
