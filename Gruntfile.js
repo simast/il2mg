@@ -32,6 +32,7 @@ module.exports = function(grunt) {
 				options: {
 					node: true,
 					esnext: true,
+					validthis: true,
 					globals: {
 						log: true
 					},
