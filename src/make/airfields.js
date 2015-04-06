@@ -3,20 +3,35 @@
 
 var Item = require("../item");
 
-// Data tags for airfield items
+// Data tags for special airfield items
 var itemTags = {
-	WINDSOCK: -10, // Windsock
-	BEACON: -9, // Beacon
-	LIGHT_LANDING: -8, // Landing light
-	LIGHT_SEARCH: -7, // Search light
-	AA_FLAK: -6, // Anti-aircraft (Flak)
-	AA_MG: -5, // Anti-aircraft (MG)
-	CAR: -4, // Car vehicle
-	TRUCK_FUEL: -3, // Fuel truck
-	TRUCK_CARGO: -2, // Cargo truck
 	PLANE: -1, // Plane spot
-	DECO: 1, // Decoration
-	FUEL: 2 // Fuel item
+	TRUCK_CARGO: -2, // Cargo truck
+	TRUCK_FUEL: -3, // Fuel truck
+	CAR: -4, // Car vehicle
+	AA_MG: -5, // Anti-aircraft (MG)
+	AA_FLAK: -6, // Anti-aircraft (Flak)
+	LIGHT_SEARCH: -7, // Search light
+	LIGHT_LAND: -8, // Landing light
+	BEACON: -9, // Beacon
+	WINDSOCK: -10, // Windsock
+	EFFECT: -11, // Effect
+	WRECK: -12 // Wreckage
+};
+
+// Data flags for airfield items
+var itemFlags = {
+	BLOCK_DECO: 1, // Decoration
+	BLOCK_FUEL: 2, // Fuel item
+	PLANE_CAMO: 1, // Camouflage plane spot
+	EFFECT_SMOKE: 1, // House smoke effect
+	EFFECT_CAMP: 2, // Campfire effect
+	EFFECT_LAND: 3, // Landing fire effect
+	EFFECT_SIREN: 4, // Siren effect
+	TAXI_INV: 1, // Invertible taxi route
+	TAXI_RUNWAY: 1, // Taxi runway point
+	ROUTE_STOP: 1, // Route stop point
+	ROUTE_ROAD: 2 // Route road formation
 };
 
 // Plane size constants (types/IDs)
@@ -231,6 +246,14 @@ module.exports = function(mission, data) {
 
 		airfieldGroup.setName(airfield.name);
 
+		// Airfield load event item
+		// TODO: Implement airfield "bubble" and load/unload events
+		if (airfield.country && airfield.value) {
+
+			airfield.onLoad = airfieldGroup.createItem("MCU_TR_MissionBegin");
+			airfield.onLoad.setPosition(airfield.position);
+		}
+
 		// Make airfield vehicle routes
 		makeVehicleRoutes();
 
@@ -265,7 +288,7 @@ module.exports = function(mission, data) {
 					return;
 				}
 
-				var itemObject = null;
+				var itemObjects = null;
 
 				// Normal static item
 				if (itemTypeID >= 0) {
@@ -274,7 +297,7 @@ module.exports = function(mission, data) {
 						extraItems.push(item);
 					}
 					else {
-						itemObject = makeStaticItem(item);
+						itemObjects = makeStaticItem(item);
 					}
 				}
 				// Special item
@@ -282,30 +305,40 @@ module.exports = function(mission, data) {
 
 					// Plane item
 					if (itemTypeID === itemTags.PLANE) {
-						itemObject = makePlane(item);
+						itemObjects = makePlane(item);
 					}
 					// Beacon item
 					else if (itemTypeID === itemTags.BEACON) {
-						itemObject = makeBeacon(item);
+						itemObjects = makeBeacon(item);
 					}
 					// Windsock item
 					else if (itemTypeID === itemTags.WINDSOCK) {
-						itemObject = makeWindsock(item);
+						itemObjects = makeWindsock(item);
+					}
+					// Effect item
+					else if (itemTypeID === itemTags.EFFECT) {
+						itemObjects = makeEffect(item);
 					}
 					// Vehicle item
 					else {
-						itemObject = makeVehicle(item);
+						itemObjects = makeVehicle(item);
 					}
 
 					// Use all extra normal items in a group if special item is used
-					if (itemObject) {
+					if (itemObjects && itemObjects.length) {
 						useExtraItems = true;
 					}
 				}
 
-				// Add generated item object to airfield group
-				if (itemObject) {
-					airfieldGroup.addItem(itemObject);
+				// Add generated item objects to airfield group
+				if (Array.isArray(itemObjects) && itemObjects.length) {
+
+					itemObjects.forEach(function(itemObject) {
+
+						if (itemObject instanceof Item) {
+							airfieldGroup.addItem(itemObject);
+						}
+					});
 				}
 			});
 
@@ -343,6 +376,10 @@ module.exports = function(mission, data) {
 		limits[itemTags.AA_FLAK] = 0;
 		limits[itemTags.LIGHT_SEARCH] = 0;
 
+		limits.effects = Object.create(null);
+		limits.effects[itemFlags.EFFECT_SMOKE] = 0;
+		limits.effects[itemFlags.EFFECT_CAMP] = 0;
+
 		if (value > 0) {
 
 			// TODO: Modify TRUCK_CARGO and TRUCK_FUEL limits based on mission complexity param
@@ -360,9 +397,13 @@ module.exports = function(mission, data) {
 
 			// Only max one staff car per airfield
 			limits[itemTags.CAR] = 1;
+
+			// Smoke and campfire effect limits
+			limits.effects[itemFlags.EFFECT_SMOKE] = Math.round(Math.min(Math.max(value / 30, 1), 3));
+			limits.effects[itemFlags.EFFECT_CAMP] = Math.round(Math.min(Math.max(value / 50, 1), 2));
 		}
 
-		// TODO: Add DECO item limits (based on mission complexity param)
+		// TODO: Add BLOCK_DECO item limits (based on mission complexity param)
 
 		return limits;
 	}
@@ -380,11 +421,11 @@ module.exports = function(mission, data) {
 		itemObject.setOrientation(item[3]);
 
 		// Decoration item
-		if (itemData === itemTags.DECO) {
+		if (itemData === itemFlags.BLOCK_DECO) {
 			itemObject.Durability = 500;
 		}
 
-		return itemObject;
+		return [itemObject];
 	}
 
 	// Make a beacon item
@@ -410,7 +451,7 @@ module.exports = function(mission, data) {
 
 		itemObject.createEntity();
 
-		return itemObject;
+		return [itemObject];
 	}
 
 	// Make a windsock item
@@ -432,7 +473,82 @@ module.exports = function(mission, data) {
 
 		// TODO: Attach windsock to airfield bubble
 
-		return itemObject;
+		return [itemObject];
+	}
+
+	// Make effect item
+	function makeEffect(item) {
+
+		if (!airfield.country) {
+			return;
+		}
+
+		var effectType = item[4];
+
+		// Enforce airfield limits
+		if (airfieldLimits.effects[effectType] <= 0) {
+			return;
+		}
+
+		var effectScript;
+
+		// House smoke
+		if (effectType === itemFlags.EFFECT_SMOKE) {
+			effectScript = data.effects.house_smoke.script;
+		}
+		// Campfire
+		else if (effectType === itemFlags.EFFECT_CAMP) {
+			effectScript = data.effects.landfire.script;
+		}
+		// Siren
+		else if (effectType === itemFlags.EFFECT_SIREN) {
+			effectScript = data.effects.siren.script;
+		}
+
+		// TODO: Add support for EFFECT:LAND
+
+		if (!effectScript) {
+			return;
+		}
+
+		var items = [];
+		var effect = mission.createItem("Effect", false);
+
+		effect.setPosition(item[1], item[2], item[3]);
+		effect.setOrientation(rand.real(0, 360));
+		effect.Script = effectScript;
+
+		effect.createEntity();
+
+		if (effectType !== itemFlags.EFFECT_SIREN) {
+
+			var onEffectStart = airfield.onEffectStart;
+
+			// Create a shared effect start command
+			if (!onEffectStart) {
+
+				onEffectStart = mission.createItem("MCU_CMD_Effect", false);
+
+				onEffectStart.setPositionNear(airfield.onLoad);
+				onEffectStart.ActionType = Item.MCU_CMD_Effect.ACTION.START;
+
+				airfield.onEffectStart = onEffectStart;
+				airfield.onLoad.addTarget(onEffectStart);
+
+				items.push(onEffectStart);
+			}
+
+			onEffectStart.addObject(effect);
+		}
+
+		items.push(effect);
+
+		// Update airfield limits
+		if (airfieldLimits.effects[effectType]) {
+			airfieldLimits.effects[effectType]--;
+		}
+
+		return items;
 	}
 
 	// Make a vehicle item
@@ -549,7 +665,7 @@ module.exports = function(mission, data) {
 
 		// TODO: Attach vehicle to airfield bubble
 
-		return itemObject;
+		return [itemObject];
 	}
 
 	// Make a plane item
@@ -572,18 +688,18 @@ module.exports = function(mission, data) {
 		var plane = mission.planesByID[planeData[0]];
 		var staticPlanes = rand.shuffle(plane.static || []);
 		var planeStatic;
-		var planeCamo = (item[7] > 0);
 		var planeSizeID = planeSize[String(plane.size).toUpperCase()];
+		var isCamo = (item[7] === itemFlags.PLANE_CAMO);
 
 		// 75% chance to use camouflaged static plane when camo flag is set
-		if (planeCamo) {
-			planeCamo = rand.bool(0.75);
+		if (isCamo) {
+			isCamo = rand.bool(0.75);
 		}
 
 		// Find static plane model
 		for (var staticPlane of staticPlanes) {
 
-			if ((staticPlane.camo && !planeCamo) || (planeCamo && !staticPlane.camo)) {
+			if ((staticPlane.camo && !isCamo) || (isCamo && !staticPlane.camo)) {
 				continue;
 			}
 
@@ -637,7 +753,7 @@ module.exports = function(mission, data) {
 		itemObject.setPosition(positionX, positionZ);
 		itemObject.setOrientation(orientation);
 
-		return itemObject;
+		return [itemObject];
 	}
 
 	// Make airfield vehicle routes
@@ -686,6 +802,10 @@ module.exports = function(mission, data) {
 					airfield.position[2],
 					0
 				], true);
+
+				if (Array.isArray(vehicle)) {
+					vehicle = vehicle[0];
+				}
 			}
 
 			// Most likely a result of airfield vehicle limits
@@ -710,19 +830,16 @@ module.exports = function(mission, data) {
 				route.reverse();
 			}
 
-			// TODO: Replace mission begin MCU with further/closer trigger
-			var missionBegin = routeGroup.createItem("MCU_TR_MissionBegin");
-
 			// Create route waypoints
 			for (var w = 0; w < route.length; w++) {
 
 				var item = route[w];
 				var itemNext = route[w + 1] || route[0];
 				var itemPrev = route[w - 1] || route[route.length - 1];
-				var isStop = (item[2] === 1);
-				var isRoad = (item[2] === 2);
-				var isRoadNext = (itemNext[2] === 2);
-				var isRoadPrev = (itemPrev[2] === 2);
+				var isStop = (item[2] === itemFlags.ROUTE_STOP);
+				var isRoad = (item[2] === itemFlags.ROUTE_ROAD);
+				var isRoadNext = (itemNext[2] === itemFlags.ROUTE_ROAD);
+				var isRoadPrev = (itemPrev[2] === itemFlags.ROUTE_ROAD);
 
 				// Create waypoint MCU item
 				var waypoint = routeGroup.createItem("MCU_Waypoint");
@@ -848,8 +965,7 @@ module.exports = function(mission, data) {
 			vehicle.setPosition(waypointVehicle.XPos, waypointVehicle.YPos, waypointVehicle.ZPos);
 			vehicle.setOrientation((vehicle.YOri + waypointVehicle.YOri) % 360);
 
-			missionBegin.setPositionNear(vehicle);
-			missionBegin.addTarget(waypointVehicle);
+			airfield.onLoad.addTarget(waypointVehicle);
 		}
 	}
 
@@ -862,4 +978,5 @@ module.exports = function(mission, data) {
 };
 
 module.exports.itemTags = itemTags;
+module.exports.itemFlags = itemFlags;
 module.exports.planeSize = planeSize;

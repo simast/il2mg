@@ -7863,5 +7863,167 @@ Group
   }
   
 
+  Effect
+  {
+    Name = "EFFECT:SMOKE";
+    Index = 470;
+    LinkTrId = 0;
+    XPos = 119444.780;
+    YPos = 55.347;
+    ZPos = 156668.410;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Script = "luascripts\worldobjects\mapemitters\house_smoke.txt";
+    Model = "";
+    Desc = "";
+  }
+  
+
+  Effect
+  {
+    Name = "EFFECT:SMOKE";
+    Index = 471;
+    LinkTrId = 0;
+    XPos = 120075.556;
+    YPos = 55.385;
+    ZPos = 156859.480;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Script = "luascripts\worldobjects\mapemitters\house_smoke.txt";
+    Model = "";
+    Desc = "";
+  }
+  
+
+  Effect
+  {
+    Name = "EFFECT:SMOKE";
+    Index = 472;
+    LinkTrId = 0;
+    XPos = 119258.725;
+    YPos = 55.385;
+    ZPos = 158140.988;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Script = "luascripts\worldobjects\mapemitters\house_smoke.txt";
+    Model = "";
+    Desc = "";
+  }
+  
+
+  Group
+  {
+    Name = "EFFECT:CAMP";
+    Index = 476;
+    Desc = "";
+    Effect
+    {
+      Name = "EFFECT:CAMP";
+      Index = 473;
+      LinkTrId = 0;
+      XPos = 119572.049;
+      YPos = 55.383;
+      ZPos = 156740.447;
+      XOri = 0.00;
+      YOri = 0.00;
+      ZOri = 0.00;
+      Script = "luascripts\worldobjects\mapemitters\landfire.txt";
+      Model = "";
+      Desc = "";
+    }
+    
+
+    Block
+    {
+      Name = "DECO";
+      Index = 475;
+      LinkTrId = 0;
+      XPos = 119566.248;
+      YPos = 55.381;
+      ZPos = 156743.647;
+      XOri = 0.00;
+      YOri = 333.40;
+      ZOri = 0.00;
+      Model = "graphics\blocks\art_position_amb2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+  }
+  
+
+  Group
+  {
+    Name = "EFFECT:CAMP";
+    Index = 479;
+    Desc = "";
+    Effect
+    {
+      Name = "EFFECT:CAMP";
+      Index = 477;
+      LinkTrId = 0;
+      XPos = 119324.456;
+      YPos = 55.385;
+      ZPos = 158151.811;
+      XOri = 0.00;
+      YOri = 0.00;
+      ZOri = 0.00;
+      Script = "luascripts\worldobjects\mapemitters\landfire.txt";
+      Model = "";
+      Desc = "";
+    }
+    
+
+    Block
+    {
+      Name = "DECO";
+      Index = 478;
+      LinkTrId = 0;
+      XPos = 119321.567;
+      YPos = 55.385;
+      ZPos = 158156.028;
+      XOri = 0.00;
+      YOri = 134.29;
+      ZOri = 0.00;
+      Model = "graphics\blocks\art_position_amb1.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+  }
+  
+
+  Effect
+  {
+    Name = "EFFECT:SIREN";
+    Index = 480;
+    LinkTrId = 0;
+    XPos = 119804.349;
+    YPos = 58.390;
+    ZPos = 157450.341;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Script = "luascripts\worldobjects\mapemitters\siren.txt";
+    Model = "";
+    Desc = "";
+  }
+  
+
 }
 

@@ -6,16 +6,12 @@ module.exports = function(grunt) {
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", function() {
 
-		// TODO: Add support for EFFECT:FIRE:LAND
-		// TODO: Add support for EFFECT:FIRE:CAMP
-		// TODO: Add support for EFFECT:SIREN
-		// TODO: Add support for EFFECT:SMOKE:HOUSE
-
 		var numeral = require("numeral");
 		var data = require("../../src/data");
 		var Item = require("../../src/item");
 		var makeAirfields = require("../../src/make/airfields");
 		var itemTags = makeAirfields.itemTags;
+		var itemFlags = makeAirfields.itemFlags;
 		var planeSize = makeAirfields.planeSize;
 
 		var totalBattles = 0;
@@ -121,7 +117,7 @@ module.exports = function(grunt) {
 								var planeFlag = planeData[planeDataIndex++];
 
 								if (planeFlag === "CAMO") {
-									itemData.push(1);
+									itemData.push(itemFlags.PLANE_CAMO);
 								}
 								else if (planeFlag !== undefined) {
 									grunt.fail.fatal("Invalid plane flag in: " + item.Name);
@@ -166,8 +162,8 @@ module.exports = function(grunt) {
 								itemTypeID = itemTags.LIGHT_SEARCH;
 							}
 							// Landing light
-							else if (item.Name === "LIGHT:LANDING") {
-								itemTypeID = itemTags.LIGHT_LANDING;
+							else if (item.Name === "LIGHT:LAND") {
+								itemTypeID = itemTags.LIGHT_LAND;
 							}
 							// Beacon and windsock
 							else if (item.Name === "BEACON" || item.Name === "WINDSOCK") {
@@ -180,13 +176,13 @@ module.exports = function(grunt) {
 
 								itemTypeID = data.registerItemType(itemTypeData);
 
-								// Decoration item tag
+								// Decoration item flag
 								if (item.Name === "DECO") {
-									itemData.push(itemTags.DECO);
+									itemData.push(itemFlags.BLOCK_DECO);
 								}
-								// Fuel item tag
+								// Fuel item flag
 								else if (item.Name === "FUEL") {
-									itemData.push(itemTags.FUEL);
+									itemData.push(itemFlags.BLOCK_FUEL);
 								}
 							}
 
@@ -208,6 +204,46 @@ module.exports = function(grunt) {
 							});
 
 							jsonItems.push(jsonItem);
+
+							totalItems++;
+						}
+						// Process effect items
+						else if (item instanceof Item.Effect) {
+
+							var effectTypeID = null;
+
+							// House smoke effect
+							if (item.Name === "EFFECT:SMOKE") {
+								effectTypeID = itemFlags.EFFECT_SMOKE;
+							}
+							// Campfire effect
+							else if (item.Name === "EFFECT:CAMP") {
+								effectTypeID = itemFlags.EFFECT_CAMP;
+							}
+							// Landing fire effect
+							else if (item.Name === "EFFECT:LAND") {
+								effectTypeID = itemFlags.EFFECT_LAND;
+							}
+							// Siren effect
+							else if (item.Name === "EFFECT:SIREN") {
+								effectTypeID = itemFlags.EFFECT_SIREN;
+							}
+							// Unknown effect item definition
+							else {
+								grunt.fail.fatal("Invalid effect definition: " + item.Name);
+							}
+
+							var effect = [itemTags.EFFECT];
+
+							// Effect position
+							effect.push(item.XPos);
+							effect.push(item.YPos);
+							effect.push(item.ZPos);
+
+							// Effect type ID
+							effect.push(effectTypeID);
+
+							jsonItems.push(effect);
 
 							totalItems++;
 						}
@@ -299,7 +335,7 @@ module.exports = function(grunt) {
 								var taxiInvert = 0;
 
 								if (taxiFlag === "INV") {
-									taxiInvert = 1;
+									taxiInvert = itemFlags.TAXI_INV;
 								}
 								else if (taxiFlag !== undefined) {
 									grunt.fail.fatal("Invalid taxi route flag in: " + item.Name);
@@ -318,7 +354,7 @@ module.exports = function(grunt) {
 
 									// Runway point
 									if (taxiPoint.Type == 2) {
-										taxiPointData.push(1);
+										taxiPointData.push(itemFlags.TAXI_RUNWAY);
 									}
 
 									taxiRoute.push(taxiPointData);
@@ -363,11 +399,11 @@ module.exports = function(grunt) {
 
 								// Stop point flag
 								if (waypointFlag === "STOP") {
-									waypointFlag = 1;
+									waypointFlag = itemFlags.ROUTE_STOP;
 								}
 								// Road formation flag
 								else if (waypointFlag === "ROAD") {
-									waypointFlag = 2;
+									waypointFlag = itemFlags.ROUTE_ROAD;
 								}
 								// Unknown flag
 								else if (waypointFlag !== undefined) {
