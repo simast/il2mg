@@ -1,6 +1,30 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+// Generate mission weather and atmospheric conditions
+module.exports = function makeWeather() {
+
+	var options = this.items.Options;
+	var weather = this.battle.weather[this.date.format("YYYY-MM-DD")];
+
+	this.weather = {};
+
+	makeClouds.call(this, weather);
+	makePrecipitation.call(this, weather);
+	makeSea.call(this, weather);
+	makeTemperature.call(this, weather);
+	makePressure.call(this, weather);
+
+	options.Turbulence = 1;
+	options.WindLayers = [
+		[0, 126, 3],
+		[500, 120.147, 7.27],
+		[1000, 116.507, 11.04],
+		[2000, 105.961, 13.66],
+		[5000, 92.6825, 15.41]
+	];
+};
+
 // Make mission clouds
 function makeClouds(weather) {
 
@@ -112,27 +136,3 @@ function makePressure(weather) {
 	this.items.Options.Pressure = pressure;
 	this.weather.pressure = pressure;
 }
-
-// Generate mission weather and atmospheric conditions
-module.exports = function() {
-
-	var options = this.items.Options;
-	var weather = this.battle.weather[this.date.format("YYYY-MM-DD")];
-
-	this.weather = {};
-
-	makeClouds.call(this, weather);
-	makePrecipitation.call(this, weather);
-	makeSea.call(this, weather);
-	makeTemperature.call(this, weather);
-	makePressure.call(this, weather);
-
-	options.Turbulence = 1;
-	options.WindLayers = [
-		[0, 126, 3],
-		[500, 120.147, 7.27],
-		[1000, 116.507, 11.04],
-		[2000, 105.961, 13.66],
-		[5000, 92.6825, 15.41]
-	];
-};

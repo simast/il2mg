@@ -1,15 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Make a windsock airfield item
-module.exports = function(mission, item) {
+// Make airfield windsock item
+module.exports = function makeAirfieldWindsock(airfield, item) {
 
-	if (!this.country) {
+	if (!airfield.country) {
 		return;
 	}
 
-	var itemType = mission.data.getItemType(item[4]);
-	var itemObject = mission.createItem(itemType.type, false);
+	var itemType = this.data.getItemType(item[4]);
+	var itemObject = this.createItem(itemType.type, false);
 
 	itemObject.Model = itemType.model;
 	itemObject.Script = itemType.script;

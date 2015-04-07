@@ -4,7 +4,7 @@
 var moment = require("moment");
 
 // Generate mission time
-module.exports = function() {
+module.exports = function makeTime() {
 
 	var mission = this;
 	var data = mission.data;

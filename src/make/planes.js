@@ -2,7 +2,7 @@
 "use strict";
 
 // Generate available mission planes
-module.exports = function() {
+module.exports = function makePlanes() {
 
 	var mission = this;
 	var data = mission.data;

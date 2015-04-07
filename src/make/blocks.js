@@ -4,7 +4,7 @@
 var Item = require("../item");
 
 // Generate mission static blocks
-module.exports = function() {
+module.exports = function makeBlocks() {
 
 	var mission = this;
 	var data = mission.data;

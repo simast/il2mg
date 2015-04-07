@@ -4,7 +4,7 @@
 var Item = require("../item");
 
 // Generate mission flights
-module.exports = function() {
+module.exports = function makeFlights() {
 
 	var plane = this.createItem("Plane");
 
@@ -14,7 +14,7 @@ module.exports = function() {
 	plane.Script = "luascripts/worldobjects/planes/ju87d3.txt";
 	plane.Model = "graphics/planes/ju87d3/ju87d3.mgm";
 	plane.Country = 201;
-	plane.Skin = "ju87d3/StabI-SG5.dds";
+	plane.Skin = "ju87d3/stabi-sg5.dds";
 	plane.AILevel = 0;
 	plane.StartInAir = 2;
 	plane.Callsign = 6;

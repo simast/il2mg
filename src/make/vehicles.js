@@ -2,7 +2,7 @@
 "use strict";
 
 // Generate available mission vehicles index
-module.exports = function() {
+module.exports = function makeVehicles() {
 
 	var mission = this;
 	var data = mission.data;

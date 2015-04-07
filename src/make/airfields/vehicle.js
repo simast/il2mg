@@ -3,17 +3,17 @@
 
 var itemTags = require("./").itemTags;
 
-// Make a vehicle airfield item
-module.exports = function(mission, item, isLive) {
+// Make airfield vehicle item
+module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 
-	if (!this.country) {
+	if (!airfield.country) {
 		return;
 	}
 
 	var itemTagID = item[0];
 
 	// Enforce airfield limits
-	if (this.limits[itemTagID] <= 0) {
+	if (airfield.limits[itemTagID] <= 0) {
 		return;
 	}
 
@@ -66,9 +66,9 @@ module.exports = function(mission, item, isLive) {
 		return;
 	}
 
-	var rand = mission.rand;
-	var vehicles = isStatic ? mission.staticVehicles : mission.vehicles;
-	var countryID = rand.pick(this.countriesWeighted);
+	var rand = this.rand;
+	var vehicles = isStatic ? this.staticVehicles : this.vehicles;
+	var countryID = rand.pick(airfield.countriesWeighted);
 
 	if (!vehicles[countryID] || !vehicles[countryID][vehicleType]) {
 		return;
@@ -81,7 +81,7 @@ module.exports = function(mission, item, isLive) {
 	}
 
 	// Create vehicle item
-	var itemObject = mission.createItem(isStatic ? "Block" : "Vehicle", false);
+	var itemObject = this.createItem(isStatic ? "Block" : "Vehicle", false);
 
 	var positionX = item[1];
 	var positionZ = item[2];
@@ -112,8 +112,8 @@ module.exports = function(mission, item, isLive) {
 	}
 
 	// Update airfield limits
-	if (this.limits[itemTagID]) {
-		this.limits[itemTagID]--;
+	if (airfield.limits[itemTagID]) {
+		airfield.limits[itemTagID]--;
 	}
 
 	// TODO: Attach vehicle to airfield bubble

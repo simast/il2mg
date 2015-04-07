@@ -2,34 +2,24 @@
 "use strict";
 
 var Item = require("../../item");
-var makeVehicle = require("./vehicle");
+var makeAirfieldVehicle = require("./vehicle");
 var itemTags = require("./").itemTags;
 var itemFlags = require("./").itemFlags;
 
 // Make airfield vehicle routes
-module.exports = function(mission, routes) {
+module.exports = function makeAirfieldRoutes(airfield, routes) {
 
 	// TODO: Create only max one live vehicle route during the night
 
-	if (!this.value || !this.country) {
+	if (!airfield.value || !airfield.country || !routes || !routes.length) {
 		return;
 	}
 
-	var rand = mission.rand;
-	var routesMax = 0;
-
-	// Limit number of vehicle routes based on airfield value and available routes
-	routesMax = Math.max(Math.round(this.value / 28), 1);
-	routesMax = Math.min(routesMax, 5);
-	routesMax = Math.min(routesMax, routes.length);
-
-	if (!routesMax) {
-		return;
-	}
+	var rand = this.rand;
 
 	rand.shuffle(routes);
 
-	while (routesMax--) {
+	while (--airfield.limits.routes >= 0 && routes.length) {
 
 		// Weighted vehicle pool (chance) array
 		var vehiclePool = rand.shuffle([
@@ -44,10 +34,10 @@ module.exports = function(mission, routes) {
 		// Create a live vehicle item object for this route
 		while (vehiclePool.length && !vehicle) {
 
-			vehicle = makeVehicle.call(this, mission, [
+			vehicle = makeAirfieldVehicle.call(this, airfield, [
 				vehiclePool.shift(),
-				this.position[0],
-				this.position[2],
+				airfield.position[0],
+				airfield.position[2],
 				0
 			], true);
 
@@ -62,7 +52,7 @@ module.exports = function(mission, routes) {
 		}
 
 		var route = routes.shift();
-		var routeGroup = this.group.createItem("Group");
+		var routeGroup = airfield.group.createItem("Group");
 		var waypointVehicle = rand.integer(0, route.length - 1);
 		var waypointFirst = null;
 		var waypointLast = null;
@@ -213,6 +203,6 @@ module.exports = function(mission, routes) {
 		vehicle.setPosition(waypointVehicle.XPos, waypointVehicle.YPos, waypointVehicle.ZPos);
 		vehicle.setOrientation((vehicle.YOri + waypointVehicle.YOri) % 360);
 
-		this.onLoad.addTarget(waypointVehicle);
+		airfield.onLoad.addTarget(waypointVehicle);
 	}
 };

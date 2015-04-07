@@ -2,14 +2,14 @@
 "use strict";
 
 // Generate mission briefing
-module.exports = function() {
+module.exports = function makeBriefing() {
 
 	var options = this.items.Options;
 
 	var briefing = [];
 
 	// Date and time
-	briefing.push(makeDateAndTime.call(this));
+	briefing.push(makeBriefingDateAndTime.call(this));
 
 	// TODO: Location info
 	// TODO: Task/objective info
@@ -21,7 +21,7 @@ module.exports = function() {
 };
 
 // Make mission briefing date and time output
-function makeDateAndTime() {
+function makeBriefingDateAndTime() {
 
 	var time = this.time;
 	var output = "";

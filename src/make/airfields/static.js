@@ -3,11 +3,11 @@
 
 var itemFlags = require("./").itemFlags;
 
-// Make a normal static airfield item
-module.exports = function(mission, item) {
+// Make airfield static item
+module.exports = function makeAirfieldStatic(airfield, item) {
 
-	var itemType = mission.data.getItemType(item[0]);
-	var itemObject = mission.createItem(itemType.type, false);
+	var itemType = this.data.getItemType(item[0]);
+	var itemObject = this.createItem(itemType.type, false);
 
 	itemObject.Model = itemType.model;
 	itemObject.Script = itemType.script;

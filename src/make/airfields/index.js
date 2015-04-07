@@ -43,7 +43,7 @@ var planeSize = {
 };
 
 // Generate mission airfields
-module.exports = function() {
+module.exports = function makeAirfields() {
 
 	var mission = this;
 	var data = mission.data;
@@ -243,52 +243,6 @@ module.exports = function() {
 			continue;
 		}
 
-		// Set airfield item limits
-		airfield.limits = (function() {
-
-			var value = airfield.value || 0;
-			var time = mission.time;
-			var limits = Object.create(null);
-
-			limits[itemTags.TRUCK_CARGO] = 0;
-			limits[itemTags.TRUCK_FUEL] = 0;
-			limits[itemTags.CAR] = 0;
-			limits[itemTags.AA_MG] = 0;
-			limits[itemTags.AA_FLAK] = 0;
-			limits[itemTags.LIGHT_SEARCH] = 0;
-
-			limits.effects = Object.create(null);
-			limits.effects[itemFlags.EFFECT_SMOKE] = 0;
-			limits.effects[itemFlags.EFFECT_CAMP] = 0;
-
-			if (value > 0) {
-
-				// TODO: Modify TRUCK_CARGO and TRUCK_FUEL limits based on mission complexity param
-				limits[itemTags.TRUCK_CARGO] = Math.round(Math.min(Math.max(value / 10, 4), 24));
-				limits[itemTags.TRUCK_FUEL] = Math.round(Math.min(Math.max(value / 20, 2), 12));
-
-				// Anti-aircraft vehicle limits
-				limits[itemTags.AA_MG] = Math.round(Math.min(Math.max(value / 25, 2), 7));
-				limits[itemTags.AA_FLAK] = Math.round(Math.min(Math.max(value / 40, 0), 5));
-
-				// Only add search lights for night time periods
-				if (time.evening || time.night || time.dawn) {
-					limits[itemTags.LIGHT_SEARCH] = Math.round(Math.min(Math.max(value / 40, 0), 4));
-				}
-
-				// Only max one staff car per airfield
-				limits[itemTags.CAR] = 1;
-
-				// Smoke and campfire effect limits
-				limits.effects[itemFlags.EFFECT_SMOKE] = Math.round(Math.min(Math.max(value / 30, 1), 3));
-				limits.effects[itemFlags.EFFECT_CAMP] = Math.round(Math.min(Math.max(value / 50, 1), 2));
-			}
-
-			// TODO: Add BLOCK_DECO item limits (based on mission complexity param)
-
-			return limits;
-		})();
-
 		airfield.group = mission.createItem("Group");
 		airfield.group.setName(airfield.name);
 
@@ -300,10 +254,11 @@ module.exports = function() {
 			airfield.onLoad.setPosition(airfield.position);
 		}
 
+		// Make airfield item limits
+		makeAirfieldLimits.call(mission, airfield);
+
 		// Make airfield vehicle routes
-		if (airfieldData.routes && airfieldData.routes.length) {
-			makeRoutes.call(airfield, mission, airfieldData.routes);
-		}
+		makeAirfieldRoutes.call(mission, airfield, airfieldData.routes);
 
 		// Walk/process each airfield item
 		(function walkItems(items, isGroup) {
@@ -345,7 +300,7 @@ module.exports = function() {
 						extraItems.push(item);
 					}
 					else {
-						itemObjects = makeStatic.call(airfield, mission, item);
+						itemObjects = makeAirfieldStatic.call(mission, airfield, item);
 					}
 				}
 				// Special item
@@ -353,23 +308,23 @@ module.exports = function() {
 
 					// Plane item
 					if (itemTypeID === itemTags.PLANE) {
-						itemObjects = makePlane.call(airfield, mission, item);
+						itemObjects = makeAirfieldPlane.call(mission, airfield, item);
 					}
 					// Beacon item
 					else if (itemTypeID === itemTags.BEACON) {
-						itemObjects = makeBeacon.call(airfield, mission, item);
+						itemObjects = makeAirfieldBeacon.call(mission, airfield, item);
 					}
 					// Windsock item
 					else if (itemTypeID === itemTags.WINDSOCK) {
-						itemObjects = makeWindsock.call(airfield, mission, item);
+						itemObjects = makeAirfieldWindsock.call(mission, airfield, item);
 					}
 					// Effect item
 					else if (itemTypeID === itemTags.EFFECT) {
-						itemObjects = makeEffect.call(airfield, mission, item);
+						itemObjects = makeAirfieldEffect.call(mission, airfield, item);
 					}
 					// Vehicle item
 					else {
-						itemObjects = makeVehicle.call(airfield, mission, item);
+						itemObjects = makeAirfieldVehicle.call(mission, airfield, item);
 					}
 
 					// Use all extra normal items in a group if special item is used
@@ -423,10 +378,11 @@ module.exports.itemFlags = itemFlags;
 module.exports.planeSize = planeSize;
 
 // Airfield make parts
-var makeStatic = require("./static");
-var makePlane = require("./plane");
-var makeBeacon = require("./beacon");
-var makeWindsock = require("./windsock");
-var makeEffect = require("./effect");
-var makeVehicle = require("./vehicle");
-var makeRoutes = require("./routes");
+var makeAirfieldLimits = require("./limits");
+var makeAirfieldStatic = require("./static");
+var makeAirfieldPlane = require("./plane");
+var makeAirfieldBeacon = require("./beacon");
+var makeAirfieldWindsock = require("./windsock");
+var makeAirfieldEffect = require("./effect");
+var makeAirfieldVehicle = require("./vehicle");
+var makeAirfieldRoutes = require("./routes");

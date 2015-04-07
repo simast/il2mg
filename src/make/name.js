@@ -2,7 +2,7 @@
 "use strict";
 
 // Generate mission name
-module.exports = function() {
+module.exports = function makeName() {
 
 	var options = this.items.Options;
 

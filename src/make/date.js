@@ -4,7 +4,7 @@
 var moment = require("moment");
 
 // Generate mission date
-module.exports = function() {
+module.exports = function makeDate() {
 
 	var params = this.params;
 	var options = this.items.Options;

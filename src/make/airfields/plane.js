@@ -4,13 +4,13 @@
 var itemFlags = require("./").itemFlags;
 var planeSize = require("./").planeSize;
 
-// Make a plane airfield item
-module.exports = function(mission, item) {
+// Make airfield plane item
+module.exports = function makeAirfieldPlane(airfield, item) {
 
 	var planeSector = item[4];
 	var planeTaxiRoute = item[5];
 	var planeMaxSize = item[6];
-	var planesBySector = this.planesBySector;
+	var planesBySector = airfield.planesBySector;
 
 	if (!planesBySector || !planesBySector[planeSector] ||
 			!planesBySector[planeSector][planeMaxSize]) {
@@ -24,8 +24,8 @@ module.exports = function(mission, item) {
 		return;
 	}
 
-	var rand = mission.rand;
-	var plane = mission.planesByID[planeData[0]];
+	var rand = this.rand;
+	var plane = this.planesByID[planeData[0]];
 	var staticPlanes = rand.shuffle(plane.static || []);
 	var planeStatic;
 	var planeSizeID = planeSize[String(plane.size).toUpperCase()];
@@ -53,7 +53,7 @@ module.exports = function(mission, item) {
 	}
 
 	// Create static plane item
-	var itemObject = mission.createItem("Block", false);
+	var itemObject = this.createItem("Block", false);
 
 	var positionX = item[1];
 	var positionZ = item[2];
