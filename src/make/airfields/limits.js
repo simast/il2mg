@@ -9,10 +9,12 @@ module.exports = function makeAirfieldLimits(airfield) {
 
 	var limits = Object.create(null);
 	var value = airfield.value || 0;
+	var rand = this.rand;
 	var time = this.time;
 	var round = Math.round;
 	var min = Math.min;
 	var max = Math.max;
+	var isDark = (time.evening || time.night || time.dawn);
 
 	// Special items
 	limits[itemTags.TRUCK_CARGO] = 0;
@@ -37,11 +39,11 @@ module.exports = function makeAirfieldLimits(airfield) {
 		limits[itemTags.TRUCK_FUEL] = round(min(max(value / 20, 2), 12));
 
 		// Anti-aircraft vehicle limits
-		limits[itemTags.AA_MG] = round(min(max(value / 25, 2), 7));
-		limits[itemTags.AA_FLAK] = round(min(max(value / 40, 0), 5));
+		limits[itemTags.AA_MG] = round(min(max(value / (time.night ? 37.5 : 25), 2), 7));
+		limits[itemTags.AA_FLAK] = round(min(max(value / (time.night ? 60 : 40), 0), 5));
 
-		// Only add search lights for night time periods
-		if (time.evening || time.night || time.dawn) {
+		// Only add search lights for dark time periods
+		if (isDark) {
 			limits[itemTags.LIGHT_SEARCH] = round(min(max(value / 40, 0), 4));
 		}
 
@@ -52,8 +54,14 @@ module.exports = function makeAirfieldLimits(airfield) {
 		limits.effects[itemFlags.EFFECT_SMOKE] = round(min(max(value / 30, 1), 3));
 		limits.effects[itemFlags.EFFECT_CAMP] = round(min(max(value / 50, 1), 2));
 
-		// Vehicle route limits
-		limits.routes = min(max(round(value / 28), 1), 5);
+		// 50% chance for a single vehicle route during dark time periods
+		if (isDark) {
+			limits.routes = rand.integer(0, 1);
+		}
+		// Normal vehicle route limits during light time periods
+		else {
+			limits.routes = min(max(round(value / 28), 1), 5);
+		}
 	}
 
 	// TODO: Add BLOCK_DECO item limits (based on mission complexity param)

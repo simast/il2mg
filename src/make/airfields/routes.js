@@ -9,8 +9,6 @@ var itemFlags = require("./").itemFlags;
 // Make airfield vehicle routes
 module.exports = function makeAirfieldRoutes(airfield, routes) {
 
-	// TODO: Create only max one live vehicle route during the night
-
 	if (!airfield.value || !airfield.country || !routes || !routes.length) {
 		return;
 	}
