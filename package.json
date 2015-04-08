@@ -4,11 +4,11 @@
 	"private": true,
 	"dependencies": {
 		"commander": "2.7.1",
-		"moment": "2.9.0",
+		"moment": "2.10.0",
 		"strip-json-comments": "1.0.2",
 		"lex": "1.7.8",
 		"random-js": "1.0.4",
-		"winston": "0.9.0"
+		"winston": "1.0.0"
 	},
 	"devDependencies": {
 		"grunt": "0.4.5",
