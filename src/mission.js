@@ -444,7 +444,6 @@ BinaryIndexTable.prototype.stringValue = function(value) {
 	// Update string usage (in the header of index table)
 	this.header[index]++;
 
-	// No index
 	return index;
 };
 
