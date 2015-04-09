@@ -4,9 +4,19 @@
 var fs = require("fs");
 var os = require("os");
 
-// Abstract base mission Item class
-function Item() {
-	throw new Error();
+/**
+ * Base (and generic) mission item.
+ *
+ * @param {string} type Item type name.
+ * @constructor
+ */
+function Item(type) {
+	
+	if (typeof type !== "string" || !type.length) {
+		throw new TypeError("Invalid item type value.");
+	}
+	
+	Object.defineProperty(this, "type", {value: type});
 }
 
 // By default all items have "Index" field
@@ -547,9 +557,20 @@ Item.readTextFile = function(file) {
 
 	// Rule for the start of item definition
 	lexer.addRule(/\s*(\w+)\s*{\s*/i, function(matched, itemType) {
+		
+		var item;
+		
+		// Normal item
+		if (Item[itemType]) {
+			item = new Item[itemType]();
+		}
+		// Generic item
+		else {
+			item = new Item(itemType);
+		}
 
 		// Add new item to active items stack
-		itemStack.push(new Item[itemType]());
+		itemStack.push(item);
 	});
 
 	// Rule for item property
@@ -599,8 +620,6 @@ module.exports = Item;
 	require("./item/Airfield"),
 	require("./item/Block"),
 	require("./item/Bridge"),
-	require("./item/Chart"),
-	require("./item/Damaged"),
 	require("./item/Effect"),
 	require("./item/Flag"),
 	require("./item/Group"),
@@ -621,7 +640,6 @@ module.exports = Item;
 	require("./item/MCU_Waypoint"),
 	require("./item/Options"),
 	require("./item/Plane"),
-	require("./item/Point"),
 	require("./item/Vehicle")
 ]
 .forEach(function(item) {
