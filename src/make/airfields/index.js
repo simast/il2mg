@@ -322,6 +322,10 @@ module.exports = function makeAirfields() {
 					else if (itemTypeID === itemTags.EFFECT) {
 						itemObjects = makeAirfieldEffect.call(mission, airfield, item);
 					}
+					// Wreck item
+					else if (itemTypeID === itemTags.WRECK) {
+						itemObjects = makeAirfieldWreck.call(mission, airfield, item);
+					}
 					// Vehicle item
 					else {
 						itemObjects = makeAirfieldVehicle.call(mission, airfield, item);
@@ -384,5 +388,6 @@ var makeAirfieldPlane = require("./plane");
 var makeAirfieldBeacon = require("./beacon");
 var makeAirfieldWindsock = require("./windsock");
 var makeAirfieldEffect = require("./effect");
+var makeAirfieldWreck = require("./wreck");
 var makeAirfieldVehicle = require("./vehicle");
 var makeAirfieldRoutes = require("./routes");

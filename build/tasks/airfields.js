@@ -165,6 +165,10 @@ module.exports = function(grunt) {
 							else if (item.Name === "LIGHT:LAND") {
 								itemTypeID = itemTags.LIGHT_LAND;
 							}
+							// Wreck
+							else if (item.Name === "WRECK") {
+								itemTypeID = itemTags.WRECK;
+							}
 							// Beacon and windsock
 							else if (item.Name === "BEACON" || item.Name === "WINDSOCK") {
 
