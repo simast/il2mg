@@ -18,11 +18,23 @@ module.exports = function makeAirfieldStatic(airfield, item) {
 	if (item[4] === itemFlags.BLOCK_DECO) {
 		itemObject.Durability = 500;
 	}
-	
 	// Set static item country (required for spawning infantry)
-	// TODO: Limit number of country blocks (less infantry during the night)
-	if (airfield.country) {
-		itemObject.Country = this.rand.pick(airfield.countriesWeighted);
+	else if (airfield.country) {
+		
+		var time = this.time;
+		var countryChance = 0.8; // 80%
+		
+		// Less infantry for dark time periods
+		if (time.night) {
+			countryChance = 0.25; // 25%
+		}
+		else if (time.sunset || time.dusk || time.dawn) {
+			countryChance = 0.5; // 50%
+		}
+		
+		if (this.rand.bool(countryChance)) {
+			itemObject.Country = this.rand.pick(airfield.countriesWeighted);
+		}
 	}
 
 	return [itemObject];
