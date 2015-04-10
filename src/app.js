@@ -61,6 +61,18 @@ var params = require("commander");
 params.version(data.version);
 params.usage("[options] [mission file and/or path]");
 
+// Select mission file format (--format)
+params.option("-f, --format <format>", (function() {
+
+	var desc = "set mission file format" + os.EOL;
+	
+	desc += util.format('\t"%s" - %s\n', Mission.FORMAT_TEXT, "Text format.");
+	desc += util.format('\t"%s" - %s\n', Mission.FORMAT_BINARY, "Binary format (default).");
+	desc += util.format('\t"%s" - %s\n', Mission.FORMAT_BOTH, "Both text and binary formats.");
+
+	return desc;
+})());
+
 // Select desired battle (--battle)
 params.option("-b, --battle <battle>", (function() {
 
@@ -205,6 +217,16 @@ appDomain.run(function() {
 
 	// Validate command line params
 
+	// --format
+	if (params.format !== undefined) {
+		
+		var formats = [Mission.FORMAT_BOTH, Mission.FORMAT_TEXT, Mission.FORMAT_BINARY];
+		
+		if (formats.indexOf(params.format) < 0) {
+			throw ["Unknown mission file format!", {format: params.format}];
+		}
+	}
+	
 	// --battle
 	if (params.battle && !data.battles[params.battle]) {
 		throw ["Unknown battle!", {battle: params.battle}];

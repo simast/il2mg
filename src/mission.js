@@ -13,6 +13,11 @@ var FILE_EXT_TEXT = "Mission";
 var FILE_EXT_BINARY = "msnbin";
 var FILE_EXT_LIST = "list";
 
+// Mission file formats
+Mission.FORMAT_TEXT = "text";
+Mission.FORMAT_BINARY = "binary";
+Mission.FORMAT_BOTH = "both";
+
 /**
  * Mission constructor.
  *
@@ -23,6 +28,9 @@ function Mission(params) {
 	this.items = []; // Items list
 	this.lang = []; // Language data
 	this.params = params; // Desired mission parameters
+	
+	// Debug mode flag
+	this.debug = (this.params.debug === true);
 
 	// Last item index value
 	this.lastIndex = 0;
@@ -146,6 +154,7 @@ Mission.prototype.getLC = function(text) {
 Mission.prototype.save = function(fileName) {
 
 	var self = this;
+	var format = Mission.FORMAT_BINARY;
 
 	log.I("Saving mission...");
 
@@ -160,14 +169,26 @@ Mission.prototype.save = function(fileName) {
 	}
 
 	// TODO: Generate mission file path and name if not specified
+	
+	// Use specified format
+	if (this.params.format) {
+		format = this.params.format;
+	}
+	// Generate both mission file formats in debug mode
+	else if (this.debug) {
+		format = Mission.FORMAT_BOTH;
+	}
 
 	var promises = [];
 
-	if (this.params.debug) {
+	if (format === Mission.FORMAT_TEXT || format === Mission.FORMAT_BOTH) {
 		promises.push(this.saveText(fileName));
 	}
 
-	promises.push(this.saveBinary(fileName));
+	if (format === Mission.FORMAT_BINARY || format === Mission.FORMAT_BOTH) {
+		promises.push(this.saveBinary(fileName));
+	}
+	
 	promises.push(this.saveLang(fileName));
 
 	return Promise.all(promises);
