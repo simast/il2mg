@@ -337,7 +337,15 @@ Item.prototype.toString = function(indentLevel) {
 		indentLevel++;
 
 		this.items.forEach(function(item) {
-			value += os.EOL + os.EOL + item.toString(indentLevel);
+			
+			value += os.EOL;
+			
+			// Don't add extra whitespace for generic items
+			if (Item[item.type]) {
+				value += os.EOL;
+			}
+			
+			value += item.toString(indentLevel);
 		});
 	}
 

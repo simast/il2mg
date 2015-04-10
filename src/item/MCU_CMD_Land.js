@@ -6,17 +6,16 @@ var MCU = require("./MCU");
 // Land command item
 function MCU_CMD_Land() {
 
+	this.Priority = MCU_CMD_Land.PRIORITY_MEDIUM;
 }
 
 MCU_CMD_Land.prototype = Object.create(MCU.prototype);
 MCU_CMD_Land.prototype.typeID = 16;
 
 // Land command priority constants
-var PRIORITY = MCU_CMD_Land.PRIORITY = {
-	LOW: 0,
-	MEDIUM: 1,
-	HIGH: 2
-};
+MCU_CMD_Land.PRIORITY_LOW = 0;
+MCU_CMD_Land.PRIORITY_MEDIUM = 1;
+MCU_CMD_Land.PRIORITY_HIGH = 2;
 
 /**
  * Get binary representation of the item.
@@ -29,7 +28,7 @@ MCU_CMD_Land.prototype.toBinary = function(index) {
 	var buffer = new Buffer(4);
 
 	// Priority
-	this.writeUInt32(buffer, this.Priority !== undefined ? this.Priority : PRIORITY.MEDIUM);
+	this.writeUInt32(buffer, this.Priority);
 
 	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };

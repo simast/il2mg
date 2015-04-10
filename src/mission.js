@@ -16,7 +16,6 @@ var FILE_EXT_LIST = "list";
 // Mission file formats
 Mission.FORMAT_TEXT = "text";
 Mission.FORMAT_BINARY = "binary";
-Mission.FORMAT_BOTH = "both";
 
 /**
  * Mission constructor.
@@ -154,8 +153,9 @@ Mission.prototype.getLC = function(text) {
 Mission.prototype.save = function(fileName) {
 
 	var self = this;
-	var format = Mission.FORMAT_BINARY;
-
+	var format = this.params.format || Mission.FORMAT_BINARY;
+	var promises = [];
+	
 	log.I("Saving mission...");
 
 	// Use specified mission file path and name
@@ -169,26 +169,18 @@ Mission.prototype.save = function(fileName) {
 	}
 
 	// TODO: Generate mission file path and name if not specified
-	
-	// Use specified format
-	if (this.params.format) {
-		format = this.params.format;
-	}
-	// Generate both mission file formats in debug mode
-	else if (this.debug) {
-		format = Mission.FORMAT_BOTH;
-	}
 
-	var promises = [];
-
-	if (format === Mission.FORMAT_TEXT || format === Mission.FORMAT_BOTH) {
+	// Save text format file
+	if (format === Mission.FORMAT_TEXT || (this.debug && !this.params.format)) {
 		promises.push(this.saveText(fileName));
 	}
 
-	if (format === Mission.FORMAT_BINARY || format === Mission.FORMAT_BOTH) {
+	// Save binary format file
+	if (format === Mission.FORMAT_BINARY || (this.debug && !this.params.format)) {
 		promises.push(this.saveBinary(fileName));
 	}
 	
+	// Save language files
 	promises.push(this.saveLang(fileName));
 
 	return Promise.all(promises);

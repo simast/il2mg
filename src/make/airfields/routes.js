@@ -55,8 +55,6 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 		var waypointFirst = null;
 		var waypointLast = null;
 		var isRoadFormation = false; // Default is offroad formation
-		var waypointPriority = Item.MCU_Waypoint.priority;
-		var formationType = Item.MCU_CMD_Formation.TYPE;
 
 		routeGroup.setName(vehicle.Name);
 		routeGroup.addItem(vehicle);
@@ -139,7 +137,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			area = Math.min(Math.max(area, 10), 20);
 
 			waypoint.Area = Math.round(area);
-			waypoint.Priority = waypointPriority.LOW;
+			waypoint.Priority = Item.MCU_Waypoint.PRIORITY_LOW;
 
 			waypointLast = waypoint;
 
@@ -161,13 +159,13 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			// Road vehicle formation
 			if (isRoad && !isRoadFormation) {
 
-				formation = formationType.VEHICLE_COLUMN_ROAD;
+				formation = Item.MCU_CMD_Formation.TYPE_VEHICLE_COLUMN_ROAD;
 				isRoadFormation = true;
 			}
 			// Offroad vehicle formation
 			else if ((!isRoad && isRoadFormation) || (isRoad && !isRoadNext)) {
 
-				formation = formationType.VEHICLE_COLUMN;
+				formation = Item.MCU_CMD_Formation.TYPE_VEHICLE_COLUMN;
 				isRoadFormation = false;
 			}
 

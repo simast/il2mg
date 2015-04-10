@@ -68,7 +68,6 @@ params.option("-f, --format <format>", (function() {
 	
 	desc += util.format('\t"%s" - %s\n', Mission.FORMAT_TEXT, "Text format.");
 	desc += util.format('\t"%s" - %s\n', Mission.FORMAT_BINARY, "Binary format (default).");
-	desc += util.format('\t"%s" - %s\n', Mission.FORMAT_BOTH, "Both text and binary formats.");
 
 	return desc;
 })());
@@ -220,9 +219,7 @@ appDomain.run(function() {
 	// --format
 	if (params.format !== undefined) {
 		
-		var formats = [Mission.FORMAT_BOTH, Mission.FORMAT_TEXT, Mission.FORMAT_BINARY];
-		
-		if (formats.indexOf(params.format) < 0) {
+		if ([Mission.FORMAT_TEXT, Mission.FORMAT_BINARY].indexOf(params.format) < 0) {
 			throw ["Unknown mission file format!", {format: params.format}];
 		}
 	}

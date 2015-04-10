@@ -6,6 +6,8 @@ var MCU = require("./MCU");
 // Timer item
 function MCU_Timer() {
 
+	this.Time = 0;
+	this.Random = 100;
 }
 
 MCU_Timer.prototype = Object.create(MCU.prototype);
@@ -22,10 +24,10 @@ MCU_Timer.prototype.toBinary = function(index) {
 	var buffer = new Buffer(9);
 
 	// Time
-	this.writeDouble(buffer, this.Time || 0);
+	this.writeDouble(buffer, this.Time);
 
 	// Random
-	this.writeUInt8(buffer, this.Random !== undefined ? this.Random : 100);
+	this.writeUInt8(buffer, this.Random);
 
 	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };

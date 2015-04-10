@@ -6,16 +6,15 @@ var MCU = require("./MCU");
 // Effect command item
 function MCU_CMD_Effect() {
 
+	this.ActionType = MCU_CMD_Effect.ACTION_START;
 }
 
 MCU_CMD_Effect.prototype = Object.create(MCU.prototype);
 MCU_CMD_Effect.prototype.typeID = 26;
 
 // Effect command action type constants
-var ACTION = MCU_CMD_Effect.ACTION = {
-	START: 0,
-	STOP: 1
-};
+MCU_CMD_Effect.ACTION_START = 0;
+MCU_CMD_Effect.ACTION_STOP = 1;
 
 /**
  * Get binary representation of the item.
@@ -28,7 +27,7 @@ MCU_CMD_Effect.prototype.toBinary = function(index) {
 	var buffer = new Buffer(4);
 
 	// ActionType
-	this.writeUInt32(buffer, this.ActionType !== undefined ? this.ActionType : ACTION.START);
+	this.writeUInt32(buffer, this.ActionType);
 
 	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };

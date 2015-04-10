@@ -89,7 +89,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 
 			airfield.onLoadEffect = this.createItem("MCU_CMD_Effect", false);
 			airfield.onLoadEffect.setPositionNear(airfield.onLoad);
-			airfield.onLoadEffect.ActionType = Item.MCU_CMD_Effect.ACTION.START;
+			airfield.onLoadEffect.ActionType = Item.MCU_CMD_Effect.ACTION_START;
 
 			airfield.onLoad.addTarget(airfield.onLoadEffect);
 

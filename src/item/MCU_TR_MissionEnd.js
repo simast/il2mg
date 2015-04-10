@@ -6,6 +6,7 @@ var MCU = require("./MCU");
 // Mission End item
 function MCU_TR_MissionEnd() {
 
+	this.Succeeded = 1;
 }
 
 MCU_TR_MissionEnd.prototype = Object.create(MCU.prototype);
@@ -22,7 +23,7 @@ MCU_TR_MissionEnd.prototype.toBinary = function(index) {
 	var buffer = new Buffer(1);
 
 	// Succeeded
-	this.writeUInt8(buffer, this.Succeeded !== undefined ? this.Succeeded : 1);
+	this.writeUInt8(buffer, this.Succeeded);
 
 	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };

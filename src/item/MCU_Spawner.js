@@ -6,6 +6,7 @@ var MCU = require("./MCU");
 // Spawner item
 function MCU_Spawner() {
 
+	this.SpawnAtMe = 0;
 }
 
 MCU_Spawner.prototype = Object.create(MCU.prototype);
@@ -22,7 +23,7 @@ MCU_Spawner.prototype.toBinary = function(index) {
 	var buffer = new Buffer(1);
 
 	// SpawnAtMe
-	this.writeUInt8(buffer, this.SpawnAtMe !== undefined ? this.SpawnAtMe : 0);
+	this.writeUInt8(buffer, this.SpawnAtMe);
 
 	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
 };
