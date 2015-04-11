@@ -27,7 +27,7 @@ function Mission(params) {
 	this.items = []; // Items list
 	this.lang = []; // Language data
 	this.params = params; // Desired mission parameters
-	
+
 	// Debug mode flag
 	this.debug = (this.params.debug === true);
 
@@ -155,7 +155,7 @@ Mission.prototype.save = function(fileName) {
 	var self = this;
 	var format = this.params.format || Mission.FORMAT_BINARY;
 	var promises = [];
-	
+
 	log.I("Saving mission...");
 
 	// Use specified mission file path and name
@@ -179,7 +179,7 @@ Mission.prototype.save = function(fileName) {
 	if (format === Mission.FORMAT_BINARY || (this.debug && !this.params.format)) {
 		promises.push(this.saveBinary(fileName));
 	}
-	
+
 	// Save language files
 	promises.push(this.saveLang(fileName));
 
@@ -255,12 +255,12 @@ Mission.prototype.saveBinary = function(fileName) {
 
 		// Create index tables
 		var indexTables = {
-			name: new BinaryIndexTable(32, 100),
-			desc: new BinaryIndexTable(32, 100),
-			model: new BinaryIndexTable(64, 100),
-			skin: new BinaryIndexTable(128, 100),
-			script: new BinaryIndexTable(128, 100),
-			damaged: new BinaryIndexTable(32, 0)
+			name: new BinaryStringTable(32, 100),
+			desc: new BinaryStringTable(32, 100),
+			model: new BinaryStringTable(64, 100),
+			skin: new BinaryStringTable(128, 100),
+			script: new BinaryStringTable(128, 100),
+			damage: new BinaryDamageTable()
 		};
 
 		// Collect binary representation of all mission items
@@ -417,12 +417,12 @@ Mission.prototype.saveLang = function(fileName) {
 };
 
 /**
- * Binary data index table constructor (used in saving .msnbin file).
+ * Binary string data index table constructor (used in saving .msnbin file).
  *
  * @param {number} maxDataLength Index table maximum data item size.
  * @param {number} minItemsCount Index table minimum items count.
  */
-function BinaryIndexTable(maxDataLength, minItemsCount) {
+function BinaryStringTable(maxDataLength, minItemsCount) {
 
 	this.header = [];
 	this.data = [];
@@ -431,12 +431,12 @@ function BinaryIndexTable(maxDataLength, minItemsCount) {
 }
 
 /**
- * Manage a string index table.
+ * Get string data index table value.
  *
  * @param {string} value String value to set in the index table.
  * @returns {number} Index table address/index (16 bit unsigned integer).
  */
-BinaryIndexTable.prototype.stringValue = function(value) {
+BinaryStringTable.prototype.value = function(value) {
 
 	// No index
 	if (typeof value !== "string") {
@@ -461,11 +461,11 @@ BinaryIndexTable.prototype.stringValue = function(value) {
 };
 
 /**
- * Get a binary representation of this index table.
+ * Get a binary representation of string data index table.
  *
- * @returns {Buffer} Binary representation of the index table.
+ * @returns {Buffer} Binary representation of string data index table.
  */
-BinaryIndexTable.prototype.toBinary = function() {
+BinaryStringTable.prototype.toBinary = function() {
 
 	var dataLength = this.maxDataLength;
 	var itemsCount = Math.max(this.minItemsCount, this.data.length);
@@ -502,6 +502,124 @@ BinaryIndexTable.prototype.toBinary = function() {
 		buffer.fill(0, offset, offset + dataLength);
 		buffer.write(dataItem, offset);
 		offset += dataLength;
+	}
+
+	return buffer;
+};
+
+/**
+ * Binary damage data index table constructor (used in saving .msnbin file).
+ */
+function BinaryDamageTable() {
+
+	this.data = [];
+	this.dataIndex = Object.create(null);
+	this.maxDamageValues = 0;
+}
+
+/**
+ * Get damage data index table value.
+ *
+ * @param {string} value "Damaged" item to set in the index table.
+ * @returns {number} Index table address/index (16 bit unsigned integer).
+ */
+BinaryDamageTable.prototype.value = function(value) {
+
+	// Invalid value
+	if (!(value instanceof Item) || value.type !== "Damaged") {
+		throw new TypeError("Invalid damage item value.");
+	}
+
+	// TODO: Sort damage index values before JSON stringify
+	var valueID = JSON.stringify(value);
+	var index = this.dataIndex[valueID];
+
+	// Register a new unique damage value
+	if (index === undefined) {
+
+		var damageKeys = Object.keys(value);
+
+		this.maxDamageValues = Math.max(this.maxDamageValues, damageKeys.length);
+		this.data.push(value);
+
+		index = this.dataIndex[valueID] = this.data.length - 1;
+	}
+
+	return index;
+};
+
+/**
+ * Get a binary representation of damage data index table.
+ *
+ * @returns {Buffer} Binary representation of string data index table.
+ */
+BinaryDamageTable.prototype.toBinary = function() {
+
+	var itemsCount = this.data.length;
+	var offset = 0;
+	var size = 6;
+
+	if (itemsCount > 0) {
+
+		size += 4;
+		size += itemsCount * (1 + this.maxDamageValues * 2);
+	}
+
+	var buffer = new Buffer(size);
+
+	// Max number of damage values
+	buffer.writeUInt32LE(this.maxDamageValues, offset);
+	offset += 4;
+
+	// Number of items
+	buffer.writeUInt16LE(itemsCount, offset);
+	offset += 2;
+
+	if (itemsCount > 0) {
+
+		// Number of free/unused table items
+		buffer.writeUInt32LE(0, offset);
+		offset += 4;
+
+		// Write damage data items
+		this.data.forEach(function(damageItem) {
+
+			var damageKeys = Object.keys(damageItem);
+
+			// Number of damage key items
+			buffer.writeUInt8(damageKeys.length, offset);
+			offset += 1;
+
+			// Write damage keys/values
+			for (var k = 0; k < this.maxDamageValues; k++) {
+
+				var damageKey = 0xFF;
+				var damageValue = 0;
+
+				// Use assigned damage key/value pair
+				if (damageKeys.length) {
+
+					damageKey = damageKeys.shift();
+					damageValue = damageItem[damageKey];
+				}
+
+				if (damageValue >= 0 && damageValue <= 1) {
+
+					// NOTE: Damage value in binary file is represented as a 8 bit unsigned
+					// integer number with a range from 0 to 255.
+					damageValue = Math.round(255 * damageValue);
+				}
+				else {
+					damageValue = 0;
+				}
+
+				buffer.writeUInt8(damageKey, offset);
+				offset += 1;
+
+				buffer.writeUInt8(damageValue, offset);
+				offset += 1;
+			}
+		}, this);
 	}
 
 	return buffer;

@@ -11,11 +11,11 @@ var os = require("os");
  * @constructor
  */
 function Item(type) {
-	
+
 	if (typeof type !== "string" || !type.length) {
 		throw new TypeError("Invalid item type value.");
 	}
-	
+
 	Object.defineProperty(this, "type", {value: type});
 }
 
@@ -337,14 +337,14 @@ Item.prototype.toString = function(indentLevel) {
 		indentLevel++;
 
 		this.items.forEach(function(item) {
-			
+
 			value += os.EOL;
-			
+
 			// Don't add extra whitespace for generic items
 			if (Item[item.type]) {
 				value += os.EOL;
 			}
-			
+
 			value += item.toString(indentLevel);
 		});
 	}
@@ -387,16 +387,16 @@ Item.prototype.toBinary = function(index) {
 	this.writeOrientation(buffer);
 
 	// Name string table index
-	this.writeUInt16(buffer, index.name.stringValue(this.Name));
+	this.writeUInt16(buffer, index.name.value(this.Name));
 
 	// Desc string table index
-	this.writeUInt16(buffer, index.desc.stringValue(this.Desc));
+	this.writeUInt16(buffer, index.desc.value(this.Desc));
 
 	// Model string table index
-	this.writeUInt16(buffer, index.model.stringValue(this.Model));
+	this.writeUInt16(buffer, index.model.value(this.Model));
 
 	// Skin string table index
-	this.writeUInt16(buffer, index.skin.stringValue(this.Skin));
+	this.writeUInt16(buffer, index.skin.value(this.Skin));
 
 	return buffer;
 };
@@ -565,9 +565,9 @@ Item.readTextFile = function(file) {
 
 	// Rule for the start of item definition
 	lexer.addRule(/\s*(\w+)\s*{\s*/i, function(matched, itemType) {
-		
+
 		var item;
-		
+
 		// Normal item
 		if (Item[itemType]) {
 			item = new Item[itemType]();
