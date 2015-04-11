@@ -6,6 +6,10 @@ var MCU = require("./MCU");
 // Mission End item
 function MCU_TR_MissionEnd() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+
+	this.Enabled = 1;
 	this.Succeeded = 1;
 }
 

@@ -6,6 +6,9 @@ var MCU = require("./MCU");
 // Timer item
 function MCU_Timer() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+	
 	this.Time = 0;
 	this.Random = 100;
 }

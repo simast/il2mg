@@ -3,9 +3,11 @@
 
 var Item = require("../item");
 
-// Abstract base MCU item
+// Base MCU item
 function MCU() {
-	throw new Error();
+
+	this.Targets = [];
+	this.Objects = [];
 }
 
 MCU.prototype = Object.create(Item.prototype);
@@ -33,9 +35,11 @@ MCU.prototype.toBinary = function(index) {
 	// Enabled
 	this.writeUInt8(buffer, this.Enabled !== undefined ? this.Enabled : 1);
 
-	// Targets and Objects lists
-	this.writeUInt32Array(buffer, this.Targets || []);
-	this.writeUInt32Array(buffer, this.Objects || []);
+	// Targets list
+	this.writeUInt32Array(buffer, this.Targets);
+
+	// Objects list
+	this.writeUInt32Array(buffer, this.Objects);
 
 	return [
 		Item.prototype.toBinary.apply(this, arguments),

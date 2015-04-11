@@ -6,6 +6,10 @@ var MCU = require("./MCU");
 // Entity block
 function MCU_TR_Entity() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+
+	this.Enabled = 1;
 }
 
 MCU_TR_Entity.prototype = Object.create(MCU.prototype);

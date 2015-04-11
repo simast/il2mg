@@ -6,6 +6,9 @@ var MCU = require("./MCU");
 // Waypoint item
 function MCU_Waypoint() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+	
 	this.Area = 0;
 	this.Speed = 0;
 	this.Priority = MCU_Waypoint.PRIORITY_MEDIUM;

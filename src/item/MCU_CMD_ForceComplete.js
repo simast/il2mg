@@ -6,6 +6,9 @@ var MCU = require("./MCU");
 // Force complete command item
 function MCU_CMD_ForceComplete() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+	
 	this.Priority = MCU_CMD_ForceComplete.PRIORITY_HIGH;
 }
 

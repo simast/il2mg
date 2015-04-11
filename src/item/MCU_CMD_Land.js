@@ -6,6 +6,9 @@ var MCU = require("./MCU");
 // Land command item
 function MCU_CMD_Land() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+	
 	this.Priority = MCU_CMD_Land.PRIORITY_MEDIUM;
 }
 

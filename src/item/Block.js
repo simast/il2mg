@@ -6,6 +6,11 @@ var Item = require("../item");
 // Block item
 function Block() {
 
+	this.DeleteAfterDeath = 0;
+	this.DamageThreshold = 1;
+	this.Country = Item.DEFAULT_COUNTRY;
+	this.DamageReport = Item.DEFAULT_DAMAGE_REPORT;
+	this.Durability = Item.DEFAULT_DURABILITY;
 }
 
 Block.prototype = Object.create(Item.prototype);
@@ -32,8 +37,8 @@ Block.prototype.toBinary = function(index) {
 		flags |= 1 << 0;
 	}
 
-	// Second bit is DamageThreshold state (enabled by default if not specified)
-	if (this.DamageThreshold === undefined || this.DamageThreshold) {
+	// Second bit is DamageThreshold state
+	if (this.DamageThreshold) {
 		flags |= 1 << 1;
 	}
 
@@ -41,29 +46,14 @@ Block.prototype.toBinary = function(index) {
 	this.writeUInt8(buffer, flags);
 
 	// Country
-	this.writeUInt16(buffer, this.Country || Item.DEFAULT_COUNTRY);
+	this.writeUInt16(buffer, this.Country);
 
 	// DamageReport
-	var damageReport = Item.DEFAULT_DAMAGE_REPORT;
-
-	if (this.DamageReport !== undefined) {
-		damageReport = this.DamageReport;
-	}
-
-	this.writeUInt8(buffer, damageReport);
-
-	// Durability
-	var durability = Item.DEFAULT_DURABILITY;
-
-	if (this.Durability !== undefined) {
-		durability = this.Durability;
-	}
+	this.writeUInt8(buffer, this.DamageReport);
 
 	// NOTE: Durability in binary file is represented as a 8 bit unsigned integer
 	// number where the value is 1 point for every 500 normal durability points.
-	durability = Math.round(durability / 500);
-
-	this.writeUInt8(buffer, durability);
+	this.writeUInt8(buffer, Math.round(this.Durability / 500));
 
 	// Script string table index
 	this.writeUInt16(buffer, index.script.stringValue(this.Script));

@@ -6,6 +6,9 @@ var MCU = require("./MCU");
 // Formation command item
 function MCU_CMD_Formation() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+	
 	this.FormationType = MCU_CMD_Formation.TYPE_PLANE_NONE;
 	this.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE;
 }

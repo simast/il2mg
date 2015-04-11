@@ -6,6 +6,8 @@ var MCU = require("./MCU");
 // Take off command item
 function MCU_CMD_TakeOff() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
 }
 
 MCU_CMD_TakeOff.prototype = Object.create(MCU.prototype);

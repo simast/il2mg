@@ -6,6 +6,10 @@ var MCU = require("./MCU");
 // Icon item
 function MCU_Icon() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+
+	this.Enabled = 1;
 }
 
 MCU_Icon.prototype = Object.create(MCU.prototype);

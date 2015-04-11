@@ -6,6 +6,9 @@ var MCU = require("./MCU");
 // Effect command item
 function MCU_CMD_Effect() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+
 	this.ActionType = MCU_CMD_Effect.ACTION_START;
 }
 

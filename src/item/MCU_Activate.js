@@ -6,6 +6,8 @@ var MCU = require("./MCU");
 // Activate item
 function MCU_Activate() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
 }
 
 MCU_Activate.prototype = Object.create(MCU.prototype);

@@ -6,6 +6,9 @@ var MCU = require("./MCU");
 // Spawner item
 function MCU_Spawner() {
 
+	// Call parent constructor
+	MCU.apply(this, arguments);
+	
 	this.SpawnAtMe = 0;
 }
 
