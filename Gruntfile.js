@@ -43,6 +43,9 @@ module.exports = function(grunt) {
 			}
 		},
 
+		// Source code report task
+		sloc: sourceFiles,
+
 		// Clean task
 		clean: {
 			build: [
@@ -71,6 +74,7 @@ module.exports = function(grunt) {
 	grunt.registerTask("default", [
 		"clean",
 		"check",
+		"build:sloc",
 		"build:blocks",
 		"build:airfields",
 		"build:compile"

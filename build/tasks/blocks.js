@@ -1,12 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+var numeral = require("numeral");
+
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw blocks .Group to .json files
 	grunt.registerTask("build:blocks", "Build blocks JSON files.", function() {
 
-		var numeral = require("numeral");
 		var data = require("../../src/data");
 		var Item = require("../../src/item");
 
@@ -84,13 +85,13 @@ module.exports = function(grunt) {
 			JSON.stringify(data.blocks, null, "\t")
 		);
 
-		var okMessage = "";
+		var message = "";
 
-		okMessage += numeral(totalItems).format("0,0") + " ";
-		okMessage += grunt.util.pluralize(totalItems, "item/items");
-		okMessage += " processed from " + numeral(totalBattles).format("0,0") + " ";
-		okMessage += grunt.util.pluralize(totalBattles, "battle/battles") + ".";
+		message += numeral(totalItems).format("0,0") + " ";
+		message += grunt.util.pluralize(totalItems, "item/items");
+		message += " processed from " + numeral(totalBattles).format("0,0") + " ";
+		message += grunt.util.pluralize(totalBattles, "battle/battles") + ".";
 
-		grunt.log.ok(okMessage);
+		grunt.log.ok(message);
 	});
 };

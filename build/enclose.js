@@ -2,5 +2,5 @@
 "use strict";
 
 module.exports = {
-	scripts: "../data/**/*.json"
+	scripts: "il2mg/data/**/*.json"
 };

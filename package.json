@@ -16,6 +16,7 @@
 		"grunt-contrib-clean": "0.6.0",
 		"grunt-jscs": "1.6.0",
 		"enclose": "0.2.15",
-		"numeral": "1.5.3"
+		"numeral": "1.5.3",
+		"sloc": "0.1.9"
 	}
 }

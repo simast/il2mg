@@ -487,16 +487,16 @@ module.exports = function(grunt) {
 			JSON.stringify(data.items, null, "\t")
 		);
 
-		var okMessage = "";
+		var message = "";
 
-		okMessage += numeral(totalItems).format("0,0") + " ";
-		okMessage += grunt.util.pluralize(totalItems, "item/items");
-		okMessage += " processed from " + numeral(totalBattles).format("0,0") + " ";
-		okMessage += grunt.util.pluralize(totalBattles, "battle/battles");
-		okMessage += " and " + numeral(totalAirfields).format("0,0") + " ";
-		okMessage += grunt.util.pluralize(totalAirfields, "airfield/airfields") + ".";
+		message += numeral(totalItems).format("0,0") + " ";
+		message += grunt.util.pluralize(totalItems, "item/items");
+		message += " processed from " + numeral(totalBattles).format("0,0") + " ";
+		message += grunt.util.pluralize(totalBattles, "battle/battles");
+		message += " and " + numeral(totalAirfields).format("0,0") + " ";
+		message += grunt.util.pluralize(totalAirfields, "airfield/airfields") + ".";
 
-		grunt.log.ok(okMessage);
+		grunt.log.ok(message);
 	});
 };
 
