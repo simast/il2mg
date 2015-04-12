@@ -1,0 +1,12 @@
+{
+	// 126 IAP
+	"126iap": {
+		"name": "126 IAP",
+		"airfields": [
+			["leninsk", "start", "end"]
+		],
+		"planes": [
+			["yak1s69", 14, "start", "end"]
+		]
+	}
+}
