@@ -12783,445 +12783,687 @@ Group
   }
   
 
-  Block
-  {
-    Name = "WRECK";
-    Index = 634;
-    LinkTrId = 0;
-    XPos = 117497.558;
-    YPos = 81.269;
-    ZPos = 102108.673;
-    XOri = 0.00;
-    YOri = 264.84;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 636;
-    LinkTrId = 0;
-    XPos = 117138.079;
-    YPos = 81.268;
-    ZPos = 102904.744;
-    XOri = 0.00;
-    YOri = 28.84;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 637;
-    LinkTrId = 0;
-    XPos = 117303.063;
-    YPos = 81.268;
-    ZPos = 102329.829;
-    XOri = 0.00;
-    YOri = 243.94;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 638;
-    LinkTrId = 0;
-    XPos = 117053.509;
-    YPos = 81.268;
-    ZPos = 102525.186;
-    XOri = 0.00;
-    YOri = 22.25;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 639;
-    LinkTrId = 0;
-    XPos = 116752.818;
-    YPos = 81.268;
-    ZPos = 103254.332;
-    XOri = 0.00;
-    YOri = 165.75;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 640;
-    LinkTrId = 0;
-    XPos = 116955.861;
-    YPos = 81.268;
-    ZPos = 103233.838;
-    XOri = 0.00;
-    YOri = 116.53;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 641;
-    LinkTrId = 0;
-    XPos = 117489.673;
-    YPos = 81.268;
-    ZPos = 102480.216;
-    XOri = 0.00;
-    YOri = 72.32;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 642;
-    LinkTrId = 0;
-    XPos = 117001.946;
-    YPos = 81.268;
-    ZPos = 102770.065;
-    XOri = 0.00;
-    YOri = 182.57;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 644;
-    LinkTrId = 0;
-    XPos = 117073.814;
-    YPos = 81.268;
-    ZPos = 103152.954;
-    XOri = 0.00;
-    YOri = 234.84;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 645;
-    LinkTrId = 0;
-    XPos = 116315.694;
-    YPos = 81.268;
-    ZPos = 103827.421;
-    XOri = 0.00;
-    YOri = 142.30;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 646;
-    LinkTrId = 0;
-    XPos = 115833.982;
-    YPos = 81.268;
-    ZPos = 103901.732;
-    XOri = 0.00;
-    YOri = 199.11;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 647;
-    LinkTrId = 0;
-    XPos = 116229.275;
-    YPos = 81.268;
-    ZPos = 104092.287;
-    XOri = 0.00;
-    YOri = 346.82;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 648;
-    LinkTrId = 0;
-    XPos = 116176.254;
-    YPos = 81.268;
-    ZPos = 103543.430;
-    XOri = 0.00;
-    YOri = 337.04;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 649;
-    LinkTrId = 0;
-    XPos = 116022.035;
-    YPos = 81.268;
-    ZPos = 103633.572;
-    XOri = 0.00;
-    YOri = 100.03;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
-  {
-    Name = "WRECK";
-    Index = 650;
-    LinkTrId = 0;
-    XPos = 116405.268;
-    YPos = 81.268;
-    ZPos = 103191.627;
-    XOri = 0.00;
-    YOri = 75.26;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
-    {
-      0 = 1;
-    }
-  }
-  
-
-  Block
+  Group
   {
     Name = "WRECK";
     Index = 651;
-    LinkTrId = 0;
-    XPos = 116535.459;
-    YPos = 81.268;
-    ZPos = 102956.493;
-    XOri = 0.00;
-    YOri = 231.37;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
     Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
+    Block
     {
-      0 = 1;
+      Name = "WRECK";
+      Index = 634;
+      LinkTrId = 0;
+      XPos = 117497.558;
+      YPos = 81.269;
+      ZPos = 102108.673;
+      XOri = 0.00;
+      YOri = 264.84;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
     }
-  }
-  
+    
 
-  Block
-  {
-    Name = "WRECK";
-    Index = 652;
-    LinkTrId = 0;
-    XPos = 116784.374;
-    YPos = 81.268;
-    ZPos = 102681.469;
-    XOri = 0.00;
-    YOri = 158.78;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_he111.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Damaged
+    Block
     {
-      0 = 1;
+      Name = "WRECK";
+      Index = 635;
+      LinkTrId = 0;
+      XPos = 117138.079;
+      YPos = 81.268;
+      ZPos = 102904.744;
+      XOri = 0.00;
+      YOri = 28.84;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
     }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 636;
+      LinkTrId = 0;
+      XPos = 117303.063;
+      YPos = 81.268;
+      ZPos = 102329.829;
+      XOri = 0.00;
+      YOri = 243.94;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 637;
+      LinkTrId = 0;
+      XPos = 117053.509;
+      YPos = 81.268;
+      ZPos = 102525.186;
+      XOri = 0.00;
+      YOri = 22.25;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 638;
+      LinkTrId = 0;
+      XPos = 116752.818;
+      YPos = 81.268;
+      ZPos = 103254.332;
+      XOri = 0.00;
+      YOri = 165.75;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 639;
+      LinkTrId = 0;
+      XPos = 116955.861;
+      YPos = 81.268;
+      ZPos = 103233.838;
+      XOri = 0.00;
+      YOri = 116.53;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 640;
+      LinkTrId = 0;
+      XPos = 117489.673;
+      YPos = 81.268;
+      ZPos = 102480.216;
+      XOri = 0.00;
+      YOri = 72.32;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 641;
+      LinkTrId = 0;
+      XPos = 117041.376;
+      YPos = 81.268;
+      ZPos = 102658.819;
+      XOri = 0.00;
+      YOri = 282.95;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 642;
+      LinkTrId = 0;
+      XPos = 117073.814;
+      YPos = 81.268;
+      ZPos = 103152.954;
+      XOri = 0.00;
+      YOri = 234.84;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 643;
+      LinkTrId = 0;
+      XPos = 116315.694;
+      YPos = 81.268;
+      ZPos = 103827.421;
+      XOri = 0.00;
+      YOri = 142.30;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 644;
+      LinkTrId = 0;
+      XPos = 115833.982;
+      YPos = 81.268;
+      ZPos = 103901.732;
+      XOri = 0.00;
+      YOri = 199.11;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 645;
+      LinkTrId = 0;
+      XPos = 116229.275;
+      YPos = 81.268;
+      ZPos = 104092.287;
+      XOri = 0.00;
+      YOri = 346.82;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 646;
+      LinkTrId = 0;
+      XPos = 116176.254;
+      YPos = 81.268;
+      ZPos = 103543.430;
+      XOri = 0.00;
+      YOri = 337.04;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 647;
+      LinkTrId = 0;
+      XPos = 116022.035;
+      YPos = 81.268;
+      ZPos = 103633.572;
+      XOri = 0.00;
+      YOri = 100.03;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 648;
+      LinkTrId = 0;
+      XPos = 116405.268;
+      YPos = 81.268;
+      ZPos = 103191.627;
+      XOri = 0.00;
+      YOri = 75.26;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 649;
+      LinkTrId = 0;
+      XPos = 116535.459;
+      YPos = 81.268;
+      ZPos = 102956.493;
+      XOri = 0.00;
+      YOri = 231.37;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 650;
+      LinkTrId = 0;
+      XPos = 116799.629;
+      YPos = 81.268;
+      ZPos = 102666.877;
+      XOri = 0.00;
+      YOri = 8.11;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 652;
+      LinkTrId = 0;
+      XPos = 116698.504;
+      YPos = 81.268;
+      ZPos = 103617.316;
+      XOri = 0.00;
+      YOri = 355.80;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 653;
+      LinkTrId = 0;
+      XPos = 118003.389;
+      YPos = 81.324;
+      ZPos = 102050.957;
+      XOri = 0.00;
+      YOri = 254.88;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 654;
+      LinkTrId = 0;
+      XPos = 117808.781;
+      YPos = 82.330;
+      ZPos = 104658.630;
+      XOri = 0.00;
+      YOri = 231.04;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 655;
+      LinkTrId = 0;
+      XPos = 116052.804;
+      YPos = 81.160;
+      ZPos = 102562.257;
+      XOri = 0.00;
+      YOri = 62.10;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 656;
+      LinkTrId = 0;
+      XPos = 116642.336;
+      YPos = 81.072;
+      ZPos = 101715.869;
+      XOri = 0.00;
+      YOri = 201.01;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 657;
+      LinkTrId = 0;
+      XPos = 115535.417;
+      YPos = 80.425;
+      ZPos = 103153.199;
+      XOri = 0.00;
+      YOri = 196.44;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 658;
+      LinkTrId = 0;
+      XPos = 116966.393;
+      YPos = 81.112;
+      ZPos = 105068.515;
+      XOri = 0.00;
+      YOri = 109.31;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 659;
+      LinkTrId = 0;
+      XPos = 117864.094;
+      YPos = 81.268;
+      ZPos = 103254.615;
+      XOri = 0.00;
+      YOri = 137.72;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
+    Block
+    {
+      Name = "WRECK";
+      Index = 660;
+      LinkTrId = 0;
+      XPos = 116939.713;
+      YPos = 81.268;
+      ZPos = 102043.245;
+      XOri = 0.00;
+      YOri = 104.99;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Damaged
+      {
+        0 = 1;
+      }
+    }
+    
+
   }
   
 

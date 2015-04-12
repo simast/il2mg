@@ -25,8 +25,8 @@ module.exports = function(grunt) {
 
 		var message = "";
 
-		message += numeral(totalSource).format("0,0") + " source ";
-		message += grunt.util.pluralize(totalSource, "line/lines") + " of code";
+		message += numeral(totalSource).format("0,0") + " ";
+		message += grunt.util.pluralize(totalSource, "line/lines") + " of source code";
 		message += " (" + Math.round(totalComments / totalSource * 100) + "% comments)";
 
 		grunt.log.ok(message);
