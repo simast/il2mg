@@ -6,5 +6,9 @@
 	"201": {
 		"name": "Germany",
 		"coalition": 2
+	},
+	"202": {
+		"name": "Italy",
+		"coalition": 2
 	}
 }
