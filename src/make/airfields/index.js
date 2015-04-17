@@ -80,14 +80,15 @@ module.exports = function makeAirfields() {
 		// Process airfield units
 		if (airfieldUnits) {
 
-			var sectorsIndex = {};
-			var planesIndex = {};
-			var countries = {};
+			var sectorsIndex = Object.create(null);
+			var planesIndex = Object.create(null);
+			var countries = Object.create(null);
 
 			airfield.value = 0;
-			airfield.countries = {};
+			airfield.countries = Object.create(null);
 			airfield.countriesWeighted = []; // List of country IDs as a weighted array
-			airfield.planesBySector = {};
+			airfield.planesBySector = Object.create(null);
+			airfield.planesByUnit = Object.create(null);
 
 			// Process unit planes list
 			for (var unitID in airfieldUnits) {
@@ -114,7 +115,7 @@ module.exports = function makeAirfields() {
 						var planeSizeGroup = planesIndex[planeSizeID] = planesIndex[planeSizeID] || {};
 						var planeGroup = planeSizeGroup[groupID] = planeSizeGroup[groupID] || [];
 
-						planeGroup.push([planeID, unit.country]);
+						planeGroup.push([planeID, unit.country, unitID]);
 					}
 				});
 			}

@@ -26,6 +26,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 
 	var rand = this.rand;
 	var plane = this.planesByID[planeData[0]];
+	var planesByUnit = airfield.planesByUnit;
 	var staticPlanes = rand.shuffle(plane.static || []);
 	var planeStatic;
 	var planeSizeID = planeSize[String(plane.size).toUpperCase()];
@@ -92,6 +93,13 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	itemObject.Script = planeStatic.script;
 	itemObject.setPosition(positionX, positionZ);
 	itemObject.setOrientation(orientation);
+	
+	// Build an index of plane objects per unit (used for spawning flights)
+	var unitID = planeData[2];
+	
+	planesByUnit[unitID] = planesByUnit[unitID] || Object.create(null);
+	planesByUnit[unitID][planeSector] = planesByUnit[unitID][planeSector] || [];
+	planesByUnit[unitID][planeSector].push(itemObject);
 
 	return [itemObject];
 };

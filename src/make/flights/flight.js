@@ -34,6 +34,7 @@ module.exports = function makeFlight(params) {
 	var plane = this.planesByID[rand.pick(unit.planes)];
 	var airfield = this.airfieldsByID[unit.airfield];
 	
+	var Plane = Item.Plane;
 	var planeObject = this.createItem("Plane");
 
 	planeObject.setName(plane.name);
@@ -42,13 +43,13 @@ module.exports = function makeFlight(params) {
 	planeObject.Script = plane.script;
 	planeObject.Model = plane.model;
 	planeObject.Country = unit.country;
-	planeObject.StartInAir = Item.Plane.START_PARKING;
+	planeObject.StartInAir = Plane.START_PARKING;
 	
 	if (params.player) {
-		planeObject.AILevel = Item.Plane.AI_PLAYER;
+		planeObject.AILevel = Plane.AI_PLAYER;
 	}
 	else {
-		planeObject.AILevel = Item.Plane.AI_NORMAL;
+		planeObject.AILevel = Plane.AI_NORMAL;
 	}
 
 	// Create plane entity
