@@ -1514,60 +1514,8 @@ Group
     Desc = "";
     Block
     {
-      Name = "DECO";
+      Name = "TRUCK:CARGO";
       Index = 74;
-      LinkTrId = 0;
-      XPos = 134081.380;
-      YPos = 21.984;
-      ZPos = 307212.161;
-      XOri = 0.00;
-      YOri = 70.97;
-      ZOri = 0.00;
-      Model = "graphics\blocks\art_position_amb1.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
-      Country = 0;
-      Desc = "";
-      Durability = 25000;
-      DamageReport = 50;
-      DamageThreshold = 1;
-      DeleteAfterDeath = 1;
-    }
-    
-
-    Block
-    {
-      Name = "TRUCK:CARGO";
-      Index = 75;
-      LinkTrId = 0;
-      XPos = 134077.578;
-      YPos = 21.984;
-      ZPos = 307205.636;
-      XOri = 0.00;
-      YOri = 246.56;
-      ZOri = 0.00;
-      Model = "graphics\blocks\static_zis.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_zis.txt";
-      Country = 0;
-      Desc = "";
-      Durability = 25000;
-      DamageReport = 50;
-      DamageThreshold = 1;
-      DeleteAfterDeath = 1;
-    }
-    
-
-  }
-  
-
-  Group
-  {
-    Name = "TRUCK:CARGO";
-    Index = 76;
-    Desc = "";
-    Block
-    {
-      Name = "TRUCK:CARGO";
-      Index = 77;
       LinkTrId = 0;
       XPos = 133949.946;
       YPos = 21.984;
@@ -1589,7 +1537,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 78;
+      Index = 75;
       LinkTrId = 0;
       XPos = 133947.452;
       YPos = 21.984;
@@ -1613,30 +1561,8 @@ Group
 
   Block
   {
-    Name = "TRUCK:FUEL";
-    Index = 79;
-    LinkTrId = 0;
-    XPos = 134007.172;
-    YPos = 21.984;
-    ZPos = 307306.184;
-    XOri = 0.00;
-    YOri = 75.20;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_zis_fuel.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
-  Block
-  {
     Name = "DECO";
-    Index = 80;
+    Index = 76;
     LinkTrId = 0;
     XPos = 133957.786;
     YPos = 21.984;
@@ -1658,7 +1584,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 81;
+    Index = 77;
     LinkTrId = 0;
     XPos = 134076.120;
     YPos = 21.984;
@@ -1680,7 +1606,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 82;
+    Index = 78;
     LinkTrId = 0;
     XPos = 134072.299;
     YPos = 21.984;
@@ -1702,7 +1628,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 83;
+    Index = 79;
     LinkTrId = 0;
     XPos = 133989.700;
     YPos = 21.984;
@@ -1724,7 +1650,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 84;
+    Index = 80;
     LinkTrId = 0;
     XPos = 133916.214;
     YPos = 21.984;
@@ -1746,7 +1672,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 85;
+    Index = 81;
     LinkTrId = 0;
     XPos = 133867.016;
     YPos = 21.984;
@@ -1768,7 +1694,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 86;
+    Index = 82;
     LinkTrId = 0;
     XPos = 133894.946;
     YPos = 21.984;
@@ -1790,7 +1716,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 87;
+    Index = 83;
     LinkTrId = 0;
     XPos = 133948.235;
     YPos = 21.984;
@@ -1812,64 +1738,12 @@ Group
   Group
   {
     Name = "TRUCK:CARGO";
-    Index = 88;
+    Index = 84;
     Desc = "";
     Block
     {
       Name = "TRUCK:CARGO";
-      Index = 89;
-      LinkTrId = 0;
-      XPos = 134038.831;
-      YPos = 21.984;
-      ZPos = 307904.444;
-      XOri = 0.00;
-      YOri = 145.76;
-      ZOri = 0.00;
-      Model = "graphics\blocks\static_zis.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_zis.txt";
-      Country = 0;
-      Desc = "";
-      Durability = 25000;
-      DamageReport = 50;
-      DamageThreshold = 1;
-      DeleteAfterDeath = 1;
-    }
-    
-
-    Block
-    {
-      Name = "DECO";
-      Index = 90;
-      LinkTrId = 0;
-      XPos = 134044.585;
-      YPos = 21.984;
-      ZPos = 307899.872;
-      XOri = 0.00;
-      YOri = 342.26;
-      ZOri = 0.00;
-      Model = "graphics\blocks\art_position_amb1.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
-      Country = 0;
-      Desc = "";
-      Durability = 25000;
-      DamageReport = 50;
-      DamageThreshold = 1;
-      DeleteAfterDeath = 1;
-    }
-    
-
-  }
-  
-
-  Group
-  {
-    Name = "TRUCK:CARGO";
-    Index = 91;
-    Desc = "";
-    Block
-    {
-      Name = "TRUCK:CARGO";
-      Index = 92;
+      Index = 85;
       LinkTrId = 0;
       XPos = 133864.639;
       YPos = 21.984;
@@ -1891,7 +1765,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 93;
+      Index = 86;
       LinkTrId = 0;
       XPos = 133859.971;
       YPos = 21.984;
@@ -1916,29 +1790,7 @@ Group
   Block
   {
     Name = "TRUCK:FUEL";
-    Index = 94;
-    LinkTrId = 0;
-    XPos = 133962.394;
-    YPos = 21.984;
-    ZPos = 307876.647;
-    XOri = 0.00;
-    YOri = 254.54;
-    ZOri = 0.00;
-    Model = "graphics\blocks\static_zis_fuel.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
-  Block
-  {
-    Name = "TRUCK:FUEL";
-    Index = 95;
+    Index = 87;
     LinkTrId = 0;
     XPos = 134903.104;
     YPos = 21.984;
@@ -1960,7 +1812,7 @@ Group
   Block
   {
     Name = "TRUCK:FUEL";
-    Index = 96;
+    Index = 88;
     LinkTrId = 0;
     XPos = 134850.067;
     YPos = 21.984;
@@ -1982,7 +1834,7 @@ Group
   Block
   {
     Name = "TRUCK:FUEL";
-    Index = 97;
+    Index = 89;
     LinkTrId = 0;
     XPos = 134926.171;
     YPos = 21.984;
@@ -2004,12 +1856,12 @@ Group
   Group
   {
     Name = "BEACON";
-    Index = 98;
+    Index = 90;
     Desc = "";
     Vehicle
     {
       Name = "BEACON";
-      Index = 99;
+      Index = 91;
       LinkTrId = 0;
       XPos = 134204.869;
       YPos = 21.984;
@@ -2039,7 +1891,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 100;
+      Index = 92;
       LinkTrId = 0;
       XPos = 134206.098;
       YPos = 21.984;
@@ -2064,12 +1916,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 101;
+    Index = 93;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 102;
+      Index = 94;
       LinkTrId = 0;
       XPos = 134208.696;
       YPos = 21.984;
@@ -2099,7 +1951,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 103;
+      Index = 95;
       LinkTrId = 0;
       XPos = 134208.692;
       YPos = 21.984;
@@ -2121,7 +1973,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 104;
+      Index = 96;
       LinkTrId = 0;
       XPos = 134209.422;
       YPos = 21.984;
@@ -2146,12 +1998,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 105;
+    Index = 97;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 106;
+      Index = 98;
       LinkTrId = 0;
       XPos = 134373.363;
       YPos = 21.984;
@@ -2181,7 +2033,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 107;
+      Index = 99;
       LinkTrId = 0;
       XPos = 134373.344;
       YPos = 21.984;
@@ -2203,7 +2055,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 108;
+      Index = 100;
       LinkTrId = 0;
       XPos = 134373.207;
       YPos = 21.984;
@@ -2228,12 +2080,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 109;
+    Index = 101;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 110;
+      Index = 102;
       LinkTrId = 0;
       XPos = 134416.299;
       YPos = 21.984;
@@ -2263,7 +2115,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 111;
+      Index = 103;
       LinkTrId = 0;
       XPos = 134416.325;
       YPos = 21.984;
@@ -2285,7 +2137,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 112;
+      Index = 104;
       LinkTrId = 0;
       XPos = 134411.344;
       YPos = 21.984;
@@ -2310,12 +2162,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 113;
+    Index = 105;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 114;
+      Index = 106;
       LinkTrId = 0;
       XPos = 134893.068;
       YPos = 21.984;
@@ -2345,7 +2197,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 115;
+      Index = 107;
       LinkTrId = 0;
       XPos = 134893.003;
       YPos = 21.984;
@@ -2367,7 +2219,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 116;
+      Index = 108;
       LinkTrId = 0;
       XPos = 134892.123;
       YPos = 21.984;
@@ -2392,12 +2244,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 117;
+    Index = 109;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 118;
+      Index = 110;
       LinkTrId = 0;
       XPos = 135380.209;
       YPos = 21.984;
@@ -2427,7 +2279,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 119;
+      Index = 111;
       LinkTrId = 0;
       XPos = 135380.187;
       YPos = 21.984;
@@ -2449,7 +2301,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 120;
+      Index = 112;
       LinkTrId = 0;
       XPos = 135382.407;
       YPos = 21.984;
@@ -2471,12 +2323,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 121;
+      Index = 113;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 122;
+        Index = 114;
         LinkTrId = 0;
         XPos = 135385.008;
         YPos = 21.984;
@@ -2504,12 +2356,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 123;
+    Index = 115;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 124;
+      Index = 116;
       LinkTrId = 0;
       XPos = 133631.230;
       YPos = 21.984;
@@ -2539,7 +2391,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 125;
+      Index = 117;
       LinkTrId = 0;
       XPos = 133629.885;
       YPos = 21.984;
@@ -2564,12 +2416,12 @@ Group
   Group
   {
     Name = "TRUCK:CARGO";
-    Index = 126;
+    Index = 118;
     Desc = "";
     Block
     {
       Name = "TRUCK:CARGO";
-      Index = 127;
+      Index = 119;
       LinkTrId = 0;
       XPos = 134813.220;
       YPos = 21.984;
@@ -2591,7 +2443,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 128;
+      Index = 120;
       LinkTrId = 0;
       XPos = 134820.341;
       YPos = 21.984;
@@ -2616,12 +2468,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 129;
+    Index = 121;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 130;
+      Index = 122;
       LinkTrId = 0;
       XPos = 134828.361;
       YPos = 21.984;
@@ -2651,7 +2503,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 131;
+      Index = 123;
       LinkTrId = 0;
       XPos = 134828.389;
       YPos = 21.984;
@@ -2673,7 +2525,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 132;
+      Index = 124;
       LinkTrId = 0;
       XPos = 134825.868;
       YPos = 21.984;
@@ -2698,12 +2550,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 133;
+    Index = 125;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 134;
+      Index = 126;
       LinkTrId = 0;
       XPos = 134201.928;
       YPos = 21.984;
@@ -2733,7 +2585,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 135;
+      Index = 127;
       LinkTrId = 0;
       XPos = 134201.971;
       YPos = 21.984;
@@ -2755,12 +2607,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 136;
+      Index = 128;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 137;
+        Index = 129;
         LinkTrId = 0;
         XPos = 134216.857;
         YPos = 21.984;
@@ -2782,7 +2634,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 138;
+        Index = 130;
         LinkTrId = 0;
         XPos = 134208.830;
         YPos = 21.984;
@@ -2810,12 +2662,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 139;
+    Index = 131;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 140;
+      Index = 132;
       LinkTrId = 0;
       XPos = 134674.405;
       YPos = 21.984;
@@ -2845,7 +2697,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 141;
+      Index = 133;
       LinkTrId = 0;
       XPos = 134674.465;
       YPos = 21.984;
@@ -2867,7 +2719,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 142;
+      Index = 134;
       LinkTrId = 0;
       XPos = 134669.420;
       YPos = 21.984;
@@ -2892,12 +2744,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 143;
+    Index = 135;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 144;
+      Index = 136;
       LinkTrId = 0;
       XPos = 133864.579;
       YPos = 21.984;
@@ -2927,7 +2779,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 145;
+      Index = 137;
       LinkTrId = 0;
       XPos = 133864.571;
       YPos = 21.984;
@@ -2949,7 +2801,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 146;
+      Index = 138;
       LinkTrId = 0;
       XPos = 133860.853;
       YPos = 21.984;
@@ -2971,12 +2823,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 147;
+      Index = 139;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 148;
+        Index = 140;
         LinkTrId = 0;
         XPos = 133863.006;
         YPos = 21.984;
@@ -3004,7 +2856,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 149;
+    Index = 141;
     LinkTrId = 0;
     XPos = 134631.481;
     YPos = 21.984;
@@ -3026,7 +2878,7 @@ Group
   Block
   {
     Name = "TRUCK:CARGO";
-    Index = 150;
+    Index = 142;
     LinkTrId = 0;
     XPos = 134654.943;
     YPos = 21.984;
@@ -3048,7 +2900,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 151;
+    Index = 143;
     LinkTrId = 0;
     XPos = 134646.790;
     YPos = 21.984;
@@ -3070,12 +2922,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 152;
+    Index = 144;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 153;
+      Index = 145;
       LinkTrId = 0;
       XPos = 133530.302;
       YPos = 21.984;
@@ -3105,7 +2957,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 154;
+      Index = 146;
       LinkTrId = 0;
       XPos = 133530.438;
       YPos = 21.984;
@@ -3127,12 +2979,12 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 155;
+      Index = 147;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 156;
+        Index = 148;
         LinkTrId = 0;
         XPos = 133539.464;
         YPos = 21.984;
@@ -3165,7 +3017,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 157;
+      Index = 149;
       LinkTrId = 0;
       XPos = 133528.444;
       YPos = 21.984;
@@ -3187,12 +3039,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 158;
+      Index = 150;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 159;
+        Index = 151;
         LinkTrId = 0;
         XPos = 133547.159;
         YPos = 21.984;
@@ -3220,12 +3072,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 160;
+    Index = 152;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 161;
+      Index = 153;
       LinkTrId = 0;
       XPos = 134301.475;
       YPos = 21.984;
@@ -3255,7 +3107,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 162;
+      Index = 154;
       LinkTrId = 0;
       XPos = 134301.552;
       YPos = 21.984;
@@ -3277,7 +3129,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 163;
+      Index = 155;
       LinkTrId = 0;
       XPos = 134308.235;
       YPos = 21.984;
@@ -3299,12 +3151,12 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 164;
+      Index = 156;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 165;
+        Index = 157;
         LinkTrId = 0;
         XPos = 134309.331;
         YPos = 21.984;
@@ -3337,12 +3189,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 166;
+      Index = 158;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 167;
+        Index = 159;
         LinkTrId = 0;
         XPos = 134331.155;
         YPos = 21.984;
@@ -3364,7 +3216,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 168;
+        Index = 160;
         LinkTrId = 0;
         XPos = 134327.276;
         YPos = 21.984;
@@ -3392,12 +3244,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 169;
+    Index = 161;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 170;
+      Index = 162;
       LinkTrId = 0;
       XPos = 135514.441;
       YPos = 21.984;
@@ -3427,7 +3279,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 171;
+      Index = 163;
       LinkTrId = 0;
       XPos = 135514.233;
       YPos = 21.984;
@@ -3449,7 +3301,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 172;
+      Index = 164;
       LinkTrId = 0;
       XPos = 135515.235;
       YPos = 21.984;
@@ -3471,12 +3323,12 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 173;
+      Index = 165;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 174;
+        Index = 166;
         LinkTrId = 0;
         XPos = 135523.684;
         YPos = 21.984;
@@ -3506,7 +3358,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 175;
+        Index = 167;
         LinkTrId = 0;
         XPos = 135517.865;
         YPos = 21.984;
@@ -3534,7 +3386,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 176;
+    Index = 168;
     LinkTrId = 0;
     XPos = 134989.033;
     YPos = 21.984;
@@ -3556,7 +3408,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 177;
+    Index = 169;
     LinkTrId = 0;
     XPos = 134983.719;
     YPos = 21.984;
@@ -3578,12 +3430,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 178;
+    Index = 170;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 179;
+      Index = 171;
       LinkTrId = 0;
       XPos = 135002.243;
       YPos = 21.984;
@@ -3613,7 +3465,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 180;
+      Index = 172;
       LinkTrId = 0;
       XPos = 134997.647;
       YPos = 21.984;
@@ -3635,12 +3487,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 181;
+      Index = 173;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 182;
+        Index = 174;
         LinkTrId = 0;
         XPos = 135011.418;
         YPos = 21.984;
@@ -3668,12 +3520,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 183;
+    Index = 175;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 184;
+      Index = 176;
       LinkTrId = 0;
       XPos = 133411.339;
       YPos = 21.984;
@@ -3703,7 +3555,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 185;
+      Index = 177;
       LinkTrId = 0;
       XPos = 133411.195;
       YPos = 21.984;
@@ -3725,7 +3577,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 186;
+      Index = 178;
       LinkTrId = 0;
       XPos = 133415.037;
       YPos = 21.984;
@@ -3747,12 +3599,12 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 187;
+      Index = 179;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 188;
+        Index = 180;
         LinkTrId = 0;
         XPos = 133408.584;
         YPos = 21.984;
@@ -3782,7 +3634,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 189;
+        Index = 181;
         LinkTrId = 0;
         XPos = 133412.901;
         YPos = 21.984;
@@ -3807,12 +3659,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 190;
+      Index = 182;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 191;
+        Index = 183;
         LinkTrId = 0;
         XPos = 133433.075;
         YPos = 21.984;
@@ -3840,12 +3692,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 192;
+    Index = 184;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 193;
+      Index = 185;
       LinkTrId = 0;
       XPos = 134554.785;
       YPos = 21.984;
@@ -3875,7 +3727,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 194;
+      Index = 186;
       LinkTrId = 0;
       XPos = 134554.805;
       YPos = 21.984;
@@ -3897,7 +3749,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 195;
+      Index = 187;
       LinkTrId = 0;
       XPos = 134559.175;
       YPos = 21.984;
@@ -3919,12 +3771,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 196;
+      Index = 188;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 197;
+        Index = 189;
         LinkTrId = 0;
         XPos = 134543.490;
         YPos = 21.984;
@@ -3949,12 +3801,12 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 198;
+      Index = 190;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 199;
+        Index = 191;
         LinkTrId = 0;
         XPos = 134563.488;
         YPos = 21.984;
@@ -3990,12 +3842,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 200;
+    Index = 192;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 201;
+      Index = 193;
       LinkTrId = 0;
       XPos = 132046.572;
       YPos = 21.984;
@@ -4025,7 +3877,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 202;
+      Index = 194;
       LinkTrId = 0;
       XPos = 132048.924;
       YPos = 21.984;
@@ -4047,7 +3899,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 203;
+      Index = 195;
       LinkTrId = 0;
       XPos = 132042.324;
       YPos = 21.984;
@@ -4069,12 +3921,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 204;
+      Index = 196;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 205;
+        Index = 197;
         LinkTrId = 0;
         XPos = 132027.643;
         YPos = 21.984;
@@ -4102,12 +3954,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 206;
+    Index = 198;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 207;
+      Index = 199;
       LinkTrId = 0;
       XPos = 135362.011;
       YPos = 21.984;
@@ -4137,7 +3989,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 208;
+      Index = 200;
       LinkTrId = 0;
       XPos = 135361.775;
       YPos = 21.984;
@@ -4159,7 +4011,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 209;
+      Index = 201;
       LinkTrId = 0;
       XPos = 135362.895;
       YPos = 21.984;
@@ -4181,7 +4033,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 210;
+      Index = 202;
       LinkTrId = 0;
       XPos = 135322.759;
       YPos = 21.984;
@@ -4203,12 +4055,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 211;
+      Index = 203;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 212;
+        Index = 204;
         LinkTrId = 0;
         XPos = 135328.881;
         YPos = 21.984;
@@ -4233,12 +4085,12 @@ Group
     Group
     {
       Name = "AA:MG";
-      Index = 213;
+      Index = 205;
       Desc = "";
       Vehicle
       {
         Name = "AA:MG";
-        Index = 214;
+        Index = 206;
         LinkTrId = 0;
         XPos = 135352.894;
         YPos = 21.984;
@@ -4268,7 +4120,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 215;
+        Index = 207;
         LinkTrId = 0;
         XPos = 135358.201;
         YPos = 21.984;
@@ -4290,7 +4142,7 @@ Group
       Block
       {
         Name = "Block";
-        Index = 216;
+        Index = 208;
         LinkTrId = 0;
         XPos = 135352.831;
         YPos = 21.984;
@@ -4318,12 +4170,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 217;
+    Index = 209;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 218;
+      Index = 210;
       LinkTrId = 0;
       XPos = 136048.219;
       YPos = 21.984;
@@ -4353,7 +4205,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 219;
+      Index = 211;
       LinkTrId = 0;
       XPos = 136048.318;
       YPos = 21.984;
@@ -4375,7 +4227,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 220;
+      Index = 212;
       LinkTrId = 0;
       XPos = 136043.090;
       YPos = 21.984;
@@ -4397,12 +4249,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 221;
+      Index = 213;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 222;
+        Index = 214;
         LinkTrId = 0;
         XPos = 136036.849;
         YPos = 21.984;
@@ -4424,7 +4276,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 223;
+        Index = 215;
         LinkTrId = 0;
         XPos = 136041.786;
         YPos = 21.984;
@@ -4452,12 +4304,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 224;
+    Index = 216;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 225;
+      Index = 217;
       LinkTrId = 0;
       XPos = 135142.427;
       YPos = 21.984;
@@ -4487,7 +4339,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 226;
+      Index = 218;
       LinkTrId = 0;
       XPos = 135142.203;
       YPos = 21.984;
@@ -4509,7 +4361,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 227;
+      Index = 219;
       LinkTrId = 0;
       XPos = 135133.738;
       YPos = 21.984;
@@ -4531,7 +4383,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 228;
+      Index = 220;
       LinkTrId = 0;
       XPos = 135115.342;
       YPos = 21.984;
@@ -4553,7 +4405,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 229;
+      Index = 221;
       LinkTrId = 0;
       XPos = 135111.195;
       YPos = 21.984;
@@ -4575,12 +4427,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 230;
+      Index = 222;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 231;
+        Index = 223;
         LinkTrId = 0;
         XPos = 135112.446;
         YPos = 21.984;
@@ -4608,12 +4460,12 @@ Group
   Group
   {
     Name = "LIGHT:SEARCH";
-    Index = 232;
+    Index = 224;
     Desc = "";
     Vehicle
     {
       Name = "LIGHT:SEARCH";
-      Index = 233;
+      Index = 225;
       LinkTrId = 0;
       XPos = 134326.526;
       YPos = 21.984;
@@ -4643,7 +4495,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 234;
+      Index = 226;
       LinkTrId = 0;
       XPos = 134324.502;
       YPos = 21.984;
@@ -4668,12 +4520,12 @@ Group
   Group
   {
     Name = "LIGHT:SEARCH";
-    Index = 235;
+    Index = 227;
     Desc = "";
     Vehicle
     {
       Name = "LIGHT:SEARCH";
-      Index = 236;
+      Index = 228;
       LinkTrId = 0;
       XPos = 134522.815;
       YPos = 21.984;
@@ -4703,7 +4555,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 237;
+      Index = 229;
       LinkTrId = 0;
       XPos = 134531.083;
       YPos = 21.984;
@@ -4728,12 +4580,12 @@ Group
   Group
   {
     Name = "LIGHT:SEARCH";
-    Index = 238;
+    Index = 230;
     Desc = "";
     Vehicle
     {
       Name = "LIGHT:SEARCH";
-      Index = 239;
+      Index = 231;
       LinkTrId = 0;
       XPos = 133698.109;
       YPos = 21.984;
@@ -4763,7 +4615,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 240;
+      Index = 232;
       LinkTrId = 0;
       XPos = 133698.296;
       YPos = 21.984;
@@ -4788,7 +4640,7 @@ Group
   Effect
   {
     Name = "EFFECT:SIREN";
-    Index = 241;
+    Index = 233;
     LinkTrId = 0;
     XPos = 133890.274;
     YPos = 24.980;
@@ -4805,7 +4657,7 @@ Group
   Effect
   {
     Name = "EFFECT:SIREN";
-    Index = 242;
+    Index = 234;
     LinkTrId = 0;
     XPos = 134632.452;
     YPos = 24.980;
@@ -4822,12 +4674,12 @@ Group
   Group
   {
     Name = "EFFECT:CAMP";
-    Index = 243;
+    Index = 235;
     Desc = "";
     Effect
     {
       Name = "EFFECT:CAMP";
-      Index = 244;
+      Index = 236;
       LinkTrId = 0;
       XPos = 134340.095;
       YPos = 21.984;
@@ -4844,7 +4696,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 245;
+      Index = 237;
       LinkTrId = 0;
       XPos = 134334.963;
       YPos = 21.984;
@@ -4869,12 +4721,12 @@ Group
   Group
   {
     Name = "EFFECT:CAMP";
-    Index = 246;
+    Index = 238;
     Desc = "";
     Effect
     {
       Name = "EFFECT:CAMP";
-      Index = 247;
+      Index = 239;
       LinkTrId = 0;
       XPos = 134493.006;
       YPos = 21.984;
@@ -4891,7 +4743,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 248;
+      Index = 240;
       LinkTrId = 0;
       XPos = 134493.002;
       YPos = 21.984;
@@ -4916,7 +4768,7 @@ Group
   Effect
   {
     Name = "EFFECT:CAMP";
-    Index = 249;
+    Index = 241;
     LinkTrId = 0;
     XPos = 133714.615;
     YPos = 21.984;
@@ -4933,7 +4785,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 250;
+    Index = 242;
     LinkTrId = 0;
     XPos = 133660.490;
     YPos = 21.984;
@@ -4950,7 +4802,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 251;
+    Index = 243;
     LinkTrId = 0;
     XPos = 134411.043;
     YPos = 21.984;
@@ -4967,7 +4819,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 252;
+    Index = 244;
     LinkTrId = 0;
     XPos = 134266.699;
     YPos = 21.984;
@@ -4984,7 +4836,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 253;
+    Index = 245;
     LinkTrId = 0;
     XPos = 134334.091;
     YPos = 21.984;
@@ -5001,7 +4853,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 254;
+    Index = 246;
     LinkTrId = 0;
     XPos = 134429.495;
     YPos = 21.984;
@@ -5018,12 +4870,12 @@ Group
   Group
   {
     Name = "EFFECT:CAMP";
-    Index = 255;
+    Index = 247;
     Desc = "";
     Effect
     {
       Name = "EFFECT:CAMP";
-      Index = 256;
+      Index = 248;
       LinkTrId = 0;
       XPos = 134482.538;
       YPos = 21.984;
@@ -5040,7 +4892,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 257;
+      Index = 249;
       LinkTrId = 0;
       XPos = 134478.584;
       YPos = 21.984;
@@ -5065,7 +4917,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 258;
+    Index = 250;
     LinkTrId = 0;
     XPos = 135384.192;
     YPos = 21.984;
@@ -5087,7 +4939,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 259;
+    Index = 251;
     LinkTrId = 0;
     XPos = 135414.822;
     YPos = 21.984;
@@ -5109,12 +4961,12 @@ Group
   Group
   {
     Name = "EFFECT:CAMP";
-    Index = 260;
+    Index = 252;
     Desc = "";
     Effect
     {
       Name = "EFFECT:CAMP";
-      Index = 261;
+      Index = 253;
       LinkTrId = 0;
       XPos = 135380.494;
       YPos = 21.989;
@@ -5131,7 +4983,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 262;
+      Index = 254;
       LinkTrId = 0;
       XPos = 135375.401;
       YPos = 21.984;
@@ -5156,7 +5008,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 263;
+    Index = 255;
     LinkTrId = 0;
     XPos = 135355.182;
     YPos = 21.984;
@@ -5178,7 +5030,7 @@ Group
   Block
   {
     Name = "TRUCK:CARGO";
-    Index = 264;
+    Index = 256;
     LinkTrId = 0;
     XPos = 135432.263;
     YPos = 21.984;
@@ -5200,12 +5052,12 @@ Group
   Group
   {
     Name = "PLANE:1";
-    Index = 265;
+    Index = 257;
     Desc = "";
     Block
     {
       Name = "PLANE:1:1:MEDIUM";
-      Index = 266;
+      Index = 258;
       LinkTrId = 0;
       XPos = 135117.498;
       YPos = 21.984;
@@ -5227,7 +5079,7 @@ Group
     Block
     {
       Name = "PLANE:1:1:MEDIUM:CAMO";
-      Index = 267;
+      Index = 259;
       LinkTrId = 0;
       XPos = 135172.393;
       YPos = 21.984;
@@ -5249,7 +5101,7 @@ Group
     Block
     {
       Name = "PLANE:1:1:MEDIUM";
-      Index = 268;
+      Index = 260;
       LinkTrId = 0;
       XPos = 135059.409;
       YPos = 21.984;
@@ -5271,7 +5123,7 @@ Group
     Block
     {
       Name = "PLANE:1:1:LARGE";
-      Index = 269;
+      Index = 261;
       LinkTrId = 0;
       XPos = 135202.671;
       YPos = 21.984;
@@ -5293,7 +5145,7 @@ Group
     Block
     {
       Name = "PLANE:1:LARGE";
-      Index = 270;
+      Index = 262;
       LinkTrId = 0;
       XPos = 135007.087;
       YPos = 21.984;
@@ -5315,7 +5167,7 @@ Group
     Block
     {
       Name = "PLANE:1:0:HUGE:CAMO";
-      Index = 271;
+      Index = 263;
       LinkTrId = 0;
       XPos = 135055.212;
       YPos = 21.984;
@@ -5337,7 +5189,7 @@ Group
     Block
     {
       Name = "PLANE:1:HUGE";
-      Index = 272;
+      Index = 264;
       LinkTrId = 0;
       XPos = 135182.334;
       YPos = 21.984;
@@ -5359,12 +5211,12 @@ Group
     Group
     {
       Name = "PLANE:1:0:HUGE";
-      Index = 273;
+      Index = 265;
       Desc = "";
       Block
       {
         Name = "PLANE:1:0:HUGE";
-        Index = 274;
+        Index = 266;
         LinkTrId = 0;
         XPos = 135019.124;
         YPos = 21.984;
@@ -5386,12 +5238,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 275;
+        Index = 267;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 276;
+          Index = 268;
           LinkTrId = 0;
           XPos = 135002.757;
           YPos = 21.984;
@@ -5418,19 +5270,19 @@ Group
 
     Group
     {
-      Name = "PLANE:1:HUGE";
-      Index = 277;
+      Name = "PLANE:1:0:HUGE:CAMO";
+      Index = 269;
       Desc = "";
       Block
       {
-        Name = "PLANE:1:HUGE";
-        Index = 278;
+        Name = "PLANE:1:0:HUGE:CAMO";
+        Index = 270;
         LinkTrId = 0;
-        XPos = 134965.366;
+        XPos = 134980.822;
         YPos = 21.984;
-        ZPos = 307228.239;
+        ZPos = 307221.896;
         XOri = 0.00;
-        YOri = 86.95;
+        YOri = 314.09;
         ZOri = 0.00;
         Model = "graphics\blocks\static_pe2.mgm";
         Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
@@ -5446,13 +5298,13 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 279;
+        Index = 271;
         LinkTrId = 0;
-        XPos = 134955.682;
+        XPos = 134981.437;
         YPos = 21.984;
-        ZPos = 307220.090;
+        ZPos = 307234.538;
         XOri = 0.00;
-        YOri = 207.86;
+        YOri = 75.00;
         ZOri = 0.00;
         Model = "graphics\blocks\art_position_amb2.mgm";
         Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
@@ -5471,12 +5323,12 @@ Group
     Group
     {
       Name = "PLANE:1:0:HUGE";
-      Index = 280;
+      Index = 272;
       Desc = "";
       Block
       {
         Name = "PLANE:1:0:HUGE";
-        Index = 281;
+        Index = 273;
         LinkTrId = 0;
         XPos = 135114.041;
         YPos = 21.984;
@@ -5498,7 +5350,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 282;
+        Index = 274;
         LinkTrId = 0;
         XPos = 135103.278;
         YPos = 21.984;
@@ -5523,12 +5375,12 @@ Group
     Group
     {
       Name = "PLANE:1:1:MEDIUM";
-      Index = 283;
+      Index = 275;
       Desc = "";
       Block
       {
         Name = "PLANE:1:1:MEDIUM:CAMO";
-        Index = 284;
+        Index = 276;
         LinkTrId = 0;
         XPos = 135084.939;
         YPos = 21.984;
@@ -5550,7 +5402,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 285;
+        Index = 277;
         LinkTrId = 0;
         XPos = 135094.969;
         YPos = 21.984;
@@ -5575,12 +5427,12 @@ Group
     Group
     {
       Name = "PLANE:1:HUGE:CAMO";
-      Index = 286;
+      Index = 278;
       Desc = "";
       Block
       {
         Name = "PLANE:1:HUGE:CAMO";
-        Index = 287;
+        Index = 279;
         LinkTrId = 0;
         XPos = 135083.972;
         YPos = 21.984;
@@ -5602,12 +5454,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 288;
+        Index = 280;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 289;
+          Index = 281;
           LinkTrId = 0;
           XPos = 135067.284;
           YPos = 21.984;
@@ -5635,12 +5487,12 @@ Group
     Group
     {
       Name = "PLANE:1:LARGE";
-      Index = 290;
+      Index = 282;
       Desc = "";
       Block
       {
         Name = "PLANE:1:LARGE";
-        Index = 291;
+        Index = 283;
         LinkTrId = 0;
         XPos = 135258.228;
         YPos = 21.984;
@@ -5662,7 +5514,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 292;
+        Index = 284;
         LinkTrId = 0;
         XPos = 135268.241;
         YPos = 21.984;
@@ -5684,18 +5536,40 @@ Group
     }
     
 
+    Block
+    {
+      Name = "PLANE:1:LARGE";
+      Index = 285;
+      LinkTrId = 0;
+      XPos = 134894.527;
+      YPos = 21.984;
+      ZPos = 307163.900;
+      XOri = 0.00;
+      YOri = 169.58;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
   }
   
 
   Group
   {
     Name = "PLANE:2";
-    Index = 293;
+    Index = 286;
     Desc = "";
     Block
     {
       Name = "PLANE:2:2:MEDIUM";
-      Index = 294;
+      Index = 287;
       LinkTrId = 0;
       XPos = 135280.772;
       YPos = 21.984;
@@ -5717,7 +5591,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:SMALL";
-      Index = 295;
+      Index = 288;
       LinkTrId = 0;
       XPos = 135254.297;
       YPos = 21.984;
@@ -5739,7 +5613,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:MEDIUM";
-      Index = 296;
+      Index = 289;
       LinkTrId = 0;
       XPos = 135198.925;
       YPos = 21.984;
@@ -5761,7 +5635,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:SMALL";
-      Index = 297;
+      Index = 290;
       LinkTrId = 0;
       XPos = 135202.154;
       YPos = 21.984;
@@ -5783,7 +5657,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:SMALL";
-      Index = 298;
+      Index = 291;
       LinkTrId = 0;
       XPos = 135134.791;
       YPos = 21.984;
@@ -5805,7 +5679,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:SMALL";
-      Index = 299;
+      Index = 292;
       LinkTrId = 0;
       XPos = 135153.990;
       YPos = 21.984;
@@ -5827,7 +5701,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:MEDIUM";
-      Index = 300;
+      Index = 293;
       LinkTrId = 0;
       XPos = 135230.396;
       YPos = 21.984;
@@ -5849,7 +5723,7 @@ Group
     Block
     {
       Name = "PLANE:2:LARGE";
-      Index = 301;
+      Index = 294;
       LinkTrId = 0;
       XPos = 135160.486;
       YPos = 21.984;
@@ -5871,12 +5745,12 @@ Group
     Group
     {
       Name = "PLANE:2:HUGE";
-      Index = 302;
+      Index = 295;
       Desc = "";
       Block
       {
         Name = "PLANE:2:HUGE";
-        Index = 303;
+        Index = 296;
         LinkTrId = 0;
         XPos = 135132.169;
         YPos = 21.984;
@@ -5898,7 +5772,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 304;
+        Index = 297;
         LinkTrId = 0;
         XPos = 135143.290;
         YPos = 21.984;
@@ -5923,12 +5797,12 @@ Group
     Group
     {
       Name = "PLANE:2:HUGE";
-      Index = 305;
+      Index = 298;
       Desc = "";
       Block
       {
         Name = "PLANE:2:HUGE";
-        Index = 306;
+        Index = 299;
         LinkTrId = 0;
         XPos = 135309.280;
         YPos = 21.984;
@@ -5950,7 +5824,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 307;
+        Index = 300;
         LinkTrId = 0;
         XPos = 135312.686;
         YPos = 21.984;
@@ -5975,12 +5849,12 @@ Group
     Group
     {
       Name = "PLANE:2:2:SMALL";
-      Index = 308;
+      Index = 301;
       Desc = "";
       Block
       {
         Name = "PLANE:2:2:SMALL";
-        Index = 309;
+        Index = 302;
         LinkTrId = 0;
         XPos = 135314.196;
         YPos = 21.984;
@@ -6002,12 +5876,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 310;
+        Index = 303;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 311;
+          Index = 304;
           LinkTrId = 0;
           XPos = 135299.394;
           YPos = 21.984;
@@ -6035,12 +5909,12 @@ Group
     Group
     {
       Name = "PLANE:2:2:SMALL";
-      Index = 312;
+      Index = 305;
       Desc = "";
       Block
       {
         Name = "PLANE:2:2:SMALL";
-        Index = 313;
+        Index = 306;
         LinkTrId = 0;
         XPos = 135232.265;
         YPos = 21.984;
@@ -6062,12 +5936,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 314;
+        Index = 307;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 315;
+          Index = 308;
           LinkTrId = 0;
           XPos = 135217.697;
           YPos = 21.984;
@@ -6095,15 +5969,15 @@ Group
     Group
     {
       Name = "PLANE:2:HUGE:CAMO";
-      Index = 316;
+      Index = 309;
       Desc = "";
       Block
       {
         Name = "PLANE:2:HUGE:CAMO";
-        Index = 317;
+        Index = 310;
         LinkTrId = 0;
         XPos = 135238.626;
-        YPos = 21.987;
+        YPos = 21.984;
         ZPos = 308077.979;
         XOri = 0.00;
         YOri = 170.12;
@@ -6122,10 +5996,10 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 318;
+        Index = 311;
         LinkTrId = 0;
         XPos = 135229.777;
-        YPos = 21.985;
+        YPos = 21.984;
         ZPos = 308071.332;
         XOri = 0.00;
         YOri = 6.34;
@@ -6147,12 +6021,12 @@ Group
     Group
     {
       Name = "PLANE:2:HUGE:CAMO";
-      Index = 319;
+      Index = 312;
       Desc = "";
       Block
       {
         Name = "PLANE:2:HUGE:CAMO";
-        Index = 320;
+        Index = 313;
         LinkTrId = 0;
         XPos = 135077.954;
         YPos = 21.984;
@@ -6174,7 +6048,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 321;
+        Index = 314;
         LinkTrId = 0;
         XPos = 135070.261;
         YPos = 21.984;
@@ -6199,12 +6073,12 @@ Group
     Group
     {
       Name = "PLANE:2:LARGE:CAMO";
-      Index = 324;
+      Index = 315;
       Desc = "";
       Block
       {
         Name = "PLANE:2:LARGE:CAMO";
-        Index = 322;
+        Index = 316;
         LinkTrId = 0;
         XPos = 135100.480;
         YPos = 21.984;
@@ -6226,7 +6100,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 323;
+        Index = 317;
         LinkTrId = 0;
         XPos = 135091.611;
         YPos = 21.984;
@@ -6242,6 +6116,2222 @@ Group
         DamageReport = 50;
         DamageThreshold = 1;
         DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+  }
+  
+
+  Group
+  {
+    Name = "PLANE:3";
+    Index = 318;
+    Desc = "";
+    Block
+    {
+      Name = "PLANE:3:3:MEDIUM";
+      Index = 319;
+      LinkTrId = 0;
+      XPos = 133999.724;
+      YPos = 21.984;
+      ZPos = 307900.512;
+      XOri = 0.00;
+      YOri = 293.13;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_il2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_il2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:3:3:MEDIUM";
+      Index = 320;
+      LinkTrId = 0;
+      XPos = 133875.439;
+      YPos = 21.984;
+      ZPos = 307844.293;
+      XOri = 0.00;
+      YOri = 294.30;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_il2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_il2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:3:3:LARGE:CAMO";
+      Index = 321;
+      LinkTrId = 0;
+      XPos = 134073.017;
+      YPos = 21.984;
+      ZPos = 307878.803;
+      XOri = 0.00;
+      YOri = 202.94;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:3:3:LARGE";
+      Index = 322;
+      LinkTrId = 0;
+      XPos = 133842.518;
+      YPos = 21.984;
+      ZPos = 307801.304;
+      XOri = 0.00;
+      YOri = 345.53;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:3:HUGE";
+      Index = 323;
+      LinkTrId = 0;
+      XPos = 134036.865;
+      YPos = 21.984;
+      ZPos = 307712.649;
+      XOri = 0.00;
+      YOri = 291.61;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:3:3:MEDIUM:CAMO";
+      Index = 324;
+      LinkTrId = 0;
+      XPos = 133908.989;
+      YPos = 21.984;
+      ZPos = 307857.050;
+      XOri = 0.00;
+      YOri = 296.78;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:3:LARGE";
+      Index = 325;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:3:LARGE";
+        Index = 326;
+        LinkTrId = 0;
+        XPos = 134138.064;
+        YPos = 21.984;
+        ZPos = 307820.706;
+        XOri = 0.00;
+        YOri = 337.40;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 327;
+        LinkTrId = 0;
+        XPos = 134130.364;
+        YPos = 21.984;
+        ZPos = 307814.829;
+        XOri = 0.00;
+        YOri = 198.67;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:3:0:HUGE:CAMO";
+      Index = 328;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:3:0:HUGE:CAMO";
+        Index = 329;
+        LinkTrId = 0;
+        XPos = 134039.541;
+        YPos = 21.984;
+        ZPos = 307769.367;
+        XOri = 0.00;
+        YOri = 128.95;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 330;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 331;
+          LinkTrId = 0;
+          XPos = 134038.158;
+          YPos = 21.984;
+          ZPos = 307750.506;
+          XOri = 0.00;
+          YOri = 337.55;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:3:0:HUGE:CAMO";
+      Index = 332;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:3:0:HUGE:CAMO";
+        Index = 333;
+        LinkTrId = 0;
+        XPos = 133982.650;
+        YPos = 21.984;
+        ZPos = 307751.347;
+        XOri = 0.00;
+        YOri = 100.57;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 334;
+        LinkTrId = 0;
+        XPos = 133975.805;
+        YPos = 21.984;
+        ZPos = 307742.834;
+        XOri = 0.00;
+        YOri = 200.09;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:3:HUGE:CAMO";
+      Index = 335;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:3:HUGE:CAMO";
+        Index = 336;
+        LinkTrId = 0;
+        XPos = 133926.493;
+        YPos = 21.984;
+        ZPos = 307708.628;
+        XOri = 0.00;
+        YOri = 245.44;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 337;
+        LinkTrId = 0;
+        XPos = 133916.939;
+        YPos = 21.984;
+        ZPos = 307706.605;
+        XOri = 0.00;
+        YOri = 211.70;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:3:LARGE";
+      Index = 338;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:3:LARGE";
+        Index = 339;
+        LinkTrId = 0;
+        XPos = 133863.583;
+        YPos = 21.984;
+        ZPos = 307699.479;
+        XOri = 0.00;
+        YOri = 0.08;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 340;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 341;
+          LinkTrId = 0;
+          XPos = 133874.164;
+          YPos = 21.984;
+          ZPos = 307707.082;
+          XOri = 0.00;
+          YOri = 254.13;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:3:3:MEDIUM";
+      Index = 342;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:3:3:MEDIUM";
+        Index = 343;
+        LinkTrId = 0;
+        XPos = 133936.605;
+        YPos = 21.984;
+        ZPos = 307875.345;
+        XOri = 0.00;
+        YOri = 293.13;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_il2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_il2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 344;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 345;
+          LinkTrId = 0;
+          XPos = 133962.843;
+          YPos = 21.984;
+          ZPos = 307872.210;
+          XOri = 0.00;
+          YOri = 254.54;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:3:LARGE:CAMO";
+      Index = 346;
+      Desc = "";
+      Group
+      {
+        Name = "TRUCK:CARGO";
+        Index = 347;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:CARGO";
+          Index = 348;
+          LinkTrId = 0;
+          XPos = 134028.514;
+          YPos = 21.984;
+          ZPos = 307924.438;
+          XOri = 0.00;
+          YOri = 145.76;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+        Block
+        {
+          Name = "DECO";
+          Index = 349;
+          LinkTrId = 0;
+          XPos = 134034.268;
+          YPos = 21.984;
+          ZPos = 307919.866;
+          XOri = 0.00;
+          YOri = 342.26;
+          ZOri = 0.00;
+          Model = "graphics\blocks\art_position_amb1.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+      Block
+      {
+        Name = "PLANE:3:LARGE:CAMO";
+        Index = 350;
+        LinkTrId = 0;
+        XPos = 134038.019;
+        YPos = 21.984;
+        ZPos = 307941.963;
+        XOri = 0.00;
+        YOri = 84.14;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+  }
+  
+
+  Group
+  {
+    Name = "PLANE:4";
+    Index = 351;
+    Desc = "";
+    Group
+    {
+      Name = "PLANE:4:4:MEDIUM";
+      Index = 352;
+      Desc = "";
+      Group
+      {
+        Name = "TRUCK:CARGO";
+        Index = 353;
+        Desc = "";
+        Block
+        {
+          Name = "DECO";
+          Index = 354;
+          LinkTrId = 0;
+          XPos = 134081.380;
+          YPos = 21.984;
+          ZPos = 307212.161;
+          XOri = 0.00;
+          YOri = 70.97;
+          ZOri = 0.00;
+          Model = "graphics\blocks\art_position_amb1.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+        Block
+        {
+          Name = "TRUCK:CARGO";
+          Index = 355;
+          LinkTrId = 0;
+          XPos = 134077.578;
+          YPos = 21.984;
+          ZPos = 307205.636;
+          XOri = 0.00;
+          YOri = 246.56;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+      Block
+      {
+        Name = "PLANE:4:4:MEDIUM";
+        Index = 356;
+        LinkTrId = 0;
+        XPos = 134097.487;
+        YPos = 21.984;
+        ZPos = 307202.746;
+        XOri = 0.00;
+        YOri = 222.01;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_il2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_il2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:4:4:MEDIUM";
+      Index = 357;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:4:4:MEDIUM";
+        Index = 358;
+        LinkTrId = 0;
+        XPos = 134029.903;
+        YPos = 21.984;
+        ZPos = 307299.904;
+        XOri = 0.00;
+        YOri = 222.61;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_il2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_il2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 359;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 360;
+          LinkTrId = 0;
+          XPos = 134006.746;
+          YPos = 21.984;
+          ZPos = 307305.375;
+          XOri = 0.00;
+          YOri = 75.20;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:4:SMALL";
+      Index = 361;
+      LinkTrId = 0;
+      XPos = 134059.059;
+      YPos = 21.984;
+      ZPos = 307271.410;
+      XOri = 0.00;
+      YOri = 217.49;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_lagg3.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_lagg3.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:4:SMALL";
+      Index = 362;
+      LinkTrId = 0;
+      XPos = 134076.073;
+      YPos = 21.984;
+      ZPos = 307240.653;
+      XOri = 0.00;
+      YOri = 204.98;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_lagg3.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_lagg3.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:4:SMALL";
+      Index = 363;
+      LinkTrId = 0;
+      XPos = 134124.710;
+      YPos = 21.984;
+      ZPos = 307167.148;
+      XOri = 0.00;
+      YOri = 205.76;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_lagg3.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_lagg3.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:LARGE";
+      Index = 364;
+      LinkTrId = 0;
+      XPos = 133970.046;
+      YPos = 21.984;
+      ZPos = 307321.802;
+      XOri = 0.00;
+      YOri = 148.63;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:0:SMALL";
+      Index = 365;
+      LinkTrId = 0;
+      XPos = 133959.232;
+      YPos = 21.984;
+      ZPos = 307158.230;
+      XOri = 0.00;
+      YOri = 39.49;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_lagg3.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_lagg3.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:0:SMALL";
+      Index = 366;
+      LinkTrId = 0;
+      XPos = 133910.592;
+      YPos = 21.984;
+      ZPos = 307201.759;
+      XOri = 0.00;
+      YOri = 25.79;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_lagg3.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_lagg3.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:LARGE";
+      Index = 367;
+      LinkTrId = 0;
+      XPos = 133986.304;
+      YPos = 21.984;
+      ZPos = 307100.395;
+      XOri = 0.00;
+      YOri = 249.21;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:LARGE:CAMO";
+      Index = 368;
+      LinkTrId = 0;
+      XPos = 134019.788;
+      YPos = 21.984;
+      ZPos = 307352.915;
+      XOri = 0.00;
+      YOri = 46.70;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:4:HUGE:CAMO";
+      Index = 369;
+      LinkTrId = 0;
+      XPos = 134109.789;
+      YPos = 21.984;
+      ZPos = 307300.594;
+      XOri = 0.00;
+      YOri = 329.41;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:4:LARGE";
+      Index = 370;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:4:LARGE";
+        Index = 371;
+        LinkTrId = 0;
+        XPos = 133922.349;
+        YPos = 21.984;
+        ZPos = 307364.936;
+        XOri = 0.00;
+        YOri = 323.57;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 372;
+        LinkTrId = 0;
+        XPos = 133924.247;
+        YPos = 21.984;
+        ZPos = 307373.973;
+        XOri = 0.00;
+        YOri = 98.53;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:4:4:LARGE";
+      Index = 373;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:4:4:LARGE";
+        Index = 374;
+        LinkTrId = 0;
+        XPos = 134114.404;
+        YPos = 21.984;
+        ZPos = 307122.768;
+        XOri = 0.00;
+        YOri = 156.38;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 375;
+        LinkTrId = 0;
+        XPos = 134111.616;
+        YPos = 21.984;
+        ZPos = 307111.148;
+        XOri = 0.00;
+        YOri = 295.31;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:4:LARGE";
+      Index = 376;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:4:LARGE";
+        Index = 377;
+        LinkTrId = 0;
+        XPos = 133936.656;
+        YPos = 21.984;
+        ZPos = 307117.616;
+        XOri = 0.00;
+        YOri = 182.89;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 378;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 379;
+          LinkTrId = 0;
+          XPos = 133947.566;
+          YPos = 21.984;
+          ZPos = 307106.872;
+          XOri = 0.00;
+          YOri = 24.46;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:4:0:HUGE";
+      Index = 380;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:4:0:HUGE";
+        Index = 381;
+        LinkTrId = 0;
+        XPos = 133902.054;
+        YPos = 21.984;
+        ZPos = 307251.961;
+        XOri = 0.00;
+        YOri = 1.70;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 382;
+        LinkTrId = 0;
+        XPos = 133894.944;
+        YPos = 21.984;
+        ZPos = 307243.427;
+        XOri = 0.00;
+        YOri = 147.88;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+  }
+  
+
+  Group
+  {
+    Name = "PLANE:5";
+    Index = 385;
+    Desc = "";
+    Block
+    {
+      Name = "PLANE:5:HUGE:CAMO";
+      Index = 387;
+      LinkTrId = 0;
+      XPos = 134393.324;
+      YPos = 21.984;
+      ZPos = 307795.026;
+      XOri = 0.00;
+      YOri = 309.10;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:5:HUGE";
+      Index = 388;
+      LinkTrId = 0;
+      XPos = 134375.167;
+      YPos = 21.984;
+      ZPos = 307924.989;
+      XOri = 0.00;
+      YOri = 286.22;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:5:HUGE:CAMO";
+      Index = 389;
+      LinkTrId = 0;
+      XPos = 134511.320;
+      YPos = 21.984;
+      ZPos = 307822.647;
+      XOri = 0.00;
+      YOri = 335.59;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:5:0:HUGE:CAMO";
+      Index = 392;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:5:0:HUGE:CAMO";
+        Index = 386;
+        LinkTrId = 0;
+        XPos = 134417.614;
+        YPos = 21.984;
+        ZPos = 307916.106;
+        XOri = 0.00;
+        YOri = 245.60;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 391;
+        LinkTrId = 0;
+        XPos = 134414.227;
+        YPos = 21.984;
+        ZPos = 307926.630;
+        XOri = 0.00;
+        YOri = 125.13;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:5:HUGE";
+      Index = 394;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:5:HUGE";
+        Index = 390;
+        LinkTrId = 0;
+        XPos = 134467.623;
+        YPos = 21.984;
+        ZPos = 307807.661;
+        XOri = 0.00;
+        YOri = 103.44;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 393;
+        LinkTrId = 0;
+        XPos = 134455.458;
+        YPos = 21.984;
+        ZPos = 307799.425;
+        XOri = 0.00;
+        YOri = 283.43;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:5:0:HUGE";
+      Index = 396;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:5:0:HUGE";
+        Index = 383;
+        LinkTrId = 0;
+        XPos = 134371.857;
+        YPos = 21.984;
+        ZPos = 307843.617;
+        XOri = 0.00;
+        YOri = 68.69;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 398;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 395;
+          LinkTrId = 0;
+          XPos = 134379.628;
+          YPos = 21.984;
+          ZPos = 307830.560;
+          XOri = 0.00;
+          YOri = 309.46;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:5:0:HUGE:CAMO";
+      Index = 400;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:5:0:HUGE:CAMO";
+        Index = 384;
+        LinkTrId = 0;
+        XPos = 134419.393;
+        YPos = 21.984;
+        ZPos = 307830.499;
+        XOri = 0.00;
+        YOri = 80.77;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 399;
+        LinkTrId = 0;
+        XPos = 134412.001;
+        YPos = 21.984;
+        ZPos = 307822.212;
+        XOri = 0.00;
+        YOri = 336.79;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+  }
+  
+
+  Group
+  {
+    Name = "PLANE:6";
+    Index = 404;
+    Desc = "";
+    Block
+    {
+      Name = "PLANE:6:HUGE";
+      Index = 403;
+      LinkTrId = 0;
+      XPos = 134908.593;
+      YPos = 21.984;
+      ZPos = 307916.252;
+      XOri = 0.00;
+      YOri = 317.21;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:6:0:HUGE";
+      Index = 407;
+      LinkTrId = 0;
+      XPos = 134787.662;
+      YPos = 21.984;
+      ZPos = 307992.805;
+      XOri = 0.00;
+      YOri = 311.60;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:6:LARGE:CAMO";
+      Index = 409;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:6:LARGE:CAMO";
+        Index = 406;
+        LinkTrId = 0;
+        XPos = 134975.041;
+        YPos = 21.984;
+        ZPos = 307993.534;
+        XOri = 0.00;
+        YOri = 323.67;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 408;
+        LinkTrId = 0;
+        XPos = 134964.411;
+        YPos = 21.984;
+        ZPos = 307993.980;
+        XOri = 0.00;
+        YOri = 211.76;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:6:0:HUGE:CAMO";
+      Index = 411;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:6:0:HUGE:CAMO";
+        Index = 405;
+        LinkTrId = 0;
+        XPos = 134857.505;
+        YPos = 21.991;
+        ZPos = 308030.713;
+        XOri = 0.00;
+        YOri = 260.35;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 410;
+        LinkTrId = 0;
+        XPos = 134848.355;
+        YPos = 21.991;
+        ZPos = 308034.073;
+        XOri = 0.00;
+        YOri = 295.00;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:6:0:HUGE:CAMO";
+      Index = 413;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:6:0:HUGE:CAMO";
+        Index = 402;
+        LinkTrId = 0;
+        XPos = 134836.286;
+        YPos = 21.984;
+        ZPos = 307937.404;
+        XOri = 0.00;
+        YOri = 123.28;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 412;
+        LinkTrId = 0;
+        XPos = 134832.368;
+        YPos = 21.984;
+        ZPos = 307925.957;
+        XOri = 0.00;
+        YOri = 339.41;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:6:0:HUGE:CAMO";
+      Index = 415;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:6:0:HUGE:CAMO";
+        Index = 401;
+        LinkTrId = 0;
+        XPos = 134882.173;
+        YPos = 21.984;
+        ZPos = 307947.091;
+        XOri = 0.00;
+        YOri = 106.89;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 417;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 414;
+          LinkTrId = 0;
+          XPos = 134899.673;
+          YPos = 21.984;
+          ZPos = 307941.663;
+          XOri = 0.00;
+          YOri = 56.86;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+    }
+    
+
+  }
+  
+
+  Group
+  {
+    Name = "PLANE:7";
+    Index = 424;
+    Desc = "";
+    Block
+    {
+      Name = "PLANE:7:HUGE";
+      Index = 418;
+      LinkTrId = 0;
+      XPos = 134176.258;
+      YPos = 21.984;
+      ZPos = 306819.813;
+      XOri = 0.00;
+      YOri = 59.84;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:7:HUGE:CAMO";
+      Index = 423;
+      LinkTrId = 0;
+      XPos = 134082.421;
+      YPos = 21.984;
+      ZPos = 306710.970;
+      XOri = 0.00;
+      YOri = 347.30;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:7:HUGE";
+      Index = 426;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:7:HUGE";
+        Index = 422;
+        LinkTrId = 0;
+        XPos = 134082.434;
+        YPos = 21.984;
+        ZPos = 306774.770;
+        XOri = 0.00;
+        YOri = 161.16;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 425;
+        LinkTrId = 0;
+        XPos = 134087.614;
+        YPos = 21.984;
+        ZPos = 306763.774;
+        XOri = 0.00;
+        YOri = 234.35;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:7:0:HUGE:CAMO";
+      Index = 428;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:7:0:HUGE:CAMO";
+        Index = 421;
+        LinkTrId = 0;
+        XPos = 134191.195;
+        YPos = 21.984;
+        ZPos = 306668.273;
+        XOri = 0.00;
+        YOri = 168.77;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 427;
+        LinkTrId = 0;
+        XPos = 134203.098;
+        YPos = 21.984;
+        ZPos = 306673.994;
+        XOri = 0.00;
+        YOri = 268.36;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:7:0:HUGE:CAMO";
+      Index = 430;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:7:0:HUGE:CAMO";
+        Index = 419;
+        LinkTrId = 0;
+        XPos = 134114.083;
+        YPos = 21.984;
+        ZPos = 306727.269;
+        XOri = 0.00;
+        YOri = 11.56;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 429;
+        LinkTrId = 0;
+        XPos = 134108.396;
+        YPos = 21.984;
+        ZPos = 306715.581;
+        XOri = 0.00;
+        YOri = 329.02;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:7:0:HUGE:CAMO";
+      Index = 432;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:7:0:HUGE:CAMO";
+        Index = 420;
+        LinkTrId = 0;
+        XPos = 134125.650;
+        YPos = 21.984;
+        ZPos = 306664.499;
+        XOri = 0.00;
+        YOri = 0.46;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 434;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 431;
+          LinkTrId = 0;
+          XPos = 134114.150;
+          YPos = 21.984;
+          ZPos = 306677.925;
+          XOri = 0.00;
+          YOri = 119.83;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
+      }
+      
+
+    }
+    
+
+  }
+  
+
+  Group
+  {
+    Name = "PLANE:8";
+    Index = 437;
+    Desc = "";
+    Block
+    {
+      Name = "PLANE:8:HUGE:CAMO";
+      Index = 436;
+      LinkTrId = 0;
+      XPos = 134734.311;
+      YPos = 21.984;
+      ZPos = 307056.529;
+      XOri = 0.00;
+      YOri = 305.44;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:8:HUGE:CAMO";
+      Index = 440;
+      LinkTrId = 0;
+      XPos = 134187.095;
+      YPos = 21.984;
+      ZPos = 307043.358;
+      XOri = 0.00;
+      YOri = 239.94;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_pe2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:8:HUGE";
+      Index = 443;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:8:HUGE";
+        Index = 435;
+        LinkTrId = 0;
+        XPos = 134785.724;
+        YPos = 21.984;
+        ZPos = 307081.668;
+        XOri = 0.00;
+        YOri = 81.04;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 442;
+        LinkTrId = 0;
+        XPos = 134775.157;
+        YPos = 21.984;
+        ZPos = 307074.480;
+        XOri = 0.00;
+        YOri = 304.77;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:8:HUGE";
+      Index = 445;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:8:HUGE";
+        Index = 441;
+        LinkTrId = 0;
+        XPos = 134221.925;
+        YPos = 21.984;
+        ZPos = 306953.970;
+        XOri = 0.00;
+        YOri = 311.92;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 444;
+        LinkTrId = 0;
+        XPos = 134213.340;
+        YPos = 21.984;
+        ZPos = 306955.485;
+        XOri = 0.00;
+        YOri = 8.60;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb1.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:8:HUGE";
+      Index = 447;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:8:HUGE";
+        Index = 438;
+        LinkTrId = 0;
+        XPos = 134537.999;
+        YPos = 21.984;
+        ZPos = 307034.170;
+        XOri = 0.00;
+        YOri = 61.59;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Block
+      {
+        Name = "DECO";
+        Index = 446;
+        LinkTrId = 0;
+        XPos = 134546.433;
+        YPos = 21.984;
+        ZPos = 307027.818;
+        XOri = 0.00;
+        YOri = 97.25;
+        ZOri = 0.00;
+        Model = "graphics\blocks\art_position_amb2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+    }
+    
+
+    Group
+    {
+      Name = "PLANE:8:HUGE:CAMO";
+      Index = 449;
+      Desc = "";
+      Block
+      {
+        Name = "PLANE:8:HUGE:CAMO";
+        Index = 439;
+        LinkTrId = 0;
+        XPos = 134235.530;
+        YPos = 21.984;
+        ZPos = 307036.970;
+        XOri = 0.00;
+        YOri = 261.34;
+        ZOri = 0.00;
+        Model = "graphics\blocks\static_pe2.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_pe2.txt";
+        Country = 0;
+        Desc = "";
+        Durability = 25000;
+        DamageReport = 50;
+        DamageThreshold = 1;
+        DeleteAfterDeath = 1;
+      }
+      
+
+      Group
+      {
+        Name = "TRUCK:FUEL";
+        Index = 451;
+        Desc = "";
+        Block
+        {
+          Name = "TRUCK:FUEL";
+          Index = 448;
+          LinkTrId = 0;
+          XPos = 134225.239;
+          YPos = 21.984;
+          ZPos = 307053.618;
+          XOri = 0.00;
+          YOri = 26.26;
+          ZOri = 0.00;
+          Model = "graphics\blocks\static_zis_fuel.mgm";
+          Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
+          Country = 0;
+          Desc = "";
+          Durability = 25000;
+          DamageReport = 50;
+          DamageThreshold = 1;
+          DeleteAfterDeath = 1;
+        }
+        
+
       }
       
 
