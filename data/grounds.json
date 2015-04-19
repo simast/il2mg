@@ -1,0 +1,14 @@
+{
+	"crater_16": {
+		"model": "graphics\\grounds\\crater_16.mgm"
+	},
+	"crater_50": {
+		"model": "graphics\\grounds\\crater_50.mgm"
+	},
+	"crater_150": {
+		"model": "graphics\\grounds\\crater_150.mgm"
+	},
+	"crater_plane": {
+		"model": "graphics\\grounds\\crater_plane.mgm"
+	}
+}

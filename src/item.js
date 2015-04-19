@@ -623,13 +623,14 @@ Item.readTextFile = function(file) {
 
 module.exports = Item;
 
-// Load all supported mission items
+// Load all supported mission item types
 [
 	require("./item/Airfield"),
 	require("./item/Block"),
 	require("./item/Bridge"),
 	require("./item/Effect"),
 	require("./item/Flag"),
+	require("./item/Ground"),
 	require("./item/Group"),
 	require("./item/MCU_Activate"),
 	require("./item/MCU_CMD_Effect"),
