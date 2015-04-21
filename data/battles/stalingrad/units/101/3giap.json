@@ -1,0 +1,12 @@
+{
+	// 3 GIAP
+	"3giap": {
+		"name": "3 GIAP",
+		"airfields": [
+			["solodovka", "start", "end"]
+		],
+		"planes": [
+			["la5s8", 16, "start", "end"]
+		]
+	}
+}
