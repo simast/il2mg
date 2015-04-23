@@ -29,10 +29,18 @@ module.exports = function makeFlight(params) {
 	while (Array.isArray(this.unitsByID[params.unit])) {
 		params.unit = rand.pick(this.unitsByID[params.unit]);
 	}
+	
+	// Set default flight state
+	if (params.state === undefined) {
+		params.state = "apron";
+	}
 
 	var unit = this.unitsByID[params.unit];
 	var plane = this.planesByID[rand.pick(unit.planes)];
 	var airfield = this.airfieldsByID[unit.airfield];
+	
+	// TODO: Use airfield.planesByUnit
+	// TODO: Use airfield.taxiSpawnsBySector
 
 	var Plane = Item.Plane;
 	var planeObject = this.createItem("Plane");

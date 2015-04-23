@@ -11,7 +11,35 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	var planeTaxiRoute = item[5];
 	var planeMaxSize = item[6];
 	var planesBySector = airfield.planesBySector;
+	
+	// Build taxi spawn point by sector index (required for spawning flights)
+	var taxiSpawnsBySector = airfield.taxiSpawnsBySector;
+	var taxiSpawn;
+	
+	if (taxiSpawnsBySector) {
 
+		if (!taxiSpawnsBySector[planeSector]) {
+			taxiSpawnsBySector[planeSector] = Object.create(null);
+		}
+		
+		if (planeTaxiRoute !== false) {
+			
+			if (!taxiSpawnsBySector[planeSector][planeTaxiRoute]) {
+				taxiSpawnsBySector[planeSector][planeTaxiRoute] = [];
+			}
+			
+			taxiSpawn = [
+				item[1], // X position
+				item[2], // Z position
+				item[3], // Orientation
+				item[6] // Max plane size
+			];
+			
+			taxiSpawnsBySector[planeSector][planeTaxiRoute].push(taxiSpawn);
+		}
+	}
+
+	// No active planes
 	if (!planesBySector || !planesBySector[planeSector] ||
 			!planesBySector[planeSector][planeMaxSize]) {
 
@@ -94,12 +122,19 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	itemObject.setPosition(positionX, positionZ);
 	itemObject.setOrientation(orientation);
 	
-	// Build an index of plane objects per unit (used for spawning flights)
+	// Build plane item count by unit and sector index (required for spawning flights)
 	var unitID = planeData[2];
 	
 	planesByUnit[unitID] = planesByUnit[unitID] || Object.create(null);
-	planesByUnit[unitID][planeSector] = planesByUnit[unitID][planeSector] || [];
-	planesByUnit[unitID][planeSector].push(itemObject);
+	planesByUnit[unitID][planeSector] = planesByUnit[unitID][planeSector] || 0;
+	planesByUnit[unitID][planeSector]++;
+	
+	// Assign static plane item object to current taxi point
+	if (taxiSpawn) {
+		
+		taxiSpawn.push(plane.group); // Plane group ID
+		taxiSpawn.push(itemObject); // Plane static item object
+	}
 
 	return [itemObject];
 };
