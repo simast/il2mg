@@ -12,7 +12,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	var planeMaxSize = item[6];
 	var planesBySector = airfield.planesBySector;
 	
-	// Build taxi spawn point by sector index (required for spawning flights)
+	// Build taxi spawn point by sector index (used when spawning flights)
 	var taxiSpawnsBySector = airfield.taxiSpawnsBySector;
 	var taxiSpawn;
 	
@@ -28,12 +28,11 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 				taxiSpawnsBySector[planeSector][planeTaxiRoute] = [];
 			}
 			
-			taxiSpawn = [
-				item[1], // X position
-				item[2], // Z position
-				item[3], // Orientation
-				item[6] // Max plane size
-			];
+			taxiSpawn = {
+				position: [item[1], item[2]], // X/Z position
+				orientation: item[3], // Orientation
+				size: item[6] // Max plane size
+			};
 			
 			taxiSpawnsBySector[planeSector][planeTaxiRoute].push(taxiSpawn);
 		}
@@ -54,7 +53,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 
 	var rand = this.rand;
 	var plane = this.planesByID[planeData[0]];
-	var planesByUnit = airfield.planesByUnit;
+	var planeItemsByUnit = airfield.planeItemsByUnit;
 	var staticPlanes = rand.shuffle(plane.static || []);
 	var planeStatic;
 	var planeSizeID = planeSize[String(plane.size).toUpperCase()];
@@ -122,18 +121,25 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	itemObject.setPosition(positionX, positionZ);
 	itemObject.setOrientation(orientation);
 	
-	// Build plane item count by unit and sector index (required for spawning flights)
+	// Build plane item count by unit and sector index (used when spawning flights)
 	var unitID = planeData[2];
 	
-	planesByUnit[unitID] = planesByUnit[unitID] || Object.create(null);
-	planesByUnit[unitID][planeSector] = planesByUnit[unitID][planeSector] || 0;
-	planesByUnit[unitID][planeSector]++;
+	planeItemsByUnit[unitID] = planeItemsByUnit[unitID] || Object.create(null);
+	planeItemsByUnit[unitID][planeSector] = planeItemsByUnit[unitID][planeSector] || [];
+	planeItemsByUnit[unitID][planeSector].push(itemObject);
 	
 	// Assign static plane item object to current taxi point
 	if (taxiSpawn) {
 		
-		taxiSpawn.push(plane.group); // Plane group ID
-		taxiSpawn.push(itemObject); // Plane static item object
+		taxiSpawn.group = plane.group; // Plane group ID
+		taxiSpawn.item = itemObject; // Plane static item object
+		
+		// Weighted array of taxi spawn sector IDs by plane group (used when spawning flights)
+		if (planeTaxiRoute > 0) {
+			
+			airfield.taxiSectorsByPlaneGroup[plane.group] = airfield.taxiSectorsByPlaneGroup[plane.group] || [];
+			airfield.taxiSectorsByPlaneGroup[plane.group].push(planeSector);
+		}
 	}
 
 	return [itemObject];

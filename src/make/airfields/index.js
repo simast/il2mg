@@ -88,8 +88,9 @@ module.exports = function makeAirfields() {
 			airfield.countries = Object.create(null);
 			airfield.countriesWeighted = []; // List of country IDs as a weighted array
 			airfield.planesBySector = Object.create(null);
-			airfield.planesByUnit = Object.create(null);
+			airfield.planeItemsByUnit = Object.create(null);
 			airfield.taxiSpawnsBySector = Object.create(null);
+			airfield.taxiSectorsByPlaneGroup = Object.create(null);
 
 			// Process unit planes list
 			for (var unitID in airfieldUnits) {
