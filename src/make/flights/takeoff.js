@@ -17,4 +17,5 @@ module.exports = function makeFlightTakeoff(flight) {
 
 	takeoffCommand.setPositionNear(missionBegin);
 	takeoffCommand.addObject(leaderPlane.item);
+	takeoffCommand.YPos += 250;
 };

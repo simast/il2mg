@@ -352,6 +352,13 @@ module.exports = function(grunt) {
 								taxiRoute.push(taxiRunwayID);
 								taxiRoute.push(taxiInvert);
 
+								// Taxi route spawn point for coop missions
+								taxiRoute.push([
+									item.XPos,
+									item.ZPos,
+									item.YOri
+								]);
+
 								// Build taxi route waypoint list
 								for (var taxiPoint of taxiPoints) {
 

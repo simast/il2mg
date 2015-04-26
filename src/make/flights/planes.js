@@ -21,7 +21,7 @@ module.exports = function makeFlightPlanes(flight) {
 	var leaderPlane = flight.planes[0];
 	
 	// Create all plane item objects
-	flight.planes.forEach(function(plane) {
+	flight.planes.forEach(function(plane, planeIndex) {
 
 		var planeData = mission.planesByID[plane.id];
 		var isPlayerPlane = (plane === flight.planes.player);
@@ -125,6 +125,7 @@ module.exports = function makeFlightPlanes(flight) {
 		planeObject.Script = planeData.script;
 		planeObject.Model = planeData.model;
 		planeObject.Country = unit.country;
+		planeObject.NumberInFormation = planeIndex;
 
 		// Player plane item
 		if (plane === flight.planes.player) {

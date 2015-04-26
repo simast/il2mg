@@ -6,6 +6,7 @@ var Item = require("../item");
 // Flag item
 function Flag() {
 
+	this.Radius = 1;
 }
 
 Flag.prototype = Object.create(Item.prototype);

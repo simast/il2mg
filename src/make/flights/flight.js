@@ -3,6 +3,7 @@
 
 // Flight make parts
 var makeFlightPlanes = require("./planes");
+var makeAirfieldTaxi = require("../airfields/taxi");
 var makeFlightTakeoff = require("./takeoff");
 
 // Flight states
@@ -174,8 +175,13 @@ function makeFlight(params) {
 	flight.group.setName(unit.name);
 	
 	// Make flight parts
-	makeFlightPlanes.call(this, flight);
-	makeFlightTakeoff.call(this, flight);
+	makeFlightPlanes.call(mission, flight);
+	makeFlightTakeoff.call(mission, flight);
+
+	// Enable airfield taxi route
+	if (flight.taxi > 0) {
+		makeAirfieldTaxi.call(mission, airfield, flight.taxi);
+	}
 	
 	return flight;
 }

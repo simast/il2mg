@@ -367,8 +367,6 @@ Item.prototype.toString = function(indentLevel) {
 	// Serialize any child items
 	if (this.items && this.items.length) {
 
-		indentLevel++;
-
 		this.items.forEach(function(item) {
 
 			value += os.EOL;
@@ -378,7 +376,7 @@ Item.prototype.toString = function(indentLevel) {
 				value += os.EOL;
 			}
 
-			value += item.toString(indentLevel);
+			value += item.toString(indentLevel + 1);
 		});
 	}
 
