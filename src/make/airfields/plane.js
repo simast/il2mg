@@ -131,8 +131,8 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	// Assign static plane item object to current taxi point
 	if (taxiSpawn) {
 		
-		taxiSpawn.group = plane.group; // Plane group ID
-		taxiSpawn.item = itemObject; // Plane static item object
+		taxiSpawn.planeGroup = plane.group; // Plane group ID
+		taxiSpawn.plane = itemObject; // Plane static item object
 		
 		// Weighted array of taxi spawn sector IDs by plane group (used when spawning flights)
 		if (planeTaxiRoute > 0) {

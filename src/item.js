@@ -61,7 +61,40 @@ Item.prototype.addItem = function(item) {
 		Object.defineProperty(this, "items", {value: []});
 	}
 
+	// Add child item
 	this.items.push(item);
+
+	// Set child item parent reference
+	Object.defineProperty(item, "parent", {
+		value: this,
+		configurable: true
+	});
+};
+
+/**
+ * Remove/detach item from parent item hierarchy.
+ */
+Item.prototype.remove = function() {
+
+	if (!this.parent) {
+		throw new Error("Item has no parent.");
+	}
+
+	var parent = this.parent;
+
+	if (!parent.items || !parent.items.length) {
+		throw new Error("Parent item has no children.");
+	}
+
+	var itemIndex = parent.items.indexOf(this);
+
+	if (itemIndex < 0) {
+		throw new Error("Item is not part of a parent.");
+	}
+
+	// Remove item from parent item hierarchy
+	parent.items.splice(itemIndex, 1);
+	delete this.parent;
 };
 
 /**

@@ -118,7 +118,14 @@ Mission.prototype.addItem = function(item) {
 		throw new TypeError("Invalid item value.");
 	}
 
+	// Add child item
 	this.items.push(item);
+
+	// Set child item parent reference
+	Object.defineProperty(item, "parent", {
+		value: this,
+		configurable: true
+	});
 };
 
 /**
