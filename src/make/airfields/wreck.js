@@ -32,8 +32,9 @@ module.exports = function makeAirfieldWreck(airfield, item) {
 	var itemDamaged = new Item("Damaged");
 
 	var positionX = item[1];
-	var positionZ = item[2];
-	var orientation = item[3];
+	var positionY = item[2];
+	var positionZ = item[3];
+	var orientation = item[4];
 	var orientationOffset = 15;
 
 	// Slightly vary/randomize wreck item orientation
@@ -42,7 +43,7 @@ module.exports = function makeAirfieldWreck(airfield, item) {
 
 	itemObject.Model = wreck.model;
 	itemObject.Script = wreck.script;
-	itemObject.setPosition(positionX, positionZ);
+	itemObject.setPosition(positionX, positionY, positionZ);
 	itemObject.setOrientation(orientation);
 
 	// Set plane/vehicle damaged state (for destroyed effect)

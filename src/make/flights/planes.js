@@ -64,8 +64,8 @@ module.exports = function makeFlightPlanes(flight) {
 			var orientationOffset = 15;
 
 			positionX = spawnPoint.position[0];
-			positionY = 0;
-			positionZ = spawnPoint.position[1];
+			positionY = spawnPoint.position[1];
+			positionZ = spawnPoint.position[2];
 			orientation = spawnPoint.orientation;
 
 			// Limit position offset for player-only taxi routes

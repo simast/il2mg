@@ -194,7 +194,7 @@ Item.prototype.setPositionNear = function(item) {
 	var posX = item.XPos + magnitude * Math.cos(orientation);
 	var posZ = item.ZPos + magnitude * Math.sin(orientation);
 
-	this.setPosition(posX, item.posY, posZ);
+	this.setPosition(posX, item.YPos, posZ);
 };
 
 /**

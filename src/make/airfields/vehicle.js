@@ -84,7 +84,8 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	var itemObject = this.createItem(isStatic ? "Block" : "Vehicle", false);
 
 	var positionX = item[1];
-	var positionZ = item[2];
+	var positionY = item[2];
+	var positionZ = item[3];
 
 	// Slightly vary/randomize static vehicle position
 	if (isStatic) {
@@ -94,12 +95,12 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	}
 
 	// Slightly vary/randomize vehicle orientation
-	var orientation = Math.max((item[3] + rand.real(-20, 20) + 360) % 360, 0);
+	var orientation = Math.max((item[4] + rand.real(-20, 20) + 360) % 360, 0);
 
 	itemObject.Country = countryID;
 	itemObject.Model = isStatic ? vehicle.static.model : vehicle.model;
 	itemObject.Script = isStatic ? vehicle.static.script : vehicle.script;
-	itemObject.setPosition(positionX, positionZ);
+	itemObject.setPosition(positionX, positionY, positionZ);
 	itemObject.setOrientation(orientation);
 
 	if (isStatic) {

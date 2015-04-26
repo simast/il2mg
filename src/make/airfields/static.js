@@ -11,11 +11,11 @@ module.exports = function makeAirfieldStatic(airfield, item) {
 
 	itemObject.Model = itemType.model;
 	itemObject.Script = itemType.script;
-	itemObject.setPosition(item[1], item[2]);
-	itemObject.setOrientation(item[3]);
+	itemObject.setPosition(item[1], item[2], item[3]);
+	itemObject.setOrientation(item[4]);
 
 	// Decoration item
-	if (item[4] === itemFlags.BLOCK_DECO) {
+	if (item[5] === itemFlags.BLOCK_DECO) {
 		itemObject.Durability = 500;
 	}
 	// Set static item country (required for spawning infantry)

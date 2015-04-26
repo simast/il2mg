@@ -35,6 +35,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			vehicle = makeAirfieldVehicle.call(this, airfield, [
 				vehiclePool.shift(),
 				airfield.position[0],
+				airfield.position[1],
 				airfield.position[2],
 				0
 			], true);
@@ -86,7 +87,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			}
 
 			waypoint.addObject(vehicle);
-			waypoint.setPosition(item[0], item[1]);
+			waypoint.setPosition(item[0], airfield.position[1], item[1]);
 
 			// Set waypoint orientation (to the direction of next waypoint)
 			var orientation = Math.atan2(itemNext[1] - item[1], itemNext[0] - item[0]);

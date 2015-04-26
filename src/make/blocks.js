@@ -30,8 +30,8 @@ module.exports = function makeBlocks() {
 
 			block.Model = itemType.model;
 			block.Script = itemType.script;
-			block.setPosition(blockItem[1], blockItem[2]);
-			block.setOrientation(blockItem[3]);
+			block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
+			block.setOrientation(blockItem[4]);
 
 			totalBlocks++;
 
