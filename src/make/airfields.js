@@ -4,7 +4,7 @@
 var Item = require("../item");
 
 // Data tags for special airfield items
-var itemTags = {
+var itemTag = {
 	PLANE: -1, // Plane spot
 	TRUCK_CARGO: -2, // Cargo truck
 	TRUCK_FUEL: -3, // Fuel truck
@@ -20,7 +20,7 @@ var itemTags = {
 };
 
 // Data flags for airfield items
-var itemFlags = {
+var itemFlag = {
 	BLOCK_DECO: 1, // Decoration
 	BLOCK_FUEL: 2, // Fuel item
 	PLANE_CAMO: 1, // Camouflage plane spot
@@ -316,23 +316,23 @@ module.exports = function makeAirfields() {
 				else {
 
 					// Plane item
-					if (itemTypeID === itemTags.PLANE) {
+					if (itemTypeID === itemTag.PLANE) {
 						itemObjects = makeAirfieldPlane.call(mission, airfield, item);
 					}
 					// Beacon item
-					else if (itemTypeID === itemTags.BEACON) {
+					else if (itemTypeID === itemTag.BEACON) {
 						itemObjects = makeAirfieldBeacon.call(mission, airfield, item);
 					}
 					// Windsock item
-					else if (itemTypeID === itemTags.WINDSOCK) {
+					else if (itemTypeID === itemTag.WINDSOCK) {
 						itemObjects = makeAirfieldWindsock.call(mission, airfield, item);
 					}
 					// Effect item
-					else if (itemTypeID === itemTags.EFFECT) {
+					else if (itemTypeID === itemTag.EFFECT) {
 						itemObjects = makeAirfieldEffect.call(mission, airfield, item);
 					}
 					// Wreck item
-					else if (itemTypeID === itemTags.WRECK) {
+					else if (itemTypeID === itemTag.WRECK) {
 						itemObjects = makeAirfieldWreck.call(mission, airfield, item);
 					}
 					// Vehicle item
@@ -386,8 +386,8 @@ module.exports = function makeAirfields() {
 	log.I("Airfields:", totalAirfields, {active: totalActive});
 };
 
-module.exports.itemTags = itemTags;
-module.exports.itemFlags = itemFlags;
+module.exports.itemTag = itemTag;
+module.exports.itemFlag = itemFlag;
 module.exports.planeSize = planeSize;
 
 // Airfield make parts

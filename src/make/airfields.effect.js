@@ -2,8 +2,8 @@
 "use strict";
 
 var Item = require("../item");
-var itemTags = require("./airfields").itemTags;
-var itemFlags = require("./airfields").itemFlags;
+var itemTag = require("./airfields").itemTag;
+var itemFlag = require("./airfields").itemFlag;
 
 // Make airfield effect item
 module.exports = function makeAirfieldEffect(airfield, item) {
@@ -30,7 +30,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 	var items = [];
 
 	// House smoke
-	if (effectType === itemFlags.EFFECT_SMOKE) {
+	if (effectType === itemFlag.EFFECT_SMOKE) {
 
 		// 50% chance for smoke when raining
 		if (!isRaining || (isRaining && rand.bool(0.5))) {
@@ -38,7 +38,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 		}
 	}
 	// Campfire
-	else if (effectType === itemFlags.EFFECT_CAMP) {
+	else if (effectType === itemFlag.EFFECT_CAMP) {
 
 		effectScript = effects.landfire.script;
 
@@ -48,11 +48,11 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 			startOnLoad = false;
 
 			var campfireSmoke = makeAirfieldEffect.call(this, airfield, [
-				itemTags.EFFECT,
+				itemTag.EFFECT,
 				item[1],
 				item[2],
 				item[3],
-				itemFlags.EFFECT_SMOKE
+				itemFlag.EFFECT_SMOKE
 			]);
 
 			if (campfireSmoke && campfireSmoke.length) {
@@ -79,7 +79,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 		}
 	}
 	// Siren
-	else if (effectType === itemFlags.EFFECT_SIREN) {
+	else if (effectType === itemFlag.EFFECT_SIREN) {
 
 		effectScript = effects.siren.script;
 		startOnLoad = false;
@@ -92,13 +92,13 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 		return;
 	}
 
-	var effect = this.createItem("Effect", false);
+	var effectItem = this.createItem("Effect", false);
 
-	effect.setPosition(item[1], item[2], item[3]);
-	effect.setOrientation(rand.real(0, 360));
-	effect.Script = effectScript;
+	effectItem.setPosition(item[1], item[2], item[3]);
+	effectItem.setOrientation(rand.real(0, 360));
+	effectItem.Script = effectScript;
 
-	effect.createEntity();
+	effectItem.createEntity();
 
 	// Start effect on airfield load event
 	if (startOnLoad) {
@@ -117,10 +117,10 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 			items.push(airfield.onLoadEffect);
 		}
 
-		airfield.onLoadEffect.addObject(effect);
+		airfield.onLoadEffect.addObject(effectItem);
 	}
 
-	items.push(effect);
+	items.push(effectItem);
 
 	// Update airfield limits
 	if (airfield.limits.effects[effectType]) {

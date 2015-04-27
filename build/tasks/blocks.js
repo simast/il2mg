@@ -2,14 +2,13 @@
 "use strict";
 
 var numeral = require("numeral");
+var data = require("../../src/data");
+var Item = require("../../src/item");
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw blocks .Group to .json files
 	grunt.registerTask("build:blocks", "Build blocks JSON files.", function() {
-
-		var data = require("../../src/data");
-		var Item = require("../../src/item");
 
 		var totalBattles = 0;
 		var totalItems = 0;

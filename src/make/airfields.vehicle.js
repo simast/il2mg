@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemTags = require("./airfields").itemTags;
+var itemTag = require("./airfields").itemTag;
 
 // Make airfield vehicle item
 module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
@@ -23,39 +23,39 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	switch (itemTagID) {
 
 		// Cargo truck
-		case itemTags.TRUCK_CARGO: {
+		case itemTag.TRUCK_CARGO: {
 
 			vehicleType = "truck_cargo";
 			isStatic = !isLive;
 			break;
 		}
 		// Fuel truck
-		case itemTags.TRUCK_FUEL: {
+		case itemTag.TRUCK_FUEL: {
 
 			vehicleType = "truck_fuel";
 			isStatic = true;
 			break;
 		}
 		// Car vehicle
-		case itemTags.CAR: {
+		case itemTag.CAR: {
 
 			vehicleType = "staff_car";
 			break;
 		}
 		// Anti-aircraft (Flak)
-		case itemTags.AA_FLAK: {
+		case itemTag.AA_FLAK: {
 
 			vehicleType = "aa_flak";
 			break;
 		}
 		// Anti-aircraft (MG)
-		case itemTags.AA_MG: {
+		case itemTag.AA_MG: {
 
 			vehicleType = "aa_mg";
 			break;
 		}
 		// Search light
-		case itemTags.LIGHT_SEARCH: {
+		case itemTag.LIGHT_SEARCH: {
 
 			vehicleType = "search_light";
 			break;
@@ -81,7 +81,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	}
 
 	// Create vehicle item
-	var itemObject = this.createItem(isStatic ? "Block" : "Vehicle", false);
+	var vehicleItem = this.createItem(isStatic ? "Block" : "Vehicle", false);
 
 	var positionX = item[1];
 	var positionY = item[2];
@@ -97,19 +97,19 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	// Slightly vary/randomize vehicle orientation
 	var orientation = Math.max((item[4] + rand.real(-20, 20) + 360) % 360, 0);
 
-	itemObject.Country = countryID;
-	itemObject.Model = isStatic ? vehicle.static.model : vehicle.model;
-	itemObject.Script = isStatic ? vehicle.static.script : vehicle.script;
-	itemObject.setPosition(positionX, positionY, positionZ);
-	itemObject.setOrientation(orientation);
+	vehicleItem.Country = countryID;
+	vehicleItem.Model = isStatic ? vehicle.static.model : vehicle.model;
+	vehicleItem.Script = isStatic ? vehicle.static.script : vehicle.script;
+	vehicleItem.setPosition(positionX, positionY, positionZ);
+	vehicleItem.setOrientation(orientation);
 
 	if (isStatic) {
-		itemObject.Durability = 1500;
+		vehicleItem.Durability = 1500;
 	}
 	else {
 
-		itemObject.setName(vehicle.name);
-		itemObject.createEntity();
+		vehicleItem.setName(vehicle.name);
+		vehicleItem.createEntity();
 	}
 
 	// Update airfield limits
@@ -119,5 +119,5 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 
 	// TODO: Attach vehicle to airfield bubble
 
-	return [itemObject];
+	return [vehicleItem];
 };

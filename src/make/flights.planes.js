@@ -10,20 +10,19 @@ module.exports = function makeFlightPlanes(flight) {
 	// TODO: Set payload
 	// TODO: Set fuel
 	// TODO: Set weapon mods
-	// TODO: Set skins
-	// TODO: Create pilots
+	// TODO: Set skin
+	// TODO: Set pilot
 
-	var mission = this;
-	var rand = mission.rand;
-	var unit = mission.unitsByID[flight.unit];
-	var airfield = mission.airfieldsByID[flight.airfield];
+	var rand = this.rand;
+	var unit = this.unitsByID[flight.unit];
+	var airfield = this.airfieldsByID[flight.airfield];
 	var usedTaxiSpawns = Object.create(null);
 	var leaderPlane = flight.planes[0];
 	
 	// Create all plane item objects
 	flight.planes.forEach(function(plane, planeIndex) {
 
-		var planeData = mission.planesByID[plane.id];
+		var planeData = this.planesByID[plane.id];
 		var isPlayerPlane = (plane === flight.planes.player);
 		var isLeaderPlane = (plane === leaderPlane);
 		var validTaxiSpawns = [];
@@ -46,11 +45,13 @@ module.exports = function makeFlightPlanes(flight) {
 		}
 
 		var Plane = Item.Plane;
-		var planeObject = plane.item = flight.group.createItem("Plane");
+		var planeItem = plane.item = flight.group.createItem("Plane");
 		var positionX;
 		var positionY;
 		var positionZ;
 		var orientation;
+		
+		// TODO: Sort validTaxiSpawns based on distance to the first taxi waypoint
 
 		// Try to use any of the valid spawn points
 		var taxiSpawn = validTaxiSpawns.shift();
@@ -62,18 +63,18 @@ module.exports = function makeFlightPlanes(flight) {
 			var positionOffsetMin = 10;
 			var positionOffsetMax = 25;
 			var orientationOffset = 15;
-
-			positionX = spawnPoint.position[0];
-			positionY = spawnPoint.position[1];
-			positionZ = spawnPoint.position[2];
-			orientation = spawnPoint.orientation;
-
+			
 			// Limit position offset for player-only taxi routes
 			if (flight.taxi === 0) {
 
 				positionOffsetMin = 5;
 				positionOffsetMax = 12;
 			}
+
+			positionX = spawnPoint.position[0];
+			positionY = spawnPoint.position[1];
+			positionZ = spawnPoint.position[2];
+			orientation = spawnPoint.orientation;
 
 			// Slightly move plane position forward
 			var positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
@@ -95,12 +96,12 @@ module.exports = function makeFlightPlanes(flight) {
 				delete spawnPoint.plane;
 			}
 
-			// 25% chance to start with engine running for non-leader and non-player planes
-			if (!isPlayerPlane && !isLeaderPlane && rand.bool(0.25)) {
-				planeObject.StartInAir = Plane.START_RUNWAY;
+			// 33% chance to start with engine running for non-leader and non-player planes
+			if (!isPlayerPlane && !isLeaderPlane && rand.bool(0.33)) {
+				planeItem.StartInAir = Plane.START_RUNWAY;
 			}
 			else {
-				planeObject.StartInAir = Plane.START_PARKING;
+				planeItem.StartInAir = Plane.START_PARKING;
 			}
 
 			// Mark spawn point as used/reserved
@@ -111,39 +112,42 @@ module.exports = function makeFlightPlanes(flight) {
 			
 			// TODO: Set orientation and tweak spawn distance
 			// TODO: Set formation?
-			positionX = airfield.position[0] + rand.integer(100, 300);
-			positionY = airfield.position[1] + rand.integer(250, 450);
-			positionZ = airfield.position[2] + rand.integer(100, 300);
+			positionX = airfield.position[0] + rand.integer(150, 300);
+			positionY = airfield.position[1] + rand.integer(200, 400);
+			positionZ = airfield.position[2] + rand.integer(150, 300);
 			orientation = 0;
 			
-			planeObject.StartInAir = Plane.START_AIR;
+			planeItem.StartInAir = Plane.START_AIR;
 		}
 
-		planeObject.setName(planeData.name);
-		planeObject.setPosition(positionX, positionY, positionZ);
-		planeObject.setOrientation(orientation);
-		planeObject.Script = planeData.script;
-		planeObject.Model = planeData.model;
-		planeObject.Country = unit.country;
-		planeObject.NumberInFormation = planeIndex;
+		planeItem.setName(planeData.name);
+		planeItem.setPosition(positionX, positionY, positionZ);
+		planeItem.setOrientation(orientation);
+		planeItem.Script = planeData.script;
+		planeItem.Model = planeData.model;
+		planeItem.Country = unit.country;
+		planeItem.NumberInFormation = planeIndex;
+		planeItem.Callnum = planeIndex + 1;
 
 		// Player plane item
 		if (plane === flight.planes.player) {
-			planeObject.AILevel = Plane.AI_PLAYER;
+			planeItem.AILevel = Plane.AI_PLAYER;
 		}
 		// AI plane item
+		// TODO: Set plane AI level based on pilot skill and difficulty command-line param
 		else {
-			planeObject.AILevel = Plane.AI_NORMAL;
+			planeItem.AILevel = Plane.AI_NORMAL;
 		}
 
 		// Create plane entity
-		planeObject.createEntity();
+		planeItem.createEntity();
 
 		// Group subordinate planes with leader
 		if (!isLeaderPlane) {
-			planeObject.entity.addTarget(leaderPlane.item.entity);
+			planeItem.entity.addTarget(leaderPlane.item.entity);
 		}
-	});
+		
+	}, this);
 
 	delete flight.spawns;
 };

@@ -1,13 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+var stripJSONComments = require("strip-json-comments");
+var enclose = require("enclose");
+
 module.exports = function(grunt) {
 
 	// Grunt task used to compile to a single binary executable file
 	grunt.registerTask("build:compile", "Compile a binary executable file.", function() {
 
 		var done = this.async();
-		var stripJSONComments = require("strip-json-comments");
 		var buildName = grunt.config("pkg.name");
 		var buildDir = "build/" + buildName + "/";
 
@@ -25,22 +27,21 @@ module.exports = function(grunt) {
 			grunt.file.copy(sourceFile, buildDir + sourceFile);
 		});
 
-		var encloseExec = require("enclose").exec;
-		var encloseOptions = [];
+		var options = [];
 		var extension = (process.platform === "win32") ? ".exe" : "";
 
 		if (process.arch === "x64") {
-			encloseOptions.push("--x64");
+			options.push("--x64");
 		}
 
-		encloseOptions.push("--config=../enclose.js");
-		encloseOptions.push("--loglevel=error");
-		encloseOptions.push("--output=../" + buildName + extension);
-		encloseOptions.push(grunt.config("pkg.main"));
+		options.push("--config=../enclose.js");
+		options.push("--loglevel=error");
+		options.push("--output=../" + buildName + extension);
+		options.push(grunt.config("pkg.main"));
 
 		grunt.file.setBase(buildDir);
 
-		var enclose = encloseExec(encloseOptions);
+		var compileTask = enclose.exec(options);
 
 		function onDone(error) {
 
@@ -56,7 +57,7 @@ module.exports = function(grunt) {
 			done(error);
 		}
 
-		enclose.on("error", onDone);
-		enclose.on("exit", onDone);
+		compileTask.on("error", onDone);
+		compileTask.on("exit", onDone);
 	});
 };

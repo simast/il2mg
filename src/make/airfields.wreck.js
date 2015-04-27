@@ -28,8 +28,8 @@ module.exports = function makeAirfieldWreck(airfield, item) {
 		return;
 	}
 
-	var itemObject = this.createItem("Block", false);
-	var itemDamaged = new Item("Damaged");
+	var wreckItem = this.createItem("Block", false);
+	var damageItem = new Item("Damaged");
 
 	var positionX = item[1];
 	var positionY = item[2];
@@ -41,16 +41,16 @@ module.exports = function makeAirfieldWreck(airfield, item) {
 	orientation = orientation + rand.real(-orientationOffset, orientationOffset);
 	orientation = Math.max((orientation + 360) % 360, 0);
 
-	itemObject.Model = wreck.model;
-	itemObject.Script = wreck.script;
-	itemObject.setPosition(positionX, positionY, positionZ);
-	itemObject.setOrientation(orientation);
+	wreckItem.Model = wreck.model;
+	wreckItem.Script = wreck.script;
+	wreckItem.setPosition(positionX, positionY, positionZ);
+	wreckItem.setOrientation(orientation);
 
 	// Set plane/vehicle damaged state (for destroyed effect)
-	itemDamaged["0"] = 1;
-	itemObject.addItem(itemDamaged);
+	damageItem["0"] = 1;
+	wreckItem.addItem(damageItem);
 
-	return [itemObject];
+	return [wreckItem];
 };
 
 // Get a list of plane/vehicle blocks to use as wrecks

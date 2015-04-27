@@ -9,16 +9,16 @@ module.exports = function makeAirfieldWindsock(airfield, item) {
 	}
 
 	var itemType = this.data.getItemType(item[5]);
-	var itemObject = this.createItem(itemType.type, false);
+	var windsockItem = this.createItem(itemType.type, false);
 
-	itemObject.Model = itemType.model;
-	itemObject.Script = itemType.script;
-	itemObject.setPosition(item[1], item[2], item[3]);
-	itemObject.setOrientation(item[4]);
+	windsockItem.Model = itemType.model;
+	windsockItem.Script = itemType.script;
+	windsockItem.setPosition(item[1], item[2], item[3]);
+	windsockItem.setOrientation(item[4]);
 
-	itemObject.createEntity();
+	windsockItem.createEntity();
 
 	// TODO: Attach windsock to airfield bubble
 
-	return [itemObject];
+	return [windsockItem];
 };

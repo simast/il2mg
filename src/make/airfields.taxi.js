@@ -2,7 +2,7 @@
 "use strict";
 
 var Item = require("../item");
-var itemFlags = require("./airfields").itemFlags;
+var itemFlag = require("./airfields").itemFlag;
 
 // Make airfield taxi route
 module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
@@ -10,25 +10,32 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	if (!airfield.taxi || !airfield.taxi[taxiRouteID]) {
 		return;
 	}
+	
+	// TODO: Limit 1 taxi route per runway (due to AI issues)
 
 	var taxiRoute = airfield.taxi[taxiRouteID];
-	var runwayID = taxiRoute[0];
-	var isInvertible = (taxiRoute[1] === itemFlags.TAXI_INV);
-	var basePoint = taxiRoute[2];
+	var itemType = this.data.getItemType(taxiRoute[0]);
+	var runwayID = taxiRoute[1];
+	var isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV);
+	var basePoint = taxiRoute[3];
 
 	// Create airfield item
-	var airfieldItem = airfield.group.createItem("Airfield");
+	var airfieldItem = airfield.group.createItem(itemType.type);
 
+	airfieldItem.Model = itemType.model;
+	airfieldItem.Script = itemType.script;
 	airfieldItem.setName(airfield.name);
 	airfieldItem.setPosition(basePoint[0], airfield.position[1], basePoint[1]);
 	airfieldItem.setOrientation(basePoint[2]);
 	airfieldItem.Country = airfield.country;
 
 	var chartItem = new Item("Chart");
-	var firstPoint = taxiRoute[3];
+	var firstPointIndex = 4;
+	var firstPoint = taxiRoute[firstPointIndex];
 	var lastPoint = taxiRoute[taxiRoute.length - 1];
 
-	for (var i = 3; i < taxiRoute.length; i++) {
+	// Create airfield taxi route Chart->Point list
+	for (var i = firstPointIndex; i < taxiRoute.length; i++) {
 
 		var point = taxiRoute[i];
 		var pointItem = new Item("Point");
@@ -39,10 +46,11 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 			pointType = 0;
 		}
 		// Runway point type
-		else if (point[2] === itemFlags.TAXI_RUNWAY) {
+		else if (point[2] === itemFlag.TAXI_RUNWAY) {
 			pointType = 2;
 		}
 
+		// Convert absolute taxi point coordinates to relative vector X/Y offsets
 		var pointXDiff = point[0] - basePoint[0];
 		var pointYDiff = point[1] - basePoint[1];
 		var pointTheta = -basePoint[2] * (Math.PI / 180);

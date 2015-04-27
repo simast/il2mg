@@ -20,8 +20,6 @@ function Airfield() {
 	this.RearmTime = 0;
 	this.RefuelTime = 0;
 	this.MaintenanceRadius = 0;
-	this.Model = "graphics\\airfields\\fakefield.mgm";
-	this.Script = "luascripts\\worldobjects\\airfields\\fakefield.txt";
 }
 
 Airfield.prototype = Object.create(Block.prototype);

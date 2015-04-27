@@ -964,6 +964,16 @@
 			"type": "Block",
 			"script": "luascripts\\worldobjects\\blocks\\arf_caponiers_1_v_5.txt",
 			"model": "graphics\\blocks\\arf_caponiers_1_v_5.mgm"
+		},
+		{
+			"type": "Airfield",
+			"script": "luascripts\\worldobjects\\airfields\\fakefield.txt",
+			"model": "graphics\\airfields\\fakefield.mgm"
+		},
+		{
+			"type": "Airfield",
+			"script": "luascripts\\worldobjects\\airfields\\fakefield_rnwspawn.txt",
+			"model": "graphics\\airfields\\fakefield_rnwspawn.mgm"
 		}
 	],
 	"index": {
@@ -1159,6 +1169,8 @@
 		"luascripts\\worldobjects\\blocks\\art_position_medium.txt": 189,
 		"luascripts\\worldobjects\\blocks\\arf_hangars_1.txt": 190,
 		"luascripts\\worldobjects\\vehicles\\ndb.txt": 191,
-		"luascripts\\worldobjects\\blocks\\arf_caponiers_1_v_5.txt": 192
+		"luascripts\\worldobjects\\blocks\\arf_caponiers_1_v_5.txt": 192,
+		"luascripts\\worldobjects\\airfields\\fakefield.txt": 193,
+		"luascripts\\worldobjects\\airfields\\fakefield_rnwspawn.txt": 194
 	}
 }

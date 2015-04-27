@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemFlags = require("./airfields").itemFlags;
+var itemFlag = require("./airfields").itemFlag;
 var planeSize = require("./airfields").planeSize;
 
 // Make airfield plane item
@@ -57,7 +57,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	var staticPlanes = rand.shuffle(plane.static || []);
 	var planeStatic;
 	var planeSizeID = planeSize[String(plane.size).toUpperCase()];
-	var isCamo = (item[8] === itemFlags.PLANE_CAMO);
+	var isCamo = (item[8] === itemFlag.PLANE_CAMO);
 
 	// 75% chance to use camouflaged static plane when camo flag is set
 	if (isCamo) {
@@ -81,7 +81,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	}
 
 	// Create static plane item
-	var itemObject = this.createItem("Block", false);
+	var planeItem = this.createItem("Block", false);
 	
 	var positionX = item[1];
 	var positionY = item[2];
@@ -115,25 +115,25 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	orientation = orientation + rand.real(-orientationOffset, orientationOffset);
 	orientation = Math.max((orientation + 360) % 360, 0);
 
-	itemObject.Country = planeData[1];
-	itemObject.Durability = 2500 + (planeSizeID * 2500);
-	itemObject.Model = planeStatic.model;
-	itemObject.Script = planeStatic.script;
-	itemObject.setPosition(positionX, positionY, positionZ);
-	itemObject.setOrientation(orientation);
+	planeItem.Country = planeData[1];
+	planeItem.Durability = 500 + (planeSizeID * 1000);
+	planeItem.Model = planeStatic.model;
+	planeItem.Script = planeStatic.script;
+	planeItem.setPosition(positionX, positionY, positionZ);
+	planeItem.setOrientation(orientation);
 	
 	// Build plane item count by unit and sector index (used when spawning flights)
 	var unitID = planeData[2];
 	
 	planeItemsByUnit[unitID] = planeItemsByUnit[unitID] || Object.create(null);
 	planeItemsByUnit[unitID][sector] = planeItemsByUnit[unitID][sector] || [];
-	planeItemsByUnit[unitID][sector].push(itemObject);
+	planeItemsByUnit[unitID][sector].push(planeItem);
 	
 	// Assign static plane item object to current taxi point
 	if (taxiSpawn) {
 		
 		taxiSpawn.planeGroup = plane.group; // Plane group ID
-		taxiSpawn.plane = itemObject; // Plane static item object
+		taxiSpawn.plane = planeItem; // Plane static item object
 		
 		// Weighted array of taxi spawn sector IDs by plane group (used when spawning flights)
 		if (taxiRoute > 0) {
@@ -143,5 +143,5 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 		}
 	}
 
-	return [itemObject];
+	return [planeItem];
 };

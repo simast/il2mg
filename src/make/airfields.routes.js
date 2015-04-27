@@ -3,8 +3,8 @@
 
 var Item = require("../item");
 var makeAirfieldVehicle = require("./airfields.vehicle");
-var itemTags = require("./airfields").itemTags;
-var itemFlags = require("./airfields").itemFlags;
+var itemTag = require("./airfields").itemTag;
+var itemFlag = require("./airfields").itemFlag;
 
 // Make airfield vehicle routes
 module.exports = function makeAirfieldRoutes(airfield, routes) {
@@ -21,10 +21,10 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 
 		// Weighted vehicle pool (chance) array
 		var vehiclePool = rand.shuffle([
-			itemTags.TRUCK_CARGO,
-			itemTags.TRUCK_CARGO,
-			itemTags.TRUCK_CARGO,
-			itemTags.CAR
+			itemTag.TRUCK_CARGO,
+			itemTag.TRUCK_CARGO,
+			itemTag.TRUCK_CARGO,
+			itemTag.CAR
 		]);
 
 		var vehicle = null;
@@ -71,10 +71,10 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			var item = route[w];
 			var itemNext = route[w + 1] || route[0];
 			var itemPrev = route[w - 1] || route[route.length - 1];
-			var isStop = (item[2] === itemFlags.ROUTE_STOP);
-			var isRoad = (item[2] === itemFlags.ROUTE_ROAD);
-			var isRoadNext = (itemNext[2] === itemFlags.ROUTE_ROAD);
-			var isRoadPrev = (itemPrev[2] === itemFlags.ROUTE_ROAD);
+			var isStop = (item[2] === itemFlag.ROUTE_STOP);
+			var isRoad = (item[2] === itemFlag.ROUTE_ROAD);
+			var isRoadNext = (itemNext[2] === itemFlag.ROUTE_ROAD);
+			var isRoadPrev = (itemPrev[2] === itemFlag.ROUTE_ROAD);
 
 			// Create waypoint MCU item
 			var waypoint = routeGroup.createItem("MCU_Waypoint");

@@ -1,22 +1,22 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemFlags = require("./airfields").itemFlags;
+var itemFlag = require("./airfields").itemFlag;
 
 // Make airfield static item
 module.exports = function makeAirfieldStatic(airfield, item) {
 
 	var itemType = this.data.getItemType(item[0]);
-	var itemObject = this.createItem(itemType.type, false);
+	var staticItem = this.createItem(itemType.type, false);
 
-	itemObject.Model = itemType.model;
-	itemObject.Script = itemType.script;
-	itemObject.setPosition(item[1], item[2], item[3]);
-	itemObject.setOrientation(item[4]);
+	staticItem.Model = itemType.model;
+	staticItem.Script = itemType.script;
+	staticItem.setPosition(item[1], item[2], item[3]);
+	staticItem.setOrientation(item[4]);
 
 	// Decoration item
-	if (item[5] === itemFlags.BLOCK_DECO) {
-		itemObject.Durability = 500;
+	if (item[5] === itemFlag.BLOCK_DECO) {
+		staticItem.Durability = 500;
 	}
 	// Set static item country (required for spawning infantry)
 	else if (airfield.country) {
@@ -33,9 +33,9 @@ module.exports = function makeAirfieldStatic(airfield, item) {
 		}
 		
 		if (this.rand.bool(countryChance)) {
-			itemObject.Country = this.rand.pick(airfield.countriesWeighted);
+			staticItem.Country = this.rand.pick(airfield.countriesWeighted);
 		}
 	}
 
-	return [itemObject];
+	return [staticItem];
 };
