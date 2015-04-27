@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemFlags = require("./").itemFlags;
-var planeSize = require("./").planeSize;
+var itemFlags = require("./airfields").itemFlags;
+var planeSize = require("./airfields").planeSize;
 
 // Make airfield plane item
 module.exports = function makeAirfieldPlane(airfield, item) {

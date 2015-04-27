@@ -31,6 +31,10 @@ Item.DEFAULT_COUNTRY = 0; // Neutral country ID
 Item.DEFAULT_DAMAGE_REPORT = 50; // 50% of damage
 Item.DEFAULT_DURABILITY = 25000;
 
+// Precision of position and orientation values (decimal places)
+Item.PRECISION_POSITION = 3;
+Item.PRECISION_ORIENTATION = 2;
+
 /**
  * Create a new child item (linked to current item mission).
  *
@@ -143,9 +147,6 @@ Item.prototype.setPosition = function() {
 	// TODO: Validate item position in context of mission map size
 	// TODO: Build a items index (to quickly lookup items based on position)
 
-	// Position precision decimal places
-	var PRECISION = 3;
-
 	// Array position version: setPosition([X, Y, Z])
 	var position = arguments[0];
 
@@ -162,15 +163,15 @@ Item.prototype.setPosition = function() {
 	}
 
 	if (position[0]) {
-		this.XPos = Number(position[0].toFixed(PRECISION));
+		this.XPos = Number(position[0].toFixed(Item.PRECISION_POSITION));
 	}
 
 	if (position[1]) {
-		this.YPos = Number(position[1].toFixed(PRECISION));
+		this.YPos = Number(position[1].toFixed(Item.PRECISION_POSITION));
 	}
 
 	if (position[2]) {
-		this.ZPos = Number(position[2].toFixed(PRECISION));
+		this.ZPos = Number(position[2].toFixed(Item.PRECISION_POSITION));
 	}
 };
 
@@ -194,6 +195,7 @@ Item.prototype.setPositionNear = function(item) {
 	var posX = item.XPos + magnitude * Math.cos(orientation);
 	var posZ = item.ZPos + magnitude * Math.sin(orientation);
 
+	// Set nearby position
 	this.setPosition(posX, item.YPos, posZ);
 };
 
@@ -203,9 +205,6 @@ Item.prototype.setPositionNear = function(item) {
  * @param {number|array} [...] Orientation X/Y/Z coordinates as an array or separate arguments.
  */
 Item.prototype.setOrientation = function() {
-
-	// Orientation precision decimal places
-	var PRECISION = 2;
 
 	// Array orientation version: setOrientation([X, Y, Z])
 	var orientation = arguments[0];
@@ -223,15 +222,15 @@ Item.prototype.setOrientation = function() {
 	}
 
 	if (orientation[0]) {
-		this.XOri = Number(orientation[0].toFixed(PRECISION));
+		this.XOri = Number(orientation[0].toFixed(Item.PRECISION_ORIENTATION));
 	}
 
 	if (orientation[1]) {
-		this.YOri = Number(orientation[1].toFixed(PRECISION));
+		this.YOri = Number(orientation[1].toFixed(Item.PRECISION_ORIENTATION));
 	}
 
 	if (orientation[2]) {
-		this.ZOri = Number(orientation[2].toFixed(PRECISION));
+		this.ZOri = Number(orientation[2].toFixed(Item.PRECISION_ORIENTATION));
 	}
 };
 

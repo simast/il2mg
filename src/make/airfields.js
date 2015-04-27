@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../../item");
+var Item = require("../item");
 
 // Data tags for special airfield items
 var itemTags = {
@@ -279,6 +279,11 @@ module.exports = function makeAirfields() {
 			items.forEach(function(item) {
 
 				var itemTypeID = item[0];
+				
+				// Set item Y position to airfield Y position when the value is 0
+				if (item[2] === 0) {
+					item[2] = airfield.position[1];
+				}
 
 				// Process item group
 				if (Array.isArray(itemTypeID)) {
@@ -386,12 +391,12 @@ module.exports.itemFlags = itemFlags;
 module.exports.planeSize = planeSize;
 
 // Airfield make parts
-var makeAirfieldLimits = require("./limits");
-var makeAirfieldStatic = require("./static");
-var makeAirfieldPlane = require("./plane");
-var makeAirfieldBeacon = require("./beacon");
-var makeAirfieldWindsock = require("./windsock");
-var makeAirfieldEffect = require("./effect");
-var makeAirfieldWreck = require("./wreck");
-var makeAirfieldVehicle = require("./vehicle");
-var makeAirfieldRoutes = require("./routes");
+var makeAirfieldLimits = require("./airfields.limits");
+var makeAirfieldStatic = require("./airfields.static");
+var makeAirfieldPlane = require("./airfields.plane");
+var makeAirfieldBeacon = require("./airfields.beacon");
+var makeAirfieldWindsock = require("./airfields.windsock");
+var makeAirfieldEffect = require("./airfields.effect");
+var makeAirfieldWreck = require("./airfields.wreck");
+var makeAirfieldVehicle = require("./airfields.vehicle");
+var makeAirfieldRoutes = require("./airfields.routes");

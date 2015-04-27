@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemFlags = require("./").itemFlags;
+var itemFlags = require("./airfields").itemFlags;
 
 // Make airfield static item
 module.exports = function makeAirfieldStatic(airfield, item) {

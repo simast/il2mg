@@ -2,9 +2,9 @@
 "use strict";
 
 // Flight make parts
-var makeFlightPlanes = require("./planes");
-var makeAirfieldTaxi = require("../airfields/taxi");
-var makeFlightTakeoff = require("./takeoff");
+var makeFlightPlanes = require("./flights.planes");
+var makeAirfieldTaxi = require("./airfields.taxi");
+var makeFlightTakeoff = require("./flights.takeoff");
 
 // Flight states
 var flightState = makeFlight.flightState = {

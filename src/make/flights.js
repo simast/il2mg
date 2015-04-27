@@ -2,7 +2,7 @@
 "use strict";
 
 // Flights make parts
-var makeFlight = require("./flight");
+var makeFlight = require("./flights.flight");
 
 // Generate mission flights
 module.exports = function makeFlights() {

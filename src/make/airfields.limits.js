@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemTags = require("./").itemTags;
-var itemFlags = require("./").itemFlags;
+var itemTags = require("./airfields").itemTags;
+var itemFlags = require("./airfields").itemFlags;
 
 // Make airfield limits
 module.exports = function makeAirfieldLimits(airfield) {

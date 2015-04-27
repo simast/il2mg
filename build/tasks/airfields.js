@@ -61,9 +61,32 @@ module.exports = function(grunt) {
 				(function buildJSON(jsonItems, items) {
 
 					items.forEach(function(item) {
+						
+						// Process group child items
+						if (item instanceof Item.Group) {
+
+							if (item.items.length) {
+								
+								var childItems = [];
+	
+								buildJSON(childItems, item.items);
+	
+								if (childItems.length) {
+									jsonItems.push(childItems);
+								}
+							}
+							
+							return;
+						}
+						
+						// Item position and orientation with forced precision
+						var positionX = Number(item.XPos.toFixed(Item.PRECISION_POSITION));
+						var positionY = Number(item.YPos.toFixed(Item.PRECISION_POSITION));
+						var positionZ = Number(item.ZPos.toFixed(Item.PRECISION_POSITION));
+						var orientation = Number(item.YOri.toFixed(Item.PRECISION_ORIENTATION));
 
 						// Process supported item types
-						if (item instanceof Item.Block || item instanceof Item.Bridge ||
+						if ((item instanceof Item.Block && !(item instanceof Item.Airfield)) ||
 								item instanceof Item.Vehicle || item instanceof Item.Flag) {
 
 							var itemTypeID = null;
@@ -196,12 +219,12 @@ module.exports = function(grunt) {
 							jsonItem.push(itemTypeID);
 
 							// Item position
-							jsonItem.push(item.XPos || 0);
-							jsonItem.push(item.YPos || 0);
-							jsonItem.push(item.ZPos || 0);
+							jsonItem.push(positionX);
+							jsonItem.push(positionY === json.position[1] ? 0 : positionY);
+							jsonItem.push(positionZ);
 
 							// Item orientation
-							jsonItem.push(item.YOri || 0);
+							jsonItem.push(orientation);
 
 							// Item data
 							itemData.forEach(function(data) {
@@ -241,9 +264,9 @@ module.exports = function(grunt) {
 							var effect = [itemTags.EFFECT];
 
 							// Effect position
-							effect.push(item.XPos);
-							effect.push(item.YPos);
-							effect.push(item.ZPos);
+							effect.push(positionX);
+							effect.push(positionY === json.position[1] ? 0 : positionY);
+							effect.push(positionZ);
 
 							// Effect type ID
 							effect.push(effectTypeID);
@@ -274,11 +297,7 @@ module.exports = function(grunt) {
 								var runway = [];
 
 								// Runway spawn point for coop missions
-								runway.push([
-									item.XPos,
-									item.ZPos,
-									item.YOri
-								]);
+								runway.push([positionX, positionZ, orientation]);
 
 								var spawnNormal = [];
 								var spawnInverted = [];
@@ -353,11 +372,7 @@ module.exports = function(grunt) {
 								taxiRoute.push(taxiInvert);
 
 								// Taxi route spawn point for coop missions
-								taxiRoute.push([
-									item.XPos,
-									item.ZPos,
-									item.YOri
-								]);
+								taxiRoute.push([positionX, positionZ, orientation]);
 
 								// Build taxi route waypoint list
 								for (var taxiPoint of taxiPoints) {
@@ -442,17 +457,6 @@ module.exports = function(grunt) {
 							}
 
 							totalItems++;
-						}
-						// Process any child items
-						else if (item instanceof Item.Group && item.items.length) {
-
-							var childItems = [];
-
-							buildJSON(childItems, item.items);
-
-							if (childItems.length) {
-								jsonItems.push(childItems);
-							}
 						}
 					});
 				})(json.items, items[0].items);

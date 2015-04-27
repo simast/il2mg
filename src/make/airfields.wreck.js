@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../../item");
+var Item = require("../item");
 
 // Make airfield wreck item
 module.exports = function makeAirfieldWreck(airfield, item) {

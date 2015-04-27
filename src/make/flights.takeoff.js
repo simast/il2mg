@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../../item");
+var Item = require("../item");
 
 // Make mission flight take off logic
 module.exports = function makeFlightTakeoff(flight) {
@@ -16,6 +16,11 @@ module.exports = function makeFlightTakeoff(flight) {
 	missionBegin.addTarget(takeoffCommand);
 
 	takeoffCommand.setPositionNear(missionBegin);
+	takeoffCommand.setPosition(
+		takeoffCommand.XPos,
+		takeoffCommand.YPos + 250,
+		takeoffCommand.ZPos
+	);
+	
 	takeoffCommand.addObject(leaderPlane.item);
-	takeoffCommand.YPos += 250;
 };

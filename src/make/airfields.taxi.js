@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../../item");
-var itemFlags = require("./").itemFlags;
+var Item = require("../item");
+var itemFlags = require("./airfields").itemFlags;
 
 // Make airfield taxi route
 module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {

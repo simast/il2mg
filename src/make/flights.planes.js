@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../../item");
-var planeSize = require("../airfields").planeSize;
+var Item = require("../item");
+var planeSize = require("./airfields").planeSize;
 
 // Make mission flight plane item objects
 module.exports = function makeFlightPlanes(flight) {

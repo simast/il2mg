@@ -52,12 +52,12 @@ module.exports = function(grunt) {
 							jsonItem.push(itemTypeID);
 
 							// Item position
-							jsonItem.push(block.XPos || 0);
-							jsonItem.push(block.YPos || 0);
-							jsonItem.push(block.ZPos || 0);
+							jsonItem.push(Number(block.XPos.toFixed(Item.PRECISION_POSITION)));
+							jsonItem.push(Number(block.YPos.toFixed(Item.PRECISION_POSITION)));
+							jsonItem.push(Number(block.ZPos.toFixed(Item.PRECISION_POSITION)));
 
 							// Item orientation
-							jsonItem.push(block.YOri || 0);
+							jsonItem.push(Number(block.YOri.toFixed(Item.PRECISION_ORIENTATION)));
 
 							json.push(jsonItem);
 
