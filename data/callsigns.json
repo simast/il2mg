@@ -1,0 +1,53 @@
+{
+	"plane": [
+		[1, "Stork"],
+		[2, "Gannet"],
+		[3, "Raven"],
+		[4, "Rook"],
+		[5, "Thrush"],
+		[6, "Crane"],
+		[7, "Finch"],
+		[8, "Oriole"],
+		[9, "Canary"],
+		[10, "Swan"],
+		[11, "Kittiwake"],
+		[12, "Eagle"],
+		[13, "Pelican"],
+		[14, "Swift"],
+		[15, "Redshank"],
+		[16, "Duck"],
+		[17, "Pheasant"],
+		[18, "Seagull"],
+		[19, "Brambling"],
+		[20, "Hawk"]
+	],
+	"airfield": [
+		[21, "Acacia"],
+		[22, "Beech"],
+		[23, "Elm"],
+		[24, "Oak"],
+		[25, "Hornbeam"],
+		[26, "Spruce"],
+		[27, "Jasmine"],
+		[28, "Willow"],
+		[29, "Maple"],
+		[30, "Linden"],
+		[31, "Magnolia"],
+		[32, "Alder"],
+		[33, "Fir"],
+		[34, "Rowan"],
+		[35, "Pine"],
+		[36, "Thuja"],
+		[37, "Pistachio"],
+		[38, "Mulberry"],
+		[39, "Eucalyptus"],
+		[40, "Ash"]
+	],
+	"vehicle": [
+		[41, "Storm"],
+		[42, "Typhoon"],
+		[43, "Hurricane"],
+		[44, "Cyclone"],
+		[45, "Volcano"]
+	]
+}

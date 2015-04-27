@@ -185,6 +185,9 @@ function makeFlight(params) {
 	flight.group = this.createItem("Group");
 	flight.group.setName(unit.name);
 	
+	// Set unique flight callsign
+	flight.callsign = this.getCallsign("plane");
+
 	// Make flight parts
 	makeFlightPlanes.call(this, flight);
 	makeFlightTakeoff.call(this, flight);

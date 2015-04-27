@@ -152,6 +152,43 @@ Mission.prototype.getLC = function(text) {
 };
 
 /**
+ * Get unique callsign.
+ *
+ * @param {string} type Callsign type.
+ * @returns {object} Unique callsign.
+ */
+Mission.prototype.getCallsign = function(type) {
+
+	if (!data.callsigns[type]) {
+		throw new TypeError("Invalid callsign type value.");
+	}
+
+	// Track last used callsign index
+	if (!this.lastCallsign) {
+		this.lastCallsign = Object.create(null);
+	}
+
+	// Initialize/shuffle callsign list data
+	if (this.lastCallsign[type] === undefined) {
+
+		this.rand.shuffle(data.callsigns[type]);
+		this.lastCallsign[type] = 0;
+	}
+	// Use next available callsign
+	else {
+
+		this.lastCallsign[type]++;
+
+		// Cycle callsign list
+		if (this.lastCallsign[type] >= data.callsigns[type].length) {
+			this.lastCallsign[type] = 0;
+		}
+	}
+
+	return data.callsigns[type][this.lastCallsign[type]];
+};
+
+/**
  * Save mission files.
  *
  * @param {string} fileName Mission file name.

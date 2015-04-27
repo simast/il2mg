@@ -33,6 +33,7 @@ var data = (function() {
 	data.items = require("../data/items");
 	data.effects = require("../data/effects");
 	data.grounds = require("../data/grounds");
+	data.callsigns = require("../data/callsigns");
 	data.countries = require("../data/countries");
 	data.battles = require("../data/battles");
 

@@ -11,6 +11,7 @@ function Plane() {
 	this.Country = Item.DEFAULT_COUNTRY;
 	this.AILevel = Plane.AI_NORMAL;
 	this.CoopStart = 0;
+	this.NumberInFormation = 0;
 	this.StartInAir = Plane.START_AIR;
 	this.Callsign = 0;
 	this.Callnum = 0;
@@ -93,8 +94,8 @@ Plane.prototype.toBinary = function(index) {
 	// Callnum
 	this.writeUInt8(buffer, this.Callnum);
 
-	// Unknown data
-	this.writeUInt32(buffer, 0);
+	// NumberInFormation
+	this.writeUInt32(buffer, this.NumberInFormation);
 
 	// Time
 	this.writeUInt32(buffer, this.Time);

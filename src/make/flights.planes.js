@@ -128,6 +128,7 @@ module.exports = function makeFlightPlanes(flight) {
 		planeItem.Country = unit.country;
 		planeItem.NumberInFormation = planeIndex;
 		planeItem.Callnum = planeIndex + 1;
+		planeItem.Callsign = flight.callsign[0];
 
 		// Player plane item
 		if (plane === flight.planes.player) {

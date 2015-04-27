@@ -29,6 +29,10 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	airfieldItem.setOrientation(basePoint[2]);
 	airfieldItem.Country = airfield.country;
 
+	if (airfield.callsign) {
+		airfieldItem.Callsign = airfield.callsign[0];
+	}
+
 	var chartItem = new Item("Chart");
 	var firstPointIndex = 4;
 	var firstPoint = taxiRoute[firstPointIndex];
