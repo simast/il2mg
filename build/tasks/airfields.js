@@ -1,15 +1,16 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+var numeral = require("numeral");
+var data = require("../../src/data");
+var Item = require("../../src/item");
+var makeAirfields = require("../../src/make/airfields");
+
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", function() {
 
-		var numeral = require("numeral");
-		var data = require("../../src/data");
-		var Item = require("../../src/item");
-		var makeAirfields = require("../../src/make/airfields");
 		var itemTags = makeAirfields.itemTags;
 		var itemFlags = makeAirfields.itemFlags;
 		var planeSize = makeAirfields.planeSize;
@@ -434,8 +435,8 @@ module.exports = function(grunt) {
 								var waypointTarget = item.Targets[0];
 								var waypoint = [];
 
-								waypoint.push(Number(item.XPos.toFixed(1)));
-								waypoint.push(Number(item.ZPos.toFixed(1)));
+								waypoint.push(Number(item.XPos.toFixed(Item.PRECISION_POSITION)));
+								waypoint.push(Number(item.ZPos.toFixed(Item.PRECISION_POSITION)));
 
 								if (waypointFlag) {
 									waypoint.push(waypointFlag);
@@ -517,9 +518,11 @@ function getPointPosition(item, point) {
 
 	var pointOrientation = item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X);
 	var pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X);
+	var positionX = item.XPos + pointMagnitude * Math.cos(pointOrientation);
+	var positionZ = item.ZPos + pointMagnitude * Math.sin(pointOrientation);
 
 	return [
-		Number((item.XPos + pointMagnitude * Math.cos(pointOrientation)).toFixed(2)),
-		Number((item.ZPos + pointMagnitude * Math.sin(pointOrientation)).toFixed(2))
+		Number(positionX.toFixed(Item.PRECISION_POSITION)),
+		Number(positionZ.toFixed(Item.PRECISION_POSITION))
 	];
 }

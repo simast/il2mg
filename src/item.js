@@ -32,7 +32,7 @@ Item.DEFAULT_DAMAGE_REPORT = 50; // 50% of damage
 Item.DEFAULT_DURABILITY = 25000;
 
 // Precision of position and orientation values (decimal places)
-Item.PRECISION_POSITION = 3;
+Item.PRECISION_POSITION = 2;
 Item.PRECISION_ORIENTATION = 2;
 
 /**

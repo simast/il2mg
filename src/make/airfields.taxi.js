@@ -50,8 +50,8 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		var pointY = pointXDiff * Math.sin(pointTheta) + pointYDiff * Math.cos(pointTheta);
 
 		pointItem.Type = pointType;
-		pointItem.X = Number(pointX.toFixed(2));
-		pointItem.Y = Number(pointY.toFixed(2));
+		pointItem.X = Number(pointX.toFixed(Item.PRECISION_POSITION));
+		pointItem.Y = Number(pointY.toFixed(Item.PRECISION_POSITION));
 
 		chartItem.addItem(pointItem);
 	}
