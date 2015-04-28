@@ -23,6 +23,8 @@ module.exports = function makePlanes() {
 		}
 
 		var plane = Object.create(null);
+		
+		plane.id = planeID;
 
 		// Build plane data and register plane parent/group hierarchy
 		while (planeData) {

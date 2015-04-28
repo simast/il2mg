@@ -34,6 +34,8 @@ module.exports = function makeUnits() {
 
 		var unit = Object.create(null);
 		var unitPlaneStorages = [];
+		
+		unit.id = unitID;
 
 		// Build unit data and register unit parent/group hierarchy
 		while (unitData) {

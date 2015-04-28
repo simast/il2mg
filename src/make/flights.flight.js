@@ -39,14 +39,14 @@ function makeFlight(params) {
 		throw new TypeError("Invalid flight plane count value.");
 	}
 
-	flight.unit = params.unit;
+	var unitID = params.unit;
 
 	// Resolve unit group IDs
-	while (Array.isArray(this.unitsByID[flight.unit])) {
-		flight.unit = rand.pick(this.unitsByID[flight.unit]);
+	while (Array.isArray(this.unitsByID[unitID])) {
+		unitID = rand.pick(this.unitsByID[unitID]);
 	}
 	
-	var unit = this.unitsByID[flight.unit];
+	var unit = flight.unit = this.unitsByID[unitID];
 	var airfield = this.airfieldsByID[unit.airfield];
 	var isPlayer = false;
 
@@ -64,7 +64,9 @@ function makeFlight(params) {
 		flight.state = flightState.PARKED;
 	}
 	
-	var planes = flight.planes = [];
+	// TODO: Add support for more than one flight element
+	var planes = flight.planes = [[]];
+	var planesCount = 0;
 	
 	rand.shuffle(unit.planes);
 	
@@ -78,24 +80,26 @@ function makeFlight(params) {
 			break;
 		}
 		
-		planes.push({
+		planes[0].push({
 			id: plane
 		});
+		
+		planesCount++;
 	}
 	
 	// No planes are available for the flight
-	if (!planes.length) {
+	if (!planesCount) {
 		return;
 	}
 	
-	// The first plane in the list is the leader plane
+	// The first plane of the leading element is the flight leader plane
 	// TODO: Leaders should pick the best plane in the flight
-	var leaderPlane = planes[0];
+	planes.leader = planes[0][0];
 	
 	// Option 1: Attempt to pick taxi route/sector where static unit planes are present
 	(function() {
 
-		var unitPlaneItems = airfield.planeItemsByUnit[flight.unit];
+		var unitPlaneItems = airfield.planeItemsByUnit[unitID];
 
 		if (unitPlaneItems) {
 
@@ -111,7 +115,7 @@ function makeFlight(params) {
 				var taxiSpawns = airfield.taxiSpawnsBySector[unitSectorID];
 
 				// 75% chance to use player-only spawn point with a single-plane player flight
-				if (isPlayer && planes.length === 1 && taxiSpawns[0] && rand.bool(0.75)) {
+				if (isPlayer && planesCount === 1 && taxiSpawns[0] && rand.bool(0.75)) {
 					flight.taxi = 0;
 				}
 				// Pick any taxi route where the flight fits the best
@@ -141,7 +145,7 @@ function makeFlight(params) {
 
 		(function() {
 
-			var leaderPlaneGroup = this.planesByID[leaderPlane.id].group;
+			var leaderPlaneGroup = this.planesByID[planes.leader.id].group;
 			var leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
 			
 			if (leaderPlaneGroupTaxiSectors) {
@@ -172,12 +176,12 @@ function makeFlight(params) {
 	if (isPlayer) {
 		
 		// 50% chance the player is a leader in a multi-plane flight formation
-		if (planes.length === 1 || rand.bool()) {
-			planes.player = leaderPlane;
+		if (planesCount === 1 || rand.bool()) {
+			planes.player = planes.leader;
 		}
 		// Player is a wingman
 		else {
-			planes.player = rand.pick(planes, 1);
+			planes.player = rand.pick(planes[0], 1);
 		}
 	}
 	

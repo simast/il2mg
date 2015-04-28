@@ -71,7 +71,7 @@ module.exports = function makeAirfields() {
 		var airfieldData = battle.airfields[airfieldID];
 		var airfield = airfieldsByID[airfieldID] = Object.create(null);
 
-		// Copy airfield name and position from data definitions
+		airfield.id = airfieldID;
 		airfield.name = airfieldData.name;
 		airfield.position = airfieldData.position;
 
