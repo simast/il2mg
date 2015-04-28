@@ -15,7 +15,7 @@
 		"grunt-contrib-jshint": "0.11.2",
 		"grunt-contrib-clean": "0.6.0",
 		"grunt-jscs": "1.6.0",
-		"enclose": "0.2.19",
+		"enclose": "0.2.21",
 		"numeral": "1.5.3",
 		"sloc": "0.1.9"
 	}
