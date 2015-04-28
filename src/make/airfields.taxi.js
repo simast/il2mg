@@ -24,7 +24,6 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 
 	airfieldItem.Model = itemType.model;
 	airfieldItem.Script = itemType.script;
-	airfieldItem.setName(airfield.name);
 	airfieldItem.setPosition(basePoint[0], airfield.position[1], basePoint[1]);
 	airfieldItem.setOrientation(basePoint[2]);
 	airfieldItem.Country = airfield.country;

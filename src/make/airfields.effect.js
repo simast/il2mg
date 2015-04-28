@@ -72,7 +72,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 			var campfireGround = this.createItem("Ground", false);
 
 			campfireGround.Model = grounds.crater_16.model;
-			campfireGround.setPosition(item[1], campfirePosY - 0.3, item[3]);
+			campfireGround.setPosition(item[1], campfirePosY - 0.28, item[3]);
 			campfireGround.setOrientation(rand.real(0, 360));
 
 			items.push(campfireGround);

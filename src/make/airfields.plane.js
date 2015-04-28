@@ -108,7 +108,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 		positionX += positionOffset * Math.cos(orientationRad);
 		positionZ += positionOffset * Math.sin(orientationRad);
 
-		orientationOffset = 45;
+		orientationOffset = 40;
 	}
 
 	// Slightly vary/randomize plane orientation

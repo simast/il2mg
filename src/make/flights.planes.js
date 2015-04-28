@@ -19,25 +19,27 @@ module.exports = function makeFlightPlanes(flight) {
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
 	var usedParkSpawns = Object.create(null);
+	var planeNumber = 1;
 	
-	// Create all plane item objects
+	// Process each flight element (section)
 	flight.elements.forEach(function(element) {
 		
 		var unit = element.unit;
 		
+		// Create plane item objects
 		element.forEach(function(plane) {
 	
 			var planeData = this.planesByID[plane.plane];
 			var isPlayerPlane = (plane === flight.player);
 			var isLeaderPlane = (plane === flight.leader);
 			var validParkSpawns = [];
-			
+
 			// Make plane pilot
 			plane.pilot = makeFlightPilot.call(this, unit);
-	
+
 			// Build a list of valid taxi spawn points
 			if (flight.spawns) {
-	
+
 				var planeSizeID = planeSize[String(planeData.size).toUpperCase()];
 	
 				flight.spawns.forEach(function(spawnPoint, spawnIndex) {
@@ -53,6 +55,11 @@ module.exports = function makeFlightPlanes(flight) {
 					}
 				});
 			}
+
+			// Sort valid spawn points by size (planes will use best fit spawn point)
+			validParkSpawns.sort(function(a, b) {
+				return (a.point.size - b.point.size);
+			});
 			
 			var Plane = Item.Plane;
 			var planeItem = plane.item = flight.group.createItem("Plane");
@@ -61,8 +68,6 @@ module.exports = function makeFlightPlanes(flight) {
 			var positionZ;
 			var orientation;
 			
-			// TODO: Sort validParkSpawns based on distance to the first taxi waypoint
-	
 			// Try to use any of the valid parking spawn points
 			var parkSpawn = validParkSpawns.shift();
 			
@@ -129,15 +134,14 @@ module.exports = function makeFlightPlanes(flight) {
 				planeItem.StartInAir = Plane.START_AIR;
 			}
 	
-			planeItem.setName(planeData.name);
 			planeItem.setPosition(positionX, positionY, positionZ);
 			planeItem.setOrientation(orientation);
 			planeItem.Script = planeData.script;
 			planeItem.Model = planeData.model;
 			planeItem.Country = unit.country;
-			planeItem.NumberInFormation = plane.number - 1;
-			planeItem.Callnum = plane.number;
 			planeItem.Callsign = flight.callsign[0];
+
+			// TODO: Set plane names for player flight
 	
 			// Player plane item
 			if (plane === flight.player) {
@@ -157,7 +161,35 @@ module.exports = function makeFlightPlanes(flight) {
 				planeItem.entity.addTarget(flight.leader.item.entity);
 			}
 			
+			plane.distance = 0;
+
+			// Compute plane distance to element leader plane
+			if (!isLeaderPlane) {
+
+				var posXDiff = flight.leader.item.XPos - planeItem.XPos;
+				var posYDiff = flight.leader.item.YPos - planeItem.YPos;
+				var posZDiff = flight.leader.item.ZPos - planeItem.ZPos;
+
+				plane.distance = Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2));
+			}
+
 		}, this);
+
+		// Sort element planes based on the distance to the element leader
+		// NOTE: Will make sure that they don't get in the way while taxiing and forming up
+		element.sort(function(a, b) {
+			return (a.distance - b.distance);
+		});
+		
+		// Set plane number and formation index
+		element.forEach(function(plane, planeIndex) {
+
+			plane.item.NumberInFormation = planeIndex;
+			plane.item.Callnum = planeNumber;
+			
+			planeNumber++;
+		});
+
 	}, this);
 
 	delete flight.spawns;
