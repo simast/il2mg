@@ -2,6 +2,7 @@
 "use strict";
 
 // Flight make parts
+var makeFlightElements = require("./flights.elements");
 var makeFlightPlanes = require("./flights.planes");
 var makeFlightTakeoff = require("./flights.takeoff");
 var makeAirfieldTaxi = require("./airfields.taxi");
@@ -21,7 +22,6 @@ function makeFlight(params) {
 	// TODO: params.player - player flight flag (or player plane ID)
 	// TODO: params.mission - mission ID
 	// TODO: params.unit - unit ID
-	// TODO: params.planes - number of planes
 	// TODO: params.state - state (parked, runway, in progress, etc)
 	// TODO: params.start - start when mission starts or at a later point in time
 
@@ -33,10 +33,12 @@ function makeFlight(params) {
 		throw new TypeError("Invalid flight unit ID value.");
 	}
 	
-	// Validate required plane count parameter
-	// TODO: Plane count should be set by mission
-	if (!Number.isInteger(params.planes) || params.planes <= 0) {
-		throw new TypeError("Invalid flight plane count value.");
+	var isPlayer = false;
+
+	// Player flight
+	// TODO: Support player param as a requested player plane ID
+	if (params.player) {
+		isPlayer = true;
 	}
 
 	var unitID = params.unit;
@@ -46,55 +48,26 @@ function makeFlight(params) {
 		unitID = rand.pick(this.unitsByID[unitID]);
 	}
 	
-	var unit = flight.unit = this.unitsByID[unitID];
+	var unit = this.unitsByID[unitID];
 	var airfield = this.airfieldsByID[unit.airfield];
-	var isPlayer = false;
-
-	// Player flight
-	// TODO: Support player param as a requested player plane ID
-	if (params.player) {
-		isPlayer = true;
-	}
 	
+	flight.unit = unitID;
 	flight.airfield = unit.airfield;
 	flight.state = params.state;
+	flight.mission = params.mission;
 
 	// Set default flight state (cold start from parking)
 	if (flight.state === undefined) {
 		flight.state = flightState.PARKED;
 	}
 	
-	// TODO: Add support for more than one flight element
-	var planes = flight.planes = [[]];
-	var planesCount = 0;
-	
-	rand.shuffle(unit.planes);
-	
-	// Pick available and required number of unit planes
-	for (var i = 0; i < params.planes; i++) {
-
-		// TODO: Pick planes required by mission type
-		var plane = unit.planes.shift();
-
-		if (!plane) {
-			break;
-		}
-		
-		planes[0].push({
-			id: plane
-		});
-		
-		planesCount++;
-	}
+	// Make flight elements (sections)
+	makeFlightElements.call(this, flight);
 	
 	// No planes are available for the flight
-	if (!planesCount) {
+	if (!flight.planes) {
 		return;
 	}
-	
-	// The first plane of the leading element is the flight leader plane
-	// TODO: Leaders should pick the best plane in the flight
-	planes.leader = planes[0][0];
 	
 	// Option 1: Attempt to pick taxi route/sector where static unit planes are present
 	(function() {
@@ -115,7 +88,7 @@ function makeFlight(params) {
 				var taxiSpawns = airfield.taxiSpawnsBySector[unitSectorID];
 
 				// 75% chance to use player-only spawn point with a single-plane player flight
-				if (isPlayer && planesCount === 1 && taxiSpawns[0] && rand.bool(0.75)) {
+				if (isPlayer && flight.planes === 1 && taxiSpawns[0] && rand.bool(0.75)) {
 					flight.taxi = 0;
 				}
 				// Pick any taxi route where the flight fits the best
@@ -145,7 +118,7 @@ function makeFlight(params) {
 
 		(function() {
 
-			var leaderPlaneGroup = this.planesByID[planes.leader.id].group;
+			var leaderPlaneGroup = this.planesByID[flight.leader.plane].group;
 			var leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
 			
 			if (leaderPlaneGroupTaxiSectors) {
@@ -176,12 +149,12 @@ function makeFlight(params) {
 	if (isPlayer) {
 		
 		// 50% chance the player is a leader in a multi-plane flight formation
-		if (planesCount === 1 || rand.bool()) {
-			planes.player = planes.leader;
+		if (flight.planes === 1 || rand.bool()) {
+			flight.player = flight.leader;
 		}
 		// Player is a wingman
 		else {
-			planes.player = rand.pick(planes[0], 1);
+			flight.player = rand.pick(flight.elements[0], 1);
 		}
 	}
 	

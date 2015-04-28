@@ -2,7 +2,7 @@
 "use strict";
 
 // Make mission flight pilot
-module.exports = function makeFlightPilot(flight) {
+module.exports = function makeFlightPilot(unit) {
 
 	var pilot = Object.create(null);
 	

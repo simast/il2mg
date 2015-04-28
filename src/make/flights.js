@@ -16,7 +16,9 @@ module.exports = function makeFlights() {
 	var flight = makeFlight.call(this, {
 		player: true,
 		unit: unit,
-		planes: 4
+		mission: {
+			planes: 4
+		}
 	});
 	
 	if (flight) {

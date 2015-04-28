@@ -7,12 +7,11 @@ var Item = require("../item");
 module.exports = function makeFlightTakeoff(flight) {
 
 	var airfield = this.airfieldsByID[flight.airfield];
-	var planes = flight.planes;
 
 	var missionBegin = flight.group.createItem("MCU_TR_MissionBegin");
 	var takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
 
-	missionBegin.setPositionNear(planes.leader.item);
+	missionBegin.setPositionNear(flight.leader.item);
 	missionBegin.addTarget(takeoffCommand);
 
 	takeoffCommand.setPositionNear(missionBegin);
@@ -22,5 +21,5 @@ module.exports = function makeFlightTakeoff(flight) {
 		takeoffCommand.ZPos
 	);
 	
-	takeoffCommand.addObject(planes.leader.item);
+	takeoffCommand.addObject(flight.leader.item);
 };

@@ -17,26 +17,23 @@ module.exports = function makeFlightPlanes(flight) {
 	// TODO: Set pilot
 
 	var rand = this.rand;
-	var unit = flight.unit;
-	var planes = flight.planes;
 	var airfield = this.airfieldsByID[flight.airfield];
-	var usedTaxiSpawns = Object.create(null);
-	var planeNumber = 1;
+	var usedParkSpawns = Object.create(null);
 	
 	// Create all plane item objects
-	planes.forEach(function(element) {
+	flight.elements.forEach(function(element) {
+		
+		var unit = element.unit;
+		
 		element.forEach(function(plane) {
 	
-			var planeData = this.planesByID[plane.id];
-			var isPlayerPlane = (plane === planes.player);
-			var isLeaderPlane = (plane === planes.leader);
-			var validTaxiSpawns = [];
-			
-			// Set plane ID number (unique per flight)
-			plane.number = planeNumber;
+			var planeData = this.planesByID[plane.plane];
+			var isPlayerPlane = (plane === flight.player);
+			var isLeaderPlane = (plane === flight.leader);
+			var validParkSpawns = [];
 			
 			// Make plane pilot
-			plane.pilot = makeFlightPilot.call(this, flight);
+			plane.pilot = makeFlightPilot.call(this, unit);
 	
 			// Build a list of valid taxi spawn points
 			if (flight.spawns) {
@@ -44,17 +41,19 @@ module.exports = function makeFlightPlanes(flight) {
 				var planeSizeID = planeSize[String(planeData.size).toUpperCase()];
 	
 				flight.spawns.forEach(function(spawnPoint, spawnIndex) {
+					
+					var spawnID = spawnIndex + 1;
 	
-					if (!usedTaxiSpawns[spawnIndex] && spawnPoint.size >= planeSizeID) {
+					if (!usedParkSpawns[spawnID] && spawnPoint.size >= planeSizeID) {
 	
-						validTaxiSpawns.push({
-							index: spawnIndex,
+						validParkSpawns.push({
+							id: spawnID,
 							point: spawnPoint
 						});
 					}
 				});
 			}
-	
+			
 			var Plane = Item.Plane;
 			var planeItem = plane.item = flight.group.createItem("Plane");
 			var positionX;
@@ -62,15 +61,15 @@ module.exports = function makeFlightPlanes(flight) {
 			var positionZ;
 			var orientation;
 			
-			// TODO: Sort validTaxiSpawns based on distance to the first taxi waypoint
+			// TODO: Sort validParkSpawns based on distance to the first taxi waypoint
 	
-			// Try to use any of the valid spawn points
-			var taxiSpawn = validTaxiSpawns.shift();
-	
+			// Try to use any of the valid parking spawn points
+			var parkSpawn = validParkSpawns.shift();
+			
 			// Use taxi spawn point
-			if (taxiSpawn) {
+			if (parkSpawn) {
 	
-				var spawnPoint = taxiSpawn.point;
+				var spawnPoint = parkSpawn.point;
 				var positionOffsetMin = 10;
 				var positionOffsetMax = 25;
 				var orientationOffset = 15;
@@ -101,9 +100,8 @@ module.exports = function makeFlightPlanes(flight) {
 				// TODO: Move around existing static plane items instead of removing them
 				if (spawnPoint.plane) {
 	
-					spawnPoint.plane.remove();
+					spawnPoint.plane.item.remove();
 	
-					delete spawnPoint.planeGroup;
 					delete spawnPoint.plane;
 				}
 	
@@ -116,7 +114,7 @@ module.exports = function makeFlightPlanes(flight) {
 				}
 	
 				// Mark spawn point as used/reserved
-				usedTaxiSpawns[taxiSpawn.index] = true;
+				usedParkSpawns[parkSpawn.id] = true;
 			}
 			// Spawn in the air above airfield
 			else {
@@ -137,12 +135,12 @@ module.exports = function makeFlightPlanes(flight) {
 			planeItem.Script = planeData.script;
 			planeItem.Model = planeData.model;
 			planeItem.Country = unit.country;
-			planeItem.NumberInFormation = planeNumber - 1;
-			planeItem.Callnum = planeNumber;
+			planeItem.NumberInFormation = plane.number - 1;
+			planeItem.Callnum = plane.number;
 			planeItem.Callsign = flight.callsign[0];
 	
 			// Player plane item
-			if (plane === planes.player) {
+			if (plane === flight.player) {
 				planeItem.AILevel = Plane.AI_PLAYER;
 			}
 			// AI plane item
@@ -156,10 +154,8 @@ module.exports = function makeFlightPlanes(flight) {
 	
 			// Group subordinate planes with leader
 			if (!isLeaderPlane) {
-				planeItem.entity.addTarget(planes.leader.item.entity);
+				planeItem.entity.addTarget(flight.leader.item.entity);
 			}
-			
-			planeNumber++;
 			
 		}, this);
 	}, this);
