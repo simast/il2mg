@@ -7,7 +7,6 @@ module.exports = function makeFlightElements(flight) {
 	var rand = this.rand;
 	var elements = flight.elements = [];
 	var planesCount = 0;
-	var elementsNumber = 1;
 	
 	// TODO: Add support for more than one flight element
 	for (var e = 0; e < 1; e++) {
@@ -20,18 +19,27 @@ module.exports = function makeFlightElements(flight) {
 		rand.shuffle(unit.planes);
 		
 		// Pick available and required number of mission planes
-		for (var i = 0; i < flight.mission.planes; i++) {
+		for (var p = 0; p < flight.mission.planes; p++) {
 	
 			// TODO: Pick planes required by mission type
-			var plane = unit.planes.shift();
+			// TODO: Use same plane for element (don't mix Bf 109 F-4s wth G-2s for example)
+			var planeID = unit.planes.shift();
 
-			if (!plane) {
+			if (!planeID) {
 				break;
 			}
 			
-			element.push({
-				plane: plane
-			});
+			var plane = {
+				plane: planeID
+			};
+			
+			element.push(plane);
+			
+			// The first plane of the leading element is the flight leader plane
+			// TODO: Let leaders pick the best plane available?
+			if (!flight.leader) {
+				flight.leader = plane;
+			}
 			
 			planesCount++;
 		}
@@ -41,10 +49,4 @@ module.exports = function makeFlightElements(flight) {
 	
 	// Number of planes in all flight elements
 	flight.planes = planesCount;
-	
-	// The first plane of the leading element is the flight leader plane
-	// TODO: Let leaders pick the best plane available
-	if (flight.planes) {
-		flight.leader = elements[0][0];
-	}
 };

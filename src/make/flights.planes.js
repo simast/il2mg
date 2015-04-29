@@ -1,8 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+var Plane = require("../item").Plane;
 var planeSize = require("./airfields").planeSize;
+var flightState = require("./flights.flight").flightState;
 
 // Flight plane make parts
 var makeFlightPilot = require("./flights.pilot");
@@ -27,15 +28,16 @@ module.exports = function makeFlightPlanes(flight) {
 		var unit = element.unit;
 		
 		// Create plane item objects
-		element.forEach(function(plane) {
+		element.forEach(function(plane, planeIndex) {
 	
 			var planeData = this.planesByID[plane.plane];
-			var isPlayerPlane = (plane === flight.player);
-			var isLeaderPlane = (plane === flight.leader);
+			var isPlayer = (plane === flight.player);
+			var leaderPlane = element[0];
+			var isLeader = (plane === leaderPlane);
 			var validParkSpawns = [];
 
 			// Make plane pilot
-			plane.pilot = makeFlightPilot.call(this, unit);
+			var pilot = plane.pilot = makeFlightPilot.call(this, unit);
 
 			// Build a list of valid taxi spawn points
 			if (flight.spawns) {
@@ -61,7 +63,6 @@ module.exports = function makeFlightPlanes(flight) {
 				return (a.point.size - b.point.size);
 			});
 			
-			var Plane = Item.Plane;
 			var planeItem = plane.item = flight.group.createItem("Plane");
 			var positionX;
 			var positionY;
@@ -109,13 +110,31 @@ module.exports = function makeFlightPlanes(flight) {
 	
 					delete spawnPoint.plane;
 				}
-	
-				// 33% chance to start with engine running for non-leader and non-player planes
-				if (!isPlayerPlane && !isLeaderPlane && rand.bool(0.33)) {
+				
+				var state = flight.state;
+				
+				// NOTE: Individual elements can have and override a global flight state
+				if (element.state !== undefined) {
+					state = element.state;
+				}
+				
+				// Parking start, engine not running
+				if (state === flightState.START) {
+					
+					planeItem.StartInAir = Plane.START_PARKING;
+					
+					// 50% chance to start with engine running for non-leader and non-player planes
+					if (!isPlayer && !isLeader && rand.bool(0.5)) {
+						planeItem.StartInAir = Plane.START_RUNWAY;
+					}
+				}
+				// Ready, taxi or runway start with engine running
+				else if (!Number.isNumber(state)) {
 					planeItem.StartInAir = Plane.START_RUNWAY;
 				}
+				// Air start
 				else {
-					planeItem.StartInAir = Plane.START_PARKING;
+					planeItem.StartInAir = Plane.START_AIR;
 				}
 	
 				// Mark spawn point as used/reserved
@@ -133,7 +152,13 @@ module.exports = function makeFlightPlanes(flight) {
 				
 				planeItem.StartInAir = Plane.START_AIR;
 			}
-	
+			
+			// Set plane name for player flight planes only
+			// NOTE: Required for the radio message UI to not report distant plane/pilot IDs
+			if (flight.player && !isPlayer) {
+				planeItem.setName(pilot.id);
+			}
+			
 			planeItem.setPosition(positionX, positionY, positionZ);
 			planeItem.setOrientation(orientation);
 			planeItem.Script = planeData.script;
@@ -148,29 +173,30 @@ module.exports = function makeFlightPlanes(flight) {
 				planeItem.AILevel = Plane.AI_PLAYER;
 			}
 			// AI plane item
-			// TODO: Set plane AI level based on pilot skill and difficulty command-line param
 			else {
-				planeItem.AILevel = Plane.AI_NORMAL;
+				planeItem.AILevel = pilot.level;
 			}
 	
 			// Create plane entity
 			planeItem.createEntity();
 	
-			// Group subordinate planes with leader
-			if (!isLeaderPlane) {
-				planeItem.entity.addTarget(flight.leader.item.entity);
+			// Group subordinate planes with element leader
+			if (!isLeader) {
+				planeItem.entity.addTarget(leaderPlane.item.entity);
 			}
 			
 			plane.distance = 0;
 
 			// Compute plane distance to element leader plane
-			if (!isLeaderPlane) {
+			if (!isLeader) {
 
-				var posXDiff = flight.leader.item.XPos - planeItem.XPos;
-				var posYDiff = flight.leader.item.YPos - planeItem.YPos;
-				var posZDiff = flight.leader.item.ZPos - planeItem.ZPos;
+				var posXDiff = leaderPlane.item.XPos - planeItem.XPos;
+				var posYDiff = leaderPlane.item.YPos - planeItem.YPos;
+				var posZDiff = leaderPlane.item.ZPos - planeItem.ZPos;
 
-				plane.distance = Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2));
+				plane.distance = Math.sqrt(
+					Math.pow(posXDiff, 2) + Math.pow(posYDiff, 2) + Math.pow(posZDiff, 2)
+				);
 			}
 
 		}, this);

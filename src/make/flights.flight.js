@@ -1,17 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Flight make parts
-var makeFlightElements = require("./flights.elements");
-var makeFlightPlanes = require("./flights.planes");
-var makeFlightTakeoff = require("./flights.takeoff");
-var makeAirfieldTaxi = require("./airfields.taxi");
-
 // Flight states
-// NOTE: Numeric flight states represent aircraft in the air at various mission states
+// NOTE: Numeric (0..1) flight states represent aircraft in the air at various mission states
 var flightState = makeFlight.flightState = {
-	PARKED: "parked", // Parked, engine not running, cold start
-	READY: "ready", // Parked, engine running, ready for taxi
+	START: "start", // Parking, engine not running
+	READY: "ready", // Parking, engine running, ready for taxi
 	TAXI: "taxi", // On the taxiway, engine running, taxiing to runway
 	RUNWAY: "runway" // On the runway, engine running, ready for takeoff
 };
@@ -56,9 +50,9 @@ function makeFlight(params) {
 	flight.state = params.state;
 	flight.mission = params.mission;
 
-	// Set default flight state (cold start from parking)
+	// Set default flight state (parking start without engine running)
 	if (flight.state === undefined) {
-		flight.state = flightState.PARKED;
+		flight.state = flightState.START;
 	}
 	
 	// Make flight elements (sections)
@@ -139,7 +133,7 @@ function makeFlight(params) {
 		}).call(this);
 	}
 	
-	// Option 3: Force air start state if no valid taxi route is found
+	// Option 3: Force (forward to) air start state if no valid taxi route is found
 	if (flight.taxi === undefined) {
 		flight.state = 0;
 	}
@@ -148,13 +142,15 @@ function makeFlight(params) {
 	// TODO: Support command-line argument for player leader/wingman selection
 	if (isPlayer) {
 		
-		// 50% chance the player is a leader in a multi-plane flight formation
-		if (flight.planes === 1 || rand.bool()) {
-			flight.player = flight.leader;
+		var playerElement = flight.elements[0];
+		
+		// 50% chance the player is a leader in a multi-plane element formation
+		if (playerElement.length === 1 || rand.bool(0.5)) {
+			flight.player = playerElement[0];
 		}
 		// Player is a wingman
 		else {
-			flight.player = rand.pick(flight.elements[0], 1);
+			flight.player = rand.pick(playerElement, 1);
 		}
 	}
 	
@@ -178,3 +174,9 @@ function makeFlight(params) {
 }
 
 module.exports = makeFlight;
+
+// Flight make parts
+var makeFlightElements = require("./flights.elements");
+var makeFlightPlanes = require("./flights.planes");
+var makeFlightTakeoff = require("./flights.takeoff");
+var makeAirfieldTaxi = require("./airfields.taxi");
