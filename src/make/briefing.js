@@ -10,6 +10,9 @@ module.exports = function makeBriefing() {
 
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
+
+	// TODO: General mission text (summarry)
+	briefing.push("Maecenas diam sem, aliquam at scelerisque quis, porttitor quis massa. Ut imperdiet hendrerit pharetra. Suspendisse vel eros vel velit venenatis pretium. Sed commodo sollicitudin rhoncus.");
 	
 	// Flight and pilot info
 	briefing.push(makeBriefingFlight.call(this));
@@ -19,6 +22,12 @@ module.exports = function makeBriefing() {
 	// TODO: Payload info
 	// TODO: Battle situation
 	// TODO: Weather report
+
+	// TODO: Flight plan output
+	briefing.push("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam faucibus ipsum vitae sapien tincidunt, sed venenatis enim semper. Nunc quis mi nulla.");
+	briefing.push("Aliquam eu diam ac enim feugiat eleifend. Pellentesque posuere blandit libero at porttitor. Phasellus euismod erat pulvinar eros posuere viverra. Donec blandit orci ac ipsum elementum, eu pellentesque felis finibus. Vivamus malesuada nibh eu nibh congue, hendrerit sollicitudin nisi faucibus.");
+	briefing.push("Duis sit amet euismod leo. Nulla ac augue ut diam egestas finibus. Etiam ut hendrerit diam. Suspendisse rutrum nunc purus. Mauris tempor congue mi, quis congue tortor fringilla id.");
+	briefing.push("Pellentesque pharetra vulputate libero, sit amet faucibus felis blandit faucibus.");
 
 	options.setDescription(this.getLC(briefing.join("<br><br>")));
 };
@@ -30,7 +39,7 @@ function makeBriefingDateAndTime() {
 	var output = "";
 
 	output += this.date.format("MMMM Do, YYYY") + "<br>";
-	output += '<font size="13">';
+	output += '<font size="14">';
 	output += this.date.format("HH.mm") + " hrs";
 
 	// Display time period names
@@ -130,32 +139,44 @@ function makeBriefingFlight() {
 		
 		if (!formation) {
 			
-			// Use generic formation name
+			// Generic formation name
 			output += "Flight";
 		}
 		else {
-			output += "<i>" + formation + "</i> formation";
+			output += "<i>" + formation + "</i>";
 		}
 		
-		output += " of " + unit.name;
+		// Unit name
+		// TODO: Show all units if elements are from different units
+		output += ' of <font color="#FFFFFF">' + unit.name + "</font>";
 		
+		// Unit alias
 		if (unit.alias) {
-			output += ' "' + unit.alias + '"';
+			output += " <i>“" + unit.alias + "”</i>";
 		}
 		
-		output += "<br><br>";
-		
+		output += ",<br><br>";
+
 		element.forEach(function(plane) {
 
 			var pilot = plane.pilot;
 			
+			// Pilot and plane info
 			output += "\t" + plane.number + ". ";
-			output += this.planesByID[plane.plane].name + " (";
-			output += pilot.rank[1] + " ";
-			output += pilot.name[0] + " " + pilot.name[1];
-			output += ")<br>";
-			
+			output += '<font size="16"><i>' + pilot.rank[1] + "</i></font> ";
+			output += pilot.name[0] + " " + pilot.name[1] + ', <font size="16"><i>';
+			output += this.planesByID[plane.plane].name;
+			output += "</i></font><br>";
+
 		}, this);
+
+		// Element separator
+		if ((elementIndex + 1) !== flight.elements.length) {
+			output += '<font size="8"></font><br>';
+		}
+		
+		// Flight callsign
+		output += "<br>\tCallsign <i>“" + flight.callsign[1] + "”</i>.";
 		
 	}, this);
 	
