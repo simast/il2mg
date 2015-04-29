@@ -22,6 +22,12 @@ module.exports = function makeFlights() {
 	});
 	
 	if (flight) {
+		
 		this.flights.push(flight);
+		
+		// Set player flight reference
+		if (flight.player) {
+			this.flights.player = flight;
+		}
 	}
 };

@@ -10,10 +10,13 @@ module.exports = function makeBriefing() {
 
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
+	
+	// Flight and pilot info
+	briefing.push(makeBriefingFlight.call(this));
 
 	// TODO: Location info
 	// TODO: Task/objective info
-	// TODO: Flight and payload info
+	// TODO: Payload info
 	// TODO: Battle situation
 	// TODO: Weather report
 
@@ -77,5 +80,84 @@ function makeBriefingDateAndTime() {
 
 	output += "</font>";
 
+	return output;
+}
+
+// Make mission flight and pilot info output
+function makeBriefingFlight() {
+	
+	var flight = this.flights.player;
+	var output = "";
+	
+	flight.elements.forEach(function(element, elementIndex) {
+		
+		var unit = element.unit;
+		var formation;
+		
+		// TODO: Move formation names to data files?
+		
+		// Germany formation names
+		if (unit.country === 201) {
+			
+			if (flight.planes === 9) {
+				formation = "Staffel";
+			}
+			else if (flight.planes === 4) {
+				formation = "Schwarm";
+			}
+			else if (flight.planes === 3) {
+				formation = "Kette";
+			}
+			else if (flight.planes === 2) {
+				formation = "Rotte";
+			}
+		}
+		// Soviet Union formation names
+		else if (unit.country === 101) {
+
+			if (flight.planes === 8 || flight.planes === 6) {
+				formation = "Gruppa";
+			}
+			else if (flight.planes === 4 || flight.planes === 3) {
+				formation = "Zveno";
+			}
+			else if (flight.planes === 2) {
+				formation = "Para";
+			}
+		}
+		
+		// TODO: Italy formation names
+		
+		if (!formation) {
+			
+			// Use generic formation name
+			output += "Flight";
+		}
+		else {
+			output += "<i>" + formation + "</i> formation";
+		}
+		
+		output += " of " + unit.name;
+		
+		if (unit.alias) {
+			output += ' "' + unit.alias + '"';
+		}
+		
+		output += "<br><br>";
+		
+		element.forEach(function(plane) {
+
+			var pilot = plane.pilot;
+			
+			output += "\t" + plane.number + ". ";
+			output += this.planesByID[plane.plane].name + " (";
+			output += pilot.rank[1] + " ";
+			output += pilot.name[0] + " " + pilot.name[1];
+			output += ")<br>";
+			
+		}, this);
+		
+	}, this);
+	
 	return output;
 }

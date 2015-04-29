@@ -212,6 +212,7 @@ module.exports = function makeFlightPlanes(flight) {
 
 			plane.item.NumberInFormation = planeIndex;
 			plane.item.Callnum = planeNumber;
+			plane.number = planeNumber;
 			
 			planeNumber++;
 		});
