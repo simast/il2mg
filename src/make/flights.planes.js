@@ -155,8 +155,8 @@ module.exports = function makeFlightPlanes(flight) {
 			
 			// Set plane name for player flight planes only
 			// NOTE: Required for the radio message UI to not report distant plane/pilot IDs
-			if (flight.player && !isPlayer) {
-				planeItem.setName(pilot.id);
+			if (flight.player && !isPlayer && pilot.name) {
+				planeItem.setName(pilot.name.short);
 			}
 			
 			planeItem.setPosition(positionX, positionY, positionZ);

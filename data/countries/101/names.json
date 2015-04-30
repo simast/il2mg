@@ -1,24 +1,33 @@
 {
-	"first": [
-		"Aleksandr",
-		"Andrey",
-		"Anton",
-		"Arkadiy",
-		"Boris",
-		"Fyodor",
-		"Ivan",
-		"Konstantin",
-		"Mikhail",
-		"Nikolay",
-		"Pavel",
-		"Semyon",
-		"Stepan",
-		"Timofey",
-		"Vasiliy",
-		"Viktor",
-		"Yevgeniy"
-	],
-	"last": [
-		"Ivanov"
-	]
+	"first": {
+		"1": [
+			"Aleksandr",
+			"Andrey",
+			"Anton",
+			"Arkadiy",
+			"Boris",
+			"Fyodor",
+			"Ivan",
+			"Konstantin",
+			"Mikhail",
+			"Nikolay",
+			"Pavel",
+			"Semyon",
+			"Stepan",
+			"Timofey",
+			"Vasiliy",
+			"Viktor",
+			"Yevgeniy"
+		],
+		"total": 1
+	},
+	"middle": {
+		"total": 0
+	},
+	"last": {
+		"1": [
+			"Ivanov"
+		],
+		"total": 1
+	}
 }
