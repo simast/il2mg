@@ -148,7 +148,7 @@ function makeBriefingFlight() {
 		
 		// Unit name
 		// TODO: Show all units if elements are from different units
-		output += ' of <font color="#FFFFFF">' + unit.name + "</font>";
+		output += ' of <font color="#fbfbfb">' + unit.name + "</font>";
 		
 		// Unit alias
 		if (unit.alias) {
@@ -160,11 +160,31 @@ function makeBriefingFlight() {
 		element.forEach(function(plane) {
 
 			var pilot = plane.pilot;
+			var rank = pilot.rank.acronym;
 			
-			// Pilot and plane info
-			output += "\t" + plane.number + ". ";
-			output += '<font size="16"><i>' + pilot.rank[1] + "</i></font> ";
-			output += pilot.name[0] + " " + pilot.name[1] + ', <font size="16"><i>';
+			// Use full rank name when acronym is not available
+			if (!rank) {
+				rank = pilot.rank.name;
+			}
+			
+			output += "\t";
+
+			// Plane call number
+			if (flight.planes > 1) {
+				output += plane.number + ". ";
+			}
+
+			output += '<font size="16"><i>' + rank + "</i></font> ";
+
+			// Highlighted player pilot name
+			if (plane === flight.player) {
+				output += '<font color="#fbfbfb">' + pilot.name + "</font>";
+			}
+			else {
+				output += pilot.name;
+			}
+
+			output += ' <font color="#848484">→</font><font size="16"><i>';
 			output += this.planesByID[plane.plane].name;
 			output += "</i></font><br>";
 
@@ -176,7 +196,9 @@ function makeBriefingFlight() {
 		}
 		
 		// Flight callsign
-		output += "<br>\tCallsign <i>“" + flight.callsign[1] + "”</i>.";
+		if (flight.callsign) {
+			output += "<br>\tCallsign <i>“" + flight.callsign[1] + "”</i>.";
+		}
 		
 	}, this);
 	

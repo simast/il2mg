@@ -18,9 +18,10 @@ module.exports = function makeUnits() {
 	var unitsByAirfield = Object.create(null);
 	var unitsByCountry = Object.create(null);
 
-	// Total unit and plane counts
+	// Total unit, plane and known pilot counts
 	var totalUnits = 0;
 	var totalPlanes = 0;
+	var totalPilots = 0;
 
 	// Process all battle units and build index lists
 	for (var unitID in battle.units) {
@@ -59,6 +60,19 @@ module.exports = function makeUnits() {
 				// Collect plane storage data
 				else if (prop === "planes") {
 					unitPlaneStorages = unitPlaneStorages.concat(getPlaneStorages(unitData));
+				}
+				// Collect pilot data
+				else if (prop === "pilots") {
+
+					if (unit.pilots) {
+						continue;
+					}
+
+					var pilots = getPilots(unitData);
+
+					if (pilots.length) {
+						unit.pilots = pilots;
+					}
 				}
 				// Collect other unit data
 				else if (unit[prop] === undefined) {
@@ -227,6 +241,36 @@ module.exports = function makeUnits() {
 		return airfields;
 	}
 
+	// Get unit pilots
+	function getPilots(unitData) {
+
+		var pilots = [];
+		var dataPilots = unitData.pilots;
+
+		if (!Array.isArray(dataPilots)) {
+			return pilots;
+		}
+		
+		// Find matching pilots based on to/from date ranges
+		for (var pilot of dataPilots) {
+
+			var pilotFrom = pilot[2];
+
+			if (pilotFrom === undefined || missionDateIsBetween(pilotFrom, pilot[3])) {
+
+				// Add matching pilot entry
+				pilots.push({
+					name: pilot[0],
+					rank: pilot[1]
+				});
+				
+				totalPilots++;
+			}
+		}
+
+		return pilots;
+	}
+
 	// Get unit plane storages
 	function getPlaneStorages(unitData) {
 
@@ -347,5 +391,5 @@ module.exports = function makeUnits() {
 	mission.unitsByCountry = Object.freeze(unitsByCountry);
 
 	// Log mission units info
-	log.I("Units:", totalUnits, {planes: totalPlanes});
+	log.I("Units:", totalUnits, {planes: totalPlanes, pilots: totalPilots});
 };

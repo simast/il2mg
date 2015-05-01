@@ -1,11 +1,12 @@
 {
-	"first": {
-		"total": 0
-	},
-	"middle": {
-		"total": 0
-	},
-	"last": {
-		"total": 0
-	}
+	"first": [
+		{
+			"total": 0
+		}
+	],
+	"last": [
+		{
+			"total": 0
+		}
+	]
 }

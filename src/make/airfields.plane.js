@@ -93,7 +93,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	if (taxiRoute !== false && !planeStatic.camo && rand.bool(0.25)) {
 
 		var positionOffsetMin = 10;
-		var positionOffsetMax = 25;
+		var positionOffsetMax = 20;
 
 		// Limit position offset for player-only taxi routes
 		if (taxiRoute === 0) {

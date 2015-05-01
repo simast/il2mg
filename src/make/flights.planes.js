@@ -37,7 +37,7 @@ module.exports = function makeFlightPlanes(flight) {
 			var validParkSpawns = [];
 
 			// Make plane pilot
-			var pilot = plane.pilot = makeFlightPilot.call(this, unit);
+			var pilot = plane.pilot = makeFlightPilot.call(this, unit, isLeader);
 
 			// Build a list of valid taxi spawn points
 			if (flight.spawns) {
@@ -77,7 +77,7 @@ module.exports = function makeFlightPlanes(flight) {
 	
 				var spawnPoint = parkSpawn.point;
 				var positionOffsetMin = 10;
-				var positionOffsetMax = 25;
+				var positionOffsetMax = 20;
 				var orientationOffset = 15;
 				
 				// Limit position offset for player-only taxi routes
@@ -153,10 +153,10 @@ module.exports = function makeFlightPlanes(flight) {
 				planeItem.StartInAir = Plane.START_AIR;
 			}
 			
-			// Set plane name for player flight planes only
+			// Set plane name to pilot ID for player flight planes only
 			// NOTE: Required for the radio message UI to not report distant plane/pilot IDs
-			if (flight.player && !isPlayer && pilot.name) {
-				planeItem.setName(pilot.name.short);
+			if (flight.player && !isPlayer && pilot.id) {
+				planeItem.setName(pilot.id);
 			}
 			
 			planeItem.setPosition(positionX, positionY, positionZ);
@@ -211,8 +211,11 @@ module.exports = function makeFlightPlanes(flight) {
 		element.forEach(function(plane, planeIndex) {
 
 			plane.item.NumberInFormation = planeIndex;
-			plane.item.Callnum = planeNumber;
 			plane.number = planeNumber;
+
+			if (flight.planes > 1) {
+				plane.item.Callnum = planeNumber;
+			}
 			
 			planeNumber++;
 		});

@@ -1,26 +1,32 @@
 {
-	"default": 7,
-	"1": ["Flieger", "Flg."],
-	"2": ["Gefreiter", "Gfr."],
-	"3": ["Obergefreiter", "Obgfr."],
-	"4": ["Hauptgefreiter", "Hptgfr."],
-	"5": ["Unteroffizier", "Uffz."],
-	"6": ["Unterfeldwebel", "Ufw."],
-	"7": ["Feldwebel", "Fw."],
-	"8": ["Fähnrich", "Fhr."],
-	"9": ["Oberfeldwebel", "Ofw."],
-	"10": ["Oberfähnrich", "Obfr."],
-	"11": ["Stabsfeldwebel", "Stbsfw."],
-	"12": ["Leutnant", "Lt."],
-	"13": ["Oberleutnant", "Oblt."],
-	"14": ["Hauptmann", "Hptm."],
-	"15": ["Major", "Maj."],
-	"16": ["Oberstleutnant", "Obstl."],
-	"17": ["Oberst", "Obst."],
-	"18": ["Generalmajor", "Genmaj."],
-	"19": ["Generalleutnant", "Genlt."],
-	"20": ["General", "Gen."],
-	"21": ["Generaloberst", "Genob."],
-	"22": ["Generalfeldmarschall", "Genfeldm."],
-	"23": ["Reichsmarschall"]
+	// Format: weight (negative for leaders), name and acronym
+
+	// Enlisted ranks
+	"1": [0, "Flieger", "Flg."],
+	"2": [0, "Gefreiter", "Gfr."],
+	"3": [0, "Obergefreiter", "Obgfr."],
+	"4": [0, "Hauptgefreiter", "Hptgfr."],
+
+	// Non-commissioned officer ranks
+	"5": [5, "Unteroffizier", "Uffz."],
+	"6": [5, "Unterfeldwebel", "Ufw."],
+	"7": [10, "Feldwebel", "Fw."],
+	"8": [3, "Fähnrich", "Fhr."],
+	"9": [2, "Oberfeldwebel", "Ofw."],
+	"10": [-1, "Oberfähnrich", "Obfr."],
+	"11": [-1, "Stabsfeldwebel", "Stbsfw."],
+
+	// Commissioned officer ranks
+	"12": [-6, "Leutnant", "Lt."],
+	"13": [-3, "Oberleutnant", "Oblt."],
+	"14": [0, "Hauptmann", "Hptm."],
+	"15": [0, "Major", "Maj."],
+	"16": [0, "Oberstleutnant", "Obstl."],
+	"17": [0, "Oberst", "Obst."],
+	"18": [0, "Generalmajor", "Genmaj."],
+	"19": [0, "Generalleutnant", "Genlt."],
+	"20": [0, "General", "Gen."],
+	"21": [0, "Generaloberst", "Genob."],
+	"22": [0, "Generalfeldmarschall", "Genfeldm."],
+	"23": [0, "Reichsmarschall"]
 }
