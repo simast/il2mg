@@ -86,6 +86,12 @@ module.exports = function makeFlightPlanes(flight) {
 					positionOffsetMin = 5;
 					positionOffsetMax = 12;
 				}
+				// Slightly move leader plane position forward to avoid possible AI taxiing issues
+				else if (isLeader) {
+
+					positionOffsetMin += 10;
+					positionOffsetMax += 10;
+				}
 	
 				positionX = spawnPoint.position[0];
 				positionY = spawnPoint.position[1];

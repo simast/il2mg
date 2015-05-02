@@ -161,6 +161,11 @@ params.option("-c, --country <country>", (function() {
 	return desc;
 })(), parseInt);
 
+// Select desired airfield (--airfield)
+params.option("-a, --airfield <airfield>", "select an airfield", function(value) {
+	return String(value).trim();
+});
+
 // Turn on debug mode (--debug)
 params.option("-D, --debug", "use debug (development) mode");
 
@@ -247,6 +252,11 @@ appDomain.run(function() {
 	// --country
 	if (params.country !== undefined && !data.countries[params.country]) {
 		throw ["Unknown country!", {country: params.country}];
+	}
+
+	// --airfield
+	if (params.airfield !== undefined && !params.airfield.length) {
+		throw ["Invalid airfield name!", {airfield: params.airfield}];
 	}
 
 	// Create a new mission

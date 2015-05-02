@@ -16,6 +16,7 @@ module.exports = function makeUnits() {
 	// Unit index tables
 	var unitsByID = Object.create(null);
 	var unitsByAirfield = Object.create(null);
+	var unitsByCoalition = Object.create(null);
 	var unitsByCountry = Object.create(null);
 
 	// Total unit, plane and known pilot counts
@@ -171,6 +172,11 @@ module.exports = function makeUnits() {
 		// Register unit to airfields index
 		unitsByAirfield[unit.airfield] = unitsByAirfield[unit.airfield] || Object.create(null);
 		unitsByAirfield[unit.airfield][unitID] = unit;
+
+		// Register unit to coalition index
+		var coalition = data.countries[unit.country].coalition;
+		unitsByCoalition[coalition] = unitsByCoalition[coalition] || Object.create(null);
+		unitsByCoalition[coalition][unitID] = unit;
 
 		// Register unit to country index
 		unitsByCountry[unit.country] = unitsByCountry[unit.country] || Object.create(null);
@@ -388,6 +394,7 @@ module.exports = function makeUnits() {
 	// Static unit data index objects
 	mission.unitsByID = Object.freeze(unitsByID);
 	mission.unitsByAirfield = Object.freeze(unitsByAirfield);
+	mission.unitsByCoalition = Object.freeze(unitsByCoalition);
 	mission.unitsByCountry = Object.freeze(unitsByCountry);
 
 	// Log mission units info
