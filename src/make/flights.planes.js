@@ -21,6 +21,56 @@ module.exports = function makeFlightPlanes(flight) {
 	var airfield = this.airfieldsByID[flight.airfield];
 	var usedParkSpawns = Object.create(null);
 	var planeNumber = 1;
+	var pilotIDs = Object.create(null);
+
+	// Create flight pilots
+	// TODO: Move to flights.pilots.js file?
+	flight.elements.forEach(function(element) {
+		element.forEach(function(plane) {
+
+			// Make pilot
+			var pilot = plane.pilot = makeFlightPilot.call(this, element.unit, plane === element[0]);
+
+			pilotIDs[pilot.id] = pilotIDs[pilot.id] || [];
+			pilotIDs[pilot.id].push(pilot);
+
+			// Make sure the pilot ID is unique per flight
+			if (pilotIDs[pilot.id].length > 1) {
+
+				var pilots = pilotIDs[pilot.id];
+				var baseID = pilot.id;
+				var prependLength = 1;
+				var uniqueIDList = new Set();
+				var uniqueIDIndex = Object.create(null);
+
+				// Prepend duplicated pilot IDs with a part of first name
+				do {
+
+					pilots.filter(function(pilot) {
+						return uniqueIDIndex[pilot.id] !== 1;
+					}).forEach(function(pilot) {
+
+						uniqueIDList.delete(pilot.id);
+
+						pilot.id = pilot.name.substr(0, prependLength) + ". " + baseID;
+
+						if (uniqueIDList.has(pilot.id)) {
+							uniqueIDIndex[pilot.id]++;
+						}
+						else {
+
+							uniqueIDList.add(pilot.id);
+							uniqueIDIndex[pilot.id] = 1;
+						}
+					});
+
+					prependLength++;
+				}
+				while (uniqueIDList.size !== pilots.length);
+			}
+
+		}, this);
+	}, this);
 	
 	// Process each flight element (section)
 	flight.elements.forEach(function(element) {
@@ -28,16 +78,14 @@ module.exports = function makeFlightPlanes(flight) {
 		var unit = element.unit;
 		
 		// Create plane item objects
-		element.forEach(function(plane, planeIndex) {
-	
+		element.forEach(function(plane) {
+
 			var planeData = this.planesByID[plane.plane];
 			var isPlayer = (plane === flight.player);
 			var leaderPlane = element[0];
 			var isLeader = (plane === leaderPlane);
 			var validParkSpawns = [];
-
-			// Make plane pilot
-			var pilot = plane.pilot = makeFlightPilot.call(this, unit, isLeader);
+			var pilot = plane.pilot;
 
 			// Build a list of valid taxi spawn points
 			if (flight.spawns) {

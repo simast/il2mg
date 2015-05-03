@@ -211,6 +211,17 @@ module.exports = function makeUnits() {
 			}
 
 			unit.planes.push(planeID);
+			
+			// Set unit max pilots count (used to figure out known and unknown pilot ratio)
+			if (unit.pilots) {
+
+				// NOTE: We don't track exact pilot numbers per unit, but for each plane in
+				// the unit we assing 2 pilots. This means that if the unit has a single plane
+				// and a single known pilot - that known pilot has a 50% chance to appear
+				// in the mission.
+				unit.pilots.max = unit.pilots.max || 0;
+				unit.pilots.max += 2;
+			}
 
 			planeStorage[1]--;
 			totalPlanes++;

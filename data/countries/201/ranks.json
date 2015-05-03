@@ -18,8 +18,8 @@
 
 	// Commissioned officer ranks
 	"12": [-6, "Leutnant", "Lt."],
-	"13": [-3, "Oberleutnant", "Oblt."],
-	"14": [0, "Hauptmann", "Hptm."],
+	"13": [-4, "Oberleutnant", "Oblt."],
+	"14": [-1, "Hauptmann", "Hptm."],
 	"15": [0, "Major", "Maj."],
 	"16": [0, "Oberstleutnant", "Obstl."],
 	"17": [0, "Oberst", "Obst."],

@@ -12,38 +12,41 @@ module.exports = function makeFlightPilot(unit, isLeader) {
 	var ranks = this.data.countries[unit.country].ranks;
 	var names = this.data.countries[unit.country].names;
 
-	// An unique set of pilot names (used to prevent duplicate pilots)
-	this.knownPilots = this.knownPilots || new Set();
+	// A set used to track unique pilot names (and prevent duplicates)
+	this.pilots = this.pilots || new Set();
 
+	// Chance to use a known pilot
+	var useKnownPilot = 0;
+
+	if (unit.pilots) {
+		useKnownPilot = Math.min(unit.pilots.length / unit.pilots.max, 1);
+	}
+	
 	var pilot;
 	do {
 
-		var useKnownPilot = false;
+		pilot = null;
 
-		// TODO:
-		if (rand.bool()) {
-			useKnownPilot = true;
-		}
-
-		// Try a known pilot
-		if (useKnownPilot) {
+		// Try selecting a known pilot
+		if (useKnownPilot && rand.bool(useKnownPilot)) {
 			pilot = getPilotKnown();
 		}
 
-		// Unknown pilot
+		// Generate an unknown pilot
 		if (!pilot) {
 			pilot = getPilotUnknown();
 		}
 	}
-	while (this.knownPilots.has(pilot.name));
+	while (this.pilots.has(pilot.name));
 
-	this.knownPilots.add(pilot.name);
+	this.pilots.add(pilot.name);
 	
 	// Set pilot level
 	if (pilot.level === undefined) {
 
 		// TODO: Set pilot AI level based on difficulty command-line param
 		// TODO: Set pilot AI level based on leader/rank
+		// TODO: Use a separate enum for pilot level (not plane AI level constants)
 		pilot.level = rand.pick([
 			Plane.AI_LOW,
 			Plane.AI_NORMAL,
@@ -51,7 +54,7 @@ module.exports = function makeFlightPilot(unit, isLeader) {
 			Plane.AI_ACE
 		]);
 	}
-	
+
 	return pilot;
 
 	// Get a known (real) pilot from the unit data
