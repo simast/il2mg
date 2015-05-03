@@ -17,7 +17,7 @@ module.exports = function makeFlightTakeoff(flight) {
 	takeoffCommand.setPositionNear(missionBegin);
 	takeoffCommand.setPosition(
 		takeoffCommand.XPos,
-		takeoffCommand.YPos + 250,
+		takeoffCommand.YPos + 350,
 		takeoffCommand.ZPos
 	);
 	
