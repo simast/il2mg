@@ -72,7 +72,7 @@ module.exports = function makeUnits() {
 					var pilots = getPilots(unitData);
 
 					if (pilots.length) {
-						unit.pilots = pilots;
+						unit.pilots = rand.shuffle(pilots);
 					}
 				}
 				// Collect other unit data

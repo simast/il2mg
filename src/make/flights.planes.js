@@ -5,9 +5,6 @@ var Plane = require("../item").Plane;
 var planeSize = require("./airfields").planeSize;
 var flightState = require("./flights.flight").flightState;
 
-// Flight plane make parts
-var makeFlightPilot = require("./flights.pilot");
-
 // Make mission flight plane item objects
 module.exports = function makeFlightPlanes(flight) {
 
@@ -15,62 +12,11 @@ module.exports = function makeFlightPlanes(flight) {
 	// TODO: Set fuel
 	// TODO: Set weapon mods
 	// TODO: Set skin
-	// TODO: Set pilot
 
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
 	var usedParkSpawns = Object.create(null);
 	var planeNumber = 1;
-	var pilotIDs = Object.create(null);
-
-	// Create flight pilots
-	// TODO: Move to flights.pilots.js file?
-	flight.elements.forEach(function(element) {
-		element.forEach(function(plane) {
-
-			// Make pilot
-			var pilot = plane.pilot = makeFlightPilot.call(this, element.unit, plane === element[0]);
-
-			pilotIDs[pilot.id] = pilotIDs[pilot.id] || [];
-			pilotIDs[pilot.id].push(pilot);
-
-			// Make sure the pilot ID is unique per flight
-			if (pilotIDs[pilot.id].length > 1) {
-
-				var pilots = pilotIDs[pilot.id];
-				var baseID = pilot.id;
-				var prependLength = 1;
-				var uniqueIDList = new Set();
-				var uniqueIDIndex = Object.create(null);
-
-				// Prepend duplicated pilot IDs with a part of first name
-				do {
-
-					pilots.filter(function(pilot) {
-						return uniqueIDIndex[pilot.id] !== 1;
-					}).forEach(function(pilot) {
-
-						uniqueIDList.delete(pilot.id);
-
-						pilot.id = pilot.name.substr(0, prependLength) + ". " + baseID;
-
-						if (uniqueIDList.has(pilot.id)) {
-							uniqueIDIndex[pilot.id]++;
-						}
-						else {
-
-							uniqueIDList.add(pilot.id);
-							uniqueIDIndex[pilot.id] = 1;
-						}
-					});
-
-					prependLength++;
-				}
-				while (uniqueIDList.size !== pilots.length);
-			}
-
-		}, this);
-	}, this);
 	
 	// Process each flight element (section)
 	flight.elements.forEach(function(element) {

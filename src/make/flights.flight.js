@@ -162,6 +162,7 @@ function makeFlight(params) {
 	flight.callsign = this.getCallsign("plane");
 
 	// Make flight parts
+	makeFlightPilots.call(this, flight);
 	makeFlightPlanes.call(this, flight);
 	makeFlightTakeoff.call(this, flight);
 
@@ -177,6 +178,7 @@ module.exports = makeFlight;
 
 // Flight make parts
 var makeFlightElements = require("./flights.elements");
+var makeFlightPilots = require("./flights.pilots");
 var makeFlightPlanes = require("./flights.planes");
 var makeFlightTakeoff = require("./flights.takeoff");
 var makeAirfieldTaxi = require("./airfields.taxi");

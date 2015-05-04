@@ -21,6 +21,12 @@
 			["bf109g2", 2, "1942-12"],
 			["bf109g4", 3, "1942-12"],
 			["bf109g4", 3, "1943-01"]
+		],
+		"pilots": [
+			["Günther Lützow", -16, "start", "1942-08-11"],
+			["Wolf-Dietrich Wilcke", -14, "1942-08-12", "1942-12-22"],
+			["Wolf-Dietrich Wilcke", -15, "1942-12-23", "end"],
+			["Walther Dahl", 13]
 		]
 	},
 
@@ -45,19 +51,36 @@
 		"name": "Stab I./JG 3",
 		"parent": "jg3_i",
 		"planesMin": 3,
-		"planesMax": 6
+		"planesMax": 6,
+		"pilots": [
+			["Nikolaus Pfützer", 13, "start", "1942-09-06"]
+		]
 	},
 	"jg3_1": {
 		"name": "1./JG 3",
-		"parent": "jg3_i"
+		"parent": "jg3_i",
+		"pilots": [
+			["Alfred Riha", 12, "start", "1942-07-28"],
+			["Heinz Schlegel", 5, "start", "1942-08-20"],
+			["Jakob Götz", 5, "start", "1942-08-28"],
+			["Wolfgang Wahl", 5, "start", "1942-10-01"],
+			["Werner Teegler", 8, "start", "1942-11-04"],
+			["Peter Wünsch", 5, "start", "1943-01-11"]
+		]
 	},
 	"jg3_2": {
 		"name": "2./JG 3",
-		"parent": "jg3_i"
+		"parent": "jg3_i",
+		"pilots": [
+			["Erwin Straznicky", 13, "start", "1942-10-03"]
+		]
 	},
 	"jg3_3": {
 		"name": "3./JG 3",
-		"parent": "jg3_i"
+		"parent": "jg3_i",
+		"pilots": [
+			["Heinz Obst", 5, "start", "1943-01-03"]
+		]
 	},
 
 	// II./JG 3
@@ -83,7 +106,10 @@
 	},
 	"jg3_4": {
 		"name": "4./JG 3",
-		"parent": "jg3_ii"
+		"parent": "jg3_ii",
+		"pilots": [
+			["Fritz Köhler", 5, "start", "1942-12-31"]
+		]
 	},
 	"jg3_5": {
 		"name": "5./JG 3",
@@ -91,7 +117,10 @@
 	},
 	"jg3_6": {
 		"name": "6./JG 3",
-		"parent": "jg3_ii"
+		"parent": "jg3_ii",
+		"pilots": [
+			["Wolfgang Vogel", 5, "start", "1942-08-01"]
+		]
 	},
 
 	// III./JG 3
@@ -116,15 +145,34 @@
 		"name": "Stab III./JG 3",
 		"parent": "jg3_iii",
 		"planesMin": 3,
-		"planesMax": 6
+		"planesMax": 6,
+		"pilots": [
+			["Otto Betz", 7, "start", "1942-08-02"]
+		]
 	},
 	// NOTE: 7./JG 3 was temporary disbanded between 1942-08 and 1943-02.
 	"jg3_8": {
 		"name": "8./JG 3",
-		"parent": "jg3_iii"
+		"parent": "jg3_iii",
+		"pilots": [
+			["Horst Krause", 5, "start", "1942-08-26"],
+			["Fritz Junk", 5, "start", "1942-08-28"],
+			["Gottfried Loos", 5, "start", "1942-10-25"],
+			["Aldemar Matzdorf", 7, "start", "1942-10-26"]
+		]
 	},
 	"jg3_9": {
 		"name": "9./JG 3",
-		"parent": "jg3_iii"
+		"parent": "jg3_iii",
+		"pilots": [
+			["Rolf Diergardt", 12, "start", "1942-08-11"],
+			["Klaus Starke", 13, "start", "1942-08-17"],
+			["Kurt Brosche", 7, "start", "1942-09-21"],
+			["Reinhard Weise", 5, "start", "1942-10-29"],
+			["Werner Rose", 5, "start", "1942-11-14"],
+			["Hermann Boll", 5, "start", "1942-12-12"],
+			["Franz Thümer", 5, "start", "1942-12-27"],
+			["Willy Giese", 5, "start", "1942-12-31"]
+		]
 	}
 }

@@ -1,16 +1,16 @@
 {
-	// Format: weight (negative for leaders), name and acronym
+	// Format: weight, name and acronym
 	
 	"1": [0, "Krasnoarmeyets"],
 	"2": [0, "Yefreytor"],
 	"3": [5, "Mladshiy Serzhant", "M.Serzh."],
 	"4": [4, "Serzhant", "Serzh."],
 	"5": [3, "Starshiy Serzhant", "St.Serzh."],
-	"6": [0, "Starshina"],
-	"7": [-2, "Mladshiy Leytenant", "M.Lt."],
-	"8": [-2, "Leytenant", "Lt."],
-	"9": [-1, "Starshiy Leytenant", "St.Lt."],
-	"10": [0, "Kapitan"],
+	"6": [2, "Starshina"],
+	"7": [3, "Mladshiy Leytenant", "M.Lt."],
+	"8": [3, "Leytenant", "Lt."],
+	"9": [2, "Starshiy Leytenant", "St.Lt."],
+	"10": [1, "Kapitan"],
 	"11": [0, "Mayor"],
 	"12": [0, "Podpolkovnik"],
 	"13": [0, "Polkovnik"],
