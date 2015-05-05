@@ -80,7 +80,7 @@ module.exports = function makeFlightPilots(flight) {
 			// Lower and upper pilot rank weighted list range bounds
 			var rankRange = {
 				min: 0,
-				max: ranks.weighted.length - 1
+				max: Math.max(ranks.weighted.length - 1, 0)
 			};
 
 			if (isFlightLeader) {
@@ -94,11 +94,20 @@ module.exports = function makeFlightPilots(flight) {
 			}
 			else {
 
-				var flightLeaderRank = flight.leader.pilot.rank.id;
-
-				// Make sure any other pilots in the same flight don't have higher (or
-				// the same) as flight leader rank.
-				rankRange.max = Math.max(ranks.weighted.ranges[flightLeaderRank][0] - 1, 0);
+				var flightLeaderRank = ranks.weighted.ranges[flight.leader.pilot.rank.id];
+				
+				if (flightLeaderRank) {
+					
+					// Make sure that high ranking (80% and above) flight leaders in the same
+					// flight don't have higher (or the same) subordinate pilots.
+					if ((flightLeaderRank[0] + flightLeaderRank[1]) / 2 / rankRange.max > 0.8) {
+						rankRange.max = Math.max(flightLeaderRank[0] - 1, 0);
+					}
+					// Lower rank flight leaders can be mixed with the same (and below) ranks
+					else {
+						rankRange.max = flightLeaderRank[1];
+					}
+				}
 			}
 
 			var pilot;

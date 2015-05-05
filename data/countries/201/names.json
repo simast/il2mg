@@ -8,8 +8,6 @@
 				"Aloysius",
 				"Ambros",
 				"Anselm",
-				"Ascan",
-				"Aturo",
 				"Balder",
 				"Baptist",
 				"Benedikt",
@@ -19,14 +17,10 @@
 				"Bernhold",
 				"Bertram",
 				"Burghard",
-				"Carlheinz",
-				"Carlos",
 				"Christoph",
 				"Claudius",
 				"Clemens",
-				"Corso",
 				"Curt",
-				"Cvitan",
 				"Detlev",
 				"Diethelm",
 				"Dirk",
@@ -155,12 +149,10 @@
 				"Wenzel",
 				"Wiili",
 				"Wilger",
-				"Wilhen",
 				"Will",
 				"Winand",
 				"Wolfang",
-				"Wollrath",
-				"York"
+				"Wollrath"
 			],
 			"2": [
 				"Alex",
@@ -477,16 +469,16 @@
 			"417": [
 				"Hans"
 			],
-			"total": 6588
+			"total": 6580
 		}
 	],
 	"last": [
 		{
 			"0": [""],
-			"1": [
-				"von"
+			"3": [
+				"von" // ~3% chance
 			],
-			"total": 20 // ~5% chance
+			"total": 100
 		},
 		{
 			"1": [
