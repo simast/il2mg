@@ -161,15 +161,15 @@ function makeFlight(params) {
 	// Set unique flight callsign
 	flight.callsign = this.getCallsign("plane");
 
-	// Make flight parts
-	makeFlightPilots.call(this, flight);
-	makeFlightPlanes.call(this, flight);
-	makeFlightTakeoff.call(this, flight);
-
 	// Enable airfield taxi route
 	if (flight.taxi > 0) {
 		makeAirfieldTaxi.call(this, airfield, flight.taxi);
 	}
+
+	// Make flight parts
+	makeFlightPilots.call(this, flight);
+	makeFlightPlanes.call(this, flight);
+	makeFlightTakeoff.call(this, flight);
 	
 	return flight;
 }

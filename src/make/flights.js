@@ -27,7 +27,7 @@ module.exports = function makeFlights() {
 		player: true,
 		unit: unit,
 		mission: {
-			planes: 4
+			planes: [2, 2]
 		}
 	});
 	

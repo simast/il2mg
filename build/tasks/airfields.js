@@ -385,6 +385,7 @@ module.exports = function(grunt) {
 								taxiRoute.push([positionX, positionZ, orientation]);
 
 								// Build taxi route waypoint list
+								var taxiPointsData = [];
 								for (var taxiPoint of taxiPoints) {
 
 									var taxiPointData = getPointPosition(item, taxiPoint);
@@ -394,8 +395,10 @@ module.exports = function(grunt) {
 										taxiPointData.push(itemFlag.TAXI_RUNWAY);
 									}
 
-									taxiRoute.push(taxiPointData);
+									taxiPointsData.push(taxiPointData);
 								}
+								
+								taxiRoute.push(taxiPointsData);
 
 								json.taxi[taxiID] = taxiRoute;
 							}

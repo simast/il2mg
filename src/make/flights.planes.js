@@ -19,10 +19,16 @@ module.exports = function makeFlightPlanes(flight) {
 	var planeNumber = 1;
 	
 	// Process each flight element (section)
-	flight.elements.forEach(function(element) {
+	flight.elements.forEach(function(element, elementIndex) {
 		
 		var unit = element.unit;
 		
+		// Only the first element can start from parking spot
+		// TODO: Always allow to start player elements from parking
+		if (elementIndex > 0 && flight.state === flightState.START) {
+			element.state = flightState.READY;
+		}
+
 		// Create plane item objects
 		element.forEach(function(plane) {
 
@@ -129,7 +135,7 @@ module.exports = function makeFlightPlanes(flight) {
 					}
 				}
 				// Ready, taxi or runway start with engine running
-				else if (!Number.isNumber(state)) {
+				else if (typeof state === "string") {
 					planeItem.StartInAir = Plane.START_RUNWAY;
 				}
 				// Air start

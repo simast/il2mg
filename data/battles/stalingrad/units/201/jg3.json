@@ -24,7 +24,7 @@
 		],
 		"pilots": [
 			["Günther Lützow", -16, "start", "1942-08-11"],
-			["Wolf-Dietrich Wilcke", -14, "1942-08-12", "1942-12-22"],
+			["Wolf-Dietrich Wilcke", -14, "start", "1942-12-22"],
 			["Wolf-Dietrich Wilcke", -15, "1942-12-23", "end"],
 			["Walther Dahl", 13]
 		]

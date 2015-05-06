@@ -7,15 +7,27 @@ var itemFlag = require("./airfields").itemFlag;
 // Make airfield taxi route
 module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 
+	// TODO: Invert taxi points based on shortest distance to runway
+	// TODO: Invert taxi points based on takeoff against the wind requirements
+
 	if (!airfield.taxi || !airfield.taxi[taxiRouteID]) {
 		return;
 	}
 	
-	// TODO: Limit 1 taxi route per runway (due to AI issues)
-
 	var taxiRoute = airfield.taxi[taxiRouteID];
-	var itemType = this.data.getItemType(taxiRoute[0]);
 	var runwayID = taxiRoute[1];
+	var activeTaxiRoutes = airfield.activeTaxiRoutes;
+
+	if (!activeTaxiRoutes) {
+		activeTaxiRoutes = airfield.activeTaxiRoutes = Object.create(null);
+	}
+
+	// Limit 1 taxi route per runway (due to AI issues)
+	if (activeTaxiRoutes[runwayID] !== undefined) {
+		return;
+	}
+
+	var itemType = this.data.getItemType(taxiRoute[0]);
 	var isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV);
 	var basePoint = taxiRoute[3];
 
@@ -33,14 +45,14 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	}
 
 	var chartItem = new Item("Chart");
-	var firstPointIndex = 4;
-	var firstPoint = taxiRoute[firstPointIndex];
-	var lastPoint = taxiRoute[taxiRoute.length - 1];
+	var taxiPoints = taxiRoute[4];
+	var firstPoint = taxiPoints[0];
+	var lastPoint = taxiPoints[taxiPoints.length - 1];
 
 	// Create airfield taxi route Chart->Point list
-	for (var i = firstPointIndex; i < taxiRoute.length; i++) {
+	for (var i = 0; i < taxiPoints.length; i++) {
 
-		var point = taxiRoute[i];
+		var point = taxiPoints[i];
 		var pointItem = new Item("Point");
 		var pointType = 1; // Taxi point type
 
@@ -69,4 +81,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 
 	airfieldItem.addItem(chartItem);
 	airfieldItem.createEntity();
+
+	// Set active taxi route for runway
+	activeTaxiRoutes[runwayID] = taxiRouteID;
 };

@@ -94,18 +94,18 @@ module.exports = function makeFlightPilots(flight) {
 			}
 			else {
 
-				var flightLeaderRank = ranks.weighted.ranges[flight.leader.pilot.rank.id];
+				var flRankRange = ranks.weighted.ranges[flight.leader.pilot.rank.id];
 				
-				if (flightLeaderRank) {
+				if (flRankRange) {
 					
-					// Make sure that high ranking (80% and above) flight leaders in the same
+					// Make sure that high ranking (60-85% and above) flight leaders in the same
 					// flight don't have higher (or the same) subordinate pilots.
-					if ((flightLeaderRank[0] + flightLeaderRank[1]) / 2 / rankRange.max > 0.8) {
-						rankRange.max = Math.max(flightLeaderRank[0] - 1, 0);
+					if ((flRankRange[0] + flRankRange[1]) / 2 / rankRange.max > rand.real(0.6, 0.85)) {
+						rankRange.max = Math.max(flRankRange[0] - 1, 0);
 					}
 					// Lower rank flight leaders can be mixed with the same (and below) ranks
 					else {
-						rankRange.max = flightLeaderRank[1];
+						rankRange.max = flRankRange[1];
 					}
 				}
 			}
@@ -276,7 +276,6 @@ module.exports = function makeFlightPilots(flight) {
 		while (pilot.name.length >= 22);
 
 		// Pilot ID (unique short name)
-		// TODO: Make sure pilot id is unique per flight (prepend with first letter of name if required)
 		if (nameParts.last) {
 			pilot.id = nameParts.last.join(" ");
 		}

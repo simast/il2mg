@@ -6,20 +6,28 @@ var Item = require("../item");
 // Make mission flight take off logic
 module.exports = function makeFlightTakeoff(flight) {
 
+	// No takeoff command for player-only taxi route
+	if (flight.taxi === 0) {
+		return;
+	}
+
 	var airfield = this.airfieldsByID[flight.airfield];
 
-	var missionBegin = flight.group.createItem("MCU_TR_MissionBegin");
-	var takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
+	flight.elements.forEach(function(element) {
 
-	missionBegin.setPositionNear(flight.leader.item);
-	missionBegin.addTarget(takeoffCommand);
-
-	takeoffCommand.setPositionNear(missionBegin);
-	takeoffCommand.setPosition(
-		takeoffCommand.XPos,
-		takeoffCommand.YPos + 350,
-		takeoffCommand.ZPos
-	);
+		var missionBegin = flight.group.createItem("MCU_TR_MissionBegin");
+		var takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
 	
-	takeoffCommand.addObject(flight.leader.item);
+		missionBegin.setPositionNear(element[0].item);
+		missionBegin.addTarget(takeoffCommand);
+
+		takeoffCommand.setPositionNear(missionBegin);
+		takeoffCommand.setPosition(
+			takeoffCommand.XPos,
+			takeoffCommand.YPos + 550,
+			takeoffCommand.ZPos
+		);
+
+		takeoffCommand.addObject(element[0].item);
+	});
 };

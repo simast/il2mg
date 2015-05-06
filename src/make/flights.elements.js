@@ -8,8 +8,8 @@ module.exports = function makeFlightElements(flight) {
 	var elements = flight.elements = [];
 	var planesCount = 0;
 	
-	// TODO: Add support for more than one flight element
-	for (var e = 0; e < 1; e++) {
+	// Create requested number of flight elements
+	flight.mission.planes.forEach(function(planesInElement) {
 		
 		var element = [];
 
@@ -19,7 +19,7 @@ module.exports = function makeFlightElements(flight) {
 		rand.shuffle(unit.planes);
 		
 		// Pick available and required number of mission planes
-		for (var p = 0; p < flight.mission.planes; p++) {
+		for (var p = 0; p < planesInElement; p++) {
 	
 			// TODO: Pick planes required by mission type
 			// TODO: Use same plane for element (don't mix Bf 109 F-4s wth G-2s for example)
@@ -45,7 +45,8 @@ module.exports = function makeFlightElements(flight) {
 		}
 		
 		elements.push(element);
-	}
+		
+	}, this);
 	
 	// Number of planes in all flight elements
 	flight.planes = planesCount;
