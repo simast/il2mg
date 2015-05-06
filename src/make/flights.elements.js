@@ -44,7 +44,9 @@ module.exports = function makeFlightElements(flight) {
 			planesCount++;
 		}
 		
-		elements.push(element);
+		if (element.length) {
+			elements.push(element);
+		}
 		
 	}, this);
 	

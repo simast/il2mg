@@ -12,13 +12,13 @@ module.exports = function makeFlightPilots(flight) {
 	var data = this.data;
 	var pilotIDs = Object.create(null);
 
-	// Create flight pilots
 	flight.elements.forEach(function(element) {
 
 		var unit = element.unit;
 		var ranks = data.countries[unit.country].ranks;
+		var leaderPlane = null;
 
-		// Build a weighted list of pilot ranks
+		// Build a weighted index list of pilot ranks
 		if (!ranks.weighted) {
 
 			var rankIDs = Object.keys(ranks);
@@ -50,6 +50,7 @@ module.exports = function makeFlightPilots(flight) {
 			});
 		}
 
+		// Create pilot for each plane
 		element.forEach(function(plane) {
 
 			var isFlightLeader = (plane === flight.leader);
@@ -184,8 +185,24 @@ module.exports = function makeFlightPilots(flight) {
 
 			// Set plane pilot
 			plane.pilot = pilot;
+			
+			// Mark the top ranking pilot as a leader of this element
+			if (!leaderPlane || leaderPlane.pilot.rank.id < pilot.rank.id) {
+				leaderPlane = plane;
+			}
 
 		}, this);
+		
+		// Make sure the selected leading pilot is actually a leader of the element
+		if (element.length > 1 && leaderPlane !== element[0]) {
+			
+			var notLeaderPilot = element[0].pilot;
+			
+			// Switch pilots, keeping the planes
+			element[0].pilot = leaderPlane.pilot;
+			leaderPlane.pilot = notLeaderPilot;
+		}
+		
 	}, this);
 
 	// Get a known (real) pilot from the unit data
@@ -267,13 +284,16 @@ module.exports = function makeFlightPilots(flight) {
 				nameParts[namePart] = getPilotNamePart(names[namePart]);
 			}
 
-			// Set full pilot name
-			if (nameParts.first && nameParts.last) {
+			// First name and last name parts are required and should not be the same
+			if (nameParts.first && nameParts.last &&
+					nameParts.first[0] !== nameParts.last[nameParts.last.length - 1]) {
+				
+				// Set full pilot name
 				pilot.name = nameParts.first.join(" ") + " " + nameParts.last.join(" ");
 			}
 		}
-		// Enforce max 22 characters for full pilot name
-		while (pilot.name.length >= 22);
+		// NOTE: Enforce max 22 characters for full pilot name
+		while (!pilot.name.length || pilot.name.length >= 22);
 
 		// Pilot ID (unique short name)
 		if (nameParts.last) {

@@ -216,11 +216,9 @@ module.exports = function makeUnits() {
 			if (unit.pilots) {
 
 				// NOTE: We don't track exact pilot numbers per unit, but for each plane in
-				// the unit we assing 2 pilots. This means that if the unit has a single plane
-				// and a single known pilot - that known pilot has a 50% chance to appear
-				// in the mission.
+				// the unit we assing randomized 1.5 to 2.5 pilot count. 
 				unit.pilots.max = unit.pilots.max || 0;
-				unit.pilots.max += 2;
+				unit.pilots.max += rand.real(1.5, 2.5);
 			}
 
 			planeStorage[1]--;

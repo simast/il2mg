@@ -141,17 +141,7 @@ function makeFlight(params) {
 	// Pick a player plane
 	// TODO: Support command-line argument for player leader/wingman selection
 	if (isPlayer) {
-		
-		var playerElement = flight.elements[0];
-		
-		// 50% chance the player is a leader in a multi-plane element formation
-		if (playerElement.length === 1 || rand.bool(0.5)) {
-			flight.player = playerElement[0];
-		}
-		// Player is a wingman
-		else {
-			flight.player = rand.pick(playerElement, 1);
-		}
+		flight.player = rand.pick(rand.pick(flight.elements));
 	}
 	
 	// Create flight group item
