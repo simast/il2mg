@@ -20,6 +20,7 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 	// TODO: Set different beacon channels
 
 	beaconItem.Country = airfield.country;
+	beaconItem.Engageable = 0;
 	beaconItem.BeaconChannel = 1;
 
 	beaconItem.createEntity();

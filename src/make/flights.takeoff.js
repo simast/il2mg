@@ -6,8 +6,8 @@ var Item = require("../item");
 // Make mission flight take off logic
 module.exports = function makeFlightTakeoff(flight) {
 
-	// No takeoff command for player-only taxi route
-	if (flight.taxi === 0) {
+	// No takeoff command for player-only taxi route (or flight from air start)
+	if (!flight.taxi) {
 		return;
 	}
 
@@ -24,7 +24,7 @@ module.exports = function makeFlightTakeoff(flight) {
 		takeoffCommand.setPositionNear(missionBegin);
 		takeoffCommand.setPosition(
 			takeoffCommand.XPos,
-			takeoffCommand.YPos + 550,
+			takeoffCommand.YPos + 500,
 			takeoffCommand.ZPos
 		);
 
