@@ -1,0 +1,7 @@
+// Fw 190 A-3
+{
+	"name": "Fw 190 A-3",
+	"parent": "fw190a",
+	"model": "graphics\\planes\\fw190a3\\fw190a3.mgm",
+	"script": "luascripts\\worldobjects\\planes\\fw190a3.txt"
+}

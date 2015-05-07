@@ -1,0 +1,7 @@
+// Bf 109 G-2
+{
+	"name": "Bf 109 G-2",
+	"parent": "bf109g",
+	"model": "graphics\\planes\\bf109g2\\bf109g2.mgm",
+	"script": "luascripts\\worldobjects\\planes\\bf109g2.txt"
+}

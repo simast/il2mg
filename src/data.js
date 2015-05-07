@@ -2,11 +2,12 @@
 "use strict";
 
 var fs = require("fs");
+var requireDir = require("require-directory");
+var stripJSONComments = require("strip-json-comments");
 
 // Get/load all static data
 var data = (function() {
 
-	var stripJSONComments = require("strip-json-comments");
 	var Module = require("module");
 	var origJSONLoader = Module._extensions[".json"];
 
@@ -23,7 +24,7 @@ var data = (function() {
 
 	data.name = require("../data/name");
 	data.version = require("../data/version");
-	data.planes = require("../data/planes");
+	data.planes = requireDir(module, "../data/planes");
 	data.vehicles = require("../data/vehicles");
 	data.clouds = require("../data/clouds");
 	data.coalitions = require("../data/coalitions");

@@ -1,0 +1,7 @@
+// Pe-2 ser.87
+{
+	"name": "Pe-2 ser.87",
+	"parent": "pe2",
+	"model": "graphics\\planes\\pe2s87\\pe2s87.mgm",
+	"script": "luascripts\\worldobjects\\planes\\pe2s87.txt"
+}

@@ -1,0 +1,7 @@
+// Bf 109 F-4/trop
+{
+	"name": "Bf 109 F-4/trop",
+	"parent": "bf109f4",
+	"model": "graphics\\planes\\bf109f4\\bf109f4.mgm",
+	"script": "luascripts\\worldobjects\\planes\\bf109f4.txt"
+}

@@ -1,0 +1,6 @@
+// Fw 190
+{
+	"name": "Fw 190",
+	"type": ["fighter", "fighter_light"],
+	"size": "small"
+}

@@ -1,0 +1,21 @@
+// Yak-1
+{
+	"name": "Yak-1",
+	"type": ["fighter", "fighter_light"],
+	"size": "small",
+	"static": [
+		{
+			"model": "graphics\\blocks\\static_yak1.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_yak1.txt"
+		},
+		{
+			"model": "graphics\\blocks\\static_yak1_open.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_yak1_open.txt"
+		},
+		{
+			"model": "graphics\\blocks\\static_yak1_net.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_yak1_net.txt",
+			"camo": true
+		}
+	]
+}

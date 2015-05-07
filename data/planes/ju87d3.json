@@ -1,0 +1,7 @@
+// Ju 87 D-3
+{
+	"name": "Ju 87 D-3",
+	"parent": "ju87d",
+	"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
+	"script": "luascripts\\worldobjects\\planes\\ju87d3.txt"
+}

@@ -1,0 +1,7 @@
+// Yak-1 ser.69
+{
+	"name": "Yak-1 ser.69",
+	"parent": "yak1",
+	"model": "graphics\\planes\\yak1s69\\yak1s69.mgm",
+	"script": "luascripts\\worldobjects\\planes\\yak1s69.txt"
+}

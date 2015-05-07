@@ -1,0 +1,16 @@
+// Pe-2
+{
+	"name": "Pe-2",
+	"type": ["dive_bomber", "level_bomber"],
+	"size": "large",
+	"static": [
+		{
+			"model": "graphics\\blocks\\static_pe2.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_pe2.txt"
+		},
+		{
+			"model": "graphics\\blocks\\static_pe2_open.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_pe2_open.txt"
+		}
+	]
+}

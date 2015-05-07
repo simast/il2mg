@@ -1,0 +1,7 @@
+// LaGG-3 ser.29
+{
+	"name": "LaGG-3 ser.29",
+	"parent": "lagg3",
+	"model": "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
+	"script": "luascripts\\worldobjects\\planes\\lagg3s29.txt"
+}

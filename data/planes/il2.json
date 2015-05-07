@@ -1,0 +1,17 @@
+// Il-2
+{
+	"name": "Il-2",
+	"type": ["ground_attack"],
+	"size": "medium",
+	"static": [
+		{
+			"model": "graphics\\blocks\\static_il2.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_il2.txt"
+		},
+		{
+			"model": "graphics\\blocks\\static_il2_net.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_il2_net.txt",
+			"camo": true
+		}
+	]
+}

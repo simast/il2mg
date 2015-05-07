@@ -1,0 +1,21 @@
+// Bf 109
+{
+	"name": "Bf 109",
+	"type": ["fighter", "fighter_light"],
+	"size": "small",
+	"static": [
+		{
+			"model": "graphics\\blocks\\static_bf109.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_bf109.txt"
+		},
+		{
+			"model": "graphics\\blocks\\static_bf109_open.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_bf109_open.txt"
+		},
+		{
+			"model": "graphics\\blocks\\static_bf109_net.mgm",
+			"script": "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
+			"camo": true
+		}
+	]
+}

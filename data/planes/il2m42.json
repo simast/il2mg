@@ -1,0 +1,7 @@
+// Il-2 mod.1942
+{
+	"name": "Il-2 mod.1942",
+	"parent": "il2",
+	"model": "graphics\\planes\\il2m42\\il2m42.mgm",
+	"script": "luascripts\\worldobjects\\planes\\il2m42.txt"
+}
