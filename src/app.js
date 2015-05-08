@@ -161,6 +161,26 @@ params.option("-c, --country <country>", (function() {
 	return desc;
 })(), parseInt);
 
+// Select a custom pilot (--pilot)
+params.option("-p, --pilot <rank,name>", (function() {
+
+	var desc = "select a custom pilot" + os.EOL;
+
+	desc += "\tPilot rank can be specified by prefixing the name with a number and\n";
+	desc += "\ta comma character. The rank number depends on the country, but always\n";
+	desc += "\tstarts from 1 and is incremented for each rank in a hierarchy.";
+	desc += os.EOL;
+	desc += "\tExamples:" + os.EOL;
+	desc += '\t-p "10" - Set only pilot rank.\n';
+	desc += '\t-p "Name Surname" - Set only pilot name.\n';
+	desc += '\t-p "10, Name Surname" - Set pilot rank and name.';
+	desc += os.EOL;
+
+	return desc;
+})(), function(value) {
+	return String(value).trim();
+});
+
 // Select desired airfield (--airfield)
 params.option("-a, --airfield <airfield>", "select an airfield", function(value) {
 	return String(value).trim();
@@ -257,6 +277,11 @@ appDomain.run(function() {
 	// --airfield
 	if (params.airfield !== undefined && !params.airfield.length) {
 		throw ["Invalid airfield name!", {airfield: params.airfield}];
+	}
+	
+	// --pilot
+	if (params.pilot !== undefined && !params.pilot.length) {
+		throw ["Invalid pilot name!", {pilot: params.pilot}];
 	}
 
 	// Create a new mission

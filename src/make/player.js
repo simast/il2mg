@@ -72,6 +72,29 @@ module.exports = function makePlayer() {
 			return (mission.unitsByAirfield[player.airfield][unitID] !== undefined);
 		});
 	}
+	
+	// Set desired pilot param data
+	if (params.pilot) {
+		
+		var pilot = player.pilot = Object.create(null);
+		var pilotParts = params.pilot.split(/\s*,\s*/);
+		
+		// Pilot name
+		pilot.name = pilotParts;
+		
+		// Check for optional pilot rank number
+		if (/^[0-9]+/.test(pilotParts)) {
+			
+			var pilotRank = parseInt(pilotParts[0], 10);
+			
+			// Pilot rank and name
+			if (!isNaN(pilotRank)) {
+				
+				pilot.name = pilotParts.slice(1);
+				pilot.rank = pilotRank;
+			}
+		}
+	}
 
 	// TODO: Retry mission generation when unit list is empty
 	if (!unitsList.length) {

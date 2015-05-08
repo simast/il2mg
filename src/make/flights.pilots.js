@@ -10,6 +10,7 @@ module.exports = function makeFlightPilots(flight) {
 
 	var rand = this.rand;
 	var data = this.data;
+	var player = this.player;
 	var pilotIDs = Object.create(null);
 
 	flight.elements.forEach(function(element) {
@@ -59,25 +60,6 @@ module.exports = function makeFlightPilots(flight) {
 			// A set used to track unique pilot names (and prevent duplicates)
 			this.pilots = this.pilots || new Set();
 
-			// Chance to use a known pilot
-			var useKnownPilot = 0;
-
-			if (unit.pilots && unit.pilots.length) {
-
-				// NOTE: The chance to use a known pilot is based on number of known
-				// pilots and max unit pilot count ratio.
-				useKnownPilot = Math.min(unit.pilots.length / unit.pilots.max, 1);
-
-				// At least 50% chance to search known pilots for flight leaders
-				if (isFlightLeader) {
-					useKnownPilot = Math.max(useKnownPilot, 0.5);
-				}
-				// At least 25% chance to search known pilots for element leaders
-				else if (isElementLeader) {
-					useKnownPilot = Math.max(useKnownPilot, 0.25);
-				}
-			}
-
 			// Lower and upper pilot rank weighted list range bounds
 			var rankRange = {
 				min: 0,
@@ -110,25 +92,53 @@ module.exports = function makeFlightPilots(flight) {
 					}
 				}
 			}
-
+			
 			var pilot;
-			do {
-
-				pilot = null;
-
-				// Try selecting a known pilot
-				if (useKnownPilot && rand.bool(useKnownPilot)) {
-					pilot = getPilotKnown(unit, rankRange, isFlightLeader);
-				}
-
-				// Generate an unknown pilot
-				if (!pilot) {
-					pilot = getPilotUnknown(unit, rankRange);
-				}
+			
+			// Set a custom player pilot and rank
+			if (player.pilot && plane === flight.player) {
+				pilot = getPilotPlayer(unit, rankRange);
 			}
-			while (this.pilots.has(pilot.name));
+			// Generate a known or unknown pilot
+			else {
+			
+				// Chance to use a known pilot
+				var useKnownPilot = 0;
+	
+				if (unit.pilots && unit.pilots.length) {
+	
+					// NOTE: The chance to use a known pilot is based on number of known
+					// pilots and max unit pilot count ratio.
+					useKnownPilot = Math.min(unit.pilots.length / unit.pilots.max, 1);
+	
+					// At least 50% chance to search known pilots for flight leaders
+					if (isFlightLeader) {
+						useKnownPilot = Math.max(useKnownPilot, 0.5);
+					}
+					// At least 25% chance to search known pilots for element leaders
+					else if (isElementLeader) {
+						useKnownPilot = Math.max(useKnownPilot, 0.25);
+					}
+				}
+	
+				do {
+	
+					pilot = null;
+	
+					// Try selecting a known pilot
+					if (useKnownPilot && rand.bool(useKnownPilot)) {
+						pilot = getPilotKnown(unit, rankRange, isFlightLeader);
+					}
+	
+					// Generate an unknown pilot
+					if (!pilot) {
+						pilot = getPilotUnknown(unit, rankRange);
+					}
+				}
+				while (this.pilots.has(pilot.name.toLowerCase()));
+			}
 
-			this.pilots.add(pilot.name);
+			this.pilots.add(pilot.name.toLowerCase());
 
 			// Set pilot level
 			if (pilot.level === undefined) {
@@ -196,11 +206,12 @@ module.exports = function makeFlightPilots(flight) {
 		// Make sure the selected leading pilot is actually a leader of the element
 		if (element.length > 1 && leaderPlane !== element[0]) {
 			
-			var notLeaderPilot = element[0].pilot;
+			var notLeaderPlane = element[0];
+			var leaderPlaneIndex = element.indexOf(leaderPlane);
 			
-			// Switch pilots, keeping the planes
-			element[0].pilot = leaderPlane.pilot;
-			leaderPlane.pilot = notLeaderPilot;
+			// Switch planes
+			element[0] = leaderPlane;
+			element[leaderPlaneIndex] = notLeaderPlane;
 		}
 		
 	}, this);
@@ -302,6 +313,44 @@ module.exports = function makeFlightPilots(flight) {
 		
 		// Set an unknown pilot rank
 		pilot.rank = getPilotRank(rankRange, unit.country);
+		
+		return pilot;
+	}
+	
+	// Get a custom player pilot
+	function getPilotPlayer(unit, rankRange) {
+		
+		var pilot = Object.create(null);
+		var ranks = data.countries[unit.country].ranks;
+		var playerName = player.pilot.name;
+		var playerRank = player.pilot.rank;
+		
+		// Only rank set by the player
+		if (!playerName || !playerName.length || !playerName[0].length) {
+			pilot = getPilotUnknown(unit, rankRange);
+		}
+		// Set custom player name and id
+		else {
+		
+			pilot.name = playerName.join(" ").replace(/\s+/g, " ");
+			pilot.id = playerName[playerName.length - 1];
+			
+			// Use last word from name as pilot id
+			if (playerName.length === 1) {
+				pilot.id = playerName[0].split(/\s+/).slice(-1)[0];
+			}
+			
+			pilot.id = pilot.id.replace(/\s+/g, " ");
+		}
+		
+		// Use a custom requested rank
+		if (playerRank && ranks[playerRank]) {
+			pilot.rank = getPilotRank(playerRank, unit.country);
+		}
+		// Use a random weighted rank from valid range
+		else {
+			pilot.rank = getPilotRank(rankRange, unit.country);
+		}
 		
 		return pilot;
 	}
