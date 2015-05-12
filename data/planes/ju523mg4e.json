@@ -4,5 +4,11 @@
 	"parent": "ju52",
 	"model": "graphics\\planes\\ju523mg4e\\ju523mg4e.mgm",
 	"script": "luascripts\\worldobjects\\planes\\ju523mg4e.txt",
-	"locked": true // AI only plane
+	"locked": true, // AI only plane
+	"skins": {
+		"201": {
+			"": [-1, -1, -1, 1],
+			"ju523mg4e\\ju523mg4e_skin_01.dds": [0, 0, 0, -9]
+		}
+	}
 }

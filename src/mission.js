@@ -52,9 +52,9 @@ function Mission(params) {
 	require("./make/battle").call(this);
 	require("./make/date").call(this);
 	require("./make/time").call(this);
+	require("./make/map").call(this);
 	require("./make/planes").call(this);
 	require("./make/units").call(this);
-	require("./make/map").call(this);
 	require("./make/vehicles").call(this);
 	require("./make/weather").call(this);
 	require("./make/airfields").call(this);

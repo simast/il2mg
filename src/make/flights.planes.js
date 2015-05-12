@@ -182,6 +182,27 @@ module.exports = function makeFlightPlanes(flight) {
 			else {
 				planeItem.AILevel = pilot.level;
 			}
+
+			// Set plane skin
+			if (planeData.skins && planeData.skins[unit.country]) {
+				
+				var skins = planeData.skins[unit.country];
+				var skin = null;
+
+				// Use player-only skin
+				if (isPlayer && skins.player) {
+					skin = rand.pick(skins.player);
+				}
+				// Select a random skin from valid/weighted skin list
+				else {
+					skin = rand.pick(skins);
+				}
+				
+				// Set custom plane skin
+				if (skin && skin.length) {
+					planeItem.Skin = skin;
+				}
+			}
 	
 			// Create plane entity
 			planeItem.createEntity();

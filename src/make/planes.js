@@ -4,9 +4,17 @@
 // Generate available mission planes
 module.exports = function makePlanes() {
 
-	var mission = this;
-	var data = mission.data;
-	var battle = mission.battle;
+	var data = this.data;
+	var battle = this.battle;
+
+	// Skin data array index to use when building valid/weighted plane skin list
+	var skinDataIndex = [
+		"spring",
+		"summer",
+		"autumn",
+		"winter",
+		"desert"
+	].indexOf(this.map.season);
 
 	// Plane index tables
 	var planesByID = Object.create(null);
@@ -32,7 +40,17 @@ module.exports = function makePlanes() {
 			// Collect/copy plane data from current hierarchy
 			for (var prop in planeData) {
 
-				if (plane[prop] === undefined) {
+				// Collect plane skin data
+				if (prop === "skins") {
+
+					var skins = getSkins(planeData);
+
+					if (skins) {
+						plane.skins = skins;
+					}
+				}
+				// Collect other plane data
+				else if (plane[prop] === undefined) {
 					plane[prop] = planeData[prop];
 				}
 			}
@@ -83,7 +101,74 @@ module.exports = function makePlanes() {
 		}
 	}
 
+	// Get plane skins data
+	function getSkins(planeData) {
+
+		if (!planeData.skins) {
+			return;
+		}
+
+		// Plane skin data to weighted skin data object index
+		if (!getSkins.index) {
+			getSkins.index = new Map();
+		}
+		// Check skin data index
+		else if (getSkins.index.has(planeData)) {
+			return getSkins.index.get(planeData);
+		}
+
+		var skins = null;
+
+		for (var countryID in planeData.skins) {
+
+			// Ignore skins from countries that are not part of this battle
+			if (battle.countries.indexOf(Number(countryID)) === -1) {
+				continue;
+			}
+
+			var countrySkins = [];
+
+			// Build a weighted plane skin list matching current battle map season
+			for (var skinID in planeData.skins[countryID]) {
+
+				var skinData = planeData.skins[countryID][skinID][skinDataIndex];
+				
+				if (skinData === undefined) {
+					continue;
+				}
+				
+				var skinWeight = Math.abs(skinData);
+
+				// Add weighted number of skin IDs
+				for (var n = 0; n < skinWeight; n++) {
+					
+					countrySkins.push(skinID);
+					
+					// Build player-only skin list
+					if (skinData < 0) {
+						
+						countrySkins.player = countrySkins.player || [];
+						countrySkins.player.push(skinID);
+					}
+				}
+
+				if (countrySkins.length) {
+					
+					if (!skins) {
+						skins = Object.create(null);
+					}
+					
+					skins[countryID] = countrySkins;
+				}
+			}
+		}
+		
+		getSkins.index.set(planeData, skins);
+
+		return skins;
+	}
+
 	// Static plane data index objects
-	mission.planesByID = Object.freeze(planesByID);
-	mission.planesByType = Object.freeze(planesByType);
+	this.planesByID = Object.freeze(planesByID);
+	this.planesByType = Object.freeze(planesByType);
 };
