@@ -36,6 +36,7 @@ var data = (function() {
 	data.callsigns = require("../data/callsigns");
 	data.countries = require("../data/countries");
 	data.battles = require("../data/battles");
+	data.planes = Object.create(null);
 
 	// Load country info
 	for (var countryID in data.countries) {
@@ -49,7 +50,6 @@ var data = (function() {
 	
 	// Load plane data
 	var planeData = requireDir(module, "../data/planes");
-	data.planes = Object.create(null);
 	
 	for (var planeGroup in planeData) {
 		for (var planeID in planeData[planeGroup]) {
@@ -58,6 +58,7 @@ var data = (function() {
 	}
 
 	// Load battle info
+	// TODO: Load only required battle data
 	for (var battleID in data.battles) {
 
 		var battle = data.battles[battleID];
@@ -69,30 +70,29 @@ var data = (function() {
 		battle.map = require(battlePath + "map");
 		battle.sun = require(battlePath + "sun");
 		battle.weather = require(battlePath + "weather");
-		battle.airfields = Object.create(null);
+		battle.airfields = requireDir(module, battlePath + "airfields");
 		battle.units = Object.create(null);
 
-		// Load airfields
-		require(battlePath + "airfields").forEach(function(airfieldID) {
-			battle.airfields[airfieldID] = require(battlePath + "airfields/" + airfieldID);
-		});
-
 		// Load country-specific battle units
-		battle.countries.forEach(function(countryID) {
+		for (var unitCountryID of battle.countries) {
+			
+			var unitData;
 
-			var countryUnitsPath = battlePath + "units/" + countryID;
-
-			require(countryUnitsPath).forEach(function(unitFile) {
-
-				var fileUnits = require(countryUnitsPath + "/" + unitFile);
-
-				for (var unitID in fileUnits) {
-
-					battle.units[unitID] = fileUnits[unitID];
-					battle.units[unitID].country = countryID;
+			try {
+				unitData = requireDir(module, battlePath + "units/" + unitCountryID);
+			}
+			catch (e) {
+				continue;
+			}
+			
+			for (var unitGroup in unitData) {
+				for (var unitID in unitData[unitGroup]) {
+					
+					battle.units[unitID] = unitData[unitGroup][unitID];
+					battle.units[unitID].country = unitCountryID;
 				}
-			});
-		});
+			}
+		}
 	}
 
 	// Restore original Node JSON loader
