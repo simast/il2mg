@@ -17,7 +17,7 @@ function Vehicle() {
 	this.Spotter = -1;
 	this.BeaconChannel = 0;
 	this.Callsign = 0;
-	this.DeleteAfterDeath = 0;
+	this.DeleteAfterDeath = 1;
 	this.CoopStart = 0;
 }
 

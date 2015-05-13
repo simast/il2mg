@@ -1,16 +1,43 @@
-// He 111
 {
-	"name": "He 111",
-	"type": ["level_bomber"],
-	"size": "large",
-	"static": [
-		{
-			"model": "graphics\\blocks\\static_he111.mgm",
-			"script": "luascripts\\worldobjects\\blocks\\static_he111.txt"
-		},
-		{
-			"model": "graphics\\blocks\\static_he111_open.mgm",
-			"script": "luascripts\\worldobjects\\blocks\\static_he111_open.txt"
+	// He 111
+	"he111": {
+		"name": "He 111",
+		"type": ["level_bomber"],
+		"size": "large",
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_he111.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_he111.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_he111_open.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_he111_open.txt"
+			}
+		]
+	},
+
+	// He 111 H
+	"he111h": {
+		"name": "He 111 H",
+		"parent": "he111"
+	},
+
+	// He 111 H-6
+	"he111h6": {
+		"name": "He 111 H-6",
+		"parent": "he111h",
+		"model": "graphics\\planes\\he111h6\\he111h6.mgm",
+		"script": "luascripts\\worldobjects\\planes\\he111h6.txt",
+		"skins": {
+			"201": {
+				"": [-3, -3, -3, 1],
+				"he111h6\\he111h6_skin_01.dds": [0, 0, 0, -9],
+				"he111h6\\he111h6_skin_02.dds": [0, 0, 0, 5],
+				"he111h6\\he111h6_skin_04.dds": [0, 0, 0, 2],
+				"he111h6\\he111h6_skin_06.dds": [1, 1, 1, 0],
+				"he111h6\\he111h6_skin_08.dds": [0, 0, 0, 1],
+				"he111h6\\he111h6_skin_10.dds": [0, 0, 0, 2]
+			}
 		}
-	]
+	}
 }

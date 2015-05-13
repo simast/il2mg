@@ -24,7 +24,6 @@ var data = (function() {
 
 	data.name = require("../data/name");
 	data.version = require("../data/version");
-	data.planes = requireDir(module, "../data/planes");
 	data.vehicles = require("../data/vehicles");
 	data.clouds = require("../data/clouds");
 	data.coalitions = require("../data/coalitions");
@@ -46,6 +45,16 @@ var data = (function() {
 
 		country.ranks = require(countryPath + "ranks");
 		country.names = require(countryPath + "names");
+	}
+	
+	// Load plane data
+	var planeData = requireDir(module, "../data/planes");
+	data.planes = Object.create(null);
+	
+	for (var planeGroup in planeData) {
+		for (var planeID in planeData[planeGroup]) {
+			data.planes[planeID] = planeData[planeGroup][planeID];
+		}
 	}
 
 	// Load battle info

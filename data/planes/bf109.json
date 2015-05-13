@@ -1,21 +1,87 @@
-// Bf 109
 {
-	"name": "Bf 109",
-	"type": ["fighter", "fighter_light"],
-	"size": "small",
-	"static": [
-		{
-			"model": "graphics\\blocks\\static_bf109.mgm",
-			"script": "luascripts\\worldobjects\\blocks\\static_bf109.txt"
-		},
-		{
-			"model": "graphics\\blocks\\static_bf109_open.mgm",
-			"script": "luascripts\\worldobjects\\blocks\\static_bf109_open.txt"
-		},
-		{
-			"model": "graphics\\blocks\\static_bf109_net.mgm",
-			"script": "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
-			"camo": true
+	// Bf 109
+	"bf109": {
+		"name": "Bf 109",
+		"type": ["fighter", "fighter_light"],
+		"size": "small",
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_bf109.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_bf109.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_bf109_open.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_bf109_open.txt"
+			},
+			{
+				"model": "graphics\\blocks\\static_bf109_net.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
+				"camo": true
+			}
+		]
+	},
+	
+	// Bf 109 F
+	"bf109f": {
+		"name": "Bf 109 F",
+		"parent": "bf109"
+	},
+	
+	// Bf 109 F-4
+	"bf109f4": {
+		"name": "Bf 109 F-4",
+		"parent": "bf109f",
+		"model": "graphics\\planes\\bf109f4\\bf109f4.mgm",
+		"script": "luascripts\\worldobjects\\planes\\bf109f4.txt",
+		"skins": {
+			"201": {
+				"": [-2, -2, -2, 1],
+				"bf109f4\\bf109f4_skin_01.dds": [0, 0, 0, -12],
+				"bf109f4\\bf109f4_skin_04.dds": [1, 1, 1, 0],
+				"bf109f4\\bf109f4_skin_07.dds": [0, 0, 0, 1],
+				"bf109f4\\bf109f4_skin_09.dds": [0, 0, 0, 2],
+				"bf109f4\\bf109f4_skin_10.dds": [0, 0, 0, 4]
+			}
 		}
-	]
+	},
+	
+	// Bf 109 F-4/trop
+	"bf109f4trop": {
+		"name": "Bf 109 F-4/trop",
+		"parent": "bf109f4",
+		"model": "graphics\\planes\\bf109f4\\bf109f4.mgm",
+		"script": "luascripts\\worldobjects\\planes\\bf109f4.txt"
+	},
+	
+	// Bf 109 G
+	"bf109g": {
+		"name": "Bf 109 G",
+		"parent": "bf109"
+	},
+	
+	// Bf 109 G-2
+	"bf109g2": {
+		"name": "Bf 109 G-2",
+		"parent": "bf109g",
+		"model": "graphics\\planes\\bf109g2\\bf109g2.mgm",
+		"script": "luascripts\\worldobjects\\planes\\bf109g2.txt",
+		"skins": {
+			"201": {
+				"": [-3, -1, -3, 1],
+				"bf109g2\\bf109g2_skin_01.dds": [0, 0, 0, -16],
+				"bf109g2\\bf109g2_skin_06.dds": [1, 0, 1, 0],
+				"bf109g2\\bf109g2_skin_07.dds": [1, 0, 1, 0],
+				"bf109g2\\bf109g2_skin_09.dds": [0, 0, 0, 1],
+				"bf109g2\\bf109g2_skin_10.dds": [0, 0, 0, 3]
+			}
+		}
+	},
+	
+	// Bf 109 G-4
+	"bf109g4": {
+		"name": "Bf 109 G-4",
+		"parent": "bf109g2",
+		"model": "graphics\\planes\\bf109g2\\bf109g2.mgm",
+		"script": "luascripts\\worldobjects\\planes\\bf109g2.txt"
+	}
 }

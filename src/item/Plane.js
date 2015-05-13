@@ -22,7 +22,7 @@ function Plane() {
 	this.PayloadId = 0;
 	this.WMMask = 0;
 	this.AiRTBDecision = 1;
-	this.DeleteAfterDeath = 0;
+	this.DeleteAfterDeath = 1;
 	this.Fuel = 1;
 }
 

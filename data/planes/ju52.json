@@ -1,12 +1,29 @@
-// Ju 52
 {
-	"name": "Ju 52",
-	"type": ["transport"],
-	"size": "large",
-	"static": [
-		{
-			"model": "graphics\\blocks\\static_ju52.mgm",
-			"script": "luascripts\\worldobjects\\blocks\\static_ju52.txt"
+	// Ju 52
+	"ju52": {
+		"name": "Ju 52",
+		"type": ["transport"],
+		"size": "large",
+		"static": [
+			{
+				"model": "graphics\\blocks\\static_ju52.mgm",
+				"script": "luascripts\\worldobjects\\blocks\\static_ju52.txt"
+			}
+		]
+	},
+
+	// Ju 52/3mg4e
+	"ju523mg4e": {
+		"name": "Ju 52/3mg4e",
+		"parent": "ju52",
+		"model": "graphics\\planes\\ju523mg4e\\ju523mg4e.mgm",
+		"script": "luascripts\\worldobjects\\planes\\ju523mg4e.txt",
+		"locked": true, // AI only plane
+		"skins": {
+			"201": {
+				"": [-1, -1, -1, 1],
+				"ju523mg4e\\ju523mg4e_skin_01.dds": [0, 0, 0, -9]
+			}
 		}
-	]
+	}
 }
