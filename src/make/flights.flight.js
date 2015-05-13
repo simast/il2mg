@@ -139,7 +139,6 @@ function makeFlight(params) {
 	}
 	
 	// Pick a player plane
-	// TODO: Support command-line argument for player leader/wingman selection
 	if (isPlayer) {
 		flight.player = rand.pick(rand.pick(flight.elements));
 	}

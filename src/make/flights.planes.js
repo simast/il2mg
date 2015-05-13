@@ -11,7 +11,6 @@ module.exports = function makeFlightPlanes(flight) {
 	// TODO: Set payload
 	// TODO: Set fuel
 	// TODO: Set weapon mods
-	// TODO: Set skin
 
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
