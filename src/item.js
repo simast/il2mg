@@ -162,15 +162,15 @@ Item.prototype.setPosition = function() {
 		}
 	}
 
-	if (position[0]) {
+	if (position[0] || this.XPos) {
 		this.XPos = Number(position[0].toFixed(Item.PRECISION_POSITION));
 	}
 
-	if (position[1]) {
+	if (position[1] || this.YPos) {
 		this.YPos = Number(position[1].toFixed(Item.PRECISION_POSITION));
 	}
 
-	if (position[2]) {
+	if (position[2] || this.ZPos) {
 		this.ZPos = Number(position[2].toFixed(Item.PRECISION_POSITION));
 	}
 };
@@ -221,15 +221,15 @@ Item.prototype.setOrientation = function() {
 		}
 	}
 
-	if (orientation[0]) {
+	if (orientation[0] || this.XOri) {
 		this.XOri = Number(orientation[0].toFixed(Item.PRECISION_ORIENTATION));
 	}
 
-	if (orientation[1]) {
+	if (orientation[1] || this.YOri) {
 		this.YOri = Number(orientation[1].toFixed(Item.PRECISION_ORIENTATION));
 	}
 
-	if (orientation[2]) {
+	if (orientation[2] || this.ZOri) {
 		this.ZOri = Number(orientation[2].toFixed(Item.PRECISION_ORIENTATION));
 	}
 };

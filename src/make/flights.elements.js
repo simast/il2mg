@@ -45,6 +45,10 @@ module.exports = function makeFlightElements(flight) {
 		}
 		
 		if (element.length) {
+			
+			// Inherit element state from flight
+			element.state = flight.state;
+			
 			elements.push(element);
 		}
 		
