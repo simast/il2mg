@@ -158,7 +158,52 @@ function makeFlight(params) {
 	// Make flight parts
 	makeFlightPilots.call(this, flight);
 	makeFlightPlanes.call(this, flight);
-	makeFlightStart.call(this, flight);
+	makeFlightPlan.call(this, flight);
+	
+	// TODO: Move to plan script files
+	if (flight.taxi) {
+
+		for (var element of flight.elements) {
+			
+			// Set element air start
+			if (typeof element.state !== "string") {
+	
+				var orientation = rand.integer(0, 360);
+	
+				for (var plane of element) {
+	
+					var planeItem = plane.item;
+	
+					// TODO: Set orientation and tweak spawn distance
+					// TODO: Set formation?
+					var positionX = airfield.position[0] + rand.integer(150, 350);
+					var positionY = airfield.position[1] + rand.integer(250, 350);
+					var positionZ = airfield.position[2] + rand.integer(150, 350);
+	
+					// Set plane item air start position and orientation
+					planeItem.setPosition(positionX, positionY, positionZ);
+					planeItem.setOrientation(orientation);
+				}
+	
+				continue;
+			}
+	
+			var missionBegin = flight.group.createItem("MCU_TR_MissionBegin");
+			var takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
+		
+			missionBegin.setPositionNear(element[0].item);
+			missionBegin.addTarget(takeoffCommand);
+	
+			takeoffCommand.setPositionNear(missionBegin);
+			takeoffCommand.setPosition(
+				takeoffCommand.XPos,
+				takeoffCommand.YPos + 500,
+				takeoffCommand.ZPos
+			);
+			
+			takeoffCommand.addObject(element[0].item);
+		}
+	}
 	
 	return flight;
 }
@@ -169,5 +214,5 @@ module.exports = makeFlight;
 var makeFlightElements = require("./flights.elements");
 var makeFlightPilots = require("./flights.pilots");
 var makeFlightPlanes = require("./flights.planes");
-var makeFlightStart = require("./flights.start");
+var makeFlightPlan = require("./flights.plan");
 var makeAirfieldTaxi = require("./airfields.taxi");
