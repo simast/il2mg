@@ -5122,7 +5122,7 @@ Group
 
     Block
     {
-      Name = "PLANE:1:1:LARGE";
+      Name = "PLANE:1:0:LARGE";
       Index = 261;
       LinkTrId = 0;
       XPos = 135202.671;
@@ -5270,12 +5270,12 @@ Group
 
     Group
     {
-      Name = "PLANE:1:0:HUGE:CAMO";
+      Name = "PLANE:1:1:HUGE:CAMO";
       Index = 269;
       Desc = "";
       Block
       {
-        Name = "PLANE:1:0:HUGE:CAMO";
+        Name = "PLANE:1:1:HUGE:CAMO";
         Index = 270;
         LinkTrId = 0;
         XPos = 134980.822;
@@ -5322,12 +5322,12 @@ Group
 
     Group
     {
-      Name = "PLANE:1:0:HUGE";
+      Name = "PLANE:1:1:HUGE";
       Index = 272;
       Desc = "";
       Block
       {
-        Name = "PLANE:1:0:HUGE";
+        Name = "PLANE:1:1:HUGE";
         Index = 273;
         LinkTrId = 0;
         XPos = 135114.041;
@@ -5678,7 +5678,7 @@ Group
 
     Block
     {
-      Name = "PLANE:2:2:SMALL";
+      Name = "PLANE:2:0:SMALL";
       Index = 292;
       LinkTrId = 0;
       XPos = 135153.990;
@@ -5700,7 +5700,7 @@ Group
 
     Block
     {
-      Name = "PLANE:2:2:MEDIUM";
+      Name = "PLANE:2:0:MEDIUM";
       Index = 293;
       LinkTrId = 0;
       XPos = 135230.396;
@@ -6198,7 +6198,7 @@ Group
 
     Block
     {
-      Name = "PLANE:3:3:LARGE";
+      Name = "PLANE:3:0:LARGE";
       Index = 322;
       LinkTrId = 0;
       XPos = 133842.518;
@@ -6376,12 +6376,12 @@ Group
 
     Group
     {
-      Name = "PLANE:3:0:HUGE:CAMO";
+      Name = "PLANE:3:3:HUGE:CAMO";
       Index = 332;
       Desc = "";
       Block
       {
-        Name = "PLANE:3:0:HUGE:CAMO";
+        Name = "PLANE:3:3:HUGE:CAMO";
         Index = 333;
         LinkTrId = 0;
         XPos = 133982.650;

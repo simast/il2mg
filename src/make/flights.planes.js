@@ -23,6 +23,9 @@ module.exports = function makeFlightPlanes(flight) {
 		var element = flight.elements[elementIndex];
 		var unit = element.unit;
 
+		// Skip leader only (first plane) when mapping formation number based on distance
+		var sortSkip = 0;
+
 		// Only the first element can start without engines running
 		if (element.state === flightState.START && elementIndex > 0) {
 			element.state = flightState.READY;
@@ -173,9 +176,22 @@ module.exports = function makeFlightPlanes(flight) {
 				
 				if (taxiPoint && taxiPoint[2] !== itemFlag.TAXI_RUNWAY) {
 					
+					positionX = taxiPoint[0];
+					positionY = airfield.position[1];
+					positionZ = taxiPoint[1];
+
 					// Set plane item taxi start position and orientation
-					planeItem.setPosition(taxiPoint[0], airfield.position[1], taxiPoint[1]);
+					planeItem.setPosition(positionX, positionY, positionZ);
 					planeItem.setOrientationTo(nextTaxiPoint[0], nextTaxiPoint[1]);
+
+					// Slightly move plane position backwards (from taxi spawn point)
+					var taxiOffsetOrientRad = planeItem.YOri * (Math.PI / 180);
+					var taxiOffset = 5; // 5 meters backwards
+
+					positionX -= taxiOffset * Math.cos(taxiOffsetOrientRad);
+					positionZ -= taxiOffset * Math.sin(taxiOffsetOrientRad);
+
+					planeItem.setPosition(positionX, positionY, positionZ);
 				
 					// Mark taxi spawn point as used/reserved
 					usedParkSpawns.push(-(taxiPointID + 1));
@@ -185,6 +201,9 @@ module.exports = function makeFlightPlanes(flight) {
 					// the element leader and any other planes on the taxi way do not wait for
 					// other planes on the ramp/parking to start their engines.
 					element.state = flightState.READY;
+					
+					// Skip this plane when mapping formation number based on distance
+					sortSkip++;
 				}
 			}
 			
@@ -200,6 +219,9 @@ module.exports = function makeFlightPlanes(flight) {
 				for (var i = (element.length - 1 - planeIndex); i > 0 && usedParkSpawns.length; i--) {
 					usedParkSpawns.pop();
 				}
+				
+				// Reset formation number sort skip number (to leader only)
+				sortSkip = 0;
 			}
 			
 			// Set plane name as pilot ID for player flight planes only
@@ -250,19 +272,28 @@ module.exports = function makeFlightPlanes(flight) {
 		// Sort subordinate planes in an element formation based on the distance
 		// to the leader plane (will avoid air collisions and taxi issues).
 		if (element.length > 2) {
+
+			// Sort reference plane (either element leader or the last on the taxi way)
+			var sortPlane;
 			
-			element.forEach(function(plane) {
+			// Skip only leader when sorting
+			if (sortSkip === 0) {
+				sortSkip = 1;
+			}
 
-				var leaderPlane = element[0];
-				var isLeader = (plane === leaderPlane);
+			element.forEach(function(plane, planeIndex) {
 
-				plane.distance = 0;
+				plane.distance = (planeIndex - sortSkip);
+				
+				// Ignore leader plane and planes on the taxi way
+				if (plane.distance < 0) {
+					sortPlane = plane;
+				}
+				// Compute plane distance to sort reference plane
+				else {
 
-				// Compute plane distance to element leader plane
-				if (!isLeader) {
-
-					var posXDiff = leaderPlane.item.XPos - plane.item.XPos;
-					var posZDiff = leaderPlane.item.ZPos - plane.item.ZPos;
+					var posXDiff = sortPlane.item.XPos - plane.item.XPos;
+					var posZDiff = sortPlane.item.ZPos - plane.item.ZPos;
 
 					plane.distance = Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2));
 				}
