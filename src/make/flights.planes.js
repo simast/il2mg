@@ -3,6 +3,7 @@
 
 var Plane = require("../item").Plane;
 var planeSize = require("./airfields").planeSize;
+var itemFlag = require("./airfields").itemFlag;
 var flightState = require("./flights.flight").flightState;
 
 // Make mission flight plane item objects
@@ -13,28 +14,28 @@ module.exports = function makeFlightPlanes(flight) {
 
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
-	var usedParkSpawns = Object.create(null);
+	var usedParkSpawns = [];
 	var planeNumber = flight.planes;
 
 	// Process each flight element (section) in reverse
-	for (var e = flight.elements.length - 1; e >= 0; e--) {
+	for (var elementIndex = flight.elements.length - 1; elementIndex >= 0; elementIndex--) {
 		
-		var element = flight.elements[e];
+		var element = flight.elements[elementIndex];
 		var unit = element.unit;
 
 		// Only the first element can start without engines running
-		if (element.state === flightState.START && e > 0) {
+		if (element.state === flightState.START && elementIndex > 0) {
 			element.state = flightState.READY;
 		}
 
 		// Process each plane in reverse
-		for (var p = element.length - 1; p >= 0; p--) {
+		for (var planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {
 
-			var plane = element[p];
+			var plane = element[planeIndex];
 			var planeData = this.planesByID[plane.plane];
 			var isPlayer = (plane === flight.player);
-			var lastPlane = element[p + 1];
-			var isLeader = (p === 0);
+			var lastPlane = element[planeIndex + 1];
+			var isLeader = (planeIndex === 0);
 			var validParkSpawns = [];
 			var pilot = plane.pilot;
 
@@ -47,7 +48,7 @@ module.exports = function makeFlightPlanes(flight) {
 
 					var spawnID = spawnIndex + 1;
 
-					if (!usedParkSpawns[spawnID] && spawnPoint.size >= planeSizeID) {
+					if (usedParkSpawns.indexOf(spawnID) === -1 && spawnPoint.size >= planeSizeID) {
 
 						var distance = 0;
 
@@ -70,8 +71,8 @@ module.exports = function makeFlightPlanes(flight) {
 
 				// Sort valid spawn points based on the distance to the last plane in a
 				// multi element formation. This helps when placing multiple elements on
-				// the same ramp start as they will be grouped together and the flight
-				// formation will not be mixed up.
+				// the same ramp as they will be grouped together and the flight formation
+				// will not be mixed up.
 				if (flight.elements.length > 1 && lastPlane) {
 
 					validParkSpawns.sort(function(a, b) {
@@ -93,11 +94,12 @@ module.exports = function makeFlightPlanes(flight) {
 			var positionY;
 			var positionZ;
 			var orientation;
+			var foundSpawnPoint = false;
 
 			// Try to use any of the valid parking spawn points
 			var parkSpawn = validParkSpawns.shift();
 
-			// Use taxi spawn point
+			// Use ramp/parking spawn point
 			if (parkSpawn) {
 
 				var spawnPoint = parkSpawn.point;
@@ -140,26 +142,67 @@ module.exports = function makeFlightPlanes(flight) {
 					spawnPoint.plane.item.remove();
 					delete spawnPoint.plane;
 				}
-	
-				// Mark spawn point as used/reserved
-				usedParkSpawns[parkSpawn.id] = true;
-
+				
 				// Set plane item parking start position and orientation
 				planeItem.setPosition(positionX, positionY, positionZ);
 				planeItem.setOrientation(orientation);
+	
+				// Mark parking spawn point as used/reserved
+				usedParkSpawns.push(parkSpawn.id);
+				foundSpawnPoint = true;
 			}
-			// Spawn in the air above airfield
-			else {
+			// Use taxi spawn point
+			else if (flight.taxi) {
 				
-				// Force air start to entire element when any of the planes are spawned
+				var taxiData = airfield.taxi[flight.taxi];
+				var taxiPoints = taxiData[4];
+				var taxiPointID = 0;
+				
+				// Find the last used taxi spawn point ID
+				if (usedParkSpawns.length) {
+					
+					var lastTaxiPointID = usedParkSpawns[usedParkSpawns.length - 1];
+					
+					if (lastTaxiPointID < 0) {
+						taxiPointID = Math.abs(lastTaxiPointID);
+					}
+				}
+				
+				var taxiPoint = taxiPoints[taxiPointID];
+				var nextTaxiPoint = taxiPoints[taxiPointID + 1];
+				
+				if (taxiPoint && taxiPoint[2] !== itemFlag.TAXI_RUNWAY) {
+					
+					// Set plane item taxi start position and orientation
+					planeItem.setPosition(taxiPoint[0], airfield.position[1], taxiPoint[1]);
+					planeItem.setOrientationTo(nextTaxiPoint[0], nextTaxiPoint[1]);
+				
+					// Mark taxi spawn point as used/reserved
+					usedParkSpawns.push(-(taxiPointID + 1));
+					foundSpawnPoint = true;
+					
+					// NOTE: Set entire element state to "ready" (instead of "start" state) so
+					// the element leader and any other planes on the taxi way do not wait for
+					// other planes on the ramp/parking to start their engines.
+					element.state = flightState.READY;
+				}
+			}
+			
+			// Spawn in the air above airfield
+			if (!foundSpawnPoint) {
+				
+				// Force air start to entire element when any of the planes must be spawned
 				// in the air (required for the planes in the air to not crash).
 				element.state = 0;
 
-				// TODO: Free up park spawns for other flight elements
-				usedParkSpawns = Object.create(null);
+				// Since the entire element is moved to an air start - free up previously
+				// reserved parking and taxi spawn points for other flight elements.
+				for (var i = (element.length - 1 - planeIndex); i > 0 && usedParkSpawns.length; i--) {
+					usedParkSpawns.pop();
+				}
 			}
 			
-			// Set plane name to pilot ID for player flight planes only
+			// Set plane name as pilot ID for player flight planes only
 			// NOTE: Required for the radio message UI to not report distant plane/pilot IDs
 			if (flight.player && !isPlayer && pilot.id) {
 				planeItem.setName(pilot.id);
@@ -170,8 +213,6 @@ module.exports = function makeFlightPlanes(flight) {
 			planeItem.Country = unit.country;
 			planeItem.Callsign = flight.callsign[0];
 
-			// TODO: Set plane names for player flight
-	
 			// Player plane item
 			if (plane === flight.player) {
 				planeItem.AILevel = Plane.AI_PLAYER;
@@ -234,23 +275,24 @@ module.exports = function makeFlightPlanes(flight) {
 
 		(function() {
 			
-			for (var p = element.length - 1; p >= 0; p--) {
+			for (var planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {
 
-				var plane = element[p];
+				var plane = element[planeIndex];
 				var planeItem = plane.item;
+				var leaderPlane = element[0];
 				var isPlayer = (plane === flight.player);
-				var isLeader = (p === 0);
+				var isLeader = (plane === leaderPlane);
 
 				// Group subordinate planes with element leader
-				if (element.length > 1 && p > 0) {
-					plane.item.entity.addTarget(element[0].item.entity);
+				if (element.length > 1 && planeIndex > 0) {
+					planeItem.entity.addTarget(leaderPlane.item.entity);
 				}
 
 				// Set plane number and formation index
 				if (flight.planes > 1) {
 					
-					plane.item.NumberInFormation = p;
-					plane.item.Callnum = planeNumber;
+					planeItem.NumberInFormation = planeIndex;
+					planeItem.Callnum = planeNumber;
 					plane.number = planeNumber;
 
 					planeNumber--;

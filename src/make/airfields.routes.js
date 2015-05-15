@@ -90,14 +90,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			waypoint.setPosition(item[0], airfield.position[1], item[1]);
 
 			// Set waypoint orientation (to the direction of next waypoint)
-			var orientation = Math.atan2(itemNext[1] - item[1], itemNext[0] - item[0]);
-			orientation = orientation * (180 / Math.PI);
-
-			if (orientation < 0) {
-				orientation += 360;
-			}
-
-			waypoint.setOrientation(orientation);
+			waypoint.setOrientationTo(itemNext[0], itemNext[1]);
 
 			// Compute waypoint speed
 			var distance = Math.sqrt(Math.pow(item[0] - itemPrev[0], 2) + Math.pow(item[1] - itemPrev[1], 2));

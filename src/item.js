@@ -235,6 +235,83 @@ Item.prototype.setOrientation = function() {
 };
 
 /**
+ * Set item orientation to another target item object or position.
+ *
+ * @param {number|array|object} [...] Target coordinates or target item object.
+ */
+Item.prototype.setOrientationTo = function() {
+	
+	var targetX, targetY, targetZ;
+	
+	// Arguments as another target item object: setOrientationTo(item)
+	if (arguments[0] instanceof Item) {
+		
+		var targetItem = arguments[0];
+		
+		targetX = targetItem.XPos || 0;
+		
+		if (targetItem.YPos) {
+			targetY = targetItem.YPos;
+		}
+		
+		targetZ = targetItem.ZPos || 0;
+	}
+	// Arguments as array of target position components: setOrientationTo([X, Y, Z])
+	else if (Array.isArray(arguments[0])) {
+		
+		var targetPosition = arguments[0];
+
+		targetX = targetPosition[0];
+		
+		if (targetPosition.length > 2) {
+			
+			targetY = targetPosition[1];
+			targetZ = targetPosition[2];
+		}
+		else {
+			targetZ = targetPosition[1];
+		}
+	}
+	// Arguments as separate target position components: setOrientationTo(X, Y, Z)
+	else {
+		
+		targetX = arguments[0];
+		
+		if (arguments.length > 2) {
+			
+			targetY = arguments[1];
+			targetZ = arguments[2];
+		}
+		else {
+			targetZ = arguments[1];
+		}
+	}
+	
+	// Unknown/invalid orientation target position
+	if (targetX === undefined || targetZ === undefined) {
+		throw new TypeError("Invalid orientation target value.");
+	}
+	
+	var sourceX = this.XPos || 0;
+	var sourceY = this.YPos || 0;
+	var sourceZ = this.ZPos || 0;
+	
+	// TODO: Support 3D orientation
+	if (targetY === undefined) {
+
+		var orientationY = Math.atan2(targetZ - sourceZ, targetX - sourceX);
+		orientationY = orientationY * (180 / Math.PI);
+		
+		if (orientationY < 0) {
+			orientationY += 360;
+		}
+		
+		// Set item Y orientation
+		this.setOrientation(orientationY);
+	}
+};
+
+/**
  * Add a new item target link.
  *
  * @param {Item} item Target item object to link.
