@@ -7,7 +7,6 @@ var moment = require("moment");
 module.exports = function makeUnits() {
 
 	var mission = this;
-	var data = mission.data;
 	var battle = mission.battle;
 	var rand = mission.rand;
 	var missionDate = mission.date;
@@ -174,7 +173,7 @@ module.exports = function makeUnits() {
 		unitsByAirfield[unit.airfield][unitID] = unit;
 
 		// Register unit to coalition index
-		var coalition = data.countries[unit.country].coalition;
+		var coalition = DATA.countries[unit.country].coalition;
 		unitsByCoalition[coalition] = unitsByCoalition[coalition] || Object.create(null);
 		unitsByCoalition[coalition][unitID] = unit;
 

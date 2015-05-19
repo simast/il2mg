@@ -30,7 +30,7 @@ module.exports = function makePlayer() {
 	if (params.country) {
 		
 		// Make sure country is part of requested coalition
-		if (player.coalition && this.data.countries[params.country].coalition !== player.coalition) {
+		if (player.coalition && DATA.countries[params.country].coalition !== player.coalition) {
 			
 			throw ["Country is not part of coalition!", {
 				country: params.country,

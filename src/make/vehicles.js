@@ -5,7 +5,6 @@
 module.exports = function makeVehicles() {
 
 	var mission = this;
-	var data = mission.data;
 	var battle = mission.battle;
 
 	// Vehicle index tables
@@ -20,9 +19,9 @@ module.exports = function makeVehicles() {
 	});
 
 	// Process all vehicles and build index lists per country and type
-	for (var i = 0; i < data.vehicles.length; i++) {
+	for (var i = 0; i < DATA.vehicles.length; i++) {
 
-		var vehicle = data.vehicles[i];
+		var vehicle = DATA.vehicles[i];
 
 		// Filter out vehicles with from/to dates
 		if ((vehicle.from && mission.date.isBefore(vehicle.from)) ||

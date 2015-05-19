@@ -1,28 +1,29 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+// Load static global data
+require("../../src/data");
+
+var itemTag = DATA.itemTag;
+var itemFlag = DATA.itemFlag;
+var planeSize = DATA.planeSize;
+
 var numeral = require("numeral");
-var data = require("../../src/data");
 var Item = require("../../src/item");
-var makeAirfields = require("../../src/make/airfields");
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", function() {
 
-		var itemTag = makeAirfields.itemTag;
-		var itemFlag = makeAirfields.itemFlag;
-		var planeSize = makeAirfields.planeSize;
-
 		var totalBattles = 0;
 		var totalAirfields = 0;
 		var totalItems = 0;
 
 		// Process airfields for each battle
-		for (var battleID in data.battles) {
+		for (var battleID in DATA.battles) {
 
-			var battle = data.battles[battleID];
+			var battle = DATA.battles[battleID];
 			var airfieldsPath = "data/battles/" + battleID + "/airfields/";
 
 			// Process all airfields
@@ -199,12 +200,12 @@ module.exports = function(grunt) {
 							else if (item.Name === "BEACON" || item.Name === "WINDSOCK") {
 
 								itemTypeID = itemTag[item.Name];
-								itemData.push(data.registerItemType(itemTypeData));
+								itemData.push(DATA.registerItemType(itemTypeData));
 							}
 							// Normal item
 							else {
 
-								itemTypeID = data.registerItemType(itemTypeData);
+								itemTypeID = DATA.registerItemType(itemTypeData);
 
 								// Decoration item flag
 								if (item.Name === "DECO") {
@@ -300,7 +301,7 @@ module.exports = function(grunt) {
 								var runway = [];
 								
 								// Runway airfield item type ID
-								runway.push(data.registerItemType(itemTypeData));
+								runway.push(DATA.registerItemType(itemTypeData));
 
 								// Runway spawn point for coop missions
 								runway.push([positionX, positionZ, orientation]);
@@ -375,7 +376,7 @@ module.exports = function(grunt) {
 								var taxiPoints = item.items[0].items;
 								
 								// Taxi route airfield item type ID
-								taxiRoute.push(data.registerItemType(itemTypeData));
+								taxiRoute.push(DATA.registerItemType(itemTypeData));
 
 								// Taxi route runway ID and invertible flag
 								taxiRoute.push(taxiRunwayID);
@@ -509,7 +510,7 @@ module.exports = function(grunt) {
 		// Write items type JSON data file
 		grunt.file.write(
 			"data/items.json",
-			JSON.stringify(data.items, null, "\t")
+			JSON.stringify(DATA.items, null, "\t")
 		);
 
 		var message = "";

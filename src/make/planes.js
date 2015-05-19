@@ -4,7 +4,6 @@
 // Generate available mission planes
 module.exports = function makePlanes() {
 
-	var data = this.data;
 	var battle = this.battle;
 
 	// Skin data array index to use when building valid/weighted plane skin list
@@ -21,9 +20,9 @@ module.exports = function makePlanes() {
 	var planesByType = Object.create(null);
 
 	// Process all planes and build index lists
-	for (var planeID in data.planes) {
+	for (var planeID in DATA.planes) {
 
-		var planeData = data.planes[planeID];
+		var planeData = DATA.planes[planeID];
 
 		// Ignore dummy plane definitions (and groups used to catalog planes)
 		if (!planeData || !planeData.name || !planeData.model || !planeData.script) {
@@ -65,7 +64,7 @@ module.exports = function makePlanes() {
 				plane.group = planeParentID;
 			}
 
-			planeData = data.planes[planeParentID];
+			planeData = DATA.planes[planeParentID];
 
 			// Register plane in the parent group hierarchy
 			var planeGroup = planesByID[planeParentID] || [];

@@ -3,8 +3,8 @@
 
 var Item = require("../item");
 var makeAirfieldVehicle = require("./airfields.vehicle");
-var itemTag = require("./airfields").itemTag;
-var itemFlag = require("./airfields").itemFlag;
+var itemTag = DATA.itemTag;
+var itemFlag = DATA.itemFlag;
 
 // Make airfield vehicle routes
 module.exports = function makeAirfieldRoutes(airfield, routes) {

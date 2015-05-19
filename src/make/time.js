@@ -7,15 +7,14 @@ var moment = require("moment");
 module.exports = function makeTime() {
 
 	var mission = this;
-	var data = mission.data;
 
 	// Main period time lengths
-	var TIME_DAWN = data.time.dawn.period;
-	var TIME_SUNRISE = data.time.sunrise.period;
-	var TIME_NOON = data.time.noon.period;
-	var TIME_SUNSET = data.time.sunset.period;
-	var TIME_DUSK = data.time.dusk.period;
-	var TIME_MIDNIGHT = data.time.midnight.period;
+	var TIME_DAWN = DATA.time.dawn.period;
+	var TIME_SUNRISE = DATA.time.sunrise.period;
+	var TIME_NOON = DATA.time.noon.period;
+	var TIME_SUNSET = DATA.time.sunset.period;
+	var TIME_DUSK = DATA.time.dusk.period;
+	var TIME_MIDNIGHT = DATA.time.midnight.period;
 
 	var date = mission.date.startOf("day");
 	var time = mission.params.time;
@@ -56,9 +55,9 @@ module.exports = function makeTime() {
 		var weightedPeriods = [];
 
 		// Build a weighted period array
-		for (var periodID in data.time) {
+		for (var periodID in DATA.time) {
 
-			var period = data.time[periodID];
+			var period = DATA.time[periodID];
 
 			if (period.weight) {
 

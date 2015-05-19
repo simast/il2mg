@@ -9,14 +9,13 @@ module.exports = function makeFlightPilots(flight) {
 	// TODO: Support female pilots/names
 
 	var rand = this.rand;
-	var data = this.data;
 	var player = this.player;
 	var pilotIDs = Object.create(null);
 
 	flight.elements.forEach(function(element) {
 
 		var unit = element.unit;
-		var ranks = data.countries[unit.country].ranks;
+		var ranks = DATA.countries[unit.country].ranks;
 		var leaderPlane = null;
 
 		// Build a weighted index list of pilot ranks
@@ -223,7 +222,7 @@ module.exports = function makeFlightPilots(flight) {
 			return;
 		}
 		
-		var ranks = data.countries[unit.country].ranks;
+		var ranks = DATA.countries[unit.country].ranks;
 		var pilotFound;
 		var pilotIndex;
 		var pilotRank;
@@ -280,7 +279,7 @@ module.exports = function makeFlightPilots(flight) {
 	// Get an unknown (fake) pilot
 	function getPilotUnknown(unit, rankRange) {
 
-		var names = data.countries[unit.country].names;
+		var names = DATA.countries[unit.country].names;
 		var pilot = Object.create(null);
 		var nameParts;
 
@@ -321,7 +320,7 @@ module.exports = function makeFlightPilots(flight) {
 	function getPilotPlayer(unit, rankRange) {
 		
 		var pilot = Object.create(null);
-		var ranks = data.countries[unit.country].ranks;
+		var ranks = DATA.countries[unit.country].ranks;
 		var playerName = player.pilot.name;
 		var playerRank = player.pilot.rank;
 		
@@ -415,7 +414,7 @@ module.exports = function makeFlightPilots(flight) {
 	// Get pilot rank
 	function getPilotRank(rankID, country) {
 		
-		var ranks = data.countries[country].ranks;
+		var ranks = DATA.countries[country].ranks;
 		
 		// Generate a random weighted rank from rank range bounds
 		if (typeof rankID === "object") {

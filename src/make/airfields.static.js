@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemFlag = require("./airfields").itemFlag;
+var itemFlag = DATA.itemFlag;
 
 // Make airfield static item
 module.exports = function makeAirfieldStatic(airfield, item) {
 
-	var itemType = this.data.getItemType(item[0]);
+	var itemType = DATA.getItemType(item[0]);
 	var staticItem = this.createItem(itemType.type, false);
 
 	staticItem.Model = itemType.model;

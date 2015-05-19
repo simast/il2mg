@@ -2,7 +2,7 @@
 "use strict";
 
 var Item = require("../item");
-var itemFlag = require("./airfields").itemFlag;
+var itemFlag = DATA.itemFlag;
 
 // Make airfield taxi route
 module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
@@ -27,7 +27,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		return;
 	}
 
-	var itemType = this.data.getItemType(taxiRoute[0]);
+	var itemType = DATA.getItemType(taxiRoute[0]);
 	var isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV);
 	var basePoint = taxiRoute[3];
 

@@ -2,9 +2,9 @@
 "use strict";
 
 var Plane = require("../item").Plane;
-var planeSize = require("./airfields").planeSize;
-var itemFlag = require("./airfields").itemFlag;
-var flightState = require("./flights.flight").flightState;
+var planeSize = DATA.planeSize;
+var itemFlag = DATA.itemFlag;
+var flightState = DATA.flightState;
 
 // Make mission flight plane item objects
 module.exports = function makeFlightPlanes(flight) {

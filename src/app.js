@@ -6,8 +6,12 @@ var util = require("util");
 var domain = require("domain");
 var moment = require("moment");
 var winston = require("winston");
+
+// Load static global data
+require("./data");
+
 var Mission = require("./mission");
-var data = require("./data");
+var flightState = DATA.flightState;
 
 var logColors = {
 	I: "gray", // Info
@@ -58,7 +62,7 @@ console.error = function() {
 // Setup command line interface
 var params = require("commander");
 
-params.version(data.version);
+params.version(DATA.version);
 params.usage("[options] [mission file and/or path]");
 
 // Select mission file format (--format)
@@ -77,8 +81,8 @@ params.option("-b, --battle <battle>", (function() {
 
 	var desc = "select a battle" + os.EOL;
 
-	for (var battleID in data.battles) {
-		desc += util.format('\t"%s" - %s\n', battleID, data.battles[battleID].name);
+	for (var battleID in DATA.battles) {
+		desc += util.format('\t"%s" - %s\n', battleID, DATA.battles[battleID].name);
 	}
 
 	return desc;
@@ -91,9 +95,9 @@ params.option("-d, --date <YYYY-MM-DD>", (function() {
 
 	desc += "\tValid date values will depend on the selected battle:" + os.EOL;
 
-	for (var battleID in data.battles) {
+	for (var battleID in DATA.battles) {
 
-		var battle = data.battles[battleID];
+		var battle = DATA.battles[battleID];
 		var battleFrom = moment(battle.from).format("YYYY-MM-DD");
 		var battleTo = moment(battle.to).format("YYYY-MM-DD");
 
@@ -120,8 +124,8 @@ params.option("-t, --time <HH:MM>", (function() {
 
 	desc += "\tTime can also be specified using special values:" + os.EOL;
 
-	for (var timeID in data.time) {
-		desc += util.format('\t"%s" - %s\n', timeID, data.time[timeID].description);
+	for (var timeID in DATA.time) {
+		desc += util.format('\t"%s" - %s\n', timeID, DATA.time[timeID].description);
 	}
 
 	return desc;
@@ -142,8 +146,8 @@ params.option("-C, --coalition <coalition>", (function() {
 
 	var desc = "select a coalition" + os.EOL;
 
-	for (var coalitionID in data.coalitions) {
-		desc += util.format('\t"%s" - %s\n', coalitionID, data.coalitions[coalitionID]);
+	for (var coalitionID in DATA.coalitions) {
+		desc += util.format('\t"%s" - %s\n', coalitionID, DATA.coalitions[coalitionID]);
 	}
 
 	return desc;
@@ -154,17 +158,17 @@ params.option("-c, --country <country>", (function() {
 
 	var desc = "select a country" + os.EOL;
 
-	for (var countryID in data.countries) {
-		desc += util.format('\t"%s" - %s\n', countryID, data.countries[countryID].name);
+	for (var countryID in DATA.countries) {
+		desc += util.format('\t"%s" - %s\n', countryID, DATA.countries[countryID].name);
 	}
 
 	return desc;
 })(), parseInt);
 
-// Select a custom pilot (--pilot)
+// Set a custom pilot (--pilot)
 params.option("-p, --pilot <rank,name>", (function() {
 
-	var desc = "select a custom pilot" + os.EOL;
+	var desc = "set a custom pilot" + os.EOL;
 
 	desc += "\tPilot rank can be specified by prefixing the name with a number and\n";
 	desc += "\ta comma character. The rank number depends on the country, but always\n";
@@ -174,6 +178,20 @@ params.option("-p, --pilot <rank,name>", (function() {
 	desc += '\t-p "10" - Set only pilot rank.\n';
 	desc += '\t-p "Name Surname" - Set only pilot name.\n';
 	desc += '\t-p "10, Name Surname" - Set pilot rank and name.';
+	desc += os.EOL;
+
+	return desc;
+})(), function(value) {
+	return String(value).trim();
+});
+
+// Set flight state (--state)
+params.option("-s, --state <state>", (function() {
+
+	var desc = "set flight state" + os.EOL;
+
+	desc += '\t"' + flightState.START + '" - Start from parking area or taxiway (default).\n';
+	desc += '\t"' + flightState.RUNWAY + '" - Start from runway.';
 	desc += os.EOL;
 
 	return desc;
@@ -250,7 +268,7 @@ appDomain.run(function() {
 	}
 	
 	// --battle
-	if (params.battle && !data.battles[params.battle]) {
+	if (params.battle && !DATA.battles[params.battle]) {
 		throw ["Unknown battle!", {battle: params.battle}];
 	}
 
@@ -260,17 +278,17 @@ appDomain.run(function() {
 	}
 
 	// --time
-	if (params.time && typeof params.time === "string" && !data.time[params.time]) {
+	if (params.time && typeof params.time === "string" && !DATA.time[params.time]) {
 		throw ["Invalid mission time!", {time: params.time}];
 	}
 
 	// --coalition
-	if (params.coalition !== undefined && !data.coalitions[params.coalition]) {
+	if (params.coalition !== undefined && !DATA.coalitions[params.coalition]) {
 		throw ["Unknown coalition!", {coalition: params.coalition}];
 	}
 
 	// --country
-	if (params.country !== undefined && !data.countries[params.country]) {
+	if (params.country !== undefined && !DATA.countries[params.country]) {
 		throw ["Unknown country!", {country: params.country}];
 	}
 
@@ -282,6 +300,13 @@ appDomain.run(function() {
 	// --pilot
 	if (params.pilot !== undefined && !params.pilot.length) {
 		throw ["Invalid pilot name!", {pilot: params.pilot}];
+	}
+	
+	// --state
+	if (params.state !== undefined &&
+			[flightState.START, flightState.RUNWAY].indexOf(params.state) === -1) {
+		
+		throw ["Invalid flight state!", {state: params.state}];
 	}
 
 	// Create a new mission

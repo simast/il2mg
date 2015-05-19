@@ -8,7 +8,7 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 		return;
 	}
 
-	var itemType = this.data.getItemType(item[5]);
+	var itemType = DATA.getItemType(item[5]);
 	var beaconItem = this.createItem(itemType.type, false);
 
 	beaconItem.Model = itemType.model;

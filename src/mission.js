@@ -5,7 +5,6 @@ var fs = require("fs");
 var os = require("os");
 var path = require("path");
 var Random = require("random-js");
-var data = require("./data");
 var Item = require("./item");
 
 // Mission file extensions
@@ -40,10 +39,6 @@ function Mission(params) {
 	// Reserve an empty localization string (used in binary mission generation for
 	// items without LCName or LCDesc properties).
 	this.getLC("");
-
-	// Set mission related static data
-	// TODO: Load only mission related data (and not all battles)
-	this.data = data;
 
 	log.I("Making mission...");
 	log.profile("Making");
@@ -160,7 +155,7 @@ Mission.prototype.getLC = function(text) {
  */
 Mission.prototype.getCallsign = function(type) {
 
-	if (!data.callsigns[type]) {
+	if (!DATA.callsigns[type]) {
 		throw new TypeError("Invalid callsign type value.");
 	}
 
@@ -172,7 +167,7 @@ Mission.prototype.getCallsign = function(type) {
 	// Initialize/shuffle callsign list data
 	if (this.lastCallsign[type] === undefined) {
 
-		this.rand.shuffle(data.callsigns[type]);
+		this.rand.shuffle(DATA.callsigns[type]);
 		this.lastCallsign[type] = 0;
 	}
 	// Use next available callsign
@@ -181,12 +176,12 @@ Mission.prototype.getCallsign = function(type) {
 		this.lastCallsign[type]++;
 
 		// Cycle callsign list
-		if (this.lastCallsign[type] >= data.callsigns[type].length) {
+		if (this.lastCallsign[type] >= DATA.callsigns[type].length) {
 			this.lastCallsign[type] = 0;
 		}
 	}
 
-	return data.callsigns[type][this.lastCallsign[type]];
+	return DATA.callsigns[type][this.lastCallsign[type]];
 };
 
 /**
@@ -421,7 +416,7 @@ Mission.prototype.saveLang = function(fileName) {
 	var self = this;
 	var promises = [];
 
-	data.languages.forEach(function(lang) {
+	DATA.languages.forEach(function(lang) {
 
 		var profileName = "Saving ." + lang;
 

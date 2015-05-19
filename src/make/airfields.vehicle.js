@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemTag = require("./airfields").itemTag;
+var itemTag = DATA.itemTag;
 
 // Make airfield vehicle item
 module.exports = function makeAirfieldVehicle(airfield, item, isLive) {

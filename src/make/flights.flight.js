@@ -1,14 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Flight states
-// NOTE: Numeric (0..1) flight states represent aircraft in the air at various mission states
-var flightState = makeFlight.flightState = {
-	START: "start", // Parking, engine not running
-	READY: "ready", // Parking, engine running, ready for taxi
-	TAXI: "taxi", // On the taxiway, engine running, taxiing to runway
-	RUNWAY: "runway" // On the runway, engine running, ready for takeoff
-};
+var flightState = DATA.flightState;
+
+// Flight make parts
+var makeFlightElements = require("./flights.elements");
+var makeFlightPilots = require("./flights.pilots");
+var makeFlightPlanes = require("./flights.planes");
+var makeFlightPlan = require("./flights.plan");
+var makeAirfieldTaxi = require("./airfields.taxi");
 
 // Make mission flight
 function makeFlight(params) {
@@ -102,6 +102,7 @@ function makeFlight(params) {
 
 				// Pick taxi route plane spawn points
 				flight.spawns = taxiSpawns[flight.taxi];
+				
 				break;
 			}
 		}
@@ -136,6 +137,12 @@ function makeFlight(params) {
 	// Make sure the taxi route on the airfield is valid and exists
 	if (flight.taxi && !airfield.taxi[flight.taxi]) {
 		delete flight.taxi;
+	}
+	
+	// NOTE: Randomize taxi spawns list as it's not fully randomized by this point
+	// (due to groups usage in airfield data files).
+	if (flight.spawns) {
+		rand.shuffle(flight.spawns);
 	}
 	
 	// Option 3: Force (forward to) air start state if no valid taxi route is found
@@ -214,10 +221,3 @@ function makeFlight(params) {
 }
 
 module.exports = makeFlight;
-
-// Flight make parts
-var makeFlightElements = require("./flights.elements");
-var makeFlightPilots = require("./flights.pilots");
-var makeFlightPlanes = require("./flights.planes");
-var makeFlightPlan = require("./flights.plan");
-var makeAirfieldTaxi = require("./airfields.taxi");

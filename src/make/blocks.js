@@ -7,7 +7,6 @@ var Item = require("../item");
 module.exports = function makeBlocks() {
 
 	var mission = this;
-	var data = mission.data;
 	var blocksFiles = mission.battle.blocks;
 	var blocksGroup = mission.createItem("Group");
 
@@ -25,7 +24,7 @@ module.exports = function makeBlocks() {
 		for (var i = 0; i < blocks.length; i++) {
 
 			var blockItem = blocks[i];
-			var itemType = data.getItemType(blockItem[0]);
+			var itemType = DATA.getItemType(blockItem[0]);
 			var block = blocksGroup.createItem(itemType.type);
 
 			block.Model = itemType.model;

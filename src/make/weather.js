@@ -36,7 +36,7 @@ function makeClouds(weather) {
 		cloudsType = rand.integer(cloudsType[0], cloudsType[1]);
 	}
 
-	var cloudsData = rand.pick(this.data.clouds[cloudsType]);
+	var cloudsData = rand.pick(DATA.clouds[cloudsType]);
 
 	var altitude = cloudsData.altitude;
 	if (Array.isArray(altitude)) {

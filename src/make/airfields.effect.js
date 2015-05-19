@@ -2,8 +2,10 @@
 "use strict";
 
 var Item = require("../item");
-var itemTag = require("./airfields").itemTag;
-var itemFlag = require("./airfields").itemFlag;
+var itemTag = DATA.itemTag;
+var itemFlag = DATA.itemFlag;
+var effects = DATA.effects;
+var grounds = DATA.grounds;
 
 // Make airfield effect item
 module.exports = function makeAirfieldEffect(airfield, item) {
@@ -21,8 +23,6 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 
 	var rand = this.rand;
 	var time = this.time;
-	var effects = this.data.effects;
-	var grounds = this.data.grounds;
 	var effectScript;
 	var startOnLoad = true;
 	var isRaining = (this.weather.precipitation.type === 1);

@@ -1,8 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var flightState = require("./flights.flight").flightState;
-
 // Plan commands
 var planCommand = {
 	TAKEOFF: "takeoff",
@@ -31,9 +29,5 @@ module.exports = function makeFlightPlan(flight) {
 	plan.push({do: planCommand.LAND});
 	
 	// TODO: Fast-forward plan to required flight state
-	
-	// Process pending plan commands
-	for (var command of plan) {
-		require("./flights.plan." + command.do).call(this, flight);
-	}
+	// TODO: Process pending plan commands
 };
