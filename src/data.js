@@ -215,9 +215,16 @@ DATA.planeSize = Object.freeze({
 // NOTE: Numeric (0..1) flight states represent aircraft in the air at various mission states
 DATA.flightState = Object.freeze({
 	START: "start", // Parking, engine not running
-	READY: "ready", // Parking, engine running, ready for taxi
 	TAXI: "taxi", // On the taxiway, engine running, taxiing to runway
 	RUNWAY: "runway" // On the runway, engine running, ready for takeoff
+});
+
+// Flight plan actions
+DATA.planAction = Object.freeze({
+	TAKEOFF: "takeoff", // Taxi (optionally) and takeoff from airfield
+	WAIT: "wait", // Wait for something (do nothing)
+	FLY: "fly", // Fly to waypoint/location
+	LAND: "land" // Land on airfield (ending the flight)
 });
 
 global.DATA = DATA;

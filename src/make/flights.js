@@ -27,7 +27,9 @@ module.exports = function makeFlights() {
 		player: true,
 		unit: unit,
 		mission: {
-			planes: [2, 2]
+			type: "training",
+			planes: [2],
+			payload: "bombs"
 		}
 	});
 	

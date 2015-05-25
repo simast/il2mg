@@ -122,20 +122,21 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	planeItem.setPosition(positionX, positionY, positionZ);
 	planeItem.setOrientation(orientation);
 	
-	// Build plane item count by unit and sector index (used when spawning flights)
 	var unitID = planeData[2];
-	
+	var planeIndexData = {
+		group: plane.group, // Plane group ID
+		item: planeItem // Plane static item object
+	};
+
+	// Build plane item count by unit and sector index (used when spawning flights)
 	planeItemsByUnit[unitID] = planeItemsByUnit[unitID] || Object.create(null);
 	planeItemsByUnit[unitID][sector] = planeItemsByUnit[unitID][sector] || [];
-	planeItemsByUnit[unitID][sector].push(planeItem);
+	planeItemsByUnit[unitID][sector].push(planeIndexData);
 	
 	// Assign static plane item object to current taxi point
 	if (taxiSpawn) {
 		
-		taxiSpawn.plane = {
-			group: plane.group, // Plane group ID
-			item: planeItem // Plane static item object
-		};
+		taxiSpawn.plane = planeIndexData;
 		
 		// Weighted array of taxi spawn sector IDs by plane group (used when spawning flights)
 		if (taxiRoute > 0) {

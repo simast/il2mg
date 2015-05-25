@@ -4100,7 +4100,7 @@ Group
 
     Block
     {
-      Name = "PLANE:1:1:SMALL";
+      Name = "PLANE:1:0:SMALL";
       Index = 208;
       LinkTrId = 0;
       XPos = 131966.087;
@@ -6707,8 +6707,8 @@ Group
       Point
       {
         Type = 0;
-        X = 16.1731;
-        Y = 58.0034;
+        X = 16.4644;
+        Y = 75.572;
       }
       Point
       {
@@ -6833,8 +6833,8 @@ Group
       Point
       {
         Type = 0;
-        X = 17.215;
-        Y = 58.3194;
+        X = 16.7736;
+        Y = 74.9686;
       }
     }
     ReturnPlanes = 0;

@@ -1,14 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var flightState = DATA.flightState;
-
 // Flight make parts
 var makeFlightElements = require("./flights.elements");
 var makeFlightPilots = require("./flights.pilots");
 var makeFlightPlanes = require("./flights.planes");
 var makeFlightPlan = require("./flights.plan");
 var makeAirfieldTaxi = require("./airfields.taxi");
+
+// Data constants
+var flightState = DATA.flightState;
 
 // Make mission flight
 function makeFlight(params) {
@@ -37,7 +38,7 @@ function makeFlight(params) {
 
 	var unitID = params.unit;
 
-	// Resolve unit group IDs
+	// Resolve unit from unit group ID
 	while (Array.isArray(this.unitsByID[unitID])) {
 		unitID = rand.pick(this.unitsByID[unitID]);
 	}
@@ -62,6 +63,9 @@ function makeFlight(params) {
 	if (!flight.planes) {
 		return;
 	}
+
+	// Flight plan actions list
+	flight.plan = [];
 	
 	// Option 1: Attempt to pick taxi route/sector where static unit planes are present
 	(function() {
@@ -72,10 +76,16 @@ function makeFlight(params) {
 
 			var unitSectors = Object.keys(unitPlaneItems);
 
-			// Order the unit sector list by number of planes present
-			unitSectors.sort(function(a, b) {
-				return unitPlaneItems[b].length - unitPlaneItems[a].length;
-			});
+			if (flight.planes > 1) {
+
+				// Order the unit sector list by number of planes present
+				unitSectors.sort(function(a, b) {
+					return unitPlaneItems[b].length - unitPlaneItems[a].length;
+				});
+			}
+			else {
+				rand.shuffle(unitSectors);
+			}
 
 			for (var unitSectorID of unitSectors) {
 
@@ -99,6 +109,8 @@ function makeFlight(params) {
 					// TODO: Check for the best taxi route for a given flight plane set
 					flight.taxi = Number(rand.pick(taxiRoutes));
 				}
+
+				flight.sector = unitSectorID;
 
 				// Pick taxi route plane spawn points
 				flight.spawns = taxiSpawns[flight.taxi];
@@ -129,6 +141,7 @@ function makeFlight(params) {
 
 					flight.taxi = Number(rand.pick(taxiRoutes));
 					flight.spawns = taxiSpawns[flight.taxi];
+					flight.sector = taxiSectorID;
 				}
 			}
 		}).call(this);
@@ -150,9 +163,13 @@ function makeFlight(params) {
 		flight.state = 0;
 	}
 	
-	// Pick a player plane
+	// Pick a player element and plane
 	if (isPlayer) {
-		flight.player = rand.pick(rand.pick(flight.elements));
+
+		var playerElement = rand.pick(flight.elements);
+
+		playerElement.player = true;
+		flight.player = rand.pick(playerElement);
 	}
 	
 	// Create flight group item
@@ -171,51 +188,6 @@ function makeFlight(params) {
 	makeFlightPilots.call(this, flight);
 	makeFlightPlanes.call(this, flight);
 	makeFlightPlan.call(this, flight);
-	
-	// TODO: Move to plan script files
-	for (var element of flight.elements) {
-
-		// Set element air start
-		if (typeof element.state === "number") {
-
-			var orientation = rand.integer(0, 360);
-
-			for (var plane of element) {
-
-				var planeItem = plane.item;
-
-				// TODO: Set orientation and tweak spawn distance
-				// TODO: Set formation?
-				var positionX = airfield.position[0] + rand.integer(150, 350);
-				var positionY = airfield.position[1] + rand.integer(250, 350);
-				var positionZ = airfield.position[2] + rand.integer(150, 350);
-
-				// Set plane item air start position and orientation
-				planeItem.setPosition(positionX, positionY, positionZ);
-				planeItem.setOrientation(orientation);
-			}
-
-			continue;
-		}
-
-		if (flight.taxi) {
-
-			var missionBegin = flight.group.createItem("MCU_TR_MissionBegin");
-			var takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
-		
-			missionBegin.setPositionNear(element[0].item);
-			missionBegin.addTarget(takeoffCommand);
-	
-			takeoffCommand.setPositionNear(missionBegin);
-			takeoffCommand.setPosition(
-				takeoffCommand.XPos,
-				takeoffCommand.YPos + 500,
-				takeoffCommand.ZPos
-			);
-			
-			takeoffCommand.addObject(element[0].item);
-		}
-	}
 	
 	return flight;
 }

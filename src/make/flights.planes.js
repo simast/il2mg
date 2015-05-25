@@ -2,6 +2,8 @@
 "use strict";
 
 var Plane = require("../item").Plane;
+
+// Data constants
 var planeSize = DATA.planeSize;
 var itemFlag = DATA.itemFlag;
 var flightState = DATA.flightState;
@@ -26,9 +28,12 @@ module.exports = function makeFlightPlanes(flight) {
 		// Skip leader only (first plane) when mapping formation number based on distance
 		var sortSkip = 0;
 
-		// Only the first element can start without engines running
-		if (element.state === flightState.START && elementIndex > 0) {
-			element.state = flightState.READY;
+		// Only one element can start on the ramp from "start" flight state
+		// NOTE: Player element will always start from ramp
+		if (element.state === flightState.START &&
+				((!flight.player && elementIndex > 0) || (flight.player && !element.player))) {
+
+			element.state = flightState.TAXI;
 		}
 
 		// Process each plane in reverse
@@ -40,134 +45,146 @@ module.exports = function makeFlightPlanes(flight) {
 			var lastPlane = element[planeIndex + 1];
 			var isLeader = (planeIndex === 0);
 			var validParkSpawns = [];
+			var foundSpawnPoint = false;
+			var foundStaticPlane = false;
 			var pilot = plane.pilot;
-
-			// Build a list of valid taxi spawn points
-			if (flight.spawns) {
-
-				var planeSizeID = planeSize[String(planeData.size).toUpperCase()];
-
-				flight.spawns.forEach(function(spawnPoint, spawnIndex) {
-
-					var spawnID = spawnIndex + 1;
-
-					if (usedParkSpawns.indexOf(spawnID) === -1 && spawnPoint.size >= planeSizeID) {
-
-						var distance = 0;
-
-						// Compute spawn point distance to last plane item position
-						if (flight.elements.length > 1 && lastPlane) {
-
-							var posXDiff = lastPlane.item.XPos - spawnPoint.position[0];
-							var posZDiff = lastPlane.item.ZPos - spawnPoint.position[2];
-
-							distance = Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2));
-						}
-
-						validParkSpawns.push({
-							id: spawnID,
-							point: spawnPoint,
-							distance: distance
-						});
-					}
-				});
-
-				// Sort valid spawn points based on the distance to the last plane in a
-				// multi element formation. This helps when placing multiple elements on
-				// the same ramp as they will be grouped together and the flight formation
-				// will not be mixed up.
-				if (flight.elements.length > 1 && lastPlane) {
-
-					validParkSpawns.sort(function(a, b) {
-						return (a.distance - b.distance);
-					});
-				}
-				// When placing a first plane on the ramp - sort valid spawn points by
-				// size (the first plane will use best fit spawn point).
-				else {
-
-					validParkSpawns.sort(function(a, b) {
-						return (a.point.size - b.point.size);
-					});
-				}
-			}
-
 			var planeItem = plane.item = flight.group.createItem("Plane");
 			var positionX;
 			var positionY;
 			var positionZ;
 			var orientation;
-			var foundSpawnPoint = false;
 
-			// Try to use any of the valid parking spawn points
-			var parkSpawn = validParkSpawns.shift();
+			// Try to start plane from parking/ramp
+			if (element.state === flightState.START) {
 
-			// Use ramp/parking spawn point
-			if (parkSpawn) {
+				// Build a list of valid taxi spawn points
+				if (flight.spawns) {
 
-				var spawnPoint = parkSpawn.point;
-				var positionOffsetMin = 10;
-				var positionOffsetMax = 20;
-				var orientationOffset = 15;
+					var planeSizeID = planeSize[String(planeData.size).toUpperCase()];
 
-				// Limit position offset for player-only taxi routes
-				if (flight.taxi === 0) {
+					flight.spawns.forEach(function(spawnPoint, spawnIndex) {
 
-					positionOffsetMin = 5;
-					positionOffsetMax = 12;
+						var spawnID = spawnIndex + 1;
+
+						if (usedParkSpawns.indexOf(spawnID) === -1 && spawnPoint.size >= planeSizeID) {
+
+							var distance = 0;
+
+							// Compute spawn point distance to last plane item position
+							if (flight.elements.length > 1 && lastPlane) {
+
+								var posXDiff = lastPlane.item.XPos - spawnPoint.position[0];
+								var posZDiff = lastPlane.item.ZPos - spawnPoint.position[2];
+
+								distance = Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2));
+							}
+
+							validParkSpawns.push({
+								id: spawnID,
+								point: spawnPoint,
+								distance: distance
+							});
+						}
+					});
+
+					// Sort valid spawn points based on the distance to the last plane in a
+					// multi element formation. This helps when placing multiple elements on
+					// the same ramp as they will be grouped together and the flight formation
+					// will not be mixed up.
+					if (flight.elements.length > 1 && lastPlane) {
+
+						validParkSpawns.sort(function(a, b) {
+							return (a.distance - b.distance);
+						});
+					}
+					// When placing a first plane on the ramp - sort valid spawn points by
+					// size (the first plane will use best fit spawn point).
+					else {
+
+						validParkSpawns.sort(function(a, b) {
+							return (a.point.size - b.point.size);
+						});
+					}
 				}
-				// Slightly move leader plane position forward to avoid possible AI taxiing issues
-				else if (isLeader) {
 
-					positionOffsetMin += 10;
-					positionOffsetMax += 10;
-				}
+				// Try to use any of the valid parking spawn points
+				var parkSpawn = validParkSpawns.shift();
 
-				positionX = spawnPoint.position[0];
-				positionY = spawnPoint.position[1];
-				positionZ = spawnPoint.position[2];
-				orientation = spawnPoint.orientation;
-	
-				// Slightly move plane position forward
-				var positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
-				var orientationRad = orientation * (Math.PI / 180);
-	
-				positionX += positionOffset * Math.cos(orientationRad);
-				positionZ += positionOffset * Math.sin(orientationRad);
-	
-				// Slightly vary/randomize plane orientation
-				orientation = orientation + rand.real(-orientationOffset, orientationOffset);
-				orientation = Math.max((orientation + 360) % 360, 0);
-	
-				// TODO: Move around existing static plane items instead of removing them
-				if (spawnPoint.plane) {
-	
-					spawnPoint.plane.item.remove();
-					delete spawnPoint.plane;
+				// Use ramp/parking spawn point
+				if (parkSpawn) {
+
+					var spawnPoint = parkSpawn.point;
+					var positionOffsetMin = 10;
+					var positionOffsetMax = 20;
+					var orientationOffset = 15;
+
+					// Limit position offset for player-only taxi routes
+					if (flight.taxi === 0) {
+
+						positionOffsetMin = 5;
+						positionOffsetMax = 12;
+					}
+					// Slightly move leader plane position forward to avoid possible AI taxiing issues
+					else if (isLeader) {
+
+						positionOffsetMin += 10;
+						positionOffsetMax += 10;
+					}
+
+					positionX = spawnPoint.position[0];
+					positionY = spawnPoint.position[1];
+					positionZ = spawnPoint.position[2];
+					orientation = spawnPoint.orientation;
+
+					// Slightly move plane position forward
+					var positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
+					var orientationRad = orientation * (Math.PI / 180);
+
+					positionX += positionOffset * Math.cos(orientationRad);
+					positionZ += positionOffset * Math.sin(orientationRad);
+
+					// Slightly vary/randomize plane orientation
+					orientation = orientation + rand.real(-orientationOffset, orientationOffset);
+					orientation = Math.max((orientation + 360) % 360, 0);
+
+					// TODO: Move around existing static plane items instead of removing them
+					if (spawnPoint.plane && spawnPoint.plane.item) {
+
+						spawnPoint.plane.item.remove();
+						foundStaticPlane = true;
+
+						delete spawnPoint.plane.item;
+						delete spawnPoint.plane;
+					}
+
+					// Set plane item parking start position and orientation
+					planeItem.setPosition(positionX, positionY, positionZ);
+					planeItem.setOrientation(orientation);
+
+					// Mark parking spawn point as used/reserved
+					usedParkSpawns.push(parkSpawn.id);
+					foundSpawnPoint = true;
 				}
-				
-				// Set plane item parking start position and orientation
-				planeItem.setPosition(positionX, positionY, positionZ);
-				planeItem.setOrientation(orientation);
-	
-				// Mark parking spawn point as used/reserved
-				usedParkSpawns.push(parkSpawn.id);
-				foundSpawnPoint = true;
 			}
+
 			// Use taxi spawn point
-			else if (flight.taxi) {
+			if (!foundSpawnPoint && flight.taxi &&
+					(element.state === flightState.START || element.state === flightState.TAXI)) {
 				
 				var taxiData = airfield.taxi[flight.taxi];
 				var taxiPoints = taxiData[4];
 				var taxiPointID = 0;
-				
+
 				// Find the last used taxi spawn point ID
 				if (usedParkSpawns.length) {
 					
-					var lastTaxiPointID = usedParkSpawns[usedParkSpawns.length - 1];
-					
-					if (lastTaxiPointID < 0) {
-						taxiPointID = Math.abs(lastTaxiPointID);
+					for (var x = usedParkSpawns.length - 1; x >= 0; x--) {
+
+						if (usedParkSpawns[x] < 0) {
+
+							taxiPointID = Math.abs(usedParkSpawns[x]);
+							break;
+						}
 					}
 				}
 				
@@ -197,10 +214,8 @@ module.exports = function makeFlightPlanes(flight) {
 					usedParkSpawns.push(-(taxiPointID + 1));
 					foundSpawnPoint = true;
 					
-					// NOTE: Set entire element state to "ready" (instead of "start" state) so
-					// the element leader and any other planes on the taxi way do not wait for
-					// other planes on the ramp/parking to start their engines.
-					element.state = flightState.READY;
+					// Set element state to "taxi"
+					element.state = flightState.TAXI;
 					
 					// Skip this plane when mapping formation number based on distance
 					sortSkip++;
@@ -222,6 +237,25 @@ module.exports = function makeFlightPlanes(flight) {
 				
 				// Reset formation number sort skip number (to leader only)
 				sortSkip = 0;
+			}
+			
+			// Replace matching unit static plane item with a live plane
+			// TODO: Handle shedulled flights
+			if (!foundStaticPlane && flight.sector && airfield.planeItemsByUnit[unit.id]) {
+
+				var planeItemsByUnit = airfield.planeItemsByUnit[unit.id][flight.sector];
+				
+				for (var staticPlane of planeItemsByUnit) {
+
+					// Select matching (by plane group) static plane item
+					if (staticPlane.item && staticPlane.group === planeData.group) {
+
+						staticPlane.item.remove();
+						delete staticPlane.item;
+
+						break;
+					}
+				}
 			}
 			
 			// Set plane name as pilot ID for player flight planes only
