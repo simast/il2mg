@@ -48,13 +48,14 @@ module.exports = function makeFlightPlan(flight) {
 	// Process pending plan actions
 	for (var action of plan) {
 
-		if (makePlanAction[action.type]) {
+		if (!makePlanAction[action.type]) {
+			continue;
+		}
 
-			output = makePlanAction[action.type].call(this, flight, action, output);
+		output = makePlanAction[action.type].call(this, flight, action, output);
 
-			if (typeof output !== "function") {
-				output = function() {};
-			}
+		if (typeof output !== "function") {
+			output = function() {};
 		}
 	}
 };

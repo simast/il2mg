@@ -20,9 +20,17 @@ module.exports = function makePlanLand(flight, action, input) {
 
 			landCommand = flight.group.createItem("MCU_CMD_Land");
 			
-			// TODO: Set position on the start of runway
-			landCommand.setPositionNear(leaderPlaneItem);
-			landCommand.Priority = MCU_CMD_Land.PRIORITY_LOW;
+			// NOTE: Landing point is the same as takeoff
+			var landPoint = airfield.taxi[flight.taxi].takeoff;
+
+			landCommand.Priority = MCU_CMD_Land.PRIORITY_HIGH;
+
+			// Set land command position to the start/land point of runway
+			landCommand.setPosition(
+				landPoint[0],
+				airfield.position[1],
+				landPoint[1]
+			);
 		}
 
 		landCommand.addObject(leaderPlaneItem);

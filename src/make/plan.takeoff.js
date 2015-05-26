@@ -44,7 +44,15 @@ module.exports = function makePlanTakeoff(flight, action, input) {
 			if (!takeoffCommand) {
 
 				takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
-				takeoffCommand.setPositionNear(leaderPlaneItem);
+
+				var takeoffPoint = airfield.taxi[flight.taxi].takeoff;
+
+				// Set takeoff command position to the start/takeoff point of runway
+				takeoffCommand.setPosition(
+					takeoffPoint[0],
+					airfield.position[1],
+					takeoffPoint[1]
+				);
 			}
 
 			takeoffCommand.addObject(leaderPlaneItem);

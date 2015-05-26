@@ -62,7 +62,13 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		}
 		// Runway point type
 		else if (point[2] === itemFlag.TAXI_RUNWAY) {
+
 			pointType = 2;
+
+			// Index takeoff point position
+			if (!taxiRoute.takeoff) {
+				taxiRoute.takeoff = [point[0], point[1]];
+			}
 		}
 
 		// Convert absolute taxi point coordinates to relative vector X/Y offsets
