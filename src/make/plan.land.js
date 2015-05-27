@@ -1,41 +1,51 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU_CMD_Land = require("../item").MCU_CMD_Land;
+var MCU_TR_Entity = require("../item").MCU_TR_Entity;
 
 // Make plan land action
-module.exports = function makePlanLand(flight, action, input) {
+module.exports = function makePlanLand(action, element, flight, input) {
 
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
+	var leaderElement = flight.elements[0];
+	var leaderPlaneItem = element[0].item;
+	var landCommand = flight.group.createItem("MCU_CMD_Land");
 
-	// NOTE: Flight will use a single land command for all elements
-	var landCommand;
+	// NOTE: Landing point is the same as takeoff
+	var takeoffStart = airfield.taxi[flight.taxi].takeoffStart;
+	var takeoffEnd = airfield.taxi[flight.taxi].takeoffEnd;
 
-	for (var element of flight.elements) {
+	// Set land command position and orientation
+	landCommand.setPosition(takeoffStart);
+	landCommand.setOrientationTo(takeoffEnd);
 
-		var leaderPlaneItem = element[0].item;
+	landCommand.addObject(leaderPlaneItem);
 
-		if (!landCommand) {
+	// Leading element land action
+	if (element === leaderElement) {
 
-			landCommand = flight.group.createItem("MCU_CMD_Land");
-			
-			// NOTE: Landing point is the same as takeoff
-			var landPoint = airfield.taxi[flight.taxi].takeoff;
-
-			landCommand.Priority = MCU_CMD_Land.PRIORITY_HIGH;
-
-			// Set land command position to the start/land point of runway
-			landCommand.setPosition(
-				landPoint[0],
-				airfield.position[1],
-				landPoint[1]
-			);
-		}
-
-		landCommand.addObject(leaderPlaneItem);
+		element.landCommand = landCommand;
 
 		// Connect land command to previous action
 		input(landCommand);
+	}
+	// Other element land action
+	else {
+
+		// TODO: Other elements should wait for previous element landed reports
+
+		// Short timer used to delay land command
+		var waitTimer = flight.group.createItem("MCU_Timer");
+
+		waitTimer.Time = rand.real(8, 12);
+		waitTimer.setPositionNear(leaderPlaneItem); // TODO
+		waitTimer.addTarget(landCommand);
+
+		flight.leader.item.entity.addReport(
+			MCU_TR_Entity.REPORT_LANDED,
+			leaderElement.landCommand,
+			waitTimer
+		);
 	}
 };

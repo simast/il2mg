@@ -23,7 +23,7 @@ module.exports = function makeFlightPlan(flight) {
 	}
 
 	// TODO: Make mission related plan
-
+	
 	// FIXME: Random wait action
 	plan.push({
 		type: planAction.WAIT,
@@ -40,11 +40,14 @@ module.exports = function makeFlightPlan(flight) {
 	
 	// TODO: Fast-forward plan to required flight state
 
-	// Connect initial plan input with onStart event command
-	var output = function(input) {
-		onStart.addTarget(input);
-	};
-	
+	// List of output callback functions for previous plan action (for each element)
+	// NOTE: Connect initial plan input with onStart event command
+	var outputPrev = [
+		function(input) {
+			onStart.addTarget(input);
+		}
+	];
+
 	// Process pending plan actions
 	for (var action of plan) {
 
@@ -52,10 +55,28 @@ module.exports = function makeFlightPlan(flight) {
 			continue;
 		}
 
-		output = makePlanAction[action.type].call(this, flight, action, output);
+		var output = [];
 
-		if (typeof output !== "function") {
-			output = function() {};
-		}
+		// Multiple flight elements will share a single plan, but can use a different
+		// command set (as with second element on guard duty for first leading element).
+		flight.elements.forEach(function(element, elementIndex) {
+
+			var input = outputPrev[elementIndex];
+
+			if (typeof input !== "function") {
+				input = function() {};
+			}
+
+			output.push(makePlanAction[action.type].call(
+				this,
+				action,
+				element,
+				flight,
+				input
+			));
+
+		}, this);
+
+		outputPrev = output;
 	}
 };

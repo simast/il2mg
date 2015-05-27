@@ -65,9 +65,13 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 
 			pointType = 2;
 
-			// Index takeoff point position
-			if (!taxiRoute.takeoff) {
-				taxiRoute.takeoff = [point[0], point[1]];
+			// Index takeoff point start position
+			if (!taxiRoute.takeoffStart) {
+				taxiRoute.takeoffStart = [point[0], airfield.position[1], point[1]];
+			}
+			// Index takeoff point end position
+			else if (!taxiRoute.takeoffEnd) {
+				taxiRoute.takeoffEnd = [point[0], airfield.position[1], point[1]];
 			}
 		}
 

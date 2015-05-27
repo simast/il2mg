@@ -278,7 +278,7 @@ Item.prototype.setOrientationTo = function() {
 		targetX = arguments[0];
 		
 		if (arguments.length > 2) {
-			
+
 			targetY = arguments[1];
 			targetZ = arguments[2];
 		}
@@ -297,18 +297,16 @@ Item.prototype.setOrientationTo = function() {
 	var sourceZ = this.ZPos || 0;
 	
 	// TODO: Support 3D orientation
-	if (targetY === undefined) {
 
-		var orientationY = Math.atan2(targetZ - sourceZ, targetX - sourceX);
-		orientationY = orientationY * (180 / Math.PI);
-		
-		if (orientationY < 0) {
-			orientationY += 360;
-		}
-		
-		// Set item Y orientation
-		this.setOrientation(orientationY);
+	var orientationY = Math.atan2(targetZ - sourceZ, targetX - sourceX);
+	orientationY = orientationY * (180 / Math.PI);
+
+	if (orientationY < 0) {
+		orientationY += 360;
 	}
+
+	// Set item Y orientation
+	this.setOrientation(orientationY);
 };
 
 /**

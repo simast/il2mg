@@ -245,15 +245,19 @@ module.exports = function makeFlightPlanes(flight) {
 
 				var planeItemsByUnit = airfield.planeItemsByUnit[unit.id][flight.sector];
 				
-				for (var staticPlane of planeItemsByUnit) {
+				// FIXME: flight.sector can be other sector (not where unit planes are present)
+				if (planeItemsByUnit) {
+					
+					for (var staticPlane of planeItemsByUnit) {
 
-					// Select matching (by plane group) static plane item
-					if (staticPlane.item && staticPlane.group === planeData.group) {
+						// Select matching (by plane group) static plane item
+						if (staticPlane.item && staticPlane.group === planeData.group) {
 
-						staticPlane.item.remove();
-						delete staticPlane.item;
+							staticPlane.item.remove();
+							delete staticPlane.item;
 
-						break;
+							break;
+						}
 					}
 				}
 			}
