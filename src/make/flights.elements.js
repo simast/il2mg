@@ -13,7 +13,7 @@ module.exports = function makeFlightElements(flight) {
 		
 		var element = [];
 
-		// TODO: Elements can be mixed from the same unit group and plane group
+		// TODO: Allow elements to be mixed from the same unit group and plane group
 		var unit = element.unit = this.unitsByID[flight.unit];
 		
 		rand.shuffle(unit.planes);
@@ -46,7 +46,7 @@ module.exports = function makeFlightElements(flight) {
 		
 		if (element.length) {
 			
-			// Inherit element state from flight
+			// Inherit element state from parent flight
 			element.state = flight.state;
 			
 			elements.push(element);

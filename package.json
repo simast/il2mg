@@ -5,7 +5,7 @@
 	"dependencies": {
 		"commander": "2.8.1",
 		"moment": "2.10.3",
-		"require-directory": "2.1.0",
+		"require-directory": "2.1.1",
 		"strip-json-comments": "1.0.2",
 		"lex": "1.7.8",
 		"random-js": "1.0.4",
@@ -16,7 +16,7 @@
 		"grunt-contrib-jshint": "0.11.2",
 		"grunt-contrib-clean": "0.6.0",
 		"grunt-jscs": "1.8.0",
-		"enclose": "0.2.23",
+		"enclose": "0.2.28",
 		"numeral": "1.5.3",
 		"sloc": "0.1.9"
 	}

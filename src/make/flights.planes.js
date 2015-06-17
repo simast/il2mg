@@ -166,6 +166,10 @@ module.exports = function makeFlightPlanes(flight) {
 					foundSpawnPoint = true;
 				}
 			}
+			// Try to start plane from runway
+			else if (element.state === flightState.RUNWAY) {
+
+			}
 
 			// Use taxi spawn point
 			if (!foundSpawnPoint && flight.taxi &&

@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU_TR_Entity = require("../item").MCU_TR_Entity;
+var Item = require("../item");
 
 // Make plan takeoff action
 module.exports = function makePlanTakeoff(action, element, flight, input) {
@@ -60,37 +60,47 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	takeoffCommand.addObject(leaderPlaneItem);
 	
 	// Waypoint command used to form/delay element over an airfield
-	var formCommand = flight.group.createItem("MCU_Waypoint");
+	var waypointCommand = flight.group.createItem("MCU_Waypoint");
 
 	// TODO
-	formCommand.Area = 100;
-	formCommand.Speed = 280;
+	waypointCommand.Area = 100;
+	waypointCommand.Speed = 280;
 
 	// Semi-random formation point over the airfield
-	formCommand.setPosition(
+	waypointCommand.setPosition(
 		airfield.position[0] + rand.integer(-500, 500),
 		airfield.position[1] + rand.integer(240, 260),
 		airfield.position[2] + rand.integer(-500, 500)
 	);
 
-	formCommand.addObject(leaderPlaneItem);
+	waypointCommand.addObject(leaderPlaneItem);
+	
+	// Element plane formation command
+	var formationCommand = flight.group.createItem("MCU_CMD_Formation");
+
+	formationCommand.FormationType = Item.MCU_CMD_Formation.TYPE_PLANE_EDGE_RIGHT;
+	formationCommand.FormationDensity = Item.MCU_CMD_Formation.DENSITY_LOOSE;
+	formationCommand.addObject(leaderPlaneItem);
 
 	// Short timer used to delay next command after takeoff is reported
 	var waitTimer = flight.group.createItem("MCU_Timer");
 
-	waitTimer.Time = rand.real(3, 6);
+	waitTimer.Time = rand.real(4, 6);
 	waitTimer.setPosition(takeoffEnd);
-	waitTimer.addTarget(formCommand);
+	waitTimer.addTarget(waypointCommand);
+	
+	formationCommand.setPositionNear(waitTimer);
+	waypointCommand.addTarget(formationCommand);
 
 	// Set element leader take off report event action
 	leaderPlaneItem.entity.addReport(
-		MCU_TR_Entity.REPORT_TOOK_OFF,
+		Item.MCU_TR_Entity.REPORT_TOOK_OFF,
 		takeoffCommand,
 		waitTimer
 	);
 
 	// Connect takeoff command to next action
 	return function(input) {
-		formCommand.addTarget(input);
-	}
+		waypointCommand.addTarget(input);
+	};
 };

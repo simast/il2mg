@@ -96,6 +96,13 @@ module.exports = function makePlayer() {
 		}
 	}
 
+	// Set player flight state
+	player.state = DATA.flightState.START;
+
+	if (params.state !== undefined) {
+		player.state = params.state;
+	}
+
 	// TODO: Retry mission generation when unit list is empty
 	if (!unitsList.length) {
 		throw "No valid units found!";

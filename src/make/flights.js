@@ -25,6 +25,7 @@ module.exports = function makeFlights() {
 	// TODO: Make a number of active and shedulled flights
 	var flight = makeFlight.call(this, {
 		player: true,
+		state: player.state,
 		unit: unit,
 		mission: {
 			type: "training",
