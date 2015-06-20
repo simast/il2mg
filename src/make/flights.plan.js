@@ -7,6 +7,7 @@ var planAction = DATA.planAction;
 // Plan action make parts
 var makePlanAction = Object.create(null);
 
+makePlanAction[planAction.START] = require("./plan.start.js");
 makePlanAction[planAction.TAKEOFF] = require("./plan.takeoff.js");
 makePlanAction[planAction.WAIT] = require("./plan.wait.js");
 makePlanAction[planAction.LAND] = require("./plan.land.js");
@@ -17,7 +18,10 @@ module.exports = function makeFlightPlan(flight) {
 	var rand = this.rand;
 	var plan = flight.plan = [];
 
-	// Add initial take off plan action
+	// Initial start plan action
+	plan.push({type: planAction.START});
+
+	// Take off plan action
 	if (typeof flight.state !== "number") {
 		plan.push({type: planAction.TAKEOFF});
 	}
@@ -33,20 +37,10 @@ module.exports = function makeFlightPlan(flight) {
 	// FIXME: Land action
 	plan.push({type: planAction.LAND});
 	
-	// TODO: Add support for shedulled flights
-	var onStart = flight.onStart = flight.group.createItem("MCU_TR_MissionBegin");
-	
-	onStart.setPositionNear(flight.leader.item);
-	
 	// TODO: Fast-forward plan to required flight state
 
 	// List of output callback functions for previous plan action (for each element)
-	// NOTE: Connect initial plan input with onStart event command
-	var outputPrev = [
-		function(input) {
-			onStart.addTarget(input);
-		}
-	];
+	var outputPrev = [];
 
 	// Process pending plan actions
 	for (var action of plan) {

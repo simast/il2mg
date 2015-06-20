@@ -10717,294 +10717,6 @@ Group
   }
   
 
-  Airfield
-  {
-    Name = "RUNWAY:1";
-    Index = 474;
-    LinkTrId = 0;
-    XPos = 116917.214;
-    YPos = 81.268;
-    ZPos = 102732.505;
-    XOri = 0.00;
-    YOri = 126.52;
-    ZOri = 0.00;
-    Model = "graphics\airfields\fakefield_rnwspawn.mgm";
-    Script = "LuaScripts\WorldObjects\Airfields\fakefield_rnwspawn.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Callsign = 0;
-    Callnum = 0;
-    Chart
-    {
-      Point
-      {
-        Type = 0;
-        X = 55.3305;
-        Y = 36.4041;
-      }
-      Point
-      {
-        Type = 1;
-        X = 40.2297;
-        Y = 4.0191;
-      }
-      Point
-      {
-        Type = 1;
-        X = 24.7399;
-        Y = 37.5578;
-      }
-      Point
-      {
-        Type = 1;
-        X = 13.3204;
-        Y = 4.13325;
-      }
-      Point
-      {
-        Type = 1;
-        X = -2.11767;
-        Y = 36.6495;
-      }
-      Point
-      {
-        Type = 1;
-        X = -13.4593;
-        Y = 3.43915;
-      }
-      Point
-      {
-        Type = 1;
-        X = -29.2776;
-        Y = 36.9078;
-      }
-      Point
-      {
-        Type = 1;
-        X = -39.921;
-        Y = 4.27113;
-      }
-      Point
-      {
-        Type = 2;
-        X = -57.5417;
-        Y = 21.4646;
-      }
-      Point
-      {
-        Type = 2;
-        X = 1438.04;
-        Y = 7.46793;
-      }
-      Point
-      {
-        Type = 1;
-        X = 1420.64;
-        Y = -11.7314;
-      }
-      Point
-      {
-        Type = 1;
-        X = 1406.82;
-        Y = 23.9484;
-      }
-      Point
-      {
-        Type = 1;
-        X = 1392.25;
-        Y = -10.4031;
-      }
-      Point
-      {
-        Type = 1;
-        X = 1378.72;
-        Y = 24.6128;
-      }
-      Point
-      {
-        Type = 1;
-        X = 1365.6;
-        Y = -9.27567;
-      }
-      Point
-      {
-        Type = 1;
-        X = 1351.17;
-        Y = 25.0568;
-      }
-      Point
-      {
-        Type = 1;
-        X = 1338.9;
-        Y = -8.48028;
-      }
-      Point
-      {
-        Type = 0;
-        X = 1323.69;
-        Y = 25.1849;
-      }
-    }
-    ReturnPlanes = 0;
-    Hydrodrome = 0;
-    RepairFriendlies = 0;
-    RearmFriendlies = 0;
-    RefuelFriendlies = 0;
-    RepairTime = 0;
-    RearmTime = 0;
-    RefuelTime = 0;
-    MaintenanceRadius = 1000;
-  }
-  
-
-  Airfield
-  {
-    Name = "RUNWAY:2";
-    Index = 475;
-    LinkTrId = 0;
-    XPos = 116887.548;
-    YPos = 81.268;
-    ZPos = 103017.455;
-    XOri = 0.00;
-    YOri = 306.28;
-    ZOri = 0.00;
-    Model = "graphics\airfields\fakefield_rnwspawn.mgm";
-    Script = "LuaScripts\WorldObjects\Airfields\fakefield_rnwspawn.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-    Callsign = 0;
-    Callnum = 0;
-    Chart
-    {
-      Point
-      {
-        Type = 0;
-        X = 45.3471;
-        Y = 37.1097;
-      }
-      Point
-      {
-        Type = 1;
-        X = 34.7341;
-        Y = 3.68449;
-      }
-      Point
-      {
-        Type = 1;
-        X = 21.7264;
-        Y = 38.1239;
-      }
-      Point
-      {
-        Type = 1;
-        X = 11.5977;
-        Y = 3.23569;
-      }
-      Point
-      {
-        Type = 1;
-        X = -0.790554;
-        Y = 38.4078;
-      }
-      Point
-      {
-        Type = 1;
-        X = -13.1073;
-        Y = 3.73081;
-      }
-      Point
-      {
-        Type = 1;
-        X = -25.7171;
-        Y = 39.1475;
-      }
-      Point
-      {
-        Type = 1;
-        X = -37.9834;
-        Y = 3.4553;
-      }
-      Point
-      {
-        Type = 2;
-        X = -60.7705;
-        Y = 21.4901;
-      }
-      Point
-      {
-        Type = 2;
-        X = 940.571;
-        Y = 25.5014;
-      }
-      Point
-      {
-        Type = 1;
-        X = 924.557;
-        Y = 8.10516;
-      }
-      Point
-      {
-        Type = 1;
-        X = 914.534;
-        Y = 40.1917;
-      }
-      Point
-      {
-        Type = 1;
-        X = 900.502;
-        Y = 8.88625;
-      }
-      Point
-      {
-        Type = 1;
-        X = 887.759;
-        Y = 41.2137;
-      }
-      Point
-      {
-        Type = 1;
-        X = 873.713;
-        Y = 9.59989;
-      }
-      Point
-      {
-        Type = 1;
-        X = 860.546;
-        Y = 41.7446;
-      }
-      Point
-      {
-        Type = 1;
-        X = 846.123;
-        Y = 8.73607;
-      }
-      Point
-      {
-        Type = 0;
-        X = 831.322;
-        Y = 41.8513;
-      }
-    }
-    ReturnPlanes = 0;
-    Hydrodrome = 0;
-    RepairFriendlies = 0;
-    RearmFriendlies = 0;
-    RefuelFriendlies = 0;
-    RepairTime = 0;
-    RearmTime = 0;
-    RefuelTime = 0;
-    MaintenanceRadius = 1000;
-  }
-  
-
   Vehicle
   {
     Name = "LIGHT:SEARCH";
@@ -12728,7 +12440,7 @@ Group
       Index = 635;
       LinkTrId = 0;
       XPos = 117497.558;
-      YPos = 81.269;
+      YPos = 81.268;
       ZPos = 102108.673;
       XOri = 0.00;
       YOri = 264.84;
@@ -13196,7 +12908,7 @@ Group
       Index = 653;
       LinkTrId = 0;
       XPos = 118003.389;
-      YPos = 81.324;
+      YPos = 81.268;
       ZPos = 102050.957;
       XOri = 0.00;
       YOri = 254.88;
@@ -13222,7 +12934,7 @@ Group
       Index = 654;
       LinkTrId = 0;
       XPos = 117808.781;
-      YPos = 82.330;
+      YPos = 81.268;
       ZPos = 104658.630;
       XOri = 0.00;
       YOri = 231.04;
@@ -13248,7 +12960,7 @@ Group
       Index = 655;
       LinkTrId = 0;
       XPos = 116052.804;
-      YPos = 81.160;
+      YPos = 81.268;
       ZPos = 102562.257;
       XOri = 0.00;
       YOri = 62.10;
@@ -13274,7 +12986,7 @@ Group
       Index = 656;
       LinkTrId = 0;
       XPos = 116642.336;
-      YPos = 81.072;
+      YPos = 81.268;
       ZPos = 101715.869;
       XOri = 0.00;
       YOri = 201.01;
@@ -13300,7 +13012,7 @@ Group
       Index = 657;
       LinkTrId = 0;
       XPos = 115535.417;
-      YPos = 80.425;
+      YPos = 81.268;
       ZPos = 103153.199;
       XOri = 0.00;
       YOri = 196.44;
@@ -13326,7 +13038,7 @@ Group
       Index = 658;
       LinkTrId = 0;
       XPos = 116966.393;
-      YPos = 81.112;
+      YPos = 81.268;
       ZPos = 105068.515;
       XOri = 0.00;
       YOri = 109.31;

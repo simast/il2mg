@@ -221,6 +221,7 @@ DATA.flightState = Object.freeze({
 
 // Flight plan actions
 DATA.planAction = Object.freeze({
+	START: "start", // Initial start action
 	TAKEOFF: "takeoff", // Taxi (optionally) and takeoff from airfield
 	WAIT: "wait", // Wait for something (do nothing)
 	FLY: "fly", // Fly to waypoint/location

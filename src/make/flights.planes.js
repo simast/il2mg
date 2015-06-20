@@ -2,6 +2,7 @@
 "use strict";
 
 var Plane = require("../item").Plane;
+var makeAirfieldTaxi = require("./airfields.taxi");
 
 // Data constants
 var planeSize = DATA.planeSize;
@@ -28,12 +29,18 @@ module.exports = function makeFlightPlanes(flight) {
 		// Skip leader only (first plane) when mapping formation number based on distance
 		var sortSkip = 0;
 
-		// Only one element can start on the ramp from "start" flight state
-		// NOTE: Player element will always start from ramp
-		if (element.state === flightState.START &&
-				((!flight.player && elementIndex > 0) || (flight.player && !element.player))) {
+		// Enforce a limit of one element per ramp or runway start and make sure the
+		// player element is always selected for ramp/runway start.
+		if ((!flight.player && elementIndex > 0) || (flight.player && !element.player)) {
 
-			element.state = flightState.TAXI;
+			// Only one element can start on the ramp from "start" flight state
+			if (element.state === flightState.START) {
+				element.state = flightState.TAXI;
+			}
+			// Only one element can start on the runway from "runway" flight state
+			else if (element.state === flightState.RUNWAY) {
+				element.state = 0; // Air start
+			}
 		}
 
 		// Process each plane in reverse
@@ -53,6 +60,8 @@ module.exports = function makeFlightPlanes(flight) {
 			var positionY;
 			var positionZ;
 			var orientation;
+			var positionOffset;
+			var orientationRad;
 
 			// Try to start plane from parking/ramp
 			if (element.state === flightState.START) {
@@ -137,14 +146,14 @@ module.exports = function makeFlightPlanes(flight) {
 					orientation = spawnPoint.orientation;
 
 					// Slightly move plane position forward
-					var positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
-					var orientationRad = orientation * (Math.PI / 180);
+					positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
+					orientationRad = orientation * (Math.PI / 180);
 
 					positionX += positionOffset * Math.cos(orientationRad);
 					positionZ += positionOffset * Math.sin(orientationRad);
 
 					// Slightly vary/randomize plane orientation
-					orientation = orientation + rand.real(-orientationOffset, orientationOffset);
+					orientation = orientation + rand.real(-orientationOffset, orientationOffset, true);
 					orientation = Math.max((orientation + 360) % 360, 0);
 
 					// TODO: Move around existing static plane items instead of removing them
@@ -169,6 +178,92 @@ module.exports = function makeFlightPlanes(flight) {
 			// Try to start plane from runway
 			else if (element.state === flightState.RUNWAY) {
 
+				var runwayTaxi = airfield.taxi[flight.taxi];
+
+				// TODO: Pick best runway and taxi route based on runway length and plane size
+				if (!runwayTaxi) {
+
+					var runwayTaxiID;
+
+					// Use any already active taxi route for runway start
+					if (airfield.activeTaxiRoutes) {
+
+						runwayTaxiID = rand.pick(Object.keys(airfield.activeTaxiRoutes));
+						runwayTaxiID = airfield.activeTaxiRoutes[runwayTaxiID];
+					}
+					// Use any random taxi route
+					else {
+
+						runwayTaxiID = rand.pick(Object.keys(airfield.taxi));
+
+						// Enable selected airfield taxi route
+						makeAirfieldTaxi.call(this, airfield, runwayTaxiID);
+					}
+
+					runwayTaxi = airfield.taxi[runwayTaxiID];
+					flight.taxi = runwayTaxiID;
+				}
+				
+				if (runwayTaxi) {
+					
+					// Set initial plane item runway start position and orientation
+					planeItem.setPosition(runwayTaxi.takeoffStart);
+					planeItem.setOrientationTo(runwayTaxi.takeoffEnd);
+
+					// Fit multiple planes for the runway start
+					if (element.length > 1) {
+
+						positionX = runwayTaxi.takeoffStart[0];
+						positionY = runwayTaxi.takeoffStart[1];
+						positionZ = runwayTaxi.takeoffStart[2];
+						orientation = planeItem.YOri;
+
+						// Move plane position forward
+						positionOffset = 24 * (element.length - planeIndex - 1);
+						orientationRad = orientation * (Math.PI / 180);
+
+						positionX += positionOffset * Math.cos(orientationRad);
+						positionZ += positionOffset * Math.sin(orientationRad);
+
+						// Move/alternate plane position to left or right side
+						var positionDir = planeIndex % 2;
+						positionOffset = 14;
+
+						// Right position offset
+						if (positionDir) {
+							orientation += 90;
+						}
+						// Left position offset
+						else {
+							orientation -= 90;
+						}
+						
+						orientation = Math.max((orientation + 360) % 360, 0);
+						orientationRad = orientation * (Math.PI / 180);
+						
+						positionX += positionOffset * Math.cos(orientationRad);
+						positionZ += positionOffset * Math.sin(orientationRad);
+
+						// Set plane item runway start position
+						planeItem.setPosition(positionX, positionY, positionZ);
+					}
+
+					positionX = planeItem.XPos;
+					positionZ = planeItem.ZPos;
+
+					// Slightly randomize plane runway spawn position
+					positionX += rand.real(-3, 3, true);
+					positionZ += rand.real(-3, 3, true);
+					
+					// Slightly randomize plane runway spawn orientation
+					orientation = planeItem.YOri + rand.real(-5, 5, true);
+					orientation = Math.max((orientation + 360) % 360, 0);
+
+					planeItem.setPosition(positionX, planeItem.YPos, positionZ);
+					planeItem.setOrientation(orientation);
+
+					foundSpawnPoint = true;
+				}
 			}
 
 			// Use taxi spawn point

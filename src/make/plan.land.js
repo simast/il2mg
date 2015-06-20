@@ -6,6 +6,11 @@ var MCU_TR_Entity = require("../item").MCU_TR_Entity;
 // Make plan land action
 module.exports = function makePlanLand(action, element, flight, input) {
 
+	// TODO: Remove/delete flight planes at destination if it's not possible to land
+	if (!flight.taxi) {
+		return;
+	}
+	
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
 	var leaderElement = flight.elements[0];

@@ -52,7 +52,6 @@ module.exports = function(grunt) {
 
 				json.items = [];
 				json.sectors = {};
-				json.runways = {};
 				json.taxi = {};
 				json.routes = [];
 
@@ -63,7 +62,7 @@ module.exports = function(grunt) {
 				(function buildJSON(jsonItems, items) {
 
 					items.forEach(function(item) {
-						
+
 						// Process group child items
 						if (item instanceof Item.Group) {
 
@@ -279,67 +278,11 @@ module.exports = function(grunt) {
 
 							totalItems++;
 						}
-						// Process airfield items (taxi routes and runways)
+						// Process taxi route items
 						else if (item instanceof Item.Airfield) {
 
-							// Runway
-							if (/^RUNWAY/.test(item.Name)) {
-
-								var runwayData = item.Name.split(":");
-								var runwayID = +runwayData[1];
-
-								// Validate runway ID
-								if (!Number.isInteger(runwayID)) {
-									grunt.fail.fatal("Invalid runway ID in: " + item.Name);
-								}
-
-								// Validate required runway child items
-								if (!item.items[0] || item.items[0].type !== "Chart" || !item.items[0].items.length) {
-									grunt.fail.fatal("Missing RUNWAY definition Chart and Point data.");
-								}
-
-								var runway = [];
-								
-								// Runway airfield item type ID
-								runway.push(DATA.registerItemType(itemTypeData));
-
-								// Runway spawn point for coop missions
-								runway.push([positionX, positionZ, orientation]);
-
-								var spawnNormal = [];
-								var spawnInverted = [];
-								var spawnPoints = item.items[0].items;
-								var i;
-
-								// Build normal direction spawn points
-								for (i = 0; i < spawnPoints.length; i++) {
-
-									spawnNormal.push(getPointPosition(item, spawnPoints[i]));
-
-									// VPP point marks end of spawns for this direction
-									if (spawnPoints[i].Type == 2) {
-										break;
-									}
-								}
-
-								// Build inverted direction spawn points
-								for (i = spawnPoints.length - 1; i >= 0; i--) {
-
-									spawnInverted.push(getPointPosition(item, spawnPoints[i]));
-
-									// VPP point marks end of spawns for this direction
-									if (spawnPoints[i].Type == 2) {
-										break;
-									}
-								}
-
-								runway.push(spawnNormal);
-								runway.push(spawnInverted);
-
-								json.runways[runwayID] = runway;
-							}
 							// Taxi route
-							else if (/^TAXI/.test(item.Name)) {
+							if (/^TAXI/.test(item.Name)) {
 
 								var taxiData = item.Name.split(":");
 								var taxiID = +taxiData[1];
