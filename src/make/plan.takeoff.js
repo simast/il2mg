@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+var MCU_CMD_Formation = require("../item").MCU_CMD_Formation;
 
 // Make plan takeoff action
 module.exports = function makePlanTakeoff(action, element, flight, input) {
@@ -90,8 +90,8 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		// Element plane formation command
 		var formationCommand = flight.group.createItem("MCU_CMD_Formation");
 	
-		formationCommand.FormationType = Item.MCU_CMD_Formation.TYPE_PLANE_EDGE_RIGHT;
-		formationCommand.FormationDensity = Item.MCU_CMD_Formation.DENSITY_LOOSE;
+		formationCommand.FormationType = MCU_CMD_Formation.TYPE_PLANE_EDGE_RIGHT;
+		formationCommand.FormationDensity = MCU_CMD_Formation.DENSITY_LOOSE;
 		formationCommand.addObject(leaderPlaneItem);
 		formationCommand.setPositionNear(waypointCommand);
 
@@ -102,7 +102,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		
 		// Set element leader take off report event action
 		leaderPlaneItem.entity.addReport(
-			Item.MCU_TR_Entity.REPORT_TOOK_OFF,
+			"OnTookOff",
 			takeoffCommand,
 			waitTimerAfter
 		);

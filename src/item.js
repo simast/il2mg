@@ -748,6 +748,7 @@ module.exports = Item;
 	require("./item/MCU_Icon"),
 	require("./item/MCU_Spawner"),
 	require("./item/MCU_Timer"),
+	require("./item/MCU_TR_ComplexTrigger"),
 	require("./item/MCU_TR_Entity"),
 	require("./item/MCU_TR_MissionBegin"),
 	require("./item/MCU_TR_MissionEnd"),

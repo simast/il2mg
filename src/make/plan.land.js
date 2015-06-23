@@ -1,8 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU_TR_Entity = require("../item").MCU_TR_Entity;
-
 // Make plan land action
 module.exports = function makePlanLand(action, element, flight, input) {
 
@@ -48,7 +46,7 @@ module.exports = function makePlanLand(action, element, flight, input) {
 		waitTimer.addTarget(landCommand);
 
 		flight.leader.item.entity.addReport(
-			MCU_TR_Entity.REPORT_LANDED,
+			"OnLanded",
 			leaderElement.landCommand,
 			waitTimer
 		);

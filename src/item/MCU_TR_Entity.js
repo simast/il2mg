@@ -4,7 +4,7 @@
 var Item = require("../item");
 var MCU = require("./MCU");
 
-// Entity block
+// Entity item
 function MCU_TR_Entity() {
 
 	// Call parent constructor
@@ -13,33 +13,61 @@ function MCU_TR_Entity() {
 	this.Enabled = 1;
 }
 
-MCU_TR_Entity.prototype = Object.create(MCU.prototype);
+MCU_TR_Entity.prototype = Object.create(MCU.prototype, {
+	
+	// Valid Entity event type name and ID constants
+	EVENTS: {
+		value: {
+			OnTODO: 1
+		}
+	}
+});
+
 MCU_TR_Entity.prototype.typeID = 30;
 
-// Entity report type ID constants
-MCU_TR_Entity.REPORT_SPAWNED = 0;
-MCU_TR_Entity.REPORT_TARGET_ATTACKED = 1;
-MCU_TR_Entity.REPORT_AREA_ATTACKED = 2;
-MCU_TR_Entity.REPORT_TOOK_OFF = 3;
-MCU_TR_Entity.REPORT_LANDED = 4;
+// Entity report type name and ID constants
+var reportType = {
+	OnSpawned: 0,
+	OnTargetAttacked: 1,
+	OnAreaAttacked: 2,
+	OnTookOff: 3,
+	OnLanded: 4
+};
+
+// Events are available for Entity item
+MCU_TR_Entity.prototype.addEvent = MCU.addEvent;
 
 /**
  * Add an entity report event.
  *
- * @param {number} type Report type ID.
+ * @param {string} type Report type name.
  * @param {object} command Source command item.
  * @param {object} target Target command item.
  */
 MCU_TR_Entity.prototype.addReport = function(type, command, target) {
+	
+	// Validate report type
+	if (reportType[type] === undefined) {
+		throw new Error("Invalid entity report type.");
+	}
+	
+	// Validate report source and target command items
+	if (!(command instanceof MCU) || !(target instanceof MCU)) {
+		throw new Error("Invalid entity report source or target command item.");
+	}
 
+	// Child event item name constants
+	var ITEM_ON_REPORTS = "OnReports";
+	var ITEM_ON_REPORT = "OnReport";
+	
 	var reportsItem;
 
-	// Find OnReports child item
+	// Find existing reports container child item
 	if (this.items && this.items.length) {
 
 		for (var item of this.items) {
 
-			if (item.type === "OnReports") {
+			if (item.type === ITEM_ON_REPORTS) {
 
 				reportsItem = item;
 				break;
@@ -47,17 +75,19 @@ MCU_TR_Entity.prototype.addReport = function(type, command, target) {
 		}
 	}
 
-	// Create a new OnReports child item
+	// Create a new reports container child item
 	if (!reportsItem) {
 
-		reportsItem = new Item("OnReports");
+		reportsItem = new Item(ITEM_ON_REPORTS);
 		this.addItem(reportsItem);
 	}
 
-	// Add a new OnReport item
-	var reportItem = new Item("OnReport");
+	// Add a new report item
+	var reportItem = new Item(ITEM_ON_REPORT);
+	
+	// TODO: Ignore duplicate/existing reports
 
-	reportItem.Type = type;
+	reportItem.Type = reportType[type];
 	reportItem.CmdId = command.Index;
 	reportItem.TarId = target.Index;
 
