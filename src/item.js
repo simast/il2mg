@@ -356,9 +356,10 @@ Item.prototype.addObject = function(item) {
 /**
  * Create a linked item entity.
  *
+ * @param {boolean} disabled Create entity in a disabled state.
  * @returns {Item} Linked item entity.
  */
-Item.prototype.createEntity = function() {
+Item.prototype.createEntity = function(disabled) {
 
 	if (this.entity) {
 		throw new Error("Item is already linked to an entity.");
@@ -371,6 +372,11 @@ Item.prototype.createEntity = function() {
 	entity.MisObjID = this.Index;
 
 	Object.defineProperty(this, "entity", {value: entity});
+	
+	// Set entity to an initial disabled state
+	if (disabled) {
+		entity.Enabled = 0;
+	}
 
 	return entity;
 };
@@ -769,6 +775,7 @@ module.exports = Item;
 	require("./item/MCU_CMD_Formation"),
 	require("./item/MCU_CMD_Land"),
 	require("./item/MCU_CMD_TakeOff"),
+	require("./item/MCU_Counter"),
 	require("./item/MCU_Deactivate"),
 	require("./item/MCU_Delete"),
 	require("./item/MCU_Icon"),

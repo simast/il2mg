@@ -193,6 +193,6 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 		vehicle.setPosition(waypointVehicle.XPos, waypointVehicle.YPos, waypointVehicle.ZPos);
 		vehicle.setOrientation((vehicle.YOri + waypointVehicle.YOri) % 360);
 
-		airfield.onLoad.addTarget(waypointVehicle);
+		airfield.zone.onInitialize.addTarget(waypointVehicle);
 	}
 };

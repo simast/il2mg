@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+var MCU_CMD_Effect = require("../item").MCU_CMD_Effect;
 var itemTag = DATA.itemTag;
 var itemFlag = DATA.itemFlag;
 var effects = DATA.effects;
@@ -23,6 +23,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 
 	var rand = this.rand;
 	var time = this.time;
+	var zone = airfield.zone;
 	var effectScript;
 	var startOnLoad = true;
 	var isRaining = (this.weather.precipitation.type === 1);
@@ -98,27 +99,30 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 	effectItem.setOrientation(rand.real(0, 360));
 	effectItem.Script = effectScript;
 
-	effectItem.createEntity();
+	effectItem.createEntity(true);
 
 	// Start effect on airfield load event
 	if (startOnLoad) {
 
-		// Create a shared effect start command (when airfield is loaded)
-		if (!airfield.onLoadEffect) {
+		// Create a shared effect start command (activated when airfield is loaded)
+		if (!zone.onEffectStart) {
 
-			airfield.onLoadEffect = this.createItem("MCU_CMD_Effect", false);
-			airfield.onLoadEffect.setPositionNear(airfield.onLoad);
-			airfield.onLoadEffect.ActionType = Item.MCU_CMD_Effect.ACTION_START;
+			zone.onEffectStart = zone.group.createItem("MCU_CMD_Effect");
+			zone.onEffectStart.setPositionNear(zone.onLoad);
+			zone.onEffectStart.ActionType = MCU_CMD_Effect.ACTION_START;
 
-			airfield.onLoad.addTarget(airfield.onLoadEffect);
+			zone.onLoad.addTarget(zone.onEffectStart);
 
-			// TODO: Create onUnloadEffect command
-
-			items.push(airfield.onLoadEffect);
+			// TODO: Create onEffectStop event item?
 		}
 
-		airfield.onLoadEffect.addObject(effectItem);
+		// Start effect on airfield zone load event
+		zone.onEffectStart.addObject(effectItem);
 	}
+	
+	// Attach effect to airfield "bubble" zone
+	zone.onActivate.addObject(effectItem);
+	zone.onDeactivate.addObject(effectItem);
 
 	items.push(effectItem);
 

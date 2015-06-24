@@ -15,10 +15,13 @@ module.exports = function makeAirfieldWindsock(airfield, item) {
 	windsockItem.Script = itemType.script;
 	windsockItem.setPosition(item[1], item[2], item[3]);
 	windsockItem.setOrientation(item[4]);
+	windsockItem.StartHeight = 1;
 
-	windsockItem.createEntity();
+	windsockItem.createEntity(true);
 
-	// TODO: Attach windsock to airfield bubble
+	// Attach windsock to airfield "bubble" zone
+	airfield.zone.onActivate.addObject(windsockItem);
+	airfield.zone.onDeactivate.addObject(windsockItem);
 
 	return [windsockItem];
 };

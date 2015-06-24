@@ -109,7 +109,11 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	else {
 
 		vehicleItem.setName(vehicle.name);
-		vehicleItem.createEntity();
+		vehicleItem.createEntity(true);
+
+		// Attach vehicle to airfield "bubble" zone
+		airfield.zone.onActivate.addObject(vehicleItem);
+		airfield.zone.onDeactivate.addObject(vehicleItem);
 	}
 
 	// Update airfield limits

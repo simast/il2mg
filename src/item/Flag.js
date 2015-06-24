@@ -6,7 +6,13 @@ var Item = require("../item");
 // Flag item
 function Flag() {
 
+	this.StartHeight = 0;
+	this.SpeedFactor = 1;
+	this.BlockThreshold = 1;
 	this.Radius = 1;
+	this.Type = 0;
+	this.CountPlanes = 0;
+	this.CountVehicles = 0;
 }
 
 Flag.prototype = Object.create(Item.prototype);
@@ -37,25 +43,25 @@ Flag.prototype.toBinary = function(index) {
 	this.writeUInt16(buffer, 0);
 
 	// StartHeight
-	this.writeFloat(buffer, this.StartHeight !== undefined ? this.StartHeight : 1);
+	this.writeFloat(buffer, this.StartHeight);
 
 	// SpeedFactor
-	this.writeFloat(buffer, this.SpeedFactor || 0);
+	this.writeFloat(buffer, this.SpeedFactor);
 
 	// BlockThreshold
-	this.writeFloat(buffer, this.BlockThreshold || 0);
+	this.writeFloat(buffer, this.BlockThreshold);
 
 	// Radius
-	this.writeDouble(buffer, this.Radius || 0);
+	this.writeDouble(buffer, this.Radius);
 
 	// Type
-	this.writeUInt32(buffer, this.Type || 0);
+	this.writeUInt32(buffer, this.Type);
 
 	// CountPlanes
-	this.writeUInt8(buffer, this.CountPlanes || 0);
+	this.writeUInt8(buffer, this.CountPlanes);
 
 	// CountVehicles
-	this.writeUInt8(buffer, this.CountVehicles || 0);
+	this.writeUInt8(buffer, this.CountVehicles);
 
 	// Script
 	this.writeString(buffer, scriptLength, this.Script);
