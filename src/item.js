@@ -3,6 +3,7 @@
 
 var fs = require("fs");
 var os = require("os");
+var getSlug = require("speakingurl");
 
 /**
  * Base (and generic) mission item.
@@ -419,6 +420,18 @@ Item.prototype.toString = function(indentLevel) {
 
 		// Quoted string output
 		if (propType === "string" && !(propValue instanceof String)) {
+
+			// HACK: The .Mission file parser does not seem to support UTF-8/unicode
+			// characters and will fail to load the mission when there are any. As a
+			// workaround we transliterate "Name" string to a safe ASCII character set.
+			if (propName === "Name") {
+				
+				propValue = getSlug(propValue, {
+					maintainCase: true,
+					separator: " "
+				});
+			}
+
 			value += '"' + propValue + '"';
 		}
 		// Complex array output

@@ -108,7 +108,7 @@ module.exports = function makeFlightPlanes(flight) {
 					}
 					// When placing a first plane on the ramp - sort valid spawn points by
 					// size (the first plane will use best fit spawn point).
-					else {
+					else if (!lastPlane) {
 
 						validParkSpawns.sort(function(a, b) {
 							return (a.point.size - b.point.size);
