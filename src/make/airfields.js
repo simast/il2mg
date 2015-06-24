@@ -15,6 +15,7 @@ var makeAirfieldEffect = require("./airfields.effect");
 var makeAirfieldWreck = require("./airfields.wreck");
 var makeAirfieldVehicle = require("./airfields.vehicle");
 var makeAirfieldRoutes = require("./airfields.routes");
+var makeAirfieldZone = require("./airfields.zone");
 
 // Generate mission airfields
 module.exports = function makeAirfields() {
@@ -226,13 +227,8 @@ module.exports = function makeAirfields() {
 		airfield.group = mission.createItem("Group");
 		airfield.group.setName(airfield.name);
 
-		// Airfield load event item
-		// TODO: Implement airfield "bubble" and load/unload events
-		if (airfield.country && airfield.value) {
-
-			airfield.onLoad = airfield.group.createItem("MCU_TR_MissionBegin");
-			airfield.onLoad.setPosition(airfield.position);
-		}
+		// Make airfield zone
+		makeAirfieldZone.call(mission, airfield);
 
 		// Make airfield item limits
 		makeAirfieldLimits.call(mission, airfield);

@@ -387,12 +387,8 @@ Item.prototype.toString = function(indentLevel) {
 	var indent = new Array(2 * indentLevel + 1).join(" ");
 	var value = indent + this.type + os.EOL + indent + "{";
 
-	// Build item properties list
-	Object.keys(this).forEach(function(propName) {
-
-		var propValue = this[propName];
-
-		value += os.EOL + indent + "  " + propName;
+	// Build property and value textual representation
+	function propertyToString(propName, propValue) {
 
 		var propType = typeof propValue;
 		var isArray = false;
@@ -400,9 +396,22 @@ Item.prototype.toString = function(indentLevel) {
 
 		if (propType === "object") {
 
+			// Set with multiple values output
+			if (propValue instanceof Set) {
+
+				// Repeat property name for each set value
+				for (var setValue of propValue) {
+					propertyToString(propName, setValue);
+				}
+
+				return;
+			}
+
 			isArray = Array.isArray(propValue);
 			isArrayComplex = isArray && Array.isArray(propValue[0]);
 		}
+
+		value += os.EOL + indent + "  " + propName;
 
 		if (!isArrayComplex) {
 			value += " = ";
@@ -435,7 +444,11 @@ Item.prototype.toString = function(indentLevel) {
 		if (!isArrayComplex) {
 			value += ";";
 		}
+	}
 
+	// Build item properties list
+	Object.keys(this).forEach(function(propName) {
+		propertyToString(propName, this[propName]);
 	}, this);
 
 	// Serialize any child items
