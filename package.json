@@ -9,7 +9,7 @@
 		"strip-json-comments": "1.0.2",
 		"lex": "1.7.8",
 		"random-js": "1.0.4",
-		"winston": "1.0.0",
+		"winston": "1.0.1",
 		"speakingurl":"5.0.1"
 	},
 	"devDependencies": {
