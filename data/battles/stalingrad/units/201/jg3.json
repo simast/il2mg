@@ -174,5 +174,43 @@
 			["Franz Thümer", 5, "start", "1942-12-27"],
 			["Willy Giese", 5, "start", "1942-12-31"]
 		]
+	},
+
+	// Pitomnik airfield defence squadron for Stalingrad pocket
+	"jg3_platzschutzstaffel": {
+		"name": "Platzschutzstaffel",
+		"parent": "jg3",
+		"alias": "Pitomnik",
+		"airfields": [
+			["pitomnik", "1942-11-29", "1943-01-16"]
+		],
+		"planes": [
+			// Formed with half-dozen volunteers from I./JG 3
+			["bf109g2", 6, "start", "1942-12-11"],
+			// On 1942-12-12 was reinforced with another half-dozen volunteers from II./JG 3
+			["bf109g2", 12, "1942-12-12", "1942-12-18"],
+			["bf109g2", 9, "1942-12-19", "1942-12-25"],
+			["bf109g2", 6, "1942-12-26", "end"]
+		],
+		"pilots": [
+			["Rudolf Germeroth", 14],
+			["Franz Beyer", 13, "1942-12"],
+			["Werner Lucas", -13, "1942-12-16", "end"],
+			["Gustav Frielinghaus", -13, "1942-12-15", "end"],
+			["Gustav Dilling", 7],
+			["Franz Daspelgruber", -12],
+			["Georg Pissarski", 5],
+			["Hans Grünberg", 5, "1942-12-12", "end"],
+			["Hans Frese", 7, "1942-12-12", "end"],
+			["Rudolf Traphan", 7, "1942-12-12", "end"],
+			["Georg Schentke", -12, "start", "1942-12-25"],
+			["Kurt Ebener", -7, "1942-12-12", "end"],
+			["Karl-Heinz Langer", 13, "start", "1942-12-17"],
+			["Heinrich Blaut", 5, "start", "1942-11-30"],
+			["Kurt Hofrath", -5, "start", "1943-01-03"],
+			["Heinz Obst", 5, "start", "1943-01-03"],
+			["Richard Eisele", 5, "start", "1943-01-14"],
+			["Hans Reiff", -7, "1942-12-12", "end"]
+		]
 	}
 }
