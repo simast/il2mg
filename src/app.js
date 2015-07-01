@@ -62,8 +62,11 @@ console.error = function() {
 // Setup command line interface
 var params = require("commander");
 
-params.version(DATA.version);
+// --help usage line output
 params.usage("[options] [mission file and/or path]");
+
+// --version output
+params.version(DATA.name + " " + DATA.version + " (C) Simas Toleikis, 2015");
 
 // Select mission file format (--format)
 params.option("-f, --format <format>", (function() {

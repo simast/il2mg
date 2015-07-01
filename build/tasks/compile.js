@@ -30,14 +30,10 @@ module.exports = function(grunt) {
 		var options = [];
 		var extension = (process.platform === "win32") ? ".exe" : "";
 
-		if (process.arch === "x64") {
-			options.push("--x64");
-		}
-
-		options.push("--version=iojs"); // io.js
-		options.push("--config=../enclose.js");
-		options.push("--loglevel=error");
-		options.push("--output=../" + buildName + extension);
+		options.push("--version", "iojs"); // Latest io.js
+		options.push("--config", "../enclose.js");
+		options.push("--loglevel", "error");
+		options.push("--output", "../" + buildName + extension);
 		options.push(grunt.config("pkg.main"));
 
 		grunt.file.setBase(buildDir);
