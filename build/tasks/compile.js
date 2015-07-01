@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 			options.push("--x64");
 		}
 
-		options.push("--version=v2.2.1"); // io.js
+		options.push("--version=iojs"); // io.js
 		options.push("--config=../enclose.js");
 		options.push("--loglevel=error");
 		options.push("--output=../" + buildName + extension);
