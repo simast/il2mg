@@ -1,11 +1,11 @@
 {
 	// 515 IAP
 	"515iap": {
-		"name": "515 IAP",
-		"airfields": [
+		name: "515 IAP",
+		airfields: [
 			["leninsk", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["yak1s69", 16, "start", "end"]
 		]
 	}

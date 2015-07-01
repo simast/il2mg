@@ -1,33 +1,33 @@
 {
 	// Yak-1
 	"yak1": {
-		"name": "Yak-1",
-		"type": ["fighter", "fighter_light"],
-		"size": "small",
-		"static": [
+		name: "Yak-1",
+		type: ["fighter", "fighter_light"],
+		size: "small",
+		static: [
 			{
-				"model": "graphics\\blocks\\static_yak1.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_yak1.txt"
+				model: "graphics\\blocks\\static_yak1.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_yak1.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_yak1_open.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_yak1_open.txt"
+				model: "graphics\\blocks\\static_yak1_open.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_yak1_open.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_yak1_net.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_yak1_net.txt",
-				"camo": true
+				model: "graphics\\blocks\\static_yak1_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_yak1_net.txt",
+				camo: true
 			}
 		]
 	},
 
 	// Yak-1 ser.69
 	"yak1s69": {
-		"name": "Yak-1 ser.69",
-		"parent": "yak1",
-		"model": "graphics\\planes\\yak1s69\\yak1s69.mgm",
-		"script": "luascripts\\worldobjects\\planes\\yak1s69.txt",
-		"skins": {
+		name: "Yak-1 ser.69",
+		parent: "yak1",
+		model: "graphics\\planes\\yak1s69\\yak1s69.mgm",
+		script: "luascripts\\worldobjects\\planes\\yak1s69.txt",
+		skins: {
 			"101": {
 				"": [-4, -4, -4, 1],
 				"yak1s69\\yak1s69_skin_01.dds": [0, 0, 0, -10],

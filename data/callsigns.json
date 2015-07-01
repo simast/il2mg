@@ -1,5 +1,5 @@
 {
-	"plane": [
+	plane: [
 		[1, "Stork"],
 		[2, "Gannet"],
 		[3, "Raven"],
@@ -21,7 +21,7 @@
 		[19, "Brambling"],
 		[20, "Hawk"]
 	],
-	"airfield": [
+	airfield: [
 		[21, "Acacia"],
 		[22, "Beech"],
 		[23, "Elm"],
@@ -43,7 +43,7 @@
 		[39, "Eucalyptus"],
 		[40, "Ash"]
 	],
-	"vehicle": [
+	vehicle: [
 		[41, "Storm"],
 		[42, "Typhoon"],
 		[43, "Hurricane"],

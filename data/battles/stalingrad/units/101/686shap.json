@@ -1,11 +1,11 @@
 {
 	// 686 ShAP
 	"686shap": {
-		"name": "686 ShAP",
-		"airfields": [
+		name: "686 ShAP",
+		airfields: [
 			["leninsk", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["il2m42", 12, "start", "end"]
 		]
 	}

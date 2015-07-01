@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var stripJSONComments = require("strip-json-comments");
+var JSON5 = require("json5");
 var enclose = require("enclose");
 
 module.exports = function(grunt) {
@@ -13,10 +13,10 @@ module.exports = function(grunt) {
 		var buildName = grunt.config("pkg.name");
 		var buildDir = "build/" + buildName + "/";
 
-		// Prepare data JSON files for binary executable use
+		// Convert data JSON5 files to JSON format for binary executable use
 		grunt.file.expand("data/**/*.json").forEach(function(dataFile) {
 
-			var jsonData = JSON.parse(stripJSONComments(grunt.file.read(dataFile)));
+			var jsonData = JSON5.parse(grunt.file.read(dataFile));
 
 			grunt.file.write(buildDir + dataFile, JSON.stringify(jsonData));
 		});

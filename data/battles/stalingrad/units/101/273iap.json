@@ -2,14 +2,14 @@
 	// 273 IAP
 	"273iap": {
 		// NOTE: On 1942-11-22 became 31 GIAP
-		"name": [
+		name: [
 			["273 IAP", "start", "1942-11-21"],
 			["31 GIAP", "1942-11-22", "end"]
 		],
-		"airfields": [
+		airfields: [
 			["solodovka", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["yak1s69", 12, "start", "end"]
 		]
 	}

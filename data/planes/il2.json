@@ -1,29 +1,29 @@
 {
 	// Il-2
 	"il2": {
-		"name": "Il-2",
-		"type": ["ground_attack"],
-		"size": "medium",
-		"static": [
+		name: "Il-2",
+		type: ["ground_attack"],
+		size: "medium",
+		static: [
 			{
-				"model": "graphics\\blocks\\static_il2.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_il2.txt"
+				model: "graphics\\blocks\\static_il2.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_il2.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_il2_net.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_il2_net.txt",
-				"camo": true
+				model: "graphics\\blocks\\static_il2_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_il2_net.txt",
+				camo: true
 			}
 		]
 	},
 
 	// Il-2 mod.1942
 	"il2m42": {
-		"name": "Il-2 mod.1942",
-		"parent": "il2",
-		"model": "graphics\\planes\\il2m42\\il2m42.mgm",
-		"script": "luascripts\\worldobjects\\planes\\il2m42.txt",
-		"skins": {
+		name: "Il-2 mod.1942",
+		parent: "il2",
+		model: "graphics\\planes\\il2m42\\il2m42.mgm",
+		script: "luascripts\\worldobjects\\planes\\il2m42.txt",
+		skins: {
 			"101": {
 				"": [-3, -3, -3, 1],
 				"il2m42\\il2m42_skin_01.dds": [0, 0, 0, -8],

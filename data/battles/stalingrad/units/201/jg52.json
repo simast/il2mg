@@ -4,23 +4,24 @@
 
 	// III./JG 52
 	"jg52_iii": {
-		"parent": "jg52"
+		parent: "jg52"
 	},
 
 	// Mixed III./JG 52 detachment sent to Stalingrad area
-	"jg52_iii_sk": {
-		"name": "III./JG 52",
-		"parent": "jg52_iii",
-		"airfields": [
+	"jg52_iii_stalingrad": {
+		name: "III./JG 52",
+		parent: "jg52_iii",
+		alias: "Stalingrad",
+		airfields: [
 			["tuzov", "1942-08-21", "1942-09-10"],
 			["pitomnik", "1942-09-11", "1942-09-26"]
 		],
 		// NOTE: Each staffel detached one swarm (around 12 planes total)
-		"planes": [
+		planes: [
 			["bf109g2", 11, "1942-08"],
 			["bf109g2", 8, "1942-09"]
 		],
-		"pilots": [
+		pilots: [
 			["Otto Decker", -13, "start", "1942-08-27"],
 			["Hermann Graf", -13, "start", "1942-09-15"],
 			["Hermann Graf", -14, "1942-09-16", "end"],

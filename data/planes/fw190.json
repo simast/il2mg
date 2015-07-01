@@ -1,24 +1,24 @@
 {
 	// Fw 190
 	"fw190": {
-		"name": "Fw 190",
-		"type": ["fighter", "fighter_light"],
-		"size": "small"
+		name: "Fw 190",
+		type: ["fighter", "fighter_light"],
+		size: "small"
 	},
 
 	// Fw 190 A
 	"fw190a": {
-		"name": "Fw 190 A",
-		"parent": "fw190"
+		name: "Fw 190 A",
+		parent: "fw190"
 	},
 
 	// Fw 190 A-3
 	"fw190a3": {
-		"name": "Fw 190 A-3",
-		"parent": "fw190a",
-		"model": "graphics\\planes\\fw190a3\\fw190a3.mgm",
-		"script": "luascripts\\worldobjects\\planes\\fw190a3.txt",
-		"skins": {
+		name: "Fw 190 A-3",
+		parent: "fw190a",
+		model: "graphics\\planes\\fw190a3\\fw190a3.mgm",
+		script: "luascripts\\worldobjects\\planes\\fw190a3.txt",
+		skins: {
 			"201": {
 				"": [-5, -4, -5, 1],
 				"fw190a3\\fw190a3_skin_01.dds": [0, 0, 0, -11],

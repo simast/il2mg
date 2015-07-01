@@ -1,47 +1,47 @@
 {
 	// Ju 87
 	"ju87": {
-		"name": "Ju 87",
-		"type": ["ground_attack", "dive_bomber"],
-		"size": "medium",
-		"static": [
+		name: "Ju 87",
+		type: ["ground_attack", "dive_bomber"],
+		size: "medium",
+		static: [
 			{
-				"model": "graphics\\blocks\\static_ju87.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_ju87.txt"
+				model: "graphics\\blocks\\static_ju87.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_ju87.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_ju87_open.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_ju87_open.txt"
+				model: "graphics\\blocks\\static_ju87_open.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_ju87_open.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_ju87_net.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_ju87_net.txt",
-				"camo": true
+				model: "graphics\\blocks\\static_ju87_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_ju87_net.txt",
+				camo: true
 			}
 		]
 	},
 
 	// Ju 87 D
 	"ju87d": {
-		"name": "Ju 87 D",
-		"parent": "ju87"
+		name: "Ju 87 D",
+		parent: "ju87"
 	},
 
 	// Ju 87 D-1
 	"ju87d1": {
-		"name": "Ju 87 D-1",
-		"parent": "ju87d3",
-		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
-		"script": "luascripts\\worldobjects\\planes\\ju87d3.txt"
+		name: "Ju 87 D-1",
+		parent: "ju87d3",
+		model: "graphics\\planes\\ju87d3\\ju87d3.mgm",
+		script: "luascripts\\worldobjects\\planes\\ju87d3.txt"
 	},
 
 	// Ju 87 D-3
 	"ju87d3": {
-		"name": "Ju 87 D-3",
-		"parent": "ju87d",
-		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
-		"script": "luascripts\\worldobjects\\planes\\ju87d3.txt",
-		"skins": {
+		name: "Ju 87 D-3",
+		parent: "ju87d",
+		model: "graphics\\planes\\ju87d3\\ju87d3.mgm",
+		script: "luascripts\\worldobjects\\planes\\ju87d3.txt",
+		skins: {
 			"201": {
 				"": [-3, -3, -3, 1],
 				"ju87d3\\ju87d3_skin_01.dds": [0, 0, 0, -10],
@@ -58,16 +58,16 @@
 
 	// Ju 87 G
 	"ju87g": {
-		"name": "Ju 87 G",
-		"parent": "ju87"
+		name: "Ju 87 G",
+		parent: "ju87"
 	},
 
 	// Ju 87 G-1
 	"ju87g1": {
-		"name": "Ju 87 G-1",
-		"type": ["ground_attack"],
-		"parent": "ju87g",
-		"model": "graphics\\planes\\ju87d3\\ju87d3.mgm",
-		"script": "luascripts\\worldobjects\\planes\\ju87d3.txt"
+		name: "Ju 87 G-1",
+		type: ["ground_attack"],
+		parent: "ju87g",
+		model: "graphics\\planes\\ju87d3\\ju87d3.mgm",
+		script: "luascripts\\worldobjects\\planes\\ju87d3.txt"
 	}
 }

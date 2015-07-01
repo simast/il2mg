@@ -1,6 +1,6 @@
 {
 	// Special Stuka squadron inside the Stalingrad pocket
 	"sonderstaffel": {
-		"name": "Stuka-Sonderstaffel"
+		name: "Stuka-Sonderstaffel"
 	}
 }

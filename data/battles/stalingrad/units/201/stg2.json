@@ -1,17 +1,17 @@
 {
 	// Sturzkampfgeschwader 2 "Immelmann"
 	"stg2": {
-		"alias": "Immelmann"
+		alias: "Immelmann"
 	},
 
 	// Stab/StG 2
 	"stg2_stab": {
-		"name": "Stab/StG 2",
-		"parent": "stg2",
-		"airfields": [
+		name: "Stab/StG 2",
+		parent: "stg2",
+		airfields: [
 			["oblivskaya", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["fw189a1", 4, "start", "1942-10"],
 			["bf110f4", 2, "start", "1942-10"],
 			["bf110e3", 2, "start", "1942-10"],
@@ -24,11 +24,11 @@
 
 	// I./StG 2
 	"stg2_i": {
-		"parent": "stg2",
-		"airfields": [
+		parent: "stg2",
+		airfields: [
 			["oblivskaya", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["ju87d1", 23, "1942-07"],
 			["ju87d3", 15, "1942-07"],
 			["ju87d1", 17, "1942-08"],
@@ -54,40 +54,40 @@
 	"stg2_i_stab": {
 		// NOTE: The I gruppe was known as I.(Eins.)/StG 2 (Eins. for Einsatzgruppe
 		// - operational wing) since 1942-11-27.
-		"name": [
+		name: [
 			["Stab I./StG 2", "start", "1942-11-26"],
 			["Stab I.(Eins.)/StG 2", "1942-11-27", "end"]
 		],
-		"parent": "stg2_i",
-		"planesMin": 3,
-		"planesMax": 6
+		parent: "stg2_i",
+		planesMin: 3,
+		planesMax: 6
 	},
 	"stg2_1": {
-		"name": "1./StG 2",
-		"parent": "stg2_i"
+		name: "1./StG 2",
+		parent: "stg2_i"
 	},
 	"stg2_2": {
-		"name": "2./StG 2",
-		"parent": "stg2_i",
-		"airfields": [
+		name: "2./StG 2",
+		parent: "stg2_i",
+		airfields: [
 			["gatchina", "1942-09-07", "1942-10-end"]
 		]
 	},
 	"stg2_3": {
-		"name": "3./StG 2",
-		"parent": "stg2_i",
-		"airfields": [
+		name: "3./StG 2",
+		parent: "stg2_i",
+		airfields: [
 			["gatchina", "1942-09-07", "1942-10-end"]
 		]
 	},
 
 	// II./StG 2
 	"stg2_ii": {
-		"parent": "stg2",
-		"airfields": [
+		parent: "stg2",
+		airfields: [
 			["oblivskaya", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["ju87d1", 7, "1942-07"],
 			["ju87d3", 20, "1942-07"],
 			["ju87d1", 7, "1942-08"],
@@ -101,22 +101,22 @@
 		]
 	},
 	"stg2_ii_stab": {
-		"name": "Stab II./StG 2",
-		"parent": "stg2_ii",
-		"planesMin": 3,
-		"planesMax": 6
+		name: "Stab II./StG 2",
+		parent: "stg2_ii",
+		planesMin: 3,
+		planesMax: 6
 	},
 	"stg2_4": {
-		"name": "4./StG 2",
-		"parent": "stg2_ii"
+		name: "4./StG 2",
+		parent: "stg2_ii"
 	},
 	"stg2_5": {
-		"name": "5./StG 2",
-		"parent": "stg2_ii"
+		name: "5./StG 2",
+		parent: "stg2_ii"
 	},
 	"stg2_6": {
-		"name": "6./StG 2",
-		"parent": "stg2_ii"
+		name: "6./StG 2",
+		parent: "stg2_ii"
 	}
 
 	// NOTE: III./StG 2 operated up north (Kharkov, Voronezh, Vyazma)

@@ -1,23 +1,23 @@
 {
 	"city_fire": {
-		"script": "luascripts\\worldobjects\\mapemitters\\city_fire.txt",
-		"time": 16.66
+		script: "luascripts\\worldobjects\\mapemitters\\city_fire.txt",
+		time: 16.66
 	},
 	"city_firesmall": {
-		"script": "luascripts\\worldobjects\\mapemitters\\city_firesmall.txt",
-		"time": 16.66
+		script: "luascripts\\worldobjects\\mapemitters\\city_firesmall.txt",
+		time: 16.66
 	},
 	"house_smoke": {
-		"script": "luascripts\\worldobjects\\mapemitters\\house_smoke.txt"
+		script: "luascripts\\worldobjects\\mapemitters\\house_smoke.txt"
 	},
 	"landfire": {
-		"script": "luascripts\\worldobjects\\mapemitters\\landfire.txt"
+		script: "luascripts\\worldobjects\\mapemitters\\landfire.txt"
 	},
 	"siren": {
-		"script": "luascripts\\worldobjects\\mapemitters\\siren.txt"
+		script: "luascripts\\worldobjects\\mapemitters\\siren.txt"
 	},
 	"villagesmoke": {
-		"script": "luascripts\\worldobjects\\mapemitters\\villagesmoke.txt",
-		"time": 16.66
+		script: "luascripts\\worldobjects\\mapemitters\\villagesmoke.txt",
+		time: 16.66
 	}
 }

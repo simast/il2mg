@@ -1,5 +1,5 @@
 {
-	"first": [
+	first: [
 		{
 			"1": [
 				"Abrek",
@@ -269,7 +269,7 @@
 			"330": [
 				"Nikolai"
 			],
-			"total": 2788
+			total: 2788
 		},
 		// Russian patronymic name abbreviations
 		{
@@ -338,10 +338,10 @@
 			"511": [
 				"A."
 			],
-			"total": 8500 // 2796 (~30% chance)
+			total: 8500 // 2796 (~30% chance)
 		}
 	],
-	"last": [
+	last: [
 		{
 			"1": [
 				"Abdrashitov",
@@ -2517,7 +2517,7 @@
 			"24": [
 				"Ivanov"
 			],
-			"total": 2870
+			total: 2870
 		}
 	]
 }

@@ -1,17 +1,17 @@
 {
 	// Jagdgeschwader 3 "Udet"
 	"jg3": {
-		"alias": "Udet"
+		alias: "Udet"
 	},
 
 	// Stab/JG 3
 	"jg3_stab": {
-		"name": "Stab/JG 3",
-		"parent": "jg3",
-		"airfields": [
+		name: "Stab/JG 3",
+		parent: "jg3",
+		airfields: [
 			["oblivskaya", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["bf109f4trop", 5, "1942-07"],
 			["bf109f4trop", 5, "1942-08"],
 			["bf109f4trop", 2, "1942-09"],
@@ -22,7 +22,7 @@
 			["bf109g4", 3, "1942-12"],
 			["bf109g4", 3, "1943-01"]
 		],
-		"pilots": [
+		pilots: [
 			["Günther Lützow", -16, "start", "1942-08-11"],
 			["Wolf-Dietrich Wilcke", -14, "start", "1942-12-22"],
 			["Wolf-Dietrich Wilcke", -15, "1942-12-23", "end"],
@@ -32,11 +32,11 @@
 
 	// I./JG 3
 	"jg3_i": {
-		"parent": "jg3",
-		"airfields": [
+		parent: "jg3",
+		airfields: [
 			["oblivskaya", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["bf109f4trop", 32, "1942-07"],
 			["bf109f4trop", 31, "1942-08"],
 			["bf109f4trop", 28, "1942-09-01", "1942-09-07"],
@@ -48,18 +48,18 @@
 		]
 	},
 	"jg3_i_stab": {
-		"name": "Stab I./JG 3",
-		"parent": "jg3_i",
-		"planesMin": 3,
-		"planesMax": 6,
-		"pilots": [
+		name: "Stab I./JG 3",
+		parent: "jg3_i",
+		planesMin: 3,
+		planesMax: 6,
+		pilots: [
 			["Nikolaus Pfützer", 13, "start", "1942-09-06"]
 		]
 	},
 	"jg3_1": {
-		"name": "1./JG 3",
-		"parent": "jg3_i",
-		"pilots": [
+		name: "1./JG 3",
+		parent: "jg3_i",
+		pilots: [
 			["Alfred Riha", 12, "start", "1942-07-28"],
 			["Heinz Schlegel", 5, "start", "1942-08-20"],
 			["Jakob Götz", 5, "start", "1942-08-28"],
@@ -69,27 +69,27 @@
 		]
 	},
 	"jg3_2": {
-		"name": "2./JG 3",
-		"parent": "jg3_i",
-		"pilots": [
+		name: "2./JG 3",
+		parent: "jg3_i",
+		pilots: [
 			["Erwin Straznicky", 13, "start", "1942-10-03"]
 		]
 	},
 	"jg3_3": {
-		"name": "3./JG 3",
-		"parent": "jg3_i",
-		"pilots": [
+		name: "3./JG 3",
+		parent: "jg3_i",
+		pilots: [
 			["Heinz Obst", 5, "start", "1943-01-03"]
 		]
 	},
 
 	// II./JG 3
 	"jg3_ii": {
-		"parent": "jg3",
-		"airfields": [
+		parent: "jg3",
+		airfields: [
 			["oblivskaya", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["bf109f4trop", 30, "1942-07"],
 			["bf109f4trop", 28, "1942-08-01", "1942-08-23"],
 			// NOTE: On 1942-08-23 left for Germany, re-equipped with Bf 109 G-2 and then
@@ -99,37 +99,37 @@
 		]
 	},
 	"jg3_ii_stab": {
-		"name": "Stab II./JG 3",
-		"parent": "jg3_ii",
-		"planesMin": 3,
-		"planesMax": 6
+		name: "Stab II./JG 3",
+		parent: "jg3_ii",
+		planesMin: 3,
+		planesMax: 6
 	},
 	"jg3_4": {
-		"name": "4./JG 3",
-		"parent": "jg3_ii",
-		"pilots": [
+		name: "4./JG 3",
+		parent: "jg3_ii",
+		pilots: [
 			["Fritz Köhler", 5, "start", "1942-12-31"]
 		]
 	},
 	"jg3_5": {
-		"name": "5./JG 3",
-		"parent": "jg3_ii"
+		name: "5./JG 3",
+		parent: "jg3_ii"
 	},
 	"jg3_6": {
-		"name": "6./JG 3",
-		"parent": "jg3_ii",
-		"pilots": [
+		name: "6./JG 3",
+		parent: "jg3_ii",
+		pilots: [
 			["Wolfgang Vogel", 5, "start", "1942-08-01"]
 		]
 	},
 
 	// III./JG 3
 	"jg3_iii": {
-		"parent": "jg3",
-		"airfields": [
+		parent: "jg3",
+		airfields: [
 			["oblivskaya", "start", "end"]
 		],
-		"planes": [
+		planes: [
 			["bf109f4", 30, "1942-07"],
 			["bf109f4", 29, "1942-08"],
 			["bf109f4", 25, "1942-09"],
@@ -142,19 +142,19 @@
 		]
 	},
 	"jg3_iii_stab": {
-		"name": "Stab III./JG 3",
-		"parent": "jg3_iii",
-		"planesMin": 3,
-		"planesMax": 6,
-		"pilots": [
+		name: "Stab III./JG 3",
+		parent: "jg3_iii",
+		planesMin: 3,
+		planesMax: 6,
+		pilots: [
 			["Otto Betz", 7, "start", "1942-08-02"]
 		]
 	},
 	// NOTE: 7./JG 3 was temporary disbanded between 1942-08 and 1943-02.
 	"jg3_8": {
-		"name": "8./JG 3",
-		"parent": "jg3_iii",
-		"pilots": [
+		name: "8./JG 3",
+		parent: "jg3_iii",
+		pilots: [
 			["Horst Krause", 5, "start", "1942-08-26"],
 			["Fritz Junk", 5, "start", "1942-08-28"],
 			["Gottfried Loos", 5, "start", "1942-10-25"],
@@ -162,9 +162,9 @@
 		]
 	},
 	"jg3_9": {
-		"name": "9./JG 3",
-		"parent": "jg3_iii",
-		"pilots": [
+		name: "9./JG 3",
+		parent: "jg3_iii",
+		pilots: [
 			["Rolf Diergardt", 12, "start", "1942-08-11"],
 			["Klaus Starke", 13, "start", "1942-08-17"],
 			["Kurt Brosche", 7, "start", "1942-09-21"],
@@ -177,14 +177,14 @@
 	},
 
 	// Pitomnik airfield defence squadron for Stalingrad pocket
-	"jg3_platzschutzstaffel": {
-		"name": "Platzschutzstaffel",
-		"parent": "jg3",
-		"alias": "Pitomnik",
-		"airfields": [
+	"jg3_pitomnik": {
+		name: "Platzschutzstaffel",
+		parent: "jg3",
+		alias: "Pitomnik",
+		airfields: [
 			["pitomnik", "1942-11-29", "1943-01-16"]
 		],
-		"planes": [
+		planes: [
 			// Formed with half-dozen volunteers from I./JG 3
 			["bf109g2", 6, "start", "1942-12-11"],
 			// On 1942-12-12 was reinforced with another half-dozen volunteers from II./JG 3
@@ -192,7 +192,7 @@
 			["bf109g2", 9, "1942-12-19", "1942-12-25"],
 			["bf109g2", 6, "1942-12-26", "end"]
 		],
-		"pilots": [
+		pilots: [
 			["Rudolf Germeroth", 14],
 			["Franz Beyer", 13, "1942-12"],
 			["Werner Lucas", -13, "1942-12-16", "end"],

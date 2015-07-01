@@ -3,7 +3,6 @@
 
 var fs = require("fs");
 var requireDir = require("require-directory");
-var stripJSONComments = require("strip-json-comments");
 
 var DATA = Object.create(null);
 
@@ -76,18 +75,28 @@ DATA.planAction = Object.freeze({
 
 // Load all static data
 (function() {
-
-	var Module = require("module");
-	var origJSONLoader = Module._extensions[".json"];
-
-	// Temporary override Node JSON loader to support comments in JSON data files
-	Module._extensions[".json"] = function(module, filename) {
-
-		var json = stripJSONComments(fs.readFileSync(filename, "utf8"));
-		var js = "module.exports = " + json;
-
-		module._compile(js, filename);
-	};
+	
+	var useJSON5 = true;
+	
+	// NOTE: Having JSON5 module name as two separate string literals will trick
+	// enclose to not included it in the binary file. Thus JSON files in the binary
+	// will be loaded using native JSON object (for performance reasons).
+	try {
+		var JSON5 = require("json" + "5");
+	}
+	catch (e) {
+		useJSON5 = false;
+	}
+	
+	if (useJSON5) {
+		
+		useJSON5 = require.extensions[".json"];
+		
+		// Temporary override native JSON loader to handle JSON5 data files
+		require.extensions[".json"] = function(module, filename) {
+			module.exports = JSON5.parse(fs.readFileSync(filename, "utf8"));
+		};
+	}
 
 	DATA.vehicles = Object.freeze(require("../data/vehicles"));
 	DATA.clouds = Object.freeze(require("../data/clouds"));
@@ -143,6 +152,13 @@ DATA.planAction = Object.freeze({
 		
 		for (var unitCountryID in unitsData) {
 			
+			unitCountryID = parseInt(unitCountryID, 10);
+			
+			// Ignore invalid country IDs
+			if (isNaN(unitCountryID) || !DATA.countries[unitCountryID]) {
+				continue;
+			}
+			
 			var unitsDataCountry = unitsData[unitCountryID];
 			
 			// Build units list
@@ -162,8 +178,10 @@ DATA.planAction = Object.freeze({
 		Object.freeze(battle.units);
 	}
 
-	// Restore original Node JSON loader
-	Module._extensions[".json"] = origJSONLoader;
+	// Restore original/native JSON loader
+	if (useJSON5) {
+		require.extensions[".json"] = useJSON5;
+	}
 }());
 
 /**

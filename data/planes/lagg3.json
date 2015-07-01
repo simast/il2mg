@@ -1,37 +1,37 @@
 {
 	// LaGG-3
 	"lagg3": {
-		"name": "LaGG-3",
-		"type": ["fighter", "fighter_light"],
-		"size": "small",
-		"static": [
+		name: "LaGG-3",
+		type: ["fighter", "fighter_light"],
+		size: "small",
+		static: [
 			{
-				"model": "graphics\\blocks\\static_lagg3.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_lagg3.txt"
+				model: "graphics\\blocks\\static_lagg3.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_lagg3.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_lagg3_w1.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_w1.txt"
+				model: "graphics\\blocks\\static_lagg3_w1.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_lagg3_w1.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_lagg3_w2.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_w2.txt"
+				model: "graphics\\blocks\\static_lagg3_w2.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_lagg3_w2.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_lagg3_net.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
-				"camo": true
+				model: "graphics\\blocks\\static_lagg3_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
+				camo: true
 			}
 		]
 	},
 
 	// LaGG-3 ser.29
 	"lagg3s29": {
-		"name": "LaGG-3 ser.29",
-		"parent": "lagg3",
-		"model": "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
-		"script": "luascripts\\worldobjects\\planes\\lagg3s29.txt",
-		"skins": {
+		name: "LaGG-3 ser.29",
+		parent: "lagg3",
+		model: "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
+		script: "luascripts\\worldobjects\\planes\\lagg3s29.txt",
+		skins: {
 			"101": {
 				"": [-4, -4, -4, 1],
 				"lagg3s29\\lagg3s29_skin_01.dds": [0, 0, 0, -10],

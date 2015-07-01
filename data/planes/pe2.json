@@ -1,28 +1,28 @@
 {
 	// Pe-2
 	"pe2": {
-		"name": "Pe-2",
-		"type": ["dive_bomber", "level_bomber"],
-		"size": "large",
-		"static": [
+		name: "Pe-2",
+		type: ["dive_bomber", "level_bomber"],
+		size: "large",
+		static: [
 			{
-				"model": "graphics\\blocks\\static_pe2.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_pe2.txt"
+				model: "graphics\\blocks\\static_pe2.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_pe2.txt"
 			},
 			{
-				"model": "graphics\\blocks\\static_pe2_open.mgm",
-				"script": "luascripts\\worldobjects\\blocks\\static_pe2_open.txt"
+				model: "graphics\\blocks\\static_pe2_open.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_pe2_open.txt"
 			}
 		]
 	},
 
 	// Pe-2 ser.87
 	"pe2s87": {
-		"name": "Pe-2 ser.87",
-		"parent": "pe2",
-		"model": "graphics\\planes\\pe2s87\\pe2s87.mgm",
-		"script": "luascripts\\worldobjects\\planes\\pe2s87.txt",
-		"skins": {
+		name: "Pe-2 ser.87",
+		parent: "pe2",
+		model: "graphics\\planes\\pe2s87\\pe2s87.mgm",
+		script: "luascripts\\worldobjects\\planes\\pe2s87.txt",
+		skins: {
 			"101": {
 				"": [-5, -4, -5, 1],
 				"pe2s87\\pe2s87_skin_01.dds": [0, 0, 0, -11],

@@ -1,8 +1,8 @@
 {
 	// Battle of Stalingrad
-	"stalingrad": {
-		"name": "Stalingrad, 1942-1943",
-		"from": "1942-07-17",
-		"to": "1943-02-02"
+	stalingrad: {
+		name: "Stalingrad, 1942-1943",
+		from: "1942-07-17",
+		to: "1943-02-02"
 	}
 }

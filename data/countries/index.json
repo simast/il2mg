@@ -1,14 +1,14 @@
 {
 	"101": {
-		"name": "Soviet Union",
-		"coalition": 1
+		name: "Soviet Union",
+		coalition: 1
 	},
 	"201": {
-		"name": "Germany",
-		"coalition": 2
+		name: "Germany",
+		coalition: 2
 	},
 	"202": {
-		"name": "Italy",
-		"coalition": 2
+		name: "Italy",
+		coalition: 2
 	}
 }
