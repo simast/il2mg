@@ -10,6 +10,13 @@ function MCU_Icon() {
 	MCU.apply(this, arguments);
 
 	this.Enabled = 1;
+	this.LCName = 0;
+	this.LCDesc = 0;
+	this.IconId = 0;
+	this.RColor = 0;
+	this.GColor = 0;
+	this.BColor = 0;
+	this.LineType = 0;
 }
 
 MCU_Icon.prototype = Object.create(MCU.prototype);

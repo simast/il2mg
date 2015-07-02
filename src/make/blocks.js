@@ -10,7 +10,7 @@ module.exports = function makeBlocks() {
 	var blocksFiles = mission.battle.blocks;
 	var blocksGroup = mission.createItem("Group");
 
-	blocksGroup.setName("Blocks");
+	blocksGroup.setName("BLOCK");
 
 	// Total block count
 	var totalBlocks = 0;

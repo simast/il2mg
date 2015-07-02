@@ -78,6 +78,7 @@ module.exports = function(grunt) {
 		"build:sloc",
 		"build:blocks",
 		"build:airfields",
+		"build:fronts",
 		"build:compile"
 	]);
 };

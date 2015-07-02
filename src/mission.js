@@ -54,6 +54,7 @@ function Mission(params) {
 	require("./make/weather").call(this);
 	require("./make/airfields").call(this);
 	require("./make/player").call(this);
+	require("./make/fronts").call(this);
 	require("./make/blocks").call(this);
 	require("./make/flights").call(this);
 	require("./make/name").call(this);
