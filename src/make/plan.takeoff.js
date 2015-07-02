@@ -46,7 +46,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 			waitTimerMax = 30;
 		}
 
-		waitTimerBefore.Time = rand.real(waitTimerMin, waitTimerMax, true);
+		waitTimerBefore.Time = +(rand.real(waitTimerMin, waitTimerMax).toFixed(3));
 		waitTimerBefore.setPositionNear(takeoffCommand);
 		waitTimerBefore.addTarget(takeoffCommand);
 
@@ -81,7 +81,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	// Short timer used to delay next command after takeoff is reported
 	var waitTimerAfter = flight.group.createItem("MCU_Timer");
 
-	waitTimerAfter.Time = rand.real(5, 8, true);
+	waitTimerAfter.Time = +(rand.real(5, 8).toFixed(3));
 	waitTimerAfter.setPosition(takeoffEnd);
 	waitTimerAfter.addTarget(waypointCommand);
 

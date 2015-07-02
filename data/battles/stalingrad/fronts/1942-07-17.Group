@@ -6,7 +6,7 @@ Group
   MCU_Waypoint
   {
     Index = 3;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [4];
     Objects = [];
@@ -25,7 +25,7 @@ Group
   MCU_Waypoint
   {
     Index = 4;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [6];
     Objects = [];
@@ -44,7 +44,7 @@ Group
   MCU_Waypoint
   {
     Index = 6;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [8];
     Objects = [];
@@ -63,7 +63,7 @@ Group
   MCU_Waypoint
   {
     Index = 8;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [10];
     Objects = [];
@@ -82,7 +82,7 @@ Group
   MCU_Waypoint
   {
     Index = 10;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [12];
     Objects = [];
@@ -101,7 +101,7 @@ Group
   MCU_Waypoint
   {
     Index = 12;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [14];
     Objects = [];
@@ -120,7 +120,7 @@ Group
   MCU_Waypoint
   {
     Index = 14;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [16];
     Objects = [];
@@ -139,7 +139,7 @@ Group
   MCU_Waypoint
   {
     Index = 16;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [18];
     Objects = [];
@@ -158,7 +158,7 @@ Group
   MCU_Waypoint
   {
     Index = 18;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [20];
     Objects = [];
@@ -177,7 +177,7 @@ Group
   MCU_Waypoint
   {
     Index = 20;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [22];
     Objects = [];
@@ -196,7 +196,7 @@ Group
   MCU_Waypoint
   {
     Index = 22;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [24];
     Objects = [];
@@ -215,7 +215,7 @@ Group
   MCU_Waypoint
   {
     Index = 24;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [26];
     Objects = [];
@@ -234,7 +234,7 @@ Group
   MCU_Waypoint
   {
     Index = 26;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [28];
     Objects = [];
@@ -253,7 +253,7 @@ Group
   MCU_Waypoint
   {
     Index = 28;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [30];
     Objects = [];
@@ -272,7 +272,7 @@ Group
   MCU_Waypoint
   {
     Index = 30;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [32];
     Objects = [];
@@ -291,7 +291,7 @@ Group
   MCU_Waypoint
   {
     Index = 32;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [34];
     Objects = [];
@@ -310,7 +310,7 @@ Group
   MCU_Waypoint
   {
     Index = 34;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [36];
     Objects = [];
@@ -329,7 +329,7 @@ Group
   MCU_Waypoint
   {
     Index = 36;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [38];
     Objects = [];
@@ -348,7 +348,7 @@ Group
   MCU_Waypoint
   {
     Index = 38;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [40];
     Objects = [];
@@ -367,7 +367,7 @@ Group
   MCU_Waypoint
   {
     Index = 40;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [42];
     Objects = [];
@@ -386,7 +386,7 @@ Group
   MCU_Waypoint
   {
     Index = 42;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [44];
     Objects = [];
@@ -405,7 +405,7 @@ Group
   MCU_Waypoint
   {
     Index = 44;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [46];
     Objects = [];
@@ -424,7 +424,7 @@ Group
   MCU_Waypoint
   {
     Index = 46;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [48];
     Objects = [];
@@ -443,7 +443,7 @@ Group
   MCU_Waypoint
   {
     Index = 48;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [50];
     Objects = [];
@@ -462,7 +462,7 @@ Group
   MCU_Waypoint
   {
     Index = 50;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [];
     Objects = [];
@@ -481,7 +481,7 @@ Group
   MCU_Waypoint
   {
     Index = 52;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [56];
     Objects = [];
@@ -500,7 +500,7 @@ Group
   MCU_Waypoint
   {
     Index = 54;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [58];
     Objects = [];
@@ -519,7 +519,7 @@ Group
   MCU_Waypoint
   {
     Index = 56;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [54];
     Objects = [];
@@ -538,7 +538,7 @@ Group
   MCU_Waypoint
   {
     Index = 58;
-    Name = "FRONT";
+    Name = "BORDER";
     Desc = "";
     Targets = [];
     Objects = [];

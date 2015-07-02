@@ -48,6 +48,13 @@ DATA.itemFlag = Object.freeze({
 	ROUTE_ROAD: 2 // Route road formation
 });
 
+// Front line item types
+DATA.frontLine = Object.freeze({
+	BORDER: 1, // Border line
+	ATTACK: 2, // Attack arrow
+	DEFEND: 3 // Defensive line
+});
+
 // Plane size constants (types/IDs)
 DATA.planeSize = Object.freeze({
 	SMALL: 1,

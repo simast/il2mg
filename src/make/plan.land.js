@@ -41,7 +41,7 @@ module.exports = function makePlanLand(action, element, flight, input) {
 		// Short timer used to delay land command
 		var waitTimer = flight.group.createItem("MCU_Timer");
 
-		waitTimer.Time = rand.real(10, 15);
+		waitTimer.Time = +(rand.real(10, 15).toFixed(3));
 		waitTimer.setPositionNear(leaderPlaneItem); // TODO
 		waitTimer.addTarget(landCommand);
 

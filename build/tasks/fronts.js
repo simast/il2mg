@@ -38,13 +38,11 @@ module.exports = function(grunt) {
 					continue;
 				}
 
-				let json = {};
-
-				json.fronts = [];
+				let json = [];
 
 				// Fronts point data indexes
-				let frontsNext = Object.create(null);
-				let frontsPrev = Object.create(null);
+				let pointsNext = Object.create(null);
+				let pointsPrev = Object.create(null);
 				
 				// Build output JSON object with recursion
 				(function buildJSON(items) {
@@ -61,29 +59,34 @@ module.exports = function(grunt) {
 							return;
 						}
 
-						// Process waypoint items (front lines)
+						// All front line items are waypoints
 						if (item instanceof Item.MCU_Waypoint) {
 
-							// Front line point
-							if (/^FRONT/.test(item.Name)) {
+							// Process supported front line item
+							if (DATA.frontLine[item.Name]) {
 
-								let pointID = item.Index;
-								let targetID = item.Targets[0];
 								let point = [];
+								let pointID = item.Index;
+								
+								// NOTE: Multiple target links are not supported
+								let targetID = item.Targets[0];
+								
+								// Point item type
+								point.push(DATA.frontLine[item.Name]);
 
-								// Front point position
+								// Point item position
 								point.push(Math.round(item.XPos));
 								point.push(Math.round(item.ZPos));
 
 								let segment = null;
 
 								// Link to a known previous point
-								if (frontsPrev[pointID]) {
+								if (pointsPrev[pointID]) {
 
-									segment = frontsPrev[pointID].segment;
+									segment = pointsPrev[pointID].segment;
 									segment.push(point);
 
-									let nextTarget = frontsNext[targetID];
+									let nextTarget = pointsNext[targetID];
 
 									// Merge connecting segments
 									while (nextTarget) {
@@ -93,37 +96,37 @@ module.exports = function(grunt) {
 
 										// Remove an empty (already connected) segment
 										if (!nextTarget.segment.length) {
-											json.fronts.splice(json.fronts.indexOf(nextTarget.segment), 1);
+											json.splice(json.indexOf(nextTarget.segment), 1);
 										}
 
 										// Switch indexed data to new connecting segment
 										nextTarget.segment = segment;
 
-										nextTarget = frontsNext[nextTarget.target];
+										nextTarget = pointsNext[nextTarget.target];
 									}
 								}
 								// Link to a known next point
-								else if (targetID && frontsNext[targetID]) {
+								else if (targetID && pointsNext[targetID]) {
 
-									segment = frontsNext[targetID].segment;
+									segment = pointsNext[targetID].segment;
 									segment.unshift(point);
 								}
 								// Create a new segment
 								else {
 
 									segment = [point];
-									json.fronts.push(segment);
+									json.push(segment);
 								}
 
 								// Register front point index data
-								frontsNext[pointID] = frontsPrev[targetID] = {
+								pointsNext[pointID] = pointsPrev[targetID] = {
 									target: targetID,
 									segment: segment
 								};
 							}
-							// Unknown waypoint item definition
+							// Unknown front point item definition
 							else {
-								grunt.fail.fatal("Invalid waypoint definition: " + item.Name);
+								grunt.fail.fatal("Invalid front point definition: " + item.Name);
 							}
 
 							totalItems++;
