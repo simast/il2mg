@@ -40,9 +40,8 @@ module.exports = function(grunt) {
 
 				let json = [];
 
-				// Fronts point data indexes
-				let pointsNext = Object.create(null);
-				let pointsPrev = Object.create(null);
+				// Front point data index
+				let pointsIndex = Object.create(null);
 				
 				// Build output JSON object with recursion
 				(function buildJSON(items) {
@@ -66,11 +65,10 @@ module.exports = function(grunt) {
 							if (DATA.frontLine[item.Name]) {
 
 								let point = [];
-								let pointID = item.Index;
-								
-								// NOTE: Multiple target links are not supported
-								let targetID = item.Targets[0];
-								
+								let pointIndex = item.Index;
+								let pointTargets = [];
+								let pointID = json.push(point) - 1;
+
 								// Point item type
 								point.push(DATA.frontLine[item.Name]);
 
@@ -78,58 +76,48 @@ module.exports = function(grunt) {
 								point.push(Math.round(item.XPos));
 								point.push(Math.round(item.ZPos));
 
-								let segment = null;
+								// Mark target list index position
+								let targetIndexPos = point.length;
 
-								// Link to a known previous point
-								if (pointsPrev[pointID]) {
+								// Process item targets
+								for (let targetIndex of item.Targets) {
 
-									segment = pointsPrev[pointID].segment;
-									segment.push(point);
+									// Target point is already processed
+									if (typeof pointsIndex[targetIndex] === "number") {
+										pointTargets.push(pointsIndex[targetIndex]);
+									}
+									// Target point is pending
+									else {
 
-									let nextTarget = pointsNext[targetID];
-
-									// Merge connecting segments
-									while (nextTarget) {
-
-										// Line is a loop
-										if (nextTarget.segment === segment) {
-
-											segment.push(true);
-											break;
-										}
-
-										// Transfer point to connecting segment
-										segment.push(nextTarget.segment.shift());
-
-										// Remove an empty (already connected) segment
-										if (!nextTarget.segment.length) {
-											json.splice(json.indexOf(nextTarget.segment), 1);
-										}
-
-										// Switch indexed data to new connecting segment
-										nextTarget.segment = segment;
-
-										nextTarget = pointsNext[nextTarget.target];
+										pointsIndex[targetIndex] = pointsIndex[targetIndex] || [];
+										pointsIndex[targetIndex].push(pointID);
 									}
 								}
-								// Link to a known next point
-								else if (targetID && pointsNext[targetID]) {
 
-									segment = pointsNext[targetID].segment;
-									segment.unshift(point);
+								// Process pending targets
+								if (pointsIndex[pointIndex]) {
+									
+									while (pointsIndex[pointIndex].length) {
+
+										let targetID = pointsIndex[pointIndex].shift();
+										let targetList = json[targetID][targetIndexPos];
+										
+										// Create a new target list
+										if (!targetList) {
+											targetList = json[targetID][targetIndexPos] = [];
+										}
+										
+										targetList.push(pointID);
+									}
 								}
-								// Create a new segment
-								else {
-
-									segment = [point];
-									json.push(segment);
+								
+								// Point item targets
+								if (pointTargets.length) {
+									point.push(pointTargets);
 								}
-
-								// Register front point index data
-								pointsNext[pointID] = pointsPrev[targetID] = {
-									target: targetID,
-									segment: segment
-								};
+								
+								// Mark point as processed
+								pointsIndex[pointIndex] = pointID;
 							}
 							// Unknown front point item definition
 							else {

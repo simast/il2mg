@@ -16,6 +16,7 @@ module.exports = function makeFronts() {
 	}
 
 	// Load fronts data file
+	// TODO: Move to data.js?
 	var frontsPath = "../../data/battles/" + this.battleID + "/fronts/";
 	var frontsData = require(frontsPath + frontsFile);
 	
@@ -30,7 +31,7 @@ module.exports = function makeFronts() {
 	// Coalitions list used for front icons
 	var coalitions = [Item.DEFAULT_COALITION];
 
-	// All coalitions can see front lines
+	// All coalitions can see front icon items
 	for (var countryID of this.battle.countries) {
 
 		var coalitionID = DATA.countries[countryID].coalition;
@@ -40,54 +41,61 @@ module.exports = function makeFronts() {
 		}
 	}
 
-	// Process front line segments
-	for (var segment of frontsData) {
+	// Indexed list of created point icons
+	var pointItems = Object.create(null);
 
-		var prevPointItem = null;
-		var firstPointItem = null;
+	// Process front points
+	for (var pointID = 0; pointID < frontsData.length; pointID++) {
+		makeFrontPoint(pointID);
+	}
 
-		// Process front line points
-		for (var point of segment) {
+	// Make front point icon item
+	function makeFrontPoint(pointID) {
+
+		// Point item is already created
+		if (pointItems[pointID]) {
+			return;
+		}
+
+		var point = frontsData[pointID];
+		var pointType = point[0];
+		var pointTargets = point[3];
+		var pointItem = frontsGroup.createItem("MCU_Icon");
+
+		pointItem.setPosition(point[1], point[2]);
+		pointItem.Coalitions = coalitions;
+
+		// Border line
+		if (pointType === frontLine.BORDER) {
+			pointItem.LineType = MCU_Icon.LINE_POSITION_0;
+		}
+		// Attack arrow
+		else if (pointType === frontLine.ATTACK) {
+
+			pointItem.LineType = MCU_Icon.LINE_ATTACK;
+			pointItem.RColor = 165;
+			pointItem.GColor = 165;
+			pointItem.BColor = 165;
+		}
+		// Defensive line
+		else if (pointType === frontLine.DEFEND) {
+			pointItem.LineType = MCU_Icon.LINE_DEFEND;
+		}
+
+		// Index point icon item
+		pointItems[pointID] = pointItem;
+
+		// Connect point items with target links
+		if (pointTargets) {
 			
-			var pointItem;
-
-			// Flag for a looping front line segment
-			if (point === true) {
-				pointItem = firstPointItem;
-			}
-			else {
-
-				var pointType = point[0];
-
-				// Create front line point icon item
-				pointItem = frontsGroup.createItem("MCU_Icon");
-
-				pointItem.setPosition(point[1], point[2]);
-				pointItem.Coalitions = coalitions;
-
-				// Border line
-				if (pointType === frontLine.BORDER) {
-					pointItem.LineType = MCU_Icon.LINE_POSITION_0;
+			for (var targetID of pointTargets) {
+				
+				// Target item is not yet created
+				if (!pointItems[targetID]) {
+					makeFrontPoint(targetID);
 				}
-				// Attack arrow
-				else if (pointType === frontLine.ATTACK) {
-					pointItem.LineType = MCU_Icon.LINE_ATTACK;
-				}
-				// Defensive line
-				else if (pointType === frontLine.DEFEND) {
-					pointItem.LineType = MCU_Icon.LINE_DEFEND;
-				}
-			}
-
-			// Connect point items with target links
-			if (prevPointItem) {
-				prevPointItem.addTarget(pointItem);
-			}
-
-			prevPointItem = pointItem;
-
-			if (!firstPointItem) {
-				firstPointItem = pointItem;
+				
+				pointItem.addTarget(pointItems[targetID]);
 			}
 		}
 	}
