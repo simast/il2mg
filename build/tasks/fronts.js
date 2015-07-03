@@ -91,6 +91,13 @@ module.exports = function(grunt) {
 									// Merge connecting segments
 									while (nextTarget) {
 
+										// Line is a loop
+										if (nextTarget.segment === segment) {
+
+											segment.push(true);
+											break;
+										}
+
 										// Transfer point to connecting segment
 										segment.push(nextTarget.segment.shift());
 

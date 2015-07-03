@@ -2,6 +2,7 @@
 "use strict";
 
 var Item = require("../item");
+var MCU_Icon = Item.MCU_Icon;
 var frontLine = DATA.frontLine;
 
 // Generate mission fronts
@@ -39,25 +40,43 @@ module.exports = function makeFronts() {
 		}
 	}
 
-	// Process front line sections
-	for (var section of frontsData) {
+	// Process front line segments
+	for (var segment of frontsData) {
 
 		var prevPointItem = null;
+		var firstPointItem = null;
 
 		// Process front line points
-		for (var point of section) {
+		for (var point of segment) {
 			
-			var pointType = point[0];
+			var pointItem;
 
-			// Create front line point icon item
-			var pointItem = frontsGroup.createItem("MCU_Icon");
+			// Flag for a looping front line segment
+			if (point === true) {
+				pointItem = firstPointItem;
+			}
+			else {
 
-			pointItem.setPosition(point[1], point[2]);
-			pointItem.Coalitions = coalitions;
-			
-			// Border line
-			if (pointType === frontLine.BORDER) {
-				pointItem.LineType = 13;
+				var pointType = point[0];
+
+				// Create front line point icon item
+				pointItem = frontsGroup.createItem("MCU_Icon");
+
+				pointItem.setPosition(point[1], point[2]);
+				pointItem.Coalitions = coalitions;
+
+				// Border line
+				if (pointType === frontLine.BORDER) {
+					pointItem.LineType = MCU_Icon.LINE_POSITION_0;
+				}
+				// Attack arrow
+				else if (pointType === frontLine.ATTACK) {
+					pointItem.LineType = MCU_Icon.LINE_ATTACK;
+				}
+				// Defensive line
+				else if (pointType === frontLine.DEFEND) {
+					pointItem.LineType = MCU_Icon.LINE_DEFEND;
+				}
 			}
 
 			// Connect point items with target links
@@ -66,6 +85,10 @@ module.exports = function makeFronts() {
 			}
 
 			prevPointItem = pointItem;
+
+			if (!firstPointItem) {
+				firstPointItem = pointItem;
+			}
 		}
 	}
 };
