@@ -49,7 +49,7 @@ function makeClouds(weather) {
 	}
 
 	// Set clouds data for Options item
-	options.CloudConfig = cloudsData.config;
+	options.CloudConfig = this.map.season + "\\" + cloudsData.config;
 	options.CloudLevel = altitude;
 	options.CloudHeight = thickness;
 

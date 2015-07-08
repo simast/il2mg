@@ -1,0 +1,36 @@
+{
+	// I-16
+	"i16": {
+		name: "I-16",
+		type: ["fighter", "fighter_light"],
+		size: "small",
+		// NOTE: Static I-16 models are not available, using LaGG-3 as a workaround
+		static: [
+			{
+				model: "graphics\\blocks\\static_lagg3.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_lagg3.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_lagg3_w1.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_lagg3_w1.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_lagg3_w2.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_lagg3_w2.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_lagg3_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
+				camo: true
+			}
+		]
+	},
+
+	// I-16 type 24
+	"i16t24": {
+		name: "I-16 type 24",
+		parent: "i16",
+		model: "graphics\\planes\\i16t24\\i16t24.mgm",
+		script: "luascripts\\worldobjects\\planes\\i16t24.txt"
+	}
+}
