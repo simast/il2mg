@@ -1,12 +1,22 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+// Data constants
+var planAction = DATA.planAction;
+var briefingColor = DATA.briefingColor;
+
+// Plan action briefing parts
+var makeBriefingPlan = Object.create(null);
+
+makeBriefingPlan[planAction.TAKEOFF] = require("./briefing.takeoff.js");
+
 // Generate mission briefing
 module.exports = function makeBriefing() {
 
 	var options = this.items.Options;
 
 	var briefing = [];
+	var flight = this.flights.player;
 
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
@@ -23,12 +33,21 @@ module.exports = function makeBriefing() {
 	// TODO: Battle situation
 	// TODO: Weather report
 
-	// TODO: Flight plan output
-	briefing.push("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam faucibus ipsum vitae sapien tincidunt, sed venenatis enim semper. Nunc quis mi nulla.");
-	briefing.push("Aliquam eu diam ac enim feugiat eleifend. Pellentesque posuere blandit libero at porttitor. Phasellus euismod erat pulvinar eros posuere viverra. Donec blandit orci ac ipsum elementum, eu pellentesque felis finibus. Vivamus malesuada nibh eu nibh congue, hendrerit sollicitudin nisi faucibus.");
-	briefing.push("Duis sit amet euismod leo. Nulla ac augue ut diam egestas finibus. Etiam ut hendrerit diam. Suspendisse rutrum nunc purus. Mauris tempor congue mi, quis congue tortor fringilla id.");
-	briefing.push("Pellentesque pharetra vulputate libero, sit amet faucibus felis blandit faucibus.");
-
+	// Flight plan briefing output
+	for (var action of flight.plan) {
+		
+		if (!makeBriefingPlan[action.type]) {
+			continue;
+		}
+		
+		// Make plan action briefing
+		var actionBriefing = makeBriefingPlan[action.type].call(this, action, flight);
+		
+		if (actionBriefing && actionBriefing.length) {
+			briefing.push(actionBriefing);
+		}
+	}
+	
 	options.setDescription(this.getLC(briefing.join("<br><br>")));
 };
 
@@ -151,7 +170,7 @@ function makeBriefingFlight() {
 
 			// Unit name
 			// TODO: Show all units if elements are from different units
-			output += ' of <font color="#fbfbfb">' + unit.name + "</font>";
+			output += ' of <font color="' + briefingColor.LIGHT + '">' + unit.name + "</font>";
 
 			// Unit alias
 			if (unit.alias) {
@@ -182,13 +201,13 @@ function makeBriefingFlight() {
 
 			// Highlighted player pilot name
 			if (plane === flight.player) {
-				output += '<font color="#fbfbfb">' + pilot.name + "</font>";
+				output += '<font color="' + briefingColor.LIGHT + '">' + pilot.name + "</font>";
 			}
 			else {
 				output += pilot.name;
 			}
 
-			output += ' <font color="#848484">→</font><font size="16"><i>';
+			output += ' <font color="' + briefingColor.DARK + '">→</font><font size="16"><i>';
 			output += this.planesByID[plane.plane].name;
 			output += "</i></font><br>";
 

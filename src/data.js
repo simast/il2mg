@@ -80,6 +80,12 @@ DATA.planAction = Object.freeze({
 	LAND: "land" // Land on airfield (ending the flight)
 });
 
+// Briefing colors as HTML hex color values
+DATA.briefingColor = Object.freeze({
+	LIGHT: "#fbfbfb",
+	DARK: "#848484"
+});
+
 // Load all static data
 (function() {
 	
