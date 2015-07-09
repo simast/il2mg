@@ -33,7 +33,7 @@ MCU_CMD_AttackArea.PRIORITY_HIGH = 2;
  */
 MCU_CMD_AttackArea.prototype.toBinary = function(index) {
 
-	var buffer = new Buffer(4);
+	var buffer = new Buffer(19);
 
 	// AttackArea
 	this.writeDouble(buffer, this.AttackArea);

@@ -98,31 +98,33 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 	effectItem.setPosition(item[1], item[2], item[3]);
 	effectItem.setOrientation(rand.real(0, 360));
 	effectItem.Script = effectScript;
-
 	effectItem.createEntity(true);
+	
+	// Attach effect to airfield "bubble" zone
+	zone.onActivate.addObject(effectItem);
+	zone.onDeactivate.addObject(effectItem);
 
 	// Start effect on airfield load event
 	if (startOnLoad) {
+		
+		var onEffectStart = zone.onEffectStart;
 
 		// Create a shared effect start command (activated when airfield is loaded)
-		if (!zone.onEffectStart) {
+		if (!onEffectStart) {
 
-			zone.onEffectStart = zone.group.createItem("MCU_CMD_Effect");
-			zone.onEffectStart.setPositionNear(zone.onLoad);
-			zone.onEffectStart.ActionType = MCU_CMD_Effect.ACTION_START;
+			onEffectStart = zone.onEffectStart = zone.group.createItem("MCU_CMD_Effect");
+			
+			onEffectStart.setPositionNear(zone.onLoad);
+			onEffectStart.ActionType = MCU_CMD_Effect.ACTION_START;
 
-			zone.onLoad.addTarget(zone.onEffectStart);
+			zone.onLoad.addTarget(onEffectStart);
 
 			// TODO: Create onEffectStop event item?
 		}
 
 		// Start effect on airfield zone load event
-		zone.onEffectStart.addObject(effectItem);
+		onEffectStart.addObject(effectItem);
 	}
-	
-	// Attach effect to airfield "bubble" zone
-	zone.onActivate.addObject(effectItem);
-	zone.onDeactivate.addObject(effectItem);
 
 	items.push(effectItem);
 
