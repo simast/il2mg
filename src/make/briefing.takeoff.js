@@ -47,6 +47,11 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 	briefing.push('<font color="' + briefingColor.LIGHT + '">' + airfield.name + "</font>");
 	briefing.push("airfield");
 	
+	// Airfield callsign
+	if (airfield.callsign) {
+		briefing.push("(callsign <i>“" + airfield.callsign[1] + "”</i>)");
+	}
+
 	// Compute take off heading
 	if (taxiRoute) {
 		
