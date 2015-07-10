@@ -179,7 +179,7 @@ function makeFlight(params) {
 	// Set unique flight callsign
 	flight.callsign = this.getCallsign("plane");
 
-	// Enable airfield taxi route
+	// Enable required airfield taxi route
 	if (flight.taxi > 0) {
 		makeAirfieldTaxi.call(this, airfield, flight.taxi);
 	}
@@ -188,6 +188,37 @@ function makeFlight(params) {
 	makeFlightPilots.call(this, flight);
 	makeFlightPlanes.call(this, flight);
 	makeFlightPlan.call(this, flight);
+	
+	// Enable closest airfield taxi route for player-only spawn point
+	if (flight.taxi === 0) {
+		
+		var playerItem = flight.player.item;
+		var taxiRoutes = [];
+		
+		// Build taxi route list with distances to player plane item
+		for (var taxiRouteID in airfield.taxi) {
+			
+			var taxiRoute = airfield.taxi[taxiRouteID];
+			var posXDiff = playerItem.XPos - taxiRoute[3][0];
+			var posZDiff = playerItem.ZPos - taxiRoute[3][1];
+
+			taxiRoutes.push({
+				id: +taxiRouteID,
+				distance: Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2))
+			});
+		}
+		
+		if (taxiRoutes.length) {
+		
+			// Sort taxi routes based on shortest distance to player plane item
+			taxiRoutes.sort(function(a, b) {
+				return (a.distance - b.distance);
+			});
+			
+			// Enable airfield taxi route
+			makeAirfieldTaxi.call(this, airfield, taxiRoutes[0].id);
+		}
+	}
 	
 	return flight;
 }

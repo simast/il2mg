@@ -3,6 +3,7 @@
 
 // Flights make parts
 var makeFlight = require("./flights.flight");
+var makeAirfieldTaxi = require("./airfields.taxi");
 
 // Generate mission flights
 module.exports = function makeFlights() {
@@ -29,7 +30,7 @@ module.exports = function makeFlights() {
 		unit: unit,
 		mission: {
 			type: "training",
-			planes: [2, 2],
+			planes: [1],
 			payload: "bombs"
 		}
 	});
@@ -41,6 +42,30 @@ module.exports = function makeFlights() {
 		// Set player flight reference
 		if (flight.player) {
 			this.flights.player = flight;
+		}
+	}
+	
+	// Enable not used taxi routes for all active airfields
+	for (var airfieldID in this.airfieldsByID) {
+		
+		var airfield = this.airfieldsByID[airfieldID];
+		
+		// Ignore airfields without value (no active planes/units)
+		if (!airfield.value) {
+			continue;
+		}
+		
+		// Choose taxi routes randomly
+		var taxiRoutes = rand.shuffle(Object.keys(airfield.taxi));
+		
+		for (var taxiRouteID of taxiRoutes) {
+			
+			var taxiRunwayID = airfield.taxi[taxiRouteID][1];
+			
+			// Enable one random taxi route for each runway
+			if (!airfield.activeTaxiRoutes || !airfield.activeTaxiRoutes[taxiRunwayID]) {
+				makeAirfieldTaxi.call(this, airfield, +taxiRouteID);
+			}
 		}
 	}
 };
