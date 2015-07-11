@@ -215,8 +215,13 @@ function makeFlight(params) {
 				return (a.distance - b.distance);
 			});
 			
+			var playerTaxiRouteID = taxiRoutes[0].id;
+
 			// Enable airfield taxi route
-			makeAirfieldTaxi.call(this, airfield, taxiRoutes[0].id);
+			makeAirfieldTaxi.call(this, airfield, playerTaxiRouteID);
+
+			// Use selected taxi route for player-only flight
+			flight.taxi = playerTaxiRouteID;
 		}
 	}
 	
