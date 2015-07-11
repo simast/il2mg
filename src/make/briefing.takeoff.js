@@ -54,10 +54,10 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 					taxiDistanceFirst = taxiDistanceReference;
 				}
 
-				// NOTE: Try at least 2 taxi points and abort when the distance from
+				// NOTE: Try at least 3 taxi points and abort when the distance from
 				// the reference point to the player plane item is greater than 100
 				// meters. Also abort if we hit taxi runway takeoff point.
-				if (i >= 1 && (taxiDistanceReference > 100 || taxiPoints[i][2] === itemFlag.TAXI_RUNWAY)) {
+				if (i >= 2 && (taxiDistanceReference > 100 || taxiPoints[i][2] === itemFlag.TAXI_RUNWAY)) {
 					break;
 				}
 			}
