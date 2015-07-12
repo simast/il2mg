@@ -5,23 +5,18 @@
 module.exports = function makePlanLand(action, element, flight, input) {
 
 	// TODO: Remove/delete flight planes at destination if it's not possible to land
-	if (!flight.taxi) {
-		return;
-	}
 	
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
 	var leaderElement = flight.elements[0];
 	var leaderPlaneItem = element[0].item;
+	var taxiRoute = airfield.taxi[Math.abs(flight.taxi)];
 	var landCommand = flight.group.createItem("MCU_CMD_Land");
 
-	// NOTE: Landing point is the same as takeoff
-	var takeoffStart = airfield.taxi[flight.taxi].takeoffStart;
-	var takeoffEnd = airfield.taxi[flight.taxi].takeoffEnd;
-
 	// Set land command position and orientation
-	landCommand.setPosition(takeoffStart);
-	landCommand.setOrientationTo(takeoffEnd);
+	// NOTE: Landing point is the same as takeoff
+	landCommand.setPosition(taxiRoute.takeoffStart);
+	landCommand.setOrientationTo(taxiRoute.takeoffEnd);
 
 	landCommand.addObject(leaderPlaneItem);
 

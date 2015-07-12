@@ -11,6 +11,14 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	var taxiRoute = item[6];
 	var maxSize = item[7];
 	var planesBySector = airfield.planesBySector;
+	var playerTaxiRoute;
+
+	// NOTE: Negative taxi routes are player-only taxi routes
+	if (taxiRoute < 0) {
+
+		playerTaxiRoute = Math.abs(taxiRoute);
+		taxiRoute = 0;
+	}
 	
 	// Build taxi spawn point by sector index (used when spawning flights)
 	var taxiSpawnsBySector = airfield.taxiSpawnsBySector;
@@ -33,6 +41,11 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 				orientation: item[4], // Orientation
 				size: maxSize // Max plane size
 			};
+			
+			// Mark route to be activated with player-only spawn
+			if (playerTaxiRoute) {
+				taxiSpawn.route = playerTaxiRoute;
+			}
 			
 			taxiSpawnsBySector[sector][taxiRoute].push(taxiSpawn);
 		}

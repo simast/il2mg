@@ -96,23 +96,26 @@ module.exports = function makeFlightPlanes(flight) {
 						}
 					});
 
-					// Sort valid spawn points based on the distance to the last plane in a
-					// multi element formation. This helps when placing multiple elements on
-					// the same ramp as they will be grouped together and the flight formation
-					// will not be mixed up.
-					if (flight.elements.length > 1 && lastPlane) {
+					if (element.length > 1) {
 
-						validParkSpawns.sort(function(a, b) {
-							return (a.distance - b.distance);
-						});
-					}
-					// When placing a first plane on the ramp - sort valid spawn points by
-					// size (the first plane will use best fit spawn point).
-					else if (!lastPlane) {
+						// Sort valid spawn points based on the distance to the last plane in a
+						// multi element formation. This helps when placing multiple elements on
+						// the same ramp as they will be grouped together and the flight formation
+						// will not be mixed up.
+						if (flight.elements.length > 1 && lastPlane) {
 
-						validParkSpawns.sort(function(a, b) {
-							return (a.point.size - b.point.size);
-						});
+							validParkSpawns.sort(function(a, b) {
+								return (a.distance - b.distance);
+							});
+						}
+						// When placing a first plane on the ramp - sort valid spawn points by
+						// size (the first plane will use best fit spawn point).
+						else if (!lastPlane) {
+
+							validParkSpawns.sort(function(a, b) {
+								return (a.point.size - b.point.size);
+							});
+						}
 					}
 				}
 
@@ -173,6 +176,15 @@ module.exports = function makeFlightPlanes(flight) {
 					// Mark parking spawn point as used/reserved
 					usedParkSpawns.push(parkSpawn.id);
 					foundSpawnPoint = true;
+
+					// Player-only spawn point with a taxi route defined
+					if (flight.taxi === 0 && spawnPoint.route) {
+
+						// Enable and use selected airfield taxi route
+						if (makeAirfieldTaxi.call(this, airfield, spawnPoint.route)) {
+							flight.taxi = spawnPoint.route;
+						}
+					}
 				}
 			}
 			// Try to start plane from runway

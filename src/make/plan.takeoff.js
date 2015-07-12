@@ -6,30 +6,24 @@ var MCU_CMD_Formation = require("../item").MCU_CMD_Formation;
 // Make plan takeoff action
 module.exports = function makePlanTakeoff(action, element, flight, input) {
 
-	// Skip takeoff logic for player-only taxi routes
-	if (!flight.taxi) {
-		return;
-	}
-
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
 	var leaderPlaneItem = element[0].item;
-	var takeoffStart = airfield.taxi[flight.taxi].takeoffStart;
-	var takeoffEnd = airfield.taxi[flight.taxi].takeoffEnd;
 	var takeoffCommand = flight.takeoffCommand;
+	var taxiRoute = airfield.taxi[flight.taxi];
 	var flightState = DATA.flightState;
 	var isAirStart = (typeof element.state === "number");
 	var isLastElement = (element === flight.elements[flight.elements.length - 1]);
 	
-	// Create takeoff command
-	// NOTE: Flight will use a single takeoff command for all elements
-	if (!takeoffCommand) {
+	// Create take off command
+	// NOTE: Flight will use a single take off command for all elements
+	if (!takeoffCommand && taxiRoute) {
 
 		takeoffCommand = flight.takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
 
 		// Set takeoff command position and orientation
-		takeoffCommand.setPosition(takeoffStart);
-		takeoffCommand.setOrientationTo(takeoffEnd);
+		takeoffCommand.setPosition(taxiRoute.takeoffStart);
+		takeoffCommand.setOrientationTo(taxiRoute.takeoffEnd);
 	}
 
 	// Add a short timer before takeoff from runway start
@@ -53,12 +47,12 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		input(waitTimerBefore);
 	}
 	// Connect takeoff command to previous action
-	else if (isLastElement && !isAirStart) {
+	else if (takeoffCommand && isLastElement && !isAirStart) {
 		input(takeoffCommand);
 	}
 
 	// Set takeoff command object to element leader plane
-	if (!isAirStart) {
+	if (takeoffCommand && !isAirStart) {
 		takeoffCommand.addObject(leaderPlaneItem);
 	}
 	
@@ -82,8 +76,25 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	var waitTimerAfter = flight.group.createItem("MCU_Timer");
 
 	waitTimerAfter.Time = +(rand.real(5, 8).toFixed(3));
-	waitTimerAfter.setPosition(takeoffEnd);
 	waitTimerAfter.addTarget(waypointCommand);
+	
+	if (takeoffCommand) {
+		waitTimerAfter.setPositionNear(takeoffCommand);
+	}
+	else {
+		waitTimerAfter.setPositionNear(leaderPlaneItem);
+	}
+
+	// Deactivate command used to make sure the subsequent take off command actions
+	// are not repeated after the second take off (for player flight only)
+	if (flight.player) {
+
+		var deactivateAfter = flight.group.createItem("MCU_Deactivate");
+
+		deactivateAfter.setPositionNear(waitTimerAfter);
+		deactivateAfter.addTarget(waitTimerAfter);
+		waitTimerAfter.addTarget(deactivateAfter);
+	}
 
 	if (element.length > 1) {
 
@@ -101,11 +112,22 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	if (!isAirStart) {
 		
 		// Set element leader take off report event action
-		leaderPlaneItem.entity.addReport(
-			"OnTookOff",
-			takeoffCommand,
-			waitTimerAfter
-		);
+		if (takeoffCommand) {
+
+			leaderPlaneItem.entity.addReport(
+				"OnTookOff",
+				takeoffCommand,
+				waitTimerAfter
+			);
+		}
+		// Set take off event action for player-only spawn
+		else {
+
+			leaderPlaneItem.entity.addEvent(
+				"OnPlaneTookOff",
+				waitTimerAfter
+			);
+		}
 	}
 	else {
 		input(waitTimerAfter);

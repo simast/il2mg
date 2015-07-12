@@ -5204,12 +5204,12 @@ Group
 
     Block
     {
-      Name = "PLANE:2:0:LARGE:CAMO";
+      Name = "PLANE:2:-2:LARGE:CAMO";
       Index = 258;
       LinkTrId = 0;
-      XPos = 134428.502;
+      XPos = 134423.889;
       YPos = 25.626;
-      ZPos = 279542.139;
+      ZPos = 279554.421;
       XOri = 0.00;
       YOri = 138.67;
       ZOri = 0.00;
@@ -5365,11 +5365,11 @@ Group
           Name = "TRUCK:FUEL";
           Index = 268;
           LinkTrId = 0;
-          XPos = 134375.937;
+          XPos = 134334.997;
           YPos = 25.626;
-          ZPos = 279552.687;
+          ZPos = 279536.760;
           XOri = 0.00;
-          YOri = 335.59;
+          YOri = 260.95;
           ZOri = 0.00;
           Model = "graphics\blocks\static_zis_fuel.mgm";
           Script = "LuaScripts\WorldObjects\Blocks\static_zis_fuel.txt";
@@ -8545,7 +8545,7 @@ Group
       YPos = 25.626;
       ZPos = 280371.217;
       XOri = 0.00;
-      YOri = 317.71;
+      YOri = 316.24;
       ZOri = 0.00;
       Area = 10;
       Speed = 100;
@@ -8560,11 +8560,11 @@ Group
       Desc = "";
       Targets = [487];
       Objects = [];
-      XPos = 133628.660;
+      XPos = 133634.879;
       YPos = 25.626;
-      ZPos = 280309.702;
+      ZPos = 280301.202;
       XOri = 0.00;
-      YOri = 245.12;
+      YOri = 242.87;
       ZOri = 0.00;
       Area = 10;
       Speed = 100;
@@ -8579,9 +8579,9 @@ Group
       Desc = "";
       Targets = [489];
       Objects = [];
-      XPos = 133605.019;
+      XPos = 133612.102;
       YPos = 25.626;
-      ZPos = 280258.119;
+      ZPos = 280256.591;
       XOri = 0.00;
       YOri = 161.68;
       ZOri = 0.00;
@@ -9066,7 +9066,7 @@ Group
       YPos = 25.626;
       ZPos = 279619.849;
       XOri = 0.00;
-      YOri = 114.31;
+      YOri = 116.42;
       ZOri = 0.00;
       Area = 10;
       Speed = 100;
@@ -9081,11 +9081,11 @@ Group
       Desc = "";
       Targets = [541];
       Objects = [];
-      XPos = 134156.185;
+      XPos = 134149.022;
       YPos = 25.626;
-      ZPos = 279697.798;
+      ZPos = 279706.469;
       XOri = 0.00;
-      YOri = 166.28;
+      YOri = 192.13;
       ZOri = 0.00;
       Area = 10;
       Speed = 100;
@@ -9100,9 +9100,9 @@ Group
       Desc = "";
       Targets = [543];
       Objects = [];
-      XPos = 134083.958;
+      XPos = 134095.833;
       YPos = 25.626;
-      ZPos = 279715.349;
+      ZPos = 279694.802;
       XOri = 0.00;
       YOri = 121.47;
       ZOri = 0.00;
@@ -9691,7 +9691,7 @@ Group
       Index = 587;
       LinkTrId = 0;
       XPos = 133603.568;
-      YPos = 25.629;
+      YPos = 25.626;
       ZPos = 280629.949;
       XOri = 0.00;
       YOri = 83.26;
@@ -9717,7 +9717,7 @@ Group
       Index = 588;
       LinkTrId = 0;
       XPos = 133673.857;
-      YPos = 25.710;
+      YPos = 25.626;
       ZPos = 279581.941;
       XOri = 0.00;
       YOri = 168.37;
@@ -9795,7 +9795,7 @@ Group
       Index = 591;
       LinkTrId = 0;
       XPos = 133742.970;
-      YPos = 25.470;
+      YPos = 25.626;
       ZPos = 278674.795;
       XOri = 0.00;
       YOri = 78.45;
@@ -9821,7 +9821,7 @@ Group
       Index = 592;
       LinkTrId = 0;
       XPos = 135132.424;
-      YPos = 25.625;
+      YPos = 25.626;
       ZPos = 280307.249;
       XOri = 0.00;
       YOri = 127.71;
@@ -9847,7 +9847,7 @@ Group
       Index = 593;
       LinkTrId = 0;
       XPos = 133290.989;
-      YPos = 25.068;
+      YPos = 25.626;
       ZPos = 279542.880;
       XOri = 0.00;
       YOri = 275.50;
@@ -9873,7 +9873,7 @@ Group
       Index = 594;
       LinkTrId = 0;
       XPos = 133313.994;
-      YPos = 25.792;
+      YPos = 25.626;
       ZPos = 280752.670;
       XOri = 0.00;
       YOri = 203.06;
@@ -9925,7 +9925,7 @@ Group
       Index = 596;
       LinkTrId = 0;
       XPos = 134911.038;
-      YPos = 25.613;
+      YPos = 25.626;
       ZPos = 279016.694;
       XOri = 0.00;
       YOri = 57.76;
@@ -10021,7 +10021,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 601;
+    Index = 600;
     LinkTrId = 0;
     XPos = 134263.257;
     YPos = 25.626;
@@ -10043,7 +10043,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 602;
+    Index = 601;
     LinkTrId = 0;
     XPos = 134096.449;
     YPos = 25.626;
@@ -10065,7 +10065,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 603;
+    Index = 602;
     LinkTrId = 0;
     XPos = 134338.383;
     YPos = 25.626;

@@ -28,6 +28,11 @@ module.exports = function makePlanStart(action, element, flight, input) {
 		}
 	}
 
+	// Player-only spawn without valid taxi route
+	if (flight.taxi <= 0) {
+		return;
+	}
+
 	if (!flight.onStart) {
 
 		// TODO: Add support for shedulled flights

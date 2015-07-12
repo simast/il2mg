@@ -13,7 +13,7 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 	var airfield = this.airfieldsByID[flight.airfield];
 	var playerElement = flight.elements[0];
 	var playerPlaneItem = flight.player.item;
-	var taxiRoute = airfield.taxi[flight.taxi];
+	var taxiRoute = airfield.taxi[Math.abs(flight.taxi)];
 
 	// Find player element
 	for (var element of flight.elements) {

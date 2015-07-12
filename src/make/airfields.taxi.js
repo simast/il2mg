@@ -9,8 +9,10 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 
 	// TODO: Invert taxi points based on takeoff against the wind requirements
 
+	taxiRouteID = parseInt(taxiRouteID, 10);
+
 	if (!airfield.taxi || !airfield.taxi[taxiRouteID]) {
-		return;
+		return false;
 	}
 	
 	var taxiRoute = airfield.taxi[taxiRouteID];
@@ -23,7 +25,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 
 	// Limit 1 taxi route per runway (due to AI issues)
 	if (activeTaxiRoutes[runwayID] !== undefined) {
-		return;
+		return (activeTaxiRoutes[runwayID] === taxiRouteID);
 	}
 
 	var itemType = DATA.getItemType(taxiRoute[0]);
@@ -138,4 +140,6 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 
 	// Set active taxi route for runway
 	activeTaxiRoutes[runwayID] = taxiRouteID;
+	
+	return true;
 };

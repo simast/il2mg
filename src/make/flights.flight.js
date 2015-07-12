@@ -184,10 +184,9 @@ function makeFlight(params) {
 		makeAirfieldTaxi.call(this, airfield, flight.taxi);
 	}
 
-	// Make flight parts
+	// Make flight pilots and planes
 	makeFlightPilots.call(this, flight);
 	makeFlightPlanes.call(this, flight);
-	makeFlightPlan.call(this, flight);
 	
 	// Enable closest airfield taxi route for player-only spawn point
 	if (flight.taxi === 0) {
@@ -221,9 +220,12 @@ function makeFlight(params) {
 			makeAirfieldTaxi.call(this, airfield, playerTaxiRouteID);
 
 			// Use selected taxi route for player-only flight
-			flight.taxi = playerTaxiRouteID;
+			flight.taxi = -playerTaxiRouteID;
 		}
 	}
+	
+	// Make flight plan
+	makeFlightPlan.call(this, flight);
 	
 	return flight;
 }
