@@ -162,11 +162,11 @@ Group
     Name = "FUEL";
     Index = 10;
     LinkTrId = 0;
-    XPos = 116118.183;
+    XPos = 116127.587;
     YPos = 81.268;
-    ZPos = 103472.820;
+    ZPos = 103481.193;
     XOri = 0.00;
-    YOri = 23.09;
+    YOri = 203.64;
     ZOri = 0.00;
     Model = "graphics\blocks\arf_gsm_1.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\arf_gsm_1.txt";
@@ -3586,9 +3586,9 @@ Group
     Name = "TRUCK:FUEL";
     Index = 172;
     LinkTrId = 0;
-    XPos = 116099.975;
+    XPos = 116097.524;
     YPos = 81.268;
-    ZPos = 103502.247;
+    ZPos = 103503.336;
     XOri = 0.00;
     YOri = 77.17;
     ZOri = 0.00;
@@ -3608,9 +3608,9 @@ Group
     Name = "TRUCK:FUEL";
     Index = 173;
     LinkTrId = 0;
-    XPos = 116122.502;
+    XPos = 116113.807;
     YPos = 81.268;
-    ZPos = 103465.541;
+    ZPos = 103473.492;
     XOri = 0.00;
     YOri = 144.62;
     ZOri = 0.00;
@@ -7842,11 +7842,11 @@ Group
         Name = "TRUCK:FUEL";
         Index = 393;
         LinkTrId = 0;
-        XPos = 116538.073;
+        XPos = 116548.974;
         YPos = 81.268;
-        ZPos = 102656.195;
+        ZPos = 102675.272;
         XOri = 0.00;
-        YOri = 287.48;
+        YOri = 77.30;
         ZOri = 0.00;
         Model = "graphics\blocks\static_opel_fuel.mgm";
         Script = "LuaScripts\WorldObjects\Blocks\static_opel_fuel.txt";
@@ -8260,7 +8260,7 @@ Group
 
     Block
     {
-      Name = "PLANE:1:-1:SMALL";
+      Name = "PLANE:1:0:SMALL";
       Index = 412;
       LinkTrId = 0;
       XPos = 116233.820;

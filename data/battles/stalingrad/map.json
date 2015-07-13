@@ -6,9 +6,9 @@
 		season: "summer",
 		width: 358400,
 		height: 230400,
-		heightmap: "graphics\\LANDSCAPE_Stalin_w\\height.hini",
-		textures: "graphics\\LANDSCAPE_Stalin_w\\textures.tini",
-		forests: "graphics\\LANDSCAPE_Stalin_w\\trees\\woods.wds",
+		heightmap: "graphics\\landscape_stalin_w\\height.hini",
+		textures: "graphics\\landscape_stalin_w\\textures.tini",
+		forests: "graphics\\landscape_stalin_w\\trees\\woods.wds",
 		gui: "stalingrad-1942"
 	},
 	// Autumn
@@ -18,9 +18,9 @@
 		season: "autumn",
 		width: 358400,
 		height: 230400,
-		heightmap: "graphics\\LANDSCAPE_Stalin_w\\height.hini",
-		textures: "graphics\\LANDSCAPE_Stalin_w\\textures.tini",
-		forests: "graphics\\LANDSCAPE_Stalin_w\\trees\\woods.wds",
+		heightmap: "graphics\\landscape_stalin_w\\height.hini",
+		textures: "graphics\\landscape_stalin_w\\textures.tini",
+		forests: "graphics\\landscape_stalin_w\\trees\\woods.wds",
 		gui: "stalingrad-1942"
 	},
 	// Winter
@@ -30,9 +30,9 @@
 		season: "winter",
 		width: 358400,
 		height: 230400,
-		heightmap: "graphics\\LANDSCAPE_Stalin_w\\height.hini",
-		textures: "graphics\\LANDSCAPE_Stalin_w\\textures.tini",
-		forests: "graphics\\LANDSCAPE_Stalin_w\\trees\\woods.wds",
+		heightmap: "graphics\\landscape_stalin_w\\height.hini",
+		textures: "graphics\\landscape_stalin_w\\textures.tini",
+		forests: "graphics\\landscape_stalin_w\\trees\\woods.wds",
 		gui: "stalingrad-1942"
 	}
 ]

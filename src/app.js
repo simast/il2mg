@@ -207,6 +207,9 @@ params.option("-a, --airfield <airfield>", "select an airfield", function(value)
 	return String(value).trim();
 });
 
+// Set mission seed value (--seed)
+params.option("-S, --seed <seed>", "set mission seed value");
+
 // Turn on debug mode (--debug)
 params.option("-D, --debug", "use debug (development) mode");
 
@@ -276,8 +279,14 @@ appDomain.run(function() {
 	}
 
 	// --date
-	if (params.date && typeof params.date !== "object") {
-		throw ["Invalid mission date!", {date: params.date}];
+	if (params.date) {
+
+		if (typeof params.date !== "object") {
+			throw ["Invalid mission date!", {date: params.date}];
+		}
+		else {
+			params.date = params.date.format("YYYY-MM-DD");
+		}
 	}
 
 	// --time

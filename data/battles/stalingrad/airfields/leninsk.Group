@@ -5169,9 +5169,9 @@ Group
       Name = "PLANE:1:-1:LARGE:CAMO";
       Index = 263;
       LinkTrId = 0;
-      XPos = 135055.212;
+      XPos = 135047.162;
       YPos = 21.984;
-      ZPos = 307321.842;
+      ZPos = 307307.530;
       XOri = 0.00;
       YOri = 274.95;
       ZOri = 0.00;
@@ -5330,9 +5330,9 @@ Group
         Name = "PLANE:1:1:HUGE";
         Index = 273;
         LinkTrId = 0;
-        XPos = 135114.041;
+        XPos = 135113.502;
         YPos = 21.984;
-        ZPos = 307324.684;
+        ZPos = 307327.647;
         XOri = 0.00;
         YOri = 279.67;
         ZOri = 0.00;
@@ -5352,9 +5352,9 @@ Group
         Name = "DECO";
         Index = 274;
         LinkTrId = 0;
-        XPos = 135103.278;
+        XPos = 135102.739;
         YPos = 21.984;
-        ZPos = 307333.190;
+        ZPos = 307336.153;
         XOri = 0.00;
         YOri = 192.65;
         ZOri = 0.00;

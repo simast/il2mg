@@ -3,6 +3,7 @@
 
 var fs = require("fs");
 var os = require("os");
+var util = require("util");
 var path = require("path");
 var Random = require("random-js");
 var Item = require("./item");
@@ -16,10 +17,24 @@ var FILE_EXT_LIST = "list";
 Mission.FORMAT_TEXT = "text";
 Mission.FORMAT_BINARY = "binary";
 
+// List of mission parameters that make up the complex seed value
+// NOTE: The order is important and is used to define parameter sequence
+var COMPLEX_SEED_PARAMS = [
+	"seed", // Base seed value (numeric)
+	"battle",
+	"date",
+	"time",
+	"coalition",
+	"country",
+	"pilot",
+	"state",
+	"airfield"
+];
+
 /**
  * Mission constructor.
  *
- * @param {object} params Desired mission parameters (command-line arguments).
+ * @param {object} params Desired mission parameters.
  */
 function Mission(params) {
 
@@ -29,24 +44,16 @@ function Mission(params) {
 
 	// Debug mode flag
 	this.debug = (this.params.debug === true);
-	
-	// Seed value for random generator
-	this.seed = Date.now();
 
 	// Last item index value
 	this.lastIndex = 0;
-
-	// Initialize random number generator
-	var mtRand = Random.engines.mt19937();
-	mtRand.seed(this.seed);
-	this.rand = new Random(mtRand);
 
 	// Reserve an empty localization string (used in binary mission generation for
 	// items without LCName or LCDesc properties).
 	this.getLC("");
 	
-	// Save seed value as a localization string
-	this.getLC(this.seed.toString());
+	// Initialize random number generator
+	this.initRand(params);
 
 	log.I("Making mission...");
 	log.profile("Making");
@@ -70,6 +77,95 @@ function Mission(params) {
 
 	log.profile("Making");
 }
+
+/**
+ * Initialize random number generator.
+ *
+ * @param {object} params Desired mission parameters.
+ */
+Mission.prototype.initRand = function(params) {
+
+	var complexSeed;
+
+	// Initialize from existing seed
+	if (params.seed) {
+
+		// Make sure the seed parameter is exclusive and is not used together with
+		// other complex seed parameters.
+		for (var i = 1; i < COMPLEX_SEED_PARAMS.length; i++) {
+
+			var param = COMPLEX_SEED_PARAMS[i];
+
+			if (param in params) {
+				throw ['Cannot use "%s" parameter together with seed.', param];
+			}
+		}
+
+		// Try a complex seed value (with Base64 parameters)
+		try {
+			complexSeed = JSON.parse(new Buffer(params.seed, "base64").toString("utf8"));
+		}
+		catch (e) {}
+
+		if (typeof complexSeed === "object") {
+
+			// Restore parameters from complex seed value
+			COMPLEX_SEED_PARAMS.forEach(function(param, paramIndex) {
+
+				if (paramIndex in complexSeed) {
+					params[param] = complexSeed[paramIndex];
+				}
+			});
+		}
+
+		// Handle simple seed value (numeric)
+		if (/^[0-9]+$/.test(params.seed)) {
+
+			var seedNumber = parseInt(params.seed, 10);
+
+			if (!isNaN(seedNumber) && seedNumber > 0) {
+				this.seed = seedNumber;
+			}
+		}
+
+		// Validate seed value
+		if (!this.seed) {
+			throw ["Invalid mission seed!", {seed: params.seed}];
+		}
+	}
+	// Create a new seed
+	else {
+
+		this.seed = Date.now();
+
+		// Check seed affecting parameters and create a complex seed if necessary
+		COMPLEX_SEED_PARAMS.forEach(function(param, paramIndex) {
+
+			if (param in params) {
+
+				complexSeed = complexSeed || Object.create(null);
+				complexSeed[paramIndex] = params[param];
+			}
+		});
+		
+		if (complexSeed) {
+			complexSeed[0] = this.seed;
+		}
+	}
+	
+	// Initialize random number generator
+	var mtRand = Random.engines.mt19937();
+	mtRand.seed(this.seed);
+	this.rand = new Random(mtRand);
+	
+	// Save seed value as a localization string
+	if (complexSeed) {
+		this.getLC(new Buffer(JSON.stringify(complexSeed), "utf8").toString("base64"));
+	}
+	else {
+		this.getLC(this.seed.toString());
+	}
+};
 
 /**
  * Create a new mission item.

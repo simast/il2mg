@@ -13,6 +13,11 @@ module.exports = function makeDate() {
 	var battleTo = moment(battle.to).endOf("day");
 	var date = params.date;
 
+	// Parse date as moment object
+	if (date) {
+		date = moment(date, "YYYY-MM-DD", true);
+	}
+	
 	// Validate desired date (from params)
 	if (date && (date.isBefore(battleFrom) || date.isAfter(battleTo))) {
 
