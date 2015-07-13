@@ -12,6 +12,9 @@ DATA.name = "il2mg";
 // Application version
 DATA.version = "r1";
 
+// Application copyright
+DATA.copyright = "(C) Simas Toleikis, 2015";
+
 // List of supported mission localization languages
 DATA.languages = Object.freeze([
 	"eng" // English

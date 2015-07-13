@@ -29,16 +29,24 @@ function Mission(params) {
 
 	// Debug mode flag
 	this.debug = (this.params.debug === true);
+	
+	// Seed value for random generator
+	this.seed = Date.now();
 
 	// Last item index value
 	this.lastIndex = 0;
 
 	// Initialize random number generator
-	this.rand = new Random(Random.engines.browserCrypto);
+	var mtRand = Random.engines.mt19937();
+	mtRand.seed(this.seed);
+	this.rand = new Random(mtRand);
 
 	// Reserve an empty localization string (used in binary mission generation for
 	// items without LCName or LCDesc properties).
 	this.getLC("");
+	
+	// Save seed value as a localization string
+	this.getLC(this.seed.toString());
 
 	log.I("Making mission...");
 	log.profile("Making");
@@ -208,8 +216,10 @@ Mission.prototype.save = function(fileName) {
 
 		fileName = path.join(fileDir, fileBase);
 	}
-
-	// TODO: Generate mission file path and name if not specified
+	// Generate mission file path and name if not specified
+	else {
+		fileName = DATA.name + "-" + this.seed;
+	}
 
 	// Save text format file
 	if (format === Mission.FORMAT_TEXT || (this.debug && !this.params.format)) {

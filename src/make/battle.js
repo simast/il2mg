@@ -20,7 +20,7 @@ module.exports = function makeBattle() {
 	// Create main mission Options item
 	var options = this.createItem("Options");
 
-	options.LCAuthor = this.getLC(DATA.name + " " + DATA.version);
+	options.LCAuthor = this.getLC(DATA.name + " " + DATA.version + " " + DATA.copyright);
 	options.MissionType = 0; // Single-player mission
 	options.PlayerConfig = ""; // TODO: ?
 	options.AqmId = 0; // TODO: ?

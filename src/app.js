@@ -66,7 +66,7 @@ var params = require("commander");
 params.usage("[options] [mission file and/or path]");
 
 // --version output
-params.version(DATA.name + " " + DATA.version + " (C) Simas Toleikis, 2015");
+params.version(DATA.name + " " + DATA.version + " " + DATA.copyright);
 
 // Select mission file format (--format)
 params.option("-f, --format <format>", (function() {
