@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 			all: {
 				src: grunt.file.match("**/*.js", sourceFiles),
 				options: {
-					config: "jscs.json",
+					config: "build/.jscsrc",
 					esnext: true
 				}
 			}
