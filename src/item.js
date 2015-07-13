@@ -771,6 +771,7 @@ module.exports = Item;
 	require("./item/Group"),
 	require("./item/MCU_Activate"),
 	require("./item/MCU_CMD_AttackArea"),
+	require("./item/MCU_CMD_Cover"),
 	require("./item/MCU_CMD_Effect"),
 	require("./item/MCU_CMD_ForceComplete"),
 	require("./item/MCU_CMD_Formation"),
