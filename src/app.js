@@ -68,6 +68,9 @@ params.usage("[options] [mission file and/or path]");
 // --version output
 params.version(DATA.name + " " + DATA.version + " " + DATA.copyright);
 
+// Set mission seed value (--seed)
+params.option("-S, --seed <seed>", "set mission seed value");
+
 // Select mission file format (--format)
 params.option("-f, --format <format>", (function() {
 
@@ -207,11 +210,10 @@ params.option("-a, --airfield <airfield>", "select an airfield", function(value)
 	return String(value).trim();
 });
 
-// Set mission seed value (--seed)
-params.option("-S, --seed <seed>", "set mission seed value");
-
 // Turn on debug mode (--debug)
-params.option("-D, --debug", "use debug (development) mode");
+if (!DATA.isBinary) {
+	params.option("-D, --debug", "use debug (development) mode");
+}
 
 /**
  * TODO: Support other command line params:

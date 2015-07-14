@@ -1,7 +1,8 @@
 /node_modules
 /docs
 /build/il2mg
-*.exe
+/build/il2mg.exe
+*.upx
 *.mission
 *.eng
 *.ger

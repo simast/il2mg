@@ -15,6 +15,9 @@ DATA.version = "r1";
 // Application copyright
 DATA.copyright = "(C) Simas Toleikis, 2015";
 
+// Flag used to identify the data as binary (compiled to an executable)
+DATA.isBinary = false;
+
 // List of supported mission localization languages
 DATA.languages = Object.freeze([
 	"eng" // English
@@ -101,7 +104,9 @@ DATA.briefingColor = Object.freeze({
 		var JSON5 = require("json" + "5");
 	}
 	catch (e) {
+		
 		useJSON5 = false;
+		DATA.isBinary = true;
 	}
 	
 	if (useJSON5) {

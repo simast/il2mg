@@ -136,7 +136,8 @@ Mission.prototype.initRand = function(params) {
 	// Create a new seed
 	else {
 
-		this.seed = Date.now();
+		// NOTE: Ignoring the first number from Date.now() to shorten the seed
+		this.seed = Date.now() % 1000000000000;
 
 		// Check seed affecting parameters and create a complex seed if necessary
 		COMPLEX_SEED_PARAMS.forEach(function(param, paramIndex) {

@@ -22,18 +22,18 @@ module.exports = function(grunt) {
 		});
 
 		// Copy over app source files
-		// TODO: Minify/combine into a single file?
 		grunt.file.expand("src/**/*.js").forEach(function(sourceFile) {
 			grunt.file.copy(sourceFile, buildDir + sourceFile);
 		});
 
 		var options = [];
 		var extension = (process.platform === "win32") ? ".exe" : "";
+		var binaryFilePath = "../" + buildName + extension;
 
 		options.push("--version", "iojs"); // Latest io.js
 		options.push("--config", "../enclose.js");
 		options.push("--loglevel", "error");
-		options.push("--output", "../" + buildName + extension);
+		options.push("--output", binaryFilePath);
 		options.push(grunt.config("pkg.main"));
 
 		grunt.file.setBase(buildDir);
@@ -41,17 +41,30 @@ module.exports = function(grunt) {
 		var compileTask = enclose.exec(options);
 
 		function onDone(error) {
-
-			grunt.file.setBase("../../");
-
-			if (!error) {
-				grunt.log.ok();
+			
+			if (error) {
+				return done(error);
 			}
+			
+			// TODO: Set executable file resource info
 
-			// Clean up temporary build directory
-			grunt.file.delete(buildDir);
-
-			done(error);
+			// Compress binary file with UPX executable packer
+			grunt.util.spawn({
+				cmd: "../tools/upx.exe",
+				args: ["-qqq", "--best", binaryFilePath]
+			}, function(error, result, code) {
+				
+				grunt.file.setBase("../../");
+	
+				// Clean up temporary build directory
+				grunt.file.delete(buildDir);
+				
+				if (!error) {
+					grunt.log.ok();
+				}
+				
+				done(error);
+			});
 		}
 
 		compileTask.on("error", onDone);

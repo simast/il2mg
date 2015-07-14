@@ -51,7 +51,8 @@ module.exports = function(grunt) {
 		clean: {
 			build: [
 				"build/il2mg",
-				"build/il2mg.exe"
+				"build/il2mg.exe",
+				"build/il2mg.upx"
 			],
 			data: [
 				"data/**/*.eng",
