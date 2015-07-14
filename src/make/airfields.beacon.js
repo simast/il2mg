@@ -8,6 +8,11 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 		return;
 	}
 
+	// Initialize beacons index table
+	if (!this.beaconsByAirfield) {
+		this.beaconsByAirfield = Object.create(null);
+	}
+
 	var itemType = DATA.getItemType(item[5]);
 	var beaconItem = this.createItem(itemType.type, false);
 
@@ -15,15 +20,18 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 	beaconItem.Script = itemType.script;
 	beaconItem.setPosition(item[1], item[2], item[3]);
 	beaconItem.setOrientation(item[4]);
-
-	// TODO: Make beacons only for player related airfields
-	// TODO: Set different beacon channels
-
 	beaconItem.Country = airfield.country;
 	beaconItem.Engageable = 0;
-	beaconItem.BeaconChannel = 1;
+	beaconItem.BeaconChannel = 0;
 
-	beaconItem.createEntity();
+	beaconItem.createEntity(true);
+
+	// Attach beacon to airfield "bubble" zone
+	airfield.zone.onActivate.addObject(beaconItem);
+	airfield.zone.onDeactivate.addObject(beaconItem);
+
+	// Save beacon item reference
+	this.beaconsByAirfield[airfield.id] = beaconItem;
 
 	return [beaconItem];
 };

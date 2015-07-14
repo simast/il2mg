@@ -180,7 +180,7 @@ function makeFlight(params) {
 	flight.callsign = this.getCallsign("plane");
 	
 	// Make sure the callsign used for player flight is unique
-	if (this.flights.player) {
+	if (!isPlayer && this.flights.player) {
 		
 		var playerCallsign = this.flights.player.callsign;
 
@@ -239,6 +239,19 @@ function makeFlight(params) {
 	
 	// Make flight plan
 	makeFlightPlan.call(this, flight);
+	
+	// Enable radio beacon source for player home airfield
+	if (isPlayer && this.beaconsByAirfield && this.beaconsByAirfield[airfield.id]) {
+		
+		var beaconItem = this.beaconsByAirfield[airfield.id];
+		
+		beaconItem.BeaconChannel = 1;
+		beaconItem.entity.Enabled = 1;
+		
+		// Detach beacon item from airfield "bubble" zone
+		airfield.zone.onActivate.removeObject(beaconItem);
+		airfield.zone.onDeactivate.removeObject(beaconItem);
+	}
 	
 	return flight;
 }

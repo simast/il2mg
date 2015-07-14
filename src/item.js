@@ -330,6 +330,29 @@ Item.prototype.addTarget = function(item) {
 };
 
 /**
+ * Remove existing item target link.
+ *
+ * @param {Item} item Target item to remove as a link.
+ */
+Item.prototype.removeTarget = function(item) {
+
+	if (!(item instanceof Item)) {
+		throw new TypeError("Invalid target item value.");
+	}
+
+	if (!this.Targets || !this.Targets.length) {
+		return;
+	}
+
+	var itemPos = this.Targets.indexOf(item.Index);
+
+	// Remove existing item link
+	if (itemPos > -1) {
+		this.Targets.splice(itemPos, 1);
+	}
+};
+
+/**
  * Add a new item object link.
  *
  * @param {Item} item Target item object to link.
@@ -350,6 +373,29 @@ Item.prototype.addObject = function(item) {
 	// Add a new item object link
 	if (this.Objects.indexOf(item.entity.Index) === -1) {
 		this.Objects.push(item.entity.Index);
+	}
+};
+
+/**
+ * Remove existing item object link.
+ *
+ * @param {Item} item Target item object to remove as a link.
+ */
+Item.prototype.removeObject = function(item) {
+
+	if (!(item instanceof Item)) {
+		throw new TypeError("Invalid object item value.");
+	}
+
+	if (!item.entity || !this.Objects || !this.Objects.length) {
+		return;
+	}
+
+	var itemPos = this.Objects.indexOf(item.entity.Index);
+
+	// Remove existing item object link
+	if (itemPos > -1) {
+		this.Objects.splice(itemPos, 1);
 	}
 };
 
