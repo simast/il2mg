@@ -382,7 +382,7 @@ module.exports = function makeFlightPlanes(flight) {
 			planeItem.Script = planeData.script;
 			planeItem.Model = planeData.model;
 			planeItem.Country = unit.country;
-			planeItem.Callsign = flight.callsign[0];
+			planeItem.Callsign = flight.callsign.id;
 
 			// Player plane item
 			if (plane === flight.player) {

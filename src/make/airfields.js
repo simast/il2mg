@@ -67,9 +67,6 @@ module.exports = function makeAirfields() {
 			airfield.taxiSpawnsBySector = Object.create(null);
 			airfield.taxiSectorsByPlaneGroup = Object.create(null);
 
-			// Set unique airfield callsign
-			airfield.callsign = mission.getCallsign("airfield");
-
 			// Process unit planes list
 			for (var unitID in airfieldUnits) {
 

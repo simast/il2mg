@@ -219,7 +219,7 @@ function makeBriefingFlight() {
 		}
 		// Flight callsign
 		else if (flight.callsign) {
-			output += "<br>\tCallsign <i>“" + flight.callsign[1] + "”</i>.";
+			output += "<br>\tCallsign <i>“" + flight.callsign.name + "”</i>.";
 		}
 		
 	}, this);

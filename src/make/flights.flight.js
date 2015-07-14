@@ -178,6 +178,19 @@ function makeFlight(params) {
 	
 	// Set unique flight callsign
 	flight.callsign = this.getCallsign("plane");
+	
+	// Make sure the callsign used for player flight is unique
+	if (this.flights.player) {
+		
+		var playerCallsign = this.flights.player.callsign;
+
+		if (playerCallsign) {
+			
+			while (flight.callsign.id === playerCallsign.id) {
+				flight.callsign = this.getCallsign("plane");
+			}
+		}
+	}
 
 	// Enable required airfield taxi route
 	if (flight.taxi > 0) {

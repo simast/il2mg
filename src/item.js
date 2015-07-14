@@ -434,6 +434,8 @@ Item.prototype.toString = function(indentLevel) {
 				
 				propValue = getSlug(propValue, {
 					maintainCase: true,
+					uric: true,
+					mark: true,
 					separator: " "
 				});
 			}

@@ -31,6 +31,25 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	var itemType = DATA.getItemType(taxiRoute[0]);
 	var isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV);
 	var basePoint = taxiRoute[3];
+	
+	// Set unique airfield callsign
+	if (!airfield.callsign) {
+		
+		airfield.callsign = this.getCallsign("airfield");
+
+		// Make sure the callsign used for player home airfield is unique
+		if (this.flights.player) {
+			
+			var playerAirfield = this.airfieldsByID[this.flights.player.airfield];
+	
+			if (airfield.id !== playerAirfield.id) {
+				
+				while (airfield.callsign.id === playerAirfield.callsign.id) {
+					airfield.callsign = this.getCallsign("airfield");
+				}
+			}
+		}
+	}
 
 	// Create airfield item
 	var airfieldItem = airfield.group.createItem(itemType.type);
@@ -40,10 +59,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	airfieldItem.setPosition(basePoint[0], airfield.position[1], basePoint[1]);
 	airfieldItem.setOrientation(basePoint[2]);
 	airfieldItem.Country = airfield.country;
-
-	if (airfield.callsign) {
-		airfieldItem.Callsign = airfield.callsign[0];
-	}
+	airfieldItem.Callsign = airfield.callsign.id;
 
 	var taxiPoints = taxiRoute[4];
 

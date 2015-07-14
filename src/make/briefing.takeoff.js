@@ -114,7 +114,7 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 	
 	// Airfield callsign
 	if (airfield.callsign) {
-		briefing.push("(callsign <i>“" + airfield.callsign[1] + "”</i>)");
+		briefing.push("(callsign <i>“" + airfield.callsign.name + "”</i>)");
 	}
 
 	// Add take off heading/direction

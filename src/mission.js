@@ -286,8 +286,14 @@ Mission.prototype.getCallsign = function(type) {
 			this.lastCallsign[type] = 0;
 		}
 	}
+	
+	var callsign = DATA.callsigns[type][this.lastCallsign[type]];
 
-	return DATA.callsigns[type][this.lastCallsign[type]];
+	// Return selected callsign info
+	return {
+		id: callsign[0],
+		name: callsign[1]
+	};
 };
 
 /**
