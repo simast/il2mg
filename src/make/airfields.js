@@ -202,13 +202,25 @@ module.exports = function makeAirfields() {
 
 						// Log a warning if unitPlanes.length is greater than 0 (could not
 						// distribute all unit planes - not enough parking spots).
-						unitPlanes.forEach(function(planeData) {
-
-							log.W("Not enough plane spots!", {
-								airfield: airfieldID,
-								plane: planeData[0]
+						if (unitPlanes.length) {
+							
+							var logData = {
+								airfield: airfieldID
+							};
+							
+							unitPlanes.forEach(function(planeData) {
+								
+								var planeID = planeData[0];
+								
+								if (!logData[planeID]) {
+									logData[planeID] = 0;
+								}
+								
+								logData[planeID]++;
 							});
-						});
+							
+							log.W("Not enough plane spots!", logData);
+						}
 					});
 				}
 			})();

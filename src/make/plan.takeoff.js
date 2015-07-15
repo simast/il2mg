@@ -13,6 +13,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	var taxiRoute = airfield.taxi[flight.taxi];
 	var flightState = DATA.flightState;
 	var isAirStart = (typeof element.state === "number");
+	var isLeadingElement = (element === flight.elements[0]);
 	var isLastElement = (element === flight.elements[flight.elements.length - 1]);
 	
 	// Create take off command
@@ -56,27 +57,10 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		takeoffCommand.addObject(leaderPlaneItem);
 	}
 	
-	// Waypoint command used to form/delay element over an airfield
-	var waypointCommand = flight.group.createItem("MCU_Waypoint");
-
-	// TODO
-	waypointCommand.Area = 100;
-	waypointCommand.Speed = 280;
-
-	// Semi-random formation point over the airfield
-	waypointCommand.setPosition(
-		airfield.position[0] + rand.integer(-500, 500),
-		airfield.position[1] + rand.integer(240, 260),
-		airfield.position[2] + rand.integer(-500, 500)
-	);
-
-	waypointCommand.addObject(leaderPlaneItem);
-	
 	// Short timer used to delay next command after takeoff is reported
 	var waitTimerAfter = flight.group.createItem("MCU_Timer");
 
 	waitTimerAfter.Time = +(rand.real(5, 8).toFixed(3));
-	waitTimerAfter.addTarget(waypointCommand);
 	
 	if (takeoffCommand) {
 		waitTimerAfter.setPositionNear(takeoffCommand);
@@ -84,10 +68,44 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	else {
 		waitTimerAfter.setPositionNear(leaderPlaneItem);
 	}
+	
+	// Final take off command - either a waypoint over an airfield for a leading
+	// element, or a cover command for other elements.
+	var finalCommand;
+	
+	// Waypoint command used to form/delay leading element over an airfield
+	if (isLeadingElement) {
+		
+		finalCommand = flight.group.createItem("MCU_Waypoint");
+	
+		// TODO
+		finalCommand.Area = 100;
+		finalCommand.Speed = 280;
+	
+		// Semi-random formation point over the airfield
+		finalCommand.setPosition(
+			airfield.position[0] + rand.integer(-500, 500),
+			airfield.position[1] + rand.integer(240, 260),
+			airfield.position[2] + rand.integer(-500, 500)
+		);
+	
+		finalCommand.addObject(leaderPlaneItem);
+	}
+	// Cover command used for non-leading elements
+	else {
+		
+		finalCommand = flight.group.createItem("MCU_CMD_Cover");
+		
+		finalCommand.setPositionNear(waitTimerAfter);
+		finalCommand.addObject(leaderPlaneItem);
+		finalCommand.addTarget(flight.elements[0][0].item.entity);
+	}
+	
+	waitTimerAfter.addTarget(finalCommand);
 
 	// Deactivate command used to make sure the subsequent take off command actions
 	// are not repeated after the second take off (for player flight only)
-	if (flight.player) {
+	if (element.player) {
 
 		var deactivateAfter = flight.group.createItem("MCU_Deactivate");
 
@@ -104,9 +122,14 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		formationCommand.FormationType = MCU_CMD_Formation.TYPE_PLANE_EDGE_RIGHT;
 		formationCommand.FormationDensity = MCU_CMD_Formation.DENSITY_LOOSE;
 		formationCommand.addObject(leaderPlaneItem);
-		formationCommand.setPositionNear(waypointCommand);
+		formationCommand.setPositionNear(finalCommand);
 
-		waypointCommand.addTarget(formationCommand);
+		if (isLeadingElement) {
+			finalCommand.addTarget(formationCommand);
+		}
+		else {
+			waitTimerAfter.addTarget(formationCommand);
+		}
 	}
 
 	if (!isAirStart) {
@@ -134,7 +157,10 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	}
 
 	// Connect takeoff command to next action
-	return function(input) {
-		waypointCommand.addTarget(input);
-	};
+	if (isLeadingElement) {
+		
+		return function(input) {
+			finalCommand.addTarget(input);
+		};
+	}
 };
