@@ -1,0 +1,1204 @@
+Group
+{
+  Name = "1942-08-08";
+  Index = 1444;
+  Desc = "";
+  MCU_Waypoint
+  {
+    Index = 1445;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1446];
+    Objects = [];
+    XPos = -1224.124;
+    YPos = 16.076;
+    ZPos = 237319.662;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1447;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1448];
+    Objects = [];
+    XPos = 57982.548;
+    YPos = 16.076;
+    ZPos = 192406.484;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1449;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1450];
+    Objects = [];
+    XPos = 65551.134;
+    YPos = 16.076;
+    ZPos = 154652.188;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1450;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1452];
+    Objects = [];
+    XPos = 71549.941;
+    YPos = 16.076;
+    ZPos = 143889.246;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1453;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1454];
+    Objects = [];
+    XPos = 91023.476;
+    YPos = 16.076;
+    ZPos = 150124.165;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1455;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1456];
+    Objects = [];
+    XPos = 113208.669;
+    YPos = 16.076;
+    ZPos = 140977.653;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1457;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1458];
+    Objects = [];
+    XPos = 139498.196;
+    YPos = 16.076;
+    ZPos = 135605.364;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1458;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1460];
+    Objects = [];
+    XPos = 136978.118;
+    YPos = 16.076;
+    ZPos = 157620.998;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1461;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1462];
+    Objects = [];
+    XPos = 138531.929;
+    YPos = 16.076;
+    ZPos = 174328.454;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1462;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1464];
+    Objects = [];
+    XPos = 142726.950;
+    YPos = 16.076;
+    ZPos = 175723.521;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1465;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1466];
+    Objects = [];
+    XPos = 186947.335;
+    YPos = 16.076;
+    ZPos = 169581.275;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1467;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1468];
+    Objects = [];
+    XPos = 212665.094;
+    YPos = 16.076;
+    ZPos = 146206.994;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1468;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1470];
+    Objects = [];
+    XPos = 213310.761;
+    YPos = 16.076;
+    ZPos = 135501.527;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1470;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1472];
+    Objects = [];
+    XPos = 220318.688;
+    YPos = 16.076;
+    ZPos = 129227.979;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1472;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 231559.015;
+    YPos = 16.076;
+    ZPos = 129185.168;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1474;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1475];
+    Objects = [];
+    XPos = 166413.214;
+    YPos = 16.076;
+    ZPos = 187603.477;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1476;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1467];
+    Objects = [];
+    XPos = 204941.429;
+    YPos = 16.076;
+    ZPos = 145605.247;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1466;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1476];
+    Objects = [];
+    XPos = 200836.837;
+    YPos = 16.076;
+    ZPos = 153682.893;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1456;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1457];
+    Objects = [];
+    XPos = 121981.177;
+    YPos = 16.076;
+    ZPos = 135448.684;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1454;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1480];
+    Objects = [];
+    XPos = 104108.693;
+    YPos = 16.076;
+    ZPos = 159921.675;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1464;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1482];
+    Objects = [];
+    XPos = 146935.730;
+    YPos = 16.076;
+    ZPos = 184384.464;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1482;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1474];
+    Objects = [];
+    XPos = 156621.500;
+    YPos = 16.076;
+    ZPos = 189686.786;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1448;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1485];
+    Objects = [];
+    XPos = 59457.895;
+    YPos = 16.076;
+    ZPos = 180876.762;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1485;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1449];
+    Objects = [];
+    XPos = 63527.549;
+    YPos = 16.076;
+    ZPos = 166767.997;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1452;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1453];
+    Objects = [];
+    XPos = 81772.077;
+    YPos = 16.076;
+    ZPos = 146751.855;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1475;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1465];
+    Objects = [];
+    XPos = 175812.751;
+    YPos = 16.076;
+    ZPos = 176971.432;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1489;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1447];
+    Objects = [];
+    XPos = 62409.142;
+    YPos = 16.076;
+    ZPos = 207306.219;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1446;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1491];
+    Objects = [];
+    XPos = 14826.641;
+    YPos = 16.076;
+    ZPos = 238111.721;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1491;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1493];
+    Objects = [];
+    XPos = 30233.692;
+    YPos = 16.076;
+    ZPos = 234804.220;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1493;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1495];
+    Objects = [];
+    XPos = 44904.844;
+    YPos = 16.076;
+    ZPos = 241056.690;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1496;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1489];
+    Objects = [];
+    XPos = 74307.515;
+    YPos = 16.076;
+    ZPos = 221975.256;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1497;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1496];
+    Objects = [];
+    XPos = 80146.465;
+    YPos = 16.076;
+    ZPos = 233698.004;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1495;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1497];
+    Objects = [];
+    XPos = 67789.709;
+    YPos = 16.076;
+    ZPos = 242978.371;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1499;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1500];
+    Objects = [];
+    XPos = 109006.667;
+    YPos = 16.076;
+    ZPos = 172145.474;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1500;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1502];
+    Objects = [];
+    XPos = 116514.417;
+    YPos = 16.076;
+    ZPos = 173858.168;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1502;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1504];
+    Objects = [];
+    XPos = 124719.576;
+    YPos = 16.076;
+    ZPos = 181617.605;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1504;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1461];
+    Objects = [];
+    XPos = 131321.750;
+    YPos = 16.076;
+    ZPos = 177337.411;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1506;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1507];
+    Objects = [];
+    XPos = 103116.160;
+    YPos = 16.076;
+    ZPos = 167298.876;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1480;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1506];
+    Objects = [];
+    XPos = 105369.030;
+    YPos = 16.076;
+    ZPos = 163495.471;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1507;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1499];
+    Objects = [];
+    XPos = 107616.434;
+    YPos = 16.076;
+    ZPos = 169077.706;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1510;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1455];
+    Objects = [];
+    XPos = 112184.432;
+    YPos = 16.076;
+    ZPos = 151566.129;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1511;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1510];
+    Objects = [];
+    XPos = 119128.800;
+    YPos = 16.076;
+    ZPos = 163017.516;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1460;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [1511];
+    Objects = [];
+    XPos = 131809.582;
+    YPos = 16.076;
+    ZPos = 161768.020;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1513;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 126147.828;
+    YPos = 16.076;
+    ZPos = 158842.126;
+    XOri = 0.00;
+    YOri = 87.86;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1514;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1513];
+    Objects = [];
+    XPos = 124279.058;
+    YPos = 16.076;
+    ZPos = 157377.606;
+    XOri = 0.00;
+    YOri = 88.04;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1515;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1514];
+    Objects = [];
+    XPos = 124960.545;
+    YPos = 16.076;
+    ZPos = 161557.285;
+    XOri = 0.00;
+    YOri = 88.07;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1516;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1515];
+    Objects = [];
+    XPos = 126062.965;
+    YPos = 16.076;
+    ZPos = 165714.586;
+    XOri = 0.00;
+    YOri = 88.07;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1517;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1516];
+    Objects = [];
+    XPos = 123343.891;
+    YPos = 16.076;
+    ZPos = 166092.488;
+    XOri = 0.00;
+    YOri = 88.07;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1518;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 119703.328;
+    YPos = 16.076;
+    ZPos = 139944.199;
+    XOri = 0.00;
+    YOri = 241.74;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1519;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1518];
+    Objects = [];
+    XPos = 122089.822;
+    YPos = 16.076;
+    ZPos = 140676.838;
+    XOri = 0.00;
+    YOri = 241.92;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1520;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1519];
+    Objects = [];
+    XPos = 119864.236;
+    YPos = 16.076;
+    ZPos = 136214.112;
+    XOri = 0.00;
+    YOri = 241.95;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1521;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1520];
+    Objects = [];
+    XPos = 117812.492;
+    YPos = 16.076;
+    ZPos = 132698.220;
+    XOri = 0.00;
+    YOri = 241.95;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1522;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1521];
+    Objects = [];
+    XPos = 120016.655;
+    YPos = 16.076;
+    ZPos = 130787.534;
+    XOri = 0.00;
+    YOri = 241.95;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1523;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 135385.024;
+    YPos = 16.076;
+    ZPos = 136512.875;
+    XOri = 0.00;
+    YOri = 328.41;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1524;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1523];
+    Objects = [];
+    XPos = 135267.775;
+    YPos = 16.076;
+    ZPos = 138890.877;
+    XOri = 0.00;
+    YOri = 328.59;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1525;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1524];
+    Objects = [];
+    XPos = 138796.335;
+    YPos = 16.076;
+    ZPos = 136157.615;
+    XOri = 0.00;
+    YOri = 328.62;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1526;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1525];
+    Objects = [];
+    XPos = 141581.549;
+    YPos = 16.076;
+    ZPos = 134457.396;
+    XOri = 0.00;
+    YOri = 328.62;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1527;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1526];
+    Objects = [];
+    XPos = 142828.544;
+    YPos = 16.076;
+    ZPos = 137006.710;
+    XOri = 0.00;
+    YOri = 328.62;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1528;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1529];
+    Objects = [];
+    XPos = 56787.157;
+    YPos = 16.076;
+    ZPos = 203446.164;
+    XOri = 0.00;
+    YOri = 253.76;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1529;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1531];
+    Objects = [];
+    XPos = 55373.445;
+    YPos = 16.076;
+    ZPos = 198589.321;
+    XOri = 0.00;
+    YOri = 253.76;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1531;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1533];
+    Objects = [];
+    XPos = 60844.720;
+    YPos = 16.076;
+    ZPos = 197606.116;
+    XOri = 0.00;
+    YOri = 253.76;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1533;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [1535];
+    Objects = [];
+    XPos = 68304.054;
+    YPos = 16.076;
+    ZPos = 202630.297;
+    XOri = 0.00;
+    YOri = 253.73;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 1535;
+    Name = "ATTACK";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 64227.247;
+    YPos = 16.076;
+    ZPos = 203681.873;
+    XOri = 0.00;
+    YOri = 253.55;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+}
+

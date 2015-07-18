@@ -73,9 +73,9 @@ module.exports = function makeFronts() {
 		else if (pointType === frontLine.ATTACK) {
 
 			pointItem.LineType = MCU_Icon.LINE_ATTACK;
-			pointItem.RColor = 165;
-			pointItem.GColor = 165;
-			pointItem.BColor = 165;
+			pointItem.RColor = 145;
+			pointItem.GColor = 145;
+			pointItem.BColor = 145;
 		}
 		// Defensive line
 		else if (pointType === frontLine.DEFEND) {

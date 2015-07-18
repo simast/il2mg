@@ -20,11 +20,18 @@ module.exports = function(grunt) {
 
 			let battle = DATA.battles[battleID];
 			let frontsPath = "data/battles/" + battleID + "/fronts/";
+			let frontsProcessed = Object.create(null);
 
 			// Process all fronts
 			for (let frontDate in battle.fronts) {
 
 				let frontFile = battle.fronts[frontDate];
+				
+				// Skip file if it was already processed for another front date
+				if (frontsProcessed[frontFile]) {
+					continue;
+				}
+				
 				let fileSource = frontsPath + frontFile + ".Group";
 				let fileDestination = frontsPath + frontFile + ".json";
 
@@ -134,6 +141,9 @@ module.exports = function(grunt) {
 					fileDestination,
 					JSON.stringify(json, null, "\t")
 				);
+				
+				// Mark front file as processed
+				frontsProcessed[frontFile] = true;
 			}
 
 			totalBattles++;
