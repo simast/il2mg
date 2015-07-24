@@ -24,7 +24,9 @@ Flag.prototype.typeID = 13;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-Flag.prototype.toBinary = function(index) {
+Flag.prototype.toBinary = function* (index) {
+	
+	yield* Item.prototype.toBinary.apply(this, arguments);
 
 	var size = 38;
 	var scriptLength = Buffer.byteLength(this.Script);
@@ -66,10 +68,7 @@ Flag.prototype.toBinary = function(index) {
 	// Script
 	this.writeString(buffer, scriptLength, this.Script);
 
-	return [
-		Item.prototype.toBinary.apply(this, arguments),
-		buffer
-	];
+	yield buffer;
 };
 
 module.exports = Flag;

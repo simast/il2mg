@@ -403,7 +403,7 @@ Mission.prototype.saveBinary = function(fileName) {
 
 	var promise = new Promise(function(resolve, reject) {
 
-		var optionsBuffer;
+		var optionsBuffers = [];
 		var itemBuffers = [];
 		var numItems = 0;
 
@@ -431,33 +431,38 @@ Mission.prototype.saveBinary = function(fileName) {
 				}
 				// Get item binary representation (data buffers)
 				else {
+					
+					var buffer;
 
-					var buffer = item.toBinary(indexTables);
-
-					// Find Options item buffer
-					if (item instanceof Item.Options) {
-						optionsBuffer = buffer;
-					}
-					// Process normal item buffers
-					else if (buffer.length) {
-
-						itemBuffers.push(buffer);
-
-						// Process linked item entity
-						if (item.entity) {
-
-							itemBuffers.push(item.entity.toBinary(indexTables));
-							numItems++;
+					for (buffer of item.toBinary(indexTables)) {
+						
+						// Collect Options item buffers
+						if (item instanceof Item.Options) {
+							optionsBuffers.push(buffer);
 						}
-
+						// Process normal item buffers
+						else if (buffer.length) {
+							itemBuffers.push(buffer);
+						}
+					}
+					
+					// Process linked item entity
+					if (item.entity) {
+						
+						for (buffer of item.entity.toBinary(indexTables)) {
+							itemBuffers.push(buffer);
+						}
+						
 						numItems++;
 					}
+					
+					numItems++;
 				}
 			});
 
 		})(self.items);
 
-		if (!optionsBuffer) {
+		if (!optionsBuffers.length) {
 			throw new Error();
 		}
 
@@ -465,8 +470,10 @@ Mission.prototype.saveBinary = function(fileName) {
 
 		fileStream.once("open", function(fd) {
 
-			// Write Options item buffer (has to be the first one in the file)
-			fileStream.write(optionsBuffer);
+			// Write Options item buffers (has to be the first one in the file)
+			while (optionsBuffers.length) {
+				fileStream.write(optionsBuffers.shift());
+			}
 
 			var indexTableNames = Object.keys(indexTables);
 			var itlhBuffer = new Buffer(7); // Index table list header buffer
@@ -487,20 +494,9 @@ Mission.prototype.saveBinary = function(fileName) {
 			fileStream.write(bsBuffer);
 
 			// Write item buffers
-			itemBuffers.forEach(function(buffer) {
-
-				// Single item buffer
-				if (Buffer.isBuffer(buffer)) {
-					fileStream.write(buffer);
-				}
-				// Multiple item buffers
-				else if (Array.isArray(buffer)) {
-
-					buffer.forEach(function(buffer) {
-						fileStream.write(buffer);
-					});
-				}
-			});
+			while (itemBuffers.length) {
+				fileStream.write(itemBuffers.shift());
+			}
 
 			fileStream.end();
 		});

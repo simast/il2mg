@@ -47,7 +47,9 @@ Plane.START_PARKING = 2;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-Plane.prototype.toBinary = function(index) {
+Plane.prototype.toBinary = function* (index) {
+	
+	yield* Item.prototype.toBinary.apply(this, arguments);
 
 	var size = 50;
 	var scriptLength = Buffer.byteLength(this.Script);
@@ -124,10 +126,7 @@ Plane.prototype.toBinary = function(index) {
 	// Fuel
 	this.writeFloat(buffer, this.Fuel);
 
-	return [
-		Item.prototype.toBinary.apply(this, arguments),
-		buffer
-	];
+	yield buffer;
 };
 
 module.exports = Plane;

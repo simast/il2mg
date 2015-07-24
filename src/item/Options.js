@@ -19,7 +19,7 @@ Options.prototype.hasIndex = false;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-Options.prototype.toBinary = function(index) {
+Options.prototype.toBinary = function* (index) {
 
 	var date = moment(this.Date, "D.M.YYYY", true);
 	var time = moment(this.Time, "H:m:s", true);
@@ -167,7 +167,7 @@ Options.prototype.toBinary = function(index) {
 
 	}, this);
 
-	return buffer;
+	yield buffer;
 };
 
 module.exports = Options;

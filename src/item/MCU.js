@@ -167,7 +167,9 @@ MCU.prototype.writeReports = function(buffer) {
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-MCU.prototype.toBinary = function(index) {
+MCU.prototype.toBinary = function* (index) {
+	
+	yield* Item.prototype.toBinary.apply(this, arguments);
 
 	var size = 9;
 
@@ -190,10 +192,7 @@ MCU.prototype.toBinary = function(index) {
 	// Objects list
 	this.writeUInt32Array(buffer, this.Objects);
 
-	return [
-		Item.prototype.toBinary.apply(this, arguments),
-		buffer
-	];
+	yield buffer;
 };
 
 module.exports = MCU;

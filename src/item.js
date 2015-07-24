@@ -550,7 +550,7 @@ Item.prototype.toString = function(indentLevel) {
  * @param {object} index Binary data index object.
  * @returns {Buffer} Base binary representation of the item.
  */
-Item.prototype.toBinary = function(index) {
+Item.prototype.toBinary = function* (index) {
 
 	if (!this.typeID) {
 		throw new Error("Invalid item binary type ID.");
@@ -583,7 +583,7 @@ Item.prototype.toBinary = function(index) {
 	// Skin string table index
 	this.writeUInt16(buffer, index.skin.value(this.Skin));
 
-	return buffer;
+	yield buffer;
 };
 
 /**

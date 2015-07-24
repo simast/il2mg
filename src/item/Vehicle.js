@@ -36,7 +36,9 @@ Vehicle.AI_HIGH = 3;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-Vehicle.prototype.toBinary = function(index) {
+Vehicle.prototype.toBinary = function* (index) {
+
+	yield* Item.prototype.toBinary.apply(this, arguments);
 
 	var size = 39;
 	var scriptLength = Buffer.byteLength(this.Script);
@@ -98,10 +100,7 @@ Vehicle.prototype.toBinary = function(index) {
 	// CoopStart
 	this.writeUInt8(buffer, this.CoopStart);
 
-	return [
-		Item.prototype.toBinary.apply(this, arguments),
-		buffer
-	];
+	yield buffer;
 };
 
 module.exports = Vehicle;

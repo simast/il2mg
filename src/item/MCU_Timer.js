@@ -22,7 +22,9 @@ MCU_Timer.prototype.typeID = 41;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-MCU_Timer.prototype.toBinary = function(index) {
+MCU_Timer.prototype.toBinary = function* (index) {
+	
+	yield* MCU.prototype.toBinary.apply(this, arguments);
 
 	var buffer = new Buffer(9);
 
@@ -32,7 +34,7 @@ MCU_Timer.prototype.toBinary = function(index) {
 	// Random
 	this.writeUInt8(buffer, this.Random);
 
-	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
+	yield buffer;
 };
 
 module.exports = MCU_Timer;

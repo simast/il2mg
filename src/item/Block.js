@@ -22,7 +22,9 @@ Block.prototype.typeID = 1;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-Block.prototype.toBinary = function(index) {
+Block.prototype.toBinary = function* (index) {
+	
+	yield* Item.prototype.toBinary.apply(this, arguments);
 
 	var buffer = new Buffer(13);
 	var damageItem;
@@ -79,10 +81,7 @@ Block.prototype.toBinary = function(index) {
 	// Damage data table index
 	this.writeUInt16(buffer, damageItem ? index.damage.value(damageItem) : 0xFFFF);
 
-	return [
-		Item.prototype.toBinary.apply(this, arguments),
-		buffer
-	];
+	yield buffer;
 };
 
 module.exports = Block;

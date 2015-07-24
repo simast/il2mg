@@ -78,7 +78,9 @@ MCU_TR_Entity.prototype.typeID = 30;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-MCU_TR_Entity.prototype.toBinary = function(index) {
+MCU_TR_Entity.prototype.toBinary = function* (index) {
+	
+	yield* MCU.prototype.toBinary.apply(this, arguments);
 
 	var size = 12;
 
@@ -101,7 +103,7 @@ MCU_TR_Entity.prototype.toBinary = function(index) {
 	// Reports list
 	this.writeReports(buffer);
 
-	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
+	yield buffer;
 };
 
 module.exports = MCU_TR_Entity;

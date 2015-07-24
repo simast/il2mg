@@ -31,7 +31,9 @@ Airfield.prototype.typeID = 9;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-Airfield.prototype.toBinary = function(index) {
+Airfield.prototype.toBinary = function* (index) {
+	
+	yield* Block.prototype.toBinary.apply(this, arguments);
 
 	var size = 31;
 	var pointItems = [];
@@ -112,7 +114,7 @@ Airfield.prototype.toBinary = function(index) {
 		
 	}, this);
 	
-	return Block.prototype.toBinary.apply(this, arguments).concat(buffer);
+	yield buffer;
 };
 
 module.exports = Airfield;

@@ -26,14 +26,16 @@ MCU_CMD_ForceComplete.PRIORITY_HIGH = 2;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-MCU_CMD_ForceComplete.prototype.toBinary = function(index) {
+MCU_CMD_ForceComplete.prototype.toBinary = function* (index) {
+	
+	yield* MCU.prototype.toBinary.apply(this, arguments);
 
 	var buffer = new Buffer(4);
 
 	// Priority
 	this.writeUInt32(buffer, this.Priority);
 
-	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
+	yield buffer;
 };
 
 module.exports = MCU_CMD_ForceComplete;

@@ -19,7 +19,9 @@ Ground.prototype.typeID = 7;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-Ground.prototype.toBinary = function(index) {
+Ground.prototype.toBinary = function* (index) {
+	
+	yield* Item.prototype.toBinary.apply(this, arguments);
 
 	var buffer = new Buffer(9);
 
@@ -37,10 +39,7 @@ Ground.prototype.toBinary = function(index) {
 	this.writeUInt8(buffer, 0);
 	this.writeUInt8(buffer, 0);
 
-	return [
-		Item.prototype.toBinary.apply(this, arguments),
-		buffer
-	];
+	yield buffer;
 };
 
 module.exports = Ground;

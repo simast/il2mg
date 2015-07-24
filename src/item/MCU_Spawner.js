@@ -21,14 +21,16 @@ MCU_Spawner.prototype.typeID = 48;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-MCU_Spawner.prototype.toBinary = function(index) {
+MCU_Spawner.prototype.toBinary = function* (index) {
+	
+	yield* MCU.prototype.toBinary.apply(this, arguments);
 
 	var buffer = new Buffer(1);
 
 	// SpawnAtMe
 	this.writeUInt8(buffer, this.SpawnAtMe);
 
-	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
+	yield buffer;
 };
 
 module.exports = MCU_Spawner;

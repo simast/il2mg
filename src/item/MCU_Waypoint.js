@@ -28,7 +28,9 @@ MCU_Waypoint.PRIORITY_HIGH = 2;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-MCU_Waypoint.prototype.toBinary = function(index) {
+MCU_Waypoint.prototype.toBinary = function* (index) {
+	
+	yield* MCU.prototype.toBinary.apply(this, arguments);
 
 	var buffer = new Buffer(20);
 
@@ -41,7 +43,7 @@ MCU_Waypoint.prototype.toBinary = function(index) {
 	// Priority
 	this.writeUInt32(buffer, this.Priority);
 
-	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
+	yield buffer;
 };
 
 module.exports = MCU_Waypoint;

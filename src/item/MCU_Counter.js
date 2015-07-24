@@ -22,7 +22,9 @@ MCU_Counter.prototype.typeID = 43;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-MCU_Counter.prototype.toBinary = function(index) {
+MCU_Counter.prototype.toBinary = function* (index) {
+	
+	yield* MCU.prototype.toBinary.apply(this, arguments);
 
 	var buffer = new Buffer(5);
 
@@ -32,7 +34,7 @@ MCU_Counter.prototype.toBinary = function(index) {
 	// Dropcount
 	this.writeUInt8(buffer, this.Dropcount);
 
-	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
+	yield buffer;
 };
 
 module.exports = MCU_Counter;

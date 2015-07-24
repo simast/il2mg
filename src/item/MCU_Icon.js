@@ -92,7 +92,9 @@ MCU_Icon.LINE_POSITION_9 = 22;
  * @param {object} index Binary data index object.
  * @returns {Buffer} Binary representation of the item.
  */
-MCU_Icon.prototype.toBinary = function(index) {
+MCU_Icon.prototype.toBinary = function* (index) {
+	
+	yield* MCU.prototype.toBinary.apply(this, arguments);
 
 	var size = 32;
 
@@ -126,7 +128,7 @@ MCU_Icon.prototype.toBinary = function(index) {
 	// Coalitions
 	this.writeUInt32Array(buffer, this.Coalitions || []);
 
-	return MCU.prototype.toBinary.apply(this, arguments).concat(buffer);
+	yield buffer;
 };
 
 module.exports = MCU_Icon;
