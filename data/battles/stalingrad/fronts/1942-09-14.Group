@@ -561,9 +561,9 @@ Group
     Desc = "";
     Targets = [5081];
     Objects = [];
-    XPos = 144847.713;
+    XPos = 144786.580;
     YPos = 16.076;
-    ZPos = 264650.720;
+    ZPos = 264403.004;
     XOri = 0.00;
     YOri = 0.00;
     ZOri = 0.00;
@@ -1112,9 +1112,9 @@ Group
     Desc = "";
     Targets = [5080];
     Objects = [];
-    XPos = 142097.140;
+    XPos = 147020.995;
     YPos = 16.076;
-    ZPos = 262321.706;
+    ZPos = 254858.998;
     XOri = 0.00;
     YOri = 0.00;
     ZOri = 0.00;

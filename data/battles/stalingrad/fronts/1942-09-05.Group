@@ -597,7 +597,7 @@ Group
     Index = 4140;
     Name = "BORDER";
     Desc = "";
-    Targets = [4136];
+    Targets = [6551];
     Objects = [];
     XPos = 146708.589;
     YPos = 16.076;
@@ -1231,6 +1231,25 @@ Group
     ZPos = 246654.655;
     XOri = 0.00;
     YOri = 288.34;
+    ZOri = 0.00;
+    Area = 0;
+    Speed = 0;
+    Priority = 1;
+  }
+  
+
+  MCU_Waypoint
+  {
+    Index = 6551;
+    Name = "BORDER";
+    Desc = "";
+    Targets = [4136];
+    Objects = [];
+    XPos = 147021.069;
+    YPos = 16.076;
+    ZPos = 254859.007;
+    XOri = 0.00;
+    YOri = 0.00;
     ZOri = 0.00;
     Area = 0;
     Speed = 0;
