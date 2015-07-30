@@ -45,9 +45,12 @@
 	"requireKeywordsOnNewLine": ["else", "while", "catch"],
 	"requireDotNotation": true,
 	"disallowYodaConditions": true,
-	"validateJSDoc": {
-		"checkParamNames": true,
+	"jsDoc": {
+		"checkAnnotations": "jsdoc3",
+		"requireParamTypes": true,
 		"checkRedundantParams": true,
-		"requireParamTypes": true
-	}
+		"checkReturnTypes": true
+	},
+	"disallowSpaceBeforeComma": true,
+	"disallowSpaceBeforeSemicolon": true
 }
