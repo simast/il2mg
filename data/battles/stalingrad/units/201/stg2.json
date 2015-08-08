@@ -52,12 +52,7 @@
 		]
 	},
 	"stg2_i_stab": {
-		// NOTE: The I gruppe was known as I.(Eins.)/StG 2 (Eins. for Einsatzgruppe
-		// - operational wing) since 1942-11-27.
-		name: [
-			["Stab I./StG 2", "start", "1942-11-26"],
-			["Stab I.(Eins.)/StG 2", "1942-11-27", "end"]
-		],
+		name: "Stab I./StG 2",
 		parent: "stg2_i",
 		planesMin: 3,
 		planesMax: 6
