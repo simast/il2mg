@@ -1,0 +1,32 @@
+{
+	// MC.202
+	"mc202": {
+		name: "MC.202",
+		type: ["fighter", "fighter_light"],
+		size: "small",
+		// NOTE: Static MC.202 models are not available, using Bf 109 as a workaround
+		static: [
+			{
+				model: "graphics\\blocks\\static_bf109.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_bf109_open.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109_open.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_bf109_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
+				camo: true
+			}
+		]
+	},
+
+	// MC.202 ser.VIII
+	"mc202s8": {
+		name: "MC.202 ser.VIII",
+		parent: "mc202",
+		model: "graphics\\planes\\mc202s8\\mc202s8.mgm",
+		script: "luascripts\\worldobjects\\planes\\mc202s8.txt"
+	}
+}

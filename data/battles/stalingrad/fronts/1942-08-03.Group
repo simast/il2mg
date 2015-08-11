@@ -637,9 +637,9 @@ Group
     Desc = "";
     Targets = [1128];
     Objects = [];
-    XPos = 45248.069;
+    XPos = 45074.618;
     YPos = 16.076;
-    ZPos = 209681.352;
+    ZPos = 210042.708;
     XOri = 0.00;
     YOri = 253.76;
     ZOri = 0.00;
@@ -656,9 +656,9 @@ Group
     Desc = "";
     Targets = [];
     Objects = [];
-    XPos = 47602.067;
+    XPos = 47456.155;
     YPos = 16.076;
-    ZPos = 221071.768;
+    ZPos = 219737.630;
     XOri = 0.00;
     YOri = 253.55;
     ZOri = 0.00;

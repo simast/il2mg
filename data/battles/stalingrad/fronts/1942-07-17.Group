@@ -537,14 +537,14 @@ Group
 
   MCU_Waypoint
   {
-    Index = 119;
+    Index = 56;
     Name = "ATTACK";
     Desc = "";
-    Targets = [121];
+    Targets = [57];
     Objects = [];
-    XPos = 26399.925;
+    XPos = 26660.879;
     YPos = 16.076;
-    ZPos = 75922.145;
+    ZPos = 77301.473;
     XOri = 0.00;
     YOri = 0.00;
     ZOri = 0.00;
@@ -556,10 +556,10 @@ Group
 
   MCU_Waypoint
   {
-    Index = 121;
+    Index = 57;
     Name = "ATTACK";
     Desc = "";
-    Targets = [122];
+    Targets = [59];
     Objects = [];
     XPos = 27354.312;
     YPos = 16.076;
@@ -575,10 +575,10 @@ Group
 
   MCU_Waypoint
   {
-    Index = 122;
+    Index = 59;
     Name = "ATTACK";
     Desc = "";
-    Targets = [123];
+    Targets = [61];
     Objects = [];
     XPos = 21873.236;
     YPos = 16.076;
@@ -594,10 +594,10 @@ Group
 
   MCU_Waypoint
   {
-    Index = 123;
+    Index = 61;
     Name = "ATTACK";
     Desc = "";
-    Targets = [124];
+    Targets = [63];
     Objects = [];
     XPos = 16154.013;
     YPos = 16.076;
@@ -613,14 +613,14 @@ Group
 
   MCU_Waypoint
   {
-    Index = 124;
+    Index = 63;
     Name = "ATTACK";
     Desc = "";
     Targets = [];
     Objects = [];
-    XPos = 17847.799;
+    XPos = 19301.685;
     YPos = 16.076;
-    ZPos = 79168.109;
+    ZPos = 79391.783;
     XOri = 0.00;
     YOri = 0.00;
     ZOri = 0.00;

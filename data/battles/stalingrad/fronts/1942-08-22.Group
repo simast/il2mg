@@ -1074,9 +1074,9 @@ Group
     Desc = "";
     Targets = [2547];
     Objects = [];
-    XPos = 161382.660;
+    XPos = 162258.127;
     YPos = 16.076;
-    ZPos = 210289.108;
+    ZPos = 209377.163;
     XOri = 0.00;
     YOri = 266.88;
     ZOri = 0.00;
@@ -1093,9 +1093,9 @@ Group
     Desc = "";
     Targets = [2549];
     Objects = [];
-    XPos = 157176.511;
+    XPos = 157577.767;
     YPos = 16.076;
-    ZPos = 207483.330;
+    ZPos = 205185.229;
     XOri = 0.00;
     YOri = 266.88;
     ZOri = 0.00;
@@ -1131,9 +1131,9 @@ Group
     Desc = "";
     Targets = [2553];
     Objects = [];
-    XPos = 151535.107;
+    XPos = 152376.179;
     YPos = 16.076;
-    ZPos = 247257.805;
+    ZPos = 232679.228;
     XOri = 0.00;
     YOri = 266.85;
     ZOri = 0.00;
@@ -1150,9 +1150,9 @@ Group
     Desc = "";
     Targets = [];
     Objects = [];
-    XPos = 148878.701;
+    XPos = 147897.450;
     YPos = 16.076;
-    ZPos = 242065.612;
+    ZPos = 225664.713;
     XOri = 0.00;
     YOri = 266.67;
     ZOri = 0.00;
