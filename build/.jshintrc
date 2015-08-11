@@ -1,0 +1,12 @@
+{
+	"node": true,
+	"esnext": true,
+	"validthis": true,
+	"globals": {
+		"log": true,
+		"DATA": true
+	},
+	"-W053": true,
+	"-W055": true,
+	"-W083": true
+}

@@ -30,16 +30,7 @@ module.exports = function(grunt) {
 			all: {
 				src: grunt.file.match("**/*.js", sourceFiles),
 				options: {
-					node: true,
-					esnext: true,
-					validthis: true,
-					globals: {
-						log: true,
-						DATA: true
-					},
-					"-W053": true, // Do not use {a} as a constructor
-					"-W055": true, // A constructor name should start with an uppercase letter
-					"-W083": true // Don't make functions within a loop
+					jshintrc: "build/.jshintrc"
 				}
 			}
 		},
@@ -71,15 +62,25 @@ module.exports = function(grunt) {
 	// Load custom build Grunt tasks
 	grunt.loadTasks("build/tasks");
 
-	// Register Grunt tasks
-	grunt.registerTask("check", ["jscs", "jshint"]);
+	// Task to run static code analysis using JSHint and JSCS
+	grunt.registerTask("check", [
+		"jscs",
+		"jshint"
+	]);
+	
+	// Default task used for building the project
 	grunt.registerTask("default", [
 		"clean",
 		"check",
 		"build:sloc",
 		"build:blocks",
 		"build:airfields",
-		"build:fronts",
+		"build:fronts"
+	]);
+	
+	// Task to build and compile the project
+	grunt.registerTask("compile", [
+		"default",
 		"build:compile"
 	]);
 };
