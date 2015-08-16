@@ -48,6 +48,21 @@ module.exports = function makeAirfields() {
 		airfield.id = airfieldID;
 		airfield.name = airfieldData.name;
 		airfield.position = airfieldData.position;
+		
+		// Getter for airfield items group
+		Object.defineProperty(airfield, "group", {
+			get: function() {
+				
+				// Lazy (first time access) initialization of group item
+				delete this.group;
+				
+				this.group = mission.createItem("Group");
+				this.group.setName(this.name);
+				
+				return this.group;
+			},
+			configurable: true
+		});
 
 		var airfieldUnits = mission.unitsByAirfield[airfieldID];
 
@@ -59,6 +74,7 @@ module.exports = function makeAirfields() {
 			var countries = Object.create(null);
 
 			airfield.value = 0;
+			airfield.planes = 0;
 			airfield.taxi = airfieldData.taxi;
 			airfield.countries = Object.create(null);
 			airfield.countriesWeighted = []; // List of country IDs as a weighted array
@@ -94,6 +110,8 @@ module.exports = function makeAirfields() {
 
 						planeGroup.push([planeID, unit.country, unitID]);
 					}
+					
+					airfield.planes++;
 				});
 			}
 
@@ -224,6 +242,17 @@ module.exports = function makeAirfields() {
 					});
 				}
 			})();
+			
+			// Show airfield icon with number of planes in debug mode
+			if (mission.debug) {
+				
+				var airfieldIcon = airfield.group.createItem("MCU_Icon");
+				
+				// TODO: Show icon at the edge of the map for off-map airfields
+				airfieldIcon.setPosition(airfield.position);
+				airfieldIcon.setName(mission.getLC(airfield.planes + "\u2708"));
+				airfieldIcon.Coalitions = mission.coalitions;
+			}
 
 			totalActive++;
 		}
@@ -232,9 +261,6 @@ module.exports = function makeAirfields() {
 		if (!airfieldData.items || !airfieldData.items.length) {
 			continue;
 		}
-
-		airfield.group = mission.createItem("Group");
-		airfield.group.setName(airfield.name);
 
 		// Make airfield zone
 		makeAirfieldZone.call(mission, airfield);

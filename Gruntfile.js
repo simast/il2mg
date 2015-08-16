@@ -40,7 +40,7 @@ module.exports = function(grunt) {
 
 		// Clean task
 		clean: {
-			build: [
+			compile: [
 				"build/il2mg",
 				"build/il2mg.exe",
 				"build/il2mg.upx"
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 	
 	// Default task used for building the project
 	grunt.registerTask("default", [
-		"clean",
+		"clean:data",
 		"check",
 		"build:sloc",
 		"build:blocks",
@@ -80,6 +80,7 @@ module.exports = function(grunt) {
 	
 	// Task to build and compile the project
 	grunt.registerTask("compile", [
+		"clean:compile",
 		"default",
 		"build:compile"
 	]);

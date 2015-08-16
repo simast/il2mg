@@ -21,6 +21,7 @@ Mission.FORMAT_BINARY = "binary";
 // NOTE: The order is important and is used to define parameter sequence
 var COMPLEX_SEED_PARAMS = [
 	"seed", // Base seed value (numeric)
+	"debug",
 	"battle",
 	"date",
 	"time",

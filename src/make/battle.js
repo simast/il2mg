@@ -16,6 +16,7 @@ module.exports = function makeBattle() {
 
 	this.battleID = battleID;
 	var battle = this.battle = DATA.battles[battleID];
+	var coalitions = this.coalitions = [];
 
 	// Create main mission Options item
 	var options = this.createItem("Options");
@@ -30,11 +31,16 @@ module.exports = function makeBattle() {
 
 		var countries = [];
 
-		// Unknown (neutral) country/coalition
+		// Unknown (neutral) country and coalition
+		coalitions.push(Item.DEFAULT_COALITION);
 		countries.push([Item.DEFAULT_COUNTRY, Item.DEFAULT_COALITION]);
 
 		battle.countries.forEach(function(countryID) {
-			countries.push([countryID, DATA.countries[countryID].coalition]);
+			
+			var coalition = DATA.countries[countryID].coalition;
+			
+			coalitions.push(coalition);
+			countries.push([countryID, coalition]);
 		});
 
 		return countries;

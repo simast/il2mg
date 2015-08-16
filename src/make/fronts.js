@@ -8,6 +8,8 @@ var frontLine = DATA.frontLine;
 // Generate mission fronts
 module.exports = function makeFronts() {
 	
+	var mission = this;
+	
 	// Resolve required fronts file based on mission date
 	var frontsFile = this.battle.fronts[this.date.format("YYYY-MM-DD")];
 
@@ -27,19 +29,6 @@ module.exports = function makeFronts() {
 	// Front icons group
 	var frontsGroup = this.createItem("Group");
 	frontsGroup.setName("FRONT");
-
-	// Coalitions list used for front icons
-	var coalitions = [Item.DEFAULT_COALITION];
-
-	// All coalitions can see front icon items
-	for (var countryID of this.battle.countries) {
-
-		var coalitionID = DATA.countries[countryID].coalition;
-
-		if (coalitions.indexOf(coalitionID) === -1) {
-			coalitions.push(coalitionID);
-		}
-	}
 
 	// Indexed list of created point icons
 	var pointItems = Object.create(null);
@@ -63,7 +52,7 @@ module.exports = function makeFronts() {
 		var pointItem = frontsGroup.createItem("MCU_Icon");
 
 		pointItem.setPosition(point[1], point[2]);
-		pointItem.Coalitions = coalitions;
+		pointItem.Coalitions = mission.coalitions;
 
 		// Border line
 		if (pointType === frontLine.BORDER) {
