@@ -57,8 +57,7 @@ DATA.itemFlag = Object.freeze({
 // Front line item types
 DATA.frontLine = Object.freeze({
 	BORDER: 1, // Border line
-	ATTACK: 2, // Attack arrow
-	DEFEND: 3 // Defensive line
+	ATTACK: 2 // Attack arrow
 });
 
 // Plane size constants (types/IDs)
@@ -84,6 +83,11 @@ DATA.planAction = Object.freeze({
 	WAIT: "wait", // Wait for something (do nothing)
 	FLY: "fly", // Fly to waypoint/location
 	LAND: "land" // Land on airfield (ending the flight)
+});
+
+// Map colors as RGB array values
+DATA.mapColor = Object.freeze({
+	ATTACK: [145, 145, 145]
 });
 
 // Briefing colors as HTML hex color values

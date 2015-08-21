@@ -87,6 +87,23 @@ MCU_Icon.LINE_POSITION_8 = 21;
 MCU_Icon.LINE_POSITION_9 = 22;
 
 /**
+ * Set icon item color value.
+ *
+ * @param {number[]} color Color value as RGB array.
+ */
+MCU_Icon.prototype.setColor = function(color) {
+	
+	// Validate color value
+	if (!Array.isArray(color) || color.length !== 3) {
+		throw new Error("Invalid icon item color value.");
+	}
+	
+	this.RColor = color[0];
+	this.GColor = color[1];
+	this.BColor = color[2];
+};
+
+/**
  * Get binary representation of the item.
  *
  * @param {object} index Binary data index object.

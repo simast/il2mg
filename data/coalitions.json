@@ -1,4 +1,8 @@
 {
-	"1": "Allies",
-	"2": "Axis"
+	"1": {
+		name: "Allies"
+	},
+	"2": {
+		name: "Axis"
+	}
 }

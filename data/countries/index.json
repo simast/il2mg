@@ -1,14 +1,12 @@
 {
 	"101": {
 		name: "Soviet Union",
-		coalition: 1
+		coalition: 1,
+		color: [166, 35, 28]
 	},
 	"201": {
 		name: "Germany",
-		coalition: 2
-	},
-	"202": {
-		name: "Italy",
-		coalition: 2
+		coalition: 2,
+		color: [15, 85, 129]
 	}
 }

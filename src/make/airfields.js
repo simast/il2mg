@@ -246,12 +246,21 @@ module.exports = function makeAirfields() {
 			// Show airfield icon with number of planes in debug mode
 			if (mission.debug) {
 				
-				var airfieldIcon = airfield.group.createItem("MCU_Icon");
+				// NOTE: Icon text can only have a custom color if it is linked to another
+				// icon. As a workaround - we are creating two icons at the same location.
+				var airfieldIcon1 = airfield.group.createItem("MCU_Icon");
+				var airfieldIcon2 = airfield.group.createItem("MCU_Icon");
 				
 				// TODO: Show icon at the edge of the map for off-map airfields
-				airfieldIcon.setPosition(airfield.position);
-				airfieldIcon.setName(mission.getLC(airfield.planes + "\u2708"));
-				airfieldIcon.Coalitions = mission.coalitions;
+				airfieldIcon1.setPosition(airfield.position);
+				airfieldIcon2.setPosition(airfield.position);
+				
+				airfieldIcon1.LineType = Item.MCU_Icon.LINE_BOLD;
+				airfieldIcon1.setName(mission.getLC(airfield.planes + "\u2708"));
+				airfieldIcon1.setColor(DATA.countries[airfield.country].color);
+				airfieldIcon1.Coalitions = mission.coalitions;
+				
+				airfieldIcon1.addTarget(airfieldIcon2);
 			}
 
 			totalActive++;

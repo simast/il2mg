@@ -6,16 +6,16 @@
 		"commander": "2.8.1",
 		"moment": "2.10.6",
 		"require-directory": "2.1.1",
-		"lex": "1.7.8",
+		"lex": "1.7.9",
 		"random-js": "1.0.4",
 		"winston": "1.0.1",
-		"speakingurl": "5.0.1"
+		"speakingurl": "6.0.0"
 	},
 	"devDependencies": {
 		"grunt": "0.4.5",
 		"grunt-contrib-jshint": "0.11.2",
 		"grunt-contrib-clean": "0.6.0",
-		"grunt-jscs": "2.0.0",
+		"grunt-jscs": "2.1.0",
 		"json5": "0.4.0",
 		"enclose": "0.2.30",
 		"numeral": "1.5.3",

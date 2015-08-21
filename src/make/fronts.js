@@ -4,6 +4,7 @@
 var Item = require("../item");
 var MCU_Icon = Item.MCU_Icon;
 var frontLine = DATA.frontLine;
+var mapColor = DATA.mapColor;
 
 // Generate mission fronts
 module.exports = function makeFronts() {
@@ -62,13 +63,7 @@ module.exports = function makeFronts() {
 		else if (pointType === frontLine.ATTACK) {
 
 			pointItem.LineType = MCU_Icon.LINE_ATTACK;
-			pointItem.RColor = 145;
-			pointItem.GColor = 145;
-			pointItem.BColor = 145;
-		}
-		// Defensive line
-		else if (pointType === frontLine.DEFEND) {
-			pointItem.LineType = MCU_Icon.LINE_DEFEND;
+			pointItem.setColor(mapColor.ATTACK);
 		}
 
 		// Index point icon item

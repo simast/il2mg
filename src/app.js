@@ -153,7 +153,7 @@ params.option("-C, --coalition <coalition>", (function() {
 	var desc = "select a coalition" + os.EOL;
 
 	for (var coalitionID in DATA.coalitions) {
-		desc += util.format('\t"%s" - %s\n', coalitionID, DATA.coalitions[coalitionID]);
+		desc += util.format('\t"%s" - %s\n', coalitionID, DATA.coalitions[coalitionID].name);
 	}
 
 	return desc;
