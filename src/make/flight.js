@@ -2,11 +2,11 @@
 "use strict";
 
 // Flight make parts
-var makeFlightElements = require("./flights.elements");
-var makeFlightPilots = require("./flights.pilots");
-var makeFlightPlanes = require("./flights.planes");
-var makeFlightPlan = require("./flights.plan");
-var makeAirfieldTaxi = require("./airfields.taxi");
+var makeFlightElements = require("./flight.elements");
+var makeFlightPilots = require("./flight.pilots");
+var makeFlightPlanes = require("./flight.planes");
+var makeFlightPlan = require("./flight.plan");
+var makeAirfieldTaxi = require("./airfield.taxi");
 
 // Data constants
 var flightState = DATA.flightState;
@@ -180,9 +180,9 @@ function makeFlight(params) {
 	flight.callsign = this.getCallsign("plane");
 	
 	// Make sure the callsign used for player flight is unique
-	if (!isPlayer && this.flights.player) {
+	if (!isPlayer && this.player.flight) {
 		
-		var playerCallsign = this.flights.player.callsign;
+		var playerCallsign = this.player.flight.callsign;
 
 		if (playerCallsign) {
 			

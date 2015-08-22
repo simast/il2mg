@@ -41,6 +41,7 @@ function Mission(params) {
 
 	this.items = []; // Items list
 	this.lang = []; // Language data
+	this.make = []; // Delayed make callbacks list
 	this.params = params; // Desired mission parameters
 
 	// Debug mode flag
@@ -72,9 +73,14 @@ function Mission(params) {
 	require("./make/player").call(this);
 	require("./make/fronts").call(this);
 	require("./make/blocks").call(this);
-	require("./make/flights").call(this);
+	require("./make/tasks").call(this);
 	require("./make/name").call(this);
 	require("./make/briefing").call(this);
+	
+	// Execute all delayed (last) mission make callbacks
+	for (var makeCallback of this.make) {
+		makeCallback();
+	}
 
 	log.profile("Making");
 }

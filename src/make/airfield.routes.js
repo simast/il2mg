@@ -2,7 +2,7 @@
 "use strict";
 
 var Item = require("../item");
-var makeAirfieldVehicle = require("./airfields.vehicle");
+var makeAirfieldVehicle = require("./airfield.vehicle");
 var itemTag = DATA.itemTag;
 var itemFlag = DATA.itemFlag;
 

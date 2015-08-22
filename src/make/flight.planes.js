@@ -2,7 +2,7 @@
 "use strict";
 
 var Plane = require("../item").Plane;
-var makeAirfieldTaxi = require("./airfields.taxi");
+var makeAirfieldTaxi = require("./airfield.taxi");
 
 // Data constants
 var planeSize = DATA.planeSize;

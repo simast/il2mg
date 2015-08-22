@@ -16,7 +16,7 @@ module.exports = function makeBriefing() {
 	var options = this.items.Options;
 
 	var briefing = [];
-	var flight = this.flights.player;
+	var flight = this.player.flight;
 
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
@@ -114,7 +114,7 @@ function makeBriefingDateAndTime() {
 // Make mission flight and pilot info output
 function makeBriefingFlight() {
 	
-	var flight = this.flights.player;
+	var flight = this.player.flight;
 	var output = "";
 	
 	flight.elements.forEach(function(element, elementIndex) {

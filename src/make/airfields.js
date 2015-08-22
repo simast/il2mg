@@ -6,16 +6,17 @@ var itemTag = DATA.itemTag;
 var planeSize = DATA.planeSize;
 
 // Airfield make parts
-var makeAirfieldLimits = require("./airfields.limits");
-var makeAirfieldStatic = require("./airfields.static");
-var makeAirfieldPlane = require("./airfields.plane");
-var makeAirfieldBeacon = require("./airfields.beacon");
-var makeAirfieldWindsock = require("./airfields.windsock");
-var makeAirfieldEffect = require("./airfields.effect");
-var makeAirfieldWreck = require("./airfields.wreck");
-var makeAirfieldVehicle = require("./airfields.vehicle");
-var makeAirfieldRoutes = require("./airfields.routes");
-var makeAirfieldZone = require("./airfields.zone");
+var makeAirfieldLimits = require("./airfield.limits");
+var makeAirfieldStatic = require("./airfield.static");
+var makeAirfieldPlane = require("./airfield.plane");
+var makeAirfieldBeacon = require("./airfield.beacon");
+var makeAirfieldWindsock = require("./airfield.windsock");
+var makeAirfieldEffect = require("./airfield.effect");
+var makeAirfieldWreck = require("./airfield.wreck");
+var makeAirfieldVehicle = require("./airfield.vehicle");
+var makeAirfieldRoutes = require("./airfield.routes");
+var makeAirfieldZone = require("./airfield.zone");
+var makeAirfieldTaxi = require("./airfield.taxi");
 
 // Generate mission airfields
 module.exports = function makeAirfields() {
@@ -258,7 +259,9 @@ module.exports = function makeAirfields() {
 				airfieldIcon1.LineType = Item.MCU_Icon.LINE_BOLD;
 				airfieldIcon1.setName(mission.getLC(airfield.planes + "\u2708"));
 				airfieldIcon1.setColor(DATA.countries[airfield.country].color);
+				
 				airfieldIcon1.Coalitions = mission.coalitions;
+				airfieldIcon2.Coalitions = mission.coalitions;
 				
 				airfieldIcon1.addTarget(airfieldIcon2);
 			}
@@ -397,6 +400,36 @@ module.exports = function makeAirfields() {
 	// Static airfield data index objects
 	mission.airfieldsByID = Object.freeze(airfieldsByID);
 	mission.airfieldsByCoalition = Object.freeze(airfieldsByCoalition);
+	
+	// Enable not used taxi routes for all active airfields
+	// NOTE: When the flights are created they will enable taxi routes that match
+	// parking spots of the planes. The code below makes sure to enable the remaining
+	// taxi routes for all active airfields that were not activated by flights code.
+	mission.make.push(function() {
+
+		for (var airfieldID in mission.airfieldsByID) {
+			
+			var airfield = mission.airfieldsByID[airfieldID];
+			
+			// Ignore airfields without value (no active planes/units)
+			if (!airfield.value) {
+				continue;
+			}
+			
+			// Choose taxi routes randomly
+			var taxiRoutes = rand.shuffle(Object.keys(airfield.taxi));
+			
+			for (var taxiRouteID of taxiRoutes) {
+				
+				var taxiRunwayID = airfield.taxi[taxiRouteID][1];
+				
+				// Enable one random taxi route for each runway
+				if (!airfield.activeTaxiRoutes || !airfield.activeTaxiRoutes[taxiRunwayID]) {
+					makeAirfieldTaxi.call(mission, airfield, +taxiRouteID);
+				}
+			}
+		}
+	});
 
 	// Log mission airfields info
 	log.I("Airfields:", totalAirfields, {active: totalActive});
