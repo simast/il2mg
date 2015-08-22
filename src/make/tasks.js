@@ -28,11 +28,8 @@ module.exports = function makeTasks() {
 		player: true,
 		state: player.state,
 		unit: unit,
-		mission: {
-			type: "training",
-			planes: [2, 2],
-			payload: "bombs"
-		}
+		formation: "fighter",
+		task: "practice"
 	});
 	
 	if (flight) {

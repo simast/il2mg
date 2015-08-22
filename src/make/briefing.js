@@ -123,49 +123,14 @@ function makeBriefingFlight() {
 		if (elementIndex === 0) {
 
 			var unit = element.unit;
-			var formation;
 
-			// TODO: Move formation names to data files?
-
-			// Germany formation names
-			if (unit.country === 201) {
-
-				if (flight.planes === 9) {
-					formation = "Staffel";
-				}
-				else if (flight.planes === 4) {
-					formation = "Schwarm";
-				}
-				else if (flight.planes === 3) {
-					formation = "Kette";
-				}
-				else if (flight.planes === 2) {
-					formation = "Rotte";
-				}
-			}
-			// Soviet Union formation names
-			else if (unit.country === 101) {
-
-				if (flight.planes === 8 || flight.planes === 6) {
-					formation = "Gruppa";
-				}
-				else if (flight.planes === 4 || flight.planes === 3) {
-					formation = "Zveno";
-				}
-				else if (flight.planes === 2) {
-					formation = "Para";
-				}
-			}
-
-			// TODO: Italy formation names
-
-			if (!formation) {
+			if (!flight.formation.name) {
 
 				// Generic formation name
 				output += "Flight";
 			}
 			else {
-				output += "<i>" + formation + "</i>";
+				output += "<i>" + flight.formation.name + "</i>";
 			}
 
 			// Unit name

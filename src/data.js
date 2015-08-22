@@ -141,8 +141,9 @@ DATA.briefingColor = Object.freeze({
 		var country = DATA.countries[countryID];
 		var countryPath = "../data/countries/" + countryID + "/";
 
-		country.ranks = require(countryPath + "ranks");
+		country.formations = require(countryPath + "formations");
 		country.names = require(countryPath + "names");
+		country.ranks = require(countryPath + "ranks");
 	}
 	
 	// Load plane data

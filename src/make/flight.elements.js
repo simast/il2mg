@@ -2,14 +2,39 @@
 "use strict";
 
 // Make mission flight elements
-module.exports = function makeFlightElements(flight) {
+module.exports = function makeFlightElements(flight, formation) {
 
 	var rand = this.rand;
 	var elements = flight.elements = [];
 	var planesCount = 0;
 	
+	// TODO: Use a formation with best match of available planes in the unit
+	if (Array.isArray(formation)) {
+		formation = rand.pick(formation);
+	}
+	
+	// Use a simple flight formation (with number of planes specified)
+	if (typeof formation === "number") {
+		
+		flight.formation = {
+			planes: [formation]
+		};
+	}
+	// Use a named flight formation
+	else {
+		
+		var formations = this.formations[flight.country];
+		
+		// Resolve formation from formation group ID
+		while (Array.isArray(formations[formation])) {
+			formation = rand.pick(formations[formation]);
+		}
+		
+		flight.formation = formations[formation];
+	}
+	
 	// Create requested number of flight elements
-	flight.mission.planes.forEach(function(planesInElement) {
+	flight.formation.planes.forEach(function(planesInElement) {
 		
 		var element = [];
 

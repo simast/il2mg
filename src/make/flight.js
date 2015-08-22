@@ -15,7 +15,7 @@ var flightState = DATA.flightState;
 function makeFlight(params) {
 
 	// TODO: params.player - player flight flag (or player plane ID)
-	// TODO: params.mission - mission ID
+	// TODO: params.task - task ID
 	// TODO: params.unit - unit ID
 	// TODO: params.state - state (parked, runway, in progress, etc)
 	// TODO: params.start - start when mission starts or at a later point in time
@@ -48,16 +48,16 @@ function makeFlight(params) {
 	
 	flight.unit = unitID;
 	flight.airfield = unit.airfield;
+	flight.country = unit.country;
 	flight.state = params.state;
-	flight.mission = params.mission;
 
 	// Set default flight state (parking start without engine running)
 	if (flight.state === undefined) {
 		flight.state = flightState.START;
 	}
 	
-	// Make flight elements (sections)
-	makeFlightElements.call(this, flight);
+	// Make flight elements (sections/formation)
+	makeFlightElements.call(this, flight, params.formation);
 	
 	// No planes are available for the flight
 	if (!flight.planes) {

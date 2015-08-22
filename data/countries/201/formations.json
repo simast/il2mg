@@ -1,0 +1,34 @@
+{
+	// Fighter
+	fighter: {},
+	
+	// Fighter (2 planes)
+	fighter_2: {
+		parent: "fighter",
+		name: "Rotte",
+		planes: [2]
+	},
+	
+	// Fighter (4 planes)
+	fighter_4: {
+		parent: "fighter"
+	},
+	
+	// Fighter (4 planes with 2 elements)
+	fighter_2x2: {
+		parent: "fighter_4",
+		name: "Schwarm",
+		planes: [2, 2], // Finger-four
+		density: "loose"
+	},
+	
+	// Bomber
+	bomber: {},
+	
+	// Bomber (3 planes)
+	bomber_3: {
+		parent: "bomber",
+		name: "Kette",
+		planes: [3]
+	}
+}

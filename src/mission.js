@@ -73,6 +73,7 @@ function Mission(params) {
 	require("./make/player").call(this);
 	require("./make/fronts").call(this);
 	require("./make/blocks").call(this);
+	require("./make/formations").call(this);
 	require("./make/tasks").call(this);
 	require("./make/name").call(this);
 	require("./make/briefing").call(this);
