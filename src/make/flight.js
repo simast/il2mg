@@ -2,7 +2,7 @@
 "use strict";
 
 // Flight make parts
-var makeFlightElements = require("./flight.elements");
+var makeFlightFormation = require("./flight.formation");
 var makeFlightPilots = require("./flight.pilots");
 var makeFlightPlanes = require("./flight.planes");
 var makeFlightPlan = require("./flight.plan");
@@ -28,6 +28,11 @@ function makeFlight(params) {
 		throw new TypeError("Invalid flight unit ID value.");
 	}
 	
+	// Validate required task parameter
+	if (!params.task || !DATA.tasks[params.task]) {
+		throw new TypeError("Invalid flight task value.");
+	}
+	
 	var isPlayer = false;
 
 	// Player flight
@@ -46,6 +51,7 @@ function makeFlight(params) {
 	var unit = this.unitsByID[unitID];
 	var airfield = this.airfieldsByID[unit.airfield];
 	
+	flight.task = params.task;
 	flight.unit = unitID;
 	flight.airfield = unit.airfield;
 	flight.country = unit.country;
@@ -56,8 +62,8 @@ function makeFlight(params) {
 		flight.state = flightState.START;
 	}
 	
-	// Make flight elements (sections/formation)
-	makeFlightElements.call(this, flight, params.formation);
+	// Make flight formation (elements/sections)
+	makeFlightFormation.call(this, flight);
 	
 	// No planes are available for the flight
 	if (!flight.planes) {

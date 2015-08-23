@@ -17,6 +17,7 @@ module.exports = function makeFlightPlanes(flight) {
 
 	var rand = this.rand;
 	var airfield = this.airfieldsByID[flight.airfield];
+	var unit = this.unitsByID[flight.unit];
 	var usedParkSpawns = [];
 	var planeNumber = flight.planes;
 
@@ -24,7 +25,6 @@ module.exports = function makeFlightPlanes(flight) {
 	for (var elementIndex = flight.elements.length - 1; elementIndex >= 0; elementIndex--) {
 		
 		var element = flight.elements[elementIndex];
-		var unit = element.unit;
 
 		// Skip leader only (first plane) when mapping formation number based on distance
 		var sortSkip = 0;

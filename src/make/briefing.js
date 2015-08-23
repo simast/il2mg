@@ -115,36 +115,29 @@ function makeBriefingDateAndTime() {
 function makeBriefingFlight() {
 	
 	var flight = this.player.flight;
+	var unit = this.unitsByID[flight.unit];
 	var output = "";
 	
+	// Country specific formation name
+	if (flight.formation.name) {
+		output += "<i>" + flight.formation.name + "</i>";
+	}
+	// Generic formation name
+	else {
+		output += "Flight";
+	}
+
+	// Unit name
+	output += ' of <font color="' + briefingColor.LIGHT + '">' + unit.name + "</font>";
+
+	// Unit alias
+	if (unit.alias) {
+		output += " <i>“" + unit.alias + "”</i>";
+	}
+
+	output += ",<br><br>";
+	
 	flight.elements.forEach(function(element, elementIndex) {
-		
-		// Add flight formation and unit data
-		if (elementIndex === 0) {
-
-			var unit = element.unit;
-
-			if (!flight.formation.name) {
-
-				// Generic formation name
-				output += "Flight";
-			}
-			else {
-				output += "<i>" + flight.formation.name + "</i>";
-			}
-
-			// Unit name
-			// TODO: Show all units if elements are from different units
-			output += ' of <font color="' + briefingColor.LIGHT + '">' + unit.name + "</font>";
-
-			// Unit alias
-			if (unit.alias) {
-				output += " <i>“" + unit.alias + "”</i>";
-			}
-
-			output += ",<br><br>";
-		}
-
 		element.forEach(function(plane) {
 
 			var pilot = plane.pilot;

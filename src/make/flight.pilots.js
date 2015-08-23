@@ -10,11 +10,11 @@ module.exports = function makeFlightPilots(flight) {
 
 	var rand = this.rand;
 	var player = this.player;
+	var unit = this.unitsByID[flight.unit];
 	var pilotIDs = Object.create(null);
 
 	flight.elements.forEach(function(element) {
 
-		var unit = element.unit;
 		var ranks = DATA.countries[unit.country].ranks;
 		var leaderPlane = null;
 

@@ -10,39 +10,42 @@ module.exports = function makeTasks() {
 	var rand = this.rand;
 	var player = this.player;
 	var task = [];
-	var unit;
+	var flight;
 
 	this.tasks = [];
-
-	// Use requested player unit
-	if (player.unit) {
-		unit = player.unit;
-	}
-	// Pick a random unit
-	else {
-		unit = rand.pick(Object.keys(this.unitsByID));
-	}
 	
-	// TODO: Make a number of active and shedulled flights
-	var flight = makeFlight.call(this, {
-		player: true,
-		state: player.state,
-		unit: unit,
-		formation: "fighter",
-		task: "practice"
-	});
-	
-	if (flight) {
+	// FIXME: Make a number of active and shedulled flights
+	do {
 		
-		// Add flight to task hierarchy
-		task.push(flight);
-		this.tasks.push(task);
-		
-		// Set player flight and task references
-		if (flight.player) {
+		try {
 			
-			player.flight = flight;
-			player.task = task;
+			flight = makeFlight.call(this, {
+				player: true,
+				state: player.state,
+				unit: rand.pick(Object.keys(this.unitsByID)),
+				task: rand.pick(Object.keys(DATA.tasks))
+			});
 		}
+		catch (error) {
+			
+			if (Array.isArray(error)) {
+				log.W.apply(log, error);
+			}
+			else {
+				throw error;
+			}
+		}
+	}
+	while (!flight);
+	
+	// Add flight to task hierarchy
+	task.push(flight);
+	this.tasks.push(task);
+	
+	// Set player flight and task references
+	if (flight.player) {
+		
+		player.flight = flight;
+		player.task = task;
 	}
 };
