@@ -3,7 +3,7 @@
 	"ju52": {
 		manufacturer: "Junkers",
 		name: "Ju 52",
-		alias: ["Tante Ju"],
+		alias: "Tante Ju",
 		type: ["transport"],
 		size: "large",
 		static: [

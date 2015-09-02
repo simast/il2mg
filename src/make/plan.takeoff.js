@@ -7,7 +7,7 @@ var MCU_CMD_Formation = require("../item").MCU_CMD_Formation;
 module.exports = function makePlanTakeoff(action, element, flight, input) {
 
 	var rand = this.rand;
-	var airfield = this.airfieldsByID[flight.airfield];
+	var airfield = this.airfields[flight.airfield];
 	var leaderPlaneItem = element[0].item;
 	var takeoffCommand = flight.takeoffCommand;
 	var taxiRoute = airfield.taxi[flight.taxi];

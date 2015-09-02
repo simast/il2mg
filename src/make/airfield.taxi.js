@@ -40,7 +40,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		// Make sure the callsign used for player home airfield is unique
 		if (this.player.flight) {
 			
-			var playerAirfield = this.airfieldsByID[this.player.flight.airfield];
+			var playerAirfield = this.airfields[this.player.flight.airfield];
 	
 			if (airfield.id !== playerAirfield.id) {
 				

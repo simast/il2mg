@@ -31,7 +31,7 @@ module.exports = function makeAirfields() {
 	var planeSizeMax = planeSize.HUGE;
 
 	// Airfield index tables
-	var airfieldsByID = Object.create(null);
+	var airfields = Object.create(null);
 	var airfieldsByCoalition = Object.create(null);
 
 	// Total airfield counts
@@ -44,7 +44,7 @@ module.exports = function makeAirfields() {
 		totalAirfields++;
 
 		var airfieldData = battle.airfields[airfieldID];
-		var airfield = airfieldsByID[airfieldID] = Object.create(null);
+		var airfield = airfields[airfieldID] = Object.create(null);
 
 		airfield.id = airfieldID;
 		airfield.name = airfieldData.name;
@@ -92,7 +92,7 @@ module.exports = function makeAirfields() {
 
 				unit.planes.forEach(function(planeID) {
 
-					var plane = mission.planesByID[planeID];
+					var plane = mission.planes[planeID];
 					var planeSizeID = planeSize[String(plane.size).toUpperCase()];
 
 					if (planeSizeID) {
@@ -398,7 +398,7 @@ module.exports = function makeAirfields() {
 	}
 
 	// Static airfield data index objects
-	mission.airfieldsByID = Object.freeze(airfieldsByID);
+	mission.airfields = Object.freeze(airfields);
 	mission.airfieldsByCoalition = Object.freeze(airfieldsByCoalition);
 	
 	// Enable not used taxi routes for all active airfields
@@ -407,9 +407,9 @@ module.exports = function makeAirfields() {
 	// taxi routes for all active airfields that were not activated by flights code.
 	mission.make.push(function() {
 
-		for (var airfieldID in mission.airfieldsByID) {
+		for (var airfieldID in mission.airfields) {
 			
-			var airfield = mission.airfieldsByID[airfieldID];
+			var airfield = mission.airfields[airfieldID];
 			
 			// Ignore airfields without value (no active planes/units)
 			if (!airfield.value) {

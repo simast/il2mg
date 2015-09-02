@@ -3,7 +3,7 @@
 	"pe2": {
 		manufacturer: "Petlyakov",
 		name: "Pe-2",
-		alias: ["Peshka"],
+		alias: "Peshka",
 		type: ["dive_bomber", "level_bomber"],
 		size: "large",
 		static: [

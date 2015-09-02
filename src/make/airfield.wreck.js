@@ -66,9 +66,9 @@ function getWreckItems(mission) {
 	var foundStatics = Object.create(null);
 
 	// Collect plane static blocks
-	for (var planeID in mission.planesByID) {
+	for (var planeID in mission.planes) {
 
-		var planeData = mission.planesByID[planeID];
+		var planeData = mission.planes[planeID];
 
 		// Ignore plane groups and planes without static blocks
 		if (Array.isArray(planeData) || !planeData.static) {

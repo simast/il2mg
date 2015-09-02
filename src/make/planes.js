@@ -16,7 +16,7 @@ module.exports = function makePlanes() {
 	].indexOf(this.map.season);
 
 	// Plane index tables
-	var planesByID = Object.create(null);
+	var planes = Object.create(null);
 	var planesByType = Object.create(null);
 
 	// Process all planes and build index lists
@@ -67,7 +67,7 @@ module.exports = function makePlanes() {
 			planeData = DATA.planes[planeParentID];
 
 			// Register plane in the parent group hierarchy
-			var planeGroup = planesByID[planeParentID] || [];
+			var planeGroup = planes[planeParentID] || [];
 
 			// Register a new child plane in the plane group
 			if (Array.isArray(planeGroup)) {
@@ -82,12 +82,12 @@ module.exports = function makePlanes() {
 					planeGroup.parent = planeData.parent;
 				}
 
-				planesByID[planeParentID] = planeGroup;
+				planes[planeParentID] = planeGroup;
 			}
 		}
 
 		// Register plane to ID index
-		planesByID[planeID] = plane;
+		planes[planeID] = plane;
 
 		// Register plane to type index
 		if (Array.isArray(plane.type)) {
@@ -168,6 +168,6 @@ module.exports = function makePlanes() {
 	}
 
 	// Static plane data index objects
-	this.planesByID = Object.freeze(planesByID);
+	this.planes = Object.freeze(planes);
 	this.planesByType = Object.freeze(planesByType);
 };

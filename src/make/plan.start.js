@@ -5,7 +5,7 @@
 module.exports = function makePlanStart(action, element, flight, input) {
 
 	var rand = this.rand;
-	var airfield = this.airfieldsByID[flight.airfield];
+	var airfield = this.airfields[flight.airfield];
 
 	// Set element planes to an air start position
 	if (typeof element.state === "number") {

@@ -134,6 +134,7 @@ DATA.briefingColor = Object.freeze({
 	DATA.countries = Object.freeze(require("../data/countries"));
 	DATA.battles = Object.freeze(require("../data/battles"));
 	DATA.planes = Object.create(null);
+	DATA.tasks = Object.create(null);
 
 	// Load countries
 	for (var countryID in DATA.countries) {
@@ -158,7 +159,15 @@ DATA.briefingColor = Object.freeze({
 	Object.freeze(DATA.planes);
 	
 	// Load tasks
-	DATA.tasks = Object.freeze(requireDir(module, "../data/tasks"));
+	var taskData = requireDir(module, "../data/tasks");
+	
+	for (var taskGroup in taskData) {
+		for (var taskID in taskData[taskGroup]) {
+			DATA.tasks[taskID] = taskData[taskGroup][taskID];
+		}
+	}
+	
+	Object.freeze(DATA.tasks);
 
 	// Load battles
 	// TODO: Load only required mission battle data

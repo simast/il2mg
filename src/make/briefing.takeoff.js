@@ -10,7 +10,7 @@ var itemFlag = DATA.itemFlag;
 module.exports = function makeBriefingTakeoff(action, flight) {
 	
 	var briefing = [];
-	var airfield = this.airfieldsByID[flight.airfield];
+	var airfield = this.airfields[flight.airfield];
 	var playerElement = flight.elements[0];
 	var playerPlaneItem = flight.player.item;
 	var taxiRoute = airfield.taxi[Math.abs(flight.taxi)];

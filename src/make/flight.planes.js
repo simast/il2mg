@@ -16,8 +16,8 @@ module.exports = function makeFlightPlanes(flight) {
 	// TODO: Set weapon mods
 
 	var rand = this.rand;
-	var airfield = this.airfieldsByID[flight.airfield];
-	var unit = this.unitsByID[flight.unit];
+	var airfield = this.airfields[flight.airfield];
+	var unit = this.units[flight.unit];
 	var usedParkSpawns = [];
 	var planeNumber = flight.planes;
 
@@ -47,7 +47,7 @@ module.exports = function makeFlightPlanes(flight) {
 		for (var planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {
 
 			var plane = element[planeIndex];
-			var planeData = this.planesByID[plane.plane];
+			var planeData = this.planes[plane.plane];
 			var isPlayer = (plane === flight.player);
 			var lastPlane = element[planeIndex + 1];
 			var isLeader = (planeIndex === 0);

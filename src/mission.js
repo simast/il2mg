@@ -74,6 +74,7 @@ function Mission(params) {
 	require("./make/fronts").call(this);
 	require("./make/blocks").call(this);
 	require("./make/formations").call(this);
+	require("./make/tasks").call(this);
 	require("./make/forces").call(this);
 	require("./make/briefing").call(this);
 	

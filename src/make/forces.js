@@ -22,8 +22,8 @@ module.exports = function makeForces() {
 			flight = makeFlight.call(this, {
 				player: true,
 				state: player.state,
-				unit: rand.pick(Object.keys(this.unitsByID)),
-				task: rand.pick(Object.keys(DATA.tasks))
+				unit: rand.pick(Object.keys(this.units)),
+				task: rand.pick(Object.keys(this.tasks))
 			});
 		}
 		catch (error) {

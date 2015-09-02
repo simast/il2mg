@@ -17,7 +17,7 @@ module.exports = function makeBriefing() {
 	var options = this.items.Options;
 	var briefing = [];
 	var flight = this.player.flight;
-	var task = DATA.tasks[flight.task];
+	var task = this.tasks[flight.task];
 
 	// Mission name
 	var name = this.battle.name;
@@ -39,16 +39,16 @@ module.exports = function makeBriefing() {
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
 	
-	// Flight description
-	if (task.description) {
+	// Task intro description
+	if (task.intro) {
 		
-		var description = task.description;
+		var intro = task.intro;
 		
-		if (!Array.isArray(description)) {
-			description = [description];
+		if (!Array.isArray(intro)) {
+			intro = [intro];
 		}
 		
-		briefing.push(makeBriefingTemplate.call(this, rand.pick(description)));
+		briefing.push(makeBriefingTemplate.call(this, rand.pick(intro)));
 	}
 
 	// Flight elements and pilot info
@@ -141,7 +141,7 @@ function makeBriefingDateAndTime() {
 function makeBriefingFlight() {
 	
 	var flight = this.player.flight;
-	var unit = this.unitsByID[flight.unit];
+	var unit = this.units[flight.unit];
 	var output = "";
 	
 	// Country specific formation name
@@ -192,7 +192,7 @@ function makeBriefingFlight() {
 			}
 
 			output += ' <font color="' + briefingColor.DARK + '">→</font><font size="16"><i>';
-			output += this.planesByID[plane.plane].name;
+			output += this.planes[plane.plane].name;
 			output += "</i></font><br>";
 
 		}, this);

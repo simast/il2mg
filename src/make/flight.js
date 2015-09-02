@@ -14,22 +14,16 @@ var flightState = DATA.flightState;
 // Make mission flight
 function makeFlight(params) {
 
-	// TODO: params.player - player flight flag (or player plane ID)
-	// TODO: params.task - task ID
-	// TODO: params.unit - unit ID
-	// TODO: params.state - state (parked, runway, in progress, etc)
-	// TODO: params.start - start when mission starts or at a later point in time
-
 	var rand = this.rand;
 	var flight = Object.create(null);
 
 	// Validate required unit parameter
-	if (!params.unit || !this.unitsByID[params.unit]) {
+	if (!params.unit || !this.units[params.unit]) {
 		throw new TypeError("Invalid flight unit ID value.");
 	}
 	
 	// Validate required task parameter
-	if (!params.task || !DATA.tasks[params.task]) {
+	if (!params.task || !this.tasks[params.task]) {
 		throw new TypeError("Invalid flight task value.");
 	}
 	
@@ -41,17 +35,23 @@ function makeFlight(params) {
 		isPlayer = true;
 	}
 
+	var taskID = params.task;
 	var unitID = params.unit;
+	
+	// Resolve task from task group
+	while (Array.isArray(this.tasks[taskID])) {
+		taskID = rand.pick(this.tasks[taskID]);
+	}
 
-	// Resolve unit from unit group ID
-	while (Array.isArray(this.unitsByID[unitID])) {
-		unitID = rand.pick(this.unitsByID[unitID]);
+	// Resolve unit from unit group
+	while (Array.isArray(this.units[unitID])) {
+		unitID = rand.pick(this.units[unitID]);
 	}
 	
-	var unit = this.unitsByID[unitID];
-	var airfield = this.airfieldsByID[unit.airfield];
+	var unit = this.units[unitID];
+	var airfield = this.airfields[unit.airfield];
 	
-	flight.task = params.task;
+	flight.task = taskID;
 	flight.unit = unitID;
 	flight.airfield = unit.airfield;
 	flight.country = unit.country;
@@ -131,7 +131,7 @@ function makeFlight(params) {
 
 		(function() {
 
-			var leaderPlaneGroup = this.planesByID[flight.leader.plane].group;
+			var leaderPlaneGroup = this.planes[flight.leader.plane].group;
 			var leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
 			
 			if (leaderPlaneGroupTaxiSectors) {

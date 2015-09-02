@@ -10,7 +10,7 @@ module.exports = function makePlayer() {
 	var player = this.player = Object.create(null);
 
 	// Initial valid units list (all units)
-	var unitsList = Object.keys(this.unitsByID);
+	var unitsList = Object.keys(this.units);
 
 	// Validate desired coalition param
 	if (params.coalition) {
@@ -57,7 +57,7 @@ module.exports = function makePlayer() {
 		var airfieldID = params.airfield.toLowerCase();
 
 		// Unknown airfield ID/name
-		if (!this.airfieldsByID[airfieldID]) {
+		if (!this.airfields[airfieldID]) {
 			throw ["Unknown airfield name!", {airfield: params.airfield}];
 		}
 		// Inactive airfield

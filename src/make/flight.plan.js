@@ -22,12 +22,22 @@ module.exports = function makeFlightPlan(flight) {
 		plan.push({type: planAction.TAKEOFF});
 	}
 
-	// Make task specific plan
-	var makeTask = makeParts["task." + flight.task];
+	var taskID = flight.task;
 	
-	if (makeTask) {
-		makeTask.call(this, flight);
+	// Make task specific plan
+	do {
+		
+		var makeTask = makeParts["task." + taskID];
+		
+		if (makeTask) {
+			
+			makeTask.call(this, flight);
+			break;
+		}
+		
+		taskID = this.tasks[taskID].parent;
 	}
+	while (taskID);
 
 	// Land plan action
 	plan.push({type: planAction.LAND});

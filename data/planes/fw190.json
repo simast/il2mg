@@ -3,7 +3,7 @@
 	"fw190": {
 		manufacturer: "Focke-Wulf",
 		name: "Fw 190",
-		alias: ["Würger"],
+		alias: "Würger",
 		type: ["fighter", "fighter_light"],
 		size: "small"
 	},

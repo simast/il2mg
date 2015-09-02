@@ -7,7 +7,7 @@ module.exports = function makePlanLand(action, element, flight, input) {
 	// TODO: Remove/delete flight planes at destination if it's not possible to land
 	
 	var rand = this.rand;
-	var airfield = this.airfieldsByID[flight.airfield];
+	var airfield = this.airfields[flight.airfield];
 	var leaderElement = flight.elements[0];
 	var leaderPlaneItem = element[0].item;
 	var taxiRoute = airfield.taxi[Math.abs(flight.taxi)];

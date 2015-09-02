@@ -1,0 +1,31 @@
+{
+	// Free flight task (single-plane)
+	free: {
+		time: "day",
+		planes: {
+			fighter_light: 1,
+			ground_attack: 1
+		}
+	},
+	
+	// Test flight
+	free_test: {
+		parent: "free",
+		name: "Test flight over {{airfield}}",
+		intro: [
+			"I have been assigned a brand new {{{plane}}}! Mechanic Artiom insists I should hop in and familiarize myself with the new machine - make a test flight over and around the airfield, push the engine to its limits and see how the airframe behaves in the air."
+		]
+	},
+
+	// Practice flight
+	free_practice: {
+		parent: "free",
+		name: "Practice flight over {{airfield}}"
+	},
+
+	// Training flight
+	free_train: {
+		parent: "free",
+		name: "Training flight over {{airfield}}"
+	}
+}

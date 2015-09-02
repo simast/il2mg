@@ -3,7 +3,7 @@
 	"i16": {
 		manufacturer: "Polikarpov",
 		name: "I-16",
-		alias: ["Ishak"],
+		alias: "Ishak",
 		type: ["fighter", "fighter_light"],
 		size: "small",
 		// NOTE: Static I-16 models are not available, using LaGG-3 as a workaround

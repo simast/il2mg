@@ -65,7 +65,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	}
 
 	var rand = this.rand;
-	var plane = this.planesByID[planeData[0]];
+	var plane = this.planes[planeData[0]];
 	var planeItemsByUnit = airfield.planeItemsByUnit;
 	var staticPlanes = rand.shuffle(plane.static || []);
 	var planeStatic;

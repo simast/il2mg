@@ -10,7 +10,7 @@ module.exports = function makeFlightPilots(flight) {
 
 	var rand = this.rand;
 	var player = this.player;
-	var unit = this.unitsByID[flight.unit];
+	var unit = this.units[flight.unit];
 	var pilotIDs = Object.create(null);
 
 	flight.elements.forEach(function(element) {
@@ -253,7 +253,7 @@ module.exports = function makeFlightPilots(flight) {
 		var pilot = Object.create(null);
 
 		// Set a known pilot rank
-		pilot.rank = getPilotRank(pilotRank, unit.country);
+		pilot.rank = getRank(pilotRank, unit.country);
 
 		// Pilot name as array of name components
 		if (Array.isArray(pilotFound.name)) {
@@ -281,37 +281,32 @@ module.exports = function makeFlightPilots(flight) {
 
 		var names = DATA.countries[unit.country].names;
 		var pilot = Object.create(null);
-		var nameParts;
+		var name;
 
 		do {
 
 			pilot.name = "";
 			pilot.id = "";
-			nameParts = Object.create(null);
-
-			// Make all name parts
-			for (var namePart in names) {
-				nameParts[namePart] = getPilotNamePart(names[namePart]);
-			}
+			
+			name = getName(names);
 
 			// First name and last name parts are required and should not be the same
-			if (nameParts.first && nameParts.last &&
-					nameParts.first[0] !== nameParts.last[nameParts.last.length - 1]) {
+			if (name.first && name.last && name.first[0] !== name.last[name.last.length - 1]) {
 				
 				// Set full pilot name
-				pilot.name = nameParts.first.join(" ") + " " + nameParts.last.join(" ");
+				pilot.name = name.first.join(" ") + " " + name.last.join(" ");
 			}
 		}
 		// NOTE: Enforce max 22 characters for full pilot name
 		while (!pilot.name.length || pilot.name.length >= 22);
 
 		// Pilot ID (unique short name)
-		if (nameParts.last) {
-			pilot.id = nameParts.last.join(" ");
+		if (name.last) {
+			pilot.id = name.last.join(" ");
 		}
 		
 		// Set an unknown pilot rank
-		pilot.rank = getPilotRank(rankRange, unit.country);
+		pilot.rank = getRank(rankRange, unit.country);
 		
 		return pilot;
 	}
@@ -344,75 +339,83 @@ module.exports = function makeFlightPilots(flight) {
 		
 		// Use a custom requested rank
 		if (playerRank && ranks[playerRank]) {
-			pilot.rank = getPilotRank(playerRank, unit.country);
+			pilot.rank = getRank(playerRank, unit.country);
 		}
 		// Use a random weighted rank from valid range
 		else {
-			pilot.rank = getPilotRank(rankRange, unit.country);
+			pilot.rank = getRank(rankRange, unit.country);
 		}
 		
 		return pilot;
 	}
 
-	// Get a random weighted pilot name part
-	function getPilotNamePart(names) {
+	// Get a random weighted name
+	function getName(names) {
 	
-		var parts = [];
+		var nameParts = Object.create(null);
 
-		// Make each sub-part of requested name part
-		names.forEach(function(nameList) {
-
-			// Build range/interval name list index
-			if (!nameList.ranges) {
-
-				nameList.ranges = [];
-
-				Object.keys(nameList).forEach(function(value) {
-
-					value = parseInt(value, 10);
-
-					if (!isNaN(value)) {
-						nameList.ranges.push(value);
-					}
-				});
-
-				nameList.ranges.sort(function(a, b) {
-					return b - a;
-				});
-			}
-
-			var name;
-			var weightTarget = rand.integer(1, nameList.total);
-			var weightCurrent = 0;
-			var weight;
-
-			for (weight of nameList.ranges) {
-
-				weightCurrent += weight;
-
-				if (weightTarget <= weightCurrent) {
-
-					// Name part matches weight
-					name = rand.pick(nameList[weight]);
-					break;
+		// Make all name parts
+		for (var namePart in names) {
+			
+			var parts = [];
+	
+			// Make each sub-part of name part
+			names[namePart].forEach(function(nameList) {
+	
+				// Build range/interval name list index
+				if (!nameList.ranges) {
+	
+					nameList.ranges = [];
+	
+					Object.keys(nameList).forEach(function(value) {
+	
+						value = parseInt(value, 10);
+	
+						if (!isNaN(value)) {
+							nameList.ranges.push(value);
+						}
+					});
+	
+					nameList.ranges.sort(function(a, b) {
+						return b - a;
+					});
 				}
-			}
-
-			// Use one of the least popular name parts
-			if (!name) {
-				name = rand.pick(nameList[weight]);
-			}
 	
-			if (name.length) {
-				parts.push(name);
-			}
-		});
+				var name;
+				var weightTarget = rand.integer(1, nameList.total);
+				var weightCurrent = 0;
+				var weight;
 	
-		return parts;
+				for (weight of nameList.ranges) {
+	
+					weightCurrent += weight;
+	
+					if (weightTarget <= weightCurrent) {
+	
+						// Name part matches weight
+						name = rand.pick(nameList[weight]);
+						break;
+					}
+				}
+	
+				// Use one of the least popular name parts
+				if (!name) {
+					name = rand.pick(nameList[weight]);
+				}
+		
+				if (name.length) {
+					parts.push(name);
+				}
+			});
+			
+			nameParts[namePart] = parts;
+		}
+		
+		return nameParts;
 	}
 
-	// Get pilot rank
-	function getPilotRank(rankID, country) {
+	// Get a rank
+	function getRank(rankID, country) {
 		
 		var ranks = DATA.countries[country].ranks;
 		
@@ -437,4 +440,8 @@ module.exports = function makeFlightPilots(flight) {
 
 		return rank;
 	}
+	
+	// Export functions used for making random names and ranks
+	makeFlightPilots.getName = getName;
+	makeFlightPilots.getRank = getRank;
 };

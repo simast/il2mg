@@ -6,8 +6,8 @@ var util = require("util");
 // Data constants
 var planAction = DATA.planAction;
 
-// Make mission practice task
-module.exports = function makeTaskPractice(flight) {
+// Make mission free flight task
+module.exports = function makeTaskFree(flight) {
 	
 	var rand = this.rand;
 	var plan = flight.plan;

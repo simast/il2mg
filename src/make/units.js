@@ -13,7 +13,7 @@ module.exports = function makeUnits() {
 	var planeStorages = new Set();
 
 	// Unit index tables
-	var unitsByID = Object.create(null);
+	var units = Object.create(null);
 	var unitsByAirfield = Object.create(null);
 	var unitsByCoalition = Object.create(null);
 	var unitsByCountry = Object.create(null);
@@ -104,13 +104,13 @@ module.exports = function makeUnits() {
 			}
 
 			// Register unit in the parent group hierarchy
-			var unitGroup = unitsByID[unitParentID] || [];
+			var unitGroup = units[unitParentID] || [];
 
 			// Register a new child plane in the plane group
 			if (Array.isArray(unitGroup)) {
 
 				unitGroup.push(unitID);
-				unitsByID[unitParentID] = unitGroup;
+				units[unitParentID] = unitGroup;
 			}
 
 			unitData = battle.units[unitParentID];
@@ -123,7 +123,7 @@ module.exports = function makeUnits() {
 			var parentID = unit.parent;
 			while (parentID) {
 
-				var parentUnit = unitsByID[parentID];
+				var parentUnit = units[parentID];
 
 				if (Array.isArray(parentUnit)) {
 
@@ -136,7 +136,7 @@ module.exports = function makeUnits() {
 
 					// Remove entire group if empty
 					if (!parentUnit.length) {
-						delete unitsByID[parentID];
+						delete units[parentID];
 					}
 				}
 
@@ -166,7 +166,7 @@ module.exports = function makeUnits() {
 		delete unit.planesMin;
 
 		// Register unit to ID index
-		unitsByID[unitID] = unit;
+		units[unitID] = unit;
 
 		// Register unit to airfields index
 		unitsByAirfield[unit.airfield] = unitsByAirfield[unit.airfield] || Object.create(null);
@@ -194,7 +194,7 @@ module.exports = function makeUnits() {
 		while (planeStorage[1] > 0) {
 
 			var planeID = planeStorage[0];
-			var plane = mission.planesByID[planeID];
+			var plane = mission.planes[planeID];
 
 			// Handle plane groups
 			if (Array.isArray(plane)) {
@@ -203,7 +203,7 @@ module.exports = function makeUnits() {
 
 			// Pick random unit
 			var unitID = rand.pick(planeStorage.units);
-			var unit = unitsByID[unitID];
+			var unit = units[unitID];
 
 			if (unit.planes.max !== undefined && unit.planes.length >= unit.planes.max) {
 				continue;
@@ -303,7 +303,7 @@ module.exports = function makeUnits() {
 				var planeID = planeStorage[0];
 
 				// Only collect storages with valid plane IDs
-				if (mission.planesByID[planeID]) {
+				if (mission.planes[planeID]) {
 					planeStorages.push(planeStorage);
 				}
 			}
@@ -400,7 +400,7 @@ module.exports = function makeUnits() {
 	}
 
 	// Static unit data index objects
-	mission.unitsByID = Object.freeze(unitsByID);
+	mission.units = Object.freeze(units);
 	mission.unitsByAirfield = Object.freeze(unitsByAirfield);
 	mission.unitsByCoalition = Object.freeze(unitsByCoalition);
 	mission.unitsByCountry = Object.freeze(unitsByCountry);

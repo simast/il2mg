@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Generate available mission vehicles index
+// Generate available mission vehicles
 module.exports = function makeVehicles() {
 
 	var mission = this;

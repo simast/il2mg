@@ -1,7 +1,10 @@
 {
-	name: "Patrol flight from {{airfield}}",
-	time: "day",
-	planes: {
-		fighter: "fighter"
+	// Patrol task
+	patrol: {
+		name: "Patrol flight from {{airfield}}",
+		time: "day",
+		planes: {
+			fighter: "fighter"
+		}
 	}
 }

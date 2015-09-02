@@ -5,8 +5,8 @@
 module.exports = function makeFlightFormation(flight) {
 
 	var rand = this.rand;
-	var task = DATA.tasks[flight.task];
-	var unit = this.unitsByID[flight.unit];
+	var task = this.tasks[flight.task];
+	var unit = this.units[flight.unit];
 	var formations = this.formations[flight.country];
 	var formation;
 	
@@ -88,7 +88,7 @@ module.exports = function makeFlightFormation(flight) {
 				
 				for (var planeID of unit.planes) {
 					
-					var plane = this.planesByID[planeID];
+					var plane = this.planes[planeID];
 					
 					// Check for plane to be of the required type
 					if (Array.isArray(plane.type) && plane.type.indexOf(planeType) >= 0) {
