@@ -9,7 +9,8 @@
 		"lex": "1.7.9",
 		"random-js": "1.0.4",
 		"winston": "1.0.1",
-		"speakingurl": "6.0.0"
+		"speakingurl": "6.0.0",
+		"mustache": "2.1.3"
 	},
 	"devDependencies": {
 		"grunt": "0.4.5",

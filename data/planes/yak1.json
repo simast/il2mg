@@ -1,6 +1,7 @@
 {
 	// Yak-1
 	"yak1": {
+		manufacturer: "Yakovlev",
 		name: "Yak-1",
 		type: ["fighter", "fighter_light"],
 		size: "small",

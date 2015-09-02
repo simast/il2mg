@@ -4,15 +4,15 @@
 // Flight make parts
 var makeFlight = require("./flight");
 
-// Generate tasks
-module.exports = function makeTasks() {
+// Generate mission task forces
+module.exports = function makeForces() {
 	
 	var rand = this.rand;
 	var player = this.player;
-	var task = [];
+	var force = [];
 	var flight;
 
-	this.tasks = [];
+	this.forces = [];
 	
 	// FIXME: Make a number of active and shedulled flights
 	do {
@@ -38,14 +38,14 @@ module.exports = function makeTasks() {
 	}
 	while (!flight);
 	
-	// Add flight to task hierarchy
-	task.push(flight);
-	this.tasks.push(task);
+	// Add flight to task force
+	force.push(flight);
+	this.forces.push(force);
 	
-	// Set player flight and task references
+	// Set player flight and task force references
 	if (flight.player) {
 		
 		player.flight = flight;
-		player.task = task;
+		player.force = force;
 	}
 };

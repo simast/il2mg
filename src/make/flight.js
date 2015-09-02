@@ -116,7 +116,7 @@ function makeFlight(params) {
 					flight.taxi = Number(rand.pick(taxiRoutes));
 				}
 
-				flight.sector = unitSectorID;
+				flight.sector = Number(unitSectorID);
 
 				// Pick taxi route plane spawn points
 				flight.spawns = taxiSpawns[flight.taxi];
@@ -146,8 +146,8 @@ function makeFlight(params) {
 				if (taxiRoutes.length) {
 
 					flight.taxi = Number(rand.pick(taxiRoutes));
+					flight.sector = Number(taxiSectorID);
 					flight.spawns = taxiSpawns[flight.taxi];
-					flight.sector = taxiSectorID;
 				}
 			}
 		}).call(this);

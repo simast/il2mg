@@ -1,4 +1,5 @@
 {
+	name: "Patrol flight from {{airfield}}",
 	time: "day",
 	planes: {
 		fighter: "fighter"

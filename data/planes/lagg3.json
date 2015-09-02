@@ -1,6 +1,7 @@
 {
 	// LaGG-3
 	"lagg3": {
+		manufacturer: "Lavochkin", // Lavochkin-Gorbunov-Gudkov
 		name: "LaGG-3",
 		type: ["fighter", "fighter_light"],
 		size: "small",

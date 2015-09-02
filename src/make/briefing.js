@@ -1,47 +1,73 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+var requireDir = require("require-directory");
+
 // Data constants
-var planAction = DATA.planAction;
 var briefingColor = DATA.briefingColor;
 
-// Plan action briefing parts
-var makeBriefingPlan = Object.create(null);
-
-makeBriefingPlan[planAction.TAKEOFF] = require("./briefing.takeoff.js");
+// Briefing make parts
+var makeBriefingParts = requireDir(module, {include: /briefing\..+\.js$/});
+var makeBriefingTemplate = makeBriefingParts["briefing.template"];
 
 // Generate mission briefing
 module.exports = function makeBriefing() {
 
+	var rand = this.rand;
 	var options = this.items.Options;
-
 	var briefing = [];
 	var flight = this.player.flight;
+	var task = DATA.tasks[flight.task];
+
+	// Mission name
+	var name = this.battle.name;
+	
+	// Use task name
+	if (task.name) {
+		
+		name = task.name;
+		
+		if (!Array.isArray(name)) {
+			name = [name];
+		}
+		
+		name = makeBriefingTemplate.call(this, rand.pick(name));
+	}
+	
+	options.setName(this.getLC(name));
 
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
-
-	// TODO: General mission text (summarry)
-	briefing.push("Maecenas diam sem, aliquam at scelerisque quis, porttitor quis massa. Ut imperdiet hendrerit pharetra. Suspendisse vel eros vel velit venenatis pretium. Sed commodo sollicitudin rhoncus.");
 	
-	// Flight and pilot info
+	// Flight description
+	if (task.description) {
+		
+		var description = task.description;
+		
+		if (!Array.isArray(description)) {
+			description = [description];
+		}
+		
+		briefing.push(makeBriefingTemplate.call(this, rand.pick(description)));
+	}
+
+	// Flight elements and pilot info
 	briefing.push(makeBriefingFlight.call(this));
 
-	// TODO: Location info
-	// TODO: Task/objective info
 	// TODO: Payload info
-	// TODO: Battle situation
 	// TODO: Weather report
 
 	// Flight plan briefing output
 	for (var action of flight.plan) {
 		
-		if (!makeBriefingPlan[action.type]) {
+		var makeBriefingPlan = makeBriefingParts["briefing." + action.type];
+
+		if (!makeBriefingPlan) {
 			continue;
 		}
 		
 		// Make plan action briefing
-		var actionBriefing = makeBriefingPlan[action.type].call(this, action, flight);
+		var actionBriefing = makeBriefingPlan.call(this, action, flight);
 		
 		if (actionBriefing && actionBriefing.length) {
 			briefing.push(actionBriefing);

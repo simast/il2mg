@@ -1,6 +1,7 @@
 {
 	// La-5
 	"la5": {
+		manufacturer: "Lavochkin",
 		name: "La-5",
 		type: ["fighter", "fighter_light"],
 		size: "small",

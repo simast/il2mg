@@ -1,6 +1,7 @@
 {
 	// He 111
 	"he111": {
+		manufacturer: "Heinkel",
 		name: "He 111",
 		type: ["level_bomber"],
 		size: "large",

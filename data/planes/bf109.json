@@ -1,6 +1,7 @@
 {
 	// Bf 109
 	"bf109": {
+		manufacturer: "Messerschmitt",
 		name: "Bf 109",
 		type: ["fighter", "fighter_light"],
 		size: "small",

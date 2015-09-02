@@ -1,21 +1,17 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+var requireDir = require("require-directory");
+
 // Data constants
 var planAction = DATA.planAction;
 
-// Plan action make parts
-var makePlanAction = Object.create(null);
-
-makePlanAction[planAction.START] = require("./plan.start.js");
-makePlanAction[planAction.TAKEOFF] = require("./plan.takeoff.js");
-makePlanAction[planAction.WAIT] = require("./plan.wait.js");
-makePlanAction[planAction.LAND] = require("./plan.land.js");
+// Plan action and task make parts
+var makeParts = requireDir(module, {include: /(plan|task)\..+\.js$/});
 
 // Make mission flight plan
 module.exports = function makeFlightPlan(flight) {
 	
-	var rand = this.rand;
 	var plan = flight.plan = [];
 
 	// Initial start plan action
@@ -26,15 +22,14 @@ module.exports = function makeFlightPlan(flight) {
 		plan.push({type: planAction.TAKEOFF});
 	}
 
-	// TODO: Make mission related plan
+	// Make task specific plan
+	var makeTask = makeParts["task." + flight.task];
 	
-	// FIXME: Random wait action
-	plan.push({
-		type: planAction.WAIT,
-		time: rand.integer(60, 90)
-	});
+	if (makeTask) {
+		makeTask.call(this, flight);
+	}
 
-	// FIXME: Land action
+	// Land plan action
 	plan.push({type: planAction.LAND});
 	
 	// TODO: Fast-forward plan to required flight state
@@ -44,8 +39,10 @@ module.exports = function makeFlightPlan(flight) {
 
 	// Process pending plan actions
 	for (var action of plan) {
-
-		if (!makePlanAction[action.type]) {
+		
+		var makePlanAction = makeParts["plan." + action.type];
+	
+		if (!makePlanAction) {
 			continue;
 		}
 
@@ -61,7 +58,7 @@ module.exports = function makeFlightPlan(flight) {
 				input = function() {};
 			}
 
-			output.push(makePlanAction[action.type].call(
+			output.push(makePlanAction.call(
 				this,
 				action,
 				element,

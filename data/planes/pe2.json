@@ -1,7 +1,9 @@
 {
 	// Pe-2
 	"pe2": {
+		manufacturer: "Petlyakov",
 		name: "Pe-2",
+		alias: ["Peshka"],
 		type: ["dive_bomber", "level_bomber"],
 		size: "large",
 		static: [

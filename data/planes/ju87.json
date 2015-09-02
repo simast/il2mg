@@ -1,7 +1,9 @@
 {
 	// Ju 87
 	"ju87": {
+		manufacturer: "Junkers",
 		name: "Ju 87",
+		alias: ["Stuka"],
 		type: ["ground_attack", "dive_bomber"],
 		size: "medium",
 		static: [

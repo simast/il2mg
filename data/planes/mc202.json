@@ -1,7 +1,9 @@
 {
 	// MC.202
 	"mc202": {
+		manufacturer: "Macchi",
 		name: "MC.202",
+		alias: ["Folgore"],
 		type: ["fighter", "fighter_light"],
 		size: "small",
 		// NOTE: Static MC.202 models are not available, using Bf 109 as a workaround

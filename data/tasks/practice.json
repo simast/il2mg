@@ -1,6 +1,11 @@
 {
+	name: "Practice flight over {{airfield}}",
+	description: [
+		"I have been assigned a brand new {{&plane}} plane! My mechanic Artiom insists I should hop in and familiarize myself with the new machine - make a test flight over and around the airfield, push engine to the limits and see how the airframe responds to controls and behaves in the air."
+	],
 	time: "day",
 	planes: {
-		fighter_light: 1
+		fighter_light: 1,
+		ground_attack: 1
 	}
 }

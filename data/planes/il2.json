@@ -1,7 +1,9 @@
 {
 	// Il-2
 	"il2": {
+		manufacturer: "Ilyushin",
 		name: "Il-2",
+		alias: ["Sturmovik"],
 		type: ["ground_attack"],
 		size: "medium",
 		static: [
