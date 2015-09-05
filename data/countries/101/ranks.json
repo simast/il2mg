@@ -1,22 +1,94 @@
 {
-	// Format: weight, name and acronym
-	
-	"1": [0, "Krasnoarmeyets"],
-	"2": [0, "Yefreytor"],
-	"3": [22, "Mladshiy Serzhant", "M.Srzh."],
-	"4": [23, "Serzhant", "Srzh."],
-	"5": [13, "Starshiy Serzhant", "St.Srzh."],
-	"6": [16, "Starshina", "Strsh."],
-	"7": [19, "Mladshiy Leytenant", "M.Lt."],
-	"8": [30, "Leytenant", "Lt."],
-	"9": [11, "Starshiy Leytenant", "St.Lt."],
-	"10": [1, "Kapitan"],
-	"11": [0, "Mayor"],
-	"12": [0, "Podpolkovnik"],
-	"13": [0, "Polkovnik"],
-	"14": [0, "General-Mayor"],
-	"15": [0, "General-Leytenant"],
-	"16": [0, "General-Polkovnik"],
-	"17": [0, "General Armii"],
-	"18": [0, "Marchal Sovyetskogo Soyuza"]
+	"1": {
+		name: "Krasnoarmeyets"
+	},
+	"2": {
+		name: "Yefreytor"
+	},
+	"3": {
+		name: "Mladshiy Serzhant",
+		abbr: "M.Srzh.",
+		type: {
+			pilot: 22
+		}
+	},
+	"4": {
+		name: "Serzhant",
+		abbr: "Srzh.",
+		type: {
+			pilot: 23
+		}
+	},
+	"5": {
+		name: "Starshiy Serzhant",
+		abbr: "St.Srzh.",
+		type: {
+			pilot: 13
+		}
+	},
+	"6": {
+		name: "Starshina",
+		abbr: "Strsh.",
+		type: {
+			pilot: 16
+		}
+	},
+	"7": {
+		name: "Mladshiy Leytenant",
+		abbr: "M.Lt.",
+		type: {
+			pilot: 19
+		}
+	},
+	"8": {
+		name: "Leytenant",
+		abbr: "Lt.",
+		type: {
+			pilot: 30
+		}
+	},
+	"9": {
+		name: "Starshiy Leytenant",
+		abbr: "St.Lt.",
+		type: {
+			pilot: 11
+		}
+	},
+	"10": {
+		name: "Kapitan",
+		type: {
+			pilot: 1,
+			commander: 3
+		}
+	},
+	"11": {
+		name: "Mayor",
+		type: {
+			commander: 2
+		}
+	},
+	"12": {
+		name: "Podpolkovnik",
+		type: {
+			commander: 1
+		}
+	},
+	"13": {
+		name: "Polkovnik"
+	},
+	"14": {
+		name: "General-Mayor"
+	},
+	"15": {
+		name: "General-Leytenant"
+	},
+	"16": {
+		name: "General-Polkovnik"
+	},
+	"17": {
+		name: "General Armii"
+	},
+	"18": {
+		name: "Marchal Sovyetskogo Soyuza"
+	}
 }

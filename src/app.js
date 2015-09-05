@@ -202,7 +202,17 @@ params.option("-s, --state <state>", (function() {
 
 	return desc;
 })(), function(value) {
-	return String(value).trim();
+	
+	value = String(value).trim();
+	
+	// Try flight state as a number
+	var state = Number(value);
+	
+	if (isNaN(state) || state < 0 || state > 1) {
+		return value;
+	}
+	
+	return state;
 });
 
 // Select desired airfield (--airfield)
@@ -318,7 +328,8 @@ appDomain.run(function() {
 	
 	// --state
 	if (params.state !== undefined &&
-			[flightState.START, flightState.RUNWAY].indexOf(params.state) === -1) {
+			[flightState.START, flightState.RUNWAY].indexOf(params.state) === -1 &&
+			typeof params.state !== "number") {
 		
 		throw ["Invalid flight state!", {state: params.state}];
 	}

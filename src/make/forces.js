@@ -45,7 +45,17 @@ module.exports = function makeForces() {
 	// Set player flight and task force references
 	if (flight.player) {
 		
-		player.flight = flight;
 		player.force = force;
+		player.flight = flight;
+		
+		// Find player element
+		for (var element of flight.elements) {
+	
+			if (element.player) {
+	
+				player.element = element;
+				break;
+			}
+		}
 	}
 };

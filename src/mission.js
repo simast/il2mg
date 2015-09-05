@@ -43,10 +43,7 @@ function Mission(params) {
 	this.lang = []; // Language data
 	this.make = []; // Delayed make callbacks list
 	this.params = params; // Desired mission parameters
-
-	// Debug mode flag
-	this.debug = (this.params.debug === true);
-
+	
 	// Last item index value
 	this.lastIndex = 0;
 
@@ -56,6 +53,9 @@ function Mission(params) {
 	
 	// Initialize random number generator
 	this.initRand(params);
+	
+	// Debug mode flag
+	this.debug = (this.params.debug === true);
 
 	log.I("Making mission...");
 	log.profile("Making");

@@ -1,8 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var util = require("util");
-
 // Data constants
 var planAction = DATA.planAction;
 

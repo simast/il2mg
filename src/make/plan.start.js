@@ -6,9 +6,10 @@ module.exports = function makePlanStart(action, element, flight, input) {
 
 	var rand = this.rand;
 	var airfield = this.airfields[flight.airfield];
+	var isAirStart = (typeof element.state === "number");
 
 	// Set element planes to an air start position
-	if (typeof element.state === "number") {
+	if (isAirStart) {
 
 		var orientation = rand.integer(0, 360);
 
@@ -29,7 +30,7 @@ module.exports = function makePlanStart(action, element, flight, input) {
 	}
 
 	// Player-only spawn without valid taxi route
-	if (flight.taxi <= 0) {
+	if (flight.taxi <= 0 && !isAirStart) {
 		return;
 	}
 

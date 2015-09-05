@@ -12,8 +12,9 @@
 	free_test: {
 		parent: "free",
 		name: "Test flight over {{airfield}}",
-		intro: [
-			"I have been assigned a brand new {{{plane}}}! Mechanic Artiom insists I should hop in and familiarize myself with the new machine - make a test flight over and around the airfield, push the engine to its limits and see how the airframe behaves in the air."
+		story: [
+			"I have been assigned a brand new {{{plane}}}! My mechanic {{name.first}} insists I should hop in and familiarize myself with the new machine - make a test flight over and around the airfield, push the engine to its limits and see how the airframe behaves in the air.",
+			"One of the {{{plane}}}s recently underwent a complete engine overhaul on the field. While {{name.first}}, our chief mechanic, assured commander {{{rank.commander}}} {{name.last}} that everything is in order - nevertheless, a test flight has been scheduled to determine if the plane is combat ready. I am to fly over the airfield and make note of the engine performance."
 		]
 	},
 

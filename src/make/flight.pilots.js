@@ -18,36 +18,57 @@ module.exports = function makeFlightPilots(flight) {
 		var ranks = DATA.countries[unit.country].ranks;
 		var leaderPlane = null;
 
-		// Build a weighted index list of pilot ranks
+		// Build an index list of weighted pilot ranks by type
 		if (!ranks.weighted) {
-
-			var rankIDs = Object.keys(ranks);
-
-			ranks.weighted = [];
-			ranks.weighted.ranges = Object.create(null);
-
-			rankIDs.forEach(function(rankID) {
-
-				var rankWeight = ranks[rankID][0];
-
-				if (rankWeight > 0) {
-
-					// Start and end range for weighted rank interval
-					ranks.weighted.ranges[rankID] = [
-						ranks.weighted.length,
-						ranks.weighted.length
-					];
-
-					for (var i = 0; i < rankWeight; i++) {
-
-						ranks.weighted.push(rankID);
-
-						if (i > 0) {
-							ranks.weighted.ranges[rankID][1]++;
+			
+			ranks.weighted = Object.create(null);
+			
+			for (var rankID in ranks) {
+				
+				rankID = parseInt(rankID, 10);
+				
+				if (isNaN(rankID)) {
+					continue;
+				}
+				
+				var rank = ranks[rankID];
+				
+				if (typeof rank.type !== "object") {
+					continue;
+				}
+				
+				for (var rankType in rank.type) {
+					
+					var ranksWeighted = ranks.weighted[rankType];
+					
+					// Initialize weighted rank array
+					if (!ranksWeighted) {
+						
+						ranksWeighted = ranks.weighted[rankType] = [];
+						ranksWeighted.ranges = Object.create(null);
+					}
+					
+					var rankWeight = rank.type[rankType];
+	
+					if (rankWeight > 0) {
+	
+						// Start and end range for weighted rank interval
+						ranksWeighted.ranges[rankID] = [
+							ranksWeighted.length,
+							ranksWeighted.length
+						];
+	
+						for (var i = 0; i < rankWeight; i++) {
+	
+							ranksWeighted.push(rankID);
+	
+							if (i > 0) {
+								ranksWeighted.ranges[rankID][1]++;
+							}
 						}
 					}
 				}
-			});
+			}
 		}
 
 		// Create pilot for each plane
@@ -55,14 +76,16 @@ module.exports = function makeFlightPilots(flight) {
 
 			var isFlightLeader = (plane === flight.leader);
 			var isElementLeader = (plane === element[0]);
+			var ranksWeighted = ranks.weighted.pilot;
 
 			// A set used to track unique pilot names (and prevent duplicates)
 			this.pilots = this.pilots || new Set();
 
 			// Lower and upper pilot rank weighted list range bounds
 			var rankRange = {
+				type: "pilot",
 				min: 0,
-				max: Math.max(ranks.weighted.length - 1, 0)
+				max: Math.max(ranksWeighted.length - 1, 0)
 			};
 
 			if (isFlightLeader) {
@@ -72,11 +95,11 @@ module.exports = function makeFlightPilots(flight) {
 				// will increase as well (to a max 85% weight limit at 6 planes).
 				var rankOffset = Math.min((flight.planes / 6) - (1 / 6), 0.85);
 
-				rankRange.min = Math.floor(ranks.weighted.length * rankOffset);
+				rankRange.min = Math.floor(ranksWeighted.length * rankOffset);
 			}
 			else {
 
-				var flRankRange = ranks.weighted.ranges[flight.leader.pilot.rank.id];
+				var flRankRange = ranksWeighted.ranges[flight.leader.pilot.rank.id];
 				
 				if (flRankRange) {
 					
@@ -222,7 +245,7 @@ module.exports = function makeFlightPilots(flight) {
 			return;
 		}
 		
-		var ranks = DATA.countries[unit.country].ranks;
+		var ranksWeighted = DATA.countries[unit.country].ranks.weighted.pilot;
 		var pilotFound;
 		var pilotIndex;
 		var pilotRank;
@@ -234,8 +257,8 @@ module.exports = function makeFlightPilots(flight) {
 			
 			// Use first matching known pilot by rank requirements
 			// NOTE: Flight leaders have no upper rank requirement for known pilots
-			if (pilotRank >= ranks.weighted[rankRange.min] &&
-					(isFlightLeader || pilotRank <= ranks.weighted[rankRange.max])) {
+			if (pilotRank >= ranksWeighted[rankRange.min] &&
+					(isFlightLeader || pilotRank <= ranksWeighted[rankRange.max])) {
 				
 				pilotFound = pilotData;
 				break;
@@ -415,13 +438,23 @@ module.exports = function makeFlightPilots(flight) {
 	}
 
 	// Get a rank
-	function getRank(rankID, country) {
+	function getRank(rankID, countryID) {
 		
-		var ranks = DATA.countries[country].ranks;
+		var ranks = DATA.countries[countryID].ranks;
 		
-		// Generate a random weighted rank from rank range bounds
+		// Generate a random weighted rank based on type and/or range bounds
 		if (typeof rankID === "object") {
-			rankID = parseInt(ranks.weighted[rand.integer(rankID.min, rankID.max)], 10);
+			
+			var ranksWeighted = ranks.weighted[rankID.type];
+			
+			// Random weighted rank for a given type
+			if (rankID.min === undefined || rankID.max === undefined) {
+				rankID = rand.pick(ranksWeighted);
+			}
+			// Use weighted rank range bounds
+			else {
+				rankID = ranksWeighted[rand.integer(rankID.min, rankID.max)];
+			}
 		}
 
 		var rankData = ranks[rankID];
@@ -431,11 +464,11 @@ module.exports = function makeFlightPilots(flight) {
 		rank.id = rankID;
 	
 		// Full rank name
-		rank.name = rankData[1];
+		rank.name = rankData.name;
 	
-		// Short rank acronym
-		if (rankData[2]) {
-			rank.acronym = rankData[2];
+		// Short rank abbreviation
+		if (rankData.abbr) {
+			rank.abbr = rankData.abbr;
 		}
 
 		return rank;

@@ -1,27 +1,137 @@
 {
-	// Format: weight, name and acronym
-
-	"1": [0, "Flieger", "Flg."],
-	"2": [7, "Gefreiter", "Gfr."],
-	"3": [4, "Obergefreiter", "Obgfr."],
-	"4": [1, "Hauptgefreiter", "Hptgfr."],
-	"5": [44, "Unteroffizier", "Uffz."],
-	"6": [1, "Unterfeldwebel", "Ufw."],
-	"7": [13, "Feldwebel", "Fw."],
-	"8": [2, "Fähnrich", "Fhr."],
-	"9": [14, "Oberfeldwebel", "Ofw."],
-	"10": [4, "Oberfähnrich", "Obfr."],
-	"11": [1, "Stabsfeldwebel", "Stbsfw."],
-	"12": [49, "Leutnant", "Lt."],
-	"13": [11, "Oberleutnant", "Oblt."],
-	"14": [1, "Hauptmann", "Hptm."],
-	"15": [0, "Major", "Maj."],
-	"16": [0, "Oberstleutnant", "Obstl."],
-	"17": [0, "Oberst", "Obst."],
-	"18": [0, "Generalmajor", "Genmaj."],
-	"19": [0, "Generalleutnant", "Genlt."],
-	"20": [0, "General", "Gen."],
-	"21": [0, "Generaloberst", "Genob."],
-	"22": [0, "Generalfeldmarschall", "Genfeldm."],
-	"23": [0, "Reichsmarschall"]
+	"1": {
+		name: "Flieger",
+		abbr: "Flg."
+	},
+	"2": {
+		name: "Gefreiter",
+		abbr: "Gfr.",
+		type: {
+			pilot: 7
+		}
+	},
+	"3": {
+		name: "Obergefreiter",
+		abbr: "Obgfr.",
+		type: {
+			pilot: 4
+		}
+	},
+	"4": {
+		name: "Hauptgefreiter",
+		abbr: "Hptgfr.",
+		type: {
+			pilot: 1
+		}
+	},
+	"5": {
+		name: "Unteroffizier",
+		abbr: "Uffz.",
+		type: {
+			pilot: 44
+		}
+	},
+	"6": {
+		name: "Unterfeldwebel",
+		abbr: "Ufw.",
+		type: {
+			pilot: 1
+		}
+	},
+	"7": {
+		name: "Feldwebel",
+		abbr: "Fw.",
+		type: {
+			pilot: 13
+		}
+	},
+	"8": {
+		name: "Fähnrich",
+		abbr: "Fhr.",
+		type: {
+			pilot: 2
+		}
+	},
+	"9": {
+		name: "Oberfeldwebel",
+		abbr: "Ofw.",
+		type: {
+			pilot: 14
+		}
+	},
+	"10": {
+		name: "Oberfähnrich",
+		abbr: "Obfr.",
+		type: {
+			pilot: 4
+		}
+	},
+	"11": {
+		name: "Stabsfeldwebel",
+		abbr: "Stbsfw.",
+		type: {
+			pilot: 1
+		}
+	},
+	"12": {
+		name: "Leutnant",
+		abbr: "Lt.",
+		type: {
+			pilot: 49
+		}
+	},
+	"13": {
+		name: "Oberleutnant",
+		abbr: "Oblt.",
+		type: {
+			pilot: 11,
+			commander: 3
+		}
+	},
+	"14": {
+		name: "Hauptmann",
+		abbr: "Hptm.",
+		type: {
+			pilot: 1,
+			commander: 2
+		}
+	},
+	"15": {
+		name: "Major",
+		abbr: "Maj.",
+		type: {
+			commander: 1
+		}
+	},
+	"16": {
+		name: "Oberstleutnant",
+		abbr: "Obstl."
+	},
+	"17": {
+		name: "Oberst",
+		abbr: "Obst."
+	},
+	"18": {
+		name: "Generalmajor",
+		abbr: "Genmaj."
+	},
+	"19": {
+		name: "Generalleutnant",
+		abbr: "Genlt."
+	},
+	"20": {
+		name: "General",
+		abbr: "Gen."
+	},
+	"21": {
+		name: "Generaloberst",
+		abbr: "Genob."
+	},
+	"22": {
+		name: "Generalfeldmarschall",
+		abbr: "Genfeldm."
+	},
+	"23": {
+		name: "Reichsmarschall"
+	}
 }

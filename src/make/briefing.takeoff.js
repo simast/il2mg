@@ -11,19 +11,9 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 	
 	var briefing = [];
 	var airfield = this.airfields[flight.airfield];
-	var playerElement = flight.elements[0];
+	var playerElement = this.player.element;
 	var playerPlaneItem = flight.player.item;
 	var taxiRoute = airfield.taxi[Math.abs(flight.taxi)];
-
-	// Find player element
-	for (var element of flight.elements) {
-
-		if (element.player) {
-
-			playerElement = element;
-			break;
-		}
-	}
 
 	// Add taxi info string only if relevant
 	if (taxiRoute && (playerElement.state === flightState.START ||

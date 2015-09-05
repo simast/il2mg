@@ -8,7 +8,7 @@ var briefingColor = DATA.briefingColor;
 
 // Briefing make parts
 var makeBriefingParts = requireDir(module, {include: /briefing\..+\.js$/});
-var makeBriefingTemplate = makeBriefingParts["briefing.template"];
+var makeBriefingText = makeBriefingParts["briefing.text"];
 
 // Generate mission briefing
 module.exports = function makeBriefing() {
@@ -31,7 +31,7 @@ module.exports = function makeBriefing() {
 			name = [name];
 		}
 		
-		name = makeBriefingTemplate.call(this, rand.pick(name));
+		name = makeBriefingText.call(this, rand.pick(name));
 	}
 	
 	options.setName(this.getLC(name));
@@ -39,16 +39,16 @@ module.exports = function makeBriefing() {
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
 	
-	// Task intro description
-	if (task.intro) {
+	// Task intro story
+	if (task.story) {
 		
-		var intro = task.intro;
+		var story = task.story;
 		
-		if (!Array.isArray(intro)) {
-			intro = [intro];
+		if (!Array.isArray(story)) {
+			story = [story];
 		}
 		
-		briefing.push(makeBriefingTemplate.call(this, rand.pick(intro)));
+		briefing.push(makeBriefingText.call(this, rand.pick(story)));
 	}
 
 	// Flight elements and pilot info
@@ -167,9 +167,9 @@ function makeBriefingFlight() {
 		element.forEach(function(plane) {
 
 			var pilot = plane.pilot;
-			var rank = pilot.rank.acronym;
+			var rank = pilot.rank.abbr;
 			
-			// Use full rank name when acronym is not available
+			// Use full rank name when abbreviation is not available
 			if (!rank) {
 				rank = pilot.rank.name;
 			}
