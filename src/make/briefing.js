@@ -35,6 +35,7 @@ module.exports = function makeBriefing() {
 	}
 	
 	options.setName(this.getLC(name));
+	this.name = name;
 
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
@@ -48,7 +49,9 @@ module.exports = function makeBriefing() {
 			story = [story];
 		}
 		
-		briefing.push(makeBriefingText.call(this, rand.pick(story)));
+		if (story.length) {
+			briefing.push(makeBriefingText.call(this, rand.pick(story)));
+		}
 	}
 
 	// Flight elements and pilot info

@@ -339,7 +339,7 @@ appDomain.run(function() {
 
 	// Save mission files
 	mission.save(params.args[0]).then(function() {
-		log.D("Success!");
+		log.D(mission.name);
 	}, function(error) {
 		appDomain.emit("error", error);
 	});
