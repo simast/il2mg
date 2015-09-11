@@ -9,67 +9,68 @@ module.exports = function makeFlightPilots(flight) {
 	// TODO: Support female pilots/names
 
 	var rand = this.rand;
+	var task = this.tasks[flight.task];
 	var player = this.player;
 	var unit = this.units[flight.unit];
+	var ranks = DATA.countries[unit.country].ranks;
 	var pilotIDs = Object.create(null);
-
-	flight.elements.forEach(function(element) {
-
-		var ranks = DATA.countries[unit.country].ranks;
-		var leaderPlane = null;
-
-		// Build an index list of weighted pilot ranks by type
-		if (!ranks.weighted) {
+	
+	// Build an index list of weighted pilot ranks by type
+	if (!ranks.weighted) {
+		
+		ranks.weighted = Object.create(null);
+		
+		for (var rankID in ranks) {
 			
-			ranks.weighted = Object.create(null);
+			rankID = parseInt(rankID, 10);
 			
-			for (var rankID in ranks) {
+			if (isNaN(rankID)) {
+				continue;
+			}
+			
+			var rank = ranks[rankID];
+			
+			if (typeof rank.type !== "object") {
+				continue;
+			}
+			
+			for (var rankType in rank.type) {
 				
-				rankID = parseInt(rankID, 10);
+				var ranksWeighted = ranks.weighted[rankType];
 				
-				if (isNaN(rankID)) {
-					continue;
+				// Initialize weighted rank array
+				if (!ranksWeighted) {
+					
+					ranksWeighted = ranks.weighted[rankType] = [];
+					ranksWeighted.ranges = Object.create(null);
 				}
 				
-				var rank = ranks[rankID];
-				
-				if (typeof rank.type !== "object") {
-					continue;
-				}
-				
-				for (var rankType in rank.type) {
-					
-					var ranksWeighted = ranks.weighted[rankType];
-					
-					// Initialize weighted rank array
-					if (!ranksWeighted) {
-						
-						ranksWeighted = ranks.weighted[rankType] = [];
-						ranksWeighted.ranges = Object.create(null);
-					}
-					
-					var rankWeight = rank.type[rankType];
-	
-					if (rankWeight > 0) {
-	
-						// Start and end range for weighted rank interval
-						ranksWeighted.ranges[rankID] = [
-							ranksWeighted.length,
-							ranksWeighted.length
-						];
-	
-						for (var i = 0; i < rankWeight; i++) {
-	
-							ranksWeighted.push(rankID);
-	
-							if (i > 0) {
-								ranksWeighted.ranges[rankID][1]++;
-							}
+				var rankWeight = rank.type[rankType];
+
+				if (rankWeight > 0) {
+
+					// Start and end range for weighted rank interval
+					ranksWeighted.ranges[rankID] = [
+						ranksWeighted.length,
+						ranksWeighted.length
+					];
+
+					for (var i = 0; i < rankWeight; i++) {
+
+						ranksWeighted.push(rankID);
+
+						if (i > 0) {
+							ranksWeighted.ranges[rankID][1]++;
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	flight.elements.forEach(function(element) {
+		
+		var leaderPlane = null;
 
 		// Create pilot for each plane
 		element.forEach(function(plane) {
@@ -115,6 +116,16 @@ module.exports = function makeFlightPilots(flight) {
 				}
 			}
 			
+			// Modify max rank range based on task rankMax configuration parameter
+			if (typeof task.rankMax === "number") {
+				rankRange.max = Math.min(Math.floor(ranksWeighted.length * task.rankMax), rankRange.max);
+			}
+			
+			// Modify min rank range based on task rankMin configuration parameter
+			if (typeof task.rankMin === "number") {
+				rankRange.min = Math.max(Math.floor(ranksWeighted.length * task.rankMin), rankRange.min);
+			}
+			
 			var pilot;
 			
 			// Set a custom player pilot and rank
@@ -127,15 +138,26 @@ module.exports = function makeFlightPilots(flight) {
 				// Chance to use a known pilot
 				var useKnownPilot = 0;
 	
+				// NOTE: A multi plane formation flight will have no upper rank limit
+				// for known pilots acting as flight leaders (unless strictly required
+				// by task configuration).
+				var useKnownPilotMaxRankRange = true;
+				
 				if (unit.pilots && unit.pilots.length) {
 	
 					// NOTE: The chance to use a known pilot is based on number of known
 					// pilots and max unit pilot count ratio.
 					useKnownPilot = Math.min(unit.pilots.length / unit.pilots.max, 1);
 	
-					// At least 50% chance to search known pilots for flight leaders
-					if (isFlightLeader) {
+					// At least 50% chance to search known pilots for flight leaders with
+					// a multi-plane flight formation.
+					if (isFlightLeader && flight.planes > 1) {
+						
 						useKnownPilot = Math.max(useKnownPilot, 0.5);
+						
+						if (typeof task.rankMax !== "number") {
+							useKnownPilotMaxRankRange = false;
+						}
 					}
 					// At least 25% chance to search known pilots for element leaders
 					else if (isElementLeader) {
@@ -149,7 +171,7 @@ module.exports = function makeFlightPilots(flight) {
 	
 					// Try selecting a known pilot
 					if (useKnownPilot && rand.bool(useKnownPilot)) {
-						pilot = getPilotKnown(unit, rankRange, isFlightLeader);
+						pilot = getPilotKnown(unit, rankRange, useKnownPilotMaxRankRange);
 					}
 	
 					// Generate an unknown pilot
@@ -239,7 +261,7 @@ module.exports = function makeFlightPilots(flight) {
 	}, this);
 
 	// Get a known (real) pilot from the unit data
-	function getPilotKnown(unit, rankRange, isFlightLeader) {
+	function getPilotKnown(unit, rankRange, useMaxRankRange) {
 
 		if (!unit.pilots || !unit.pilots.length) {
 			return;
@@ -256,9 +278,8 @@ module.exports = function makeFlightPilots(flight) {
 			pilotRank = Math.abs(pilotData.rank);
 			
 			// Use first matching known pilot by rank requirements
-			// NOTE: Flight leaders have no upper rank requirement for known pilots
 			if (pilotRank >= ranksWeighted[rankRange.min] &&
-					(isFlightLeader || pilotRank <= ranksWeighted[rankRange.max])) {
+					(!useMaxRankRange || pilotRank <= ranksWeighted[rankRange.max])) {
 				
 				pilotFound = pilotData;
 				break;

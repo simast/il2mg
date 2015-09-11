@@ -13,6 +13,9 @@ module.exports = function makeTaskFree(flight) {
 	// FIXME: Random wait action
 	plan.push({
 		type: planAction.WAIT,
-		time: rand.integer(60, 90)
+		time: rand.integer(60, 90),
+		briefing: function() {
+			return "···";
+		}
 	});
 };

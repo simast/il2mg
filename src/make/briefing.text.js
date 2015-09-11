@@ -188,22 +188,24 @@ module.exports = function makeBriefingText(template) {
 			// Full rank name
 			rankTypeTag.toString = function() {
 				
-				var rank = getRank({type: rankType}, flight.country);
+				var rank = getRank({type: this}, flight.country);
 				
 				if (rank.name) {
 					return "<i>" + rank.name + "</i>";
 				}
-			};
+				
+			}.bind(rankType);
 
 			// Abbreviated rank name
 			rankTypeTag.abbr = function() {
 				
-				var rank = getRank({type: rankType}, flight.country);
+				var rank = getRank({type: this}, flight.country);
 				
 				if (rank.abbr) {
 					return "<i>" + rank.abbr + "</i>";
 				}
-			};
+				
+			}.bind(rankType);
 		}
 	}
 	

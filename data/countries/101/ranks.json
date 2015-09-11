@@ -44,14 +44,16 @@
 		name: "Leytenant",
 		abbr: "Lt.",
 		type: {
-			pilot: 30
+			pilot: 30,
+			leader: 3
 		}
 	},
 	"9": {
 		name: "Starshiy Leytenant",
 		abbr: "St.Lt.",
 		type: {
-			pilot: 11
+			pilot: 11,
+			leader: 1
 		}
 	},
 	"10": {

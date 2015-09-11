@@ -1,7 +1,8 @@
 {
-	// Free flight task (single-plane)
+	// Single-plane free test/practice/training flights over the local airfield
 	free: {
 		time: "day",
+		rankMax: 0.5, // Don't use high ranking pilots (use 50% max weighted rank range)
 		planes: {
 			fighter_light: 1,
 			ground_attack: 1
@@ -9,7 +10,7 @@
 	},
 	
 	// Test flight
-	free_test: {
+	test: {
 		parent: "free",
 		name: "Test flight over {{airfield}}",
 		story: [
@@ -20,16 +21,18 @@
 	},
 
 	// Practice flight
-	free_practice: {
+	practice: {
 		parent: "free",
 		name: "Practice flight over {{airfield}}",
 		story: [
-			"I have just returned from an extended leave and can't wait to get back in the cockpit! {{{rank.commander}}} {{name.last}}, our commander, insists I should keep calm and restrain myself from any combat action. I am to take {{{plane}}} for a practice flight over and around the airfield - familiarize myself with the controls and feel how the airframe behaves in the air."
+			"I have just returned from an extended leave and can't wait to get back in the cockpit! {{{rank.commander}}} {{name.last}}, our commander, insists I should keep calm and restrain myself from any combat action. I am to take {{{plane}}} for a practice flight over and around the airfield - familiarize myself with the controls and feel how the airframe behaves in the air.",
+			"I don't feel too confident flying this {{{plane}}}. My flight leader {{{rank.leader}}} {{name.last}} has noted this already and mentioned that I was struggling maintaining required flight formation during our last combat mission. As frustrating as it may be, I have been ordered to fly a number of practice flights over and around the airfield.",
+			"This {{{plane}}} is quite a different machine from what we used to fly in our training unit! While I am eager to get some real combat action - I don't feel confident enough in my handling of this new type of aircraft. As per my request, {{{rank.commander}}} {{name.last}}, our commander, has gave me direct permission to fly a series of practice flights over the airfield."
 		]
 	},
 
 	// Training flight
-	free_train: {
+	train: {
 		parent: "free",
 		name: "Training flight over {{airfield}}"
 	}

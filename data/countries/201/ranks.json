@@ -77,7 +77,8 @@
 		name: "Leutnant",
 		abbr: "Lt.",
 		type: {
-			pilot: 49
+			pilot: 49,
+			leader: 3
 		}
 	},
 	"13": {
@@ -85,6 +86,7 @@
 		abbr: "Oblt.",
 		type: {
 			pilot: 11,
+			leader: 1,
 			commander: 3
 		}
 	},

@@ -59,11 +59,18 @@ module.exports = function makeBriefing() {
 
 	// TODO: Payload info
 	// TODO: Weather report
+	
+	var briefingPlan = [];
 
 	// Flight plan briefing output
 	for (var action of flight.plan) {
 		
 		var makeBriefingPlan = makeBriefingParts["briefing." + action.type];
+		
+		// Use custom plan action briefing text
+		if (action.briefing) {
+			makeBriefingPlan = action.briefing;
+		}
 
 		if (!makeBriefingPlan) {
 			continue;
@@ -73,8 +80,13 @@ module.exports = function makeBriefing() {
 		var actionBriefing = makeBriefingPlan.call(this, action, flight);
 		
 		if (actionBriefing && actionBriefing.length) {
-			briefing.push(actionBriefing);
+			briefingPlan.push(actionBriefing);
 		}
+	}
+	
+	// NOTE: Using smaller line breaks for separating plan actions
+	if (briefingPlan.length) {
+		briefing.push(briefingPlan.join('<br><font size="8"></font><br>'));
 	}
 	
 	options.setDescription(this.getLC(briefing.join("<br><br>")));
