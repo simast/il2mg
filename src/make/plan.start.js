@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+var MCU_Icon = require("../item").MCU_Icon;
+
 // Make plan start action
 module.exports = function makePlanStart(action, element, flight, input) {
 
@@ -27,6 +29,17 @@ module.exports = function makePlanStart(action, element, flight, input) {
 			planeItem.setPosition(positionX, positionY, positionZ);
 			planeItem.setOrientation(orientation);
 		}
+	}
+	
+	// Create start location icon for player flight
+	// TODO: Don't create icon for flights in progress (state > 0)?
+	if (flight.player) {
+		
+		var startIcon = flight.group.createItem("MCU_Icon");
+		
+		startIcon.setPosition(airfield.position);
+		startIcon.Coalitions = [DATA.countries[flight.country].coalition];
+		startIcon.IconId = MCU_Icon.ICON_TAKE_OFF;
 	}
 
 	// Player-only spawn without valid taxi route

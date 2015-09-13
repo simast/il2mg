@@ -47,7 +47,7 @@ module.exports = function makePlayer() {
 		
 		// Filter units based on country
 		unitsList = unitsList.filter(function(unitID) {
-			return (mission.unitsByCountry[player.country][unitID] !== undefined);
+			return (unitID in mission.unitsByCountry[player.country]);
 		});
 	}
 
@@ -69,7 +69,7 @@ module.exports = function makePlayer() {
 		
 		// Filter units by player chosen airfield
 		unitsList = unitsList.filter(function(unitID) {
-			return (mission.unitsByAirfield[player.airfield][unitID] !== undefined);
+			return (unitID in mission.unitsByAirfield[player.airfield]);
 		});
 	}
 	
@@ -102,12 +102,29 @@ module.exports = function makePlayer() {
 	if (params.state !== undefined) {
 		player.state = params.state;
 	}
+	
+	// Limit to units stationed on airfields with available taxi route data (unless
+	// the player explicitly requests an air start or specifies an airfield).
+	if (typeof player.state !== "number" && player.airfield === undefined) {
 
+		unitsList = unitsList.filter(function(unitID) {
+			
+			var unit = mission.units[unitID];
+			
+			// Filter out unit groups
+			if (Array.isArray(unit)) {
+				return false;
+			}
+			
+			return !!mission.airfields[unit.airfield].taxi;
+		});
+	}
+	
 	// TODO: Retry mission generation when unit list is empty
 	if (!unitsList.length) {
 		throw "No valid units found!";
 	}
 
-	// Pick a random player unit from valid units list
-	player.unit = rand.pick(unitsList);
+	// Set valid player units list
+	player.units = unitsList;
 };

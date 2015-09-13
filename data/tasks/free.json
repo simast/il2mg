@@ -32,7 +32,7 @@
 	},
 
 	// Training flight
-	train: {
+	training: {
 		parent: "free",
 		name: "Training flight over {{airfield}}"
 	}

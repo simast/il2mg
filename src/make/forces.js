@@ -22,7 +22,7 @@ module.exports = function makeForces() {
 			flight = makeFlight.call(this, {
 				player: true,
 				state: player.state,
-				unit: rand.pick(Object.keys(this.units)),
+				unit: rand.pick(player.units),
 				task: rand.pick(Object.keys(this.tasks))
 			});
 		}
