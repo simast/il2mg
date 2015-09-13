@@ -10,7 +10,11 @@ module.exports = function makeBriefingLand(action, flight) {
 	var briefing = [];
 	var airfield = this.airfields[action.airfield || flight.airfield];
 	var playerElement = this.player.element;
-	var taxiRoute = airfield.taxi[action.taxi || Math.abs(flight.taxi)];
+	var taxiRoute;
+	
+	if (airfield.taxi) {
+		taxiRoute = airfield.taxi[action.taxi || Math.abs(flight.taxi)];
+	}
 	
 	briefing.push("Land at");
 	

@@ -41,8 +41,8 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		if (this.player.flight) {
 			
 			var playerAirfield = this.airfields[this.player.flight.airfield];
-	
-			if (airfield.id !== playerAirfield.id) {
+			
+			if (airfield.id !== playerAirfield.id && playerAirfield.callsign) {
 				
 				while (airfield.callsign.id === playerAirfield.callsign.id) {
 					airfield.callsign = this.getCallsign("airfield");

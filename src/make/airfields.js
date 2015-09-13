@@ -154,6 +154,8 @@ module.exports = function makeAirfields() {
 
 			// Assign planes to sectors
 			(function() {
+				
+				var logData = Object.create(null);
 
 				// NOTE: During distribution large size planes take priority over small size
 				for (var planeSizeID = planeSizeMax; planeSizeID >= planeSizeMin; planeSizeID--) {
@@ -219,28 +221,32 @@ module.exports = function makeAirfields() {
 							}
 						}
 
-						// Log a warning if unitPlanes.length is greater than 0 (could not
+						// Collect info when unitPlanes.length is greater than 0 (could not
 						// distribute all unit planes - not enough parking spots).
-						if (unitPlanes.length) {
+						unitPlanes.forEach(function(planeData) {
 							
-							var logData = {
-								airfield: airfieldID
-							};
+							var planeID = planeData[0];
 							
-							unitPlanes.forEach(function(planeData) {
-								
-								var planeID = planeData[0];
-								
-								if (!logData[planeID]) {
-									logData[planeID] = 0;
-								}
-								
-								logData[planeID]++;
-							});
+							if (!logData[planeID]) {
+								logData[planeID] = 0;
+							}
 							
-							log.W("Not enough plane spots!", logData);
-						}
+							logData[planeID]++;
+						});
 					});
+				}
+				
+				// Log a warning for each plane type (with number of planes) that could
+				// not be distributed on the airfield (due to missing plane spots).
+				for (var planeID in logData) {
+					
+					var logParams = {
+						airfield: airfieldID
+					};
+					
+					logParams[planeID] = logData[planeID];
+					
+					log.W("Not enough plane spots!", logParams);
 				}
 			})();
 			
@@ -411,8 +417,8 @@ module.exports = function makeAirfields() {
 			
 			var airfield = mission.airfields[airfieldID];
 			
-			// Ignore airfields without value (no active planes/units)
-			if (!airfield.value) {
+			// Ignore airfields without taxi routes or with empty value (no active planes/units)
+			if (!airfield.value || !airfield.taxi) {
 				continue;
 			}
 			

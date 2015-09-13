@@ -1,0 +1,87 @@
+{
+	// Jagdgeschwader 53 "Pik As"
+	"jg53": {
+		alias: "Pik As"
+	},
+
+	// I./JG 53
+	"jg53_i": {
+		parent: "jg53",
+		airfields: [
+			["tatsinskaya", "1942-07-26", "1942-07-31"], // Novy-Cholan ("a field near Tazinskaya")
+			["frolov", "1942-08-01", "1942-08-04"],
+			["berezovsky", "1942-08-05", "1942-08-12"], // Bereska ("on the river Don", 60 km west of Stalingrad)
+			["tuzov", "1942-08-13", "1942-09-10"],
+			["pitomnik", "1942-09-11", "1942-09-25"]
+			// ... was relieved and passed remaining aircraft to I./JG 3 and by train,
+			// road and air left for Comiso/Sicily.
+		],
+		planes: [
+			["bf109g2", 37, "1942-07"],
+			["bf109g2", 35, "1942-08"],
+			["bf109g2", 34, "1942-09"]
+		]
+	},
+	"jg53_i_stab": {
+		name: "Stab I./JG 53",
+		parent: "jg53_i",
+		planesMin: 3,
+		planesMax: 6,
+		pilots: [
+			["Walter Spies", 14],
+			["Fritz Dinger", -12, "1942-07-26", "end"],
+			["Hans Kornatz", 9, "start", "1942-09-08"],
+			["Manfred Spenner", 13, "1942-09-09", "end"]
+		]
+	},
+	"jg53_1": {
+		name: "1./JG 53",
+		parent: "jg53_i",
+		pilots: [
+			["Friedrich-Karl Müller", -13, "start", "1942-09-04"],
+			["Friedrich-Karl Müller", -14, "1942-09-05", "end"],
+			["Walter Zellot", -12, "start", "1942-08-19"],
+			["Werner Schöw", 12, "start", "1942-08-11"],
+			["Ludwig Reibel", 5, "start", "1942-08-31"],
+			["Ludwig Reibel", 9, "1942-09-01", "end"],
+			["Helmut Peissert", -5, "start", "1942-09-04"],
+			["Marian Mazurek", -5],
+			["Heinz Sieg", 5, "start", "1942-08-24"]
+		]
+	},
+	"jg53_2": {
+		name: "2./JG 53",
+		parent: "jg53_i",
+		pilots: [
+			["Klaus Quaet-Faslem", -13, "start", "1942-08-19"],
+			["Walter Zellot", -12, "1942-08-20", "1942-09-10"],
+			["Alfred Franke", -9, "start", "1942-09-09"],
+			["Erich Thomas", 12],
+			["Hans Kornatz", -9, "start", "1942-09-08"],
+			["Wilhelm Budke", 7, "start", "1942-09-19"],
+			["Gerhard Stockmann", 7],
+			["Erwin Meier", 5, "start", "1942-09-13"],
+			["Erich Juhls", 5],
+			["Johann Spott", 5, "start", "1942-09-20"],
+			["Gustav Perl", 5, "start", "1942-08-24"]
+		]
+	},
+	"jg53_3": {
+		name: "3./JG 53",
+		parent: "jg53_i",
+		pilots: [
+			["Wolfgang Tonne", -13],
+			["Wilhelm Crinius", -5, "start", "1942-09-01"],
+			["Wilhelm Crinius", -7, "1942-09-02", "1942-09-23"],
+			["Wilhelm Crinius", -12, "1942-09-24", "end"],
+			["Gerhard Riess", 5, "start", "1942-09-08"],
+			["Heinrich Wöhrle", 5, "start", "1942-09-10"],
+			["Franz Hagedorn", 7, "start", "1942-09-10"],
+			["Hans Röhrig", -12],
+			["Heinz Golinski", -5],
+			["Fritz Gammel", -9, "start", "1942-09-04"],
+			["Walter Seiz", 12],
+			["Heinrich Leschert", 9, "start", "1942-08-10"]
+		]
+	}
+}

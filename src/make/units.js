@@ -52,9 +52,14 @@ module.exports = function makeUnits() {
 					}
 
 					var airfields = getAirfields(unitData);
-
-					if (airfields.length) {
-						unit.airfield = rand.pick(airfields);
+					
+					for (var airfieldID in airfields) {
+						
+						unit.airfield = airfieldID;
+						unit.availability = airfields[airfieldID];
+						
+						// TODO: Distribute unit if more than one airfield is available
+						break;
 					}
 				}
 				// Collect plane storage data
@@ -228,7 +233,7 @@ module.exports = function makeUnits() {
 	// Get unit airfields
 	function getAirfields(unitData) {
 
-		var airfields = [];
+		var airfields = Object.create(null);
 
 		// TODO: Dynamically generate rebase/transfer missions
 
@@ -244,11 +249,18 @@ module.exports = function makeUnits() {
 			var airfieldID = airfield[0];
 
 			if (missionDateIsBetween(airfield[1], airfield[2])) {
-
-				// Add found airfield entry
-				if (airfields.indexOf(airfieldID) === -1) {
-					airfields.push(airfieldID);
+				
+				var availability = 1;
+				
+				// Forth parameter in the array can be used to specify unit availability (%)
+				if (typeof airfield[3] === "number") {
+					availability = airfield[3];
 				}
+				
+				availability = Math.max(Math.min(availability, 1), 0);
+				
+				// Add found airfield entry (with availability)
+				airfields[airfieldID] = availability;
 			}
 		}
 

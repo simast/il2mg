@@ -9,7 +9,15 @@
 		name: "Stab/JG 3",
 		parent: "jg3",
 		airfields: [
-			["oblivskaya", "start", "end"]
+			["millerovo", "start", "1942-07-22"],
+			["tatsinskaya", "1942-07-23", "1942-07-28"], // Nowy-Cholan ("a field near Tazinskaya")
+			["frolov", "1942-07-29", "1942-08-10"],
+			["tuzov", "1942-08-11", "1942-09-13"],
+			["pitomnik", "1942-09-14", "1942-11-20"],
+			["morozovskiy_west", "1942-11-21", "1942-12-23"],
+			["morozovskiy_south", "1942-12-24", "1943-01-02"],
+			["tatsinskaya", "1943-01-03", "1943-01-08"],
+			["shakhty", "1943-01-09", "1943-01-25"]
 		],
 		planes: [
 			["bf109f4trop", 5, "1942-07"],
@@ -26,7 +34,8 @@
 			["Günther Lützow", -16, "start", "1942-08-11"],
 			["Wolf-Dietrich Wilcke", -14, "start", "1942-12-22"],
 			["Wolf-Dietrich Wilcke", -15, "1942-12-23", "end"],
-			["Walther Dahl", 13]
+			["Walther Dahl", 13],
+			["Rudolf Germeroth", 14, "1942-09-15", "1942-11-28"]
 		]
 	},
 
@@ -34,13 +43,23 @@
 	"jg3_i": {
 		parent: "jg3",
 		airfields: [
-			["oblivskaya", "start", "end"]
+			["millerovo", "start", "1942-07-18"],
+			["morozovskiy_west", "1942-07-19", "1942-07-27"],
+			["frolov", "1942-07-28", "1942-08-10"],
+			["tuzov", "1942-08-11", "1942-09-07"],
+			["novocherkassk", "1942-09-08", "1942-09-25", 0], // Rest and refit
+			// ... received all Bf 109 G-2 planes from I./JG 53
+			["pitomnik", "1942-09-26", "1942-11-28"],
+			["morozovskiy_west", "1942-11-29", "1942-12-23"],
+			["morozovskiy_south", "1942-12-24", "1943-01-02"],
+			["tatsinskaya", "1943-01-03", "1943-01-06"],
+			["shakhty", "1943-01-07", "1943-01-20"]
 		],
 		planes: [
 			["bf109f4trop", 32, "1942-07"],
 			["bf109f4trop", 31, "1942-08"],
 			["bf109f4trop", 28, "1942-09-01", "1942-09-07"],
-			["bf109g2", 37, "1942-09-24", "1942-09-end"],
+			["bf109g2", 37, "1942-09-26", "1942-09-end"],
 			["bf109g2", 32, "1942-10"],
 			["bf109g2", 34, "1942-11"],
 			["bf109g2", 26, "1942-12"],
@@ -53,6 +72,7 @@
 		planesMin: 3,
 		planesMax: 6,
 		pilots: [
+			["Klaus Quaet-Faslem", 14, "1942-08-20", "end"],
 			["Nikolaus Pfützer", 13, "start", "1942-09-06"]
 		]
 	},
@@ -65,7 +85,8 @@
 			["Jakob Götz", 5, "start", "1942-08-28"],
 			["Wolfgang Wahl", 5, "start", "1942-10-01"],
 			["Werner Teegler", 8, "start", "1942-11-04"],
-			["Peter Wünsch", 5, "start", "1943-01-11"]
+			["Peter Wünsch", 5, "start", "1943-01-11"],
+			["Helmut Rüffler", -7, "start", "1942-12-23"]
 		]
 	},
 	"jg3_2": {
@@ -79,7 +100,8 @@
 		name: "3./JG 3",
 		parent: "jg3_i",
 		pilots: [
-			["Heinz Obst", 5, "start", "1943-01-03"]
+			["Heinz Obst", 5, "start", "1943-01-03"],
+			["Ludwig Häfner", -12, "1942-10-01", "1942-11-10"]
 		]
 	},
 
@@ -87,13 +109,20 @@
 	"jg3_ii": {
 		parent: "jg3",
 		airfields: [
-			["oblivskaya", "start", "end"]
+			["millerovo", "start", "1942-07-21"],
+			["tatsinskaya", "1942-07-22", "1942-07-27"], // Nowy-Cholan ("a field near Tazinskaya")
+			["frolov", "1942-07-28", "1942-08-10"],
+			["tuzov", "1942-08-11", "1942-08-23"],
+			// ... left for Germany, re-equipped with Bf 109 G-2 and then went up north
+			// near Leningrad, then to Smolensk, then returned to Stalingrad.
+			["morozovskiy_west", "1942-12-12", "1942-12-23"],
+			["morozovskiy_south", "1942-12-24", "1943-01-02"],
+			["tatsinskaya", "1943-01-03", "1943-01-05"],
+			["shakhty", "1943-01-06", "1943-01-22"]
 		],
 		planes: [
 			["bf109f4trop", 30, "1942-07"],
 			["bf109f4trop", 28, "1942-08-01", "1942-08-23"],
-			// NOTE: On 1942-08-23 left for Germany, re-equipped with Bf 109 G-2 and then
-			// went up north near Leningrad, then to Smolensk, then returned to Stalingrad.
 			["bf109g2", 24, "1942-12-12", "1942-12-end"],
 			["bf109g2", 17, "1943-01-01", "end"]
 		]
@@ -119,7 +148,8 @@
 		name: "6./JG 3",
 		parent: "jg3_ii",
 		pilots: [
-			["Wolfgang Vogel", 5, "start", "1942-08-01"]
+			["Wolfgang Vogel", 5, "start", "1942-08-01"],
+			["Ludwig Häfner", -12, "start", "1942-09-31"]
 		]
 	},
 
@@ -127,7 +157,16 @@
 	"jg3_iii": {
 		parent: "jg3",
 		airfields: [
-			["oblivskaya", "start", "end"]
+			["millerovo", "start", "1942-07-20"],
+			["tatsinskaya", "1942-07-21", "1942-07-27"], // Nowy-Cholan ("a field near Tazinskaya")
+			["frolov", "1942-07-28", "1942-08-10"],
+			["tuzov", "1942-08-11", "1942-09-10"],
+			["pitomnik", "1942-09-11", "1942-11-22"],
+			["oblivskaya", "1942-11-23", "1942-11-27"],
+			["morozovskiy_west", "1942-11-28", "1942-12-23"],
+			["morozovskiy_south", "1942-12-24", "1943-01-02"],
+			["tatsinskaya", "1943-01-03", "1943-01-08"],
+			["shakhty", "1943-01-09", "1943-01-25"]
 		],
 		planes: [
 			["bf109f4", 30, "1942-07"],
@@ -158,7 +197,8 @@
 			["Horst Krause", 5, "start", "1942-08-26"],
 			["Fritz Junk", 5, "start", "1942-08-28"],
 			["Gottfried Loos", 5, "start", "1942-10-25"],
-			["Aldemar Matzdorf", 7, "start", "1942-10-26"]
+			["Aldemar Matzdorf", 7, "start", "1942-10-26"],
+			["Wilhelm Lemke", -12, "start", "1942-08-11"]
 		]
 	},
 	"jg3_9": {
@@ -166,21 +206,23 @@
 		parent: "jg3_iii",
 		pilots: [
 			["Rolf Diergardt", 12, "start", "1942-08-11"],
+			["Wilhelm Lemke", -12, "1942-08-12", "end"],
 			["Klaus Starke", 13, "start", "1942-08-17"],
 			["Kurt Brosche", 7, "start", "1942-09-21"],
 			["Reinhard Weise", 5, "start", "1942-10-29"],
 			["Werner Rose", 5, "start", "1942-11-14"],
 			["Hermann Boll", 5, "start", "1942-12-12"],
 			["Franz Thümer", 5, "start", "1942-12-27"],
-			["Willy Giese", 5, "start", "1942-12-31"]
+			["Willy Giese", 5, "start", "1942-12-31"],
+			["Walter Ohlrogge", 9, "start", "1942-09-05"]
 		]
 	},
 
 	// Pitomnik airfield defence squadron for Stalingrad pocket
 	"jg3_pitomnik": {
 		name: "Platzschutzstaffel",
-		parent: "jg3",
 		alias: "Pitomnik",
+		parent: "jg3",
 		airfields: [
 			["pitomnik", "1942-11-29", "1943-01-16"]
 		],
