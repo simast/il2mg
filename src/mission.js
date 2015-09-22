@@ -46,6 +46,8 @@ function Mission(params) {
 	
 	// Last item index value
 	this.lastIndex = 0;
+	
+	log.I("Making mission...");
 
 	// Reserve an empty localization string (used in binary mission generation for
 	// items without LCName or LCDesc properties).
@@ -56,8 +58,7 @@ function Mission(params) {
 	
 	// Debug mode flag
 	this.debug = (this.params.debug === true);
-
-	log.I("Making mission...");
+	
 	log.profile("Making");
 
 	// Make mission parts
@@ -167,13 +168,21 @@ Mission.prototype.initRand = function(params) {
 	mtRand.seed(this.seed);
 	this.rand = new Random(mtRand);
 	
+	var seedParam;
+	
 	// Save seed value as a localization string
 	if (complexSeed) {
-		this.getLC(new Buffer(JSON.stringify(complexSeed), "utf8").toString("base64"));
+		seedParam = new Buffer(JSON.stringify(complexSeed), "utf8").toString("base64");
 	}
 	else {
-		this.getLC(this.seed.toString());
+		seedParam = this.seed.toString();
 	}
+	
+	// Save seed param value as a localization string
+	this.getLC(seedParam);
+	
+	// Log seed param value
+	log.I("Seed:", seedParam);
 };
 
 /**

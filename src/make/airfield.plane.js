@@ -42,9 +42,12 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 				size: maxSize // Max plane size
 			};
 			
-			// Mark route to be activated with player-only spawn
+			// Mark route to be activated for this plane spawn
 			if (playerTaxiRoute) {
 				taxiSpawn.route = playerTaxiRoute;
+			}
+			else if (taxiRoute > 0) {
+				taxiSpawn.route = taxiRoute;
 			}
 			
 			taxiSpawnsBySector[sector][taxiRoute].push(taxiSpawn);

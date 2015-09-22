@@ -69,63 +69,74 @@ function makeFlight(params) {
 	if (!flight.planes) {
 		return;
 	}
-
-	// Flight plan actions list
-	flight.plan = [];
 	
 	// Option 1: Attempt to pick taxi route/sector where static unit planes are present
 	(function() {
 
 		var unitPlaneItems = airfield.planeItemsByUnit[unitID];
+		
+		if (!unitPlaneItems) {
+			return;
+		}
+		
+		var unitSectors = Object.keys(unitPlaneItems);
 
-		if (unitPlaneItems) {
+		if (flight.planes > 1) {
 
-			var unitSectors = Object.keys(unitPlaneItems);
+			// Order the unit sector list by number of planes present
+			unitSectors.sort(function(a, b) {
+				return unitPlaneItems[b].length - unitPlaneItems[a].length;
+			});
+		}
+		else {
+			rand.shuffle(unitSectors);
+		}
 
-			if (flight.planes > 1) {
+		for (var unitSectorID of unitSectors) {
 
-				// Order the unit sector list by number of planes present
-				unitSectors.sort(function(a, b) {
-					return unitPlaneItems[b].length - unitPlaneItems[a].length;
-				});
-			}
-			else {
-				rand.shuffle(unitSectors);
-			}
-
-			for (var unitSectorID of unitSectors) {
-
-				var taxiSpawns = airfield.taxiSpawnsBySector[unitSectorID];
-
-				// 75% chance to use player-only spawn point with a single-plane player flight
-				if (isPlayer && flight.planes === 1 && taxiSpawns[0] && rand.bool(0.75)) {
-					flight.taxi = 0;
-				}
-				// Pick any taxi route where the flight fits the best
-				else {
-
-					var taxiRoutes = Object.keys(taxiSpawns).filter(function(value) {
-						return value > 0;
-					});
-
-					if (!taxiRoutes.length) {
-						continue;
-					}
-
-					// TODO: Check for the best taxi route for a given flight plane set
-					flight.taxi = Number(rand.pick(taxiRoutes));
-				}
-
-				flight.sector = Number(unitSectorID);
-
-				// Pick taxi route plane spawn points
-				flight.spawns = taxiSpawns[flight.taxi];
+			var taxiSpawns = airfield.taxiSpawnsBySector[unitSectorID];
+			var usePlayerOnlySpawns = false;
+			var validSpawns = [];
+			
+			// Use player-only spawn points with a single-plane player flight
+			if (isPlayer && flight.planes === 1 && taxiSpawns[0]) {
 				
-				break;
+				flight.taxi = 0;
+				usePlayerOnlySpawns = true;
+				validSpawns.push.apply(validSpawns, taxiSpawns[0]);
 			}
+			
+			// Pick any taxi route where the flight fits the best
+			var taxiRoutes = Object.keys(taxiSpawns).filter(function(value) {
+				return value > 0;
+			});
+			
+			// Continue to another sector where unit planes are present
+			if (!taxiRoutes.length && !validSpawns.length) {
+				continue;
+			}
+			
+			flight.sector = Number(unitSectorID);
+			flight.spawns = validSpawns;
+			
+			if (taxiRoutes.length) {
+				
+				var taxiRoute = Number(rand.pick(taxiRoutes));
+				
+				if (usePlayerOnlySpawns) {
+					validSpawns.push.apply(validSpawns, taxiSpawns[taxiRoute]);
+				}
+				else {
+					
+					flight.taxi = taxiRoute;
+					flight.spawns = taxiSpawns[taxiRoute];
+				}
+			}
+			
+			break;
 		}
 	}).call(this);
-
+	
 	// Option 2: Attempt to pick any taxi route/sector where the same plane group units are present
 	if (flight.taxi === undefined) {
 
@@ -152,7 +163,7 @@ function makeFlight(params) {
 			}
 		}).call(this);
 	}
-
+	
 	// Make sure the taxi route on the airfield is valid and exists
 	if (flight.taxi && !airfield.taxi[flight.taxi]) {
 		delete flight.taxi;
@@ -166,7 +177,13 @@ function makeFlight(params) {
 	
 	// Option 3: Force (forward to) air start state if no valid taxi route is found
 	if (flight.taxi === undefined) {
+		
 		flight.state = 0;
+		
+		// Also reset each individual element state
+		for (var element of flight.elements) {
+			element.state = flight.state;
+		}
 	}
 	
 	// Pick a player element and plane
@@ -197,12 +214,12 @@ function makeFlight(params) {
 			}
 		}
 	}
-
+	
 	// Enable required airfield taxi route
 	if (flight.taxi > 0) {
 		makeAirfieldTaxi.call(this, airfield, flight.taxi);
 	}
-
+	
 	// Make flight pilots and planes
 	makeFlightPilots.call(this, flight);
 	makeFlightPlanes.call(this, flight);

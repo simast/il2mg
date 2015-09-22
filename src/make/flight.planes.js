@@ -11,28 +11,28 @@ var flightState = DATA.flightState;
 
 // Make mission flight plane item objects
 module.exports = function makeFlightPlanes(flight) {
-
+	
 	// TODO: Set payload
 	// TODO: Set weapon mods
-
+	
 	var rand = this.rand;
 	var airfield = this.airfields[flight.airfield];
 	var unit = this.units[flight.unit];
 	var usedParkSpawns = [];
 	var planeNumber = flight.planes;
-
+	
 	// Process each flight element (section) in reverse
 	for (var elementIndex = flight.elements.length - 1; elementIndex >= 0; elementIndex--) {
 		
 		var element = flight.elements[elementIndex];
-
+		
 		// Skip leader only (first plane) when mapping formation number based on distance
 		var sortSkip = 0;
-
+		
 		// Enforce a limit of one element per ramp or runway start and make sure the
 		// player element is always selected for ramp/runway start.
 		if ((!flight.player && elementIndex > 0) || (flight.player && !element.player)) {
-
+			
 			// Only one element can start on the ramp from "start" flight state
 			if (element.state === flightState.START) {
 				element.state = flightState.TAXI;
@@ -42,10 +42,10 @@ module.exports = function makeFlightPlanes(flight) {
 				element.state = 0; // Air start
 			}
 		}
-
+		
 		// Process each plane in reverse
 		for (var planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {
-
+			
 			var plane = element[planeIndex];
 			var planeData = this.planes[plane.plane];
 			var isPlayer = (plane === flight.player);
@@ -62,10 +62,10 @@ module.exports = function makeFlightPlanes(flight) {
 			var orientation;
 			var positionOffset;
 			var orientationRad;
-
+			
 			// Try to start plane from parking/ramp
 			if (element.state === flightState.START) {
-
+				
 				// Build a list of valid taxi spawn points
 				if (flight.spawns) {
 
@@ -121,7 +121,7 @@ module.exports = function makeFlightPlanes(flight) {
 
 				// Try to use any of the valid parking spawn points
 				var parkSpawn = validParkSpawns.shift();
-
+				
 				// Use ramp/parking spawn point
 				if (parkSpawn) {
 
@@ -177,13 +177,11 @@ module.exports = function makeFlightPlanes(flight) {
 					usedParkSpawns.push(parkSpawn.id);
 					foundSpawnPoint = true;
 
-					// Player-only spawn point with a taxi route defined
-					if (flight.taxi === 0 && spawnPoint.route) {
+					// Enable taxi route for selected spawn point (player-only flight)
+					if (flight.taxi === 0 && spawnPoint.route &&
+							makeAirfieldTaxi.call(this, airfield, spawnPoint.route)) {
 
-						// Enable and use selected airfield taxi route
-						if (makeAirfieldTaxi.call(this, airfield, spawnPoint.route)) {
-							flight.taxi = spawnPoint.route;
-						}
+						flight.taxi = spawnPoint.route;
 					}
 				}
 			}

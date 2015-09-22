@@ -9,9 +9,17 @@ var itemFlag = DATA.itemFlag;
 // Make plan takeoff action briefing
 module.exports = function makeBriefingTakeoff(action, flight) {
 	
+	var playerElement = this.player.element;
+	
+	// Ignore take off briefing on air start
+	// NOTE: This may happen when the flight state was "start" - but the player element
+	// was pushed for air start (due to lack of plane spots or taxi routes for example).
+	if (typeof playerElement.state === "number") {
+		return;
+	}
+	
 	var briefing = [];
 	var airfield = this.airfields[flight.airfield];
-	var playerElement = this.player.element;
 	var playerPlaneItem = flight.player.item;
 	var taxiRoute = airfield.taxi[Math.abs(flight.taxi)];
 
