@@ -1,0 +1,40 @@
+{
+	// P-40
+	"p40": {
+		manufacturer: "Curtiss",
+		name: "P-40",
+		alias: "Kittyhawk",
+		type: ["fighter", "fighter_light"],
+		size: "small",
+		// NOTE: Static P-40 models are not available, using Yak-1 as a workaround 
+		static: [
+			{
+				model: "graphics\\blocks\\static_yak1.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_yak1.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_yak1_open.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_yak1_open.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_yak1_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_yak1_net.txt",
+				camo: true
+			}
+		]
+	},
+
+	// P-40 E
+	"p40e": {
+		name: "P-40 E",
+		parent: "p40"
+	},
+	
+	// P-40 E-1
+	"p40e1": {
+		name: "P-40 E-1",
+		parent: "p40e",
+		model: "graphics\\planes\\p40e1\\p40e1.mgm",
+		script: "luascripts\\worldobjects\\planes\\p40e1.txt"
+	}
+}

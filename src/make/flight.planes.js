@@ -129,18 +129,25 @@ module.exports = function makeFlightPlanes(flight) {
 					var positionOffsetMin = 10;
 					var positionOffsetMax = 20;
 					var orientationOffset = 15;
-
+					
 					// Limit position offset for player-only taxi routes
 					if (flight.taxi === 0) {
-
-						positionOffsetMin = 5;
-						positionOffsetMax = 12;
+						
+						positionOffsetMin = 8;
+						positionOffsetMax = 14;
 					}
 					// Slightly move leader plane position forward to avoid possible AI taxiing issues
-					else if (isLeader) {
-
+					else if (isLeader && flight.planes > 1) {
+						
 						positionOffsetMin += 10;
 						positionOffsetMax += 10;
+					}
+					
+					// Add taxi spawn minimum offset distance
+					if (spawnPoint.offset) {
+						
+						positionOffsetMin += spawnPoint.offset;
+						positionOffsetMax += spawnPoint.offset;
 					}
 
 					positionX = spawnPoint.position[0];
@@ -151,7 +158,7 @@ module.exports = function makeFlightPlanes(flight) {
 					// Slightly move plane position forward
 					positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
 					orientationRad = orientation * (Math.PI / 180);
-
+					
 					positionX += positionOffset * Math.cos(orientationRad);
 					positionZ += positionOffset * Math.sin(orientationRad);
 

@@ -10,8 +10,16 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	var sector = item[5];
 	var taxiRoute = item[6];
 	var maxSize = item[7];
+	var taxiOffset;
 	var planesBySector = airfield.planesBySector;
 	var playerTaxiRoute;
+	
+	// Extended taxi route data as array
+	if (Array.isArray(taxiRoute)) {
+		
+		taxiOffset = taxiRoute[1]; // Spawn offset in meters
+		taxiRoute = taxiRoute[0];
+	}
 
 	// NOTE: Negative taxi routes are player-only taxi routes
 	if (taxiRoute < 0) {
@@ -48,6 +56,11 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 			}
 			else if (taxiRoute > 0) {
 				taxiSpawn.route = taxiRoute;
+			}
+			
+			// Include taxi spawn offset
+			if (taxiOffset) {
+				taxiSpawn.offset = taxiOffset;
 			}
 			
 			taxiSpawnsBySector[sector][taxiRoute].push(taxiSpawn);

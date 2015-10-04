@@ -1,0 +1,40 @@
+{
+	// 9 GIAP
+	"9giap": {
+		name: "9 GIAP",
+		airfields: [
+			["illarionovsky", "start", "1942-08-23"],
+			["shkolniy", "1942-08-24", "1942-08-27"],
+			["zaplavnoe", "1942-08-28", "1942-09-08"],
+			// ... withdrawn from the front line and reformed as an "all-ace" unit
+			["zhitkur", "1942-12-09", "1942-12-09", 0],
+			["zety", "1942-12-10", "1943-01-12"],
+			["kotelnikovo", "1943-01-13", "end"]
+		],
+		planes: [
+			["lagg3s29", 15, "start", "1942-07-24"],
+			["lagg3s29", 11, "1942-07-25", "1942-07-29"],
+			// ... received 20 LaGG-3s from 194 IAP
+			["lagg3s29", 28, "1942-07-30", "1942-08-07"],
+			["lagg3s29", 18, "1942-08-08", "1942-08-15"],
+			["lagg3s29", 10, "1942-08-16", "1942-08-26"],
+			// ... received 8 LaGG-3s from 156 IAP
+			["lagg3s29", 16, "1942-08-27", "1942-09-08"],
+			// ... refitted with Yak-1 fighter planes
+			["yak1s69", 25, "1942-12-09", "1943-01-12"],
+			["yak1s69", 21, "1943-01-13", "end"]
+		],
+		pilots: [
+			["Lev Shestakov", -11, "start", "1942-09-08"],
+			["Mikhail Baranov", -9, "1942-12-09", "1943-01-15"],
+			["Arkadiy Kovachevich", -10, "1942-12-09", "end"],
+			["Sultan Amet-Khan", -9, "1942-12-09", "end"],
+			["Vladimir Lavrinenkov", -6, "1942-12-09", "end"],
+			["Liliya Litvyak", -6, "1942-12-09", "1943-01-12"],
+			["Yekaterina Budanova", 9, "1942-12-09", "1943-01-12"],
+			["Ivan Borisov", 7, "1942-12-09", "end"],
+			["Pavel Golovachev", -8],
+			["Aleksey Alelyukhin", 8]
+		]
+	}
+}

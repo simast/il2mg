@@ -1,0 +1,26 @@
+{
+	// 2 IAP
+	"2iap": {
+		name: [
+			["2 IAP PVO", "start", "1942-08-23"],
+			["2 IAP", "1942-08-24", "end"]
+		],
+		airfields: [
+			// ... part of 102 IAD/PVO
+			["voroponovo", "1942-07-27", "1942-08-23"],
+			["zhitkur", "1942-08-24", "1942-08-24", 0],
+			// ... was in 8 VA reserve, did not fly combat missions
+			// TODO: Was part of 226 SAD and 287 IAD
+			// ... part of 268 IAD/8 VA
+			["zety", "1943-01-01", "1943-01-12"],
+			["kotelnikovo", "1943-01-13", "end"]
+		],
+		planes: [
+			["yak1s69", 22, "start", "1942-08-06"],
+			["yak1s69", 16, "1942-08-07", "1942-08-16"],
+			["yak1s69", 8, "1942-08-17", "1942-08-23"],
+			// TODO: from 1942-08-23 to 1943-01-01
+			["yak1s69", 15, "1943-01-01", "end"]
+		]
+	}
+}

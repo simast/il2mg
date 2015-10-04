@@ -18,12 +18,22 @@ module.exports = function makePlanes() {
 	// Plane index tables
 	var planes = Object.create(null);
 	var planesByType = Object.create(null);
+	
+	// Map of plane alias references
+	var planeAlias = Object.create(null);
 
 	// Process all planes and build index lists
 	for (var planeID in DATA.planes) {
 
 		var planeData = DATA.planes[planeID];
-
+		
+		// Alias reference to another plane type
+		if (typeof planeData === "string") {
+			
+			planeAlias[planeID] = planeData;
+			continue;
+		}
+		
 		// Ignore dummy plane definitions (and groups used to catalog planes)
 		if (!planeData || !planeData.name || !planeData.model || !planeData.script) {
 			continue;
@@ -99,6 +109,16 @@ module.exports = function makePlanes() {
 			});
 		}
 	}
+	
+	// Process all plane alias references
+	for (planeID in planeAlias) {
+		
+		var aliasPlaneID = planeAlias[planeID];
+		
+		if (planes[aliasPlaneID]) {
+			planes[planeID] = planes[aliasPlaneID];
+		}
+	}
 
 	// Get plane skins data
 	function getSkins(planeData) {
@@ -166,7 +186,7 @@ module.exports = function makePlanes() {
 
 		return skins;
 	}
-
+	
 	// Static plane data index objects
 	this.planes = Object.freeze(planes);
 	this.planesByType = Object.freeze(planesByType);

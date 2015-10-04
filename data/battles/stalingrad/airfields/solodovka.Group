@@ -4100,7 +4100,7 @@ Group
 
     Block
     {
-      Name = "PLANE:1:-1:SMALL";
+      Name = "PLANE:1:-1+25:SMALL";
       Index = 208;
       LinkTrId = 0;
       XPos = 131966.087;
@@ -4170,7 +4170,7 @@ Group
       Index = 211;
       LinkTrId = 0;
       XPos = 131963.690;
-      YPos = 13.004;
+      YPos = 13.005;
       ZPos = 318144.693;
       XOri = 0.00;
       YOri = 268.40;
@@ -4197,7 +4197,7 @@ Group
         Index = 213;
         LinkTrId = 0;
         XPos = 131840.639;
-        YPos = 13.004;
+        YPos = 13.005;
         ZPos = 318154.975;
         XOri = 0.00;
         YOri = 60.32;
@@ -4219,7 +4219,7 @@ Group
         Index = 214;
         LinkTrId = 0;
         XPos = 131847.324;
-        YPos = 13.004;
+        YPos = 13.005;
         ZPos = 318149.584;
         XOri = 0.00;
         YOri = 323.45;
@@ -4249,7 +4249,7 @@ Group
         Index = 216;
         LinkTrId = 0;
         XPos = 131913.672;
-        YPos = 13.004;
+        YPos = 13.005;
         ZPos = 318147.325;
         XOri = 0.00;
         YOri = 269.09;
@@ -4276,7 +4276,7 @@ Group
           Index = 218;
           LinkTrId = 0;
           XPos = 131932.635;
-          YPos = 13.004;
+          YPos = 13.005;
           ZPos = 318146.926;
           XOri = 0.00;
           YOri = 46.81;
@@ -4300,16 +4300,16 @@ Group
 
     Group
     {
-      Name = "PLANE:1:-1:LARGE:CAMO";
+      Name = "PLANE:1:-1+15:LARGE:CAMO";
       Index = 219;
       Desc = "";
       Block
       {
-        Name = "PLANE:1:-1:LARGE:CAMO";
+        Name = "PLANE:1:-1+15:LARGE:CAMO";
         Index = 220;
         LinkTrId = 0;
         XPos = 132004.548;
-        YPos = 13.004;
+        YPos = 13.005;
         ZPos = 318137.055;
         XOri = 0.00;
         YOri = 261.14;
@@ -4331,7 +4331,7 @@ Group
         Index = 221;
         LinkTrId = 0;
         XPos = 132016.494;
-        YPos = 13.004;
+        YPos = 13.005;
         ZPos = 318138.820;
         XOri = 0.00;
         YOri = 153.43;
@@ -4352,7 +4352,7 @@ Group
 
     Block
     {
-      Name = "PLANE:1:1:SMALL";
+      Name = "PLANE:1:1+20:SMALL";
       Index = 222;
       LinkTrId = 0;
       XPos = 131930.842;
@@ -4374,12 +4374,12 @@ Group
 
     Group
     {
-      Name = "PLANE:1:1:MEDIUM";
+      Name = "PLANE:1:1+10:MEDIUM";
       Index = 223;
       Desc = "";
       Block
       {
-        Name = "PLANE:1:1:MEDIUM";
+        Name = "PLANE:1:1+10:MEDIUM";
         Index = 224;
         LinkTrId = 0;
         XPos = 132006.190;
@@ -4654,7 +4654,7 @@ Group
       Index = 240;
       LinkTrId = 0;
       XPos = 132087.468;
-      YPos = 13.004;
+      YPos = 13.005;
       ZPos = 317283.148;
       XOri = 0.00;
       YOri = 131.96;
@@ -5127,7 +5127,7 @@ Group
         Index = 268;
         LinkTrId = 0;
         XPos = 132110.863;
-        YPos = 13.004;
+        YPos = 13.005;
         ZPos = 317334.796;
         XOri = 0.00;
         YOri = 168.68;
@@ -5149,7 +5149,7 @@ Group
         Index = 269;
         LinkTrId = 0;
         XPos = 132120.226;
-        YPos = 13.004;
+        YPos = 13.005;
         ZPos = 317323.292;
         XOri = 0.00;
         YOri = 67.21;
@@ -5182,7 +5182,7 @@ Group
       Index = 271;
       LinkTrId = 0;
       XPos = 131436.157;
-      YPos = 13.004;
+      YPos = 13.005;
       ZPos = 317580.429;
       XOri = 0.00;
       YOri = 84.59;
@@ -5292,7 +5292,7 @@ Group
       Index = 276;
       LinkTrId = 0;
       XPos = 131353.562;
-      YPos = 13.004;
+      YPos = 13.005;
       ZPos = 317722.367;
       XOri = 0.00;
       YOri = 271.81;
@@ -5513,7 +5513,7 @@ Group
         Index = 290;
         LinkTrId = 0;
         XPos = 131407.960;
-        YPos = 13.004;
+        YPos = 13.005;
         ZPos = 317700.907;
         XOri = 0.00;
         YOri = 255.16;
@@ -5540,7 +5540,7 @@ Group
           Index = 292;
           LinkTrId = 0;
           XPos = 131388.679;
-          YPos = 13.004;
+          YPos = 13.005;
           ZPos = 317697.944;
           XOri = 0.00;
           YOri = 202.21;
@@ -6365,8 +6365,8 @@ Group
       Point
       {
         Type = 0;
-        X = 24.2751;
-        Y = 17.8262;
+        X = 23.8164;
+        Y = 54.9834;
       }
       Point
       {
@@ -6497,8 +6497,8 @@ Group
       Point
       {
         Type = 0;
-        X = 24.9348;
-        Y = 17.9245;
+        X = 23.5603;
+        Y = 55.8472;
       }
     }
     ReturnPlanes = 0;
