@@ -87,7 +87,7 @@ DATA.planAction = Object.freeze({
 
 // Map colors as RGB array values
 DATA.mapColor = Object.freeze({
-	ATTACK: [145, 145, 145]
+	ATTACK: [148, 148, 148]
 });
 
 // Briefing colors as HTML hex color values

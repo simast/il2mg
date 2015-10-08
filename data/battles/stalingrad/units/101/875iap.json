@@ -1,0 +1,17 @@
+{
+	// 875 IAP
+	"875iap": {
+		name: "875 IAP",
+		airfields: [
+			// 220 IAD
+			["ventsy", "start", "1942-07-22"],
+			["illarionovsky", "1942-07-23", "1942-08-03"]
+		],
+		planes: [
+			// TOE 015/134 (32 aircraft)
+			// ... on 1942-05-15 arrived with 21 Yak-1 (and lost 12 aircraft)
+			["yak1s69", 13, "start", "1942-07-26"],
+			["yak1s69", 10, "1942-07-27", "end"]
+		]
+	}
+}

@@ -1,8 +1,9 @@
 {
 	// 273 IAP
 	"273iap": {
+		// On 1942-11-22 became 31 GIAP
 		name: [
-			["273 IAP", "start", "1942-11-21"], // On 1942-11-22 became 31 GIAP
+			["273 IAP", "start", "1942-11-21"],
 			["31 GIAP", "1942-11-22", "end"]
 		],
 		airfields: [
@@ -14,6 +15,7 @@
 			["kotelnikovo", "1943-01-13", "end"]
 		],
 		planes: [
+			// TOE 015/174 (20 aircraft)
 			["yak1s69", 15, "start", "1942-07-29"],
 			["yak1s69", 11, "1942-07-30", "1942-08-13"],
 			["yak1s69", 13, "1942-08-14", "1942-08-26"],
@@ -21,8 +23,7 @@
 			["yak1s69", 12, "1942-09-04", "1942-09-end"],
 			["yak1s69", 18, "1942-10-01", "1942-12-08"],
 			["yak1s69", 16, "1942-12-09", "1942-12-24"],
-			// ... received remaining aircraft and personnel of 11 IAP - which was
-			// used to equip third eskadrilya.
+			// TOE 015/284 (32 aircraft)
 			["yak1s69", 27, "1942-12-25", "1943-01-12"],
 			["yak1s69", 23, "1943-01-13", "end"]
 		]

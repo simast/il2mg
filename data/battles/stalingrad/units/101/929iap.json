@@ -1,0 +1,16 @@
+{
+	// 929 IAP
+	"929iap": {
+		name: "929 IAP",
+		airfields: [
+			// 220 IAD
+			["illarionovsky", "start", "1942-08-04"],
+			["pichuga", "1942-08-05", "1942-08-20"]
+		],
+		planes: [
+			// TOE 015/174 (20 aircraft)
+			["yak1s69", 13, "start", "1942-08-04"],
+			["yak1s69", 9, "1942-08-05", "end"]
+		]
+	}
+}
