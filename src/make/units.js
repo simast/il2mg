@@ -195,8 +195,10 @@ module.exports = function makeUnits() {
 		// TODO: Improve plane distribution algorithm
 		// TODO: Honor min/max plane counts
 		// TODO: Pick planes based on rating
+		
+		var planeCount = planeStorage[1];
 
-		while (planeStorage[1] > 0) {
+		while (planeCount > 0) {
 
 			var planeID = planeStorage[0];
 			var plane = mission.planes[planeID];
@@ -225,7 +227,7 @@ module.exports = function makeUnits() {
 				unit.pilots.max += rand.real(1.5, 2.5);
 			}
 
-			planeStorage[1]--;
+			planeCount--;
 			totalPlanes++;
 		}
 	});
@@ -309,8 +311,33 @@ module.exports = function makeUnits() {
 
 		// Find matching plane storages based on to/from date ranges
 		dataPlanes.forEach(function(planeStorage) {
+			
+			var dateRange = missionDateIsBetween(planeStorage[2], planeStorage[3], true);
 
-			if (missionDateIsBetween(planeStorage[2], planeStorage[3])) {
+			if (dateRange) {
+				
+				var planeCount = planeStorage[1];
+				
+				// Pick plane count from valid array range
+				if (Array.isArray(planeCount)) {
+					
+					var maxPlanes = Math.max.apply(null, planeCount);
+					var minPlanes = Math.min.apply(null, planeCount);
+					var rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, "days"));
+					var rangeDaysMission = mission.date.diff(dateRange.from, "days");
+					var planePercent = rangeDaysMission / rangeDaysInterval;
+					
+					// Use +-15% randomness
+					planePercent = 1 - rand.real(planePercent - 0.15, planePercent + 0.15, true);
+					
+					// Pick plane count from valid range
+					planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * planePercent);
+					planeCount = Math.round(planeCount);
+					planeCount = Math.max(planeCount, minPlanes);
+					planeCount = Math.min(planeCount, maxPlanes);
+					
+					planeStorage[1] = planeCount;
+				}
 
 				var planeID = planeStorage[0];
 
@@ -355,7 +382,7 @@ module.exports = function makeUnits() {
 	}
 
 	// Utility function used to validate to/from date ranges based on mission date
-	function missionDateIsBetween(dateFrom, dateTo) {
+	function missionDateIsBetween(dateFrom, dateTo, returnRange) {
 
 		dateFrom = parseDate(dateFrom).startOf("day");
 
@@ -368,6 +395,16 @@ module.exports = function makeUnits() {
 		}
 
 		if (!missionDate.isBefore(dateFrom) && !missionDate.isAfter(dateTo)) {
+			
+			// Return from/to range as moment date objects
+			if (returnRange) {
+				
+				return {
+					from: dateFrom,
+					to: dateTo
+				};
+			}
+			
 			return true;
 		}
 
