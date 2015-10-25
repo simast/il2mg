@@ -1,0 +1,19 @@
+{
+	// 431 IAP
+	"431iap": {
+		name: "431 IAP",
+		airfields: [
+			// 283 IAD
+			["kamyshin", "1942-09-07", "1942-09-07", 0],
+			["altuhov", "1942-09-08", "1942-12-01"],
+			["illarionovsky", "1942-12-02", "1942-12-10"]
+		],
+		planes: [
+			// TOE 015/174 (20 aircraft)
+			["yak1s69", [16, 11], "1942-09-07", "1942-12-04"],
+			// ... received aircraft from 812 IAP?
+			["yak1s69", [24, 23], "1942-12-05", "1942-12-10"]
+			// ... transferred remaining aircraft to 520 IAP
+		]
+	}
+}

@@ -24,8 +24,8 @@
 		pilots: [
 			["Nikolai Baranov", 11],
 			["Boris Yeryomin", -10],
-			["Liliya Litvyak", -6, "1943-01-13", "end"],
-			["Yekaterina Budanova", 9, "1943-01-13", "end"]
+			["Yekaterina Budanova", 9, "1943-01-13", "end"],
+			["Liliya Litvyak", -6, "1943-01-13", "end"]
 		]
 	}
 }

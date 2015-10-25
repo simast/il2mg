@@ -74,7 +74,7 @@ params.option("-S, --seed <seed>", "set mission seed value");
 // Select mission file format (--format)
 params.option("-f, --format <format>", (function() {
 
-	var desc = "set mission file format" + os.EOL;
+	var desc = "set mission file format" + os.EOL + os.EOL;
 	
 	desc += util.format('\t"%s" - %s\n', Mission.FORMAT_TEXT, "Text format.");
 	desc += util.format('\t"%s" - %s\n', Mission.FORMAT_BINARY, "Binary format (default).");
@@ -85,7 +85,7 @@ params.option("-f, --format <format>", (function() {
 // Select desired battle (--battle)
 params.option("-b, --battle <battle>", (function() {
 
-	var desc = "select a battle" + os.EOL;
+	var desc = "select a battle" + os.EOL + os.EOL;
 
 	for (var battleID in DATA.battles) {
 		desc += util.format('\t"%s" - %s\n', battleID, DATA.battles[battleID].name);
@@ -97,9 +97,9 @@ params.option("-b, --battle <battle>", (function() {
 // Select mission date (--date)
 params.option("-d, --date <YYYY-MM-DD>", (function() {
 
-	var desc = "select mission date" + os.EOL;
+	var desc = "select mission date" + os.EOL + os.EOL;
 
-	desc += "\tValid date values will depend on the selected battle:" + os.EOL;
+	desc += "\tValid date values will depend on the selected battle:" + os.EOL + os.EOL;
 
 	for (var battleID in DATA.battles) {
 
@@ -126,9 +126,9 @@ params.option("-d, --date <YYYY-MM-DD>", (function() {
 // Select mission time (--time)
 params.option("-t, --time <HH:MM>", (function() {
 
-	var desc = "select mission time" + os.EOL;
+	var desc = "select mission time" + os.EOL + os.EOL;
 
-	desc += "\tTime can also be specified using special values:" + os.EOL;
+	desc += "\tTime can also be specified using special values:" + os.EOL + os.EOL;
 
 	for (var timeID in DATA.time) {
 		desc += util.format('\t"%s" - %s\n', timeID, DATA.time[timeID].description);
@@ -150,7 +150,7 @@ params.option("-t, --time <HH:MM>", (function() {
 // Select desired coalition (--coalition)
 params.option("-C, --coalition <coalition>", (function() {
 
-	var desc = "select a coalition" + os.EOL;
+	var desc = "select a coalition" + os.EOL + os.EOL;
 
 	for (var coalitionID in DATA.coalitions) {
 		desc += util.format('\t"%s" - %s\n', coalitionID, DATA.coalitions[coalitionID].name);
@@ -162,7 +162,7 @@ params.option("-C, --coalition <coalition>", (function() {
 // Select desired country (--country)
 params.option("-c, --country <country>", (function() {
 
-	var desc = "select a country" + os.EOL;
+	var desc = "select a country" + os.EOL + os.EOL;
 
 	for (var countryID in DATA.countries) {
 		desc += util.format('\t"%s" - %s\n', countryID, DATA.countries[countryID].name);
@@ -174,13 +174,13 @@ params.option("-c, --country <country>", (function() {
 // Set a custom pilot (--pilot)
 params.option("-p, --pilot <rank,name>", (function() {
 
-	var desc = "set a custom pilot" + os.EOL;
+	var desc = "set a custom pilot" + os.EOL + os.EOL;
 
 	desc += "\tPilot rank can be specified by prefixing the name with a number and\n";
 	desc += "\ta comma character. The rank number depends on the country, but always\n";
 	desc += "\tstarts from 1 and is incremented for each rank in a hierarchy.";
-	desc += os.EOL;
-	desc += "\tExamples:" + os.EOL;
+	desc += os.EOL + os.EOL;
+	desc += "\tExamples:" + os.EOL + os.EOL;
 	desc += '\t-p "10" - Set only pilot rank.\n';
 	desc += '\t-p "Name Surname" - Set only pilot name.\n';
 	desc += '\t-p "10, Name Surname" - Set pilot rank and name.';
@@ -194,7 +194,7 @@ params.option("-p, --pilot <rank,name>", (function() {
 // Set flight state (--state)
 params.option("-s, --state <state>", (function() {
 
-	var desc = "set flight state" + os.EOL;
+	var desc = "set flight state" + os.EOL + os.EOL;
 
 	desc += '\t"' + flightState.START + '" - Start from parking area or taxiway (default).\n';
 	desc += '\t"' + flightState.RUNWAY + '" - Start from runway.';

@@ -1,0 +1,15 @@
+{
+	// 176 IAP
+	"176iap": {
+		name: "176 IAP",
+		airfields: [
+			// 283 IAD
+			["kamyshin", "1943-01-03", "1943-01-03", 0],
+			["illarionovsky", "1943-01-04", "end"]
+		],
+		planes: [
+			// TOE 015/284 (32 aircraft)
+			["yak1s69", [30, 24], "1943-01-03", "end"]
+		]
+	}
+}
