@@ -84,5 +84,19 @@
 		parent: "bf109g2",
 		model: "graphics\\planes\\bf109g2\\bf109g2.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109g2.txt"
+	},
+
+	// Bf 109 E
+	"bf109e": {
+		name: "Bf 109 E",
+		parent: "bf109"
+	},
+
+	// Bf 109 E-7
+	"bf109e7": {
+		name: "Bf 109 E-7",
+		parent: "bf109e",
+		model: "graphics\\planes\\bf109e7\\bf109e7.mgm",
+		script: "luascripts\\worldobjects\\planes\\bf109e7.txt"
 	}
 }

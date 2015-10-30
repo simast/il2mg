@@ -8,58 +8,14 @@ Group
     Name = "Block";
     Index = 3;
     LinkTrId = 0;
-    XPos = 116114.056;
+    XPos = 116107.552;
     YPos = 81.268;
-    ZPos = 103018.117;
+    ZPos = 103015.340;
     XOri = 0.00;
-    YOri = 34.90;
+    YOri = 36.04;
     ZOri = 0.00;
     Model = "graphics\blocks\arf_caponiers_10_h_3.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_10_h_3.txt";
-    Country = 50;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
-  Block
-  {
-    Name = "Block";
-    Index = 4;
-    LinkTrId = 0;
-    XPos = 116622.760;
-    YPos = 81.268;
-    ZPos = 102321.364;
-    XOri = 0.00;
-    YOri = 34.87;
-    ZOri = 0.00;
-    Model = "graphics\blocks\arf_caponiers_6_h_4.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_6_h_4.txt";
-    Country = 50;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
-  Block
-  {
-    Name = "Block";
-    Index = 5;
-    LinkTrId = 0;
-    XPos = 116429.863;
-    YPos = 81.268;
-    ZPos = 102560.436;
-    XOri = 0.00;
-    YOri = 34.44;
-    ZOri = 0.00;
-    Model = "graphics\blocks\arf_caponiers_9_h_3.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_9_h_3.txt";
     Country = 50;
     Desc = "";
     Durability = 25000;
@@ -184,9 +140,9 @@ Group
     Name = "FUEL";
     Index = 11;
     LinkTrId = 0;
-    XPos = 116089.628;
+    XPos = 116073.334;
     YPos = 81.268;
-    ZPos = 103472.200;
+    ZPos = 103471.155;
     XOri = 0.00;
     YOri = 204.31;
     ZOri = 0.00;
@@ -294,9 +250,9 @@ Group
     Name = "Block";
     Index = 16;
     LinkTrId = 0;
-    XPos = 116409.659;
+    XPos = 116420.925;
     YPos = 81.268;
-    ZPos = 102595.315;
+    ZPos = 102606.884;
     XOri = 0.00;
     YOri = 175.42;
     ZOri = 0.00;
@@ -368,28 +324,6 @@ Group
     ZOri = 0.00;
     Model = "graphics\blocks\dugout.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\dugout.txt";
-    Country = 50;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
-  Block
-  {
-    Name = "Block";
-    Index = 20;
-    LinkTrId = 0;
-    XPos = 116254.604;
-    YPos = 81.268;
-    ZPos = 102842.524;
-    XOri = 0.00;
-    YOri = 36.54;
-    ZOri = 0.00;
-    Model = "graphics\blocks\arf_caponiers_8_h_4.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_8_h_4.txt";
     Country = 50;
     Desc = "";
     Durability = 25000;
@@ -2274,9 +2208,9 @@ Group
     Name = "DECO";
     Index = 106;
     LinkTrId = 0;
-    XPos = 116607.729;
+    XPos = 116613.966;
     YPos = 81.268;
-    ZPos = 102334.821;
+    ZPos = 102329.653;
     XOri = 0.00;
     YOri = 31.05;
     ZOri = 0.00;
@@ -2296,11 +2230,11 @@ Group
     Name = "DECO";
     Index = 107;
     LinkTrId = 0;
-    XPos = 116548.361;
+    XPos = 116555.103;
     YPos = 81.268;
-    ZPos = 102415.922;
+    ZPos = 102418.915;
     XOri = 0.00;
-    YOri = 118.61;
+    YOri = 134.87;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb2.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
@@ -2428,11 +2362,11 @@ Group
     Name = "DECO";
     Index = 113;
     LinkTrId = 0;
-    XPos = 116487.212;
+    XPos = 116491.716;
     YPos = 81.268;
-    ZPos = 102502.770;
+    ZPos = 102496.730;
     XOri = 0.00;
-    YOri = 293.50;
+    YOri = 262.51;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb1.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
@@ -2450,11 +2384,11 @@ Group
     Name = "DECO";
     Index = 114;
     LinkTrId = 0;
-    XPos = 116285.024;
+    XPos = 116271.194;
     YPos = 81.268;
-    ZPos = 102802.084;
+    ZPos = 102795.193;
     XOri = 0.00;
-    YOri = 35.05;
+    YOri = 117.03;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb2.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
@@ -2472,11 +2406,11 @@ Group
     Name = "DECO";
     Index = 115;
     LinkTrId = 0;
-    XPos = 116324.270;
+    XPos = 116327.921;
     YPos = 81.268;
-    ZPos = 102747.430;
+    ZPos = 102749.859;
     XOri = 0.00;
-    YOri = 147.08;
+    YOri = 105.82;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb1.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
@@ -2494,11 +2428,11 @@ Group
     Name = "DECO";
     Index = 116;
     LinkTrId = 0;
-    XPos = 116220.668;
+    XPos = 116219.530;
     YPos = 81.268;
-    ZPos = 102871.264;
+    ZPos = 102881.176;
     XOri = 0.00;
-    YOri = 323.81;
+    YOri = 343.13;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb1.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
@@ -2516,11 +2450,11 @@ Group
     Name = "DECO";
     Index = 117;
     LinkTrId = 0;
-    XPos = 116449.562;
+    XPos = 116429.283;
     YPos = 81.268;
-    ZPos = 102557.353;
+    ZPos = 102579.296;
     XOri = 0.00;
-    YOri = 258.24;
+    YOri = 129.52;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb2.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
@@ -3109,9 +3043,9 @@ Group
       Name = "TRUCK:CARGO";
       Index = 146;
       LinkTrId = 0;
-      XPos = 116515.607;
+      XPos = 116518.090;
       YPos = 81.268;
-      ZPos = 102510.998;
+      ZPos = 102505.821;
       XOri = 0.00;
       YOri = 78.70;
       ZOri = 0.00;
@@ -3131,9 +3065,9 @@ Group
       Name = "DECO";
       Index = 147;
       LinkTrId = 0;
-      XPos = 116515.182;
+      XPos = 116517.665;
       YPos = 81.268;
-      ZPos = 102506.283;
+      ZPos = 102501.106;
       XOri = 0.00;
       YOri = 118.65;
       ZOri = 0.00;
@@ -7549,9 +7483,9 @@ Group
       Name = "PLANE:1:4:MEDIUM";
       Index = 377;
       LinkTrId = 0;
-      XPos = 116713.331;
+      XPos = 116706.620;
       YPos = 81.268;
-      ZPos = 102273.043;
+      ZPos = 102284.532;
       XOri = 0.00;
       YOri = 119.93;
       ZOri = 0.00;
@@ -7568,17 +7502,17 @@ Group
 
     Block
     {
-      Name = "PLANE:1:4:MEDIUM";
+      Name = "PLANE:1:4:LARGE";
       Index = 378;
       LinkTrId = 0;
-      XPos = 116634.678;
+      XPos = 116632.438;
       YPos = 81.268;
-      ZPos = 102286.698;
+      ZPos = 102286.362;
       XOri = 0.00;
       YOri = 35.56;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -7590,61 +7524,61 @@ Group
 
     Block
     {
-      Name = "PLANE:1:4:MEDIUM";
+      Name = "PLANE:1:4:LARGE";
       Index = 379;
       LinkTrId = 0;
-      XPos = 116593.522;
+      XPos = 116594.201;
       YPos = 81.268;
-      ZPos = 102340.953;
+      ZPos = 102342.342;
       XOri = 0.00;
-      YOri = 38.43;
-      ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
-      Country = 0;
-      Desc = "";
-      Durability = 25000;
-      DamageReport = 50;
-      DamageThreshold = 1;
-      DeleteAfterDeath = 1;
-    }
-    
-
-    Block
-    {
-      Name = "PLANE:1:4:MEDIUM";
-      Index = 380;
-      LinkTrId = 0;
-      XPos = 116556.996;
-      YPos = 81.268;
-      ZPos = 102398.594;
-      XOri = 0.00;
-      YOri = 39.76;
-      ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
-      Country = 0;
-      Desc = "";
-      Durability = 25000;
-      DamageReport = 50;
-      DamageThreshold = 1;
-      DeleteAfterDeath = 1;
-    }
-    
-
-    Block
-    {
-      Name = "PLANE:1:4:LARGE:CAMO";
-      Index = 381;
-      LinkTrId = 0;
-      XPos = 116584.927;
-      YPos = 81.268;
-      ZPos = 102376.229;
-      XOri = 0.00;
-      YOri = 50.87;
+      YOri = 35.14;
       ZOri = 0.00;
       Model = "graphics\blocks\static_he111.mgm";
       Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:1:4:LARGE";
+      Index = 380;
+      LinkTrId = 0;
+      XPos = 116559.581;
+      YPos = 81.268;
+      ZPos = 102400.856;
+      XOri = 0.00;
+      YOri = 39.31;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+    Block
+    {
+      Name = "PLANE:1:4:SMALL:CAMO";
+      Index = 381;
+      LinkTrId = 0;
+      XPos = 116582.536;
+      YPos = 81.268;
+      ZPos = 102373.041;
+      XOri = 0.00;
+      YOri = 50.87;
+      ZOri = 0.00;
+      Model = "graphics\blocks\static_bf109.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_bf109.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -7864,17 +7798,17 @@ Group
 
     Block
     {
-      Name = "PLANE:1:3:MEDIUM:CAMO";
+      Name = "PLANE:1:3:LARGE:CAMO";
       Index = 394;
       LinkTrId = 0;
-      XPos = 116479.387;
+      XPos = 116476.368;
       YPos = 81.268;
-      ZPos = 102510.531;
+      ZPos = 102508.361;
       XOri = 0.00;
-      YOri = 36.79;
+      YOri = 35.54;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -7886,17 +7820,17 @@ Group
 
     Block
     {
-      Name = "PLANE:1:3:MEDIUM";
+      Name = "PLANE:1:3:LARGE";
       Index = 395;
       LinkTrId = 0;
-      XPos = 116438.429;
+      XPos = 116436.165;
       YPos = 81.268;
-      ZPos = 102565.271;
+      ZPos = 102563.027;
       XOri = 0.00;
-      YOri = 37.83;
+      YOri = 36.19;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -7908,17 +7842,17 @@ Group
 
     Block
     {
-      Name = "PLANE:1:3:MEDIUM";
+      Name = "PLANE:1:3:LARGE";
       Index = 396;
       LinkTrId = 0;
-      XPos = 116401.483;
+      XPos = 116400.744;
       YPos = 81.268;
-      ZPos = 102623.210;
+      ZPos = 102621.621;
       XOri = 0.00;
-      YOri = 39.73;
+      YOri = 39.41;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -7952,17 +7886,17 @@ Group
 
     Block
     {
-      Name = "PLANE:1:2:MEDIUM";
+      Name = "PLANE:1:2:LARGE";
       Index = 398;
       LinkTrId = 0;
-      XPos = 116311.351;
+      XPos = 116309.370;
       YPos = 81.268;
-      ZPos = 102759.068;
+      ZPos = 102758.058;
       XOri = 0.00;
-      YOri = 33.60;
+      YOri = 34.78;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -7974,17 +7908,17 @@ Group
 
     Block
     {
-      Name = "PLANE:1:2:MEDIUM";
+      Name = "PLANE:1:2:LARGE";
       Index = 399;
       LinkTrId = 0;
-      XPos = 116268.290;
+      XPos = 116266.092;
       YPos = 81.268;
-      ZPos = 102812.496;
+      ZPos = 102809.300;
       XOri = 0.00;
-      YOri = 34.50;
+      YOri = 35.68;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -7996,17 +7930,17 @@ Group
 
     Block
     {
-      Name = "PLANE:1:2:MEDIUM:CAMO";
+      Name = "PLANE:1:2:LARGE:CAMO";
       Index = 400;
       LinkTrId = 0;
-      XPos = 116230.270;
+      XPos = 116226.091;
       YPos = 81.268;
-      ZPos = 102867.616;
+      ZPos = 102864.929;
       XOri = 0.00;
-      YOri = 32.53;
+      YOri = 37.25;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -8175,14 +8109,14 @@ Group
       Name = "PLANE:1:1:LARGE";
       Index = 408;
       LinkTrId = 0;
-      XPos = 116118.860;
+      XPos = 116112.655;
       YPos = 81.268;
-      ZPos = 103020.955;
+      ZPos = 103018.647;
       XOri = 0.00;
-      YOri = 40.24;
+      YOri = 41.09;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 50;
       Desc = "";
       Durability = 50000;
@@ -8197,14 +8131,14 @@ Group
       Name = "PLANE:1:1:LARGE";
       Index = 409;
       LinkTrId = 0;
-      XPos = 116159.170;
+      XPos = 116153.748;
       YPos = 81.268;
-      ZPos = 102967.151;
+      ZPos = 102965.439;
       XOri = 0.00;
-      YOri = 40.24;
+      YOri = 41.09;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 50;
       Desc = "";
       Durability = 50000;
@@ -8219,14 +8153,14 @@ Group
       Name = "PLANE:1:1:LARGE";
       Index = 410;
       LinkTrId = 0;
-      XPos = 116081.383;
+      XPos = 116074.330;
       YPos = 81.268;
-      ZPos = 103079.186;
+      ZPos = 103076.324;
       XOri = 0.00;
-      YOri = 40.24;
+      YOri = 41.09;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 50;
       Desc = "";
       Durability = 50000;
@@ -13110,6 +13044,72 @@ Group
     }
     
 
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 664;
+    LinkTrId = 0;
+    XPos = 116261.193;
+    YPos = 81.268;
+    ZPos = 102806.183;
+    XOri = 0.00;
+    YOri = 37.13;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_caponiers_10_h_3.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_10_h_3.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 665;
+    LinkTrId = 0;
+    XPos = 116432.134;
+    YPos = 81.268;
+    ZPos = 102560.693;
+    XOri = 0.00;
+    YOri = 33.49;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_caponiers_10_h_3.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_10_h_3.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 667;
+    LinkTrId = 0;
+    XPos = 116589.195;
+    YPos = 81.268;
+    ZPos = 102338.733;
+    XOri = 0.00;
+    YOri = 32.44;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_caponiers_10_h_3.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_10_h_3.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
   }
   
 

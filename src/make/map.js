@@ -40,7 +40,7 @@ module.exports = function makeMap() {
 	options.Forests = map.forests;
 	options.Layers = ""; // TODO: ?
 	options.GuiMap = map.gui;
-	options.SeasonPrefix = map.season.substr(0, 2);
+	options.SeasonPrefix = map.prefix;
 
 	// Set active mission map
 	this.map = map;

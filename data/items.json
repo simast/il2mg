@@ -994,6 +994,11 @@
 			"type": "Block",
 			"script": "luascripts\\worldobjects\\blocks\\tank_position.txt",
 			"model": "graphics\\blocks\\tank_position.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\arf_caponiers_4_r_6.txt",
+			"model": "graphics\\blocks\\arf_caponiers_4_r_6.mgm"
 		}
 	],
 	"index": {
@@ -1195,6 +1200,7 @@
 		"luascripts\\worldobjects\\blocks\\arf_caponiers_2_v_5.txt": 195,
 		"luascripts\\worldobjects\\blocks\\arf_caponiers_5_r_7.txt": 196,
 		"luascripts\\worldobjects\\blocks\\arf_caponiers_12_h_5.txt": 197,
-		"luascripts\\worldobjects\\blocks\\tank_position.txt": 198
+		"luascripts\\worldobjects\\blocks\\tank_position.txt": 198,
+		"luascripts\\worldobjects\\blocks\\arf_caponiers_4_r_6.txt": 199
 	}
 }

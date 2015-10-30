@@ -100,28 +100,6 @@ Group
   Block
   {
     Name = "Block";
-    Index = 7;
-    LinkTrId = 0;
-    XPos = 134592.545;
-    YPos = 60.770;
-    ZPos = 214579.228;
-    XOri = 0.00;
-    YOri = 196.28;
-    ZOri = 0.00;
-    Model = "graphics\blocks\arf_caponiers_6_h_4.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_6_h_4.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
-  Block
-  {
-    Name = "Block";
     Index = 8;
     LinkTrId = 0;
     XPos = 134869.733;
@@ -144,35 +122,13 @@ Group
   Block
   {
     Name = "Block";
-    Index = 9;
-    LinkTrId = 0;
-    XPos = 135950.512;
-    YPos = 60.770;
-    ZPos = 214903.575;
-    XOri = 0.00;
-    YOri = 205.61;
-    ZOri = 0.00;
-    Model = "graphics\blocks\arf_caponiers_9_h_3.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_9_h_3.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
-  Block
-  {
-    Name = "Block";
     Index = 10;
     LinkTrId = 0;
-    XPos = 134605.072;
+    XPos = 134606.293;
     YPos = 60.770;
-    ZPos = 215247.855;
+    ZPos = 215245.821;
     XOri = 0.00;
-    YOri = 275.11;
+    YOri = 275.93;
     ZOri = 0.00;
     Model = "graphics\blocks\arf_caponiers_10_h_3.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_10_h_3.txt";
@@ -1020,9 +976,9 @@ Group
     Name = "DECO";
     Index = 49;
     LinkTrId = 0;
-    XPos = 134575.609;
+    XPos = 134571.602;
     YPos = 60.770;
-    ZPos = 214627.294;
+    ZPos = 214627.366;
     XOri = 0.00;
     YOri = 261.86;
     ZOri = 0.00;
@@ -1042,11 +998,11 @@ Group
     Name = "DECO";
     Index = 50;
     LinkTrId = 0;
-    XPos = 134634.698;
+    XPos = 134630.642;
     YPos = 60.770;
-    ZPos = 214490.358;
+    ZPos = 214495.619;
     XOri = 0.00;
-    YOri = 250.28;
+    YOri = 229.49;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb2.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
@@ -1064,9 +1020,9 @@ Group
     Name = "DECO";
     Index = 51;
     LinkTrId = 0;
-    XPos = 134616.128;
+    XPos = 134605.265;
     YPos = 60.770;
-    ZPos = 214495.457;
+    ZPos = 214503.402;
     XOri = 0.00;
     YOri = 195.26;
     ZOri = 0.00;
@@ -1570,9 +1526,9 @@ Group
     Name = "DECO";
     Index = 74;
     LinkTrId = 0;
-    XPos = 134518.168;
+    XPos = 134518.388;
     YPos = 60.770;
-    ZPos = 215219.741;
+    ZPos = 215216.606;
     XOri = 0.00;
     YOri = 209.62;
     ZOri = 0.00;
@@ -1592,11 +1548,11 @@ Group
     Name = "DECO";
     Index = 75;
     LinkTrId = 0;
-    XPos = 134551.320;
+    XPos = 134550.745;
     YPos = 60.770;
-    ZPos = 215242.451;
+    ZPos = 215240.901;
     XOri = 0.00;
-    YOri = 206.03;
+    YOri = 207.40;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb1.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
@@ -1614,9 +1570,9 @@ Group
     Name = "DECO";
     Index = 76;
     LinkTrId = 0;
-    XPos = 134597.119;
+    XPos = 134598.166;
     YPos = 60.770;
-    ZPos = 215255.712;
+    ZPos = 215253.500;
     XOri = 0.00;
     YOri = 297.24;
     ZOri = 0.00;
@@ -1636,9 +1592,9 @@ Group
     Name = "DECO";
     Index = 77;
     LinkTrId = 0;
-    XPos = 134657.471;
+    XPos = 134658.516;
     YPos = 60.770;
-    ZPos = 215240.249;
+    ZPos = 215238.729;
     XOri = 0.00;
     YOri = 192.20;
     ZOri = 0.00;
@@ -1658,9 +1614,9 @@ Group
     Name = "DECO";
     Index = 78;
     LinkTrId = 0;
-    XPos = 134703.028;
+    XPos = 134704.297;
     YPos = 60.770;
-    ZPos = 215238.128;
+    ZPos = 215235.589;
     XOri = 0.00;
     YOri = 239.47;
     ZOri = 0.00;
@@ -1680,9 +1636,9 @@ Group
     Name = "DECO";
     Index = 79;
     LinkTrId = 0;
-    XPos = 134683.941;
+    XPos = 134684.666;
     YPos = 60.770;
-    ZPos = 215258.938;
+    ZPos = 215257.902;
     XOri = 0.00;
     YOri = 54.05;
     ZOri = 0.00;
@@ -2010,9 +1966,9 @@ Group
     Name = "DECO";
     Index = 94;
     LinkTrId = 0;
-    XPos = 135895.543;
+    XPos = 135896.916;
     YPos = 60.770;
-    ZPos = 214971.769;
+    ZPos = 214974.650;
     XOri = 0.00;
     YOri = 27.62;
     ZOri = 0.00;
@@ -2052,35 +2008,13 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 96;
-    LinkTrId = 0;
-    XPos = 135951.593;
-    YPos = 60.770;
-    ZPos = 214911.357;
-    XOri = 0.00;
-    YOri = 66.26;
-    ZOri = 0.00;
-    Model = "graphics\blocks\art_position_amb2.mgm";
-    Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
-    Country = 0;
-    Desc = "";
-    Durability = 25000;
-    DamageReport = 50;
-    DamageThreshold = 1;
-    DeleteAfterDeath = 1;
-  }
-  
-
-  Block
-  {
-    Name = "DECO";
     Index = 97;
     LinkTrId = 0;
-    XPos = 135961.719;
+    XPos = 135955.826;
     YPos = 60.770;
-    ZPos = 214845.605;
+    ZPos = 214849.146;
     XOri = 0.00;
-    YOri = 115.34;
+    YOri = 91.06;
     ZOri = 0.00;
     Model = "graphics\blocks\art_position_amb1.mgm";
     Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
@@ -8222,9 +8156,9 @@ Group
       Name = "PLANE:1:1:LARGE:CAMO";
       Index = 501;
       LinkTrId = 0;
-      XPos = 134538.454;
+      XPos = 134538.930;
       YPos = 60.770;
-      ZPos = 215232.078;
+      ZPos = 215230.176;
       XOri = 0.00;
       YOri = 275.48;
       ZOri = 0.00;
@@ -8359,9 +8293,9 @@ Group
         Name = "PLANE:1:1:LARGE";
         Index = 508;
         LinkTrId = 0;
-        XPos = 134674.727;
+        XPos = 134675.203;
         YPos = 60.770;
-        ZPos = 215244.248;
+        ZPos = 215242.345;
         XOri = 0.00;
         YOri = 278.39;
         ZOri = 0.00;
@@ -8386,9 +8320,9 @@ Group
           Name = "TRUCK:FUEL";
           Index = 510;
           LinkTrId = 0;
-          XPos = 134649.394;
+          XPos = 134649.870;
           YPos = 60.770;
-          ZPos = 215230.388;
+          ZPos = 215228.486;
           XOri = 0.00;
           YOri = 125.60;
           ZOri = 0.00;
@@ -8687,9 +8621,9 @@ Group
         Name = "PLANE:1:1:LARGE";
         Index = 528;
         LinkTrId = 0;
-        XPos = 134605.982;
+        XPos = 134606.457;
         YPos = 60.770;
-        ZPos = 215240.792;
+        ZPos = 215238.890;
         XOri = 0.00;
         YOri = 275.67;
         ZOri = 0.00;
@@ -8709,9 +8643,9 @@ Group
         Name = "DECO";
         Index = 529;
         LinkTrId = 0;
-        XPos = 134624.417;
+        XPos = 134624.893;
         YPos = 60.770;
-        ZPos = 215237.544;
+        ZPos = 215235.642;
         XOri = 0.00;
         YOri = 62.15;
         ZOri = 0.00;
@@ -9297,17 +9231,17 @@ Group
     Desc = "";
     Block
     {
-      Name = "PLANE:3:3:MEDIUM";
+      Name = "PLANE:3:3:LARGE";
       Index = 564;
       LinkTrId = 0;
-      XPos = 135912.252;
+      XPos = 135913.409;
       YPos = 60.770;
-      ZPos = 214961.886;
+      ZPos = 214960.730;
       XOri = 0.00;
       YOri = 204.26;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -9319,17 +9253,17 @@ Group
 
     Block
     {
-      Name = "PLANE:3:3:MEDIUM";
+      Name = "PLANE:3:3:LARGE";
       Index = 565;
       LinkTrId = 0;
-      XPos = 135970.928;
+      XPos = 135969.445;
       YPos = 60.770;
-      ZPos = 214838.513;
+      ZPos = 214836.896;
       XOri = 0.00;
       YOri = 210.84;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -9388,9 +9322,9 @@ Group
       Name = "PLANE:3:3:MEDIUM:CAMO";
       Index = 568;
       LinkTrId = 0;
-      XPos = 135958.158;
+      XPos = 135953.960;
       YPos = 60.770;
-      ZPos = 214870.206;
+      ZPos = 214867.887;
       XOri = 0.00;
       YOri = 204.78;
       ZOri = 0.00;
@@ -9410,9 +9344,9 @@ Group
       Name = "PLANE:3:MEDIUM:CAMO";
       Index = 569;
       LinkTrId = 0;
-      XPos = 135941.317;
+      XPos = 135944.901;
       YPos = 60.770;
-      ZPos = 214949.257;
+      ZPos = 214941.542;
       XOri = 0.00;
       YOri = 53.75;
       ZOri = 0.00;
@@ -9451,7 +9385,7 @@ Group
 
     Group
     {
-      Name = "PLANE:3:3:MEDIUM:CAMO";
+      Name = "PLANE:3:3:LARGE:CAMO";
       Index = 571;
       Desc = "";
       Group
@@ -9464,9 +9398,9 @@ Group
           Name = "TRUCK:FUEL";
           Index = 573;
           LinkTrId = 0;
-          XPos = 135921.099;
+          XPos = 135922.328;
           YPos = 60.770;
-          ZPos = 214913.871;
+          ZPos = 214915.101;
           XOri = 0.00;
           YOri = 234.36;
           ZOri = 0.00;
@@ -9486,17 +9420,17 @@ Group
 
       Block
       {
-        Name = "PLANE:3:3:MEDIUM:CAMO";
+        Name = "PLANE:3:3:LARGE:CAMO";
         Index = 574;
         LinkTrId = 0;
-        XPos = 135943.721;
+        XPos = 135943.311;
         YPos = 60.770;
-        ZPos = 214901.896;
+        ZPos = 214900.565;
         XOri = 0.00;
         YOri = 204.26;
         ZOri = 0.00;
-        Model = "graphics\blocks\static_ju87.mgm";
-        Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+        Model = "graphics\blocks\static_he111.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
         Country = 0;
         Desc = "";
         Durability = 25000;
@@ -9847,17 +9781,17 @@ Group
     Desc = "";
     Block
     {
-      Name = "PLANE:4:4:MEDIUM";
+      Name = "PLANE:4:4:LARGE";
       Index = 596;
       LinkTrId = 0;
-      XPos = 134592.307;
+      XPos = 134584.704;
       YPos = 60.770;
-      ZPos = 214615.473;
+      ZPos = 214613.233;
       XOri = 0.00;
-      YOri = 192.75;
+      YOri = 194.47;
       ZOri = 0.00;
-      Model = "graphics\blocks\static_ju87.mgm";
-      Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+      Model = "graphics\blocks\static_he111.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
       Country = 0;
       Desc = "";
       Durability = 25000;
@@ -9894,9 +9828,9 @@ Group
       Name = "PLANE:4:4:MEDIUM:CAMO";
       Index = 598;
       LinkTrId = 0;
-      XPos = 134604.496;
+      XPos = 134596.417;
       YPos = 60.770;
-      ZPos = 214584.375;
+      ZPos = 214581.882;
       XOri = 0.00;
       YOri = 198.77;
       ZOri = 0.00;
@@ -10009,9 +9943,9 @@ Group
         Name = "PLANE:4:LARGE";
         Index = 604;
         LinkTrId = 0;
-        XPos = 134561.217;
+        XPos = 134556.058;
         YPos = 60.770;
-        ZPos = 214637.840;
+        ZPos = 214645.598;
         XOri = 0.00;
         YOri = 73.69;
         ZOri = 0.00;
@@ -10036,9 +9970,9 @@ Group
           Name = "TRUCK:FUEL";
           Index = 606;
           LinkTrId = 0;
-          XPos = 134546.914;
+          XPos = 134541.755;
           YPos = 60.770;
-          ZPos = 214632.626;
+          ZPos = 214640.384;
           XOri = 0.00;
           YOri = 149.92;
           ZOri = 0.00;
@@ -10143,22 +10077,22 @@ Group
 
     Group
     {
-      Name = "PLANE:4:4:MEDIUM";
+      Name = "PLANE:4:4:LARGE";
       Index = 612;
       Desc = "";
       Block
       {
-        Name = "PLANE:4:4:MEDIUM";
+        Name = "PLANE:4:4:LARGE";
         Index = 613;
         LinkTrId = 0;
-        XPos = 134630.773;
+        XPos = 134623.208;
         YPos = 60.770;
-        ZPos = 214485.296;
+        ZPos = 214483.071;
         XOri = 0.00;
         YOri = 198.25;
         ZOri = 0.00;
-        Model = "graphics\blocks\static_ju87.mgm";
-        Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+        Model = "graphics\blocks\static_he111.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
         Country = 0;
         Desc = "";
         Durability = 25000;
@@ -10178,9 +10112,9 @@ Group
           Name = "TRUCK:FUEL";
           Index = 615;
           LinkTrId = 0;
-          XPos = 134624.163;
+          XPos = 134619.298;
           YPos = 60.770;
-          ZPos = 214464.003;
+          ZPos = 214457.022;
           XOri = 0.00;
           YOri = 308.81;
           ZOri = 0.00;
@@ -10203,22 +10137,22 @@ Group
 
     Group
     {
-      Name = "PLANE:4:4:MEDIUM";
+      Name = "PLANE:4:4:LARGE";
       Index = 616;
       Desc = "";
       Block
       {
-        Name = "PLANE:4:4:MEDIUM";
+        Name = "PLANE:4:4:LARGE";
         Index = 617;
         LinkTrId = 0;
-        XPos = 134614.812;
+        XPos = 134606.738;
         YPos = 60.770;
-        ZPos = 214551.559;
+        ZPos = 214549.902;
         XOri = 0.00;
-        YOri = 194.58;
+        YOri = 195.48;
         ZOri = 0.00;
-        Model = "graphics\blocks\static_ju87.mgm";
-        Script = "LuaScripts\WorldObjects\Blocks\static_ju87.txt";
+        Model = "graphics\blocks\static_he111.mgm";
+        Script = "LuaScripts\WorldObjects\Blocks\static_he111.txt";
         Country = 0;
         Desc = "";
         Durability = 25000;
@@ -10233,9 +10167,9 @@ Group
         Name = "DECO";
         Index = 618;
         LinkTrId = 0;
-        XPos = 134610.403;
+        XPos = 134602.926;
         YPos = 60.770;
-        ZPos = 214537.476;
+        ZPos = 214534.983;
         XOri = 0.00;
         YOri = 349.43;
         ZOri = 0.00;
@@ -13217,6 +13151,72 @@ Group
     RearmTime = 0;
     RefuelTime = 0;
     MaintenanceRadius = 1000;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 731;
+    LinkTrId = 0;
+    XPos = 135948.830;
+    YPos = 60.770;
+    ZPos = 214902.221;
+    XOri = 0.00;
+    YOri = 204.67;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_caponiers_10_h_3.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_10_h_3.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "DECO";
+    Index = 732;
+    LinkTrId = 0;
+    XPos = 135946.691;
+    YPos = 60.770;
+    ZPos = 214916.324;
+    XOri = 0.00;
+    YOri = 246.34;
+    ZOri = 0.00;
+    Model = "graphics\blocks\art_position_amb1.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\art_position_amb1.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 733;
+    LinkTrId = 0;
+    XPos = 134611.501;
+    YPos = 60.770;
+    ZPos = 214550.829;
+    XOri = 0.00;
+    YOri = 196.10;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_caponiers_10_h_3.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_10_h_3.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
   }
   
 

@@ -4,30 +4,33 @@
 		from: "1942-07-17",
 		to: "1942-09-06",
 		season: "summer",
+		prefix: "su",
 		width: 358400,
 		height: 230400,
-		heightmap: "graphics\\landscape_stalin_w\\height.hini",
-		textures: "graphics\\landscape_stalin_w\\textures.tini",
-		forests: "graphics\\landscape_stalin_w\\trees\\woods.wds",
-		gui: "stalingrad-1942"
+		heightmap: "graphics\\landscape_stalin_s\\height.hini",
+		textures: "graphics\\landscape_stalin_s\\textures.tini",
+		forests: "graphics\\landscape_stalin_s\\trees\\woods.wds",
+		gui: "stalingrad-summer-1942"
 	},
 	// Autumn
 	{
 		from: "1942-09-07",
 		to: "1942-11-15",
 		season: "autumn",
+		prefix: "su", // NOTE: "au" is not available
 		width: 358400,
 		height: 230400,
-		heightmap: "graphics\\landscape_stalin_w\\height.hini",
-		textures: "graphics\\landscape_stalin_w\\textures.tini",
-		forests: "graphics\\landscape_stalin_w\\trees\\woods.wds",
-		gui: "stalingrad-1942"
+		heightmap: "graphics\\landscape_stalin_a\\height.hini",
+		textures: "graphics\\landscape_stalin_a\\textures.tini",
+		forests: "graphics\\landscape_stalin_a\\trees\\woods.wds",
+		gui: "stalingrad-autumn-1942"
 	},
 	// Winter
 	{
 		from: "1942-11-16",
 		to: "1943-02-02",
 		season: "winter",
+		prefix: "wi",
 		width: 358400,
 		height: 230400,
 		heightmap: "graphics\\landscape_stalin_w\\height.hini",
