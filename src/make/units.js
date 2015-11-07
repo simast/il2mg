@@ -33,6 +33,16 @@ module.exports = function makeUnits() {
 			continue;
 		}
 
+		var unitFrom = unitData.from;
+		var unitTo = unitData.to;
+		
+		// Filter out units with from/to dates
+		if ((unitFrom && this.date.isBefore(unitFrom)) ||
+				(unitTo && this.date.isAfter(unitTo) && !this.date.isSame(unitTo, "day"))) {
+
+			continue;
+		}
+		
 		var unit = Object.create(null);
 		var unitPlaneStorages = [];
 		
@@ -333,6 +343,11 @@ module.exports = function makeUnits() {
 					// Pick plane count from valid range
 					planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * planePercent);
 					planeCount = Math.round(planeCount);
+					
+					// Use +-1 plane randomness
+					planeCount += rand.pick([-1, 1]);
+					
+					// Enforce min/max range bounds
 					planeCount = Math.max(planeCount, minPlanes);
 					planeCount = Math.min(planeCount, maxPlanes);
 					

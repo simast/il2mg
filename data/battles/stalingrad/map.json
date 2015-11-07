@@ -15,7 +15,7 @@
 	// Autumn
 	{
 		from: "1942-09-07",
-		to: "1942-11-15",
+		to: "1942-11-14",
 		season: "autumn",
 		prefix: "su", // NOTE: "au" is not available
 		width: 358400,
@@ -27,7 +27,7 @@
 	},
 	// Winter
 	{
-		from: "1942-11-16",
+		from: "1942-11-15",
 		to: "1943-02-02",
 		season: "winter",
 		prefix: "wi",

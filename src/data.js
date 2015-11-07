@@ -10,7 +10,7 @@ var DATA = Object.create(null);
 DATA.name = "il2mg";
 
 // Application version
-DATA.version = "r1";
+DATA.version = "r2";
 
 // Application copyright
 DATA.copyright = "(C) Simas Toleikis, 2015";

@@ -71,5 +71,14 @@
 		parent: "ju87g",
 		model: "graphics\\planes\\ju87d3\\ju87d3.mgm",
 		script: "luascripts\\worldobjects\\planes\\ju87d3.txt"
-	}
+	},
+	
+	// Ju 87 R-2
+	"ju87r2": "ju87d3",
+
+	// Ju 87 R-4
+	"ju87r4": "ju87d3",
+
+	// Ju 87 B-2
+	"ju87b2": "ju87d1"
 }
