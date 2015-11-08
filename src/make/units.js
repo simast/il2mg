@@ -17,6 +17,9 @@ module.exports = function makeUnits() {
 	var unitsByAirfield = Object.create(null);
 	var unitsByCoalition = Object.create(null);
 	var unitsByCountry = Object.create(null);
+	
+	// Unit weight table (by plane count)
+	var unitsWeighted = [];
 
 	// Total unit, plane and known pilot counts
 	var totalUnits = 0;
@@ -227,6 +230,7 @@ module.exports = function makeUnits() {
 			}
 
 			unit.planes.push(planeID);
+			unitsWeighted.push(unitID);
 			
 			// Set unit max pilots count (used to figure out known and unknown pilot ratio)
 			if (unit.pilots) {
@@ -468,6 +472,9 @@ module.exports = function makeUnits() {
 	mission.unitsByAirfield = Object.freeze(unitsByAirfield);
 	mission.unitsByCoalition = Object.freeze(unitsByCoalition);
 	mission.unitsByCountry = Object.freeze(unitsByCountry);
+	
+	// Static unit weight table (by plane count)
+	mission.unitsWeighted = Object.freeze(unitsWeighted);
 
 	// Log mission units info
 	log.I("Units:", totalUnits, {planes: totalPlanes, pilots: totalPilots});
