@@ -5,8 +5,8 @@
 		airfields: [
 			// 288 IAD and 226 SAD
 			["kamyshin", "1942-08-20", "1942-08-20", 0],
-			["demidov", "1942-08-21", "1942-11-26"],
-			["zaplavnoe", "1942-11-27", "end"]
+			["demidov", "1942-08-20", "1942-11-26"],
+			["zaplavnoe", "1942-11-26", "end"]
 		],
 		planes: [
 			// TOE 015/174 (20 aircraft)

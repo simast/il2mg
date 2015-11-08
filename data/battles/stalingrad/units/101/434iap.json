@@ -10,7 +10,7 @@
 			["gumrak", "start", "1942-08-03"],
 			// 16 VA
 			["stalingradskiy", "1942-09-13", "1942-09-13", 0],
-			["davydovka", "1942-09-14", "1942-10-03"] // Pichuga?
+			["davydovka", "1942-09-13", "1942-10-03"] // Pichuga?
 		],
 		planes: [
 			// TOE 015/134 (32 aircraft)
@@ -33,7 +33,7 @@
 		airfields: [
 			// 16 VA
 			["stalingradskiy", "1942-09-13", "1942-09-13", 0],
-			["davydovka", "1942-09-14", "1942-10-03"] // Pichuga?
+			["davydovka", "1942-09-13", "1942-10-03"] // Pichuga?
 		],
 		planes: [
 			// A single flight (4 aircraft)

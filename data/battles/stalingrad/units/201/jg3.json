@@ -10,14 +10,14 @@
 		parent: "jg3",
 		airfields: [
 			["millerovo", "start", "1942-07-22"],
-			["tatsinskaya", "1942-07-23", "1942-07-28"], // Nowy-Cholan ("a field near Tazinskaya")
-			["frolov", "1942-07-29", "1942-08-10"],
-			["tuzov", "1942-08-11", "1942-09-13"],
-			["pitomnik", "1942-09-14", "1942-11-20"],
-			["morozovskiy_west", "1942-11-21", "1942-12-23"],
-			["morozovskiy_south", "1942-12-24", "1943-01-02"],
-			["tatsinskaya", "1943-01-03", "1943-01-08"],
-			["shakhty", "1943-01-09", "1943-01-25"]
+			["tatsinskaya", "1942-07-22", "1942-07-28"], // Nowy-Cholan ("a field near Tazinskaya")
+			["frolov", "1942-07-28", "1942-08-10"],
+			["tuzov", "1942-08-10", "1942-09-13"],
+			["pitomnik", "1942-09-13", "1942-11-20"],
+			["morozovskiy_west", "1942-11-20", "1942-12-23"],
+			["morozovskiy_south", "1942-12-23", "1943-01-02"],
+			["tatsinskaya", "1943-01-02", "1943-01-08"],
+			["shakhty", "1943-01-08", "1943-01-25", 0.5]
 		],
 		planes: [
 			// 1942-07
@@ -54,16 +54,16 @@
 		parent: "jg3",
 		airfields: [
 			["millerovo", "start", "1942-07-18"],
-			["morozovskiy_west", "1942-07-19", "1942-07-27"],
-			["frolov", "1942-07-28", "1942-08-10"],
-			["tuzov", "1942-08-11", "1942-09-07"],
-			["novocherkassk", "1942-09-08", "1942-09-25", 0], // Rest and refit
+			["morozovskiy_west", "1942-07-18", "1942-07-27"],
+			["frolov", "1942-07-27", "1942-08-10"],
+			["tuzov", "1942-08-10", "1942-09-07"],
+			["novocherkassk", "1942-09-07", "1942-09-25", 0], // Rest and refit
 			// ... received all Bf 109 G-2 planes from I./JG 53
-			["pitomnik", "1942-09-26", "1942-11-28"],
-			["morozovskiy_west", "1942-11-29", "1942-12-23"],
-			["morozovskiy_south", "1942-12-24", "1943-01-02"],
-			["tatsinskaya", "1943-01-03", "1943-01-06"],
-			["shakhty", "1943-01-07", "1943-01-20"]
+			["pitomnik", "1942-09-25", "1942-11-28"],
+			["morozovskiy_west", "1942-11-28", "1942-12-23"],
+			["morozovskiy_south", "1942-12-23", "1943-01-02"],
+			["tatsinskaya", "1943-01-02", "1943-01-06"],
+			["shakhty", "1943-01-06", "1943-01-20", 0.5]
 		],
 		planes: [
 			// 1942-07
@@ -130,15 +130,15 @@
 		parent: "jg3",
 		airfields: [
 			["millerovo", "start", "1942-07-21"],
-			["tatsinskaya", "1942-07-22", "1942-07-27"], // Nowy-Cholan ("a field near Tazinskaya")
-			["frolov", "1942-07-28", "1942-08-10"],
-			["tuzov", "1942-08-11", "1942-08-23"],
+			["tatsinskaya", "1942-07-21", "1942-07-27"], // Nowy-Cholan ("a field near Tazinskaya")
+			["frolov", "1942-07-27", "1942-08-10"],
+			["tuzov", "1942-08-10", "1942-08-23"],
 			// ... left for Germany, re-equipped with Bf 109 G-2 and then went up north
 			// near Leningrad, then to Smolensk, then returned to Stalingrad.
 			["morozovskiy_west", "1942-12-12", "1942-12-23"],
-			["morozovskiy_south", "1942-12-24", "1943-01-02"],
-			["tatsinskaya", "1943-01-03", "1943-01-05"],
-			["shakhty", "1943-01-06", "1943-01-22"]
+			["morozovskiy_south", "1942-12-23", "1943-01-02"],
+			["tatsinskaya", "1943-01-02", "1943-01-05"],
+			["shakhty", "1943-01-05", "1943-01-22", 0.5]
 		],
 		planes: [
 			// 1942-07
@@ -185,15 +185,15 @@
 		parent: "jg3",
 		airfields: [
 			["millerovo", "start", "1942-07-20"],
-			["tatsinskaya", "1942-07-21", "1942-07-27"], // Nowy-Cholan ("a field near Tazinskaya")
-			["frolov", "1942-07-28", "1942-08-10"],
-			["tuzov", "1942-08-11", "1942-09-10"],
-			["pitomnik", "1942-09-11", "1942-11-22"],
-			["oblivskaya", "1942-11-23", "1942-11-27"],
-			["morozovskiy_west", "1942-11-28", "1942-12-23"],
-			["morozovskiy_south", "1942-12-24", "1943-01-02"],
-			["tatsinskaya", "1943-01-03", "1943-01-08"],
-			["shakhty", "1943-01-09", "1943-01-25"]
+			["tatsinskaya", "1942-07-20", "1942-07-27"], // Nowy-Cholan ("a field near Tazinskaya")
+			["frolov", "1942-07-27", "1942-08-10"],
+			["tuzov", "1942-08-10", "1942-09-10"],
+			["pitomnik", "1942-09-10", "1942-11-22"],
+			["oblivskaya", "1942-11-22", "1942-11-27"],
+			["morozovskiy_west", "1942-11-27", "1942-12-23"],
+			["morozovskiy_south", "1942-12-23", "1943-01-02"],
+			["tatsinskaya", "1943-01-02", "1943-01-08"],
+			["shakhty", "1943-01-08", "1943-01-25", 0.5]
 		],
 		planes: [
 			// 1942-07
@@ -264,7 +264,8 @@
 		alias: "Pitomnik",
 		parent: "jg3",
 		airfields: [
-			["pitomnik", "1942-11-29", "1943-01-16"]
+			["pitomnik", "1942-11-29", "1943-01-16"],
+			["gumrak", "1943-01-16", "1943-01-16", 0]
 		],
 		planes: [
 			// Formed with half-dozen volunteers from I./JG 3

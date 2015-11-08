@@ -5,7 +5,7 @@
 		airfields: [
 			// 1 OAG/8 VA
 			["gumrak", "start", "1942-08-03"],
-			["zhitkur", "1942-08-04", "1942-08-04", 0]
+			["zhitkur", "1942-08-03", "1942-08-03", 0]
 			// TODO: 285 BAD
 		],
 		planes: [

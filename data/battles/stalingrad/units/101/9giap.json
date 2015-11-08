@@ -5,13 +5,13 @@
 		airfields: [
 			// 268 IAD
 			["ventsy", "start", "1942-07-22"],
-			["illarionovsky", "1942-07-23", "1942-08-23"],
-			["shkolniy", "1942-08-24", "1942-08-27"],
-			["zaplavnoe", "1942-08-28", "1942-09-08"],
+			["illarionovsky", "1942-07-22", "1942-08-23"],
+			["shkolniy", "1942-08-23", "1942-08-27"],
+			["zaplavnoe", "1942-08-27", "1942-09-08"],
 			// ... withdrawn from the front line and reformed as an "all-ace" unit
 			["zhitkur", "1942-12-09", "1942-12-09", 0],
-			["zety", "1942-12-10", "1943-01-12"],
-			["kotelnikovo", "1943-01-13", "end"]
+			["zety", "1942-12-09", "1943-01-12"],
+			["kotelnikovo", "1943-01-12", "end"]
 		],
 		planes: [
 			// TOE 015/174 (20 aircraft)

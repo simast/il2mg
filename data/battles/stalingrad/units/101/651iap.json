@@ -4,7 +4,7 @@
 		name: "651 IAP PVO",
 		airfields: [
 			["beketovka", "start", "1942-08-25"],
-			["verh_ahtuba", "1942-08-26", "1942-09-05"]
+			["verh_ahtuba", "1942-08-25", "1942-09-05"]
 		],
 		planes: [
 			["i15bis", [7, 2], "start", "1942-09-05"],

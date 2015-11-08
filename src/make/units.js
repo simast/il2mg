@@ -48,6 +48,8 @@ module.exports = function makeUnits() {
 		
 		var unit = Object.create(null);
 		var unitPlaneStorages = [];
+		var unitAirfields = [];
+		var unitPilots = [];
 		
 		unit.id = unitID;
 
@@ -60,20 +62,11 @@ module.exports = function makeUnits() {
 				// Collect airfield data
 				if (prop === "airfields") {
 
-					if (unit.airfield) {
+					if (unitAirfields.length) {
 						continue;
 					}
 
-					var airfields = getAirfields(unitData);
-					
-					for (var airfieldID in airfields) {
-						
-						unit.airfield = airfieldID;
-						unit.availability = airfields[airfieldID];
-						
-						// TODO: Distribute unit if more than one airfield is available
-						break;
-					}
+					unitAirfields = getAirfields(unitData);
 				}
 				// Collect plane storage data
 				else if (prop === "planes") {
@@ -82,15 +75,11 @@ module.exports = function makeUnits() {
 				// Collect pilot data
 				else if (prop === "pilots") {
 
-					if (unit.pilots) {
+					if (unitPilots.length) {
 						continue;
 					}
 
-					var pilots = getPilots(unitData);
-
-					if (pilots.length) {
-						unit.pilots = rand.shuffle(pilots);
-					}
+					unitPilots = getPilots(unitData);
 				}
 				// Collect other unit data
 				else if (unit[prop] === undefined) {
@@ -124,7 +113,6 @@ module.exports = function makeUnits() {
 			// Register unit in the parent group hierarchy
 			var unitGroup = units[unitParentID] || [];
 
-			// Register a new child plane in the plane group
 			if (Array.isArray(unitGroup)) {
 
 				unitGroup.push(unitID);
@@ -133,71 +121,142 @@ module.exports = function makeUnits() {
 
 			unitData = battle.units[unitParentID];
 		}
+		
+		var unitParts = [
+			unit // Original unit
+		];
 
-		// Remove invalid unit definition (without plane storages or invalid airfield)
-		if (!unitPlaneStorages.length || !unit.airfield || !battle.airfields[unit.airfield]) {
-
-			// Clean up parent unit groups
-			var parentID = unit.parent;
-			while (parentID) {
-
-				var parentUnit = units[parentID];
-
-				if (Array.isArray(parentUnit)) {
-
-					var parentUnitIndex = parentUnit.indexOf(unitID);
-
-					// Remove unit from group
-					if (parentUnitIndex > -1) {
-						parentUnit.splice(parentUnitIndex, 1);
+		// Split unit into separate parts (based on number of airfields)
+		// NOTE: Don't split units with planesMin/planesMax
+		if (unitAirfields.length && !unit.planesMin && !unit.planesMax) {
+			
+			// Split unit into separate parts for each extra airfield
+			for (var i = 1; i < unitAirfields.length; i++) {
+				
+				// Create a new unit part based on the original
+				var unitPart = JSON.parse(JSON.stringify(unit));
+				
+				// Assign new unique unit ID
+				unitPart.id = unitPart.id + "_" + i + rand.hex(3);
+				
+				// Register new unit in the parent group hierarchy
+				var unitPartParentID = unitPart.parent;
+				while (unitPartParentID) {
+					
+					var unitPartParent = units[unitPartParentID];
+					
+					if (Array.isArray(unitPartParent)) {
+						unitPartParent.push(unitPart.id);
 					}
-
-					// Remove entire group if empty
-					if (!parentUnit.length) {
-						delete units[parentID];
-					}
+					
+					unitPartParentID = battle.units[unitPartParentID].parent;
 				}
-
-				parentID = battle.units[parentID].parent;
+				
+				unitParts.push(unitPart);
 			}
-
-			continue;
 		}
+		
+		// Randomize unit part and airfield lists
+		rand.shuffle(unitParts);
+		rand.shuffle(unitAirfields);
+		
+		// Distribute pilots to all unit parts
+		if (unitPilots.length) {
+			
+			rand.shuffle(unitPilots);
+			
+			while (unitPilots.length) {
+				
+				var pilot = unitPilots.shift();
+				var pilotUnit = rand.pick(unitParts);
+				
+				if (!pilotUnit.pilots) {
+					pilotUnit.pilots = [];
+				}
+				
+				pilotUnit.pilots.push(pilot);
+			}
+		}
+		
+		// Process each unit part
+		unitParts.forEach(function(unit) {
+			
+			var unitID = unit.id;
+			
+			// Assign random matching airfield and availability
+			if (unitAirfields.length) {
+				
+				var airfield = unitAirfields.shift();
 
-		// Register unit plane storages
-		unitPlaneStorages.forEach(function(planeStorage) {
-
-			planeStorage.units = planeStorage.units || [];
-			planeStorage.units.push(unitID);
-
-			planeStorages.add(planeStorage);
+				unit.airfield = airfield.id;
+				unit.availability = airfield.availability;
+			}
+			
+			// Remove invalid unit definition (without plane storages or invalid airfield)
+			if (!unitPlaneStorages.length || !unit.airfield || !battle.airfields[unit.airfield]) {
+	
+				// Clean up parent unit groups
+				var parentID = unit.parent;
+				while (parentID) {
+	
+					var parentUnit = units[parentID];
+	
+					if (Array.isArray(parentUnit)) {
+	
+						var parentUnitIndex = parentUnit.indexOf(unitID);
+	
+						// Remove unit from group
+						if (parentUnitIndex > -1) {
+							parentUnit.splice(parentUnitIndex, 1);
+						}
+	
+						// Remove entire group if empty
+						if (!parentUnit.length) {
+							delete units[parentID];
+						}
+					}
+	
+					parentID = battle.units[parentID].parent;
+				}
+	
+				return;
+			}
+			
+			// Register unit plane storages
+			unitPlaneStorages.forEach(function(planeStorage) {
+	
+				planeStorage.units = planeStorage.units || [];
+				planeStorage.units.push(unitID);
+	
+				planeStorages.add(planeStorage);
+			});
+	
+			unit.planes = [];
+			
+			// TODO: Add full support for planesMin
+			if (Number.isInteger(unit.planesMax)) {
+				unit.planes.max = rand.integer(unit.planesMin || 0, unit.planesMax);
+			}
+	
+			delete unit.planesMax;
+			delete unit.planesMin;
+	
+			// Register unit to ID index
+			units[unitID] = unit;
+	
+			// Register unit to airfields index
+			unitsByAirfield[unit.airfield] = unitsByAirfield[unit.airfield] || Object.create(null);
+			unitsByAirfield[unit.airfield][unitID] = unit;
+	
+			// Register unit to coalition index
+			var coalition = DATA.countries[unit.country].coalition;
+			unitsByCoalition[coalition] = unitsByCoalition[coalition] || Object.create(null);
+			unitsByCoalition[coalition][unitID] = unit;
+	
+			// Register unit to country index
+			unitsByCountry[unit.country] = unitsByCountry[unit.country] || Object.create(null);
+			unitsByCountry[unit.country][unitID] = unit;
 		});
-
-		unit.planes = [];
-
-		// TODO: Add full support for planesMin
-		if (Number.isInteger(unit.planesMax)) {
-			unit.planes.max = rand.integer(unit.planesMin || 0, unit.planesMax);
-		}
-
-		delete unit.planesMax;
-		delete unit.planesMin;
-
-		// Register unit to ID index
-		units[unitID] = unit;
-
-		// Register unit to airfields index
-		unitsByAirfield[unit.airfield] = unitsByAirfield[unit.airfield] || Object.create(null);
-		unitsByAirfield[unit.airfield][unitID] = unit;
-
-		// Register unit to coalition index
-		var coalition = DATA.countries[unit.country].coalition;
-		unitsByCoalition[coalition] = unitsByCoalition[coalition] || Object.create(null);
-		unitsByCoalition[coalition][unitID] = unit;
-
-		// Register unit to country index
-		unitsByCountry[unit.country] = unitsByCountry[unit.country] || Object.create(null);
-		unitsByCountry[unit.country][unitID] = unit;
 
 		totalUnits++;
 	}
@@ -249,7 +308,7 @@ module.exports = function makeUnits() {
 	// Get unit airfields
 	function getAirfields(unitData) {
 
-		var airfields = Object.create(null);
+		var airfields = [];
 
 		// TODO: Dynamically generate rebase/transfer missions
 
@@ -276,7 +335,10 @@ module.exports = function makeUnits() {
 				availability = Math.max(Math.min(availability, 1), 0);
 				
 				// Add found airfield entry (with availability)
-				airfields[airfieldID] = availability;
+				airfields.push({
+					id: airfieldID,
+					availability: availability
+				});
 			}
 		}
 
@@ -342,14 +404,18 @@ module.exports = function makeUnits() {
 					var planePercent = rangeDaysMission / rangeDaysInterval;
 					
 					// Use +-15% randomness
-					planePercent = 1 - rand.real(planePercent - 0.15, planePercent + 0.15, true);
-					
+					planePercent = rand.real(planePercent - 0.15, planePercent + 0.15, true);
+					planePercent = Math.max(planePercent, 0);
+					planePercent = Math.min(planePercent, 1);
+
 					// Pick plane count from valid range
-					planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * planePercent);
+					planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * (1 - planePercent));
 					planeCount = Math.round(planeCount);
 					
-					// Use +-1 plane randomness
-					planeCount += rand.pick([-1, 1]);
+					// Use extra +-1 plane randomness
+					if (planeCount > 2) {
+						planeCount += rand.pick([-1, 1]);
+					}
 					
 					// Enforce min/max range bounds
 					planeCount = Math.max(planeCount, minPlanes);

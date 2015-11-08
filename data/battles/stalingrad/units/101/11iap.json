@@ -4,7 +4,7 @@
 		name: "11 IAP",
 		airfields: [
 			["zaplavnoe", "1942-08-28", "1942-11-03"],
-			["konstitutsiya", "1942-11-04", "1942-12-25"] // Kapustin Yar
+			["konstitutsiya", "1942-11-03", "1942-12-25"] // Kapustin Yar
 		],
 		planes: [
 			["yak1s69", [17, 10], "1942-08-28", "1942-12-25"]

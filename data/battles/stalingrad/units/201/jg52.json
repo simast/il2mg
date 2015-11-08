@@ -40,9 +40,9 @@
 			["tuzov", "1942-08-20", "1942-09-01"],
 			// ... went to Crimea/Kerch then Caucasus
 			["morozovskiy_south", "1942-11-26", "1942-12-12"],
-			["zimovniki", "1942-12-13", "1942-12-17", 0.25],
-			["kotelnikovo", "1942-12-18", "1942-12-26"],
-			["zimovniki", "1942-12-27", "1942-12-30", 0.25]
+			["zimovniki", "1942-12-12", "1942-12-17", 0.25],
+			["kotelnikovo", "1942-12-17", "1942-12-26"],
+			["zimovniki", "1942-12-26", "1942-12-30", 0.25]
 		],
 		planes: [
 			["bf109g2", [47, 35], "1942-08-20", "1942-09-01"],
@@ -77,7 +77,7 @@
 		parent: "jg52",
 		airfields: [
 			["tuzov", "1942-08-21", "1942-09-10"],
-			["pitomnik", "1942-09-11", "1942-09-26"]
+			["pitomnik", "1942-09-10", "1942-09-26"]
 		],
 		// Each staffel detached one swarm (around 12 planes total)
 		planes: [

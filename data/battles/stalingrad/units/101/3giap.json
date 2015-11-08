@@ -5,7 +5,7 @@
 		airfields: [
 			// 235 IAD
 			["elton", "1942-11-07", "1942-11-07", 0],
-			["solodovka", "1942-11-08", "end"]
+			["solodovka", "1942-11-07", "end"]
 		],
 		planes: [
 			// TOE 015/284 (32 aircraft)

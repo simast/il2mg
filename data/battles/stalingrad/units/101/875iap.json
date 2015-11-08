@@ -5,7 +5,7 @@
 		airfields: [
 			// 220 IAD
 			["ventsy", "start", "1942-07-22"],
-			["illarionovsky", "1942-07-23", "1942-08-03"]
+			["illarionovsky", "1942-07-22", "1942-08-03"]
 		],
 		planes: [
 			// TOE 015/134 (32 aircraft)

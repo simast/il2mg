@@ -8,12 +8,12 @@
 		airfields: [
 			// 102 IAD/PVO
 			["voroponovo", "1942-07-27", "1942-08-23"],
-			["zhitkur", "1942-08-24", "1942-08-24", 0],
+			["zhitkur", "1942-08-23", "1942-08-23", 0],
 			// ... was in 8 VA reserve, did not fly combat missions
 			// TODO: 226 SAD
 			// 287 IAD and 268 IAD (reserve?)
 			["klh_im_kaganovicha", "1942-12-11", "1943-01-04", 0.2],
-			["elton", "1943-01-05", "1943-01-05", 0]
+			["elton", "1943-01-04", "1943-01-04", 0]
 		],
 		planes: [
 			// TOE 015/174 (20 aircraft)

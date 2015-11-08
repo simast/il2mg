@@ -4,7 +4,7 @@
 		name: "439 IAP PVO",
 		airfields: [
 			["voroponovo", "start", "1942-08-26"],
-			["verh_ahtuba", "1942-08-27", "1942-09-05"]
+			["verh_ahtuba", "1942-08-26", "1942-09-05"]
 		],
 		planes: [
 			["mig3", [11, 4], "start", "1942-09-05"]

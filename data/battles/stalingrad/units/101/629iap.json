@@ -4,7 +4,7 @@
 		name: "629 IAP PVO",
 		airfields: [
 			["beketovka", "start", "1942-08-27"],
-			["zaplavnoe", "1942-08-28", "1942-09-26"]
+			["zaplavnoe", "1942-08-27", "1942-09-26"]
 		],
 		planes: [
 			["i16", [21, 9], "start", "1942-09-26"],

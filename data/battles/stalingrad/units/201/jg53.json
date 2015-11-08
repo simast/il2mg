@@ -9,10 +9,10 @@
 		parent: "jg53",
 		airfields: [
 			["tatsinskaya", "1942-07-26", "1942-07-31"], // Novy-Cholan ("a field near Tazinskaya")
-			["frolov", "1942-08-01", "1942-08-04"],
-			["berezovsky", "1942-08-05", "1942-08-12"], // Bereska ("on the river Don", 60 km west of Stalingrad)
-			["tuzov", "1942-08-13", "1942-09-10"],
-			["pitomnik", "1942-09-11", "1942-09-25"]
+			["frolov", "1942-07-31", "1942-08-04"],
+			["berezovsky", "1942-08-04", "1942-08-12"], // Bereska ("on the river Don", 60 km west of Stalingrad)
+			["tuzov", "1942-08-12", "1942-09-10"],
+			["pitomnik", "1942-09-10", "1942-09-25"]
 			// ... was relieved and passed remaining aircraft to I./JG 3 and by train,
 			// road and air left for Comiso/Sicily.
 		],

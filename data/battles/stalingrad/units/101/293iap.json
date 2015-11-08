@@ -5,7 +5,7 @@
 		airfields: [
 			// 287 IAD
 			["zhitkur", "1942-10-14", "1942-10-14", 0],
-			["srednyaya_ahtuba", "1942-10-15", "end"]
+			["srednyaya_ahtuba", "1942-10-14", "end"]
 		],
 		planes: [
 			// TOE 015/284 (32 aircraft)

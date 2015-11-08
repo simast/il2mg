@@ -4,9 +4,9 @@
 		name: "788 IAP PVO",
 		airfields: [
 			["voroponovo", "start", "1942-08-27"],
-			["verh_ahtuba", "1942-08-28", "1942-09-07"],
-			["zaplavnoe", "1942-09-08", "1942-10-16"],
-			["vladimirovka", "1942-10-17", "end", 0.2]
+			["verh_ahtuba", "1942-08-27", "1942-09-07"],
+			["zaplavnoe", "1942-09-07", "1942-10-16"],
+			["vladimirovka", "1942-10-16", "end", 0.2]
 		],
 		planes: [
 			// TOE 015/134 (32 aircraft)

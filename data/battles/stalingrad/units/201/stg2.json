@@ -10,11 +10,11 @@
 		parent: "stg2",
 		airfields: [
 			["tatsinskaya", "1942-07-20", "1942-07-29"],
-			["oblivskaya", "1942-07-30", "1942-09-29"],
-			["stalino", "1942-09-30", "1942-10-12", 0], // Rest and refit
-			["karpovka", "1942-10-13", "1942-11-22"],
-			["morozovskiy_west", "1942-11-21", "1942-12-31"],
-			["makeyevka", "1943-01-01", "1943-01-01", 0] // Rest and refit
+			["oblivskaya", "1942-07-29", "1942-09-29"],
+			["stalino", "1942-09-29", "1942-10-12", 0], // Rest and refit
+			["karpovka", "1942-10-12", "1942-11-22"],
+			["morozovskiy_west", "1942-11-22", "1942-12-31"],
+			["makeyevka", "1942-12-31", "1942-12-31", 0] // Rest and refit
 		],
 		planes: [
 			["fw189a1", [5, 4], "start", "1942-09-29"],
@@ -35,12 +35,12 @@
 		parent: "stg2",
 		airfields: [
 			["tatsinskaya", "1942-07-20", "1942-08-14"],
-			["oblivskaya", "1942-08-15", "1942-09-29"],
-			["stalino", "1942-09-30", "1942-10-12", 0], // Rest and refit
-			["karpovka", "1942-10-13", "1942-11-22"],
-			["oblivskaya", "1942-11-23", "1942-11-26"],
-			["morozovskiy_west", "1942-11-27", "1942-12-31"],
-			["makeyevka", "1943-01-01", "1943-01-01", 0] // Rest and refit
+			["oblivskaya", "1942-08-14", "1942-09-29"],
+			["stalino", "1942-09-29", "1942-10-12", 0], // Rest and refit
+			["karpovka", "1942-10-12", "1942-11-22"],
+			["oblivskaya", "1942-11-22", "1942-11-26"],
+			["morozovskiy_west", "1942-11-26", "1942-12-31"],
+			["makeyevka", "1942-12-31", "1942-12-31", 0] // Rest and refit
 		],
 		planes: [
 			// 1942-07
@@ -101,11 +101,11 @@
 		parent: "stg2",
 		airfields: [
 			["tatsinskaya", "1942-07-21", "1942-07-30"],
-			["oblivskaya", "1942-07-31", "1942-10-12"],
-			["karpovka", "1942-10-13", "1942-11-22"],
-			["oblivskaya", "1942-11-23", "1942-11-26"],
-			["morozovskiy_west", "1942-11-27", "1943-01-02"],
-			["tatsinskaya", "1943-01-03", "1943-01-07"]
+			["oblivskaya", "1942-07-30", "1942-10-12"],
+			["karpovka", "1942-10-12", "1942-11-22"],
+			["oblivskaya", "1942-11-22", "1942-11-26"],
+			["morozovskiy_west", "1942-11-26", "1943-01-02"],
+			["tatsinskaya", "1943-01-02", "1943-01-07"]
 			// ... left for rest and refit to Makeyevka
 		],
 		planes: [
