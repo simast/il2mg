@@ -41,7 +41,7 @@
 			// ... went to Crimea/Kerch then Caucasus
 			["morozovskiy_south", "1942-11-26", "1942-12-12"],
 			["zimovniki", "1942-12-12", "1942-12-17", 0.25],
-			["kotelnikovo", "1942-12-17", "1942-12-26"],
+			["kotelnikovsky", "1942-12-17", "1942-12-26"],
 			["zimovniki", "1942-12-26", "1942-12-30", 0.25]
 		],
 		planes: [
