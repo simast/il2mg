@@ -23,13 +23,13 @@ module.exports = function makeTime() {
 
 	// Sunrise time objects
 	var sunrise = moment(sun[0], "HH:mm", true);
-	var sunriseTime = moment(date).hour(sunrise.hour()).minute(sunrise.minute());
+	var sunriseTime = mission.sunrise = moment(date).hour(sunrise.hour()).minute(sunrise.minute());
 	var sunriseTimeStart = moment(sunriseTime).subtract(TIME_SUNRISE / 2, "s");
 	var sunriseTimeEnd = moment(sunriseTime).add(TIME_SUNRISE / 2, "s");
 
 	// Noon time objects
 	var noon = moment(sun[1], "HH:mm", true);
-	var noonTime = moment(date).hour(noon.hour()).minute(noon.minute());
+	var noonTime = mission.noon = moment(date).hour(noon.hour()).minute(noon.minute());
 	var noonTimeStart = moment(noonTime).subtract(TIME_NOON / 2, "s");
 	var noonTimeEnd = moment(noonTime).add(TIME_NOON / 2, "s");
 

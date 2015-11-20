@@ -9,6 +9,7 @@ var briefingColor = DATA.briefingColor;
 // Briefing make parts
 var makeBriefingParts = requireDir(module, {include: /briefing\..+\.js$/});
 var makeBriefingText = makeBriefingParts["briefing.text"];
+var makeBriefingWeather = makeBriefingParts["briefing.weather"];
 
 // Generate mission briefing
 module.exports = function makeBriefing() {
@@ -58,7 +59,9 @@ module.exports = function makeBriefing() {
 	briefing.push(makeBriefingFlight.call(this));
 
 	// TODO: Payload info
-	// TODO: Weather report
+	
+	// Weather report
+	briefing.push(makeBriefingWeather.call(this));
 	
 	var briefingPlan = [];
 

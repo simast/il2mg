@@ -9,20 +9,14 @@ module.exports = function makeWeather() {
 
 	this.weather = {};
 
+	// Make weather parts
 	makeClouds.call(this, weather);
 	makePrecipitation.call(this, weather);
 	makeSea.call(this, weather);
 	makeTemperature.call(this, weather);
 	makePressure.call(this, weather);
-
-	options.Turbulence = 1;
-	options.WindLayers = [
-		[0, 126, 3],
-		[500, 120.147, 7.27],
-		[1000, 116.507, 11.04],
-		[2000, 105.961, 13.66],
-		[5000, 92.6825, 15.41]
-	];
+	makeWind.call(this, weather);
+	makeTurbulence.call(this, weather);
 };
 
 // Make mission clouds
@@ -31,7 +25,7 @@ function makeClouds(weather) {
 	var options = this.items.Options;
 	var rand = this.rand;
 
-	var cloudsType = weather[1];
+	var cloudsType = weather[2];
 	if (Array.isArray(cloudsType)) {
 		cloudsType = rand.integer(cloudsType[0], cloudsType[1]);
 	}
@@ -114,15 +108,70 @@ function makeTemperature(weather) {
 
 	var options = this.items.Options;
 	var rand = this.rand;
-
-	var temperature = weather[0];
-	if (Array.isArray(temperature)) {
-		temperature = rand.integer(temperature[0], temperature[1]);
+	var date = this.date;
+	var sunrise = this.sunrise;
+	var noon = this.noon;
+	
+	// NOTE: This algorithm was initially presented by De Wit et al. (1978)
+	// and was obtained from the subroutine WAVE in ROOTSIMU V4.0 by Hoogenboom
+	// and Huck (1986). It was slightly modified to support per minute precision
+	// and TMAX temperature is set not for 14:00, but for solar noon + 1 hour.
+	
+	var tMin = weather[0];
+	var tMax = weather[1];
+	
+	// Slightly shift original TMIN and TMAX temperatures with a random factor
+	var tMaxShift = (tMax - tMin) * 0.15; // Max +-15% of temperature delta
+	
+	tMin += rand.pick([-1, 1]) * rand.real(0, tMaxShift);
+	tMax += rand.pick([-1, 1]) * rand.real(0, tMaxShift);
+	
+	// TODO: Cloudness should affect TMIN and TMAX temperatures
+	
+	var tDelta = tMax - tMin;
+	var tAvg = (tMin + tMax) / 2;
+	var tAmp = tDelta / 2;
+	var timeNow = (date.hour() * 60 + date.minute()) / 60;
+	var timeTempMin = (sunrise.hour() * 60 + sunrise.minute()) / 60;
+	var timeTempMax = (noon.hour() * 60 + noon.minute()) / 60 + 1; // 1 hour after solar noon
+	var timeMid = 24 - timeTempMax; // Time left from TMAX to midnight (00:00)
+	
+	// Get temperature at a given point in time (minutes from midnight)
+	function getTemp(time) {
+		
+		if (time < timeTempMin || time > timeTempMax) {
+			
+			var timeAmp;
+			
+			if (time < timeTempMin) {
+				timeAmp = time + timeMid;
+			}
+			else {
+				timeAmp = time - timeTempMax;
+			}
+			
+			return tAvg + tAmp * Math.cos(Math.PI * timeAmp / (timeMid + timeTempMin));
+		}
+		else {
+			return tAvg - tAmp * Math.cos(Math.PI * (time - timeTempMin) / (timeTempMax - timeTempMin));
+		}
 	}
-
+	
+	// Get current temperature
+	var tempNow = getTemp(timeNow);
+	
+	// Peek at a temperature 15 minutes from now
+	var tempSoon = getTemp((timeNow + 0.25) % 24);
+	
+	// Current temperature change state (for the next +15 minutes)
+	this.weather.temperatureState = (tempSoon - tempNow) / tDelta * 100;
+	
 	// Set temperature data for Options item
-	options.Temperature = temperature;
-	options.TempPressLevel = 0;
+	// NOTE: Real mission temperature is set +15 minutes from now to adjust for
+	// the fact temperatures will not change while the mission is running.
+	this.weather.temperature = Math.round(tempNow);
+	options.Temperature = Math.round(tempSoon);
+	options.TempPressLevel = 0; // TODO?
 }
 
 // Make mission atmospheric pressure
@@ -135,4 +184,24 @@ function makePressure(weather) {
 	// Set pressure data
 	this.items.Options.Pressure = pressure;
 	this.weather.pressure = pressure;
+}
+
+// Make mission turbulence level
+function makeTurbulence(weather) {
+
+	// TODO: Not supported/implemented yet
+	this.items.Options.Turbulence = 1;
+}
+
+// Make mission wind layers
+function makeWind(weather) {
+
+	// TODO: Not supported/implemented yet
+	this.items.Options.WindLayers = [
+		[0, 126, 3],
+		[500, 120.147, 7.27],
+		[1000, 116.507, 11.04],
+		[2000, 105.961, 13.66],
+		[5000, 92.6825, 15.41]
+	];
 }
