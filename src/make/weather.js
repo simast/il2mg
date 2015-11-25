@@ -25,7 +25,7 @@ function makeClouds(weather) {
 	var options = this.items.Options;
 	var rand = this.rand;
 
-	var cloudsType = weather[2];
+	var cloudsType = [0, 4]; // TODO
 	if (Array.isArray(cloudsType)) {
 		cloudsType = rand.integer(cloudsType[0], cloudsType[1]);
 	}
@@ -123,10 +123,11 @@ function makeTemperature(weather) {
 	// Slightly shift original TMIN and TMAX temperatures with a random factor
 	var tMaxShift = (tMax - tMin) * 0.15; // Max +-15% of temperature delta
 	
-	tMin += rand.pick([-1, 1]) * rand.real(0, tMaxShift);
-	tMax += rand.pick([-1, 1]) * rand.real(0, tMaxShift);
+	// NOTE: 66.6% for at least +-1 variation and 33.3% for no change at all
+	tMin += rand.pick([-1, 0, 1]) * Math.max(rand.real(0, tMaxShift), 1);
+	tMax += rand.pick([-1, 0, 1]) * Math.max(rand.real(0, tMaxShift), 1);
 	
-	// TODO: Cloudness should affect TMIN and TMAX temperatures
+	// TODO: Cloudness should affect TMIN and TMAX temperatures?
 	
 	var tDelta = tMax - tMin;
 	var tAvg = (tMin + tMax) / 2;
