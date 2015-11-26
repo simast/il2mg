@@ -41,9 +41,10 @@ var planeTypeNames = {
  * 	{{{rank.TYPE.abbr}}} - Any TYPE level abbreviated rank name.
  *
  * @param {string} template Template string to use for rendering.
+ * @param {object} [view] Extra template view data.
  * @returns {string} Rendered briefing text.
  */
-module.exports = function makeBriefingText(template) {
+module.exports = function makeBriefingText(template, view) {
 	
 	var rand = this.rand;
 	var flight = this.player.flight;
@@ -209,8 +210,17 @@ module.exports = function makeBriefingText(template) {
 		}
 	}
 	
+	// With no custom view data
+	if (!view) {
+		view = context;
+	}
+	// With custom view data
+	else {
+		Object.setPrototypeOf(view, context);
+	}
+	
 	// Render template using Mustache
-	var text = mustache.render(template, context);
+	var text = mustache.render(template, view);
 	
 	return text.replace(/\s{2,}/g, " ");
 };

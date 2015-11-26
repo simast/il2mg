@@ -68,6 +68,14 @@ DATA.planeSize = Object.freeze({
 	HUGE: 4
 });
 
+// Weather state/condition constants
+DATA.weatherState = Object.freeze({
+	PERFECT: 1,
+	GOOD: 2,
+	BAD: 3,
+	EXTREME: 4
+});
+
 // Flight states
 // NOTE: Numeric (0..1) flight states represent aircraft in the air at various mission states
 DATA.flightState = Object.freeze({

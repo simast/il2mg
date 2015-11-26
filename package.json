@@ -8,7 +8,7 @@
 		"require-directory": "2.1.1",
 		"lex": "1.7.9",
 		"random-js": "1.0.8",
-		"winston": "2.1.0",
+		"winston": "2.1.1",
 		"speakingurl": "7.0.0",
 		"mustache": "2.2.0"
 	},

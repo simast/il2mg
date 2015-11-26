@@ -1,13 +1,29 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+var weatherState = DATA.weatherState;
+
 // Generate mission weather and atmospheric conditions
 module.exports = function makeWeather() {
 
+	var rand = this.rand;
 	var options = this.items.Options;
 	var weather = this.battle.weather[this.date.format("YYYY-MM-DD")];
-
-	this.weather = {};
+	var state = weather[2];
+	
+	// TODO: Use a logarithmic curve for picking weather state from interval?
+	if (Array.isArray(state)) {
+		state = rand.integer(state[0], state[1]);
+	}
+	
+	// TODO: Adjust weather state based on player plane size
+	
+	this.weather = {
+		state: state
+	};
+	
+	// TODO: Level in meters at what point temperature and pressure is measured?
+	options.TempPressLevel = 0;
 
 	// Make weather parts
 	makeClouds.call(this, weather);
@@ -172,7 +188,6 @@ function makeTemperature(weather) {
 	// the fact temperatures will not change while the mission is running.
 	this.weather.temperature = Math.round(tempNow);
 	options.Temperature = Math.round(tempSoon);
-	options.TempPressLevel = 0; // TODO?
 }
 
 // Make mission atmospheric pressure
