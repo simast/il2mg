@@ -1,9 +1,52 @@
 {
+	// Bf 110
+	"bf110": {
+		manufacturer: "Messerschmitt",
+		name: "Bf 110",
+		type: ["fighter", "fighter_heavy"],
+		size: "large",
+		// NOTE: Static Bf 110 models are not available, using Bf 109 as a workaround
+		static: [
+			{
+				model: "graphics\\blocks\\static_bf109.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_bf109_open.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109_open.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_bf109_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
+				camo: true
+			}
+		]
+	},
+	
 	// Bf 110 D-3
 	"bf110d3": null,
 	
+	// Bf 110 E
+	"bf110e": {
+		name: "Bf 110 E",
+		parent: "bf110"
+	},
+	
+	// Bf 110 E-2
+	"bf110e2": {
+		name: "Bf 110 E-2",
+		parent: "bf110e",
+		model: "graphics\\planes\\bf110e2\\bf110e2.mgm",
+		script: "luascripts\\worldobjects\\planes\\bf110e2.txt"
+	},
+	
 	// Bf 110 E-3
-	"bf110e3": null,
+	"bf110e3": {
+		name: "Bf 110 E-3",
+		parent: "bf110e2",
+		model: "graphics\\planes\\bf110e2\\bf110e2.mgm",
+		script: "luascripts\\worldobjects\\planes\\bf110e2.txt"
+	},
 	
 	// Bf 110 F-3
 	"bf110f3": null,
