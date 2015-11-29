@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 		var extension = (process.platform === "win32") ? ".exe" : "";
 		var binaryFilePath = "../" + buildName + extension;
 
-		options.push("--version", "iojs"); // Latest io.js
+		options.push("--version", "5.1.0");
 		options.push("--config", "../enclose.js");
 		options.push("--loglevel", "error");
 		options.push("--output", binaryFilePath);
@@ -38,9 +38,7 @@ module.exports = function(grunt) {
 
 		grunt.file.setBase(buildDir);
 
-		var compileTask = enclose.exec(options);
-
-		function onDone(error) {
+		enclose.exec(options, function(error) {
 			
 			if (error) {
 				return done(error);
@@ -65,9 +63,6 @@ module.exports = function(grunt) {
 				
 				done(error);
 			});
-		}
-
-		compileTask.on("error", onDone);
-		compileTask.on("exit", onDone);
+		});
 	});
 };

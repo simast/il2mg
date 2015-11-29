@@ -16,7 +16,8 @@ DATA.version = "r2";
 DATA.copyright = "(C) Simas Toleikis, 2015";
 
 // Flag used to identify the data as binary (compiled to an executable)
-DATA.isBinary = false;
+// TODO: Improve the check for binary/compiled mode detection
+DATA.isBinary = (process.argv[1].indexOf(".exe") !== -1);
 
 // List of supported mission localization languages
 DATA.languages = Object.freeze([
@@ -107,21 +108,15 @@ DATA.briefingColor = Object.freeze({
 // Load all static data
 (function() {
 	
-	var useJSON5 = true;
-	
-	// NOTE: Having JSON5 module name as two separate string literals will trick
-	// enclose to not included it in the binary file. Thus JSON files in the binary
-	// will be loaded using native JSON object (for performance reasons).
-	try {
-		var JSON5 = require("json" + "5");
-	}
-	catch (e) {
-		
-		useJSON5 = false;
-		DATA.isBinary = true;
-	}
+	// NOTE: For performance reasons JSON files in the binary/compiled mode will
+	// be loaded using native JSON object.
+	var useJSON5 = !DATA.isBinary;
 	
 	if (useJSON5) {
+		
+		// NOTE: Having JSON5 module name as two separate string literals will trick
+		// enclose to not included it in the binary file.
+		var JSON5 = require("json" + "5");
 		
 		useJSON5 = require.extensions[".json"];
 		
