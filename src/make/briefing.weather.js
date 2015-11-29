@@ -1,37 +1,39 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var makeBriefingText = require("./briefing.text");
-var weatherState = DATA.weatherState;
+const makeBriefingText = require("./briefing.text");
+const weatherState = DATA.weatherState;
 
 // General weather description segments
-var generalSegments = [
+const generalSegments = [
 	"{{weather.state}} weather conditions on the airfield {{weather.time}} with {{weather.sky}} and {{weather.wind}}",
 	"{{name.first}}, our weather officer, has reported {{weather.state}} flying conditions {{weather.time}} with {{weather.wind}} and {{weather.sky}}",
 	"Latest weather reports indicate {{weather.state}} flying conditions {{weather.time}} with {{weather.sky}} and {{weather.wind}}"
 ];
 
 // Temperature description segments
-var temperatureSegments = [
-	"The temperature on the ground is {{weather.temperature}}",
-	"Current temperature on the spot is {{weather.temperature}}"
+const temperatureSegments = [
+	"The temperature on the ground is {{weather.temp}}",
+	"Current temperature on the spot is {{weather.temp}}",
+	"Present temperature on site is {{weather.temp}}",
+	"Thermometer is measuring a temperature of {{weather.temp.value}}"
 ];
 
 // Weather state descriptions
-var stateSegments = {};
-
-stateSegments[weatherState.PERFECT] = ["perfect", "excellent", "great", "pleasant"];
-stateSegments[weatherState.GOOD] = ["good", "fair", "fine", "decent"];
-stateSegments[weatherState.BAD] = ["bad", "poor", "rough", "lousy"];
-stateSegments[weatherState.EXTREME] = ["harsh", "severe", "awful", "terrible"];
+const stateSegments = {
+	[weatherState.PERFECT]: ["perfect", "excellent", "great", "pleasant"],
+	[weatherState.GOOD]: ["good", "fair", "fine", "decent"],
+	[weatherState.BAD]: ["bad", "poor", "rough", "lousy"],
+	[weatherState.EXTREME]: ["harsh", "severe", "awful", "terrible"]
+};
 
 // TODO: Cloud and sky description segments
-var skySegments = [
+const skySegments = [
 	"clear skies",
 	"clear blue skies",
 	"cloudless skies",
 	"crystal clear skies",
-	"small patches of clouds",
+	"small patches of clouds in the sky",
 	"dense cloud cover",
 	"shallow cloud sheet base",
 	"full overcast",
@@ -39,7 +41,7 @@ var skySegments = [
 ];
 
 // TODO: Wind description segments
-var windSegments = [
+const windSegments = [
 	"no noticeable wind",
 	"calm 2 m/s winds blowing from the east",
 	"3 m/s winds blowing from south-west",
@@ -50,10 +52,10 @@ var windSegments = [
 // Make weather briefing
 module.exports = function makeBriefingWeather() {
 	
-	var briefing = [];
-	var weather = this.weather;
-	var rand = this.rand;
-	var context = {};
+	const rand = this.rand;
+	const weather = this.weather;
+	const context = {};
+	let briefing = [];
 	
 	// Weather state description
 	context.state = rand.pick(stateSegments[weather.state]);
@@ -64,7 +66,7 @@ module.exports = function makeBriefingWeather() {
 	}
 	
 	// Set specific weather time context (if any)
-	for (var time of ["morning", "afternoon", "evening", "night"]) {
+	for (let time of ["morning", "afternoon", "evening", "night"]) {
 		
 		if (this.time[time]) {
 			
@@ -76,7 +78,7 @@ module.exports = function makeBriefingWeather() {
 	// Use default generic time context (25% chance to always prefer generic one)
 	if (!context.time || rand.bool(0.25)) {
 		
-		var timeNow = ["right now", "at the moment", "just now"];
+		const timeNow = ["right now", "at the moment", "just now"];
 		
 		if (this.time.night) {
 			timeNow.push("tonight");
@@ -93,27 +95,37 @@ module.exports = function makeBriefingWeather() {
 	context.wind = rand.pick(windSegments);
 	
 	// Temperature segment
-	var temperature = weather.temperature;
-	var temperatureState = weather.temperatureState;
-	var tempStr = temperature + "°C";
-	var tempStrState;
+	const temperature = weather.temperature;
+	const temperatureState = weather.temperatureState;
+	
+	context.temp = {
+		
+		// TODO: Use Fahrenheit or Celcius based on player unit country
+		value: temperature + "°C",
+		
+		// {{weather.temp}} value output
+		toString: function() {
+			
+			let output = this.value;
+			
+			if (this.state) {
+				output += " " + this.state;
+			}
+			
+			return output;
+		}
+	};
 	
 	// 1.25+% change (for the next 15 minutes)
 	if (temperatureState >= 1.25) {
-		tempStrState = "rising";
+		context.temp.state = "and rising";
 	}
 	// 1.25-% change (for the next 15 minutes)
 	else if (temperatureState <= -1.25) {
-		tempStrState = "falling";
+		context.temp.state = "and falling";
 	}
 	
-	if (tempStrState) {
-		tempStr += " and " + tempStrState;
-	}
-	
-	context.temperature = tempStr;
-	
-	var view = {weather: context};
+	const view = {weather: context};
 	
 	// Render weather segments
 	briefing.push(makeBriefingText.call(this, rand.pick(generalSegments), view));
