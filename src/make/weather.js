@@ -2,7 +2,7 @@
 "use strict";
 
 const MAX_WIND_SPEED = 12; // Maximum wind speed (m/s)
-const MIN_WIND_SPEED = 0.5; // Minimum wind speed (m/s)
+const MIN_WIND_SPEED = 0.25; // Minimum wind speed (m/s)
 const MAX_CLOUD_COVER = 100; // Maximum cloud cover (%)
 
 // Weather state types
@@ -10,8 +10,8 @@ const weatherState = DATA.weatherState;
 
 // Maximum weather state points distribution (%)
 const weatherPoints = {
-	CLOUDS: 60,
-	WINDS: 40
+	CLOUDS: 40,
+	WINDS: 60
 };
 
 // Weather state limits

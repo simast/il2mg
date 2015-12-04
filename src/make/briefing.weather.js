@@ -6,9 +6,9 @@ const weatherState = DATA.weatherState;
 
 // General weather description segments
 const generalSegments = [
-	"{{weather.state}} weather conditions on the airfield {{weather.time}} with {{weather.sky}} and {{weather.wind}}",
-	"{{name.first}}, our weather officer, has reported {{weather.state}} flying conditions {{weather.time}} with {{weather.wind}} and {{weather.sky}}",
-	"Latest weather reports indicate {{weather.state}} flying conditions {{weather.time}} with {{weather.sky}} and {{weather.wind}}"
+	"{{weather.state}} weather conditions on the airfield {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}",
+	"{{name.first}}, our weather officer, has reported {{weather.state}} flying conditions {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}",
+	"Latest weather reports indicate {{weather.state}} flying conditions {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}"
 ];
 
 // Temperature description segments
@@ -21,32 +21,97 @@ const temperatureSegments = [
 
 // Weather state descriptions
 const stateSegments = {
-	[weatherState.PERFECT]: ["perfect", "excellent", "great", "pleasant"],
-	[weatherState.GOOD]: ["good", "fair", "fine", "decent"],
-	[weatherState.BAD]: ["bad", "poor", "rough", "lousy"],
-	[weatherState.EXTREME]: ["harsh", "severe", "awful", "terrible"]
+	[weatherState.PERFECT]: ["perfect", "excellent", "great", "pleasant", "nice"],
+	[weatherState.GOOD]: ["good", "fair", "fine", "decent", "favourable"],
+	[weatherState.BAD]: ["bad", "poor", "rough", "lousy", "adverse"],
+	[weatherState.EXTREME]: ["extreme", "dreadful", "awful", "terrible", "severe"]
 };
 
-// TODO: Cloud and sky description segments
-const skySegments = [
-	"clear skies",
-	"clear blue skies",
-	"cloudless skies",
-	"crystal clear skies",
-	"small patches of clouds in the sky",
-	"dense cloud cover",
-	"shallow cloud sheet base",
-	"full overcast",
-	"low sunlit clouds"
-];
+// Cloud cover types
+const cloudCover = {
+	CLEAR: 1,
+	FEW: 2,
+	SCATTERED: 3,
+	BROKEN: 4,
+	OVERCAST: 5
+};
 
-// TODO: Wind description segments
-const windSegments = [
-	"no noticeable wind",
-	"calm 2 m/s winds blowing from the east",
-	"3 m/s winds blowing from south-west",
-	"strong 8 m/s winds blowing from north-east",
-	"cold 5 m/s northerly winds"
+// Sky and cloud cover description segments
+const skySegments = {
+	[cloudCover.CLEAR]: [
+		"clear skies",
+		"cloudless skies",
+		"crystal clear skies"
+	],
+	[cloudCover.FEW]: [
+		"small patches of clouds in the sky",
+		"few clouds hanging in the sky",
+		"mostly cloudless skies"
+	],
+	[cloudCover.SCATTERED]: [
+		"partly clouded skies",
+		"scattered cloud cover",
+		"some low clouds in the sky"
+	],
+	[cloudCover.BROKEN]: [
+		"dense cloud cover",
+		"gray cloudy skies",
+		"thick cloud cover",
+		"sky full of clouds"
+	],
+	[cloudCover.OVERCAST]: [
+		"full overcast"
+	]
+};
+
+// Wind direction names
+const windDirection = {
+	
+	// 4 point directions
+	"4": [
+		"northerly",
+		"easterly",
+		"southerly",
+		"westerly"
+	],
+	
+	// 8 point directions
+	"8": [
+		"north",
+		"northeast",
+		"east",
+		"southeast",
+		"south",
+		"southwest",
+		"west",
+		"northwest"
+	],
+	
+	// 16 point directions
+	"16": [
+		"north",
+		"north-northeast",
+		"northeast",
+		"east-northeast",
+		"east",
+		"east-southeast",
+		"southeast",
+		"south-southeast",
+		"south",
+		"south-southwest",
+		"southwest",
+		"west-southwest",
+		"west",
+		"west-northwest",
+		"northwest",
+		"north-northwest"
+	]
+};
+
+// TODO: Precipitation segments
+const precipitationSegments = [
+	"it is raining very hard",
+	"it is raining a little"
 ];
 
 // Make weather briefing
@@ -90,9 +155,96 @@ module.exports = function makeBriefingWeather() {
 		context.time = rand.pick(timeNow);
 	}
 	
-	// TODO
-	context.sky = rand.pick(skySegments);
-	context.wind = rand.pick(windSegments);
+	// Weather state/condition reasons
+	const weatherReasons = {};
+	
+	// Sky and cloud cover segment
+	const cover = weather.clouds.cover;
+	let coverType = cloudCover.CLEAR;
+	
+	// Map matching cloud cover type
+	if (cover >= 100) {
+		coverType = cloudCover.OVERCAST;
+	}
+	else if (cover >= 70) {
+		coverType = cloudCover.BROKEN;
+	}
+	else if (cover >= 32) {
+		coverType = cloudCover.SCATTERED;
+	}
+	else if (cover > 0) {
+		coverType = cloudCover.FEW;
+	}
+	
+	weatherReasons.clouds = rand.pick(skySegments[coverType]);
+	
+	// Wind segment
+	const wind = weather.wind[0]; // At ground level
+	const windSpeed = Math.round(wind.speed);
+	let windSegment = "no noticeable wind";
+	
+	if (windSpeed > 0) {
+		
+		windSegment = "";
+		
+		// Number of direction points to use in the report
+		let windPrecision = 8;
+		
+		// Calm wind speed type
+		if (windSpeed <= 2) {
+			
+			windSegment = "calm";
+			windPrecision = 4;
+		}
+		// Strong wind speed type
+		else if (windSpeed >= 6) {
+			
+			windSegment = "strong";
+			windPrecision = 16;
+		}
+		
+		let windDir = wind.direction;
+		
+		// NOTE: Wind direction represents where the wind is blowing to and not where
+		// it is coming from. We have to invert this direction for the briefing text.
+		windDir = (windDir + 180) % 360;
+		
+		const windBearingSize = 360 / windPrecision;
+		const windBearing = Math.floor((windBearingSize / 2 + windDir) / windBearingSize % windPrecision);
+		
+		windSegment += " " + windSpeed + " m/s";
+		
+		// Just 4 directions for calm winds
+		if (windPrecision === 4) {
+			windSegment += " " + windDirection[windPrecision][windBearing];
+		}
+		
+		windSegment += " winds";
+		
+		// Use more direction precision points for stronger winds
+		if (windPrecision > 4) {
+			windSegment += " blowing from the " + windDirection[windPrecision][windBearing];
+		}
+	}
+	
+	weatherReasons.winds = windSegment;
+	
+	context.reason = [];
+	
+	// Order weather reason context based on state priority
+	rand.shuffle(Object.keys(weatherReasons)).sort(function(a, b) {
+		
+		// Use worst reason first
+		if (weather.state > weatherState.GOOD) {
+			return weather.points[a] < weather.points[b];
+		}
+		// Use best reason first
+		else {
+			return weather.points[a] > weather.points[b];
+		}
+	}).forEach(function(reasonType) {
+		context.reason.push(weatherReasons[reasonType]);
+	});
 	
 	// Temperature segment
 	const temperature = weather.temperature;
