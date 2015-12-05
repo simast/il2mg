@@ -3,6 +3,7 @@
 
 const makeBriefingText = require("./briefing.text");
 const weatherState = DATA.weatherState;
+const precipitation = DATA.precipitation;
 
 // General weather description segments
 const generalSegments = [
@@ -52,21 +53,41 @@ const skySegments = {
 	[cloudCover.SCATTERED]: [
 		"partly clouded skies",
 		"scattered cloud cover",
-		"some low clouds in the sky"
+		"low clouds in the sky"
 	],
 	[cloudCover.BROKEN]: [
 		"dense cloud cover",
-		"gray cloudy skies",
+		"grey clouded skies",
 		"thick cloud cover",
 		"sky full of clouds"
 	],
 	[cloudCover.OVERCAST]: [
+		"dense cloud cover",
+		"thick cloud cover",
 		"full overcast"
 	]
 };
 
-// Wind direction names
-const windDirection = {
+// Wind types (based on speed)
+const windType = {
+	NONE: 1,
+	CALM: 2,
+	MODERATE: 3,
+	STRONG: 4,
+	VIOLENT: 5
+};
+
+// Wind type description segments
+const windTypeSegments = {
+	[windType.NONE]: ["no noticeable wind", "calm winds"],
+	[windType.CALM]: ["calm", "mild", "light"],
+	[windType.MODERATE]: [""],
+	[windType.STRONG]: ["strong", "powerful"],
+	[windType.VIOLENT]: ["violent", "fierce"]
+};
+
+// Wind direction description segments
+const windDirectionSegments = {
 	
 	// 4 point directions
 	"4": [
@@ -78,42 +99,36 @@ const windDirection = {
 	
 	// 8 point directions
 	"8": [
-		"north",
+		"the north",
 		"northeast",
-		"east",
+		"the east",
 		"southeast",
-		"south",
+		"the south",
 		"southwest",
-		"west",
+		"the west",
 		"northwest"
 	],
 	
 	// 16 point directions
 	"16": [
-		"north",
+		"the north",
 		"north-northeast",
 		"northeast",
 		"east-northeast",
-		"east",
+		"the east",
 		"east-southeast",
 		"southeast",
 		"south-southeast",
-		"south",
+		"the south",
 		"south-southwest",
 		"southwest",
 		"west-southwest",
-		"west",
+		"the west",
 		"west-northwest",
 		"northwest",
 		"north-northwest"
 	]
 };
-
-// TODO: Precipitation segments
-const precipitationSegments = [
-	"it is raining very hard",
-	"it is raining a little"
-];
 
 // Make weather briefing
 module.exports = function makeBriefingWeather() {
@@ -182,11 +197,11 @@ module.exports = function makeBriefingWeather() {
 	// Wind segment
 	const wind = weather.wind[0]; // At ground level
 	const windSpeed = Math.round(wind.speed);
-	let windSegment = "no noticeable wind";
+	let windSegment = rand.pick(windTypeSegments[windType.NONE]);
 	
 	if (windSpeed > 0) {
 		
-		windSegment = "";
+		windSegment = rand.pick(windTypeSegments[windType.MODERATE]);
 		
 		// Number of direction points to use in the report
 		let windPrecision = 8;
@@ -194,7 +209,7 @@ module.exports = function makeBriefingWeather() {
 		// Calm wind speed type
 		if (windSpeed <= 2) {
 			
-			windSegment = rand.pick(["calm", "mild"]);
+			windSegment = rand.pick(windTypeSegments[windType.CALM]);
 			windPrecision = 4;
 		}
 		// Strong wind speed type
@@ -202,37 +217,37 @@ module.exports = function makeBriefingWeather() {
 			
 			// Extremely strong winds for flight
 			if (windSpeed >= 10) {
-				windSegment = rand.pick(["fierce", "violent"]);
+				windSegment = rand.pick(windTypeSegments[windType.VIOLENT]);
 			}
 			// Strong winds
 			else {
-				windSegment = rand.pick(["strong", "powerful"]);
+				windSegment = rand.pick(windTypeSegments[windType.STRONG]);
 			}
 			
 			windPrecision = 16;
 		}
 		
-		let windDir = wind.direction;
+		let windDirection = wind.direction;
 		
 		// NOTE: Wind direction represents where the wind is blowing to and not where
 		// it is coming from. We have to invert this direction for the briefing text.
-		windDir = (windDir + 180) % 360;
+		windDirection = (windDirection + 180) % 360;
 		
 		const windBearingSize = 360 / windPrecision;
-		const windBearing = Math.floor((windBearingSize / 2 + windDir) / windBearingSize % windPrecision);
+		const windBearing = Math.floor((windBearingSize / 2 + windDirection) / windBearingSize % windPrecision);
 		
 		windSegment += " " + windSpeed + " m/s";
 		
 		// Just 4 directions for calm winds
 		if (windPrecision === 4) {
-			windSegment += " " + windDirection[windPrecision][windBearing];
+			windSegment += " " + windDirectionSegments[windPrecision][windBearing];
 		}
 		
 		windSegment += " winds";
 		
 		// Use more direction precision points for stronger winds
 		if (windPrecision > 4) {
-			windSegment += " blowing from the " + windDirection[windPrecision][windBearing];
+			windSegment += " blowing from " + windDirectionSegments[windPrecision][windBearing];
 		}
 	}
 	
@@ -254,6 +269,29 @@ module.exports = function makeBriefingWeather() {
 	}).forEach(function(reasonType) {
 		context.reason.push(weatherReasons[reasonType]);
 	});
+	
+	const view = {weather: context};
+	
+	// Render general weather state segment
+	briefing.push(makeBriefingText.call(this, rand.pick(generalSegments), view));
+	
+	// Render precipitation segment
+	if (weather.precipitation.type !== precipitation.NONE) {
+		
+		let precipitationSegment = "It is ";
+		
+		// Show precipitation type
+		if (weather.precipitation.type === precipitation.SNOW) {
+			precipitationSegment += "snowing";
+		}
+		else {
+			precipitationSegment += "raining";
+		}
+		
+		// TODO: Show precipitation level?
+
+		briefing.push(precipitationSegment);
+	}
 	
 	// Temperature segment
 	const temperature = weather.temperature;
@@ -286,10 +324,7 @@ module.exports = function makeBriefingWeather() {
 		context.temp.state = "and falling";
 	}
 	
-	const view = {weather: context};
-	
-	// Render weather segments
-	briefing.push(makeBriefingText.call(this, rand.pick(generalSegments), view));
+	// Render temperature segment
 	briefing.push(makeBriefingText.call(this, rand.pick(temperatureSegments), view));
 	
 	briefing = briefing.join(". ") + ".";

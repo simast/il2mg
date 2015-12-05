@@ -1,11 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU_CMD_Effect = require("../item").MCU_CMD_Effect;
-var itemTag = DATA.itemTag;
-var itemFlag = DATA.itemFlag;
-var effects = DATA.effects;
-var grounds = DATA.grounds;
+const MCU_CMD_Effect = require("../item").MCU_CMD_Effect;
+const itemTag = DATA.itemTag;
+const itemFlag = DATA.itemFlag;
+const effects = DATA.effects;
+const grounds = DATA.grounds;
+const precipitation = DATA.precipitation;
 
 // Make airfield effect item
 module.exports = function makeAirfieldEffect(airfield, item) {
@@ -14,21 +15,22 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 		return;
 	}
 
-	var effectType = item[4];
+	const effectType = item[4];
 
 	// Enforce airfield limits
 	if (airfield.limits.effects[effectType] <= 0) {
 		return;
 	}
 
-	var rand = this.rand;
-	var time = this.time;
-	var zone = airfield.zone;
-	var effectScript;
-	var startOnLoad = true;
-	var isRaining = (this.weather.precipitation.type === 1);
-	var isDark = (time.evening || time.night || time.dawn);
-	var items = [];
+	const rand = this.rand;
+	const time = this.time;
+	const zone = airfield.zone;
+	const isRaining = (this.weather.precipitation.type === precipitation.RAIN);
+	const isDark = (time.evening || time.night || time.dawn);
+	const items = [];
+	
+	let effectScript;
+	let startOnLoad = true;
 
 	// House smoke
 	if (effectType === itemFlag.EFFECT_SMOKE) {
@@ -48,7 +50,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 
 			startOnLoad = false;
 
-			var campfireSmoke = makeAirfieldEffect.call(this, airfield, [
+			const campfireSmoke = makeAirfieldEffect.call(this, airfield, [
 				itemTag.EFFECT,
 				item[1],
 				item[2],
@@ -63,14 +65,14 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 		// Burning campfire
 		else {
 
-			var campfirePosY = item[2];
+			const campfirePosY = item[2];
 
 			// Make the campfire effect look more like a small fire rather than a huge
 			// landing fire by slightly lowering the effect item to the ground.
 			item[2] = campfirePosY - 0.18; // -18 cm
 
 			// Create a small burned/melted ground effect (crater) underneath the campfire
-			var campfireGround = this.createItem("Ground", false);
+			const campfireGround = this.createItem("Ground", false);
 
 			campfireGround.Model = grounds.crater_16.model;
 			campfireGround.setPosition(item[1], campfirePosY - 0.28, item[3]);
@@ -93,7 +95,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 		return;
 	}
 
-	var effectItem = this.createItem("Effect", false);
+	const effectItem = this.createItem("Effect", false);
 
 	effectItem.setPosition(item[1], item[2], item[3]);
 	effectItem.setOrientation(rand.real(0, 360));
@@ -107,7 +109,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 	// Start effect on airfield load event
 	if (startOnLoad) {
 		
-		var onEffectStart = zone.onEffectStart;
+		let onEffectStart = zone.onEffectStart;
 
 		// Create a shared effect start command (activated when airfield is loaded)
 		if (!onEffectStart) {

@@ -1,12 +1,16 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const MAX_WIND_SPEED = 12; // Maximum wind speed (m/s)
+const MAX_WIND_SPEED = 13; // Maximum wind speed (m/s)
 const MIN_WIND_SPEED = 0.25; // Minimum wind speed (m/s)
-const MAX_CLOUD_COVER = 100; // Maximum cloud cover (%)
 
-// Weather state types
+// Maximum cloud cover (%)
+// NOTE: Extra 10 points is a workaround to make full overcasts more common
+const MAX_CLOUD_COVER = 110;
+
+// Weather state and precipitation constants
 const weatherState = DATA.weatherState;
+const precipitation = DATA.precipitation;
 
 // Maximum weather state points distribution (%)
 const weatherPoints = {
@@ -26,7 +30,7 @@ const weatherLimits = {
 	},
 	[weatherState.BAD]: {
 		clouds: 99,
-		winds: 7
+		winds: 8
 	},
 	[weatherState.EXTREME]: {
 		clouds: MAX_CLOUD_COVER,
@@ -81,7 +85,7 @@ module.exports = function makeWeather() {
 	// Pick random weather points number
 	const points = rand.real(minPoints, maxPoints, true);
 	
-	// Set points for clouds and winds by using a shifted interval method
+	// Distribute points for clouds and winds by using a shifted interval method
 	const pointsOffset = rand.real(0, maxPoints - points, true);
 	const cloudPoints = Math.min(Math.max(limits.points.clouds - pointsOffset, 0), points);
 	const windPoints = Math.min(Math.max(pointsOffset + points - limits.points.clouds, 0), points);
@@ -158,8 +162,8 @@ function makePrecipitation(weather) {
 	const rand = this.rand;
 	const options = this.items.Options;
 
-	const precipitation = {
-		type: 0, // None
+	const precData = {
+		type: precipitation.NONE,
 		level: 0
 	};
 
@@ -172,24 +176,26 @@ function makePrecipitation(weather) {
 
 		if (hasPrecipitation) {
 
+			// Use snow only in the winter season
 			if (this.map.season === "winter") {
-				precipitation.type = 2; // Snow
+				precData.type = precipitation.SNOW;
 			}
+			// Use rain for other seasons
 			else {
-				precipitation.type = 1; // Rain
+				precData.type = precipitation.RAIN;
 			}
 
 			// TODO: Currently PrecLevel seems to be ignored and not supported at all
-			precipitation.level = rand.integer(0, 100);
+			precData.level = rand.integer(0, 100);
 		}
 	}
 
 	// Set precipitation data for Options item
-	options.PrecType = precipitation.type;
-	options.PrecLevel = precipitation.level;
+	options.PrecType = precData.type;
+	options.PrecLevel = precData.level;
 
 	// Save generated mission precipitation data
-	this.weather.precipitation = precipitation;
+	this.weather.precipitation = precData;
 }
 
 // Make mission sea state
@@ -224,7 +230,7 @@ function makeTemperature(weather) {
 	tMin += rand.pick([-1, 0, 1]) * Math.max(rand.real(0, tMaxShift), 1);
 	tMax += rand.pick([-1, 0, 1]) * Math.max(rand.real(0, tMaxShift), 1);
 	
-	// TODO: Cloudness should affect TMIN and TMAX temperatures?
+	// TODO: Cloudness and winds should affect TMIN and TMAX temperatures?
 	
 	const tDelta = tMax - tMin;
 	const tAvg = (tMin + tMax) / 2;

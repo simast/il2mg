@@ -1,10 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var fs = require("fs");
-var requireDir = require("require-directory");
+const fs = require("fs");
+const requireDir = require("require-directory");
 
-var DATA = Object.create(null);
+const DATA = Object.create(null);
 
 // Application name
 DATA.name = "il2mg";
@@ -77,6 +77,13 @@ DATA.weatherState = Object.freeze({
 	EXTREME: 4
 });
 
+// Precipitation type constants
+DATA.precipitation = Object.freeze({
+	NONE: 0,
+	RAIN: 1,
+	SNOW: 2
+});
+
 // Flight states
 // NOTE: Numeric (0..1) flight states represent aircraft in the air at various mission states
 DATA.flightState = Object.freeze({
@@ -110,13 +117,13 @@ DATA.briefingColor = Object.freeze({
 	
 	// NOTE: For performance reasons JSON files in the binary/compiled mode will
 	// be loaded using native JSON object.
-	var useJSON5 = !DATA.isBinary;
+	let useJSON5 = !DATA.isBinary;
 	
 	if (useJSON5) {
 		
 		// NOTE: Having JSON5 module name as two separate string literals will trick
 		// enclose to not included it in the binary file.
-		var JSON5 = require("json" + "5");
+		const JSON5 = require("json" + "5");
 		
 		useJSON5 = require.extensions[".json"];
 		
@@ -140,10 +147,10 @@ DATA.briefingColor = Object.freeze({
 	DATA.tasks = Object.create(null);
 
 	// Load countries
-	for (var countryID in DATA.countries) {
+	for (let countryID in DATA.countries) {
 
-		var country = DATA.countries[countryID];
-		var countryPath = "../data/countries/" + countryID + "/";
+		const country = DATA.countries[countryID];
+		const countryPath = "../data/countries/" + countryID + "/";
 
 		country.formations = require(countryPath + "formations");
 		country.names = require(countryPath + "names");
@@ -151,10 +158,10 @@ DATA.briefingColor = Object.freeze({
 	}
 	
 	// Load planes
-	var planeData = requireDir(module, "../data/planes");
+	const planeData = requireDir(module, "../data/planes");
 	
-	for (var planeGroup in planeData) {
-		for (var planeID in planeData[planeGroup]) {
+	for (let planeGroup in planeData) {
+		for (let planeID in planeData[planeGroup]) {
 			DATA.planes[planeID] = planeData[planeGroup][planeID];
 		}
 	}
@@ -162,10 +169,10 @@ DATA.briefingColor = Object.freeze({
 	Object.freeze(DATA.planes);
 	
 	// Load tasks
-	var taskData = requireDir(module, "../data/tasks");
+	const taskData = requireDir(module, "../data/tasks");
 	
-	for (var taskGroup in taskData) {
-		for (var taskID in taskData[taskGroup]) {
+	for (let taskGroup in taskData) {
+		for (let taskID in taskData[taskGroup]) {
 			DATA.tasks[taskID] = taskData[taskGroup][taskID];
 		}
 	}
@@ -174,10 +181,10 @@ DATA.briefingColor = Object.freeze({
 
 	// Load battles
 	// TODO: Load only required mission battle data
-	for (var battleID in DATA.battles) {
+	for (let battleID in DATA.battles) {
 
-		var battle = DATA.battles[battleID];
-		var battlePath = "../data/battles/" + battleID + "/";
+		const battle = DATA.battles[battleID];
+		const battlePath = "../data/battles/" + battleID + "/";
 
 		battle.countries = [];
 		battle.blocks = Object.freeze(require(battlePath + "blocks"));
@@ -189,9 +196,9 @@ DATA.briefingColor = Object.freeze({
 		battle.units = Object.create(null);
 		
 		// Load battle unit data
-		var unitsData = requireDir(module, battlePath + "units/");
+		const unitsData = requireDir(module, battlePath + "units/");
 		
-		for (var unitCountryID in unitsData) {
+		for (let unitCountryID in unitsData) {
 			
 			unitCountryID = parseInt(unitCountryID, 10);
 			
@@ -200,11 +207,11 @@ DATA.briefingColor = Object.freeze({
 				continue;
 			}
 			
-			var unitsDataCountry = unitsData[unitCountryID];
+			const unitsDataCountry = unitsData[unitCountryID];
 			
 			// Build units list
-			for (var unitGroup in unitsDataCountry) {
-				for (var unitID in unitsDataCountry[unitGroup]) {
+			for (let unitGroup in unitsDataCountry) {
+				for (let unitID in unitsDataCountry[unitGroup]) {
 					
 					battle.units[unitID] = unitsDataCountry[unitGroup][unitID];
 					battle.units[unitID].country = unitCountryID;
@@ -246,15 +253,15 @@ DATA.registerItemType = function(item) {
 		};
 	}
 
-	var items = this.items.items;
-	var index = this.items.index;
+	const items = this.items.items;
+	const index = this.items.index;
 
 	// Lowercase and trim script/model paths
 	item.script = item.script.trim().toLowerCase();
 	item.model = item.model.trim().toLowerCase();
 
 	// Try to find existing item type ID by script index
-	var itemTypeID = index[item.script];
+	let itemTypeID = index[item.script];
 
 	// Update existing item type data
 	if (itemTypeID !== undefined) {
@@ -288,7 +295,7 @@ DATA.getItemType = function(itemTypeID) {
 		itemTypeID = this.items.index[itemTypeID.trim().toLowerCase()];
 	}
 
-	var itemType = this.items.items[itemTypeID];
+	const itemType = this.items.items[itemTypeID];
 
 	if (typeof itemType !== "object") {
 		throw new TypeError("Invalid item type ID.");
