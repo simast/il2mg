@@ -1,33 +1,34 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var os = require("os");
-var util = require("util");
-var domain = require("domain");
-var moment = require("moment");
-var winston = require("winston");
+const os = require("os");
+const util = require("util");
+const domain = require("domain");
+const moment = require("moment");
+const winston = require("winston");
 
 // Load static global data
 require("./data");
 
-var Mission = require("./mission");
-var flightState = DATA.flightState;
-var EOL = os.EOL;
+const Mission = require("./mission");
+const flightState = DATA.flightState;
+const weatherState = DATA.weatherState;
+const EOL = os.EOL;
 
-var logColors = {
+const logColors = {
 	D: "green", // Done
 	E: "red", // Error
 	W: "yellow", // Warning
 	I: "gray" // Info
 };
 
-var logLevels = {};
+const logLevels = {};
 Object.keys(logColors).forEach(function(value, index) {
 	logLevels[value] = index;
 });
 
 // Setup winston logger
-var log = global.log = new (winston.Logger)({
+const log = global.log = new (winston.Logger)({
 	levels: logLevels,
 	colors: logColors,
 	transports: [
@@ -49,7 +50,7 @@ console.error = function() {
 		return;
 	}
 
-	var message = String(arguments[0]).trim();
+	let message = String(arguments[0]).trim();
 
 	if (message.length) {
 
@@ -61,7 +62,7 @@ console.error = function() {
 };
 
 // Setup command line interface
-var params = require("commander");
+const params = require("commander");
 
 // --help usage line output
 params.usage("[options] [mission file and/or path]");
@@ -75,7 +76,7 @@ params.option("-S, --seed <seed>", "set mission seed value");
 // Select mission file format (--format)
 params.option("-f, --format <format>", (function() {
 
-	var desc = "set mission file format" + EOL + EOL;
+	let desc = "set mission file format" + EOL + EOL;
 	
 	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_TEXT, "Text format.");
 	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_BINARY, "Binary format (default).");
@@ -86,9 +87,9 @@ params.option("-f, --format <format>", (function() {
 // Select desired battle (--battle)
 params.option("-b, --battle <battle>", (function() {
 
-	var desc = "select a battle" + EOL + EOL;
+	let desc = "select a battle" + EOL + EOL;
 
-	for (var battleID in DATA.battles) {
+	for (const battleID in DATA.battles) {
 		desc += util.format('\t"%s" - %s' + EOL, battleID, DATA.battles[battleID].name);
 	}
 
@@ -98,15 +99,15 @@ params.option("-b, --battle <battle>", (function() {
 // Select mission date (--date)
 params.option("-d, --date <YYYY-MM-DD>", (function() {
 
-	var desc = "select mission date" + EOL + EOL;
+	let desc = "select mission date" + EOL + EOL;
 
 	desc += "\tValid date values will depend on the selected battle:" + EOL + EOL;
 
-	for (var battleID in DATA.battles) {
+	for (const battleID in DATA.battles) {
 
-		var battle = DATA.battles[battleID];
-		var battleFrom = moment(battle.from).format("YYYY-MM-DD");
-		var battleTo = moment(battle.to).format("YYYY-MM-DD");
+		const battle = DATA.battles[battleID];
+		const battleFrom = moment(battle.from).format("YYYY-MM-DD");
+		const battleTo = moment(battle.to).format("YYYY-MM-DD");
 
 		desc += util.format('\t%s (from "%s" to "%s")' + EOL, battle.name, battleFrom, battleTo);
 	}
@@ -115,7 +116,7 @@ params.option("-d, --date <YYYY-MM-DD>", (function() {
 })(), function(value) {
 
 	// Try YYYY-MM-DD format
-	var date = moment(value, "YYYY-MM-DD", true);
+	const date = moment(value, "YYYY-MM-DD", true);
 
 	if (date.isValid()) {
 		return date;
@@ -127,11 +128,11 @@ params.option("-d, --date <YYYY-MM-DD>", (function() {
 // Select mission time (--time)
 params.option("-t, --time <HH:MM>", (function() {
 
-	var desc = "select mission time" + EOL + EOL;
+	let desc = "select mission time" + EOL + EOL;
 
 	desc += "\tTime can also be specified using special values:" + EOL + EOL;
 
-	for (var timeID in DATA.time) {
+	for (const timeID in DATA.time) {
 		desc += util.format('\t"%s" - %s' + EOL, timeID, DATA.time[timeID].description);
 	}
 
@@ -139,7 +140,7 @@ params.option("-t, --time <HH:MM>", (function() {
 })(), function(value) {
 
 	// Try HH:MM or HH:MM:SS format
-	var time = moment(value, ["HH:mm", "HH:mm:ss"], true);
+	const time = moment(value, ["HH:mm", "HH:mm:ss"], true);
 
 	if (time.isValid()) {
 		return time;
@@ -151,9 +152,9 @@ params.option("-t, --time <HH:MM>", (function() {
 // Select desired coalition (--coalition)
 params.option("-C, --coalition <coalition>", (function() {
 
-	var desc = "select a coalition" + EOL + EOL;
+	let desc = "select a coalition" + EOL + EOL;
 
-	for (var coalitionID in DATA.coalitions) {
+	for (const coalitionID in DATA.coalitions) {
 		desc += util.format('\t"%s" - %s' + EOL, coalitionID, DATA.coalitions[coalitionID].name);
 	}
 
@@ -163,9 +164,9 @@ params.option("-C, --coalition <coalition>", (function() {
 // Select desired country (--country)
 params.option("-c, --country <country>", (function() {
 
-	var desc = "select a country" + EOL + EOL;
+	let desc = "select a country" + EOL + EOL;
 
-	for (var countryID in DATA.countries) {
+	for (const countryID in DATA.countries) {
 		desc += util.format('\t"%s" - %s' + EOL, countryID, DATA.countries[countryID].name);
 	}
 
@@ -175,7 +176,7 @@ params.option("-c, --country <country>", (function() {
 // Set a custom pilot (--pilot)
 params.option("-p, --pilot <rank,name>", (function() {
 
-	var desc = "set a custom pilot" + EOL + EOL;
+	let desc = "set a custom pilot" + EOL + EOL;
 
 	desc += "\tPilot rank can be specified by prefixing the name with a number and" + EOL;
 	desc += "\ta comma character. The rank number depends on the country, but always" + EOL;
@@ -193,7 +194,7 @@ params.option("-p, --pilot <rank,name>", (function() {
 // Set flight state (--state)
 params.option("-s, --state <state>", (function() {
 
-	var desc = "set flight state" + EOL + EOL;
+	let desc = "set flight state" + EOL + EOL;
 
 	desc += '\t"' + flightState.START + '" - Start from parking area or taxiway (default).' + EOL;
 	desc += '\t"' + flightState.RUNWAY + '" - Start from runway.' + EOL;
@@ -204,13 +205,28 @@ params.option("-s, --state <state>", (function() {
 	value = String(value).trim();
 	
 	// Try flight state as a number
-	var state = Number(value);
+	const state = Number(value);
 	
 	if (isNaN(state) || state < 0 || state > 1) {
 		return value;
 	}
 	
 	return state;
+});
+
+// Set desired weather conditions (--weather)
+params.option("-w, --weather <weather>", (function() {
+
+	let desc = "set weather conditions" + EOL + EOL;
+
+	desc += '\t"perfect" - Perfect weather conditions.' + EOL;
+	desc += '\t"good" - Good weather conditions.' + EOL;
+	desc += '\t"bad" - Bad weather conditions.' + EOL;
+	desc += '\t"extreme" - Extreme weather conditions.' + EOL;
+
+	return desc;
+})(), function(value) {
+	return String(value).trim();
 });
 
 // Select desired airfield (--airfield)
@@ -224,14 +240,11 @@ if (!DATA.isBinary) {
 }
 
 /**
- * TODO: Support other command line params:
+ * TODO: Support other command-line params:
  *
- * --name - Mission name.
  * --type - Mission type.
- * --airport - Airport.
  * --unit - Squadron/group/unit/etc.
  * --plane - Plane type.
- * --pilot - Pilot name.
  * --players - Number of players.
  * --complexity - Mission complexity (detail level).
  * --difficulty - Mission difficulty level.
@@ -243,7 +256,7 @@ if (params.debug) {
 	log.transports.console.level = "I";
 }
 
-var appDomain = domain.create();
+const appDomain = domain.create();
 
 // Handle app domain error events and uncaught exceptions
 appDomain.on("error", function(error) {
@@ -331,9 +344,22 @@ appDomain.run(function() {
 		
 		throw ["Invalid flight state!", {state: params.state}];
 	}
+	
+	// --weather
+	if (params.weather !== undefined) {
+		
+		const weather = weatherState[params.weather.toUpperCase()];
+		
+		if (typeof weather !== "number") {
+			throw ["Invalid weather conditions!", {weather: params.weather}];
+		}
+		else {
+			params.weather = weather;
+		}
+	}
 
 	// Create a new mission
-	var mission = new Mission(params);
+	const mission = new Mission(params);
 
 	// Save mission files
 	mission.save(params.args[0]).then(function() {

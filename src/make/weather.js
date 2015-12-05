@@ -55,11 +55,21 @@ module.exports = function makeWeather() {
 	const rand = this.rand;
 	const options = this.items.Options;
 	const weather = this.battle.weather[this.date.format("YYYY-MM-DD")];
-	let state = weather[2];
+	let state;
 	
-	// TODO: Use some logarithmic curve for picking weather state from interval?
-	if (Array.isArray(state)) {
-		state = rand.integer(state[0], state[1]);
+	// Set requested weather condition
+	if (this.params.weather) {
+		state = this.params.weather;
+	}
+	// Set weather condition based on historical patterns
+	else {
+		
+		state = weather[2];
+
+		// TODO: Use some logarithmic curve for picking weather state from interval?
+		if (Array.isArray(state)) {
+			state = rand.integer(state[0], state[1]);
+		}
 	}
 	
 	// Get current state minimum and maximum weather points interval

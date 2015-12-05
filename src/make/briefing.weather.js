@@ -46,7 +46,8 @@ const skySegments = {
 	[cloudCover.FEW]: [
 		"small patches of clouds in the sky",
 		"few clouds hanging in the sky",
-		"mostly cloudless skies"
+		"mostly cloudless skies",
+		"some clouds in the sky"
 	],
 	[cloudCover.SCATTERED]: [
 		"partly clouded skies",
@@ -193,13 +194,21 @@ module.exports = function makeBriefingWeather() {
 		// Calm wind speed type
 		if (windSpeed <= 2) {
 			
-			windSegment = "calm";
+			windSegment = rand.pick(["calm", "mild"]);
 			windPrecision = 4;
 		}
 		// Strong wind speed type
 		else if (windSpeed >= 6) {
 			
-			windSegment = "strong";
+			// Extremely strong winds for flight
+			if (windSpeed >= 10) {
+				windSegment = rand.pick(["fierce", "violent"]);
+			}
+			// Strong winds
+			else {
+				windSegment = rand.pick(["strong", "powerful"]);
+			}
+			
 			windPrecision = 16;
 		}
 		
