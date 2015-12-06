@@ -8,30 +8,33 @@
 			from: "1942-07-17",
 			to: "1942-09-13",
 			prefix: "su",
-			heightmap: "graphics\\landscape_stalin_s\\height.hini",
-			textures: "graphics\\landscape_stalin_s\\textures.tini",
-			forests: "graphics\\landscape_stalin_s\\trees\\woods.wds",
-			gui: "stalingrad-summer-1942"
+			heightmap: "graphics\\LANDSCAPE_Stalin_s\\height.hini",
+			textures: "graphics\\LANDSCAPE_Stalin_s\\textures.tini",
+			forests: "graphics\\LANDSCAPE_Stalin_s\\trees\\woods.wds",
+			gui: "stalingrad-summer-1942",
+			clouds: "summer"
 		},
 		// Autumn
 		autumn: {
 			from: "1942-09-14",
 			to: "1942-11-14",
 			prefix: "su", // NOTE: "au" is not available
-			heightmap: "graphics\\landscape_stalin_a\\height.hini",
-			textures: "graphics\\landscape_stalin_a\\textures.tini",
-			forests: "graphics\\landscape_stalin_a\\trees\\woods.wds",
-			gui: "stalingrad-autumn-1942"
+			heightmap: "graphics\\LANDSCAPE_Stalin_a\\height.hini",
+			textures: "graphics\\LANDSCAPE_Stalin_a\\textures.tini",
+			forests: "graphics\\LANDSCAPE_Stalin_a\\trees\\woods.wds",
+			gui: "stalingrad-autumn-1942",
+			clouds: "summer" // NOTE: Autumn season is currently using summer cloud configs
 		},
 		// Winter
 		winter: {
 			from: "1942-11-15",
 			to: "1943-02-02",
 			prefix: "wi",
-			heightmap: "graphics\\landscape_stalin_w\\height.hini",
-			textures: "graphics\\landscape_stalin_w\\textures.tini",
-			forests: "graphics\\landscape_stalin_w\\trees\\woods.wds",
-			gui: "stalingrad-1942"
+			heightmap: "graphics\\LANDSCAPE_Stalin_w\\height.hini",
+			textures: "graphics\\LANDSCAPE_Stalin_w\\textures.tini",
+			forests: "graphics\\LANDSCAPE_Stalin_w\\trees\\woods.wds",
+			gui: "stalingrad-1942",
+			clouds: "winter"
 		}
 	}
 }

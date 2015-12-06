@@ -9,7 +9,6 @@ module.exports = function makeMap() {
 	const options = this.items.Options;
 	const date = this.date;
 	const map = {};
-	let seasonMap;
 	
 	Object.assign(map, this.battle.map);
 
@@ -24,24 +23,24 @@ module.exports = function makeMap() {
 		if (date.isSame(mapFrom, "day") || date.isSame(mapTo, "day") ||
 				date.isBetween(mapFrom, mapTo)) {
 			
-			seasonMap = mapData;
 			map.season = season;
+			map.data = mapData;
 			
 			break;
 		}
 	}
 
-	if (!seasonMap) {
+	if (!map.data) {
 		throw new Error("Could not find a valid battle map!");
 	}
 
 	// Set map data
-	options.HMap = seasonMap.heightmap;
-	options.Textures = seasonMap.textures;
-	options.Forests = seasonMap.forests;
+	options.HMap = map.data.heightmap;
+	options.Textures = map.data.textures;
+	options.Forests = map.data.forests;
 	options.Layers = ""; // TODO: ?
-	options.GuiMap = seasonMap.gui;
-	options.SeasonPrefix = seasonMap.prefix;
+	options.GuiMap = map.data.gui;
+	options.SeasonPrefix = map.data.prefix;
 	
 	// Set active mission map data
 	this.map = map;

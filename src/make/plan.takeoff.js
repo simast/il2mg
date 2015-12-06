@@ -84,9 +84,9 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	
 		// Semi-random formation point over the airfield
 		finalCommand.setPosition(
-			airfield.position[0] + rand.integer(-500, 500),
+			airfield.position[0] + rand.integer(-750, 750),
 			airfield.position[1] + rand.integer(240, 260),
-			airfield.position[2] + rand.integer(-500, 500)
+			airfield.position[2] + rand.integer(-750, 750)
 		);
 	
 		finalCommand.addObject(leaderPlaneItem);

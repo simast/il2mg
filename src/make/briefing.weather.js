@@ -294,13 +294,10 @@ module.exports = function makeBriefingWeather() {
 	}
 	
 	// Temperature segment
-	const temperature = weather.temperature;
-	const temperatureState = weather.temperatureState;
-	
 	context.temp = {
 		
 		// TODO: Use Fahrenheit or Celcius based on player unit country
-		value: temperature + "°C",
+		value: weather.temperature.level + "°C",
 		
 		// {{weather.temp}} value output
 		toString: function() {
@@ -314,6 +311,8 @@ module.exports = function makeBriefingWeather() {
 			return output;
 		}
 	};
+	
+	const temperatureState = weather.temperature.state;
 	
 	// 1.25+% change (for the next 15 minutes)
 	if (temperatureState >= 1.25) {

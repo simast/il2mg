@@ -1,17 +1,17 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var moment = require("moment");
+const moment = require("moment");
 
 // Generate mission date
 module.exports = function makeDate() {
 
-	var params = this.params;
-	var options = this.items.Options;
-	var battle = this.battle;
-	var battleFrom = moment(battle.from).startOf("day");
-	var battleTo = moment(battle.to).endOf("day");
-	var date = params.date;
+	const params = this.params;
+	const options = this.items.Options;
+	const battle = this.battle;
+	const battleFrom = moment(battle.from).startOf("day");
+	const battleTo = moment(battle.to).endOf("day");
+	let date = params.date;
 
 	// Parse date as moment object
 	if (date) {

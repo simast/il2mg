@@ -1,8 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+// TOOD: Move these constants to settings?
 const MAX_WIND_SPEED = 13; // Maximum wind speed (m/s)
 const MIN_WIND_SPEED = 0.25; // Minimum wind speed (m/s)
+const MAX_WIND_CHANGE = 30; // Maximum wind layer direction change (degrees)
+const MAX_TURBULENCE = 4; // Maximum turbulence level
+const MAX_PRESSURE_CHANGE = 15; // Maximum atmospheric pressure change (mmHg)
 
 // Maximum cloud cover (%)
 // NOTE: Extra 10 points is a workaround to make full overcasts more common
@@ -74,6 +78,13 @@ module.exports = function makeWeather() {
 		if (Array.isArray(state)) {
 			state = rand.integer(state[0], state[1]);
 		}
+		
+		// FIXME: By default we don't use extreme weather conditions with historical
+		// weather patterns. In the future - make it so larger planes in extreme
+		// weather can still try and fly missions.
+		if (state === weatherState.EXTREME) {
+			state--;
+		}
 	}
 	
 	// Get current state minimum and maximum weather points interval
@@ -111,6 +122,37 @@ module.exports = function makeWeather() {
 	makeTurbulence.call(this, weather);
 	makeSea.call(this, weather);
 	makePressure.call(this, weather);
+	
+	// Log mission weather info
+	const logData = ["Weather:"];
+	
+	// Log weather state
+	for (let state in weatherState) {
+		
+		if (weatherState[state] === this.weather.state) {
+			
+			logData.push(state.toLowerCase());
+			break;
+		}
+	}
+	
+	// Log precipitation type (if any)
+	if (this.weather.precipitation.type === precipitation.RAIN) {
+		logData.push("rain");
+	}
+	else if (this.weather.precipitation.type === precipitation.SNOW) {
+		logData.push("snow");
+	}
+	
+	// Log other weather info
+	logData.push({
+		temp: this.weather.temperature.level + "°C",
+		wind: Math.round(this.weather.wind[0].speed) + "m/s",
+		turb: this.weather.turbulence,
+		clouds: Math.round(this.weather.clouds.cover) + "%"
+	});
+	
+	log.I.apply(log, logData);
 };
 
 // Make mission clouds
@@ -143,8 +185,8 @@ function makeClouds(weather) {
 	const thickness = cloudsData.thickness;
 	const cover = cloudsData.cover;
 	
-	// Set clouds data for Options item
-	options.CloudConfig = this.map.season + "\\" + config;
+	// Register clouds data in mission Options block
+	options.CloudConfig = this.map.data.clouds + "\\" + config;
 	options.CloudLevel = altitude;
 	options.CloudHeight = thickness;
 
@@ -190,7 +232,7 @@ function makePrecipitation(weather) {
 		}
 	}
 
-	// Set precipitation data for Options item
+	// Register precipitation data in mission Options block
 	options.PrecType = precData.type;
 	options.PrecLevel = precData.level;
 
@@ -214,6 +256,7 @@ function makeTemperature(weather) {
 	const date = this.date;
 	const sunrise = this.sunrise;
 	const noon = this.noon;
+	const temperature = this.weather.temperature = {};
 	
 	// NOTE: This algorithm was initially presented by De Wit et al. (1978)
 	// and was obtained from the subroutine WAVE in ROOTSIMU V4.0 by Hoogenboom
@@ -230,9 +273,10 @@ function makeTemperature(weather) {
 	tMin += rand.pick([-1, 0, 1]) * Math.max(rand.real(0, tMaxShift), 1);
 	tMax += rand.pick([-1, 0, 1]) * Math.max(rand.real(0, tMaxShift), 1);
 	
-	// TODO: Cloudness and winds should affect TMIN and TMAX temperatures?
+	// TODO: Cloudness will minimize diurnal daily TMIN/TMAX variations and will
+	// cause lower temperatures during the day and higher during the night.
 	
-	const tDelta = tMax - tMin;
+	const tDelta = temperature.variation = tMax - tMin;
 	const tAvg = (tMin + tMax) / 2;
 	const tAmp = tDelta / 2;
 	const timeNow = (date.hour() * 60 + date.minute()) / 60;
@@ -268,22 +312,64 @@ function makeTemperature(weather) {
 	const tempSoon = getTemp((timeNow + 0.25) % 24);
 	
 	// Current temperature change state (for the next +15 minutes)
-	this.weather.temperatureState = (tempSoon - tempNow) / tDelta * 100;
+	temperature.state = (tempSoon - tempNow) / tDelta * 100;
 	
-	// Set temperature data for Options item
+	// Register temperature data in mission Options block
 	// NOTE: Real mission temperature is set +15 minutes from now to adjust for
 	// the fact temperatures will not change while the mission is running.
-	this.weather.temperature = Math.round(tempNow);
+	temperature.level = Math.round(tempNow);
 	options.Temperature = Math.round(tempSoon);
 }
 
 // Make mission atmospheric pressure
 function makePressure(weather) {
-
-	// TODO: Improve atmospheric pressure selection logic (temperature and humidity
-	// affect the atmospheric pressure).
-	const pressure = this.rand.integer(750, 770); // Millimetres of mercury (mmHg)
-
+	
+	const rand = this.rand;
+	const cloudCover = this.weather.clouds.cover;
+	const windSpeed = this.weather.wind[0].speed;
+	const tempVariation = this.weather.temperature.variation;
+	
+	// Standard atmospheric pressure
+	const pressureStandard = 760;
+	
+	// Modify pressure based on map average level/height
+	// NOTE: At low altitudes above the sea level - the pressure decreases by
+	// about 9 mmHg for every 100 meters.
+	const pressureBase = pressureStandard - (this.map.level / 100 * 9);
+	const pressureMin = pressureBase - MAX_PRESSURE_CHANGE;
+	const pressureMax = pressureBase + MAX_PRESSURE_CHANGE;
+	const pressureDelta = pressureMax - pressureMin;
+	
+	// Impact on pressure level (as a percent of total pressure delta variation)
+	const PRESSURE_CLOUDS = 50;
+	const PRESSURE_WIND = 25;
+	const PRESSURE_TEMPERATURE = 25;
+	
+	// Low pressure - clouds, precipitation, minimal TMIN/TMAX changes, stronger winds.
+	// High pressure - dry, mostly clear skies, larger TMIN/TMAX changes, lighter winds.
+	
+	let pressure = pressureMax;
+	
+	// Apply pressure change from cloud cover
+	pressure -= pressureDelta * (PRESSURE_CLOUDS / 100) * (cloudCover / 100);
+	
+	// Apply pressure change from wind speed
+	pressure -= pressureDelta * (PRESSURE_WIND / 100) * (windSpeed / MAX_WIND_SPEED);
+	
+	// Apply pressure change from diurnal temperature variations
+	const tempVariationMax = 15; // Max variation in degrees Celsius
+	const tempVariationFactor = 1 - Math.min(tempVariation / tempVariationMax, 1);
+	
+	pressure -= pressureDelta * (PRESSURE_TEMPERATURE / 100) * tempVariationFactor;
+	
+	// Apply small random pressure change factor (+-10% of delta)
+	pressure += pressureDelta * rand.real(-0.1, 0.1, true);
+	
+	// Force min/max pressure levels
+	pressure = Math.max(pressure, pressureMin);
+	pressure = Math.min(pressure, pressureMax);
+	pressure = Math.round(pressure);
+	
 	// Set pressure data
 	this.items.Options.Pressure = pressure;
 	this.weather.pressure = pressure;
@@ -291,9 +377,27 @@ function makePressure(weather) {
 
 // Make mission turbulence level
 function makeTurbulence(weather) {
-
-	// TODO: Not supported/implemented yet
-	this.items.Options.Turbulence = 1;
+	
+	const rand = this.rand;
+	const options = this.items.Options;
+	const windSpeed = this.weather.wind[0].speed; // At ground level
+	
+	// FIXME: Turbulence is not linear - find a better way to compute this
+	
+	// NOTE: The last turbulence level point will only come from randomness
+	let turbulence = (MAX_TURBULENCE - 1) * (windSpeed / MAX_WIND_SPEED);
+	
+	// Add some randomness (to make turbulence level non linear)
+	turbulence += rand.real(-1, 1, true);
+	
+	// Force min/max turbulence levels
+	turbulence = Math.max(turbulence, 0);
+	turbulence = Math.min(turbulence, MAX_TURBULENCE);
+	
+	this.weather.turbulence = Math.round(turbulence);
+	
+	// Register turbulence level in mission Options block
+	options.Turbulence = this.weather.turbulence;
 }
 
 // Make mission wind layers
@@ -324,7 +428,7 @@ function makeWind(weather) {
 		}
 		// Slightly vary direction with each higher level
 		else {
-			direction = (direction + rand.real(-30, 30) + 360) % 360;
+			direction = (direction + rand.real(-MAX_WIND_CHANGE, MAX_WIND_CHANGE) + 360) % 360;
 		}
 		
 		// Initial generated wind speed at ground level
