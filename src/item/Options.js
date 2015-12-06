@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var moment = require("moment");
-var Item = require("../item");
+const moment = require("moment");
+const Item = require("../item");
 
 // Options item
 function Options() {
@@ -21,18 +21,19 @@ Options.prototype.hasIndex = false;
  */
 Options.prototype.toBinary = function* (index) {
 
-	var date = moment(this.Date, "D.M.YYYY", true);
-	var time = moment(this.Time, "H:m:s", true);
+	const date = moment(this.Date, "D.M.YYYY", true);
+	const time = moment(this.Time, "H:m:s", true);
 
-	var hmapLength = Buffer.byteLength(this.HMap);
-	var texturesLength = Buffer.byteLength(this.Textures);
-	var forestsLength = Buffer.byteLength(this.Forests);
-	var guiMapLength = Buffer.byteLength(this.GuiMap);
-	var layersLength = Buffer.byteLength(this.Layers);
-	var seasonPrefixLength = Buffer.byteLength(this.SeasonPrefix);
-	var cloudConfigLength = Buffer.byteLength(this.CloudConfig);
+	const hmapLength = Buffer.byteLength(this.HMap);
+	const texturesLength = Buffer.byteLength(this.Textures);
+	const forestsLength = Buffer.byteLength(this.Forests);
+	const guiMapLength = Buffer.byteLength(this.GuiMap);
+	const layersLength = Buffer.byteLength(this.Layers);
+	const seasonPrefixLength = Buffer.byteLength(this.SeasonPrefix);
+	const playerConfigLength = Buffer.byteLength(this.PlayerConfig);
+	const cloudConfigLength = Buffer.byteLength(this.CloudConfig);
 
-	var size = 144;
+	let size = 144;
 
 	size += hmapLength;
 	size += texturesLength;
@@ -40,12 +41,13 @@ Options.prototype.toBinary = function* (index) {
 	size += guiMapLength;
 	size += layersLength;
 	size += seasonPrefixLength;
+	size += playerConfigLength;
 	size += cloudConfigLength;
 
 	size += this.WindLayers.length * 8 * 3;
 	size += this.Countries.length * 4 * 2;
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// Item binary type ID (or file version?)
 	this.writeUInt32(buffer, this.typeID);
@@ -100,10 +102,12 @@ Options.prototype.toBinary = function* (index) {
 
 	// LCDesc
 	this.writeUInt32(buffer, this.LCDesc);
+	
+	// PlayerConfig
+	this.writeString(buffer, playerConfigLength, this.PlayerConfig);
 
-	// Unknown 8 bytes (always zero)
+	// Unknown 4 bytes (always zero)
 	// TODO: Investigate, could this be a non-localized indexed Name and Desc properties?
-	this.writeUInt32(buffer, 0);
 	this.writeUInt32(buffer, 0);
 
 	// CloudLevel

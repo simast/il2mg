@@ -1,13 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+const Item = require("../item");
 
 // Generate mission battle info
 module.exports = function makeBattle() {
 
-	var params = this.params;
-	var battleID = params.battle;
+	const params = this.params;
+	let battleID = params.battle;
 
 	// Select random battle
 	if (!battleID) {
@@ -15,21 +15,20 @@ module.exports = function makeBattle() {
 	}
 
 	this.battleID = battleID;
-	var battle = this.battle = DATA.battles[battleID];
-	var coalitions = this.coalitions = [];
+	const battle = this.battle = DATA.battles[battleID];
+	const coalitions = this.coalitions = [];
 
 	// Create main mission Options item
-	var options = this.createItem("Options");
+	const options = this.createItem("Options");
 
 	options.LCAuthor = this.getLC(DATA.name + " " + DATA.version + " " + DATA.copyright);
 	options.MissionType = 0; // Single-player mission
-	options.PlayerConfig = ""; // TODO: ?
 	options.AqmId = 0; // TODO: ?
 
 	// Set country:coalition list
 	options.Countries = (function() {
 
-		var countries = [];
+		const countries = [];
 
 		// Unknown (neutral) country and coalition
 		coalitions.push(Item.DEFAULT_COALITION);
@@ -37,7 +36,7 @@ module.exports = function makeBattle() {
 
 		battle.countries.forEach(function(countryID) {
 			
-			var coalition = DATA.countries[countryID].coalition;
+			const coalition = DATA.countries[countryID].coalition;
 			
 			coalitions.push(coalition);
 			countries.push([countryID, coalition]);
@@ -45,6 +44,11 @@ module.exports = function makeBattle() {
 
 		return countries;
 	})();
+	
+	// Set PlayerConfig property to selected player plane item
+	this.make.push(() => {
+		options.PlayerConfig = this.player.flight.player.item.Script;
+	});
 
 	// Save "Options" mission item reference
 	this.items.Options = options;
