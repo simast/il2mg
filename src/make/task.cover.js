@@ -4,8 +4,8 @@
 // Data constants
 const planAction = DATA.planAction;
 
-// Make mission free flight task
-module.exports = function makeTaskFree(flight) {
+// Make mission airfield cover task
+module.exports = function makeTaskCover(flight) {
 	
 	const rand = this.rand;
 	const plan = flight.plan;

@@ -21,7 +21,7 @@ Group
     StartHeight = 0;
     SpeedFactor = 1;
     BlockThreshold = 1;
-    Radius = 1000;
+    Radius = 1;
     Type = 0;
     CountPlanes = 1;
     CountVehicles = 1;
@@ -6413,14 +6413,14 @@ Group
       Point
       {
         Type = 1;
-        X = -33.146;
-        Y = -69.6387;
+        X = -33.5088;
+        Y = -68.2043;
       }
       Point
       {
         Type = 1;
-        X = -83.8828;
-        Y = -112.033;
+        X = -85.0836;
+        Y = -110.362;
       }
       Point
       {
@@ -6647,8 +6647,8 @@ Group
       Point
       {
         Type = 1;
-        X = 827.236;
-        Y = -282.126;
+        X = 833.307;
+        Y = -285.49;
       }
       Point
       {
@@ -7139,14 +7139,14 @@ Group
       Point
       {
         Type = 1;
-        X = 143.329;
-        Y = 655.963;
+        X = 145.563;
+        Y = 655.612;
       }
       Point
       {
         Type = 1;
-        X = 156.36;
-        Y = 579.046;
+        X = 159.018;
+        Y = 586.124;
       }
       Point
       {

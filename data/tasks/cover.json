@@ -1,0 +1,13 @@
+{
+	// Cover flight for the local airfield
+	cover: {
+		name: "Cover {{airfield}} airfield",
+		time: "day",
+		story: [
+			"Enemy reconnaissance planes have been flying regularly over our airfield for a couple of days in a row now. Feeling nervous and expecting the worst, our commander {{{rank.commander}}} {{name.last}} is keeping the airfield under constant watch. At least one flight of fighters is arranged to be always in the air - to provide cover and intercept any approaching enemy aircraft."
+		],
+		planes: {
+			fighter_light: "fighter_2"
+		}
+	}
+}

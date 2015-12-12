@@ -34,7 +34,7 @@ const weatherLimits = {
 	},
 	[weatherState.BAD]: {
 		clouds: 99,
-		winds: 8
+		winds: 7
 	},
 	[weatherState.EXTREME]: {
 		clouds: MAX_CLOUD_COVER,
