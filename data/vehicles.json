@@ -119,11 +119,25 @@
 
 	// Tanks
 	{
+		name: "KV-1 mod.1941",
+		type: ["tank", "tank_heavy"],
+		countries: [101],
+		model: "graphics\\vehicles\\kv1-41\\kv1-41.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\kv1-41.txt"
+	},
+	{
 		name: "KV-1 mod.1942",
 		type: ["tank", "tank_heavy"],
 		countries: [101],
 		model: "graphics\\vehicles\\kv1-42\\kv1-42.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\kv1-42.txt"
+	},
+	{
+		name: "Pz.Kpfw.IV Ausf.F1",
+		type: ["tank", "tank_heavy", "tank_medium"],
+		countries: [201],
+		model: "graphics\\vehicles\\pziv-f1\\pziv-f1.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\pziv-f1.txt"
 	},
 	{
 		name: "Pz.Kpfw.IV Ausf.G",
@@ -133,11 +147,25 @@
 		script: "luascripts\\worldobjects\\vehicles\\pziv-g.txt"
 	},
 	{
-		name: "T-34/76 STZ",
+		name: "T-34 STZ mod.1941",
+		type: ["tank", "tank_medium"],
+		countries: [101],
+		model: "graphics\\vehicles\\t34-76stz-41\\t34-76stz-41.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\t34-76stz-41.txt"
+	},
+	{
+		name: "T-34 STZ",
 		type: ["tank", "tank_medium"],
 		countries: [101],
 		model: "graphics\\vehicles\\t34-76stz\\t34-76stz.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\t34-76stz.txt"
+	},
+	{
+		name: "Pz.Kpfw.III Ausf.H",
+		type: ["tank", "tank_medium", "tank_light"],
+		countries: [201],
+		model: "graphics\\vehicles\\pziii-h\\pziii-h.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\pziii-h.txt"
 	},
 	{
 		name: "Pz.Kpfw.III Ausf.L",
