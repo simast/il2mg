@@ -1,29 +1,30 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU_Icon = require("../item").MCU_Icon;
+const MCU_Icon = require("../item").MCU_Icon;
 
 // Make plan start action
 module.exports = function makePlanStart(action, element, flight, input) {
 
-	var rand = this.rand;
-	var airfield = this.airfields[flight.airfield];
-	var isAirStart = (typeof element.state === "number");
+	const rand = this.rand;
+	const airfield = this.airfields[flight.airfield];
+	const isAirStart = (typeof element.state === "number");
+	const task = this.tasks[flight.task];
 
 	// Set element planes to an air start position
 	if (isAirStart) {
 
-		var orientation = rand.integer(0, 360);
+		const orientation = rand.integer(0, 360);
 
-		for (var plane of element) {
+		for (const plane of element) {
 
-			var planeItem = plane.item;
+			const planeItem = plane.item;
 
 			// TODO: Set orientation and tweak spawn distance
 			// TODO: Set formation?
-			var positionX = airfield.position[0] + rand.integer(150, 350);
-			var positionY = airfield.position[1] + rand.integer(250, 350);
-			var positionZ = airfield.position[2] + rand.integer(150, 350);
+			const positionX = airfield.position[0] + rand.integer(150, 350);
+			const positionY = airfield.position[1] + rand.integer(250, 350);
+			const positionZ = airfield.position[2] + rand.integer(150, 350);
 
 			// Set plane item air start position and orientation
 			planeItem.setPosition(positionX, positionY, positionZ);
@@ -35,11 +36,19 @@ module.exports = function makePlanStart(action, element, flight, input) {
 	// TODO: Don't create icon for flights in progress (state > 0)?
 	if (flight.player) {
 		
-		var startIcon = flight.group.createItem("MCU_Icon");
+		const startIcon = flight.group.createItem("MCU_Icon");
 		
 		startIcon.setPosition(airfield.position);
 		startIcon.Coalitions = [DATA.countries[flight.country].coalition];
-		startIcon.IconId = MCU_Icon.ICON_TAKE_OFF;
+		
+		// Use action point icon for local tasks
+		if (task.local) {
+			startIcon.IconId = MCU_Icon.ICON_ACTION_POINT;
+		}
+		// Use regular take off icon
+		else {
+			startIcon.IconId = MCU_Icon.ICON_TAKE_OFF;
+		}
 	}
 
 	// Player-only spawn without valid taxi route
@@ -50,7 +59,7 @@ module.exports = function makePlanStart(action, element, flight, input) {
 	if (!flight.onStart) {
 
 		// TODO: Add support for shedulled flights
-		var onStart = flight.onStart = flight.group.createItem("MCU_TR_MissionBegin");
+		const onStart = flight.onStart = flight.group.createItem("MCU_TR_MissionBegin");
 
 		onStart.setPositionNear(flight.leader.item);
 	}

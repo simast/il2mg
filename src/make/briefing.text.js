@@ -1,15 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var mustache = require("mustache");
-var getName = require("./flight.pilots").getName;
-var getRank = require("./flight.pilots").getRank;
+const mustache = require("mustache");
+const getName = require("./flight.pilots").getName;
+const getRank = require("./flight.pilots").getRank;
 
 // Plane string constant
-var PLANE = "plane";
+const PLANE = "plane";
 
 // Plane type names
-var planeTypeNames = {
+const planeTypeNames = {
 	fighter: "fighter",
 	fighter_heavy: "heavy fighter",
 	ground_attack: "ground attack " + PLANE,
@@ -46,24 +46,24 @@ var planeTypeNames = {
  */
 module.exports = function makeBriefingText(template, view) {
 	
-	var rand = this.rand;
-	var flight = this.player.flight;
-	var context = flight.context;
+	const rand = this.rand;
+	const flight = this.player.flight;
+	let context = flight.context;
 	
 	// Make a context for briefing templates
 	if (!context) {
 		
 		context = flight.context = Object.create(null);
 		
-		var playerPlane = this.planes[flight.player.plane];
-		var names = DATA.countries[flight.country].names;
-		var ranks = DATA.countries[flight.country].ranks;
+		const playerPlane = this.planes[flight.player.plane];
+		const names = DATA.countries[flight.country].names;
+		const ranks = DATA.countries[flight.country].ranks;
 		
 		// Flight home airfield name
 		context.airfield = this.airfields[flight.airfield].name;
 		
 		// {{plane}} template tag
-		var planeTag = context.plane = Object.create(null);
+		const planeTag = context.plane = Object.create(null);
 		
 		planeTag.name = playerPlane.name;
 		planeTag.group = this.planes[playerPlane.group].name;
@@ -81,9 +81,9 @@ module.exports = function makeBriefingText(template, view) {
 			// Find first matching plane type name
 			// NOTE: The order of plane "type" list items is important - the last type is
 			// considered to be more important and has a higher value than the first one.
-			for (var i = playerPlane.type.length - 1; i >= 0; i--) {
+			for (let i = playerPlane.type.length - 1; i >= 0; i--) {
 				
-				var planeType = playerPlane.type[i];
+				const planeType = playerPlane.type[i];
 				
 				if (planeType in planeTypeNames) {
 					
@@ -96,7 +96,7 @@ module.exports = function makeBriefingText(template, view) {
 		// Any player plane name representation
 		planeTag.toString = function() {
 			
-			var sample = [];
+			const sample = [];
 			
 			if (planeTag.manufacturer) {
 				sample.push(planeTag.manufacturer);
@@ -110,7 +110,7 @@ module.exports = function makeBriefingText(template, view) {
 				sample.push(planeTag.alias);
 			}
 			
-			var result = [];
+			const result = [];
 			
 			// Select up to two data sample elements (keeping sort order)
 			if (sample.length) {
@@ -139,15 +139,46 @@ module.exports = function makeBriefingText(template, view) {
 		};
 		
 		// {{name}} template tag
-		var nameTag = context.name = Object.create(null);
+		const nameTag = context.name = Object.create(null);
+		
+		// Build a list of used names (to avoid repeating/confusing names)
+		// NOTE: All name parts are in lower-case!
+		let usedNames = this.usedNames;
+		
+		if (!usedNames) {
+			
+			usedNames = this.usedNames = {
+				first: new Set(),
+				last: new Set()
+			};
+			
+			// Mark all player flight pilot names as used
+			for (let pilotName of this.pilots) {
+				
+				pilotName = pilotName.split(" ");
+				
+				usedNames.first.add(pilotName[0]);
+				usedNames.last.add(pilotName[pilotName.length - 1]);
+			}
+		}
 		
 		// Any full name
 		nameTag.toString = function() {
 			
-			var name = getName(names);
-			var nameParts = [];
+			let name;
+			let nameKey;
 			
-			for (var namePart in name) {
+			do {
+				name = getName(names);
+				nameKey = name.last[name.last.length - 1].toLowerCase();
+			}
+			while (usedNames.last.has(nameKey));
+			
+			usedNames.last.add(nameKey);
+			
+			let nameParts = [];
+			
+			for (const namePart in name) {
 				nameParts = nameParts.concat(name[namePart]);
 			}
 			
@@ -157,7 +188,16 @@ module.exports = function makeBriefingText(template, view) {
 		// Any first name
 		nameTag.first = function() {
 
-			var first = getName(names).first;
+			let first;
+			let firstKey;
+			
+			do {
+				first = getName(names).first;
+				firstKey = first[0].toLowerCase();
+			}
+			while (usedNames.first.has(firstKey));
+			
+			usedNames.first.add(firstKey);
 			
 			first.toString = function() {
 				return this[0];
@@ -169,7 +209,16 @@ module.exports = function makeBriefingText(template, view) {
 		// Any last name
 		nameTag.last = function() {
 			
-			var last = getName(names).last;
+			let last;
+			let lastKey;
+			
+			do {
+				last = getName(names).last;
+				lastKey = last[last.length - 1].toLowerCase();
+			}
+			while (usedNames.last.has(lastKey));
+			
+			usedNames.last.add(lastKey);
 			
 			last.toString = function() {
 				return this.join(" ");
@@ -179,17 +228,17 @@ module.exports = function makeBriefingText(template, view) {
 		};
 		
 		// {{rank}} template tag
-		var rankTag = context.rank = Object.create(null);
+		const rankTag = context.rank = Object.create(null);
 		
 		// Create tag for each valid rank type
-		for (var rankType in ranks.weighted) {
+		for (const rankType in ranks.weighted) {
 			
-			var rankTypeTag = rankTag[rankType] = Object.create(null);
+			const rankTypeTag = rankTag[rankType] = Object.create(null);
 			
 			// Full rank name
 			rankTypeTag.toString = function() {
 				
-				var rank = getRank({type: this}, flight.country);
+				const rank = getRank({type: this}, flight.country);
 				
 				if (rank.name) {
 					return "<i>" + rank.name + "</i>";
@@ -200,7 +249,7 @@ module.exports = function makeBriefingText(template, view) {
 			// Abbreviated rank name
 			rankTypeTag.abbr = function() {
 				
-				var rank = getRank({type: this}, flight.country);
+				const rank = getRank({type: this}, flight.country);
 				
 				if (rank.abbr) {
 					return "<i>" + rank.abbr + "</i>";
@@ -220,7 +269,5 @@ module.exports = function makeBriefingText(template, view) {
 	}
 	
 	// Render template using Mustache
-	var text = mustache.render(template, view);
-	
-	return text.replace(/\s{2,}/g, " ");
+	return mustache.render(template, view).replace(/\s{2,}/g, " ");
 };
