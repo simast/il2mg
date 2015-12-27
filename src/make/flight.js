@@ -2,20 +2,20 @@
 "use strict";
 
 // Flight make parts
-var makeFlightFormation = require("./flight.formation");
-var makeFlightPilots = require("./flight.pilots");
-var makeFlightPlanes = require("./flight.planes");
-var makeFlightPlan = require("./flight.plan");
-var makeAirfieldTaxi = require("./airfield.taxi");
+const makeFlightFormation = require("./flight.formation");
+const makeFlightPilots = require("./flight.pilots");
+const makeFlightPlanes = require("./flight.planes");
+const makeFlightPlan = require("./flight.plan");
+const makeAirfieldTaxi = require("./airfield.taxi");
 
 // Data constants
-var flightState = DATA.flightState;
+const flightState = DATA.flightState;
 
 // Make mission flight
 function makeFlight(params) {
 
-	var rand = this.rand;
-	var flight = Object.create(null);
+	const rand = this.rand;
+	const flight = Object.create(null);
 
 	// Validate required unit parameter
 	if (!params.unit || !this.units[params.unit]) {
@@ -27,7 +27,7 @@ function makeFlight(params) {
 		throw new TypeError("Invalid flight task value.");
 	}
 	
-	var isPlayer = false;
+	let isPlayer = false;
 
 	// Player flight
 	// TODO: Support player param as a requested player plane ID
@@ -35,8 +35,8 @@ function makeFlight(params) {
 		isPlayer = true;
 	}
 
-	var taskID = params.task;
-	var unitID = params.unit;
+	let taskID = params.task;
+	let unitID = params.unit;
 	
 	// Resolve task from task group
 	while (Array.isArray(this.tasks[taskID])) {
@@ -48,8 +48,8 @@ function makeFlight(params) {
 		unitID = rand.pick(this.units[unitID]);
 	}
 	
-	var unit = this.units[unitID];
-	var airfield = this.airfields[unit.airfield];
+	const unit = this.units[unitID];
+	const airfield = this.airfields[unit.airfield];
 	
 	flight.task = taskID;
 	flight.unit = unitID;
@@ -73,13 +73,13 @@ function makeFlight(params) {
 	// Option 1: Attempt to pick taxi route/sector where static unit planes are present
 	(function() {
 
-		var unitPlaneItems = airfield.planeItemsByUnit[unitID];
+		const unitPlaneItems = airfield.planeItemsByUnit[unitID];
 		
 		if (!unitPlaneItems) {
 			return;
 		}
 		
-		var unitSectors = Object.keys(unitPlaneItems);
+		const unitSectors = Object.keys(unitPlaneItems);
 
 		if (flight.planes > 1) {
 
@@ -92,11 +92,11 @@ function makeFlight(params) {
 			rand.shuffle(unitSectors);
 		}
 
-		for (var unitSectorID of unitSectors) {
+		for (const unitSectorID of unitSectors) {
 
-			var taxiSpawns = airfield.taxiSpawnsBySector[unitSectorID];
-			var usePlayerOnlySpawns = false;
-			var validSpawns = [];
+			const taxiSpawns = airfield.taxiSpawnsBySector[unitSectorID];
+			const validSpawns = [];
+			let usePlayerOnlySpawns = false;
 			
 			// Use player-only spawn points with a single-plane player flight
 			if (isPlayer && flight.planes === 1 && taxiSpawns[0]) {
@@ -107,7 +107,7 @@ function makeFlight(params) {
 			}
 			
 			// Pick any taxi route where the flight fits the best
-			var taxiRoutes = Object.keys(taxiSpawns).filter(function(value) {
+			const taxiRoutes = Object.keys(taxiSpawns).filter(function(value) {
 				return value > 0;
 			});
 			
@@ -121,7 +121,7 @@ function makeFlight(params) {
 			
 			if (taxiRoutes.length) {
 				
-				var taxiRoute = Number(rand.pick(taxiRoutes));
+				const taxiRoute = Number(rand.pick(taxiRoutes));
 				
 				if (usePlayerOnlySpawns) {
 					validSpawns.push.apply(validSpawns, taxiSpawns[taxiRoute]);
@@ -142,15 +142,15 @@ function makeFlight(params) {
 
 		(function() {
 
-			var leaderPlaneGroup = this.planes[flight.leader.plane].group;
-			var leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
+			const leaderPlaneGroup = this.planes[flight.leader.plane].group;
+			const leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
 			
 			if (leaderPlaneGroupTaxiSectors) {
 
-				var taxiSectorID = rand.pick(leaderPlaneGroupTaxiSectors);
-				var taxiSpawns = airfield.taxiSpawnsBySector[taxiSectorID];
+				const taxiSectorID = rand.pick(leaderPlaneGroupTaxiSectors);
+				const taxiSpawns = airfield.taxiSpawnsBySector[taxiSectorID];
 
-				var taxiRoutes = Object.keys(taxiSpawns).filter(function(value) {
+				const taxiRoutes = Object.keys(taxiSpawns).filter(function(value) {
 					return value > 0;
 				});
 				
@@ -181,7 +181,7 @@ function makeFlight(params) {
 		flight.state = 0;
 		
 		// Also reset each individual element state
-		for (var element of flight.elements) {
+		for (const element of flight.elements) {
 			element.state = flight.state;
 		}
 	}
@@ -189,7 +189,7 @@ function makeFlight(params) {
 	// Pick a player element and plane
 	if (isPlayer) {
 
-		var playerElement = rand.pick(flight.elements);
+		const playerElement = rand.pick(flight.elements);
 
 		playerElement.player = true;
 		flight.player = rand.pick(playerElement);
@@ -205,7 +205,7 @@ function makeFlight(params) {
 	// Make sure the callsign used for player flight is unique
 	if (!isPlayer && this.player.flight) {
 		
-		var playerCallsign = this.player.flight.callsign;
+		const playerCallsign = this.player.flight.callsign;
 
 		if (playerCallsign) {
 			
@@ -227,15 +227,15 @@ function makeFlight(params) {
 	// Enable closest airfield taxi route for player-only spawn point
 	if (flight.taxi === 0) {
 		
-		var playerItem = flight.player.item;
-		var taxiRoutes = [];
+		const playerItem = flight.player.item;
+		const taxiRoutes = [];
 		
 		// Build taxi route list with distances to player plane item
-		for (var taxiRouteID in airfield.taxi) {
+		for (const taxiRouteID in airfield.taxi) {
 			
-			var taxiRoute = airfield.taxi[taxiRouteID];
-			var posXDiff = playerItem.XPos - taxiRoute[3][0];
-			var posZDiff = playerItem.ZPos - taxiRoute[3][1];
+			const taxiRoute = airfield.taxi[taxiRouteID];
+			const posXDiff = playerItem.XPos - taxiRoute[3][0];
+			const posZDiff = playerItem.ZPos - taxiRoute[3][1];
 
 			taxiRoutes.push({
 				id: +taxiRouteID,
@@ -250,7 +250,7 @@ function makeFlight(params) {
 				return (a.distance - b.distance);
 			});
 			
-			var playerTaxiRouteID = taxiRoutes[0].id;
+			const playerTaxiRouteID = taxiRoutes[0].id;
 
 			// Enable airfield taxi route
 			makeAirfieldTaxi.call(this, airfield, playerTaxiRouteID);
@@ -264,9 +264,9 @@ function makeFlight(params) {
 	makeFlightPlan.call(this, flight);
 	
 	// Enable radio beacon source for player home airfield
-	if (isPlayer && this.beaconsByAirfield && this.beaconsByAirfield[airfield.id]) {
+	if (isPlayer && airfield.beacon) {
 		
-		var beaconItem = this.beaconsByAirfield[airfield.id];
+		const beaconItem = airfield.beacon;
 		
 		beaconItem.BeaconChannel = 1;
 		beaconItem.entity.Enabled = 1;

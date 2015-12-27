@@ -2,6 +2,13 @@
 	// Fighter
 	fighter: {},
 	
+	// Fighter (2 planes with 2 elements)
+	fighter_1x1: {
+		name: "Rotte",
+		hidden: true, // Hide elements in briefing (show without separator)
+		planes: [1, 1]
+	},
+	
 	// Fighter (2 planes)
 	fighter_2: {
 		parent: "fighter",

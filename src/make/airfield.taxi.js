@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
-var itemFlag = DATA.itemFlag;
+const Item = require("../item");
+const itemFlag = DATA.itemFlag;
 
 // Make airfield taxi route
 module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
@@ -15,9 +15,9 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		return false;
 	}
 	
-	var taxiRoute = airfield.taxi[taxiRouteID];
-	var runwayID = taxiRoute[1];
-	var activeTaxiRoutes = airfield.activeTaxiRoutes;
+	const taxiRoute = airfield.taxi[taxiRouteID];
+	const runwayID = taxiRoute[1];
+	let activeTaxiRoutes = airfield.activeTaxiRoutes;
 
 	if (!activeTaxiRoutes) {
 		activeTaxiRoutes = airfield.activeTaxiRoutes = Object.create(null);
@@ -28,9 +28,9 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		return (activeTaxiRoutes[runwayID] === taxiRouteID);
 	}
 
-	var itemType = DATA.getItemType(taxiRoute[0]);
-	var isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV);
-	var basePoint = taxiRoute[3];
+	const itemType = DATA.getItemType(taxiRoute[0]);
+	const isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV);
+	const basePoint = taxiRoute[3];
 	
 	// Set unique airfield callsign
 	if (!airfield.callsign) {
@@ -40,7 +40,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		// Make sure the callsign used for player home airfield is unique
 		if (this.player.flight) {
 			
-			var playerAirfield = this.airfields[this.player.flight.airfield];
+			const playerAirfield = this.airfields[this.player.flight.airfield];
 			
 			if (airfield.id !== playerAirfield.id && playerAirfield.callsign) {
 				
@@ -49,10 +49,15 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 				}
 			}
 		}
+		
+		// Use the same airfield callsign for beacon spotter
+		if (airfield.beacon) {
+			airfield.beacon.Callsign = airfield.callsign.id;
+		}
 	}
 
 	// Create airfield item
-	var airfieldItem = airfield.group.createItem(itemType.type);
+	const airfieldItem = airfield.group.createItem(itemType.type);
 
 	airfieldItem.Model = itemType.model;
 	airfieldItem.Script = itemType.script;
@@ -61,24 +66,24 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	airfieldItem.Country = airfield.country;
 	airfieldItem.Callsign = airfield.callsign.id;
 
-	var taxiPoints = taxiRoute[4];
+	const taxiPoints = taxiRoute[4];
 
 	// Invert taxi points based on shortest distance to runway
 	if (isInvertible) {
 
 		(function() {
 
-			var isForward = true;
-			var distanceForward = 0;
-			var distanceBackward = 0;
-			var lastPoint = taxiPoints[0];
+			let isForward = true;
+			let distanceForward = 0;
+			let distanceBackward = 0;
+			let lastPoint = taxiPoints[0];
 			
 			// Compute forward and backward distances
-			for (var i = 1; i < taxiPoints.length; i++) {
+			for (let i = 1; i < taxiPoints.length; i++) {
 				
-				var point = taxiPoints[i];
+				const point = taxiPoints[i];
 				
-				var distance = Math.sqrt(
+				const distance = Math.sqrt(
 					Math.pow(lastPoint[0] - point[0], 2) + Math.pow(lastPoint[1] - point[1], 2)
 				);
 				
@@ -107,16 +112,16 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		})();
 	}
 	
-	var chartItem = new Item("Chart");
-	var firstPoint = taxiPoints[0];
-	var lastPoint = taxiPoints[taxiPoints.length - 1];
+	const chartItem = new Item("Chart");
+	const firstPoint = taxiPoints[0];
+	const lastPoint = taxiPoints[taxiPoints.length - 1];
 
 	// Create airfield taxi route Chart->Point list
-	for (var i = 0; i < taxiPoints.length; i++) {
+	for (let i = 0; i < taxiPoints.length; i++) {
 
-		var point = taxiPoints[i];
-		var pointItem = new Item("Point");
-		var pointType = 1; // Taxi point type
+		const point = taxiPoints[i];
+		const pointItem = new Item("Point");
+		let pointType = 1; // Taxi point type
 
 		// Parking point type
 		if (point === firstPoint || point === lastPoint) {
@@ -138,11 +143,11 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		}
 
 		// Convert absolute taxi point coordinates to relative vector X/Y offsets
-		var pointXDiff = point[0] - basePoint[0];
-		var pointYDiff = point[1] - basePoint[1];
-		var pointTheta = -basePoint[2] * (Math.PI / 180);
-		var pointX = pointXDiff * Math.cos(pointTheta) - pointYDiff * Math.sin(pointTheta);
-		var pointY = pointXDiff * Math.sin(pointTheta) + pointYDiff * Math.cos(pointTheta);
+		const pointXDiff = point[0] - basePoint[0];
+		const pointYDiff = point[1] - basePoint[1];
+		const pointTheta = -basePoint[2] * (Math.PI / 180);
+		const pointX = pointXDiff * Math.cos(pointTheta) - pointYDiff * Math.sin(pointTheta);
+		const pointY = pointXDiff * Math.sin(pointTheta) + pointYDiff * Math.cos(pointTheta);
 
 		pointItem.Type = pointType;
 		pointItem.X = Number(pointX.toFixed(Item.PRECISION_POSITION));

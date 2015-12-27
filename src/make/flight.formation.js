@@ -32,7 +32,7 @@ module.exports = function makeFlightFormation(flight) {
 		}
 		
 		// Check formations in random order
-		for (let taskFormation of rand.shuffle(taskFormations)) {
+		for (const taskFormation of rand.shuffle(taskFormations)) {
 			
 			// Ignore known invalid formations (when they are repeated for distribution)
 			if (invalidFormations[taskFormation]) {

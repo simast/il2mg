@@ -2,16 +2,16 @@
 "use strict";
 
 // Flight make parts
-var makeFlight = require("./flight");
+const makeFlight = require("./flight");
 
 // Generate mission task forces
 module.exports = function makeForces() {
 	
-	var rand = this.rand;
-	var player = this.player;
-	var force = [];
-	var flight;
-	var unitID;
+	const rand = this.rand;
+	const player = this.player;
+	const force = [];
+	let flight;
+	let unitID;
 
 	this.forces = [];
 	
@@ -29,7 +29,7 @@ module.exports = function makeForces() {
 				player: true,
 				state: player.state,
 				unit: unitID,
-				task: rand.pick(Object.keys(this.tasks))
+				task: rand.pick(this.tasksWeighted)
 			});
 		}
 		catch (error) {
@@ -55,7 +55,7 @@ module.exports = function makeForces() {
 		player.flight = flight;
 		
 		// Find player element
-		for (var element of flight.elements) {
+		for (const element of flight.elements) {
 	
 			if (element.player) {
 	

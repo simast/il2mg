@@ -3,6 +3,13 @@
 	fighter: {
 		name: "Zveno"
 	},
+
+	// Fighter (2 planes with 2 elements)
+	fighter_1x1: {
+		name: "Para",
+		hidden: true,
+		planes: [1, 1]
+	},
 	
 	// Fighter (2 planes)
 	fighter_2: {

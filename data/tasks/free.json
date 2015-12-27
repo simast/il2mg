@@ -1,6 +1,7 @@
 {
 	// Single-plane free (test and practice) flights over the local airfield
 	free: {
+		weight: 1,
 		time: "day",
 		local: true, // Local tasks are only for airfields present on the map
 		rankMax: 0.5, // Don't use high ranking pilots (use 50% max weighted rank range)

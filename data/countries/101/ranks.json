@@ -66,23 +66,35 @@
 	"11": {
 		name: "Mayor",
 		type: {
-			commander: 2
+			commander: 2,
+			aa: 1
 		}
 	},
 	"12": {
 		name: "Podpolkovnik",
 		type: {
-			commander: 1
+			commander: 1,
+			aa: 1
 		}
 	},
 	"13": {
-		name: "Polkovnik"
+		name: "Polkovnik",
+		type: {
+			aa: 1,
+			brass: 1
+		}
 	},
 	"14": {
-		name: "General-Mayor"
+		name: "General-Mayor",
+		type: {
+			brass: 1
+		}
 	},
 	"15": {
-		name: "General-Leytenant"
+		name: "General-Leytenant",
+		type: {
+			brass: 1
+		}
 	},
 	"16": {
 		name: "General-Polkovnik"

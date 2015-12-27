@@ -9,11 +9,18 @@ module.exports = function makeTaskCover(flight) {
 	
 	const rand = this.rand;
 	const plan = flight.plan;
+	const airfield = this.airfields[flight.airfield];
 	
-	// FIXME: Random wait action
+	// Airfield cover plan action needs a valid beacon item
+	if (!airfield.beacon) {
+		return;
+	}
+	
+	// Add cover plan action
 	plan.push({
-		type: planAction.WAIT,
-		time: rand.integer(60, 90),
+		type: planAction.COVER,
+		target: airfield.beacon,
+		time: rand.integer(90, 180),
 		briefing: function() {
 			return "···";
 		}

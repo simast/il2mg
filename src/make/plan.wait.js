@@ -4,15 +4,15 @@
 // Make plan wait action
 module.exports = function makePlanWait(action, element, flight, input) {
 
-	var leaderElement = flight.elements[0];
+	const leaderElement = flight.elements[0];
 
 	// Proccess wait action only for leading element
 	if (element !== leaderElement) {
 		return;
 	}
 
-	var leaderPlaneItem = element[0].item;
-	var waitTimer = flight.group.createItem("MCU_Timer");
+	const leaderPlaneItem = element[0].item;
+	const waitTimer = flight.group.createItem("MCU_Timer");
 
 	waitTimer.Time = action.time;
 	waitTimer.setPositionNear(leaderPlaneItem);
@@ -20,6 +20,7 @@ module.exports = function makePlanWait(action, element, flight, input) {
 	// Connect timer command to previous action
 	input(waitTimer);
 
+	// Connect timer command to next action
 	return function(input) {
 		waitTimer.addTarget(input);
 	};

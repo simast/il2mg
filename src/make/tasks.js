@@ -4,20 +4,21 @@
 // Generate available mission tasks
 module.exports = function makeTasks() {
 
-	// Tasks index table
-	var tasks = Object.create(null);
+	// Tasks index table and weighted list
+	const tasks = Object.create(null);
+	const tasksWeighted = [];
 	
 	// Process all tasks and build index list
-	for (var taskID in DATA.tasks) {
+	for (const taskID in DATA.tasks) {
 
-		var taskData = DATA.tasks[taskID];
+		let taskData = DATA.tasks[taskID];
 
 		// Ignore dummy task definitions (and groups used to catalog tasks)
 		if (!taskData || !taskData.name) {
 			continue;
 		}
 
-		var task = Object.create(null);
+		const task = Object.create(null);
 		
 		task.id = taskID;
 
@@ -25,14 +26,14 @@ module.exports = function makeTasks() {
 		while (taskData) {
 
 			// Collect/copy task data from current hierarchy
-			for (var prop in taskData) {
+			for (const prop in taskData) {
 				
 				if (task[prop] === undefined) {
 					task[prop] = taskData[prop];
 				}
 			}
 
-			var taskParentID = taskData.parent;
+			const taskParentID = taskData.parent;
 
 			if (!taskParentID) {
 				break;
@@ -45,7 +46,7 @@ module.exports = function makeTasks() {
 			taskData = DATA.tasks[taskParentID];
 
 			// Register task in the parent group hierarchy
-			var taskGroup = tasks[taskParentID] || [];
+			const taskGroup = tasks[taskParentID] || [];
 
 			// Register a new child task in the task group
 			if (Array.isArray(taskGroup)) {
@@ -62,8 +63,16 @@ module.exports = function makeTasks() {
 
 		// Register task to ID index
 		tasks[taskID] = task;
+		
+		// Add task to weighted list
+		const weight = +task.weight || 1;
+		
+		for (let i = 0; i < weight; i++) {
+			tasksWeighted.push(taskID);
+		}
 	}
-
-	// Static tasks index object
+	
+	// Static tasks index and weighted list
 	this.tasks = Object.freeze(tasks);
+	this.tasksWeighted = Object.freeze(tasksWeighted);
 };

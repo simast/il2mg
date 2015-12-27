@@ -1,27 +1,27 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var requireDir = require("require-directory");
+const requireDir = require("require-directory");
 
 // Data constants
-var briefingColor = DATA.briefingColor;
+const briefingColor = DATA.briefingColor;
 
 // Briefing make parts
-var makeBriefingParts = requireDir(module, {include: /briefing\..+\.js$/});
-var makeBriefingText = makeBriefingParts["briefing.text"];
-var makeBriefingWeather = makeBriefingParts["briefing.weather"];
+const makeBriefingParts = requireDir(module, {include: /briefing\..+\.js$/});
+const makeBriefingText = makeBriefingParts["briefing.text"];
+const makeBriefingWeather = makeBriefingParts["briefing.weather"];
 
 // Generate mission briefing
 module.exports = function makeBriefing() {
 
-	var rand = this.rand;
-	var options = this.items.Options;
-	var briefing = [];
-	var flight = this.player.flight;
-	var task = this.tasks[flight.task];
+	const rand = this.rand;
+	const options = this.items.Options;
+	const briefing = [];
+	const flight = this.player.flight;
+	const task = this.tasks[flight.task];
 
 	// Mission name
-	var name = this.battle.name;
+	let name = this.battle.name;
 	
 	// Use task name
 	if (task.name) {
@@ -44,7 +44,7 @@ module.exports = function makeBriefing() {
 	// Task intro story
 	if (task.story) {
 		
-		var story = task.story;
+		let story = task.story;
 		
 		if (!Array.isArray(story)) {
 			story = [story];
@@ -63,12 +63,12 @@ module.exports = function makeBriefing() {
 	// Weather report
 	briefing.push(makeBriefingWeather.call(this));
 	
-	var briefingPlan = [];
+	const briefingPlan = [];
 
 	// Flight plan briefing output
-	for (var action of flight.plan) {
+	for (const action of flight.plan) {
 		
-		var makeBriefingPlan = makeBriefingParts["briefing." + action.type];
+		let makeBriefingPlan = makeBriefingParts["briefing." + action.type];
 		
 		// Use custom plan action briefing text
 		if (action.briefing) {
@@ -80,7 +80,7 @@ module.exports = function makeBriefing() {
 		}
 		
 		// Make plan action briefing
-		var actionBriefing = makeBriefingPlan.call(this, action, flight);
+		const actionBriefing = makeBriefingPlan.call(this, action, flight);
 		
 		if (actionBriefing && actionBriefing.length) {
 			briefingPlan.push(actionBriefing);
@@ -98,8 +98,8 @@ module.exports = function makeBriefing() {
 // Make mission briefing date and time output
 function makeBriefingDateAndTime() {
 
-	var time = this.time;
-	var output = "";
+	const time = this.time;
+	let output = "";
 
 	output += this.date.format("MMMM Do, YYYY") + "<br>";
 	output += '<font size="14">';
@@ -108,7 +108,7 @@ function makeBriefingDateAndTime() {
 	// Display time period names
 	if (typeof this.time === "object") {
 
-		var timePeriods = Object.keys(time);
+		const timePeriods = Object.keys(time);
 
 		// Remove "day" as daylight will be indicated by other periods
 		if (time.day) {
@@ -118,7 +118,7 @@ function makeBriefingDateAndTime() {
 		// Remove "night" when night-time is indicated as midnight
 		if (time.midnight) {
 
-			var nightIndex = timePeriods.indexOf("night");
+			const nightIndex = timePeriods.indexOf("night");
 
 			if (nightIndex >= 0) {
 				timePeriods.splice(nightIndex, 1);
@@ -128,7 +128,7 @@ function makeBriefingDateAndTime() {
 		// Remove "morning" when morning is indicated as sunrise
 		if (time.sunrise) {
 
-			var morningIndex = timePeriods.indexOf("morning");
+			const morningIndex = timePeriods.indexOf("morning");
 
 			if (morningIndex >= 0) {
 				timePeriods.splice(morningIndex, 1);
@@ -138,7 +138,7 @@ function makeBriefingDateAndTime() {
 		// Remove "evening" when evening is indicated as sunset or dusk
 		if (time.sunset || time.dusk) {
 
-			var eveningIndex = timePeriods.indexOf("evening");
+			const eveningIndex = timePeriods.indexOf("evening");
 
 			if (eveningIndex >= 0) {
 				timePeriods.splice(eveningIndex, 1);
@@ -158,9 +158,9 @@ function makeBriefingDateAndTime() {
 // Make mission flight and pilot info output
 function makeBriefingFlight() {
 	
-	var flight = this.player.flight;
-	var unit = this.units[flight.unit];
-	var output = "";
+	const flight = this.player.flight;
+	const unit = this.units[flight.unit];
+	let output = "";
 	
 	// Country specific formation name
 	if (flight.formation.name) {
@@ -184,8 +184,8 @@ function makeBriefingFlight() {
 	flight.elements.forEach(function(element, elementIndex) {
 		element.forEach(function(plane) {
 
-			var pilot = plane.pilot;
-			var rank = pilot.rank.abbr;
+			const pilot = plane.pilot;
+			let rank = pilot.rank.abbr;
 			
 			// Use full rank name when abbreviation is not available
 			if (!rank) {
@@ -196,7 +196,7 @@ function makeBriefingFlight() {
 
 			// Plane call number
 			if (flight.planes > 1) {
-				output += plane.number + ". ";
+				output += '<font size="16" color="' + briefingColor.DARK + '">' + plane.number + ".</font> ";
 			}
 
 			output += '<font size="16"><i>' + rank + "</i></font> ";
@@ -209,7 +209,7 @@ function makeBriefingFlight() {
 				output += pilot.name;
 			}
 
-			output += ' <font color="' + briefingColor.DARK + '">→</font><font size="16"><i>';
+			output += ' <font color="' + briefingColor.DARK + '">⇢</font> <font size="16"><i>';
 			output += this.planes[plane.plane].name;
 			output += "</i></font><br>";
 
@@ -217,7 +217,11 @@ function makeBriefingFlight() {
 
 		// Element separator
 		if ((elementIndex + 1) !== flight.elements.length) {
-			output += '<font size="8"></font><br>';
+			
+			// Don't use element separator for hidden formations
+			if (!flight.formation.hidden) {
+				output += '<font size="8"></font><br>';
+			}
 		}
 		// Flight callsign
 		else if (flight.callsign) {

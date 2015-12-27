@@ -8,13 +8,8 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 		return;
 	}
 
-	// Initialize beacons index table
-	if (!this.beaconsByAirfield) {
-		this.beaconsByAirfield = Object.create(null);
-	}
-
-	var itemType = DATA.getItemType(item[5]);
-	var beaconItem = this.createItem(itemType.type, false);
+	const itemType = DATA.getItemType(item[5]);
+	const beaconItem = this.createItem(itemType.type, false);
 
 	beaconItem.Model = itemType.model;
 	beaconItem.Script = itemType.script;
@@ -23,6 +18,9 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 	beaconItem.Country = airfield.country;
 	beaconItem.Engageable = 0;
 	beaconItem.BeaconChannel = 0;
+	
+	// FIXME: Enabling spotter for beacon seems to cause issues with OnTookOff reports.
+	// beaconItem.Spotter = 10 * 1000; // 10 Km radius
 
 	beaconItem.createEntity(true);
 
@@ -31,7 +29,7 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 	airfield.zone.onDeactivate.addObject(beaconItem);
 
 	// Save beacon item reference
-	this.beaconsByAirfield[airfield.id] = beaconItem;
+	airfield.beacon = beaconItem;
 
 	return [beaconItem];
 };

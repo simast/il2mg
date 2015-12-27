@@ -34,9 +34,9 @@ module.exports = function makePlanStart(action, element, flight, input) {
 	
 	// Create start location icon for player flight
 	// TODO: Don't create icon for flights in progress (state > 0)?
-	if (flight.player) {
+	if (flight.player && !flight.startIcon) {
 		
-		const startIcon = flight.group.createItem("MCU_Icon");
+		const startIcon = flight.startIcon = flight.group.createItem("MCU_Icon");
 		
 		startIcon.setPosition(airfield.position);
 		startIcon.Coalitions = [DATA.countries[flight.country].coalition];

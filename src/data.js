@@ -96,6 +96,8 @@ DATA.flightState = Object.freeze({
 DATA.planAction = Object.freeze({
 	START: "start", // Initial start action
 	TAKEOFF: "takeoff", // Taxi (optionally) and takeoff from airfield
+	FORM: "form", // Form up (set formations and element cover)
+	COVER: "cover", // Cover target
 	WAIT: "wait", // Wait for something (do nothing)
 	FLY: "fly", // Fly to waypoint/location
 	LAND: "land" // Land on airfield (ending the flight)
@@ -109,7 +111,7 @@ DATA.mapColor = Object.freeze({
 // Briefing colors as HTML hex color values
 DATA.briefingColor = Object.freeze({
 	LIGHT: "#fbfbfb",
-	DARK: "#848484"
+	DARK: "#959595"
 });
 
 // Load all static data
