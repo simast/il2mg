@@ -256,7 +256,7 @@ module.exports = function makeBriefingWeather() {
 	context.reason = [];
 	
 	// Order weather reason context based on state priority
-	rand.shuffle(Object.keys(weatherReasons)).sort(function(a, b) {
+	rand.shuffle(Object.keys(weatherReasons)).sort((a, b) => {
 		
 		// Use worst reason first
 		if (weather.state > weatherState.GOOD) {
@@ -266,7 +266,7 @@ module.exports = function makeBriefingWeather() {
 		else {
 			return weather.points[a] > weather.points[b];
 		}
-	}).forEach(function(reasonType) {
+	}).forEach(reasonType => {
 		context.reason.push(weatherReasons[reasonType]);
 	});
 	

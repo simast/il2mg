@@ -16,9 +16,9 @@ module.exports = function makeBriefing() {
 
 	const rand = this.rand;
 	const options = this.items.Options;
-	const briefing = [];
 	const flight = this.player.flight;
 	const task = this.tasks[flight.task];
+	let briefing = [];
 
 	// Mission name
 	let name = this.battle.name;
@@ -63,24 +63,31 @@ module.exports = function makeBriefing() {
 	// Weather report
 	briefing.push(makeBriefingWeather.call(this));
 	
+	briefing = briefing.join("<br><br>");
+	
 	const briefingPlan = [];
 
 	// Flight plan briefing output
 	for (const action of flight.plan) {
 		
-		let makeBriefingPlan = makeBriefingParts["briefing." + action.type];
+		let makePlanBriefing;
 		
-		// Use custom plan action briefing text
-		if (action.briefing) {
-			makeBriefingPlan = action.briefing;
+		// Use default/common plan action briefing
+		if (action.type) {
+			makePlanBriefing = makeBriefingParts["briefing." + action.type];
+		}
+		
+		// Use custom plan action briefing
+		if (typeof action.makeBriefing === "function") {
+			makePlanBriefing = action.makeBriefing;
 		}
 
-		if (!makeBriefingPlan) {
+		if (!makePlanBriefing) {
 			continue;
 		}
 		
 		// Make plan action briefing
-		const actionBriefing = makeBriefingPlan.call(this, action, flight);
+		const actionBriefing = makePlanBriefing.call(this, action, flight);
 		
 		if (actionBriefing && actionBriefing.length) {
 			briefingPlan.push(actionBriefing);
@@ -89,10 +96,14 @@ module.exports = function makeBriefing() {
 	
 	// NOTE: Using smaller line breaks for separating plan actions
 	if (briefingPlan.length) {
-		briefing.push(briefingPlan.join('<br><font size="8"></font><br>'));
+		
+		briefingPlan.unshift('<font color="' + briefingColor.DARK + '">···</font>');
+		briefingPlan.unshift("");
+		
+		briefing += briefingPlan.join('<br><font size="8"></font><br>');
 	}
 	
-	options.setDescription(this.getLC(briefing.join("<br><br>")));
+	options.setDescription(this.getLC(briefing));
 };
 
 // Make mission briefing date and time output
@@ -181,8 +192,8 @@ function makeBriefingFlight() {
 
 	output += ",<br><br>";
 	
-	flight.elements.forEach(function(element, elementIndex) {
-		element.forEach(function(plane) {
+	flight.elements.forEach((element, elementIndex) => {
+		element.forEach(plane => {
 
 			const pilot = plane.pilot;
 			let rank = pilot.rank.abbr;
@@ -213,7 +224,7 @@ function makeBriefingFlight() {
 			output += this.planes[plane.plane].name;
 			output += "</i></font><br>";
 
-		}, this);
+		});
 
 		// Element separator
 		if ((elementIndex + 1) !== flight.elements.length) {
@@ -228,7 +239,7 @@ function makeBriefingFlight() {
 			output += "<br>\tCallsign <i>“" + flight.callsign.name + "”</i>.";
 		}
 		
-	}, this);
+	});
 	
 	return output;
 }

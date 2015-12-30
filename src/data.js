@@ -92,12 +92,11 @@ DATA.flightState = Object.freeze({
 	RUNWAY: "runway" // On the runway, engine running, ready for takeoff
 });
 
-// Flight plan actions
+// Common flight plan actions
 DATA.planAction = Object.freeze({
 	START: "start", // Initial start action
 	TAKEOFF: "takeoff", // Taxi (optionally) and takeoff from airfield
 	FORM: "form", // Form up (set formations and element cover)
-	COVER: "cover", // Cover target
 	WAIT: "wait", // Wait for something (do nothing)
 	FLY: "fly", // Fly to waypoint/location
 	LAND: "land" // Land on airfield (ending the flight)

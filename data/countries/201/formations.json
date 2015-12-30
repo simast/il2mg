@@ -6,14 +6,14 @@
 	fighter_1x1: {
 		name: "Rotte",
 		hidden: true, // Hide elements in briefing (show without separator)
-		planes: [1, 1]
+		elements: [1, 1]
 	},
 	
 	// Fighter (2 planes)
 	fighter_2: {
 		parent: "fighter",
 		name: "Rotte",
-		planes: [2]
+		elements: [2]
 	},
 	
 	// Fighter (4 planes)
@@ -25,7 +25,7 @@
 	fighter_2x2: {
 		parent: "fighter_4",
 		name: "Schwarm",
-		planes: [2, 2], // Finger-four
+		elements: ["fighter_2", "fighter_2"], // Finger-four
 		density: "loose"
 	},
 	
@@ -36,6 +36,6 @@
 	bomber_3: {
 		parent: "bomber",
 		name: "Kette",
-		planes: [3]
+		elements: [3]
 	}
 }

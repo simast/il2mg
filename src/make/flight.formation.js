@@ -68,7 +68,7 @@ module.exports = function makeFlightFormation(flight) {
 					
 					planesRequired = 0;
 					
-					for (let elementPlanesRequired of formations[formationType].planes) {
+					for (let elementPlanesRequired of formations[formationType].elements.planes) {
 						planesRequired += elementPlanesRequired;
 					}
 					
@@ -129,9 +129,9 @@ module.exports = function makeFlightFormation(flight) {
 					// Basic formation type
 					if (isSimpleFormation) {
 
-						formation = {
-							planes: [validPlanes.length]
-						};
+						formation = {};
+						formation.elements = [validPlanes.length];
+						formation.elements.planes = formation.elements;
 					}
 					// Advanced formation type
 					else {
@@ -164,7 +164,7 @@ module.exports = function makeFlightFormation(flight) {
 	flight.planes = 0; // Number of planes in all flight elements
 	
 	// Create requested number of flight elements
-	formation.planes.forEach(function(planesInElement) {
+	formation.elements.planes.forEach(function(planesInElement) {
 		
 		const element = [];
 		

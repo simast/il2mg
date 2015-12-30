@@ -2,8 +2,7 @@
 "use strict";
 
 const mustache = require("mustache");
-const getName = require("./flight.pilots").getName;
-const getRank = require("./flight.pilots").getRank;
+const people = require("./people");
 
 // Plane string constant
 const PLANE = "plane";
@@ -40,6 +39,9 @@ const planeTypeNames = {
  * 	{{{rank.TYPE}}} - Any TYPE level full rank name.
  * 	{{{rank.TYPE.abbr}}} - Any TYPE level abbreviated rank name.
  *
+ * 	{{{formation}}} - Flight formation name.
+ * 	{{{formation.element}}} - Player element formation name.
+ *
  * @param {string} template Template string to use for rendering.
  * @param {object} [view] Extra template view data.
  * @returns {string} Rendered briefing text.
@@ -54,8 +56,9 @@ module.exports = function makeBriefingText(template, view) {
 	if (!context) {
 		
 		context = flight.context = Object.create(null);
-		
+
 		const playerPlane = this.planes[flight.player.plane];
+		const playerElement = this.player.element;
 		const names = DATA.countries[flight.country].names;
 		const ranks = DATA.countries[flight.country].ranks;
 		
@@ -94,7 +97,7 @@ module.exports = function makeBriefingText(template, view) {
 		}
 		
 		// Any player plane name representation
-		planeTag.toString = function() {
+		planeTag.toString = () => {
 			
 			const sample = [];
 			
@@ -121,7 +124,7 @@ module.exports = function makeBriefingText(template, view) {
 						rand.integer(1, Math.min(sample.length, 2))
 					)
 					.sort()
-					.forEach(function(sampleIndex) {
+					.forEach(sampleIndex => {
 						result.push(sample[sampleIndex]);
 					});
 			}
@@ -163,13 +166,13 @@ module.exports = function makeBriefingText(template, view) {
 		}
 		
 		// Any full name
-		nameTag.toString = function() {
+		nameTag.toString = () => {
 			
 			let name;
 			let nameKey;
 			
 			do {
-				name = getName(names);
+				name = people.getName(names);
 				nameKey = name.last[name.last.length - 1].toLowerCase();
 			}
 			while (usedNames.last.has(nameKey));
@@ -186,13 +189,13 @@ module.exports = function makeBriefingText(template, view) {
 		};
 		
 		// Any first name
-		nameTag.first = function() {
+		nameTag.first = () => {
 
 			let first;
 			let firstKey;
 			
 			do {
-				first = getName(names).first;
+				first = people.getName(names).first;
 				firstKey = first[0].toLowerCase();
 			}
 			while (usedNames.first.has(firstKey));
@@ -207,13 +210,13 @@ module.exports = function makeBriefingText(template, view) {
 		};
 
 		// Any last name
-		nameTag.last = function() {
+		nameTag.last = () => {
 			
 			let last;
 			let lastKey;
 			
 			do {
-				last = getName(names).last;
+				last = people.getName(names).last;
 				lastKey = last[last.length - 1].toLowerCase();
 			}
 			while (usedNames.last.has(lastKey));
@@ -238,7 +241,7 @@ module.exports = function makeBriefingText(template, view) {
 			// Full rank name
 			rankTypeTag.toString = function() {
 				
-				const rank = getRank({type: this}, flight.country);
+				const rank = people.getRank({type: this}, flight.country);
 				
 				if (rank.name) {
 					return "<i>" + rank.name + "</i>";
@@ -249,7 +252,7 @@ module.exports = function makeBriefingText(template, view) {
 			// Abbreviated rank name
 			rankTypeTag.abbr = function() {
 				
-				const rank = getRank({type: this}, flight.country);
+				const rank = people.getRank({type: this}, flight.country);
 				
 				if (rank.abbr) {
 					return "<i>" + rank.abbr + "</i>";
@@ -257,6 +260,43 @@ module.exports = function makeBriefingText(template, view) {
 				
 			}.bind(rankType);
 		}
+		
+		// {{{formation}}} template tag
+		const formationTag = context.formation = Object.create(null);
+		
+		// Flight formation name
+		formationTag.toString = () => {
+			
+			let formation = "flight";
+			
+			// Country specific formation name
+			if (flight.formation.name) {
+				formation = "<i>" + flight.formation.name.toLowerCase() + "</i>";
+			}
+			
+			return formation;
+		};
+		
+		// Player element formation name
+		formationTag.element = () => {
+			
+			let formation = "flight";
+			
+			const playerFormationIndex = flight.elements.indexOf(playerElement);
+			const playerFormation = flight.formation.elements[playerFormationIndex];
+			
+			// Use element sub-formation
+			if (typeof playerFormation !== "number") {
+				
+				const subFormation = this.formations[flight.country][playerFormation];
+				
+				if (subFormation && subFormation.name) {
+					formation = "<i>" + subFormation.name.toLowerCase() + "</i>";
+				}
+			}
+			
+			return formation;
+		};
 	}
 	
 	// With no custom view data

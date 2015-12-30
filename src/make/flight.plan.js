@@ -43,7 +43,7 @@ module.exports = function makeFlightPlan(flight) {
 	while (taskID);
 
 	// Land plan action
-	plan.push({type: planAction.LAND});
+	plan.land = plan[plan.push({type: planAction.LAND}) - 1];
 	
 	// TODO: Fast-forward plan to required flight state
 
@@ -53,7 +53,21 @@ module.exports = function makeFlightPlan(flight) {
 	// Process pending plan actions
 	for (const action of plan) {
 		
-		const makePlanAction = makeParts["plan." + action.type];
+		let makePlanAction;
+		
+		// Use default/common plan make action
+		if (action.type) {
+			makePlanAction = makeParts["plan." + action.type];
+		}
+		
+		// Use custom plan make action
+		if (typeof action.makeAction === "function") {
+			makePlanAction = action.makeAction;
+		}
+		// Boolean flag used to skip making plan actions
+		else if (action.makeAction === false) {
+			makePlanAction = null;
+		}
 	
 		if (!makePlanAction) {
 			continue;
@@ -63,7 +77,7 @@ module.exports = function makeFlightPlan(flight) {
 
 		// Multiple flight elements will share a single plan, but can use a different
 		// command set (as with second element on guard duty for first leading element).
-		flight.elements.forEach(function(element, elementIndex) {
+		flight.elements.forEach((element, elementIndex) => {
 
 			let input = outputPrev[elementIndex];
 
@@ -78,8 +92,7 @@ module.exports = function makeFlightPlan(flight) {
 				flight,
 				input
 			));
-
-		}, this);
+		});
 
 		outputPrev = output;
 	}

@@ -1,17 +1,17 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var fs = require("fs");
-var os = require("os");
-var util = require("util");
-var path = require("path");
-var Random = require("random-js");
-var Item = require("./item");
+const fs = require("fs");
+const os = require("os");
+const util = require("util");
+const path = require("path");
+const Random = require("random-js");
+const Item = require("./item");
 
 // Mission file extensions
-var FILE_EXT_TEXT = "Mission";
-var FILE_EXT_BINARY = "msnbin";
-var FILE_EXT_LIST = "list";
+const FILE_EXT_TEXT = "Mission";
+const FILE_EXT_BINARY = "msnbin";
+const FILE_EXT_LIST = "list";
 
 // Mission file formats
 Mission.FORMAT_TEXT = "text";
@@ -19,7 +19,7 @@ Mission.FORMAT_BINARY = "binary";
 
 // List of mission parameters that make up the complex seed value
 // NOTE: The order is important and is used to define parameter sequence
-var COMPLEX_SEED_PARAMS = [
+const COMPLEX_SEED_PARAMS = [
 	"seed", // Base seed value (numeric)
 	"debug",
 	"battle",
@@ -66,6 +66,7 @@ function Mission(params) {
 	require("./make/date").call(this);
 	require("./make/time").call(this);
 	require("./make/map").call(this);
+	require("./make/people").call(this);
 	require("./make/planes").call(this);
 	require("./make/units").call(this);
 	require("./make/vehicles").call(this);
@@ -80,7 +81,7 @@ function Mission(params) {
 	require("./make/briefing").call(this);
 	
 	// Execute all delayed (last) mission make callbacks
-	for (var makeCallback of this.make) {
+	for (const makeCallback of this.make) {
 		makeCallback();
 	}
 
@@ -94,16 +95,16 @@ function Mission(params) {
  */
 Mission.prototype.initRand = function(params) {
 
-	var complexSeed;
+	let complexSeed;
 
 	// Initialize from existing seed
 	if (params.seed) {
 
 		// Make sure the seed parameter is exclusive and is not used together with
 		// other complex seed parameters.
-		for (var i = 1; i < COMPLEX_SEED_PARAMS.length; i++) {
+		for (let i = 1; i < COMPLEX_SEED_PARAMS.length; i++) {
 
-			var param = COMPLEX_SEED_PARAMS[i];
+			const param = COMPLEX_SEED_PARAMS[i];
 
 			if (param in params) {
 				throw ['Cannot use "%s" parameter together with seed.', param];
@@ -119,7 +120,7 @@ Mission.prototype.initRand = function(params) {
 		if (typeof complexSeed === "object") {
 
 			// Restore parameters from complex seed value
-			COMPLEX_SEED_PARAMS.forEach(function(param, paramIndex) {
+			COMPLEX_SEED_PARAMS.forEach((param, paramIndex) => {
 
 				if (paramIndex in complexSeed) {
 					params[param] = complexSeed[paramIndex];
@@ -130,7 +131,7 @@ Mission.prototype.initRand = function(params) {
 		// Handle simple seed value (numeric)
 		if (/^[0-9]+$/.test(params.seed)) {
 
-			var seedNumber = parseInt(params.seed, 10);
+			const seedNumber = parseInt(params.seed, 10);
 
 			if (!isNaN(seedNumber) && seedNumber > 0) {
 				this.seed = seedNumber;
@@ -149,7 +150,7 @@ Mission.prototype.initRand = function(params) {
 		this.seed = Date.now() % 1000000000000;
 
 		// Check seed affecting parameters and create a complex seed if necessary
-		COMPLEX_SEED_PARAMS.forEach(function(param, paramIndex) {
+		COMPLEX_SEED_PARAMS.forEach((param, paramIndex) => {
 
 			if (param in params) {
 
@@ -164,11 +165,11 @@ Mission.prototype.initRand = function(params) {
 	}
 	
 	// Initialize random number generator
-	var mtRand = Random.engines.mt19937();
+	const mtRand = Random.engines.mt19937();
 	mtRand.seed(this.seed);
 	this.rand = new Random(mtRand);
 	
-	var seedParam;
+	let seedParam;
 	
 	// Save seed value as a localization string
 	if (complexSeed) {
@@ -202,7 +203,7 @@ Mission.prototype.createItem = function(itemType, parent) {
 		parent = this;
 	}
 
-	var item = new Item[itemType]();
+	const item = new Item[itemType]();
 
 	if (item.hasIndex) {
 
@@ -261,7 +262,7 @@ Mission.prototype.getLC = function(text) {
 
 	text = text.trim();
 
-	var languageCode = this.lang.indexOf(text);
+	let languageCode = this.lang.indexOf(text);
 
 	if (languageCode < 0) {
 		languageCode = this.lang.push(text) - 1;
@@ -304,7 +305,7 @@ Mission.prototype.getCallsign = function(type) {
 		}
 	}
 	
-	var callsign = DATA.callsigns[type][this.lastCallsign[type]];
+	const callsign = DATA.callsigns[type][this.lastCallsign[type]];
 
 	// Return selected callsign info
 	return {
@@ -320,10 +321,9 @@ Mission.prototype.getCallsign = function(type) {
  * @returns {Promise} Promise object.
  */
 Mission.prototype.save = function(fileName) {
-
-	var self = this;
-	var format = this.params.format || Mission.FORMAT_BINARY;
-	var promises = [];
+	
+	const format = this.params.format || Mission.FORMAT_BINARY;
+	const promises = [];
 
 	log.I("Saving mission...");
 
@@ -331,8 +331,8 @@ Mission.prototype.save = function(fileName) {
 	if (fileName && fileName.length) {
 
 		// Make a path without an extension
-		var fileDir = path.dirname(fileName);
-		var fileBase = path.basename(fileName).replace(/\.[^/.]+$/, "");
+		const fileDir = path.dirname(fileName);
+		const fileBase = path.basename(fileName).replace(/\.[^/.]+$/, "");
 
 		fileName = path.join(fileDir, fileBase);
 	}
@@ -365,23 +365,22 @@ Mission.prototype.save = function(fileName) {
  */
 Mission.prototype.saveText = function(fileName) {
 
-	var self = this;
-	var profileName = "Saving ." + FILE_EXT_TEXT;
+	const profileName = "Saving ." + FILE_EXT_TEXT;
 
 	log.profile(profileName);
 
-	var promise = new Promise(function(resolve, reject) {
+	const promise = new Promise((resolve, reject) => {
 
-		var fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT);
+		const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT);
 
 		// Write .Mission data
-		fileStream.once("open", function(fd) {
+		fileStream.once("open", fd => {
 
 			// Required mission file header
 			fileStream.write("# Mission File Version = 1.0;" + os.EOL);
 
 			// Write mission items
-			self.items.forEach(function(item) {
+			this.items.forEach(item => {
 				fileStream.write(os.EOL + item.toString() + os.EOL);
 			});
 
@@ -398,7 +397,7 @@ Mission.prototype.saveText = function(fileName) {
 		fileStream.once("error", reject);
 	});
 
-	promise.then(function() {
+	promise.then(() => {
 		log.profile(profileName);
 	});
 
@@ -412,20 +411,19 @@ Mission.prototype.saveText = function(fileName) {
  * @returns {Promise} Promise object.
  */
 Mission.prototype.saveBinary = function(fileName) {
-
-	var self = this;
-	var profileName = "Saving ." + FILE_EXT_BINARY;
+	
+	const profileName = "Saving ." + FILE_EXT_BINARY;
 
 	log.profile(profileName);
 
-	var promise = new Promise(function(resolve, reject) {
+	const promise = new Promise((resolve, reject) => {
 
-		var optionsBuffers = [];
-		var itemBuffers = [];
-		var numItems = 0;
+		const optionsBuffers = [];
+		const itemBuffers = [];
+		let numItems = 0;
 
 		// Create index tables
-		var indexTables = {
+		const indexTables = {
 			name: new BinaryStringTable(32, 100),
 			desc: new BinaryStringTable(32, 100),
 			model: new BinaryStringTable(64, 100),
@@ -437,7 +435,7 @@ Mission.prototype.saveBinary = function(fileName) {
 		// Collect binary representation of all mission items
 		(function walkItems(items) {
 
-			items.forEach(function(item) {
+			items.forEach(item => {
 
 				// Process Group item child items
 				if (item instanceof Item.Group) {
@@ -449,9 +447,7 @@ Mission.prototype.saveBinary = function(fileName) {
 				// Get item binary representation (data buffers)
 				else {
 					
-					var buffer;
-
-					for (buffer of item.toBinary(indexTables)) {
+					for (const buffer of item.toBinary(indexTables)) {
 						
 						// Collect Options item buffers
 						if (item instanceof Item.Options) {
@@ -466,7 +462,7 @@ Mission.prototype.saveBinary = function(fileName) {
 					// Process linked item entity
 					if (item.entity) {
 						
-						for (buffer of item.entity.toBinary(indexTables)) {
+						for (const buffer of item.entity.toBinary(indexTables)) {
 							itemBuffers.push(buffer);
 						}
 						
@@ -477,24 +473,24 @@ Mission.prototype.saveBinary = function(fileName) {
 				}
 			});
 
-		})(self.items);
+		})(this.items);
 
 		if (!optionsBuffers.length) {
 			throw new Error();
 		}
 
-		var fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY);
+		const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY);
 
-		fileStream.once("open", function(fd) {
+		fileStream.once("open", fd => {
 
 			// Write Options item buffers (has to be the first one in the file)
 			while (optionsBuffers.length) {
 				fileStream.write(optionsBuffers.shift());
 			}
 
-			var indexTableNames = Object.keys(indexTables);
-			var itlhBuffer = new Buffer(7); // Index table list header buffer
-			var bsBuffer = new Buffer(4); // Item size buffer
+			const indexTableNames = Object.keys(indexTables);
+			const itlhBuffer = new Buffer(7); // Index table list header buffer
+			const bsBuffer = new Buffer(4); // Item size buffer
 
 			// Write index table list header (number of index tables + 3 unknown bytes)
 			itlhBuffer.writeUInt32LE(indexTableNames.length, 0);
@@ -502,7 +498,7 @@ Mission.prototype.saveBinary = function(fileName) {
 			fileStream.write(itlhBuffer);
 
 			// Write index tables
-			indexTableNames.forEach(function(tableName) {
+			indexTableNames.forEach(tableName => {
 				fileStream.write(indexTables[tableName].toBinary());
 			});
 
@@ -525,7 +521,7 @@ Mission.prototype.saveBinary = function(fileName) {
 		fileStream.once("error", reject);
 	});
 
-	promise.then(function() {
+	promise.then(() => {
 		log.profile(profileName);
 	});
 
@@ -540,26 +536,25 @@ Mission.prototype.saveBinary = function(fileName) {
  */
 Mission.prototype.saveLang = function(fileName) {
 
-	var self = this;
-	var promises = [];
+	const promises = [];
 
-	DATA.languages.forEach(function(lang) {
+	DATA.languages.forEach(lang => {
 
-		var profileName = "Saving ." + lang;
+		const profileName = "Saving ." + lang;
 
 		log.profile(profileName);
 
-		var promise = new Promise(function(resolve, reject) {
+		const promise = new Promise((resolve, reject) => {
 
-			var fileStream = fs.createWriteStream(fileName + "." + lang);
+			const fileStream = fs.createWriteStream(fileName + "." + lang);
 
-			fileStream.once("open", function(fd) {
+			fileStream.once("open", fd => {
 
 				// Write UCS2 little-endian BOM
 				fileStream.write("FFFE", "hex");
 
 				// Write language data
-				self.lang.forEach(function(value, index) {
+				this.lang.forEach((value, index) => {
 					fileStream.write(index + ":" + value + os.EOL, "ucs2");
 				});
 
@@ -573,7 +568,7 @@ Mission.prototype.saveLang = function(fileName) {
 			fileStream.once("error", reject);
 		});
 
-		promise.then(function() {
+		promise.then(() => {
 			log.profile(profileName);
 		});
 
@@ -610,7 +605,7 @@ BinaryStringTable.prototype.value = function(value) {
 		return 0xFFFF;
 	}
 
-	var index = this.data.indexOf(value);
+	let index = this.data.indexOf(value);
 
 	// Add a new string item
 	if (index < 0) {
@@ -634,15 +629,15 @@ BinaryStringTable.prototype.value = function(value) {
  */
 BinaryStringTable.prototype.toBinary = function() {
 
-	var dataLength = this.maxDataLength;
-	var itemsCount = Math.max(this.minItemsCount, this.data.length);
-	var offset = 0;
-	var size = 6;
+	const dataLength = this.maxDataLength;
+	const itemsCount = Math.max(this.minItemsCount, this.data.length);
+	let offset = 0;
+	let size = 6;
 
 	size += itemsCount * 2;
 	size += itemsCount * dataLength;
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// Max size of item
 	buffer.writeUInt32LE(dataLength, offset);
@@ -653,18 +648,18 @@ BinaryStringTable.prototype.toBinary = function() {
 	offset += 2;
 
 	// Header items
-	for (var h = 0; h < itemsCount; h++) {
+	for (let h = 0; h < itemsCount; h++) {
 
-		var headerItem = this.header[h] || 0;
+		const headerItem = this.header[h] || 0;
 
 		buffer.writeUInt16LE(headerItem, offset);
 		offset += 2;
 	}
 
 	// Data items
-	for (var d = 0; d < itemsCount; d++) {
+	for (let d = 0; d < itemsCount; d++) {
 
-		var dataItem = this.data[d] || "";
+		const dataItem = this.data[d] || "";
 
 		buffer.fill(0, offset, offset + dataLength);
 		buffer.write(dataItem, offset);
@@ -698,13 +693,13 @@ BinaryDamageTable.prototype.value = function(value) {
 	}
 
 	// TODO: Sort damage index values before JSON stringify
-	var valueID = JSON.stringify(value);
-	var index = this.dataIndex[valueID];
+	const valueID = JSON.stringify(value);
+	let index = this.dataIndex[valueID];
 
 	// Register a new unique damage value
 	if (index === undefined) {
 
-		var damageKeys = Object.keys(value);
+		const damageKeys = Object.keys(value);
 
 		this.maxDamageValues = Math.max(this.maxDamageValues, damageKeys.length);
 		this.data.push(value);
@@ -722,9 +717,9 @@ BinaryDamageTable.prototype.value = function(value) {
  */
 BinaryDamageTable.prototype.toBinary = function() {
 
-	var itemsCount = this.data.length;
-	var offset = 0;
-	var size = 6;
+	const itemsCount = this.data.length;
+	let offset = 0;
+	let size = 6;
 
 	if (itemsCount > 0) {
 
@@ -732,7 +727,7 @@ BinaryDamageTable.prototype.toBinary = function() {
 		size += itemsCount * (1 + this.maxDamageValues * 2);
 	}
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// Max number of damage values
 	buffer.writeUInt32LE(this.maxDamageValues, offset);
@@ -749,19 +744,19 @@ BinaryDamageTable.prototype.toBinary = function() {
 		offset += 4;
 
 		// Write damage data items
-		this.data.forEach(function(damageItem) {
+		this.data.forEach(damageItem => {
 
-			var damageKeys = Object.keys(damageItem);
+			const damageKeys = Object.keys(damageItem);
 
 			// Number of damage key items
 			buffer.writeUInt8(damageKeys.length, offset);
 			offset += 1;
 
 			// Write damage keys/values
-			for (var k = 0; k < this.maxDamageValues; k++) {
+			for (let k = 0; k < this.maxDamageValues; k++) {
 
-				var damageKey = 0xFF;
-				var damageValue = 0;
+				let damageKey = 0xFF;
+				let damageValue = 0;
 
 				// Use assigned damage key/value pair
 				if (damageKeys.length) {
