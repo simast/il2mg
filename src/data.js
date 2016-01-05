@@ -13,7 +13,7 @@ DATA.name = "il2mg";
 DATA.version = "r2";
 
 // Application copyright
-DATA.copyright = "(C) Simas Toleikis, 2015";
+DATA.copyright = "(C) Simas Toleikis, 2015-2016";
 
 // Flag used to identify the data as binary (compiled to an executable)
 // TODO: Improve the check for binary/compiled mode detection

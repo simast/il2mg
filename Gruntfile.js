@@ -49,7 +49,9 @@ module.exports = function(grunt) {
 				"data/**/*.eng",
 				"data/**/*.ger",
 				"data/**/*.pol",
-				"data/**/*.rus"
+				"data/**/*.rus",
+				"data/**/*.spa",
+				"data/**/*.fra"
 			]
 		}
 	});

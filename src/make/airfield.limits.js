@@ -40,7 +40,7 @@ module.exports = function makeAirfieldLimits(airfield) {
 
 		// Anti-aircraft vehicle limits
 		limits[itemTag.AA_MG] = round(min(max(value / (time.night ? 37.5 : 25), 2), 7));
-		limits[itemTag.AA_FLAK] = round(min(max(value / (time.night ? 60 : 40), 0), 5));
+		limits[itemTag.AA_FLAK] = round(min(max(value / (time.night ? 45 : 30), 0), 5));
 
 		// Only add search lights for dark time periods
 		if (isDark) {
@@ -51,7 +51,7 @@ module.exports = function makeAirfieldLimits(airfield) {
 		limits[itemTag.CAR] = 1;
 
 		// Smoke and campfire effect limits
-		limits.effects[itemFlag.EFFECT_SMOKE] = round(min(max(value / 30, 1), 3));
+		limits.effects[itemFlag.EFFECT_SMOKE] = round(min(max(value / 30, 1), 4));
 		limits.effects[itemFlag.EFFECT_CAMP] = round(min(max(value / 50, 1), 2));
 
 		// 50% chance for a single vehicle route during dark time periods

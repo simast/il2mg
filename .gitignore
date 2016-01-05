@@ -8,5 +8,7 @@
 *.ger
 *.pol
 *.rus
+*.spa
+*.fra
 *.msnbin
 *.list
