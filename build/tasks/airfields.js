@@ -119,9 +119,15 @@ module.exports = function(grunt) {
 								itemData.push(planeSector);
 
 								// Plane taxi route number
-								var planeTaxiData = planeData[planeDataIndex++].split("+");
-								var planeTaxiRoute = +planeTaxiData[0];
-								var planeTaxiOffset = +planeTaxiData[1];
+								var planeTaxiData = planeData[planeDataIndex++].match(/(\-?\d+)(.*)/);
+								var planeTaxiRoute;
+								var planeTaxiOffset;
+								
+								if (planeTaxiData) {
+									
+									planeTaxiRoute = +planeTaxiData[1];
+									planeTaxiOffset = +planeTaxiData[2];
+								}
 
 								if (!Number.isInteger(planeTaxiRoute)) {
 
