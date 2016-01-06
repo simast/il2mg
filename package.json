@@ -9,7 +9,7 @@
 		"lex": "1.7.9",
 		"random-js": "1.0.8",
 		"winston": "2.1.1",
-		"speakingurl": "8.0.0",
+		"speakingurl": "8.0.2",
 		"mustache": "2.2.1",
 		"numeral": "1.5.3"
 	},
@@ -19,7 +19,7 @@
 		"grunt-contrib-clean": "0.7.0",
 		"grunt-jscs": "2.6.0",
 		"json5": "0.4.0",
-		"enclose": "1.0.5",
+		"enclose": "1.0.6",
 		"sloc": "0.1.9"
 	}
 }
