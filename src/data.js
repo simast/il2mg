@@ -10,7 +10,7 @@ const DATA = Object.create(null);
 DATA.name = "il2mg";
 
 // Application version
-DATA.version = "r2";
+DATA.version = "r3";
 
 // Application copyright
 DATA.copyright = "(C) Simas Toleikis, 2015-2016";
