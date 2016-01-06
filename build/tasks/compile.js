@@ -41,29 +41,18 @@ module.exports = function(grunt) {
 
 		enclose.exec(options, function(error) {
 			
-			if (error) {
-				return done(error);
-			}
-			
-			// TODO: Set executable file resource info
-
-			// Compress binary file with UPX executable packer
-			grunt.util.spawn({
-				cmd: "../tools/upx.exe",
-				args: ["-qqq", "--best", binaryFilePath]
-			}, function(error, result, code) {
+			if (!error) {
 				
-				grunt.file.setBase("../../");
+				// TODO: Set executable file resource info
 	
 				// Clean up temporary build directory
+				grunt.file.setBase("../../");
 				grunt.file.delete(buildDir);
 				
-				if (!error) {
-					grunt.log.ok();
-				}
-				
-				done(error);
-			});
+				grunt.log.ok();
+			}
+			
+			done(error);
 		});
 	});
 };
