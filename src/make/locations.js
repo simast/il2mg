@@ -79,6 +79,11 @@ Location.Index = class {
 		this.tree.remove(location);
 	}
 	
+	// Find all indexed location data entries
+	findAll() {
+		return this.tree.all();
+	}
+	
 	// Find all intersecting location data entries within the bounding location
 	findIn(location) {
 		return this.tree.search([location.x1, location.z1, location.x2, location.z2]);

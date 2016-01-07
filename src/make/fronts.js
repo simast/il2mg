@@ -1,18 +1,22 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
-var MCU_Icon = Item.MCU_Icon;
-var frontLine = DATA.frontLine;
-var mapColor = DATA.mapColor;
+const Item = require("../item");
+const Location = require("./locations").Location;
+const MCU_Icon = Item.MCU_Icon;
+const frontLine = DATA.frontLine;
+const mapColor = DATA.mapColor;
 
 // Generate mission fronts
 module.exports = function makeFronts() {
 	
-	var mission = this;
+	const mission = this;
+	
+	// Initialize locations index for front points
+	const locations = this.locations.fronts = new Location.Index();
 	
 	// Resolve required fronts file based on mission date
-	var frontsFile = this.battle.fronts[this.date.format("YYYY-MM-DD")];
+	const frontsFile = this.battle.fronts[this.date.format("YYYY-MM-DD")];
 
 	if (!frontsFile) {
 		return;
@@ -20,22 +24,22 @@ module.exports = function makeFronts() {
 
 	// Load fronts data file
 	// TODO: Move to data.js?
-	var frontsPath = "../../data/battles/" + this.battleID + "/fronts/";
-	var frontsData = require(frontsPath + frontsFile);
+	const frontsPath = "../../data/battles/" + this.battleID + "/fronts/";
+	const frontsData = require(frontsPath + frontsFile);
 	
 	if (!frontsData || !frontsData.length) {
 		return;
 	}
 
 	// Front icons group
-	var frontsGroup = this.createItem("Group");
+	const frontsGroup = this.createItem("Group");
 	frontsGroup.setName("FRONT");
 
 	// Indexed list of created point icons
-	var pointItems = Object.create(null);
+	const pointItems = Object.create(null);
 
 	// Process front points
-	for (var pointID = 0; pointID < frontsData.length; pointID++) {
+	for (let pointID = 0; pointID < frontsData.length; pointID++) {
 		makeFrontPoint(pointID);
 	}
 
@@ -47,13 +51,16 @@ module.exports = function makeFronts() {
 			return;
 		}
 
-		var point = frontsData[pointID];
-		var pointType = point[0];
-		var pointTargets = point[3];
-		var pointItem = frontsGroup.createItem("MCU_Icon");
+		const point = frontsData[pointID];
+		const pointType = point[0];
+		const pointTargets = point[3];
+		const pointItem = frontsGroup.createItem("MCU_Icon");
 
 		pointItem.setPosition(point[1], point[2]);
 		pointItem.Coalitions = mission.coalitions;
+		
+		// TODO: Follow bezier curves and generate more front line points
+		locations.add(new Location(point[1], point[2]));
 
 		// Border line
 		if (pointType === frontLine.BORDER) {
@@ -72,7 +79,7 @@ module.exports = function makeFronts() {
 		// Connect point items with target links
 		if (pointTargets) {
 			
-			for (var targetID of pointTargets) {
+			for (const targetID of pointTargets) {
 				
 				// Target item is not yet created
 				if (!pointItems[targetID]) {
