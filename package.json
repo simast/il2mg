@@ -13,7 +13,9 @@
 		"winston": "2.1.1",
 		"speakingurl": "8.0.2",
 		"mustache": "2.2.1",
-		"numeral": "1.5.3"
+		"numeral": "1.5.3",
+		"rbush": "1.4.2",
+		"rbush-knn": "1.0.2"
 	},
 	"devDependencies": {
 		"grunt": "0.4.5",
