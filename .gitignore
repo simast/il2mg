@@ -2,7 +2,6 @@
 /docs
 /build/il2mg
 /build/il2mg.exe
-*.upx
 *.mission
 *.eng
 *.ger
