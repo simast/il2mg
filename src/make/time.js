@@ -1,67 +1,91 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var moment = require("moment");
+const moment = require("moment");
+const suncalc = require("suncalc");
 
 // Generate mission time
 module.exports = function makeTime() {
 
-	var mission = this;
-
 	// Main period time lengths
-	var TIME_DAWN = DATA.time.dawn.period;
-	var TIME_SUNRISE = DATA.time.sunrise.period;
-	var TIME_NOON = DATA.time.noon.period;
-	var TIME_SUNSET = DATA.time.sunset.period;
-	var TIME_DUSK = DATA.time.dusk.period;
-	var TIME_MIDNIGHT = DATA.time.midnight.period;
+	const TIME_DAWN = DATA.time.dawn.period;
+	const TIME_SUNRISE = DATA.time.sunrise.period;
+	const TIME_NOON = DATA.time.noon.period;
+	const TIME_SUNSET = DATA.time.sunset.period;
+	const TIME_DUSK = DATA.time.dusk.period;
+	const TIME_MIDNIGHT = DATA.time.midnight.period;
 
-	var date = mission.date.startOf("day");
-	var time = mission.params.time;
-	var sun = mission.battle.sun[date.format("YYYY-MM-DD")];
-	var rand = mission.rand;
-
+	const date = this.date.startOf("day");
+	const rand = this.rand;
+	const map = this.map;
+	
+	// Get sun times data
+	const sunTimes = suncalc.getTimes(date.toDate(), map.latitude, map.longitude);
+	
+	// NOTE: SunCalc will calculate sun times for local time. We have to modify
+	// that time to match defined UTC offset for selected battle map.
+	
 	// Sunrise time objects
-	var sunrise = moment(sun[0], "HH:mm", true);
-	var sunriseTime = mission.sunrise = moment(date).hour(sunrise.hour()).minute(sunrise.minute());
-	var sunriseTimeStart = moment(sunriseTime).subtract(TIME_SUNRISE / 2, "s");
-	var sunriseTimeEnd = moment(sunriseTime).add(TIME_SUNRISE / 2, "s");
-
+	const sunrise = this.sunrise = moment(date);
+	const sunriseTime = moment(sunTimes.sunrise).utcOffset(map.utcOffset);
+	
+	sunrise.set({
+		hour: sunriseTime.hour(),
+		minute: sunriseTime.minute()
+	});
+	
+	const sunriseStart = moment(sunrise).subtract(TIME_SUNRISE / 2, "s");
+	const sunriseEnd = moment(sunrise).add(TIME_SUNRISE / 2, "s");
+	
 	// Noon time objects
-	var noon = moment(sun[1], "HH:mm", true);
-	var noonTime = mission.noon = moment(date).hour(noon.hour()).minute(noon.minute());
-	var noonTimeStart = moment(noonTime).subtract(TIME_NOON / 2, "s");
-	var noonTimeEnd = moment(noonTime).add(TIME_NOON / 2, "s");
+	const noon = this.noon = moment(date);
+	const noonTime = moment(sunTimes.solarNoon).utcOffset(map.utcOffset);
+
+	noon.set({
+		hour: noonTime.hour(),
+		minute: noonTime.minute()
+	});
+	
+	const noonStart = moment(noon).subtract(TIME_NOON / 2, "s");
+	const noonEnd = moment(noon).add(TIME_NOON / 2, "s");
 
 	// Sunset time objects
-	var sunset = moment(sun[2], "HH:mm", true);
-	var sunsetTime = moment(date).hour(sunset.hour()).minute(sunset.minute());
-	var sunsetTimeStart = moment(sunsetTime).subtract(TIME_SUNSET / 2, "s");
-	var sunsetTimeEnd = moment(sunsetTime).add(TIME_SUNSET / 2, "s");
+	const sunset = this.sunset = moment(date);
+	const sunsetTime = moment(sunTimes.sunsetStart).utcOffset(map.utcOffset);
+	
+	sunset.set({
+		hour: sunsetTime.hour(),
+		minute: sunsetTime.minute()
+	});
+	
+	const sunsetStart = moment(sunset).subtract(TIME_SUNSET / 2, "s");
+	const sunsetEnd = moment(sunset).add(TIME_SUNSET / 2, "s");
 
 	// Midnight time objects
-	var midnightTime = moment(noonTime).subtract(12, "h");
-	var midnightTimeStart = moment(midnightTime).subtract(TIME_MIDNIGHT / 2, "s");
-	var midnightTimeEnd = moment(midnightTime).add(TIME_MIDNIGHT / 2, "s");
+	const midnight = this.midnight = moment(noon).subtract(12, "h");
+	const midnightStart = moment(midnight).subtract(TIME_MIDNIGHT / 2, "s");
+	const midnightEnd = moment(midnight).add(TIME_MIDNIGHT / 2, "s");
 
 	// Other time objects
-	var dawnTimeStart = moment(sunriseTimeStart).subtract(TIME_DAWN, "s");
-	var duskTimeEnd = moment(sunsetTimeEnd).add(TIME_DUSK, "s");
-	var eveningTimeStart = moment(noonTimeEnd).add(duskTimeEnd.diff(noonTimeEnd) / 2, "ms");
+	const dawnStart = moment(sunriseStart).subtract(TIME_DAWN, "s");
+	const duskEnd = moment(sunsetEnd).add(TIME_DUSK, "s");
+	const eveningStart = moment(noonEnd).add(duskEnd.diff(noonEnd) / 2, "ms");
+
+	let time = this.params.time;
 
 	// Generate a random time period
 	if (!time) {
 
-		var weightedPeriods = [];
+		const weightedPeriods = [];
 
 		// Build a weighted period array
-		for (var periodID in DATA.time) {
+		for (const periodID in DATA.time) {
 
-			var period = DATA.time[periodID];
+			const period = DATA.time[periodID];
 
 			if (period.weight) {
 
-				for (var i = 0; i < period.weight; i++) {
+				for (let i = 0; i < period.weight; i++) {
 					weightedPeriods.push(periodID);
 				}
 			}
@@ -74,14 +98,14 @@ module.exports = function makeTime() {
 	// Generate time from a named time period
 	if (typeof time === "string") {
 
-		var randValue = rand.real(0, 1);
+		const randValue = rand.real(0, 1);
 
 		switch (time) {
 
 			// Dawn (from night to sunrise)
 			case "dawn": {
 
-				time = moment(dawnTimeStart);
+				time = moment(dawnStart);
 				time.add(randValue * TIME_DAWN, "s");
 
 				break;
@@ -90,7 +114,7 @@ module.exports = function makeTime() {
 			// Sunrise (time around sunrise)
 			case "sunrise": {
 
-				time = moment(sunriseTimeStart);
+				time = moment(sunriseStart);
 				time.add(randValue * TIME_SUNRISE, "s");
 
 				break;
@@ -99,8 +123,8 @@ module.exports = function makeTime() {
 			// Morning (from sunrise to noon)
 			case "morning": {
 
-				time = moment(sunriseTimeStart);
-				time.add(randValue * noonTimeStart.diff(time), "ms");
+				time = moment(sunriseStart);
+				time.add(randValue * noonStart.diff(time), "ms");
 
 				break;
 			}
@@ -108,8 +132,8 @@ module.exports = function makeTime() {
 			// Day (from sunrise to sunset)
 			case "day": {
 
-				time = moment(sunriseTimeStart);
-				time.add(randValue * sunsetTimeEnd.diff(time), "ms");
+				time = moment(sunriseStart);
+				time.add(randValue * sunsetEnd.diff(time), "ms");
 
 				break;
 			}
@@ -117,7 +141,7 @@ module.exports = function makeTime() {
 			// Noon (time around solar noon)
 			case "noon": {
 
-				time = moment(noonTimeStart);
+				time = moment(noonStart);
 				time.add(randValue * TIME_NOON, "s");
 
 				break;
@@ -126,8 +150,8 @@ module.exports = function makeTime() {
 			// Afternoon (from noon to evening)
 			case "afternoon": {
 
-				time = moment(noonTimeEnd);
-				time.add(randValue * eveningTimeStart.diff(time), "ms");
+				time = moment(noonEnd);
+				time.add(randValue * eveningStart.diff(time), "ms");
 
 				break;
 			}
@@ -135,8 +159,8 @@ module.exports = function makeTime() {
 			// Evening (from afternoon to night)
 			case "evening": {
 
-				time = moment(eveningTimeStart);
-				time.add(randValue * duskTimeEnd.diff(time), "ms");
+				time = moment(eveningStart);
+				time.add(randValue * duskEnd.diff(time), "ms");
 
 				break;
 			}
@@ -144,7 +168,7 @@ module.exports = function makeTime() {
 			// Sunset (time around sunset)
 			case "sunset": {
 
-				time = moment(sunsetTimeStart);
+				time = moment(sunsetStart);
 				time.add(randValue * TIME_SUNSET, "s");
 
 				break;
@@ -153,7 +177,7 @@ module.exports = function makeTime() {
 			// Dusk (from sunset to night)
 			case "dusk": {
 
-				time = moment(sunsetTimeEnd);
+				time = moment(sunsetEnd);
 				time.add(randValue * TIME_DUSK, "s");
 
 				break;
@@ -162,8 +186,8 @@ module.exports = function makeTime() {
 			// Night (from dusk to dawn)
 			case "night": {
 
-				time = moment(dawnTimeStart);
-				time.subtract(randValue * duskTimeEnd.diff(time), "ms");
+				time = moment(dawnStart);
+				time.subtract(randValue * duskEnd.diff(time), "ms");
 
 				break;
 			}
@@ -171,7 +195,7 @@ module.exports = function makeTime() {
 			// Midnight (time around solar midnight)
 			case "midnight": {
 
-				time = moment(midnightTimeStart);
+				time = moment(midnightStart);
 				time.add(randValue * TIME_MIDNIGHT, "s");
 
 				break;
@@ -188,68 +212,68 @@ module.exports = function makeTime() {
 	date.second(time.second());
 
 	// Set mission time flags
-	var timeFlags = mission.time = Object.create(null);
+	const timeFlags = this.time = Object.create(null);
 
 	// Dawn flag
-	if (date.isAfter(dawnTimeStart) && date.isBefore(sunriseTimeStart)) {
+	if (date.isAfter(dawnStart) && date.isBefore(sunriseStart)) {
 		timeFlags.dawn = true;
 	}
 
 	// Sunrise flag
-	if (date.isAfter(sunriseTimeStart) && date.isBefore(sunriseTimeEnd)) {
+	if (date.isAfter(sunriseStart) && date.isBefore(sunriseEnd)) {
 		timeFlags.sunrise = true;
 	}
 
 	// Morning flag
-	if (date.isAfter(sunriseTimeStart) && date.isBefore(noonTimeStart)) {
+	if (date.isAfter(sunriseStart) && date.isBefore(noonStart)) {
 		timeFlags.morning = true;
 	}
 
 	// Day flag
-	if (date.isAfter(sunriseTimeStart) && date.isBefore(sunsetTimeEnd)) {
+	if (date.isAfter(sunriseStart) && date.isBefore(sunsetEnd)) {
 		timeFlags.day = true;
 	}
 
 	// Noon flag
-	if (date.isAfter(noonTimeStart) && date.isBefore(noonTimeEnd)) {
+	if (date.isAfter(noonStart) && date.isBefore(noonEnd)) {
 		timeFlags.noon = true;
 	}
 
 	// Afternoon flag
-	if (date.isAfter(noonTimeEnd) && date.isBefore(eveningTimeStart)) {
+	if (date.isAfter(noonEnd) && date.isBefore(eveningStart)) {
 		timeFlags.afternoon = true;
 	}
 
 	// Evening flag
-	if (date.isAfter(eveningTimeStart) && date.isBefore(duskTimeEnd)) {
+	if (date.isAfter(eveningStart) && date.isBefore(duskEnd)) {
 		timeFlags.evening = true;
 	}
 
 	// Sunset flag
-	if (date.isAfter(sunsetTimeStart) && date.isBefore(sunsetTimeEnd)) {
+	if (date.isAfter(sunsetStart) && date.isBefore(sunsetEnd)) {
 		timeFlags.sunset = true;
 	}
 
 	// Dusk flag
-	if (date.isAfter(sunsetTimeEnd) && date.isBefore(duskTimeEnd)) {
+	if (date.isAfter(sunsetEnd) && date.isBefore(duskEnd)) {
 		timeFlags.dusk = true;
 	}
 
 	// Night flag
-	if (date.isAfter(duskTimeEnd) || date.isBefore(dawnTimeStart)) {
+	if (date.isAfter(duskEnd) || date.isBefore(dawnStart)) {
 		timeFlags.night = true;
 	}
 
 	// Midnight flag
-	if (date.isAfter(midnightTimeStart) && date.isBefore(midnightTimeEnd)) {
+	if (date.isAfter(midnightStart) && date.isBefore(midnightEnd)) {
 		timeFlags.midnight = true;
 	}
 
 	// Set mission options time
-	mission.items.Options.Time = new String(date.format("H:m:s"));
+	this.items.Options.Time = new String(date.format("H:m:s"));
 
 	// Log mission time info
-	var logData = [];
+	let logData = [];
 
 	logData.push("Time:");
 	logData.push(date.format("HH:mm"));

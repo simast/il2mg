@@ -63,10 +63,11 @@ function Mission(params) {
 	log.profile("Making");
 
 	// Make mission parts
+	// NOTE: Order is very important!
 	require("./make/battle").call(this);
 	require("./make/date").call(this);
-	require("./make/time").call(this);
 	require("./make/map").call(this);
+	require("./make/time").call(this);
 	require("./make/locations").call(this);
 	require("./make/people").call(this);
 	require("./make/planes").call(this);
