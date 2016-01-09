@@ -64,7 +64,18 @@ module.exports = function makeFronts() {
 
 		// Border line
 		if (pointType === frontLine.BORDER) {
+			
 			pointItem.LineType = MCU_Icon.LINE_POSITION_0;
+			
+			// Show icons on front border points in debug mode
+			if (mission.debug && mission.debug.fronts) {
+				
+				const debugPointItem = frontsGroup.createItem("MCU_Icon");
+				
+				debugPointItem.setPosition(point[1], point[2]);
+				debugPointItem.Coalitions = mission.coalitions;
+				debugPointItem.IconId = MCU_Icon.ICON_WAYPOINT;
+			}
 		}
 		// Attack arrow
 		else if (pointType === frontLine.ATTACK) {

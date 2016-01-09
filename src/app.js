@@ -73,6 +73,34 @@ params.version(DATA.name + " " + DATA.version + " " + DATA.copyright);
 // Set mission seed value (--seed)
 params.option("-S, --seed <seed>", "set mission seed value");
 
+// Turn on debug mode (--debug)
+if (!DATA.isBinary) {
+	
+	params.option("-D, --debug [features]", (function() {
+
+		let desc = "use debug (development) mode" + EOL + EOL;
+	
+		desc += '\t"airfields" - Debug airfields.' + EOL;
+		desc += '\t"fronts" - Debug fronts and territories.' + EOL;
+	
+		return desc;
+	})(), function(value) {
+		
+		var features = Object.create(null);
+		
+		String(value).split(",").forEach((feature) => {
+			
+			feature = feature.trim();
+			
+			if (feature) {
+				features[feature] = true;
+			}
+		});
+		
+		return features;
+	});
+}
+
 // Select mission file format (--format)
 params.option("-f, --format <format>", (function() {
 
@@ -234,11 +262,6 @@ params.option("-a, --airfield <airfield>", "select an airfield", function(value)
 	return String(value).trim();
 });
 
-// Turn on debug mode (--debug)
-if (!DATA.isBinary) {
-	params.option("-D, --debug", "use debug (development) mode");
-}
-
 /**
  * TODO: Support other command-line params:
  *
@@ -288,6 +311,13 @@ appDomain.run(function() {
 
 	// Validate command line params
 
+	// --debug
+	if (typeof params.debug === "boolean" && params.debug) {
+		
+		// Simple debug mode (without extra features)
+		params.debug = Object.create(null);
+	}
+	
 	// --format
 	if (params.format !== undefined) {
 		

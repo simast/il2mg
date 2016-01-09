@@ -16,7 +16,8 @@
 		"numeral": "1.5.3",
 		"rbush": "1.4.2",
 		"rbush-knn": "1.0.2",
-		"suncalc": "1.7.0"
+		"suncalc": "1.7.0",
+		"sylvester": "0.0.21"
 	},
 	"devDependencies": {
 		"grunt": "0.4.5",

@@ -1,6 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+// Global vector/matrix/line/plane shorthand functions
+require("sylvester");
+
 const fs = require("fs");
 const os = require("os");
 const util = require("util");
@@ -57,8 +60,8 @@ function Mission(params) {
 	// Initialize random number generator
 	this.initRand(params);
 	
-	// Debug mode flag
-	this.debug = (this.params.debug === true);
+	// Debug mode
+	this.debug = (this.params.debug ? this.params.debug : false);
 	
 	log.profile("Making");
 

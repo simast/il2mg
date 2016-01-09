@@ -251,7 +251,7 @@ module.exports = function makeAirfields() {
 			})();
 			
 			// Show airfield icon with number of planes in debug mode
-			if (mission.debug) {
+			if (mission.debug && mission.debug.airfields) {
 				
 				// NOTE: Icon text can only have a custom color if it is linked to another
 				// icon. As a workaround - we are creating two icons at the same location.
