@@ -1,19 +1,18 @@
 {
 	dawn: {
 		description: "From night to sunrise.",
-		period: 5400,
-		weight: 1
+		period: 3600
 	},
 	sunrise: {
 		description: "Time around sunrise.",
-		period: 1800
+		period: 3600
 	},
 	morning: {
 		description: "From sunrise to noon."
 	},
 	day: {
 		description: "From sunrise to sunset.",
-		weight: 9
+		weight: 1
 	},
 	noon: {
 		description: "Time around solar noon.",
@@ -27,11 +26,11 @@
 	},
 	sunset: {
 		description: "Time around sunset.",
-		period: 1800
+		period: 3600
 	},
 	dusk: {
 		description: "From sunset to night.",
-		period: 5400
+		period: 3600
 	},
 	night: {
 		description: "From dusk to dawn."

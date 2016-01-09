@@ -53,6 +53,9 @@ module.exports = function makeTime() {
 	const sunset = this.sunset = moment(date);
 	const sunsetTime = moment(sunTimes.sunsetStart).utcOffset(map.utcOffset);
 	
+	// NOTE: In-game sunset start time is off by around 30 minutes from SunCalc results
+	sunsetTime.subtract(30, "minutes");
+	
 	sunset.set({
 		hour: sunsetTime.hour(),
 		minute: sunsetTime.minute()
@@ -69,7 +72,7 @@ module.exports = function makeTime() {
 	// Other time objects
 	const dawnStart = moment(sunriseStart).subtract(TIME_DAWN, "s");
 	const duskEnd = moment(sunsetEnd).add(TIME_DUSK, "s");
-	const eveningStart = moment(noonEnd).add(duskEnd.diff(noonEnd) / 2, "ms");
+	const eveningStart = moment(noonEnd).add(sunsetEnd.diff(noonEnd) / 2, "ms");
 
 	let time = this.params.time;
 
@@ -185,7 +188,7 @@ module.exports = function makeTime() {
 
 			// Night (from dusk to dawn)
 			case "night": {
-
+				
 				time = moment(dawnStart);
 				time.subtract(randValue * duskEnd.diff(time), "ms");
 
@@ -210,62 +213,62 @@ module.exports = function makeTime() {
 	date.hour(time.hour());
 	date.minute(time.minute());
 	date.second(time.second());
-
+	
 	// Set mission time flags
 	const timeFlags = this.time = Object.create(null);
 
 	// Dawn flag
-	if (date.isAfter(dawnStart) && date.isBefore(sunriseStart)) {
+	if (date.isSameOrAfter(dawnStart) && date.isBefore(sunriseStart)) {
 		timeFlags.dawn = true;
 	}
 
 	// Sunrise flag
-	if (date.isAfter(sunriseStart) && date.isBefore(sunriseEnd)) {
+	if (date.isSameOrAfter(sunriseStart) && date.isBefore(sunriseEnd)) {
 		timeFlags.sunrise = true;
 	}
 
 	// Morning flag
-	if (date.isAfter(sunriseStart) && date.isBefore(noonStart)) {
+	if (date.isSameOrAfter(sunriseStart) && date.isBefore(noonStart)) {
 		timeFlags.morning = true;
 	}
 
 	// Day flag
-	if (date.isAfter(sunriseStart) && date.isBefore(sunsetEnd)) {
+	if (date.isSameOrAfter(sunriseStart) && date.isBefore(sunsetEnd)) {
 		timeFlags.day = true;
 	}
 
 	// Noon flag
-	if (date.isAfter(noonStart) && date.isBefore(noonEnd)) {
+	if (date.isSameOrAfter(noonStart) && date.isBefore(noonEnd)) {
 		timeFlags.noon = true;
 	}
 
 	// Afternoon flag
-	if (date.isAfter(noonEnd) && date.isBefore(eveningStart)) {
+	if (date.isSameOrAfter(noonEnd) && date.isBefore(eveningStart)) {
 		timeFlags.afternoon = true;
 	}
-
+	
 	// Evening flag
-	if (date.isAfter(eveningStart) && date.isBefore(duskEnd)) {
+	if (date.isSameOrAfter(eveningStart) && date.isBefore(duskEnd)) {
 		timeFlags.evening = true;
 	}
 
 	// Sunset flag
-	if (date.isAfter(sunsetStart) && date.isBefore(sunsetEnd)) {
+	if (date.isSameOrAfter(sunsetStart) && date.isBefore(sunsetEnd)) {
 		timeFlags.sunset = true;
 	}
 
 	// Dusk flag
-	if (date.isAfter(sunsetEnd) && date.isBefore(duskEnd)) {
+	if (date.isSameOrAfter(sunsetEnd) && date.isBefore(duskEnd)) {
 		timeFlags.dusk = true;
 	}
 
 	// Night flag
-	if (date.isAfter(duskEnd) || date.isBefore(dawnStart)) {
+	if (date.isSameOrAfter(duskEnd) || date.isBefore(dawnStart)) {
 		timeFlags.night = true;
 	}
-
+	
 	// Midnight flag
-	if (date.isAfter(midnightStart) && date.isBefore(midnightEnd)) {
+	if (date.isSameOrAfter(midnightStart) && date.isBefore(midnightEnd)) {
 		timeFlags.midnight = true;
 	}
 
