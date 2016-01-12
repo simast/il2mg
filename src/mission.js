@@ -47,22 +47,22 @@ function Mission(params) {
 	this.lang = []; // Language data
 	this.make = []; // Delayed make callbacks list
 	this.params = params; // Desired mission parameters
-	
+
 	// Last item index value
 	this.lastIndex = 0;
-	
+
 	log.I("Making mission...");
 
 	// Reserve an empty localization string (used in binary mission generation for
 	// items without LCName or LCDesc properties).
 	this.getLC("");
-	
+
 	// Initialize random number generator
 	this.initRand(params);
-	
+
 	// Debug mode
 	this.debug = (this.params.debug ? this.params.debug : false);
-	
+
 	log.profile("Making");
 
 	// Make mission parts
@@ -85,7 +85,7 @@ function Mission(params) {
 	require("./make/tasks").call(this);
 	require("./make/forces").call(this);
 	require("./make/briefing").call(this);
-	
+
 	// Execute all delayed (last) mission make callbacks
 	for (const makeCallback of this.make) {
 		makeCallback();
@@ -164,19 +164,19 @@ Mission.prototype.initRand = function(params) {
 				complexSeed[paramIndex] = params[param];
 			}
 		});
-		
+
 		if (complexSeed) {
 			complexSeed[0] = this.seed;
 		}
 	}
-	
+
 	// Initialize random number generator
 	const mtRand = Random.engines.mt19937();
 	mtRand.seed(this.seed);
 	this.rand = new Random(mtRand);
-	
+
 	let seedParam;
-	
+
 	// Save seed value as a localization string
 	if (complexSeed) {
 		seedParam = new Buffer(JSON.stringify(complexSeed), "utf8").toString("base64");
@@ -184,10 +184,10 @@ Mission.prototype.initRand = function(params) {
 	else {
 		seedParam = this.seed.toString();
 	}
-	
+
 	// Save seed param value as a localization string
 	this.getLC(seedParam);
-	
+
 	// Log seed param value
 	log.I("Seed:", seedParam);
 };
@@ -310,7 +310,7 @@ Mission.prototype.getCallsign = function(type) {
 			this.lastCallsign[type] = 0;
 		}
 	}
-	
+
 	const callsign = DATA.callsigns[type][this.lastCallsign[type]];
 
 	// Return selected callsign info
@@ -327,7 +327,7 @@ Mission.prototype.getCallsign = function(type) {
  * @returns {Promise} Promise object.
  */
 Mission.prototype.save = function(fileName) {
-	
+
 	const format = this.params.format || Mission.FORMAT_BINARY;
 	const promises = [];
 
@@ -380,13 +380,13 @@ Mission.prototype.saveText = function(fileName) {
 		const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT);
 
 		// Write .Mission data
-		fileStream.once("open", fd => {
+		fileStream.once("open", (fd) => {
 
 			// Required mission file header
 			fileStream.write("# Mission File Version = 1.0;" + os.EOL);
 
 			// Write mission items
-			this.items.forEach(item => {
+			this.items.forEach((item) => {
 				fileStream.write(os.EOL + item.toString() + os.EOL);
 			});
 
@@ -417,7 +417,7 @@ Mission.prototype.saveText = function(fileName) {
  * @returns {Promise} Promise object.
  */
 Mission.prototype.saveBinary = function(fileName) {
-	
+
 	const profileName = "Saving ." + FILE_EXT_BINARY;
 
 	log.profile(profileName);
@@ -441,7 +441,7 @@ Mission.prototype.saveBinary = function(fileName) {
 		// Collect binary representation of all mission items
 		(function walkItems(items) {
 
-			items.forEach(item => {
+			items.forEach((item) => {
 
 				// Process Group item child items
 				if (item instanceof Item.Group) {
@@ -452,9 +452,9 @@ Mission.prototype.saveBinary = function(fileName) {
 				}
 				// Get item binary representation (data buffers)
 				else {
-					
+
 					for (const buffer of item.toBinary(indexTables)) {
-						
+
 						// Collect Options item buffers
 						if (item instanceof Item.Options) {
 							optionsBuffers.push(buffer);
@@ -464,17 +464,17 @@ Mission.prototype.saveBinary = function(fileName) {
 							itemBuffers.push(buffer);
 						}
 					}
-					
+
 					// Process linked item entity
 					if (item.entity) {
-						
+
 						for (const buffer of item.entity.toBinary(indexTables)) {
 							itemBuffers.push(buffer);
 						}
-						
+
 						numItems++;
 					}
-					
+
 					numItems++;
 				}
 			});
@@ -487,7 +487,7 @@ Mission.prototype.saveBinary = function(fileName) {
 
 		const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY);
 
-		fileStream.once("open", fd => {
+		fileStream.once("open", (fd) => {
 
 			// Write Options item buffers (has to be the first one in the file)
 			while (optionsBuffers.length) {
@@ -504,7 +504,7 @@ Mission.prototype.saveBinary = function(fileName) {
 			fileStream.write(itlhBuffer);
 
 			// Write index tables
-			indexTableNames.forEach(tableName => {
+			indexTableNames.forEach((tableName) => {
 				fileStream.write(indexTables[tableName].toBinary());
 			});
 
@@ -544,7 +544,7 @@ Mission.prototype.saveLang = function(fileName) {
 
 	const promises = [];
 
-	DATA.languages.forEach(lang => {
+	DATA.languages.forEach((lang) => {
 
 		const profileName = "Saving ." + lang;
 
@@ -554,7 +554,7 @@ Mission.prototype.saveLang = function(fileName) {
 
 			const fileStream = fs.createWriteStream(fileName + "." + lang);
 
-			fileStream.once("open", fd => {
+			fileStream.once("open", (fd) => {
 
 				// Write UCS2 little-endian BOM
 				fileStream.write("FFFE", "hex");
@@ -750,7 +750,7 @@ BinaryDamageTable.prototype.toBinary = function() {
 		offset += 4;
 
 		// Write damage data items
-		this.data.forEach(damageItem => {
+		this.data.forEach((damageItem) => {
 
 			const damageKeys = Object.keys(damageItem);
 

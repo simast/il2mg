@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var fs = require("fs");
-var os = require("os");
-var getSlug = require("speakingurl");
+const fs = require("fs");
+const os = require("os");
+const getSlug = require("speakingurl");
 
 /**
  * Base (and generic) mission item.
@@ -85,13 +85,13 @@ Item.prototype.remove = function() {
 		throw new Error("Item has no parent.");
 	}
 
-	var parent = this.parent;
+	const parent = this.parent;
 
 	if (!parent.items || !parent.items.length) {
 		throw new Error("Parent item has no children.");
 	}
 
-	var itemIndex = parent.items.indexOf(this);
+	const itemIndex = parent.items.indexOf(this);
 
 	if (itemIndex < 0) {
 		throw new Error("Item is not part of a parent.");
@@ -149,7 +149,7 @@ Item.prototype.setPosition = function() {
 	// TODO: Build a items index (to quickly lookup items based on position)
 
 	// Array position version: setPosition([X, Y, Z])
-	var position = arguments[0];
+	let position = arguments[0];
 
 	if (!Array.isArray(position)) {
 
@@ -189,12 +189,12 @@ Item.prototype.setPositionNear = function(item) {
 
 	// TODO: Improve nearby item positioning algorithm
 
-	var rand = item.mission.rand;
-	var orientation = rand.integer(0, 360) * (Math.PI / 180);
-	var magnitude = rand.integer(20, 40);
+	const rand = item.mission.rand;
+	const orientation = rand.integer(0, 360) * (Math.PI / 180);
+	const magnitude = rand.integer(20, 40);
 
-	var posX = item.XPos + magnitude * Math.cos(orientation);
-	var posZ = item.ZPos + magnitude * Math.sin(orientation);
+	const posX = item.XPos + magnitude * Math.cos(orientation);
+	const posZ = item.ZPos + magnitude * Math.sin(orientation);
 
 	// Set nearby position
 	this.setPosition(posX, item.YPos, posZ);
@@ -208,7 +208,7 @@ Item.prototype.setPositionNear = function(item) {
 Item.prototype.setOrientation = function() {
 
 	// Array orientation version: setOrientation([X, Y, Z])
-	var orientation = arguments[0];
+	let orientation = arguments[0];
 
 	if (!Array.isArray(orientation)) {
 
@@ -241,31 +241,31 @@ Item.prototype.setOrientation = function() {
  * @param {number|array|object} [...] Target coordinates or target item object.
  */
 Item.prototype.setOrientationTo = function() {
-	
-	var targetX, targetY, targetZ;
-	
+
+	let targetX, targetY, targetZ;
+
 	// Arguments as another target item object: setOrientationTo(item)
 	if (arguments[0] instanceof Item) {
-		
-		var targetItem = arguments[0];
-		
+
+		const targetItem = arguments[0];
+
 		targetX = targetItem.XPos || 0;
-		
+
 		if (targetItem.YPos) {
 			targetY = targetItem.YPos;
 		}
-		
+
 		targetZ = targetItem.ZPos || 0;
 	}
 	// Arguments as array of target position components: setOrientationTo([X, Y, Z])
 	else if (Array.isArray(arguments[0])) {
-		
-		var targetPosition = arguments[0];
+
+		const targetPosition = arguments[0];
 
 		targetX = targetPosition[0];
-		
+
 		if (targetPosition.length > 2) {
-			
+
 			targetY = targetPosition[1];
 			targetZ = targetPosition[2];
 		}
@@ -275,9 +275,9 @@ Item.prototype.setOrientationTo = function() {
 	}
 	// Arguments as separate target position components: setOrientationTo(X, Y, Z)
 	else {
-		
+
 		targetX = arguments[0];
-		
+
 		if (arguments.length > 2) {
 
 			targetY = arguments[1];
@@ -287,19 +287,19 @@ Item.prototype.setOrientationTo = function() {
 			targetZ = arguments[1];
 		}
 	}
-	
+
 	// Unknown/invalid orientation target position
 	if (targetX === undefined || targetZ === undefined) {
 		throw new TypeError("Invalid orientation target value.");
 	}
-	
-	var sourceX = this.XPos || 0;
-	var sourceY = this.YPos || 0;
-	var sourceZ = this.ZPos || 0;
-	
+
+	const sourceX = this.XPos || 0;
+	const sourceY = this.YPos || 0;
+	const sourceZ = this.ZPos || 0;
+
 	// TODO: Support 3D orientation
 
-	var orientationY = Math.atan2(targetZ - sourceZ, targetX - sourceX);
+	let orientationY = Math.atan2(targetZ - sourceZ, targetX - sourceX);
 	orientationY = orientationY * (180 / Math.PI);
 
 	if (orientationY < 0) {
@@ -344,7 +344,7 @@ Item.prototype.removeTarget = function(item) {
 		return;
 	}
 
-	var itemPos = this.Targets.indexOf(item.Index);
+	const itemPos = this.Targets.indexOf(item.Index);
 
 	// Remove existing item link
 	if (itemPos > -1) {
@@ -391,7 +391,7 @@ Item.prototype.removeObject = function(item) {
 		return;
 	}
 
-	var itemPos = this.Objects.indexOf(item.entity.Index);
+	const itemPos = this.Objects.indexOf(item.entity.Index);
 
 	// Remove existing item object link
 	if (itemPos > -1) {
@@ -411,14 +411,14 @@ Item.prototype.createEntity = function(disabled) {
 		throw new Error("Item is already linked to an entity.");
 	}
 
-	var entity = this.mission.createItem("MCU_TR_Entity", false);
+	const entity = this.mission.createItem("MCU_TR_Entity", false);
 
 	// Link the item with entity
 	this.LinkTrId = entity.Index;
 	entity.MisObjID = this.Index;
 
 	Object.defineProperty(this, "entity", {value: entity});
-	
+
 	// Set entity to an initial disabled state
 	if (disabled) {
 		entity.Enabled = 0;
@@ -437,15 +437,15 @@ Item.prototype.toString = function(indentLevel) {
 
 	indentLevel = indentLevel || 0;
 
-	var indent = new Array(2 * indentLevel + 1).join(" ");
-	var value = indent + this.type + os.EOL + indent + "{";
+	const indent = new Array(2 * indentLevel + 1).join(" ");
+	let value = indent + this.type + os.EOL + indent + "{";
 
 	// Build property and value textual representation
 	function propertyToString(propName, propValue) {
 
-		var propType = typeof propValue;
-		var isArray = false;
-		var isArrayComplex = false;
+		const propType = typeof propValue;
+		let isArray = false;
+		let isArrayComplex = false;
 
 		if (propType === "object") {
 
@@ -453,7 +453,7 @@ Item.prototype.toString = function(indentLevel) {
 			if (propValue instanceof Set) {
 
 				// Repeat property name for each set value
-				for (var setValue of propValue) {
+				for (const setValue of propValue) {
 					propertyToString(propName, setValue);
 				}
 
@@ -477,7 +477,7 @@ Item.prototype.toString = function(indentLevel) {
 			// characters and will fail to load the mission when there are any. As a
 			// workaround we transliterate "Name" string to a safe ASCII character set.
 			if (propName === "Name") {
-				
+
 				propValue = getSlug(propValue, {
 					maintainCase: true,
 					uric: true,
@@ -493,7 +493,7 @@ Item.prototype.toString = function(indentLevel) {
 
 			value += os.EOL + indent + "  {";
 
-			propValue.forEach(function(itemValue) {
+			propValue.forEach((itemValue) => {
 				value += os.EOL + indent + "    " + itemValue.join(":") + ";";
 			});
 
@@ -514,14 +514,14 @@ Item.prototype.toString = function(indentLevel) {
 	}
 
 	// Build item properties list
-	Object.keys(this).forEach(function(propName) {
+	Object.keys(this).forEach((propName) => {
 		propertyToString(propName, this[propName]);
-	}, this);
+	});
 
 	// Serialize any child items
 	if (this.items && this.items.length) {
 
-		this.items.forEach(function(item) {
+		this.items.forEach((item) => {
 
 			value += os.EOL;
 
@@ -557,7 +557,7 @@ Item.prototype.toBinary = function* (index) {
 	}
 
 	// Write base item binary information
-	var buffer = new Buffer(46);
+	const buffer = new Buffer(46);
 
 	// Item binary type ID
 	this.writeUInt32(buffer, this.typeID);
@@ -612,7 +612,7 @@ Item.prototype.writeOrientation = function(buffer) {
 
 	// NOTE: Orientation in binary file is represented as a 16 bit unsigned integer
 	// number between 0 (equal to 0 degrees) and 60000 (equal to 360 degrees).
-	var degreeValue = 60000 / 360;
+	const degreeValue = 60000 / 360;
 
 	this.writeUInt16(buffer, Math.round(degreeValue * (this.XOri ? this.XOri : 0)));
 	this.writeUInt16(buffer, Math.round(degreeValue * (this.YOri ? this.YOri : 0)));
@@ -714,9 +714,9 @@ Item.prototype.writeUInt32Array = function(buffer, arrayValue) {
 	this.writeUInt32(buffer, arrayValue.length);
 
 	// Array values
-	for (var i = 0; i < arrayValue.length; i++) {
+	for (let i = 0; i < arrayValue.length; i++) {
 
-		var value = arrayValue[i];
+		const value = arrayValue[i];
 
 		// Check for valid integer value
 		if (!Number.isInteger(value)) {
@@ -735,7 +735,7 @@ Item.prototype.writeUInt32Array = function(buffer, arrayValue) {
  */
 Item.readTextFile = function(file) {
 
-	var fileContent = fs.readFileSync(file, {
+	const fileContent = fs.readFileSync(file, {
 		encoding: "ascii" // TODO
 	});
 
@@ -743,15 +743,15 @@ Item.readTextFile = function(file) {
 		throw new Error("Could not read specified item file (no content).");
 	}
 
-	var Lexer = require("lex");
-	var lexer = new Lexer();
-	var items = [];
-	var itemStack = [];
+	const Lexer = require("lex");
+	const lexer = new Lexer();
+	const items = [];
+	const itemStack = [];
 
 	// Rule for the start of item definition
-	lexer.addRule(/\s*(\w+)\s*{\s*/i, function(matched, itemType) {
+	lexer.addRule(/\s*(\w+)\s*{\s*/i, (matched, itemType) => {
 
-		var item;
+		let item;
 
 		// Normal item
 		if (Item[itemType]) {
@@ -767,9 +767,9 @@ Item.readTextFile = function(file) {
 	});
 
 	// Rule for item property
-	lexer.addRule(/\s*(\w+)\s*=\s*(.+);\s*/i, function(matched, propName, propValue) {
+	lexer.addRule(/\s*(\w+)\s*=\s*(.+);\s*/i, (matched, propName, propValue) => {
 
-		var item = itemStack[itemStack.length - 1];
+		const item = itemStack[itemStack.length - 1];
 
 		// Escape backslash (\) character for JavaScript strings
 		propValue = propValue.replace(/\\/g, "\\\\");
@@ -781,9 +781,9 @@ Item.readTextFile = function(file) {
 	});
 
 	// Rule for the end of item definition
-	lexer.addRule(/\s*}\s*/i, function(matched) {
+	lexer.addRule(/\s*}\s*/i, (matched) => {
 
-		var item = itemStack.pop();
+		const item = itemStack.pop();
 
 		// Root item element
 		if (!itemStack.length) {
@@ -840,7 +840,7 @@ module.exports = Item;
 	require("./item/Plane"),
 	require("./item/Vehicle")
 ]
-.forEach(function(item) {
+.forEach((item) => {
 
 	Object.defineProperty(item.prototype, "type", {value: item.name});
 	Item[item.name] = item;

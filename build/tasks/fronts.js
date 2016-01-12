@@ -4,39 +4,39 @@
 // Load static global data
 require("../../src/data");
 
-let numeral = require("numeral");
-let Item = require("../../src/item");
+const numeral = require("numeral");
+const Item = require("../../src/item");
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw front .Group to .json files
-	grunt.registerTask("build:fronts", "Build fronts JSON files.", function() {
+	grunt.registerTask("build:fronts", "Build fronts JSON files.", () => {
 
 		let totalBattles = 0;
 		let totalItems = 0;
 
 		// Process fronts for each battle
-		for (let battleID in DATA.battles) {
+		for (const battleID in DATA.battles) {
 
-			let battle = DATA.battles[battleID];
-			let frontsPath = "data/battles/" + battleID + "/fronts/";
-			let frontsProcessed = Object.create(null);
+			const battle = DATA.battles[battleID];
+			const frontsPath = "data/battles/" + battleID + "/fronts/";
+			const frontsProcessed = Object.create(null);
 
 			// Process all fronts
-			for (let frontDate in battle.fronts) {
+			for (const frontDate in battle.fronts) {
 
-				let frontFile = battle.fronts[frontDate];
-				
+				const frontFile = battle.fronts[frontDate];
+
 				// Skip file if it was already processed for another front date
 				if (frontsProcessed[frontFile]) {
 					continue;
 				}
-				
-				let fileSource = frontsPath + frontFile + ".Group";
-				let fileDestination = frontsPath + frontFile + ".json";
+
+				const fileSource = frontsPath + frontFile + ".Group";
+				const fileDestination = frontsPath + frontFile + ".json";
 
 				// Read raw fronts Group text file
-				let items = Item.readTextFile(fileSource);
+				const items = Item.readTextFile(fileSource);
 
 				// Group file should have a non-empty single Group item
 				if (!items || !items.length || items.length !== 1 ||
@@ -45,15 +45,15 @@ module.exports = function(grunt) {
 					continue;
 				}
 
-				let json = [];
+				const json = [];
 
 				// Front point data index
-				let pointsIndex = Object.create(null);
-				
+				const pointsIndex = Object.create(null);
+
 				// Build output JSON object with recursion
 				(function buildJSON(items) {
 
-					items.forEach(function(item) {
+					items.forEach((item) => {
 
 						// Process group child items
 						if (item instanceof Item.Group) {
@@ -71,10 +71,10 @@ module.exports = function(grunt) {
 							// Process supported front line item
 							if (DATA.frontLine[item.Name]) {
 
-								let point = [];
-								let pointIndex = item.Index;
-								let pointTargets = [];
-								let pointID = json.push(point) - 1;
+								const point = [];
+								const pointIndex = item.Index;
+								const pointTargets = [];
+								const pointID = json.push(point) - 1;
 
 								// Point item type
 								point.push(DATA.frontLine[item.Name]);
@@ -84,10 +84,10 @@ module.exports = function(grunt) {
 								point.push(Math.round(item.ZPos));
 
 								// Mark target list index position
-								let targetIndexPos = point.length;
+								const targetIndexPos = point.length;
 
 								// Process item targets
-								for (let targetIndex of item.Targets) {
+								for (const targetIndex of item.Targets) {
 
 									// Target point is already processed
 									if (typeof pointsIndex[targetIndex] === "number") {
@@ -103,26 +103,26 @@ module.exports = function(grunt) {
 
 								// Process pending targets
 								if (pointsIndex[pointIndex]) {
-									
+
 									while (pointsIndex[pointIndex].length) {
 
-										let targetID = pointsIndex[pointIndex].shift();
+										const targetID = pointsIndex[pointIndex].shift();
 										let targetList = json[targetID][targetIndexPos];
-										
+
 										// Create a new target list
 										if (!targetList) {
 											targetList = json[targetID][targetIndexPos] = [];
 										}
-										
+
 										targetList.push(pointID);
 									}
 								}
-								
+
 								// Point item targets
 								if (pointTargets.length) {
 									point.push(pointTargets);
 								}
-								
+
 								// Mark point as processed
 								pointsIndex[pointIndex] = pointID;
 							}
@@ -135,13 +135,13 @@ module.exports = function(grunt) {
 						}
 					});
 				})(items[0].items);
-				
+
 				// Write output JSON fronts file
 				grunt.file.write(
 					fileDestination,
 					JSON.stringify(json, null, "\t")
 				);
-				
+
 				// Mark front file as processed
 				frontsProcessed[frontFile] = true;
 			}

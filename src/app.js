@@ -23,7 +23,7 @@ const logColors = {
 };
 
 const logLevels = {};
-Object.keys(logColors).forEach(function(value, index) {
+Object.keys(logColors).forEach((value, index) => {
 	logLevels[value] = index;
 });
 
@@ -75,37 +75,37 @@ params.option("-S, --seed <seed>", "set mission seed value");
 
 // Turn on debug mode (--debug)
 if (!DATA.isBinary) {
-	
-	params.option("-D, --debug [features]", (function() {
+
+	params.option("-D, --debug [features]", (() => {
 
 		let desc = "use debug (development) mode" + EOL + EOL;
-	
+
 		desc += '\t"airfields" - Debug airfields.' + EOL;
 		desc += '\t"fronts" - Debug fronts and territories.' + EOL;
-	
+
 		return desc;
-	})(), function(value) {
-		
-		var features = Object.create(null);
-		
+	})(), (value) => {
+
+		const features = Object.create(null);
+
 		String(value).split(",").forEach((feature) => {
-			
+
 			feature = feature.trim();
-			
+
 			if (feature) {
 				features[feature] = true;
 			}
 		});
-		
+
 		return features;
 	});
 }
 
 // Select mission file format (--format)
-params.option("-f, --format <format>", (function() {
+params.option("-f, --format <format>", (() => {
 
 	let desc = "set mission file format" + EOL + EOL;
-	
+
 	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_TEXT, "Text format.");
 	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_BINARY, "Binary format (default).");
 
@@ -113,7 +113,7 @@ params.option("-f, --format <format>", (function() {
 })());
 
 // Select desired battle (--battle)
-params.option("-b, --battle <battle>", (function() {
+params.option("-b, --battle <battle>", (() => {
 
 	let desc = "select a battle" + EOL + EOL;
 
@@ -125,7 +125,7 @@ params.option("-b, --battle <battle>", (function() {
 })());
 
 // Select mission date (--date)
-params.option("-d, --date <YYYY-MM-DD>", (function() {
+params.option("-d, --date <YYYY-MM-DD>", (() => {
 
 	let desc = "select mission date" + EOL + EOL;
 
@@ -141,7 +141,7 @@ params.option("-d, --date <YYYY-MM-DD>", (function() {
 	}
 
 	return desc;
-})(), function(value) {
+})(), (value) => {
 
 	// Try YYYY-MM-DD format
 	const date = moment(value, "YYYY-MM-DD", true);
@@ -154,7 +154,7 @@ params.option("-d, --date <YYYY-MM-DD>", (function() {
 });
 
 // Select mission time (--time)
-params.option("-t, --time <HH:MM>", (function() {
+params.option("-t, --time <HH:MM>", (() => {
 
 	let desc = "select mission time" + EOL + EOL;
 
@@ -165,7 +165,7 @@ params.option("-t, --time <HH:MM>", (function() {
 	}
 
 	return desc;
-})(), function(value) {
+})(), (value) => {
 
 	// Try HH:MM or HH:MM:SS format
 	const time = moment(value, ["HH:mm", "HH:mm:ss"], true);
@@ -178,7 +178,7 @@ params.option("-t, --time <HH:MM>", (function() {
 });
 
 // Select desired coalition (--coalition)
-params.option("-C, --coalition <coalition>", (function() {
+params.option("-C, --coalition <coalition>", (() => {
 
 	let desc = "select a coalition" + EOL + EOL;
 
@@ -190,7 +190,7 @@ params.option("-C, --coalition <coalition>", (function() {
 })(), parseInt);
 
 // Select desired country (--country)
-params.option("-c, --country <country>", (function() {
+params.option("-c, --country <country>", (() => {
 
 	let desc = "select a country" + EOL + EOL;
 
@@ -202,7 +202,7 @@ params.option("-c, --country <country>", (function() {
 })(), parseInt);
 
 // Set a custom pilot (--pilot)
-params.option("-p, --pilot <rank,name>", (function() {
+params.option("-p, --pilot <rank,name>", (() => {
 
 	let desc = "set a custom pilot" + EOL + EOL;
 
@@ -215,12 +215,12 @@ params.option("-p, --pilot <rank,name>", (function() {
 	desc += '\t-p "10, Name Surname" - Set pilot rank and name.' + EOL;
 
 	return desc;
-})(), function(value) {
+})(), (value) => {
 	return String(value).trim();
 });
 
 // Set flight state (--state)
-params.option("-s, --state <state>", (function() {
+params.option("-s, --state <state>", (() => {
 
 	let desc = "set flight state" + EOL + EOL;
 
@@ -228,22 +228,22 @@ params.option("-s, --state <state>", (function() {
 	desc += '\t"' + flightState.RUNWAY + '" - Start from runway.' + EOL;
 
 	return desc;
-})(), function(value) {
-	
+})(), (value) => {
+
 	value = String(value).trim();
-	
+
 	// Try flight state as a number
 	const state = Number(value);
-	
+
 	if (isNaN(state) || state < 0 || state > 1) {
 		return value;
 	}
-	
+
 	return state;
 });
 
 // Set desired weather conditions (--weather)
-params.option("-w, --weather <weather>", (function() {
+params.option("-w, --weather <weather>", (() => {
 
 	let desc = "set weather conditions" + EOL + EOL;
 
@@ -253,21 +253,21 @@ params.option("-w, --weather <weather>", (function() {
 	desc += '\t"extreme" - Extreme weather conditions.' + EOL;
 
 	return desc;
-})(), function(value) {
+})(), (value) => {
 	return String(value).trim();
 });
 
 // Select desired airfield (--airfield)
-params.option("-a, --airfield <airfield>", "select an airfield", function(value) {
+params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
 	return String(value).trim();
 });
 
 /**
  * TODO: Support other command-line params:
  *
- * --type - Mission type.
- * --unit - Squadron/group/unit/etc.
- * --plane - Plane type.
+ * --task - Select task.
+ * --unit - Select unit.
+ * --plane - Select plane.
  * --players - Number of players.
  * --complexity - Mission complexity (detail level).
  * --difficulty - Mission difficulty level.
@@ -282,7 +282,7 @@ if (params.debug) {
 const appDomain = domain.create();
 
 // Handle app domain error events and uncaught exceptions
-appDomain.on("error", function(error) {
+appDomain.on("error", (error) => {
 
 	// Handle simple string errors
 	if (typeof error === "string") {
@@ -307,25 +307,25 @@ appDomain.on("error", function(error) {
 });
 
 // Run app domain logic
-appDomain.run(function() {
+appDomain.run(() => {
 
 	// Validate command line params
 
 	// --debug
 	if (typeof params.debug === "boolean" && params.debug) {
-		
+
 		// Simple debug mode (without extra features)
 		params.debug = Object.create(null);
 	}
-	
+
 	// --format
 	if (params.format !== undefined) {
-		
+
 		if ([Mission.FORMAT_TEXT, Mission.FORMAT_BINARY].indexOf(params.format) < 0) {
 			throw ["Unknown mission file format!", {format: params.format}];
 		}
 	}
-	
+
 	// --battle
 	if (params.battle && !DATA.battles[params.battle]) {
 		throw ["Unknown battle!", {battle: params.battle}];
@@ -361,25 +361,25 @@ appDomain.run(function() {
 	if (params.airfield !== undefined && !params.airfield.length) {
 		throw ["Invalid airfield name!", {airfield: params.airfield}];
 	}
-	
+
 	// --pilot
 	if (params.pilot !== undefined && !params.pilot.length) {
 		throw ["Invalid pilot name!", {pilot: params.pilot}];
 	}
-	
+
 	// --state
 	if (params.state !== undefined &&
 			[flightState.START, flightState.RUNWAY].indexOf(params.state) === -1 &&
 			typeof params.state !== "number") {
-		
+
 		throw ["Invalid flight state!", {state: params.state}];
 	}
-	
+
 	// --weather
 	if (params.weather !== undefined) {
-		
+
 		const weather = weatherState[params.weather.toUpperCase()];
-		
+
 		if (typeof weather !== "number") {
 			throw ["Invalid weather conditions!", {weather: params.weather}];
 		}
@@ -392,9 +392,12 @@ appDomain.run(function() {
 	const mission = new Mission(params);
 
 	// Save mission files
-	mission.save(params.args[0]).then(function() {
-		log.D(mission.name);
-	}, function(error) {
-		appDomain.emit("error", error);
-	});
+	mission.save(params.args[0]).then(
+		() => {
+			log.D(mission.name);
+		},
+		(error) => {
+			appDomain.emit("error", error);
+		}
+	);
 });

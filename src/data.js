@@ -114,22 +114,22 @@ DATA.briefingColor = Object.freeze({
 });
 
 // Load all static data
-(function() {
-	
+(() => {
+
 	// NOTE: For performance reasons JSON files in the binary/compiled mode will
 	// be loaded using native JSON object.
 	let useJSON5 = !DATA.isBinary;
-	
+
 	if (useJSON5) {
-		
+
 		// NOTE: Having JSON5 module name as two separate string literals will trick
 		// enclose to not included it in the binary file.
 		const JSON5 = require("json" + "5");
-		
+
 		useJSON5 = require.extensions[".json"];
-		
+
 		// Temporary override native JSON loader to handle JSON5 data files
-		require.extensions[".json"] = function(module, filename) {
+		require.extensions[".json"] = (module, filename) => {
 			module.exports = JSON5.parse(fs.readFileSync(filename, "utf8"));
 		};
 	}
@@ -157,27 +157,27 @@ DATA.briefingColor = Object.freeze({
 		country.names = require(countryPath + "names");
 		country.ranks = require(countryPath + "ranks");
 	}
-	
+
 	// Load planes
 	const planeData = requireDir(module, "../data/planes");
-	
+
 	for (let planeGroup in planeData) {
 		for (let planeID in planeData[planeGroup]) {
 			DATA.planes[planeID] = planeData[planeGroup][planeID];
 		}
 	}
-	
+
 	Object.freeze(DATA.planes);
-	
+
 	// Load tasks
 	const taskData = requireDir(module, "../data/tasks");
-	
+
 	for (let taskGroup in taskData) {
 		for (let taskID in taskData[taskGroup]) {
 			DATA.tasks[taskID] = taskData[taskGroup][taskID];
 		}
 	}
-	
+
 	Object.freeze(DATA.tasks);
 
 	// Load battles
@@ -194,34 +194,34 @@ DATA.briefingColor = Object.freeze({
 		battle.weather = Object.freeze(require(battlePath + "weather"));
 		battle.airfields = requireDir(module, battlePath + "airfields");
 		battle.units = Object.create(null);
-		
+
 		// Load battle unit data
 		const unitsData = requireDir(module, battlePath + "units/");
-		
+
 		for (let unitCountryID in unitsData) {
-			
+
 			unitCountryID = parseInt(unitCountryID, 10);
-			
+
 			// Ignore invalid country IDs
 			if (isNaN(unitCountryID) || !DATA.countries[unitCountryID]) {
 				continue;
 			}
-			
+
 			const unitsDataCountry = unitsData[unitCountryID];
-			
+
 			// Build units list
 			for (let unitGroup in unitsDataCountry) {
 				for (let unitID in unitsDataCountry[unitGroup]) {
-					
+
 					battle.units[unitID] = unitsDataCountry[unitGroup][unitID];
 					battle.units[unitID].country = unitCountryID;
 				}
 			}
-			
+
 			// Register country as part of the battle
 			battle.countries.push(unitCountryID);
 		}
-		
+
 		Object.freeze(battle.countries);
 		Object.freeze(battle.units);
 	}

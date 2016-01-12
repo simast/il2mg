@@ -1,63 +1,63 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var moment = require("moment");
+const moment = require("moment");
 
 // Generate available mission units
 module.exports = function makeUnits() {
 
-	var mission = this;
-	var battle = mission.battle;
-	var rand = mission.rand;
-	var missionDate = mission.date;
-	var planeStorages = new Set();
+	const mission = this;
+	const battle = mission.battle;
+	const rand = mission.rand;
+	const missionDate = mission.date;
+	const planeStorages = new Set();
 
 	// Unit index tables
-	var units = Object.create(null);
-	var unitsByAirfield = Object.create(null);
-	var unitsByCoalition = Object.create(null);
-	var unitsByCountry = Object.create(null);
-	
+	const units = Object.create(null);
+	const unitsByAirfield = Object.create(null);
+	const unitsByCoalition = Object.create(null);
+	const unitsByCountry = Object.create(null);
+
 	// Unit weight table (by plane count)
-	var unitsWeighted = [];
+	const unitsWeighted = [];
 
 	// Total unit, plane and known pilot counts
-	var totalUnits = 0;
-	var totalPlanes = 0;
-	var totalPilots = 0;
+	let totalUnits = 0;
+	let totalPlanes = 0;
+	let totalPilots = 0;
 
 	// Process all battle units and build index lists
-	for (var unitID in battle.units) {
+	for (const unitID in battle.units) {
 
-		var unitData = battle.units[unitID];
+		let unitData = battle.units[unitID];
 
 		// Ignore dummy unit definitions (and groups used to catalog units)
 		if (!unitData || !unitData.name) {
 			continue;
 		}
 
-		var unitFrom = unitData.from;
-		var unitTo = unitData.to;
-		
+		const unitFrom = unitData.from;
+		const unitTo = unitData.to;
+
 		// Filter out units with from/to dates
 		if ((unitFrom && this.date.isBefore(unitFrom)) ||
 				(unitTo && this.date.isAfter(unitTo) && !this.date.isSame(unitTo, "day"))) {
 
 			continue;
 		}
-		
-		var unit = Object.create(null);
-		var unitPlaneStorages = [];
-		var unitAirfields = [];
-		var unitPilots = [];
-		
+
+		const unit = Object.create(null);
+		let unitPlaneStorages = [];
+		let unitAirfields = [];
+		let unitPilots = [];
+
 		unit.id = unitID;
 
 		// Build unit data and register unit parent/group hierarchy
 		while (unitData) {
 
 			// Process unit data from current hierarchy
-			for (var prop in unitData) {
+			for (const prop in unitData) {
 
 				// Collect airfield data
 				if (prop === "airfields") {
@@ -95,7 +95,7 @@ module.exports = function makeUnits() {
 				}
 			}
 
-			var unitParentID = unitData.parent;
+			const unitParentID = unitData.parent;
 
 			// Unit group is the same as unit ID if there is no parent hierarchy
 			if (!unit.group) {
@@ -111,7 +111,7 @@ module.exports = function makeUnits() {
 			}
 
 			// Register unit in the parent group hierarchy
-			var unitGroup = units[unitParentID] || [];
+			const unitGroup = units[unitParentID] || [];
 
 			if (Array.isArray(unitGroup)) {
 
@@ -121,138 +121,138 @@ module.exports = function makeUnits() {
 
 			unitData = battle.units[unitParentID];
 		}
-		
-		var unitParts = [
+
+		const unitParts = [
 			unit // Original unit
 		];
 
 		// Split unit into separate parts (based on number of airfields)
 		// NOTE: Don't split units with planesMin/planesMax
 		if (unitAirfields.length && !unit.planesMin && !unit.planesMax) {
-			
+
 			// Split unit into separate parts for each extra airfield
-			for (var i = 1; i < unitAirfields.length; i++) {
-				
+			for (let i = 1; i < unitAirfields.length; i++) {
+
 				// Create a new unit part based on the original
-				var unitPart = JSON.parse(JSON.stringify(unit));
-				
+				const unitPart = JSON.parse(JSON.stringify(unit));
+
 				// Assign new unique unit ID
 				unitPart.id = unitPart.id + "_" + i + rand.hex(3);
-				
+
 				// Register new unit in the parent group hierarchy
-				var unitPartParentID = unitPart.parent;
+				let unitPartParentID = unitPart.parent;
 				while (unitPartParentID) {
-					
-					var unitPartParent = units[unitPartParentID];
-					
+
+					const unitPartParent = units[unitPartParentID];
+
 					if (Array.isArray(unitPartParent)) {
 						unitPartParent.push(unitPart.id);
 					}
-					
+
 					unitPartParentID = battle.units[unitPartParentID].parent;
 				}
-				
+
 				unitParts.push(unitPart);
 			}
 		}
-		
+
 		// Randomize unit part and airfield lists
 		rand.shuffle(unitParts);
 		rand.shuffle(unitAirfields);
-		
+
 		// Distribute pilots to all unit parts
 		if (unitPilots.length) {
-			
+
 			rand.shuffle(unitPilots);
-			
+
 			while (unitPilots.length) {
-				
-				var pilot = unitPilots.shift();
-				var pilotUnit = rand.pick(unitParts);
-				
+
+				const pilot = unitPilots.shift();
+				const pilotUnit = rand.pick(unitParts);
+
 				if (!pilotUnit.pilots) {
 					pilotUnit.pilots = [];
 				}
-				
+
 				pilotUnit.pilots.push(pilot);
 			}
 		}
-		
+
 		// Process each unit part
-		unitParts.forEach(function(unit) {
-			
-			var unitID = unit.id;
-			
+		unitParts.forEach((unit) => {
+
+			const unitID = unit.id;
+
 			// Assign random matching airfield and availability
 			if (unitAirfields.length) {
-				
-				var airfield = unitAirfields.shift();
+
+				const airfield = unitAirfields.shift();
 
 				unit.airfield = airfield.id;
 				unit.availability = airfield.availability;
 			}
-			
+
 			// Remove invalid unit definition (without plane storages or invalid airfield)
 			if (!unitPlaneStorages.length || !unit.airfield || !battle.airfields[unit.airfield]) {
-	
+
 				// Clean up parent unit groups
-				var parentID = unit.parent;
+				let parentID = unit.parent;
 				while (parentID) {
-	
-					var parentUnit = units[parentID];
-	
+
+					const parentUnit = units[parentID];
+
 					if (Array.isArray(parentUnit)) {
-	
-						var parentUnitIndex = parentUnit.indexOf(unitID);
-	
+
+						const parentUnitIndex = parentUnit.indexOf(unitID);
+
 						// Remove unit from group
 						if (parentUnitIndex > -1) {
 							parentUnit.splice(parentUnitIndex, 1);
 						}
-	
+
 						// Remove entire group if empty
 						if (!parentUnit.length) {
 							delete units[parentID];
 						}
 					}
-	
+
 					parentID = battle.units[parentID].parent;
 				}
-	
+
 				return;
 			}
-			
+
 			// Register unit plane storages
-			unitPlaneStorages.forEach(function(planeStorage) {
-	
+			unitPlaneStorages.forEach((planeStorage) => {
+
 				planeStorage.units = planeStorage.units || [];
 				planeStorage.units.push(unitID);
-	
+
 				planeStorages.add(planeStorage);
 			});
-	
+
 			unit.planes = [];
-			
+
 			// TODO: Add full support for planesMin
 			if (Number.isInteger(unit.planesMax)) {
 				unit.planes.max = rand.integer(unit.planesMin || 0, unit.planesMax);
 			}
-	
+
 			delete unit.planesMax;
 			delete unit.planesMin;
-	
+
 			// Register unit to ID index
 			units[unitID] = unit;
-	
+
 			// Register unit to airfields index
 			unitsByAirfield[unit.airfield] = unitsByAirfield[unit.airfield] || Object.create(null);
 			unitsByAirfield[unit.airfield][unitID] = unit;
-	
+
 			// Register unit to coalition index
-			var coalition = DATA.countries[unit.country].coalition;
+			const coalition = DATA.countries[unit.country].coalition;
 			unitsByCoalition[coalition] = unitsByCoalition[coalition] || Object.create(null);
 			unitsByCoalition[coalition][unitID] = unit;
-	
+
 			// Register unit to country index
 			unitsByCountry[unit.country] = unitsByCountry[unit.country] || Object.create(null);
 			unitsByCountry[unit.country][unitID] = unit;
@@ -262,18 +262,18 @@ module.exports = function makeUnits() {
 	}
 
 	// Distribute available planes from plane storages
-	planeStorages.forEach(function(planeStorage) {
+	planeStorages.forEach((planeStorage) => {
 
 		// TODO: Improve plane distribution algorithm
 		// TODO: Honor min/max plane counts
 		// TODO: Pick planes based on rating
-		
-		var planeCount = planeStorage[1];
+
+		let planeCount = planeStorage[1];
 
 		while (planeCount > 0) {
 
-			var planeID = planeStorage[0];
-			var plane = mission.planes[planeID];
+			let planeID = planeStorage[0];
+			const plane = mission.planes[planeID];
 
 			// Handle plane groups
 			if (Array.isArray(plane)) {
@@ -281,8 +281,8 @@ module.exports = function makeUnits() {
 			}
 
 			// Pick random unit
-			var unitID = rand.pick(planeStorage.units);
-			var unit = units[unitID];
+			const unitID = rand.pick(planeStorage.units);
+			const unit = units[unitID];
 
 			if (unit.planes.max !== undefined && unit.planes.length >= unit.planes.max) {
 				continue;
@@ -290,12 +290,12 @@ module.exports = function makeUnits() {
 
 			unit.planes.push(planeID);
 			unitsWeighted.push(unitID);
-			
+
 			// Set unit max pilots count (used to figure out known and unknown pilot ratio)
 			if (unit.pilots) {
 
 				// NOTE: We don't track exact pilot numbers per unit, but for each plane in
-				// the unit we assing randomized 1.5 to 2.5 pilot count. 
+				// the unit we assing randomized 1.5 to 2.5 pilot count.
 				unit.pilots.max = unit.pilots.max || 0;
 				unit.pilots.max += rand.real(1.5, 2.5);
 			}
@@ -308,32 +308,32 @@ module.exports = function makeUnits() {
 	// Get unit airfields
 	function getAirfields(unitData) {
 
-		var airfields = [];
+		const airfields = [];
 
 		// TODO: Dynamically generate rebase/transfer missions
 
-		var dataAirfields = unitData.airfields;
+		const dataAirfields = unitData.airfields;
 
 		if (!Array.isArray(dataAirfields)) {
 			return airfields;
 		}
 
 		// Find matching airfields based on to/from date ranges
-		for (var airfield of dataAirfields) {
+		for (const airfield of dataAirfields) {
 
-			var airfieldID = airfield[0];
+			const airfieldID = airfield[0];
 
 			if (missionDateIsBetween(airfield[1], airfield[2])) {
-				
-				var availability = 1;
-				
+
+				let availability = 1;
+
 				// Forth parameter in the array can be used to specify unit availability (%)
 				if (typeof airfield[3] === "number") {
 					availability = airfield[3];
 				}
-				
+
 				availability = Math.max(Math.min(availability, 1), 0);
-				
+
 				// Add found airfield entry (with availability)
 				airfields.push({
 					id: airfieldID,
@@ -348,17 +348,17 @@ module.exports = function makeUnits() {
 	// Get unit pilots
 	function getPilots(unitData) {
 
-		var pilots = [];
-		var dataPilots = unitData.pilots;
+		const pilots = [];
+		const dataPilots = unitData.pilots;
 
 		if (!Array.isArray(dataPilots)) {
 			return pilots;
 		}
-		
-		// Find matching pilots based on to/from date ranges
-		for (var pilot of dataPilots) {
 
-			var pilotFrom = pilot[2];
+		// Find matching pilots based on to/from date ranges
+		for (const pilot of dataPilots) {
+
+			const pilotFrom = pilot[2];
 
 			if (pilotFrom === undefined || missionDateIsBetween(pilotFrom, pilot[3])) {
 
@@ -367,7 +367,7 @@ module.exports = function makeUnits() {
 					name: pilot[0],
 					rank: pilot[1]
 				});
-				
+
 				totalPilots++;
 			}
 		}
@@ -378,31 +378,31 @@ module.exports = function makeUnits() {
 	// Get unit plane storages
 	function getPlaneStorages(unitData) {
 
-		var planeStorages = [];
-		var dataPlanes = unitData.planes;
+		const planeStorages = [];
+		const dataPlanes = unitData.planes;
 
 		if (!Array.isArray(dataPlanes)) {
 			return planeStorages;
 		}
 
 		// Find matching plane storages based on to/from date ranges
-		dataPlanes.forEach(function(planeStorage) {
-			
-			var dateRange = missionDateIsBetween(planeStorage[2], planeStorage[3], true);
+		dataPlanes.forEach((planeStorage) => {
+
+			const dateRange = missionDateIsBetween(planeStorage[2], planeStorage[3], true);
 
 			if (dateRange) {
-				
-				var planeCount = planeStorage[1];
-				
+
+				let planeCount = planeStorage[1];
+
 				// Pick plane count from valid array range
 				if (Array.isArray(planeCount)) {
-					
-					var maxPlanes = Math.max.apply(null, planeCount);
-					var minPlanes = Math.min.apply(null, planeCount);
-					var rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, "days"));
-					var rangeDaysMission = mission.date.diff(dateRange.from, "days");
-					var planePercent = rangeDaysMission / rangeDaysInterval;
-					
+
+					const maxPlanes = Math.max.apply(null, planeCount);
+					const minPlanes = Math.min.apply(null, planeCount);
+					const rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, "days"));
+					const rangeDaysMission = mission.date.diff(dateRange.from, "days");
+					let planePercent = rangeDaysMission / rangeDaysInterval;
+
 					// Use +-15% randomness
 					planePercent = rand.real(planePercent - 0.15, planePercent + 0.15, true);
 					planePercent = Math.max(planePercent, 0);
@@ -411,20 +411,20 @@ module.exports = function makeUnits() {
 					// Pick plane count from valid range
 					planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * (1 - planePercent));
 					planeCount = Math.round(planeCount);
-					
+
 					// Use extra +-1 plane randomness
 					if (planeCount > 2) {
 						planeCount += rand.pick([-1, 1]);
 					}
-					
+
 					// Enforce min/max range bounds
 					planeCount = Math.max(planeCount, minPlanes);
 					planeCount = Math.min(planeCount, maxPlanes);
-					
+
 					planeStorage[1] = planeCount;
 				}
 
-				var planeID = planeStorage[0];
+				const planeID = planeStorage[0];
 
 				// Only collect storages with valid plane IDs
 				if (mission.planes[planeID]) {
@@ -439,16 +439,16 @@ module.exports = function makeUnits() {
 	// Get unit name
 	function getName(unitData) {
 
-		var name = unitData.name;
+		let name = unitData.name;
 
 		// Unit name in data files can be an array (to model name changes based on date)
 		if (Array.isArray(name)) {
 
 			name = null;
 
-			for (var i = 0; i < unitData.name.length; i++) {
+			for (let i = 0; i < unitData.name.length; i++) {
 
-				var dataName = unitData.name[i];
+				const dataName = unitData.name[i];
 
 				if (missionDateIsBetween(dataName[1], dataName[2])) {
 
@@ -480,16 +480,16 @@ module.exports = function makeUnits() {
 		}
 
 		if (!missionDate.isBefore(dateFrom) && !missionDate.isAfter(dateTo)) {
-			
+
 			// Return from/to range as moment date objects
 			if (returnRange) {
-				
+
 				return {
 					from: dateFrom,
 					to: dateTo
 				};
 			}
-			
+
 			return true;
 		}
 
@@ -510,8 +510,8 @@ module.exports = function makeUnits() {
 		// Other date format
 		else {
 
-			var dateParts = date.split("-");
-			var momentDate = moment();
+			const dateParts = date.split("-");
+			const momentDate = moment();
 
 			momentDate.year(dateParts[0]);
 			momentDate.month(Number(dateParts[1]) - 1);
@@ -538,7 +538,7 @@ module.exports = function makeUnits() {
 	mission.unitsByAirfield = Object.freeze(unitsByAirfield);
 	mission.unitsByCoalition = Object.freeze(unitsByCoalition);
 	mission.unitsByCountry = Object.freeze(unitsByCountry);
-	
+
 	// Static unit weight table (by plane count)
 	mission.unitsWeighted = Object.freeze(unitsWeighted);
 

@@ -43,17 +43,17 @@ const weatherLimits = {
 };
 
 // Compute maximum points for weather state limits
-for (let state in weatherLimits) {
-	
+for (const state in weatherLimits) {
+
 	const limits = weatherLimits[state];
 	const points = limits.points = {};
-	
+
 	// Dedicate weather state points for cloud cover
 	points.clouds = weatherPoints.CLOUDS * (limits.clouds / MAX_CLOUD_COVER);
 
 	// Dedicate weather state points for wind speed
 	points.winds = weatherPoints.WINDS * (limits.winds / MAX_WIND_SPEED);
-	
+
 	points.total = points.clouds + points.winds;
 }
 
@@ -64,21 +64,21 @@ module.exports = function makeWeather() {
 	const options = this.items.Options;
 	const weather = this.battle.weather[this.date.format("YYYY-MM-DD")];
 	let state;
-	
+
 	// Set requested weather condition
 	if (this.params.weather) {
 		state = this.params.weather;
 	}
 	// Set weather condition based on historical patterns
 	else {
-		
+
 		state = weather[2];
 
 		// TODO: Use some logarithmic curve for picking weather state from interval?
 		if (Array.isArray(state)) {
 			state = rand.integer(state[0], state[1]);
 		}
-		
+
 		// FIXME: By default we don't use extreme weather conditions with historical
 		// weather patterns. In the future - make it so larger planes in extreme
 		// weather can still try and fly missions.
@@ -86,23 +86,23 @@ module.exports = function makeWeather() {
 			state--;
 		}
 	}
-	
+
 	// Get current state minimum and maximum weather points interval
 	const limits = weatherLimits[state];
 	const prevLimits = weatherLimits[state - 1];
 	const minPoints = prevLimits ? Math.max(prevLimits.points.total, 0) : 0;
 	const maxPoints = Math.min(limits.points.total, 100);
-	
+
 	// Pick random weather points number
 	const points = rand.real(minPoints, maxPoints, true);
-	
+
 	// Distribute points for clouds and winds by using a shifted interval method
 	const pointsOffset = rand.real(0, maxPoints - points, true);
 	const cloudPoints = Math.min(Math.max(limits.points.clouds - pointsOffset, 0), points);
 	const windPoints = Math.min(Math.max(pointsOffset + points - limits.points.clouds, 0), points);
-	
+
 	// TODO: Adjust weather state based on player plane size
-	
+
 	this.weather = {
 		state: state,
 		points: {
@@ -110,7 +110,7 @@ module.exports = function makeWeather() {
 			winds: windPoints
 		}
 	};
-	
+
 	// Level in meters at what point temperature and pressure is measured
 	options.TempPressLevel = this.map.level;
 
@@ -122,20 +122,20 @@ module.exports = function makeWeather() {
 	makeTurbulence.call(this, weather);
 	makeSea.call(this, weather);
 	makePressure.call(this, weather);
-	
+
 	// Log mission weather info
 	const logData = ["Weather:"];
-	
+
 	// Log weather state
-	for (let state in weatherState) {
-		
+	for (const state in weatherState) {
+
 		if (weatherState[state] === this.weather.state) {
-			
+
 			logData.push(state.toLowerCase());
 			break;
 		}
 	}
-	
+
 	// Log precipitation type (if any)
 	if (this.weather.precipitation.type === precipitation.RAIN) {
 		logData.push("rain");
@@ -143,7 +143,7 @@ module.exports = function makeWeather() {
 	else if (this.weather.precipitation.type === precipitation.SNOW) {
 		logData.push("snow");
 	}
-	
+
 	// Log other weather info
 	logData.push({
 		temp: this.weather.temperature.level + "°C",
@@ -151,40 +151,40 @@ module.exports = function makeWeather() {
 		turb: this.weather.turbulence,
 		clouds: Math.round(this.weather.clouds.cover) + "%"
 	});
-	
+
 	log.I.apply(log, logData);
 };
 
 // Make mission clouds
 function makeClouds(weather) {
-	
+
 	const rand = this.rand;
 	const options = this.items.Options;
 	const points = this.weather.points.clouds;
 	const maxCover = weatherLimits[this.weather.state].clouds;
 	const requiredCover = maxCover * (points / weatherPoints.CLOUDS);
 	const clouds = Object.keys(DATA.clouds);
-	
+
 	// Sort cloud configs based on cover
-	rand.shuffle(clouds).sort(function(a, b) {
+	rand.shuffle(clouds).sort((a, b) => {
 		return DATA.clouds[b].cover - DATA.clouds[a].cover;
 	});
-	
+
 	let config;
-	
+
 	// Use first config matching (closest to) required cloud cover
 	for (config of clouds) {
-		
+
 		if (DATA.clouds[config].cover <= requiredCover) {
 			break;
 		}
 	}
-	
+
 	const cloudsData = DATA.clouds[config];
 	const altitude = cloudsData.altitude;
 	const thickness = cloudsData.thickness;
 	const cover = cloudsData.cover;
-	
+
 	// Register clouds data in mission Options block
 	options.CloudConfig = this.map.data.clouds + "\\" + config;
 	options.CloudLevel = altitude;
@@ -257,25 +257,25 @@ function makeTemperature(weather) {
 	const sunrise = this.sunrise;
 	const noon = this.noon;
 	const temperature = this.weather.temperature = {};
-	
+
 	// NOTE: This algorithm was initially presented by De Wit et al. (1978)
 	// and was obtained from the subroutine WAVE in ROOTSIMU V4.0 by Hoogenboom
 	// and Huck (1986). It was slightly modified to support per minute precision
 	// and TMAX temperature is set not for 14:00, but for solar noon + 1 hour.
-	
+
 	let tMin = weather[0];
 	let tMax = weather[1];
-	
+
 	// Slightly shift original TMIN and TMAX temperatures with a random factor
 	const tMaxShift = (tMax - tMin) * 0.15; // Max +-15% of temperature delta
-	
+
 	// NOTE: 66.6% for at least +-1 variation and 33.3% for no change at all
 	tMin += rand.pick([-1, 0, 1]) * Math.max(rand.real(0, tMaxShift), 1);
 	tMax += rand.pick([-1, 0, 1]) * Math.max(rand.real(0, tMaxShift), 1);
-	
+
 	// TODO: Cloudness will minimize diurnal daily TMIN/TMAX variations and will
 	// cause lower temperatures during the day and higher during the night.
-	
+
 	const tDelta = temperature.variation = tMax - tMin;
 	const tAvg = (tMin + tMax) / 2;
 	const tAmp = tDelta / 2;
@@ -283,37 +283,37 @@ function makeTemperature(weather) {
 	const timeTempMin = (sunrise.hour() * 60 + sunrise.minute()) / 60;
 	const timeTempMax = (noon.hour() * 60 + noon.minute()) / 60 + 1; // 1 hour after solar noon
 	const timeMid = 24 - timeTempMax; // Time left from TMAX to midnight (00:00)
-	
+
 	// Get temperature at a given point in time (minutes from midnight)
 	function getTemp(time) {
-		
+
 		if (time < timeTempMin || time > timeTempMax) {
-			
+
 			let timeAmp;
-			
+
 			if (time < timeTempMin) {
 				timeAmp = time + timeMid;
 			}
 			else {
 				timeAmp = time - timeTempMax;
 			}
-			
+
 			return tAvg + tAmp * Math.cos(Math.PI * timeAmp / (timeMid + timeTempMin));
 		}
 		else {
 			return tAvg - tAmp * Math.cos(Math.PI * (time - timeTempMin) / (timeTempMax - timeTempMin));
 		}
 	}
-	
+
 	// Get current temperature
 	const tempNow = getTemp(timeNow);
-	
+
 	// Peek at a temperature 15 minutes from now
 	const tempSoon = getTemp((timeNow + 0.25) % 24);
-	
+
 	// Current temperature change state (for the next +15 minutes)
 	temperature.state = (tempSoon - tempNow) / tDelta * 100;
-	
+
 	// Register temperature data in mission Options block
 	// NOTE: Real mission temperature is set +15 minutes from now to adjust for
 	// the fact temperatures will not change while the mission is running.
@@ -323,15 +323,15 @@ function makeTemperature(weather) {
 
 // Make mission atmospheric pressure
 function makePressure(weather) {
-	
+
 	const rand = this.rand;
 	const cloudCover = this.weather.clouds.cover;
 	const windSpeed = this.weather.wind[0].speed;
 	const tempVariation = this.weather.temperature.variation;
-	
+
 	// Standard atmospheric pressure
 	const pressureStandard = 760;
-	
+
 	// Modify pressure based on map average level/height
 	// NOTE: At low altitudes above the sea level - the pressure decreases by
 	// about 9 mmHg for every 100 meters.
@@ -339,37 +339,37 @@ function makePressure(weather) {
 	const pressureMin = pressureBase - MAX_PRESSURE_CHANGE;
 	const pressureMax = pressureBase + MAX_PRESSURE_CHANGE;
 	const pressureDelta = pressureMax - pressureMin;
-	
+
 	// Impact on pressure level (as a percent of total pressure delta variation)
 	const PRESSURE_CLOUDS = 50;
 	const PRESSURE_WIND = 25;
 	const PRESSURE_TEMPERATURE = 25;
-	
+
 	// Low pressure - clouds, precipitation, minimal TMIN/TMAX changes, stronger winds.
 	// High pressure - dry, mostly clear skies, larger TMIN/TMAX changes, lighter winds.
-	
+
 	let pressure = pressureMax;
-	
+
 	// Apply pressure change from cloud cover
 	pressure -= pressureDelta * (PRESSURE_CLOUDS / 100) * (cloudCover / 100);
-	
+
 	// Apply pressure change from wind speed
 	pressure -= pressureDelta * (PRESSURE_WIND / 100) * (windSpeed / MAX_WIND_SPEED);
-	
+
 	// Apply pressure change from diurnal temperature variations
 	const tempVariationMax = 15; // Max variation in degrees Celsius
 	const tempVariationFactor = 1 - Math.min(tempVariation / tempVariationMax, 1);
-	
+
 	pressure -= pressureDelta * (PRESSURE_TEMPERATURE / 100) * tempVariationFactor;
-	
+
 	// Apply small random pressure change factor (+-10% of delta)
 	pressure += pressureDelta * rand.real(-0.1, 0.1, true);
-	
+
 	// Force min/max pressure levels
 	pressure = Math.max(pressure, pressureMin);
 	pressure = Math.min(pressure, pressureMax);
 	pressure = Math.round(pressure);
-	
+
 	// Set pressure data
 	this.items.Options.Pressure = pressure;
 	this.weather.pressure = pressure;
@@ -377,51 +377,51 @@ function makePressure(weather) {
 
 // Make mission turbulence level
 function makeTurbulence(weather) {
-	
+
 	const rand = this.rand;
 	const options = this.items.Options;
 	const windSpeed = this.weather.wind[0].speed; // At ground level
-	
+
 	// FIXME: Turbulence is not linear - find a better way to compute this
-	
+
 	// NOTE: The last turbulence level point will only come from randomness
 	let turbulence = (MAX_TURBULENCE - 1) * (windSpeed / MAX_WIND_SPEED);
-	
+
 	// Add some randomness (to make turbulence level non linear)
 	turbulence += rand.real(-1, 1, true);
-	
+
 	// Force min/max turbulence levels
 	turbulence = Math.max(turbulence, 0);
 	turbulence = Math.min(turbulence, MAX_TURBULENCE);
-	
+
 	this.weather.turbulence = Math.round(turbulence);
-	
+
 	// Register turbulence level in mission Options block
 	options.Turbulence = this.weather.turbulence;
 }
 
 // Make mission wind layers
 function makeWind(weather) {
-	
+
 	const rand = this.rand;
 	const options = this.items.Options;
 	const points = this.weather.points.winds;
 	const wind = this.weather.wind = [];
 	let groundSpeed = MAX_WIND_SPEED * (points / weatherPoints.WINDS);
-	
+
 	// Force minimum wind speed value
 	if (groundSpeed < MIN_WIND_SPEED) {
 		groundSpeed += MIN_WIND_SPEED;
 	}
-	
+
 	options.WindLayers = [];
-	
+
 	let direction;
 	let speed;
-	
+
 	// Make wind for each altitude layer
-	for (let altitude of [0, 500, 1000, 2000, 5000]) {
-		
+	for (const altitude of [0, 500, 1000, 2000, 5000]) {
+
 		// Use a random initial wind direction at ground level
 		if (direction === undefined) {
 			direction = rand.real(0, 360);
@@ -430,7 +430,7 @@ function makeWind(weather) {
 		else {
 			direction = (direction + rand.real(-MAX_WIND_CHANGE, MAX_WIND_CHANGE) + 360) % 360;
 		}
-		
+
 		// Initial generated wind speed at ground level
 		if (speed === undefined) {
 			speed = groundSpeed;
@@ -439,20 +439,20 @@ function makeWind(weather) {
 		else {
 			speed = groundSpeed * Math.pow(altitude / this.map.level, rand.real(0.10, 0.15));
 		}
-		
+
 		// TODO: Increase vertical wind shear at night
-		
+
 		// Use two decimal points for direction and speed precision
 		direction = Number(direction.toFixed(2));
 		speed = Number(speed.toFixed(2));
-		
+
 		// Save wind layer data
 		wind.push({
 			altitude: altitude,
 			direction: direction,
 			speed: speed
 		});
-		
+
 		// Register wind layer in mission Options block
 		options.WindLayers.push([altitude, direction, speed]);
 	}

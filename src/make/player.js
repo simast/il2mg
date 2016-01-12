@@ -4,13 +4,12 @@
 // Generate mission player choice data
 module.exports = function makePlayer() {
 
-	var mission = this;
-	var rand = this.rand;
-	var params = this.params;
-	var player = this.player = Object.create(null);
+	const rand = this.rand;
+	const params = this.params;
+	const player = this.player = Object.create(null);
 
 	// Initial valid units list (all units)
-	var unitsList = Object.keys(this.units);
+	let unitsList = Object.keys(this.units);
 
 	// Validate desired coalition param
 	if (params.coalition) {
@@ -28,10 +27,10 @@ module.exports = function makePlayer() {
 
 	// Validate desired country param
 	if (params.country) {
-		
+
 		// Make sure country is part of requested coalition
 		if (player.coalition && DATA.countries[params.country].coalition !== player.coalition) {
-			
+
 			throw ["Country is not part of coalition!", {
 				country: params.country,
 				coalition: params.coalition
@@ -44,17 +43,17 @@ module.exports = function makePlayer() {
 		}
 
 		player.country = params.country;
-		
+
 		// Filter units based on country
-		unitsList = unitsList.filter(function(unitID) {
-			return (unitID in mission.unitsByCountry[player.country]);
+		unitsList = unitsList.filter((unitID) => {
+			return (unitID in this.unitsByCountry[player.country]);
 		});
 	}
 
 	// Validate desired airfield param
 	if (params.airfield) {
 
-		var airfieldID = params.airfield.toLowerCase();
+		const airfieldID = params.airfield.toLowerCase();
 
 		// Unknown airfield ID/name
 		if (!this.airfields[airfieldID]) {
@@ -66,30 +65,30 @@ module.exports = function makePlayer() {
 		}
 
 		player.airfield = airfieldID;
-		
+
 		// Filter units by player chosen airfield
-		unitsList = unitsList.filter(function(unitID) {
-			return (unitID in mission.unitsByAirfield[player.airfield]);
+		unitsList = unitsList.filter((unitID) => {
+			return (unitID in this.unitsByAirfield[player.airfield]);
 		});
 	}
-	
+
 	// Set desired pilot param data
 	if (params.pilot) {
-		
-		var pilot = player.pilot = Object.create(null);
-		var pilotParts = params.pilot.split(/\s*,\s*/);
-		
+
+		const pilot = player.pilot = Object.create(null);
+		const pilotParts = params.pilot.split(/\s*,\s*/);
+
 		// Pilot name
 		pilot.name = pilotParts;
-		
+
 		// Check for optional pilot rank number
 		if (/^[0-9]+/.test(pilotParts)) {
-			
-			var pilotRank = parseInt(pilotParts[0], 10);
-			
+
+			const pilotRank = parseInt(pilotParts[0], 10);
+
 			// Pilot rank and name
 			if (!isNaN(pilotRank)) {
-				
+
 				pilot.name = pilotParts.slice(1);
 				pilot.rank = pilotRank;
 			}
@@ -102,24 +101,24 @@ module.exports = function makePlayer() {
 	if (params.state !== undefined) {
 		player.state = params.state;
 	}
-	
+
 	// Limit to units stationed on airfields with available taxi route data (unless
 	// the player explicitly requests an air start or specifies an airfield).
 	if (typeof player.state !== "number" && player.airfield === undefined) {
 
-		unitsList = unitsList.filter(function(unitID) {
-			
-			var unit = mission.units[unitID];
-			
+		unitsList = unitsList.filter((unitID) => {
+
+			const unit = this.units[unitID];
+
 			// Filter out unit groups
 			if (Array.isArray(unit)) {
 				return false;
 			}
-			
-			return !!mission.airfields[unit.airfield].taxi;
+
+			return !!this.airfields[unit.airfield].taxi;
 		});
 	}
-	
+
 	// TODO: Retry mission generation when unit list is empty
 	if (!unitsList.length) {
 		throw "No valid units found!";

@@ -4,33 +4,33 @@
 // Load static global data
 require("../../src/data");
 
-var itemTag = DATA.itemTag;
-var itemFlag = DATA.itemFlag;
-var planeSize = DATA.planeSize;
+const itemTag = DATA.itemTag;
+const itemFlag = DATA.itemFlag;
+const planeSize = DATA.planeSize;
 
-var numeral = require("numeral");
-var Item = require("../../src/item");
+const numeral = require("numeral");
+const Item = require("../../src/item");
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
-	grunt.registerTask("build:airfields", "Build airfields JSON files.", function() {
+	grunt.registerTask("build:airfields", "Build airfields JSON files.", () => {
 
-		var totalBattles = 0;
-		var totalAirfields = 0;
-		var totalItems = 0;
+		let totalBattles = 0;
+		let totalAirfields = 0;
+		let totalItems = 0;
 
 		// Process airfields for each battle
-		for (var battleID in DATA.battles) {
+		for (const battleID in DATA.battles) {
 
-			var battle = DATA.battles[battleID];
-			var airfieldsPath = "data/battles/" + battleID + "/airfields/";
+			const battle = DATA.battles[battleID];
+			const airfieldsPath = "data/battles/" + battleID + "/airfields/";
 
 			// Process all airfields
-			for (var airfieldID in battle.airfields) {
+			for (const airfieldID in battle.airfields) {
 
-				var fileSource = airfieldsPath + airfieldID + ".Group";
-				var fileDestination = airfieldsPath + airfieldID + ".json";
+				const fileSource = airfieldsPath + airfieldID + ".Group";
+				const fileDestination = airfieldsPath + airfieldID + ".json";
 
 				// Ignore airfields without .Group file
 				if (!grunt.file.exists(fileSource)) {
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 				}
 
 				// Read raw airfield Group text file
-				var items = Item.readTextFile(fileSource);
+				const items = Item.readTextFile(fileSource);
 
 				// Group file should have a non-empty single Group item
 				if (!items || !items.length || items.length !== 1 ||
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 				}
 
 				// Read airfield JSON data file
-				var json = grunt.file.readJSON(fileDestination);
+				const json = grunt.file.readJSON(fileDestination);
 
 				json.items = [];
 				json.sectors = {};
@@ -56,38 +56,38 @@ module.exports = function(grunt) {
 				json.routes = [];
 
 				// Collected airfield routes data index
-				var routesData = {};
+				const routesData = {};
 
 				// Build output JSON object with recursion
 				(function buildJSON(jsonItems, items) {
 
-					items.forEach(function(item) {
+					items.forEach((item) => {
 
 						// Process group child items
 						if (item instanceof Item.Group) {
 
 							if (item.items.length) {
-								
-								var childItems = [];
-	
+
+								const childItems = [];
+
 								buildJSON(childItems, item.items);
-	
+
 								if (childItems.length) {
 									jsonItems.push(childItems);
 								}
 							}
-							
+
 							return;
 						}
-						
+
 						// Item position and orientation with forced precision
-						var positionX = Number(item.XPos.toFixed(Item.PRECISION_POSITION));
-						var positionY = Number(item.YPos.toFixed(Item.PRECISION_POSITION));
-						var positionZ = Number(item.ZPos.toFixed(Item.PRECISION_POSITION));
-						var orientation = Number(item.YOri.toFixed(Item.PRECISION_ORIENTATION));
-						
+						const positionX = Number(item.XPos.toFixed(Item.PRECISION_POSITION));
+						const positionY = Number(item.YPos.toFixed(Item.PRECISION_POSITION));
+						const positionZ = Number(item.ZPos.toFixed(Item.PRECISION_POSITION));
+						const orientation = Number(item.YOri.toFixed(Item.PRECISION_ORIENTATION));
+
 						// Item type data
-						var itemTypeData = {
+						const itemTypeData = {
 							type: item.type,
 							script: item.Script,
 							model: item.Model
@@ -97,19 +97,19 @@ module.exports = function(grunt) {
 						if ((item instanceof Item.Block && !(item instanceof Item.Airfield)) ||
 								item instanceof Item.Vehicle || item instanceof Item.Flag) {
 
-							var itemTypeID = null;
-							var itemData = [];
+							let itemTypeID = null;
+							const itemData = [];
 
 							// Plane spot
 							if (/^PLANE/.test(item.Name)) {
 
 								itemTypeID = itemTag.PLANE;
 
-								var planeData = item.Name.split(":");
-								var planeDataIndex = 1;
+								const planeData = item.Name.split(":");
+								let planeDataIndex = 1;
 
 								// Plane sector number
-								var planeSector = +planeData[planeDataIndex++];
+								const planeSector = +planeData[planeDataIndex++];
 
 								// Validate plane sector number
 								if (!Number.isInteger(planeSector)) {
@@ -119,12 +119,12 @@ module.exports = function(grunt) {
 								itemData.push(planeSector);
 
 								// Plane taxi route number
-								var planeTaxiData = planeData[planeDataIndex++].match(/(\-?\d+)(.*)/);
-								var planeTaxiRoute;
-								var planeTaxiOffset;
-								
+								const planeTaxiData = planeData[planeDataIndex++].match(/(\-?\d+)(.*)/);
+								let planeTaxiRoute;
+								let planeTaxiOffset;
+
 								if (planeTaxiData) {
-									
+
 									planeTaxiRoute = +planeTaxiData[1];
 									planeTaxiOffset = +planeTaxiData[2];
 								}
@@ -142,7 +142,7 @@ module.exports = function(grunt) {
 								itemData.push(planeTaxiRoute);
 
 								// Plane size ID
-								var planeSizeID = planeSize[planeData[planeDataIndex++]];
+								const planeSizeID = planeSize[planeData[planeDataIndex++]];
 
 								// Validate plane size ID
 								if (!Number.isInteger(planeSizeID)) {
@@ -152,7 +152,7 @@ module.exports = function(grunt) {
 								itemData.push(planeSizeID);
 
 								// Camo plane flag
-								var planeFlag = planeData[planeDataIndex++];
+								const planeFlag = planeData[planeDataIndex++];
 
 								if (planeFlag === "CAMO") {
 									itemData.push(itemFlag.PLANE_CAMO);
@@ -161,14 +161,14 @@ module.exports = function(grunt) {
 									grunt.fail.fatal("Invalid plane flag in: " + item.Name);
 								}
 
-								var sector = json.sectors[planeSector];
+								let sector = json.sectors[planeSector];
 
 								// Register airfield sector and parking data
 								if (!sector) {
 
 									sector = json.sectors[planeSector] = {};
 
-									for (var prop in planeSize) {
+									for (const prop in planeSize) {
 										sector[planeSize[prop]] = 0;
 									}
 								}
@@ -228,7 +228,7 @@ module.exports = function(grunt) {
 								}
 							}
 
-							var jsonItem = [];
+							const jsonItem = [];
 
 							// Item type ID
 							jsonItem.push(itemTypeID);
@@ -242,7 +242,7 @@ module.exports = function(grunt) {
 							jsonItem.push(orientation);
 
 							// Item data
-							itemData.forEach(function(data) {
+							itemData.forEach((data) => {
 								jsonItem.push(data);
 							});
 
@@ -253,7 +253,7 @@ module.exports = function(grunt) {
 						// Process effect items
 						else if (item instanceof Item.Effect) {
 
-							var effectTypeID = null;
+							let effectTypeID = null;
 
 							// House smoke effect
 							if (item.Name === "EFFECT:SMOKE") {
@@ -276,7 +276,7 @@ module.exports = function(grunt) {
 								grunt.fail.fatal("Invalid effect definition: " + item.Name);
 							}
 
-							var effect = [itemTag.EFFECT];
+							const effect = [itemTag.EFFECT];
 
 							// Effect position
 							effect.push(positionX);
@@ -296,8 +296,8 @@ module.exports = function(grunt) {
 							// Taxi route
 							if (/^TAXI/.test(item.Name)) {
 
-								var taxiData = item.Name.split(":");
-								var taxiID = +taxiData[1];
+								const taxiData = item.Name.split(":");
+								const taxiID = +taxiData[1];
 
 								// Validate taxi route ID
 								if (!Number.isInteger(taxiID)) {
@@ -309,7 +309,7 @@ module.exports = function(grunt) {
 									grunt.fail.fatal("Missing TAXI definition Chart and Point data.");
 								}
 
-								var taxiRunwayID = +taxiData[2];
+								const taxiRunwayID = +taxiData[2];
 
 								// Validate taxi runway ID
 								if (!Number.isInteger(taxiRunwayID)) {
@@ -317,8 +317,8 @@ module.exports = function(grunt) {
 								}
 
 								// Invert taxi route flag
-								var taxiFlag = taxiData[3];
-								var taxiInvert = 0;
+								const taxiFlag = taxiData[3];
+								let taxiInvert = 0;
 
 								if (taxiFlag === "INV") {
 									taxiInvert = itemFlag.TAXI_INV;
@@ -327,9 +327,9 @@ module.exports = function(grunt) {
 									grunt.fail.fatal("Invalid taxi route flag in: " + item.Name);
 								}
 
-								var taxiRoute = [];
-								var taxiPoints = item.items[0].items;
-								
+								const taxiRoute = [];
+								const taxiPoints = item.items[0].items;
+
 								// Taxi route airfield item type ID
 								taxiRoute.push(DATA.registerItemType(itemTypeData));
 
@@ -341,10 +341,10 @@ module.exports = function(grunt) {
 								taxiRoute.push([positionX, positionZ, orientation]);
 
 								// Build taxi route waypoint list
-								var taxiPointsData = [];
-								for (var taxiPoint of taxiPoints) {
+								const taxiPointsData = [];
+								for (const taxiPoint of taxiPoints) {
 
-									var taxiPointData = getPointPosition(item, taxiPoint);
+									const taxiPointData = getPointPosition(item, taxiPoint);
 
 									// Runway point
 									if (taxiPoint.Type == 2) {
@@ -353,7 +353,7 @@ module.exports = function(grunt) {
 
 									taxiPointsData.push(taxiPointData);
 								}
-								
+
 								taxiRoute.push(taxiPointsData);
 
 								json.taxi[taxiID] = taxiRoute;
@@ -371,8 +371,8 @@ module.exports = function(grunt) {
 							// Route waypoint
 							if (/^ROUTE/.test(item.Name)) {
 
-								var waypointData = item.Name.split(":").slice(1);
-								var routeID = +waypointData[0];
+								const waypointData = item.Name.split(":").slice(1);
+								const routeID = +waypointData[0];
 
 								// Validate route ID
 								if (!Number.isInteger(routeID)) {
@@ -384,7 +384,7 @@ module.exports = function(grunt) {
 									grunt.fail.fatal("Invalid route waypoint target in: " + item.Name);
 								}
 
-								var waypointFlag = waypointData[1];
+								let waypointFlag = waypointData[1];
 
 								// Stop point flag
 								if (waypointFlag === "STOP") {
@@ -399,9 +399,9 @@ module.exports = function(grunt) {
 									grunt.fail.fatal("Invalid route waypoint flag in: " + item.Name);
 								}
 
-								var waypointIndex = item.Index;
-								var waypointTarget = item.Targets[0];
-								var waypoint = [];
+								const waypointIndex = item.Index;
+								const waypointTarget = item.Targets[0];
+								const waypoint = [];
 
 								waypoint.push(Number(item.XPos.toFixed(Item.PRECISION_POSITION)));
 								waypoint.push(Number(item.ZPos.toFixed(Item.PRECISION_POSITION)));
@@ -411,7 +411,7 @@ module.exports = function(grunt) {
 								}
 
 								// Register route waypoint data
-								var routeData = routesData[routeID] = routesData[routeID] || {
+								const routeData = routesData[routeID] = routesData[routeID] || {
 									first: waypointIndex
 								};
 
@@ -431,24 +431,21 @@ module.exports = function(grunt) {
 				})(json.items, items[0].items);
 
 				// Store airfield routes data
-				(function() {
+				for (const routeID in routesData) {
 
-					for (var routeID in routesData) {
+					const routeData = routesData[routeID];
+					const jsonRoute = [];
+					let nextWaypoint = routeData.first;
 
-						var routeData = routesData[routeID];
-						var jsonRoute = [];
-						var nextWaypoint = routeData.first;
+					do {
 
-						do {
-
-							jsonRoute.push(routeData[nextWaypoint].data);
-							nextWaypoint = routeData[nextWaypoint].target;
-						}
-						while (nextWaypoint !== routeData.first);
-
-						json.routes.push(jsonRoute);
+						jsonRoute.push(routeData[nextWaypoint].data);
+						nextWaypoint = routeData[nextWaypoint].target;
 					}
-				})();
+					while (nextWaypoint !== routeData.first);
+
+					json.routes.push(jsonRoute);
+				}
 
 				// Write output JSON items file
 				grunt.file.write(
@@ -468,7 +465,7 @@ module.exports = function(grunt) {
 			JSON.stringify(DATA.items, null, "\t")
 		);
 
-		var message = "";
+		let message = "";
 
 		message += numeral(totalItems).format("0,0") + " ";
 		message += grunt.util.pluralize(totalItems, "item/items");
@@ -484,10 +481,10 @@ module.exports = function(grunt) {
 // Utility function used to get absolute Point item position
 function getPointPosition(item, point) {
 
-	var pointOrientation = item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X);
-	var pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X);
-	var positionX = item.XPos + pointMagnitude * Math.cos(pointOrientation);
-	var positionZ = item.ZPos + pointMagnitude * Math.sin(pointOrientation);
+	const pointOrientation = item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X);
+	const pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X);
+	const positionX = item.XPos + pointMagnitude * Math.cos(pointOrientation);
+	const positionZ = item.ZPos + pointMagnitude * Math.sin(pointOrientation);
 
 	return [
 		Number(positionX.toFixed(Item.PRECISION_POSITION)),

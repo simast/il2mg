@@ -4,50 +4,50 @@
 // Load static global data
 require("../../src/data");
 
-var numeral = require("numeral");
-var Item = require("../../src/item");
+const numeral = require("numeral");
+const Item = require("../../src/item");
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw blocks .Group to .json files
-	grunt.registerTask("build:blocks", "Build blocks JSON files.", function() {
+	grunt.registerTask("build:blocks", "Build blocks JSON files.", () => {
 
-		var totalBattles = 0;
-		var totalItems = 0;
+		let totalBattles = 0;
+		let totalItems = 0;
 
 		// Process blocks for each battle
-		for (var battleID in DATA.battles) {
+		for (const battleID in DATA.battles) {
 
-			var battle = DATA.battles[battleID];
-			var blocksPath = "data/battles/" + battleID + "/blocks/";
+			const battle = DATA.battles[battleID];
+			const blocksPath = "data/battles/" + battleID + "/blocks/";
 
 			// Process all blocks files
-			battle.blocks.forEach(function(blockFile) {
+			battle.blocks.forEach((blockFile) => {
 
-				var fileSource = blocksPath + blockFile + ".Group";
-				var fileDestination = blocksPath + blockFile + ".json";
+				const fileSource = blocksPath + blockFile + ".Group";
+				const fileDestination = blocksPath + blockFile + ".json";
 
 				// Read raw blocks
-				var blocks = Item.readTextFile(fileSource);
+				const blocks = Item.readTextFile(fileSource);
 
-				var json = [];
+				const json = [];
 
 				// Build output JSON object with recursion
 				(function buildJSON(json, blocks) {
 
-					blocks.forEach(function(block) {
+					blocks.forEach((block) => {
 
 						// Only import Block and Bridge type items
 						// TODO: Also import block damage (from Damaged child items)
 						if (block instanceof Item.Block || block instanceof Item.Bridge) {
 
-							var itemTypeID = DATA.registerItemType({
+							const itemTypeID = DATA.registerItemType({
 								type: block.type,
 								script: block.Script,
 								model: block.Model
 							});
 
-							var jsonItem = [];
+							const jsonItem = [];
 
 							// Item type ID
 							jsonItem.push(itemTypeID);
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
 			JSON.stringify(DATA.blocks, null, "\t")
 		);
 
-		var message = "";
+		let message = "";
 
 		message += numeral(totalItems).format("0,0") + " ";
 		message += grunt.util.pluralize(totalItems, "item/items");

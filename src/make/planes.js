@@ -4,10 +4,10 @@
 // Generate available mission planes
 module.exports = function makePlanes() {
 
-	var battle = this.battle;
+	const battle = this.battle;
 
 	// Skin data array index to use when building valid/weighted plane skin list
-	var skinDataIndex = [
+	const skinDataIndex = [
 		"spring",
 		"summer",
 		"autumn",
@@ -16,43 +16,43 @@ module.exports = function makePlanes() {
 	].indexOf(this.map.season);
 
 	// Plane index tables
-	var planes = Object.create(null);
-	var planesByType = Object.create(null);
-	
+	const planes = Object.create(null);
+	const planesByType = Object.create(null);
+
 	// Map of plane alias references
-	var planeAlias = Object.create(null);
+	const planeAlias = Object.create(null);
 
 	// Process all planes and build index lists
-	for (var planeID in DATA.planes) {
+	for (const planeID in DATA.planes) {
 
-		var planeData = DATA.planes[planeID];
-		
+		let planeData = DATA.planes[planeID];
+
 		// Alias reference to another plane type
 		if (typeof planeData === "string") {
-			
+
 			planeAlias[planeID] = planeData;
 			continue;
 		}
-		
+
 		// Ignore dummy plane definitions (and groups used to catalog planes)
 		if (!planeData || !planeData.name || !planeData.model || !planeData.script) {
 			continue;
 		}
 
-		var plane = Object.create(null);
-		
+		const plane = Object.create(null);
+
 		plane.id = planeID;
 
 		// Build plane data and register plane parent/group hierarchy
 		while (planeData) {
 
 			// Collect/copy plane data from current hierarchy
-			for (var prop in planeData) {
+			for (const prop in planeData) {
 
 				// Collect plane skin data
 				if (prop === "skins") {
 
-					var skins = getSkins(planeData);
+					const skins = getSkins(planeData);
 
 					if (skins) {
 						plane.skins = skins;
@@ -64,7 +64,7 @@ module.exports = function makePlanes() {
 				}
 			}
 
-			var planeParentID = planeData.parent;
+			const planeParentID = planeData.parent;
 
 			if (!planeParentID) {
 				break;
@@ -77,7 +77,7 @@ module.exports = function makePlanes() {
 			planeData = DATA.planes[planeParentID];
 
 			// Register plane in the parent group hierarchy
-			var planeGroup = planes[planeParentID] || [];
+			const planeGroup = planes[planeParentID] || [];
 
 			// Register a new child plane in the plane group
 			if (Array.isArray(planeGroup)) {
@@ -102,19 +102,19 @@ module.exports = function makePlanes() {
 		// Register plane to type index
 		if (Array.isArray(plane.type)) {
 
-			plane.type.forEach(function(type) {
+			plane.type.forEach((type) => {
 
 				planesByType[type] = planesByType[type] || [];
 				planesByType[type].push(plane);
 			});
 		}
 	}
-	
+
 	// Process all plane alias references
-	for (planeID in planeAlias) {
-		
-		var aliasPlaneID = planeAlias[planeID];
-		
+	for (const planeID in planeAlias) {
+
+		const aliasPlaneID = planeAlias[planeID];
+
 		if (planes[aliasPlaneID]) {
 			planes[planeID] = planes[aliasPlaneID];
 		}
@@ -136,57 +136,57 @@ module.exports = function makePlanes() {
 			return getSkins.index.get(planeData);
 		}
 
-		var skins = null;
+		let skins = null;
 
-		for (var countryID in planeData.skins) {
+		for (const countryID in planeData.skins) {
 
 			// Ignore skins from countries that are not part of this battle
 			if (battle.countries.indexOf(Number(countryID)) === -1) {
 				continue;
 			}
 
-			var countrySkins = [];
+			const countrySkins = [];
 
 			// Build a weighted plane skin list matching current battle map season
-			for (var skinID in planeData.skins[countryID]) {
+			for (const skinID in planeData.skins[countryID]) {
 
-				var skinData = planeData.skins[countryID][skinID][skinDataIndex];
-				
+				const skinData = planeData.skins[countryID][skinID][skinDataIndex];
+
 				if (skinData === undefined) {
 					continue;
 				}
-				
-				var skinWeight = Math.abs(skinData);
+
+				const skinWeight = Math.abs(skinData);
 
 				// Add weighted number of skin IDs
-				for (var n = 0; n < skinWeight; n++) {
-					
+				for (let n = 0; n < skinWeight; n++) {
+
 					countrySkins.push(skinID);
-					
+
 					// Build player-only skin list
 					if (skinData < 0) {
-						
+
 						countrySkins.player = countrySkins.player || [];
 						countrySkins.player.push(skinID);
 					}
 				}
 
 				if (countrySkins.length) {
-					
+
 					if (!skins) {
 						skins = Object.create(null);
 					}
-					
+
 					skins[countryID] = countrySkins;
 				}
 			}
 		}
-		
+
 		getSkins.index.set(planeData, skins);
 
 		return skins;
 	}
-	
+
 	// Static plane data index objects
 	this.planes = Object.freeze(planes);
 	this.planesByType = Object.freeze(planesByType);
