@@ -266,7 +266,7 @@ module.exports = function makeBriefingWeather() {
 		else {
 			return weather.points[a] > weather.points[b];
 		}
-	}).forEach(reasonType => {
+	}).forEach((reasonType) => {
 		context.reason.push(weatherReasons[reasonType]);
 	});
 	

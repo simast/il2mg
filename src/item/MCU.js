@@ -1,13 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+const Item = require("../item");
 
 // Event and report child item name constants
-var ITEM_ON_EVENTS = "OnEvents";
-var ITEM_ON_EVENT = "OnEvent";
-var ITEM_ON_REPORTS = "OnReports";
-var ITEM_ON_REPORT = "OnReport";
+const ITEM_ON_EVENTS = "OnEvents";
+const ITEM_ON_EVENT = "OnEvent";
+const ITEM_ON_REPORTS = "OnReports";
+const ITEM_ON_REPORT = "OnReport";
 
 // Base MCU item
 function MCU() {
@@ -54,7 +54,7 @@ MCU.prototype.addEvent = function(type, target) {
 	}
 
 	// Add a new event item
-	var eventItem = new Item(ITEM_ON_EVENT);
+	const eventItem = new Item(ITEM_ON_EVENT);
 
 	// TODO: Ignore duplicate/existing events
 
@@ -91,7 +91,7 @@ MCU.prototype.addReport = function(type, command, target) {
 	}
 
 	// Add a new report item
-	var reportItem = new Item(ITEM_ON_REPORT);
+	const reportItem = new Item(ITEM_ON_REPORT);
 	
 	// TODO: Ignore duplicate/existing reports
 
@@ -109,7 +109,7 @@ MCU.prototype.addReport = function(type, command, target) {
  */
 MCU.prototype.writeEvents = function(buffer) {
 
-	var eventsCount = 0;
+	let eventsCount = 0;
 
 	if (this.events) {
 		eventsCount = this.events.items.length;
@@ -123,7 +123,7 @@ MCU.prototype.writeEvents = function(buffer) {
 	}
 
 	// List of OnEvent items
-	this.events.items.forEach(function(event) {
+	this.events.items.forEach((event) => {
 
 		this.writeUInt32(buffer, event.Type); // Event type
 		this.writeUInt32(buffer, event.TarId); // Target command item ID
@@ -138,7 +138,7 @@ MCU.prototype.writeEvents = function(buffer) {
  */
 MCU.prototype.writeReports = function(buffer) {
 
-	var reportsCount = 0;
+	let reportsCount = 0;
 
 	if (this.reports) {
 		reportsCount = this.reports.items.length;
@@ -152,7 +152,7 @@ MCU.prototype.writeReports = function(buffer) {
 	}
 
 	// List of OnReport items
-	this.reports.items.forEach(function(report) {
+	this.reports.items.forEach((report) => {
 
 		this.writeUInt32(buffer, report.Type); // Report type
 		this.writeUInt32(buffer, report.TarId); // Target command item ID
@@ -171,7 +171,7 @@ MCU.prototype.toBinary = function* (index) {
 	
 	yield* Item.prototype.toBinary.apply(this, arguments);
 
-	var size = 9;
+	let size = 9;
 
 	if (Array.isArray(this.Targets)) {
 		size += this.Targets.length * 4;
@@ -181,7 +181,7 @@ MCU.prototype.toBinary = function* (index) {
 		size += this.Objects.length * 4;
 	}
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// Enabled
 	this.writeUInt8(buffer, this.Enabled !== undefined ? this.Enabled : 1);

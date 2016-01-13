@@ -71,7 +71,7 @@ function makeFlight(params) {
 	}
 	
 	// Option 1: Attempt to pick taxi route/sector where static unit planes are present
-	(function() {
+	(() => {
 
 		const unitPlaneItems = airfield.planeItemsByUnit[unitID];
 		
@@ -84,7 +84,7 @@ function makeFlight(params) {
 		if (flight.planes > 1) {
 
 			// Order the unit sector list by number of planes present
-			unitSectors.sort(function(a, b) {
+			unitSectors.sort((a, b) => {
 				return unitPlaneItems[b].length - unitPlaneItems[a].length;
 			});
 		}
@@ -107,7 +107,7 @@ function makeFlight(params) {
 			}
 			
 			// Pick any taxi route where the flight fits the best
-			const taxiRoutes = Object.keys(taxiSpawns).filter(function(value) {
+			const taxiRoutes = Object.keys(taxiSpawns).filter((value) => {
 				return value > 0;
 			});
 			
@@ -140,7 +140,7 @@ function makeFlight(params) {
 	// Option 2: Attempt to pick any taxi route/sector where the same plane group units are present
 	if (flight.taxi === undefined) {
 
-		(function() {
+		(() => {
 
 			const leaderPlaneGroup = this.planes[flight.leader.plane].group;
 			const leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
@@ -150,7 +150,7 @@ function makeFlight(params) {
 				const taxiSectorID = rand.pick(leaderPlaneGroupTaxiSectors);
 				const taxiSpawns = airfield.taxiSpawnsBySector[taxiSectorID];
 
-				const taxiRoutes = Object.keys(taxiSpawns).filter(function(value) {
+				const taxiRoutes = Object.keys(taxiSpawns).filter((value) => {
 					return value > 0;
 				});
 				
@@ -246,7 +246,7 @@ function makeFlight(params) {
 		if (taxiRoutes.length) {
 		
 			// Sort taxi routes based on shortest distance to player plane item
-			taxiRoutes.sort(function(a, b) {
+			taxiRoutes.sort((a, b) => {
 				return (a.distance - b.distance);
 			});
 			

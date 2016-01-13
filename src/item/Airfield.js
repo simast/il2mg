@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Block = require("./Block");
+const Block = require("./Block");
 
 // Airfield item
 function Airfield() {
@@ -35,14 +35,14 @@ Airfield.prototype.toBinary = function* (index) {
 	
 	yield* Block.prototype.toBinary.apply(this, arguments);
 
-	var size = 31;
-	var pointItems = [];
+	let size = 31;
+	const pointItems = [];
 
 	// Find Chart item
 	if (this.items && this.items.length) {
 		
-		var chartItem;
-		for (var item of this.items) {
+		let chartItem;
+		for (const item of this.items) {
 
 			if (item.type === "Chart") {
 
@@ -53,7 +53,7 @@ Airfield.prototype.toBinary = function* (index) {
 		
 		if (chartItem && chartItem.items) {
 			
-			chartItem.items.forEach(function(item) {
+			chartItem.items.forEach((item) => {
 				
 				if (item.type === "Point") {
 					pointItems.push(item);
@@ -64,7 +64,7 @@ Airfield.prototype.toBinary = function* (index) {
 	
 	size += pointItems.length * 20;
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 	
 	// ReturnPlanes
 	this.writeUInt8(buffer, this.ReturnPlanes);
@@ -106,7 +106,7 @@ Airfield.prototype.toBinary = function* (index) {
 	this.writeUInt32(buffer, pointItems.length);
 	
 	// List of Point items
-	pointItems.forEach(function(item) {
+	pointItems.forEach((item) => {
 		
 		this.writeUInt32(buffer, item.Type); // Type
 		this.writeDouble(buffer, item.X); // X

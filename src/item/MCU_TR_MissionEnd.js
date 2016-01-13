@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Mission End item
 function MCU_TR_MissionEnd() {
@@ -26,7 +26,7 @@ MCU_TR_MissionEnd.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(1);
+	const buffer = new Buffer(1);
 
 	// Succeeded
 	this.writeUInt8(buffer, this.Succeeded);

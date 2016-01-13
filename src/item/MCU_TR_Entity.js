@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Entity item
 function MCU_TR_Entity() {
@@ -82,7 +82,7 @@ MCU_TR_Entity.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var size = 12;
+	let size = 12;
 
 	if (this.events) {
 		size += this.events.items.length * 8;
@@ -92,7 +92,7 @@ MCU_TR_Entity.prototype.toBinary = function* (index) {
 		size += this.reports.items.length * 12;
 	}
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// Events list
 	this.writeEvents(buffer);

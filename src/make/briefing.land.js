@@ -2,15 +2,15 @@
 "use strict";
 
 // Data constants
-var briefingColor = DATA.briefingColor;
+const briefingColor = DATA.briefingColor;
 
 // Make plan land action briefing
 module.exports = function makeBriefingLand(action, flight) {
 	
-	var briefing = [];
-	var airfield = this.airfields[action.airfield || flight.airfield];
-	var playerElement = this.player.element;
-	var taxiRoute;
+	const briefing = [];
+	const airfield = this.airfields[action.airfield || flight.airfield];
+	const playerElement = this.player.element;
+	let taxiRoute;
 	
 	if (airfield.taxi) {
 		taxiRoute = airfield.taxi[action.taxi || Math.abs(flight.taxi)];
@@ -37,7 +37,7 @@ module.exports = function makeBriefingLand(action, flight) {
 	// Add landing heading/direction
 	if (taxiRoute && (airfield.id !== flight.airfield || typeof playerElement.state === "number")) {
 		
-		var heading = Math.atan2(
+		let heading = Math.atan2(
 			taxiRoute.takeoffEnd[2] - taxiRoute.takeoffStart[2],
 			taxiRoute.takeoffEnd[0] - taxiRoute.takeoffStart[0]
 		) * (180 / Math.PI);

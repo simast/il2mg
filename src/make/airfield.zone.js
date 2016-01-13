@@ -2,7 +2,7 @@
 "use strict";
 
 // Time to delay the unloading of airfield zone area
-var ZONE_UNLOAD_TIME = 60 * 5; // 5 minutes
+const ZONE_UNLOAD_TIME = 60 * 5; // 5 minutes
 
 // Make airfield zone ("bubble" activity trigger)
 module.exports = function makeAirfieldZone(airfield) {
@@ -11,25 +11,25 @@ module.exports = function makeAirfieldZone(airfield) {
 		return;
 	}
 
-	var zone = airfield.zone = Object.create(null);
+	const zone = airfield.zone = Object.create(null);
 
-	var zoneGroup = zone.group = airfield.group.createItem("Group");
+	const zoneGroup = zone.group = airfield.group.createItem("Group");
 	zoneGroup.setName("ZONE");
 
 	// Activity zone items
-	var zoneInitialize = zoneGroup.createItem("MCU_TR_MissionBegin");
-	var zoneTrigger = zoneGroup.createItem("MCU_TR_ComplexTrigger");
-	var zonePlus = zoneGroup.createItem("MCU_Timer");
-	var zoneMinus = zoneGroup.createItem("MCU_Timer");
-	var zoneLoad = zoneGroup.createItem("MCU_Timer");
-	var zoneLoadActivate = zoneGroup.createItem("MCU_Activate");
-	var zoneLoadDeactivate = zoneGroup.createItem("MCU_Deactivate");
-	var zoneActivate = zoneGroup.createItem("MCU_Activate");
-	var zoneUnload = zoneGroup.createItem("MCU_Timer");
-	var zoneUnloadActivate = zoneGroup.createItem("MCU_Activate");
-	var zoneUnloadDeactivate = zoneGroup.createItem("MCU_Deactivate");
-	var zoneUnloadActivateTimer = zoneGroup.createItem("MCU_Timer");
-	var zoneDeactivate = zoneGroup.createItem("MCU_Deactivate");
+	const zoneInitialize = zoneGroup.createItem("MCU_TR_MissionBegin");
+	const zoneTrigger = zoneGroup.createItem("MCU_TR_ComplexTrigger");
+	const zonePlus = zoneGroup.createItem("MCU_Timer");
+	const zoneMinus = zoneGroup.createItem("MCU_Timer");
+	const zoneLoad = zoneGroup.createItem("MCU_Timer");
+	const zoneLoadActivate = zoneGroup.createItem("MCU_Activate");
+	const zoneLoadDeactivate = zoneGroup.createItem("MCU_Deactivate");
+	const zoneActivate = zoneGroup.createItem("MCU_Activate");
+	const zoneUnload = zoneGroup.createItem("MCU_Timer");
+	const zoneUnloadActivate = zoneGroup.createItem("MCU_Activate");
+	const zoneUnloadDeactivate = zoneGroup.createItem("MCU_Deactivate");
+	const zoneUnloadActivateTimer = zoneGroup.createItem("MCU_Timer");
+	const zoneDeactivate = zoneGroup.createItem("MCU_Deactivate");
 
 	zoneTrigger.setPosition(airfield.position);
 	zoneTrigger.Radius = 6000;

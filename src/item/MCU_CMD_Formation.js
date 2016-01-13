@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Formation command item
 function MCU_CMD_Formation() {
@@ -46,7 +46,7 @@ MCU_CMD_Formation.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(8);
+	const buffer = new Buffer(8);
 
 	// FormationType
 	this.writeUInt32(buffer, this.FormationType);

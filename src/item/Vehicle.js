@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+const Item = require("../item");
 
 // Vehicle
 function Vehicle() {
@@ -40,12 +40,12 @@ Vehicle.prototype.toBinary = function* (index) {
 
 	yield* Item.prototype.toBinary.apply(this, arguments);
 
-	var size = 39;
-	var scriptLength = Buffer.byteLength(this.Script);
+	let size = 39;
+	const scriptLength = Buffer.byteLength(this.Script);
 
 	size += scriptLength;
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// LinkTrId
 	this.writeUInt32(buffer, this.LinkTrId || 0);

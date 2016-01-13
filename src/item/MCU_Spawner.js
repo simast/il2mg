@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Spawner item
 function MCU_Spawner() {
@@ -25,7 +25,7 @@ MCU_Spawner.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(1);
+	const buffer = new Buffer(1);
 
 	// SpawnAtMe
 	this.writeUInt8(buffer, this.SpawnAtMe);

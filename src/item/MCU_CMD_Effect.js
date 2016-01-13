@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Effect command item
 function MCU_CMD_Effect() {
@@ -29,7 +29,7 @@ MCU_CMD_Effect.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(4);
+	const buffer = new Buffer(4);
 
 	// ActionType
 	this.writeUInt32(buffer, this.ActionType);

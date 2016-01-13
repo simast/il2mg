@@ -69,12 +69,12 @@ module.exports = function makeFlightPilots(flight) {
 		}
 	}
 	
-	flight.elements.forEach(element => {
+	flight.elements.forEach((element) => {
 		
 		let leaderPlane = null;
 
 		// Create pilot for each plane
-		element.forEach(plane => {
+		element.forEach((plane) => {
 
 			const isFlightLeader = (plane === flight.leader);
 			const isElementLeader = (plane === element[0]);
@@ -215,9 +215,9 @@ module.exports = function makeFlightPilots(flight) {
 				// Prepend duplicated pilot IDs with a part of first name
 				do {
 
-					pilots.filter(pilot => {
+					pilots.filter((pilot) => {
 						return uniqueIDIndex[pilot.id] !== 1;
-					}).forEach(pilot => {
+					}).forEach((pilot) => {
 
 						uniqueIDList.delete(pilot.id);
 

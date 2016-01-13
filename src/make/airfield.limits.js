@@ -1,20 +1,21 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemTag = DATA.itemTag;
-var itemFlag = DATA.itemFlag;
+// Data constants
+const itemTag = DATA.itemTag;
+const itemFlag = DATA.itemFlag;
 
 // Make airfield limits
 module.exports = function makeAirfieldLimits(airfield) {
 
-	var limits = Object.create(null);
-	var value = airfield.value || 0;
-	var rand = this.rand;
-	var time = this.time;
-	var round = Math.round;
-	var min = Math.min;
-	var max = Math.max;
-	var isDark = (time.evening || time.night || time.dawn);
+	const limits = Object.create(null);
+	const value = airfield.value || 0;
+	const rand = this.rand;
+	const time = this.time;
+	const round = Math.round;
+	const min = Math.min;
+	const max = Math.max;
+	const isDark = (time.evening || time.night || time.dawn);
 
 	// Special items
 	limits[itemTag.TRUCK_CARGO] = 0;

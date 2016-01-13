@@ -1,8 +1,29 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
-var MCU = require("./MCU");
+const Item = require("../item");
+const MCU = require("./MCU");
+
+// ComplexTrigger event filters (with order representing bit number in binary file)
+const eventFilters = [
+	"EventsFilterSpawned",
+	"EventsFilterEnteredSimple",
+	"EventsFilterEnteredAlive",
+	"EventsFilterLeftSimple",
+	"EventsFilterLeftAlive",
+	"EventsFilterFinishedSimple",
+	"EventsFilterFinishedAlive",
+	"EventsFilterStationaryAndAlive",
+	"EventsFilterFinishedStationaryAndAlive",
+	"EventsFilterTookOff",
+	"EventsFilterDamaged",
+	"EventsFilterCriticallyDamaged",
+	"EventsFilterRepaired",
+	"EventsFilterKilled",
+	"EventsFilterDropedBombs",
+	"EventsFilterFiredFlare",
+	"EventsFilterFiredRockets"
+];
 
 // ComplexTrigger item
 function MCU_TR_ComplexTrigger() {
@@ -18,7 +39,7 @@ function MCU_TR_ComplexTrigger() {
 	this.CheckEntities = 0;
 	this.CheckVehicles = 0;
 
-	eventFilters.forEach(function(eventFilter) {
+	eventFilters.forEach((eventFilter) => {
 		this[eventFilter] = 0;
 	}, this);
 }
@@ -51,27 +72,6 @@ MCU_TR_ComplexTrigger.prototype = Object.create(MCU.prototype, {
 
 MCU_TR_ComplexTrigger.prototype.typeID = 40;
 
-// ComplexTrigger event filters (with order representing bit number in binary file)
-var eventFilters = [
-	"EventsFilterSpawned",
-	"EventsFilterEnteredSimple",
-	"EventsFilterEnteredAlive",
-	"EventsFilterLeftSimple",
-	"EventsFilterLeftAlive",
-	"EventsFilterFinishedSimple",
-	"EventsFilterFinishedAlive",
-	"EventsFilterStationaryAndAlive",
-	"EventsFilterFinishedStationaryAndAlive",
-	"EventsFilterTookOff",
-	"EventsFilterDamaged",
-	"EventsFilterCriticallyDamaged",
-	"EventsFilterRepaired",
-	"EventsFilterKilled",
-	"EventsFilterDropedBombs",
-	"EventsFilterFiredFlare",
-	"EventsFilterFiredRockets"
-];
-
 /**
  * Get binary representation of the item.
  *
@@ -82,20 +82,20 @@ MCU_TR_ComplexTrigger.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var size = 36;
+	let size = 36;
 	
 	if (this.events) {
 		size += this.events.items.length * 8;
 	}
 	
-	var countries = [];
-	var scripts = [];
-	var names = [];
+	const countries = [];
+	const scripts = [];
+	const names = [];
 
 	// Build countries list
 	if (this.Country instanceof Set) {
 
-		for (var countryID of this.Country) {
+		for (const countryID of this.Country) {
 
 			countries.push(countryID);
 			size += 4;
@@ -105,7 +105,7 @@ MCU_TR_ComplexTrigger.prototype.toBinary = function* (index) {
 	// Build scripts list
 	if (this.ObjectScript instanceof Set) {
 
-		for (var script of this.ObjectScript) {
+		for (const script of this.ObjectScript) {
 
 			scripts.push(script);
 			size += 4 + Buffer.byteLength(script);
@@ -115,14 +115,14 @@ MCU_TR_ComplexTrigger.prototype.toBinary = function* (index) {
 	// Build names list
 	if (this.ObjectName instanceof Set) {
 
-		for (var name of this.ObjectName) {
+		for (const name of this.ObjectName) {
 
 			names.push(name);
 			size += 4 + Buffer.byteLength(name);
 		}
 	}
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// Events list
 	this.writeEvents(buffer);
@@ -146,9 +146,9 @@ MCU_TR_ComplexTrigger.prototype.toBinary = function* (index) {
 	this.writeUInt8(buffer, this.CheckVehicles);
 
 	// EventsFilter* properties
-	var eventsFilterValue = 0;
+	let eventsFilterValue = 0;
 
-	eventFilters.forEach(function(eventFilterProp, eventFilterIndex) {
+	eventFilters.forEach((eventFilterProp, eventFilterIndex) => {
 
 		// NOTE: In binary file event filter properties are stored as individual
 		// bits (flags) in a 32-bit unsigned integer value.
@@ -167,7 +167,7 @@ MCU_TR_ComplexTrigger.prototype.toBinary = function* (index) {
 	this.writeUInt32(buffer, scripts.length);
 
 	// ObjectScript filter list items
-	scripts.forEach(function(script) {
+	scripts.forEach((script) => {
 		this.writeString(buffer, Buffer.byteLength(script), script);
 	}, this);
 	
@@ -175,7 +175,7 @@ MCU_TR_ComplexTrigger.prototype.toBinary = function* (index) {
 	this.writeUInt32(buffer, names.length);
 
 	// ObjectName filter list items
-	names.forEach(function(name) {
+	names.forEach((name) => {
 		this.writeString(buffer, Buffer.byteLength(name), name);
 	}, this);
 	

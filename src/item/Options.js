@@ -144,7 +144,7 @@ Options.prototype.toBinary = function* (index) {
 	this.writeUInt32(buffer, this.WindLayers.length);
 
 	// WindLayers
-	this.WindLayers.forEach(function(windLayer) {
+	this.WindLayers.forEach((windLayer) => {
 
 		// WindLayer ground height
 		this.writeDouble(buffer, windLayer[0]);
@@ -161,7 +161,7 @@ Options.prototype.toBinary = function* (index) {
 	this.writeUInt32(buffer, this.Countries.length);
 
 	// Countries
-	this.Countries.forEach(function(country) {
+	this.Countries.forEach((country) => {
 
 		// Country ID
 		this.writeUInt32(buffer, country[0]);

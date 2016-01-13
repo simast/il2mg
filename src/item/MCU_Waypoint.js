@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Waypoint item
 function MCU_Waypoint() {
@@ -32,7 +32,7 @@ MCU_Waypoint.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(20);
+	const buffer = new Buffer(20);
 
 	// Area (m)
 	this.writeDouble(buffer, this.Area);

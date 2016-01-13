@@ -1,10 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
-var makeAirfieldVehicle = require("./airfield.vehicle");
-var itemTag = DATA.itemTag;
-var itemFlag = DATA.itemFlag;
+const Item = require("../item");
+const makeAirfieldVehicle = require("./airfield.vehicle");
+
+// Data constants
+const itemTag = DATA.itemTag;
+const itemFlag = DATA.itemFlag;
 
 // Make airfield vehicle routes
 module.exports = function makeAirfieldRoutes(airfield, routes) {
@@ -13,21 +15,21 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 		return;
 	}
 
-	var rand = this.rand;
+	const rand = this.rand;
 
 	rand.shuffle(routes);
 
 	while (--airfield.limits.routes >= 0 && routes.length) {
 
 		// Weighted vehicle pool (chance) array
-		var vehiclePool = rand.shuffle([
+		const vehiclePool = rand.shuffle([
 			itemTag.TRUCK_CARGO,
 			itemTag.TRUCK_CARGO,
 			itemTag.TRUCK_CARGO,
 			itemTag.CAR
 		]);
 
-		var vehicle = null;
+		let vehicle = null;
 
 		// Create a live vehicle item object for this route
 		while (vehiclePool.length && !vehicle) {
@@ -50,12 +52,12 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			continue;
 		}
 
-		var route = routes.shift();
-		var routeGroup = airfield.group.createItem("Group");
-		var waypointVehicle = rand.integer(0, route.length - 1);
-		var waypointFirst = null;
-		var waypointLast = null;
-		var isRoadFormation = false; // Default is offroad formation
+		const route = routes.shift();
+		const routeGroup = airfield.group.createItem("Group");
+		let waypointVehicle = rand.integer(0, route.length - 1);
+		let waypointFirst = null;
+		let waypointLast = null;
+		let isRoadFormation = false; // Default is offroad formation
 
 		routeGroup.setName(vehicle.Name);
 		routeGroup.addItem(vehicle);
@@ -66,18 +68,18 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 		}
 
 		// Create route waypoints
-		for (var w = 0; w < route.length; w++) {
+		for (let w = 0; w < route.length; w++) {
 
-			var item = route[w];
-			var itemNext = route[w + 1] || route[0];
-			var itemPrev = route[w - 1] || route[route.length - 1];
-			var isStop = (item[2] === itemFlag.ROUTE_STOP);
-			var isRoad = (item[2] === itemFlag.ROUTE_ROAD);
-			var isRoadNext = (itemNext[2] === itemFlag.ROUTE_ROAD);
-			var isRoadPrev = (itemPrev[2] === itemFlag.ROUTE_ROAD);
+			const item = route[w];
+			const itemNext = route[w + 1] || route[0];
+			const itemPrev = route[w - 1] || route[route.length - 1];
+			const isStop = (item[2] === itemFlag.ROUTE_STOP);
+			const isRoad = (item[2] === itemFlag.ROUTE_ROAD);
+			const isRoadNext = (itemNext[2] === itemFlag.ROUTE_ROAD);
+			const isRoadPrev = (itemPrev[2] === itemFlag.ROUTE_ROAD);
 
 			// Create waypoint MCU item
-			var waypoint = routeGroup.createItem("MCU_Waypoint");
+			const waypoint = routeGroup.createItem("MCU_Waypoint");
 
 			if (waypointLast) {
 				waypointLast.addTarget(waypoint);
@@ -93,14 +95,14 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			waypoint.setOrientationTo(itemNext[0], itemNext[1]);
 
 			// Compute waypoint speed
-			var distance = Math.sqrt(Math.pow(item[0] - itemPrev[0], 2) + Math.pow(item[1] - itemPrev[1], 2));
+			const distance = Math.sqrt(Math.pow(item[0] - itemPrev[0], 2) + Math.pow(item[1] - itemPrev[1], 2));
 
 			// Waypoint distance where speed is maximum
-			var distanceMax = 180;
+			const distanceMax = 180;
 
 			// Offroad speed limits
-			var speedMin = 25;
-			var speedMax = 45;
+			let speedMin = 25;
+			let speedMax = 45;
 
 			// Onroad speed limits
 			if (isRoad && isRoadPrev) {
@@ -108,7 +110,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 				speedMax = 65;
 			}
 
-			var speed = (distance / distanceMax) * speedMax;
+			let speed = (distance / distanceMax) * speedMax;
 
 			speed = Math.max(speed, speedMin);
 			speed = Math.min(speed, speedMax);
@@ -119,13 +121,13 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			waypoint.Speed = Math.round(speed);
 
 			// Compute waypoint area
-			var b = Math.pow(item[0] - itemPrev[0], 2) + Math.pow(item[1] - itemPrev[1], 2);
-			var a = Math.pow(item[0] - itemNext[0], 2) + Math.pow(item[1] - itemNext[1], 2);
-			var c = Math.pow(itemNext[0] - itemPrev[0], 2) + Math.pow(itemNext[1] - itemPrev[1], 2);
+			const b = Math.pow(item[0] - itemPrev[0], 2) + Math.pow(item[1] - itemPrev[1], 2);
+			const a = Math.pow(item[0] - itemNext[0], 2) + Math.pow(item[1] - itemNext[1], 2);
+			const c = Math.pow(itemNext[0] - itemPrev[0], 2) + Math.pow(itemNext[1] - itemPrev[1], 2);
 
-			var angle = Math.acos((a + b - c) / Math.sqrt(4 * a * b));
-			var angleDiff = Math.abs(angle * (180 / Math.PI) - 180);
-			var area = angleDiff / 180 * 40;
+			const angle = Math.acos((a + b - c) / Math.sqrt(4 * a * b));
+			const angleDiff = Math.abs(angle * (180 / Math.PI) - 180);
+			let area = angleDiff / 180 * 40;
 
 			// Waypoint area radius limits (from 10 to 20 meters)
 			area = Math.min(Math.max(area, 10), 20);
@@ -138,7 +140,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			// Create a random stop waypoint timer
 			if (isStop) {
 
-				var stopTimer = routeGroup.createItem("MCU_Timer");
+				const stopTimer = routeGroup.createItem("MCU_Timer");
 
 				stopTimer.Time = Number(rand.real(20, 60).toFixed(3));
 				stopTimer.setPositionNear(waypoint);
@@ -148,7 +150,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 				waypointLast = stopTimer;
 			}
 
-			var formation = null;
+			let formation = null;
 
 			// Road vehicle formation
 			if (isRoad && !isRoadFormation) {
@@ -166,7 +168,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			// Create formation command item
 			if (formation !== null) {
 
-				var formationCommand = routeGroup.createItem("MCU_CMD_Formation");
+				const formationCommand = routeGroup.createItem("MCU_CMD_Formation");
 
 				formationCommand.FormationType = formation;
 				formationCommand.addObject(vehicle);

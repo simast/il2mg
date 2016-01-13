@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Icon item
 function MCU_Icon() {
@@ -113,13 +113,13 @@ MCU_Icon.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var size = 32;
+	let size = 32;
 
 	if (Array.isArray(this.Coalitions)) {
 		size += this.Coalitions.length * 4;
 	}
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// IconId
 	this.writeUInt32(buffer, this.IconId);

@@ -1,18 +1,19 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemFlag = DATA.itemFlag;
-var planeSize = DATA.planeSize;
+// Data constants
+const itemFlag = DATA.itemFlag;
+const planeSize = DATA.planeSize;
 
 // Make airfield plane item
 module.exports = function makeAirfieldPlane(airfield, item) {
 
-	var sector = item[5];
-	var taxiRoute = item[6];
-	var maxSize = item[7];
-	var taxiOffset;
-	var planesBySector = airfield.planesBySector;
-	var playerTaxiRoute;
+	const sector = item[5];
+	const maxSize = item[7];
+	const planesBySector = airfield.planesBySector;
+	let taxiRoute = item[6];
+	let taxiOffset;
+	let playerTaxiRoute;
 	
 	// Extended taxi route data as array
 	if (Array.isArray(taxiRoute)) {
@@ -29,8 +30,8 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	}
 	
 	// Build taxi spawn point by sector index (used when spawning flights)
-	var taxiSpawnsBySector = airfield.taxiSpawnsBySector;
-	var taxiSpawn;
+	const taxiSpawnsBySector = airfield.taxiSpawnsBySector;
+	let taxiSpawn;
 	
 	if (taxiSpawnsBySector) {
 
@@ -74,19 +75,19 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 		return;
 	}
 
-	var planeData = planesBySector[sector][maxSize].shift();
+	const planeData = planesBySector[sector][maxSize].shift();
 
 	if (!planeData) {
 		return;
 	}
 
-	var rand = this.rand;
-	var plane = this.planes[planeData[0]];
-	var planeItemsByUnit = airfield.planeItemsByUnit;
-	var staticPlanes = rand.shuffle(plane.static || []);
-	var planeStatic;
-	var planeSizeID = planeSize[String(plane.size).toUpperCase()];
-	var isCamo = (item[8] === itemFlag.PLANE_CAMO);
+	const rand = this.rand;
+	const plane = this.planes[planeData[0]];
+	const planeItemsByUnit = airfield.planeItemsByUnit;
+	const staticPlanes = rand.shuffle(plane.static || []);
+	const planeSizeID = planeSize[String(plane.size).toUpperCase()];
+	let planeStatic;
+	let isCamo = (item[8] === itemFlag.PLANE_CAMO);
 
 	// 75% chance to use camouflaged static plane when camo flag is set
 	if (isCamo) {
@@ -94,7 +95,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	}
 
 	// Find static plane model
-	for (var staticPlane of staticPlanes) {
+	for (const staticPlane of staticPlanes) {
 
 		if ((staticPlane.camo && !isCamo) || (isCamo && !staticPlane.camo)) {
 			continue;
@@ -110,19 +111,19 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	}
 
 	// Create static plane item
-	var planeItem = this.createItem("Block", false);
+	const planeItem = this.createItem("Block", false);
 	
-	var positionX = item[1];
-	var positionY = item[2];
-	var positionZ = item[3];
-	var orientation = item[4];
-	var orientationOffset = 15;
+	let positionX = item[1];
+	let positionY = item[2];
+	let positionZ = item[3];
+	let orientation = item[4];
+	let orientationOffset = 15;
 
 	// 25% chance to slightly move plane position forward (with taxi routes only)
 	if (taxiRoute !== false && !planeStatic.camo && rand.bool(0.25)) {
 
-		var positionOffsetMin = 10;
-		var positionOffsetMax = 20;
+		let positionOffsetMin = 10;
+		let positionOffsetMax = 20;
 
 		// Limit position offset for player-only taxi routes
 		if (taxiRoute === 0) {
@@ -131,8 +132,8 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 			positionOffsetMax = 12;
 		}
 
-		var positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
-		var orientationRad = orientation * (Math.PI / 180);
+		const positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
+		const orientationRad = orientation * (Math.PI / 180);
 
 		positionX += positionOffset * Math.cos(orientationRad);
 		positionZ += positionOffset * Math.sin(orientationRad);
@@ -151,8 +152,8 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	planeItem.setPosition(positionX, positionY, positionZ);
 	planeItem.setOrientation(orientation);
 	
-	var unitID = planeData[2];
-	var planeIndexData = {
+	const unitID = planeData[2];
+	const planeIndexData = {
 		group: plane.group, // Plane group ID
 		item: planeItem // Plane static item object
 	};

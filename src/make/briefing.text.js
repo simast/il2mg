@@ -4,8 +4,9 @@
 const mustache = require("mustache");
 const people = require("./people");
 
-// Plane string constant
+// Default string constants
 const PLANE = "plane";
+const FLIGHT = "flight";
 
 // Plane type names
 const planeTypeNames = {
@@ -124,7 +125,7 @@ module.exports = function makeBriefingText(template, view) {
 						rand.integer(1, Math.min(sample.length, 2))
 					)
 					.sort()
-					.forEach(sampleIndex => {
+					.forEach((sampleIndex) => {
 						result.push(sample[sampleIndex]);
 					});
 			}
@@ -267,7 +268,7 @@ module.exports = function makeBriefingText(template, view) {
 		// Flight formation name
 		formationTag.toString = () => {
 			
-			let formation = "flight";
+			let formation = FLIGHT;
 			
 			// Country specific formation name
 			if (flight.formation.name) {
@@ -280,7 +281,7 @@ module.exports = function makeBriefingText(template, view) {
 		// Player element formation name
 		formationTag.element = () => {
 			
-			let formation = "flight";
+			let formation = FLIGHT;
 			
 			const playerFormationIndex = flight.elements.indexOf(playerElement);
 			const playerFormation = flight.formation.elements[playerFormationIndex];

@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Force complete command item
 function MCU_CMD_ForceComplete() {
@@ -30,7 +30,7 @@ MCU_CMD_ForceComplete.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(4);
+	const buffer = new Buffer(4);
 
 	// Priority
 	this.writeUInt32(buffer, this.Priority);

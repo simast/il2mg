@@ -71,45 +71,41 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	// Invert taxi points based on shortest distance to runway
 	if (isInvertible) {
 
-		(function() {
-
-			let isForward = true;
-			let distanceForward = 0;
-			let distanceBackward = 0;
-			let lastPoint = taxiPoints[0];
-			
-			// Compute forward and backward distances
-			for (let i = 1; i < taxiPoints.length; i++) {
-				
-				const point = taxiPoints[i];
-				
-				const distance = Math.sqrt(
-					Math.pow(lastPoint[0] - point[0], 2) + Math.pow(lastPoint[1] - point[1], 2)
-				);
-				
-				if (isForward) {
-					distanceForward += distance;
-				}
-				else {
-					distanceBackward += distance;
-				}
-				
-				// Switch to backward distance on runway point type
-				if (point[2] === itemFlag.TAXI_RUNWAY) {
-					
-					isForward = false;
-					i++; // Skip next runway point
-				}
-				
-				lastPoint = taxiPoints[i];
-			}
-
-			// Reverse taxi point list
-			if (distanceForward > distanceBackward) {
-				taxiPoints.reverse();
-			}
+		let isForward = true;
+		let distanceForward = 0;
+		let distanceBackward = 0;
+		let lastPoint = taxiPoints[0];
 		
-		})();
+		// Compute forward and backward distances
+		for (let i = 1; i < taxiPoints.length; i++) {
+			
+			const point = taxiPoints[i];
+			
+			const distance = Math.sqrt(
+				Math.pow(lastPoint[0] - point[0], 2) + Math.pow(lastPoint[1] - point[1], 2)
+			);
+			
+			if (isForward) {
+				distanceForward += distance;
+			}
+			else {
+				distanceBackward += distance;
+			}
+			
+			// Switch to backward distance on runway point type
+			if (point[2] === itemFlag.TAXI_RUNWAY) {
+				
+				isForward = false;
+				i++; // Skip next runway point
+			}
+			
+			lastPoint = taxiPoints[i];
+		}
+
+		// Reverse taxi point list
+		if (distanceForward > distanceBackward) {
+			taxiPoints.reverse();
+		}
 	}
 	
 	const chartItem = new Item("Chart");

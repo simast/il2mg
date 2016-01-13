@@ -52,5 +52,6 @@
 		"checkReturnTypes": true
 	},
 	"disallowSpaceBeforeComma": true,
-	"disallowSpaceBeforeSemicolon": true
+	"disallowSpaceBeforeSemicolon": true,
+	"disallowVar": true
 }

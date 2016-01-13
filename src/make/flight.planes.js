@@ -1,38 +1,38 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Plane = require("../item").Plane;
-var makeAirfieldTaxi = require("./airfield.taxi");
+const Plane = require("../item").Plane;
+const makeAirfieldTaxi = require("./airfield.taxi");
 
 // Data constants
-var planeSize = DATA.planeSize;
-var itemFlag = DATA.itemFlag;
-var flightState = DATA.flightState;
+const planeSize = DATA.planeSize;
+const itemFlag = DATA.itemFlag;
+const flightState = DATA.flightState;
 
 // Make mission flight plane item objects
 module.exports = function makeFlightPlanes(flight) {
-	
+
 	// TODO: Set payload
 	// TODO: Set weapon mods
-	
-	var rand = this.rand;
-	var airfield = this.airfields[flight.airfield];
-	var unit = this.units[flight.unit];
-	var usedParkSpawns = [];
-	var planeNumber = flight.planes;
-	
+
+	const rand = this.rand;
+	const airfield = this.airfields[flight.airfield];
+	const unit = this.units[flight.unit];
+	const usedParkSpawns = [];
+	let planeNumber = flight.planes;
+
 	// Process each flight element (section) in reverse
-	for (var elementIndex = flight.elements.length - 1; elementIndex >= 0; elementIndex--) {
-		
-		var element = flight.elements[elementIndex];
-		
+	for (let elementIndex = flight.elements.length - 1; elementIndex >= 0; elementIndex--) {
+
+		const element = flight.elements[elementIndex];
+
 		// Skip leader only (first plane) when mapping formation number based on distance
-		var sortSkip = 0;
-		
+		let sortSkip = 0;
+
 		// Enforce a limit of one element per ramp or runway start and make sure the
 		// player element is always selected for ramp/runway start.
 		if ((!flight.player && elementIndex > 0) || (flight.player && !element.player)) {
-			
+
 			// Only one element can start on the ramp from "start" flight state
 			if (element.state === flightState.START) {
 				element.state = flightState.TAXI;
@@ -42,48 +42,48 @@ module.exports = function makeFlightPlanes(flight) {
 				element.state = 0; // Air start
 			}
 		}
-		
+
 		// Process each plane in reverse
-		for (var planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {
-			
-			var plane = element[planeIndex];
-			var planeData = this.planes[plane.plane];
-			var isPlayer = (plane === flight.player);
-			var lastPlane = element[planeIndex + 1];
-			var isLeader = (planeIndex === 0);
-			var validParkSpawns = [];
-			var foundSpawnPoint = false;
-			var foundStaticPlane = false;
-			var pilot = plane.pilot;
-			var planeItem = plane.item = flight.group.createItem("Plane");
-			var positionX;
-			var positionY;
-			var positionZ;
-			var orientation;
-			var positionOffset;
-			var orientationRad;
-			
+		for (let planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {
+
+			const plane = element[planeIndex];
+			const planeData = this.planes[plane.plane];
+			const isPlayer = (plane === flight.player);
+			const lastPlane = element[planeIndex + 1];
+			const isLeader = (planeIndex === 0);
+			const validParkSpawns = [];
+			let foundSpawnPoint = false;
+			let foundStaticPlane = false;
+			const pilot = plane.pilot;
+			const planeItem = plane.item = flight.group.createItem("Plane");
+			let positionX;
+			let positionY;
+			let positionZ;
+			let orientation;
+			let positionOffset;
+			let orientationRad;
+
 			// Try to start plane from parking/ramp
 			if (element.state === flightState.START) {
-				
+
 				// Build a list of valid taxi spawn points
 				if (flight.spawns) {
 
-					var planeSizeID = planeSize[String(planeData.size).toUpperCase()];
+					const planeSizeID = planeSize[String(planeData.size).toUpperCase()];
 
-					flight.spawns.forEach(function(spawnPoint, spawnIndex) {
+					flight.spawns.forEach((spawnPoint, spawnIndex) => {
 
-						var spawnID = spawnIndex + 1;
+						const spawnID = spawnIndex + 1;
 
 						if (usedParkSpawns.indexOf(spawnID) === -1 && spawnPoint.size >= planeSizeID) {
 
-							var distance = 0;
+							let distance = 0;
 
 							// Compute spawn point distance to last plane item position
 							if (flight.elements.length > 1 && lastPlane) {
 
-								var posXDiff = lastPlane.item.XPos - spawnPoint.position[0];
-								var posZDiff = lastPlane.item.ZPos - spawnPoint.position[2];
+								const posXDiff = lastPlane.item.XPos - spawnPoint.position[0];
+								const posZDiff = lastPlane.item.ZPos - spawnPoint.position[2];
 
 								distance = Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2));
 							}
@@ -104,7 +104,7 @@ module.exports = function makeFlightPlanes(flight) {
 						// will not be mixed up.
 						if (flight.elements.length > 1 && lastPlane) {
 
-							validParkSpawns.sort(function(a, b) {
+							validParkSpawns.sort((a, b) => {
 								return (a.distance - b.distance);
 							});
 						}
@@ -112,7 +112,7 @@ module.exports = function makeFlightPlanes(flight) {
 						// size (the first plane will use best fit spawn point).
 						else if (!lastPlane) {
 
-							validParkSpawns.sort(function(a, b) {
+							validParkSpawns.sort((a, b) => {
 								return (a.point.size - b.point.size);
 							});
 						}
@@ -120,32 +120,32 @@ module.exports = function makeFlightPlanes(flight) {
 				}
 
 				// Try to use any of the valid parking spawn points
-				var parkSpawn = validParkSpawns.shift();
-				
+				const parkSpawn = validParkSpawns.shift();
+
 				// Use ramp/parking spawn point
 				if (parkSpawn) {
 
-					var spawnPoint = parkSpawn.point;
-					var positionOffsetMin = 10;
-					var positionOffsetMax = 20;
-					var orientationOffset = 15;
-					
+					const spawnPoint = parkSpawn.point;
+					let positionOffsetMin = 10;
+					let positionOffsetMax = 20;
+					const orientationOffset = 15;
+
 					// Limit position offset for player-only taxi routes
 					if (flight.taxi === 0) {
-						
+
 						positionOffsetMin = 8;
 						positionOffsetMax = 14;
 					}
 					// Slightly move leader plane position forward to avoid possible AI taxiing issues
 					else if (isLeader && flight.planes > 1) {
-						
+
 						positionOffsetMin += 10;
 						positionOffsetMax += 10;
 					}
-					
+
 					// Add taxi spawn minimum offset distance
 					if (spawnPoint.offset) {
-						
+
 						positionOffsetMin += spawnPoint.offset;
 						positionOffsetMax += spawnPoint.offset;
 					}
@@ -158,7 +158,7 @@ module.exports = function makeFlightPlanes(flight) {
 					// Slightly move plane position forward
 					positionOffset = rand.real(positionOffsetMin, positionOffsetMax, true);
 					orientationRad = orientation * (Math.PI / 180);
-					
+
 					positionX += positionOffset * Math.cos(orientationRad);
 					positionZ += positionOffset * Math.sin(orientationRad);
 
@@ -195,12 +195,12 @@ module.exports = function makeFlightPlanes(flight) {
 			// Try to start plane from runway
 			else if (element.state === flightState.RUNWAY) {
 
-				var runwayTaxi = airfield.taxi[flight.taxi];
+				let runwayTaxi = airfield.taxi[flight.taxi];
 
 				// TODO: Pick best runway and taxi route based on runway length and plane size
 				if (!runwayTaxi) {
 
-					var runwayTaxiID;
+					let runwayTaxiID;
 
 					// Use any already active taxi route for runway start
 					if (airfield.activeTaxiRoutes) {
@@ -220,9 +220,9 @@ module.exports = function makeFlightPlanes(flight) {
 					runwayTaxi = airfield.taxi[runwayTaxiID];
 					flight.taxi = runwayTaxiID;
 				}
-				
+
 				if (runwayTaxi) {
-					
+
 					// Set initial plane item runway start position and orientation
 					planeItem.setPosition(runwayTaxi.takeoffStart);
 					planeItem.setOrientationTo(runwayTaxi.takeoffEnd);
@@ -243,7 +243,7 @@ module.exports = function makeFlightPlanes(flight) {
 						positionZ += positionOffset * Math.sin(orientationRad);
 
 						// Move/alternate plane position to left or right side
-						var positionDir = planeIndex % 2;
+						const positionDir = planeIndex % 2;
 						positionOffset = 14;
 
 						// Right position offset
@@ -254,10 +254,10 @@ module.exports = function makeFlightPlanes(flight) {
 						else {
 							orientation -= 90;
 						}
-						
+
 						orientation = Math.max((orientation + 360) % 360, 0);
 						orientationRad = orientation * (Math.PI / 180);
-						
+
 						positionX += positionOffset * Math.cos(orientationRad);
 						positionZ += positionOffset * Math.sin(orientationRad);
 
@@ -271,7 +271,7 @@ module.exports = function makeFlightPlanes(flight) {
 					// Slightly randomize plane runway spawn position
 					positionX += rand.real(-3, 3, true);
 					positionZ += rand.real(-3, 3, true);
-					
+
 					// Slightly randomize plane runway spawn orientation
 					orientation = planeItem.YOri + rand.real(-5, 5, true);
 					orientation = Math.max((orientation + 360) % 360, 0);
@@ -286,15 +286,15 @@ module.exports = function makeFlightPlanes(flight) {
 			// Use taxi spawn point
 			if (!foundSpawnPoint && flight.taxi &&
 					(element.state === flightState.START || element.state === flightState.TAXI)) {
-				
-				var taxiData = airfield.taxi[flight.taxi];
-				var taxiPoints = taxiData[4];
-				var taxiPointID = 0;
+
+				const taxiData = airfield.taxi[flight.taxi];
+				const taxiPoints = taxiData[4];
+				let taxiPointID = 0;
 
 				// Find the last used taxi spawn point ID
 				if (usedParkSpawns.length) {
-					
-					for (var x = usedParkSpawns.length - 1; x >= 0; x--) {
+
+					for (let x = usedParkSpawns.length - 1; x >= 0; x--) {
 
 						if (usedParkSpawns[x] < 0) {
 
@@ -303,12 +303,12 @@ module.exports = function makeFlightPlanes(flight) {
 						}
 					}
 				}
-				
-				var taxiPoint = taxiPoints[taxiPointID];
-				var nextTaxiPoint = taxiPoints[taxiPointID + 1];
-				
+
+				const taxiPoint = taxiPoints[taxiPointID];
+				const nextTaxiPoint = taxiPoints[taxiPointID + 1];
+
 				if (taxiPoint && taxiPoint[2] !== itemFlag.TAXI_RUNWAY) {
-					
+
 					positionX = taxiPoint[0];
 					positionY = airfield.position[1];
 					positionZ = taxiPoint[1];
@@ -318,53 +318,53 @@ module.exports = function makeFlightPlanes(flight) {
 					planeItem.setOrientationTo(nextTaxiPoint[0], nextTaxiPoint[1]);
 
 					// Slightly move plane position backwards (from taxi spawn point)
-					var taxiOffsetOrientRad = planeItem.YOri * (Math.PI / 180);
-					var taxiOffset = 5; // 5 meters backwards
+					const taxiOffsetOrientRad = planeItem.YOri * (Math.PI / 180);
+					const taxiOffset = 5; // 5 meters backwards
 
 					positionX -= taxiOffset * Math.cos(taxiOffsetOrientRad);
 					positionZ -= taxiOffset * Math.sin(taxiOffsetOrientRad);
 
 					planeItem.setPosition(positionX, positionY, positionZ);
-				
+
 					// Mark taxi spawn point as used/reserved
 					usedParkSpawns.push(-(taxiPointID + 1));
 					foundSpawnPoint = true;
-					
+
 					// Set element state to "taxi"
 					element.state = flightState.TAXI;
-					
+
 					// Skip this plane when mapping formation number based on distance
 					sortSkip++;
 				}
 			}
-			
+
 			// Spawn in the air above airfield
 			if (!foundSpawnPoint) {
-				
+
 				// Force air start to entire element when any of the planes must be spawned
 				// in the air (required for the planes in the air to not crash).
 				element.state = 0;
 
 				// Since the entire element is moved to an air start - free up previously
 				// reserved parking and taxi spawn points for other flight elements.
-				for (var i = (element.length - 1 - planeIndex); i > 0 && usedParkSpawns.length; i--) {
+				for (let i = (element.length - 1 - planeIndex); i > 0 && usedParkSpawns.length; i--) {
 					usedParkSpawns.pop();
 				}
-				
+
 				// Reset formation number sort skip number (to leader only)
 				sortSkip = 0;
 			}
-			
+
 			// Replace matching unit static plane item with a live plane
 			// TODO: Handle shedulled flights
 			if (!foundStaticPlane && flight.sector && airfield.planeItemsByUnit[unit.id]) {
 
-				var planeItemsByUnit = airfield.planeItemsByUnit[unit.id][flight.sector];
-				
+				const planeItemsByUnit = airfield.planeItemsByUnit[unit.id][flight.sector];
+
 				// FIXME: flight.sector can be other sector (not where unit planes are present)
 				if (planeItemsByUnit) {
-					
-					for (var staticPlane of planeItemsByUnit) {
+
+					for (const staticPlane of planeItemsByUnit) {
 
 						// Select matching (by plane group) static plane item
 						if (staticPlane.item && staticPlane.group === planeData.group) {
@@ -377,7 +377,7 @@ module.exports = function makeFlightPlanes(flight) {
 					}
 				}
 			}
-			
+
 			// Set plane name as pilot ID for player flight planes only
 			// NOTE: Required for the radio message UI to not report distant plane/pilot IDs
 			if (flight.player && !isPlayer && pilot.id) {
@@ -400,9 +400,9 @@ module.exports = function makeFlightPlanes(flight) {
 
 			// Set plane skin
 			if (planeData.skins && planeData.skins[unit.country]) {
-				
-				var skins = planeData.skins[unit.country];
-				var skin = null;
+
+				const skins = planeData.skins[unit.country];
+				let skin = null;
 
 				// Use player-only skin
 				if (isPlayer && skins.player) {
@@ -412,33 +412,33 @@ module.exports = function makeFlightPlanes(flight) {
 				else {
 					skin = rand.pick(skins);
 				}
-				
+
 				// Set custom plane skin
 				if (skin && skin.length) {
 					planeItem.Skin = skin;
 				}
 			}
-	
+
 			// Create plane entity
 			planeItem.createEntity();
 		}
-		
+
 		// Sort subordinate planes in an element formation based on the distance
 		// to the leader plane (will avoid air collisions and taxi issues).
 		if (element.length > 2) {
 
 			// Sort reference plane (either element leader or the last on the taxi way)
-			var sortPlane;
-			
+			let sortPlane;
+
 			// Skip only leader when sorting
 			if (sortSkip === 0) {
 				sortSkip = 1;
 			}
 
-			element.forEach(function(plane, planeIndex) {
+			element.forEach((plane, planeIndex) => {
 
 				plane.distance = (planeIndex - sortSkip);
-				
+
 				// Ignore leader plane and planes on the taxi way
 				if (plane.distance < 0) {
 					sortPlane = plane;
@@ -446,63 +446,60 @@ module.exports = function makeFlightPlanes(flight) {
 				// Compute plane distance to sort reference plane
 				else {
 
-					var posXDiff = sortPlane.item.XPos - plane.item.XPos;
-					var posZDiff = sortPlane.item.ZPos - plane.item.ZPos;
+					const posXDiff = sortPlane.item.XPos - plane.item.XPos;
+					const posZDiff = sortPlane.item.ZPos - plane.item.ZPos;
 
 					plane.distance = Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2));
 				}
 			});
 
-			element.sort(function(a, b) {
+			element.sort((a, b) => {
 				return (a.distance - b.distance);
 			});
 		}
 
-		(function() {
-			
-			for (var planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {
+		for (let planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {
 
-				var plane = element[planeIndex];
-				var planeItem = plane.item;
-				var leaderPlane = element[0];
-				var isPlayer = (plane === flight.player);
-				var isLeader = (plane === leaderPlane);
+			const plane = element[planeIndex];
+			const planeItem = plane.item;
+			const leaderPlane = element[0];
+			const isPlayer = (plane === flight.player);
+			const isLeader = (plane === leaderPlane);
 
-				// Group subordinate planes with element leader
-				if (element.length > 1 && planeIndex > 0) {
-					planeItem.entity.addTarget(leaderPlane.item.entity);
-				}
+			// Group subordinate planes with element leader
+			if (element.length > 1 && planeIndex > 0) {
+				planeItem.entity.addTarget(leaderPlane.item.entity);
+			}
 
-				// Set plane number and formation index
-				if (flight.planes > 1) {
-					
-					planeItem.NumberInFormation = planeIndex;
-					planeItem.Callnum = planeNumber;
-					plane.number = planeNumber;
+			// Set plane number and formation index
+			if (flight.planes > 1) {
 
-					planeNumber--;
-				}
-				
-				// Parking start, engine not running
-				if (element.state === flightState.START) {
-					
-					planeItem.StartInAir = Plane.START_PARKING;
-					
-					// 50% chance to start with engine running for non-leader and non-player planes
-					if (!isPlayer && !isLeader && rand.bool(0.5)) {
-						planeItem.StartInAir = Plane.START_RUNWAY;
-					}
-				}
-				// Ready, taxi or runway start with engine running
-				else if (typeof element.state === "string") {
+				planeItem.NumberInFormation = planeIndex;
+				planeItem.Callnum = planeNumber;
+				plane.number = planeNumber;
+
+				planeNumber--;
+			}
+
+			// Parking start, engine not running
+			if (element.state === flightState.START) {
+
+				planeItem.StartInAir = Plane.START_PARKING;
+
+				// 50% chance to start with engine running for non-leader and non-player planes
+				if (!isPlayer && !isLeader && rand.bool(0.5)) {
 					planeItem.StartInAir = Plane.START_RUNWAY;
 				}
-				// Air start
-				else {
-					planeItem.StartInAir = Plane.START_AIR;
-				}
 			}
-		})();
+			// Ready, taxi or runway start with engine running
+			else if (typeof element.state === "string") {
+				planeItem.StartInAir = Plane.START_RUNWAY;
+			}
+			// Air start
+			else {
+				planeItem.StartInAir = Plane.START_AIR;
+			}
+		}
 	}
 
 	delete flight.spawns;

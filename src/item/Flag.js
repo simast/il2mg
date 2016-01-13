@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+const Item = require("../item");
 
 // Flag item
 function Flag() {
@@ -28,12 +28,12 @@ Flag.prototype.toBinary = function* (index) {
 	
 	yield* Item.prototype.toBinary.apply(this, arguments);
 
-	var size = 38;
-	var scriptLength = Buffer.byteLength(this.Script);
+	let size = 38;
+	const scriptLength = Buffer.byteLength(this.Script);
 
 	size += scriptLength;
 
-	var buffer = new Buffer(size);
+	const buffer = new Buffer(size);
 
 	// LinkTrId
 	this.writeUInt32(buffer, this.LinkTrId || 0);

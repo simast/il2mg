@@ -2,14 +2,14 @@
 "use strict";
 
 // Data constants
-var flightState = DATA.flightState;
-var briefingColor = DATA.briefingColor;
-var itemFlag = DATA.itemFlag;
+const flightState = DATA.flightState;
+const briefingColor = DATA.briefingColor;
+const itemFlag = DATA.itemFlag;
 
 // Make plan takeoff action briefing
 module.exports = function makeBriefingTakeoff(action, flight) {
 	
-	var playerElement = this.player.element;
+	const playerElement = this.player.element;
 	
 	// Ignore take off briefing on air start
 	// NOTE: This may happen when the flight state was "start" - but the player element
@@ -18,10 +18,10 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 		return;
 	}
 	
-	var briefing = [];
-	var airfield = this.airfields[flight.airfield];
-	var playerPlaneItem = flight.player.item;
-	var taxiRoute = airfield.taxi[Math.abs(flight.taxi)];
+	let briefing = [];
+	const airfield = this.airfields[flight.airfield];
+	const playerPlaneItem = flight.player.item;
+	const taxiRoute = airfield.taxi[Math.abs(flight.taxi)];
 
 	// Add taxi info string only if relevant
 	if (taxiRoute && (playerElement.state === flightState.START ||
@@ -32,13 +32,13 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 		// Add taxi direction hint
 		if (taxiRoute) {
 			
-			var taxiPoints = taxiRoute[4];
-			var taxiReferencePoint;
-			var taxiDistanceReference;
-			var taxiDistanceFirst;
+			const taxiPoints = taxiRoute[4];
+			let taxiReferencePoint;
+			let taxiDistanceReference;
+			let taxiDistanceFirst;
 			
 			// Find taxi hint reference point
-			for (var i = 0; i < taxiPoints.length; i++) {
+			for (let i = 0; i < taxiPoints.length; i++) {
 
 				taxiReferencePoint = taxiPoints[i];
 
@@ -67,12 +67,12 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 
 			if (taxiReferencePoint) {
 				
-				var taxiHintOrientation = Math.atan2(
+				let taxiHintOrientation = Math.atan2(
 					taxiReferencePoint[1] - playerPlaneItem.ZPos,
 					taxiReferencePoint[0] - playerPlaneItem.XPos
 				) * (180 / Math.PI);
 
-				var planeHintOrientation = playerPlaneItem.YOri;
+				let planeHintOrientation = playerPlaneItem.YOri;
 
 				if (planeHintOrientation > 180) {
 					planeHintOrientation -= 360;
@@ -118,7 +118,7 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 	// Add take off heading/direction
 	if (taxiRoute) {
 		
-		var heading = Math.atan2(
+		let heading = Math.atan2(
 			taxiRoute.takeoffEnd[2] - taxiRoute.takeoffStart[2],
 			taxiRoute.takeoffEnd[0] - taxiRoute.takeoffStart[0]
 		) * (180 / Math.PI);

@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+const Item = require("../item");
 
 // Block item
 function Block() {
@@ -26,13 +26,13 @@ Block.prototype.toBinary = function* (index) {
 	
 	yield* Item.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(13);
-	var damageItem;
+	const buffer = new Buffer(13);
+	let damageItem;
 
 	// Find Damaged item
 	if (this.items && this.items.length) {
 
-		for (var item of this.items) {
+		for (const item of this.items) {
 
 			if (item.type === "Damaged") {
 
@@ -46,7 +46,7 @@ Block.prototype.toBinary = function* (index) {
 	this.writeUInt32(buffer, this.LinkTrId || 0);
 
 	// Flags
-	var flags = 0;
+	let flags = 0;
 
 	// First bit is DeleteAfterDeath state
 	if (this.DeleteAfterDeath) {

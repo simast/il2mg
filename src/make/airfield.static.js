@@ -1,13 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var itemFlag = DATA.itemFlag;
+const itemFlag = DATA.itemFlag;
 
 // Make airfield static item
 module.exports = function makeAirfieldStatic(airfield, item) {
 
-	var itemType = DATA.getItemType(item[0]);
-	var staticItem = this.createItem(itemType.type, false);
+	const itemType = DATA.getItemType(item[0]);
+	const staticItem = this.createItem(itemType.type, false);
 
 	staticItem.Model = itemType.model;
 	staticItem.Script = itemType.script;
@@ -21,8 +21,8 @@ module.exports = function makeAirfieldStatic(airfield, item) {
 	// Set static item country (required for spawning infantry)
 	else if (airfield.country) {
 		
-		var time = this.time;
-		var countryChance = 0.8; // 80%
+		const time = this.time;
+		let countryChance = 0.8; // 80%
 		
 		// Less infantry for dark time periods
 		if (time.night) {

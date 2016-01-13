@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Block = require("./Block");
+const Block = require("./Block");
 
 // Bridge item
 function Bridge() {

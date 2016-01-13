@@ -18,7 +18,7 @@ module.exports = function makeFlightFormation(flight) {
 	
 	// Find a first (random) matching plane formation required by the task and
 	// which this unit can satisfy with its current plane inventory.
-	for (let planeType of rand.shuffle(Object.keys(task.planes))) {
+	for (const planeType of rand.shuffle(Object.keys(task.planes))) {
 		
 		// FIXME: If the unit had an index of number of planes available by plane
 		// type value - we could optimize and get rid of a couple of iterations.
@@ -64,11 +64,11 @@ module.exports = function makeFlightFormation(flight) {
 				}
 				
 				// Collect all formation types and their required plane counts
-				for (let formationType of rand.shuffle(formationAdvanced)) {
+				for (const formationType of rand.shuffle(formationAdvanced)) {
 					
 					planesRequired = 0;
 					
-					for (let elementPlanesRequired of formations[formationType].elements.planes) {
+					for (const elementPlanesRequired of formations[formationType].elements.planes) {
 						planesRequired += elementPlanesRequired;
 					}
 					
@@ -77,7 +77,7 @@ module.exports = function makeFlightFormation(flight) {
 			}
 			
 			// Validate formation required plane count against available unit inventory
-			for (let formationType in checkFormations) {
+			for (const formationType in checkFormations) {
 				
 				const validPlanesByGroup = Object.create(null);
 				
@@ -87,7 +87,7 @@ module.exports = function makeFlightFormation(flight) {
 				// Simple formation is identified by an integer max plane number
 				const isSimpleFormation = !isNaN(parseInt(formationType, 10));
 				
-				for (let planeID of unit.planes) {
+				for (const planeID of unit.planes) {
 					
 					const plane = this.planes[planeID];
 					
@@ -164,7 +164,7 @@ module.exports = function makeFlightFormation(flight) {
 	flight.planes = 0; // Number of planes in all flight elements
 	
 	// Create requested number of flight elements
-	formation.elements.planes.forEach(function(planesInElement) {
+	formation.elements.planes.forEach((planesInElement) => {
 		
 		const element = [];
 		

@@ -26,7 +26,7 @@ module.exports = function makeBattle() {
 	options.AqmId = 0; // TODO: ?
 
 	// Set country:coalition list
-	options.Countries = (function() {
+	options.Countries = (() => {
 
 		const countries = [];
 
@@ -34,7 +34,7 @@ module.exports = function makeBattle() {
 		coalitions.push(Item.DEFAULT_COALITION);
 		countries.push([Item.DEFAULT_COUNTRY, Item.DEFAULT_COALITION]);
 
-		battle.countries.forEach(function(countryID) {
+		battle.countries.forEach((countryID) => {
 			
 			const coalition = DATA.countries[countryID].coalition;
 			

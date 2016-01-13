@@ -8,8 +8,8 @@ module.exports = function makeAirfieldWindsock(airfield, item) {
 		return;
 	}
 
-	var itemType = DATA.getItemType(item[5]);
-	var windsockItem = this.createItem(itemType.type, false);
+	const itemType = DATA.getItemType(item[5]);
+	const windsockItem = this.createItem(itemType.type, false);
 
 	windsockItem.Model = itemType.model;
 	windsockItem.Script = itemType.script;

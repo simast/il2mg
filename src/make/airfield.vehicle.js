@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Vehicle = require("../item").Vehicle;
-var MCU_CMD_AttackArea = require("../item").MCU_CMD_AttackArea;
-var itemTag = DATA.itemTag;
+const Vehicle = require("../item").Vehicle;
+const MCU_CMD_AttackArea = require("../item").MCU_CMD_AttackArea;
+const itemTag = DATA.itemTag;
 
 // Make airfield vehicle item
 module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
@@ -12,16 +12,16 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 		return;
 	}
 
-	var itemTagID = item[0];
+	const itemTagID = item[0];
 
 	// Enforce airfield limits
 	if (airfield.limits[itemTagID] <= 0) {
 		return;
 	}
 
-	var vehicleType;
-	var isStatic = false;
-	var useAttackArea = false;
+	let vehicleType;
+	let isStatic = false;
+	let useAttackArea = false;
 
 	switch (itemTagID) {
 
@@ -72,26 +72,26 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 		return;
 	}
 
-	var rand = this.rand;
-	var vehicles = isStatic ? this.staticVehicles : this.vehicles;
-	var countryID = rand.pick(airfield.countriesWeighted);
+	const rand = this.rand;
+	const vehicles = isStatic ? this.staticVehicles : this.vehicles;
+	const countryID = rand.pick(airfield.countriesWeighted);
 
 	if (!vehicles[countryID] || !vehicles[countryID][vehicleType]) {
 		return;
 	}
 
-	var vehicle = rand.pick(vehicles[countryID][vehicleType]);
+	const vehicle = rand.pick(vehicles[countryID][vehicleType]);
 
 	if (isStatic && !vehicle.static) {
 		return;
 	}
 
 	// Create vehicle item
-	var vehicleItem = this.createItem(isStatic ? "Block" : "Vehicle", false);
+	const vehicleItem = this.createItem(isStatic ? "Block" : "Vehicle", false);
 
-	var positionX = item[1];
-	var positionY = item[2];
-	var positionZ = item[3];
+	let positionX = item[1];
+	let positionY = item[2];
+	let positionZ = item[3];
 
 	// Slightly vary/randomize static vehicle position
 	if (isStatic) {
@@ -101,7 +101,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	}
 
 	// Slightly vary/randomize vehicle orientation
-	var orientation = Math.max((item[4] + rand.real(-20, 20) + 360) % 360, 0);
+	const orientation = Math.max((item[4] + rand.real(-20, 20) + 360) % 360, 0);
 
 	vehicleItem.Country = countryID;
 	vehicleItem.Model = isStatic ? vehicle.static.model : vehicle.model;
@@ -117,7 +117,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 		vehicleItem.setName(vehicle.name);
 		vehicleItem.createEntity(true);
 		
-		var zone = airfield.zone;
+		const zone = airfield.zone;
 
 		// Attach vehicle to airfield "bubble" zone
 		zone.onActivate.addObject(vehicleItem);
@@ -136,7 +136,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 				Vehicle.AI_HIGH
 			]);
 			
-			var onAttackArea = zone.onAttackArea;
+			let onAttackArea = zone.onAttackArea;
 			
 			// Create a shared attack area command (activated when airfield is loaded)
 			if (!onAttackArea) {

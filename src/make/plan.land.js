@@ -9,12 +9,12 @@ module.exports = function makePlanLand(action, element, flight, input) {
 		return;
 	}
 	
-	var rand = this.rand;
-	var airfield = this.airfields[flight.airfield];
-	var leaderElement = flight.elements[0];
-	var leaderPlaneItem = element[0].item;
-	var taxiRoute = airfield.taxi[Math.abs(flight.taxi)];
-	var landCommand = flight.group.createItem("MCU_CMD_Land");
+	const rand = this.rand;
+	const airfield = this.airfields[flight.airfield];
+	const leaderElement = flight.elements[0];
+	const leaderPlaneItem = element[0].item;
+	const taxiRoute = airfield.taxi[Math.abs(flight.taxi)];
+	const landCommand = flight.group.createItem("MCU_CMD_Land");
 
 	// Set land command position and orientation
 	// NOTE: Landing point is the same as takeoff
@@ -37,7 +37,7 @@ module.exports = function makePlanLand(action, element, flight, input) {
 		// TODO: Other elements should wait for previous element landed reports
 
 		// Short timer used to delay land command
-		var waitTimer = flight.group.createItem("MCU_Timer");
+		const waitTimer = flight.group.createItem("MCU_Timer");
 
 		waitTimer.Time = +(rand.real(10, 15).toFixed(3));
 		waitTimer.setPositionNear(leaderPlaneItem); // TODO

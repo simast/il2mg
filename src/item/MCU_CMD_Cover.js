@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var MCU = require("./MCU");
+const MCU = require("./MCU");
 
 // Cover command item
 function MCU_CMD_Cover() {
@@ -31,7 +31,7 @@ MCU_CMD_Cover.prototype.toBinary = function* (index) {
 	
 	yield* MCU.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(5);
+	const buffer = new Buffer(5);
 
 	// CoverGroup
 	this.writeUInt8(buffer, this.CoverGroup);

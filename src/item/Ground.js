@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+const Item = require("../item");
 
 // Ground
 function Ground() {
@@ -23,7 +23,7 @@ Ground.prototype.toBinary = function* (index) {
 	
 	yield* Item.prototype.toBinary.apply(this, arguments);
 
-	var buffer = new Buffer(9);
+	const buffer = new Buffer(9);
 
 	// LinkTrId
 	this.writeUInt32(buffer, this.LinkTrId || 0);

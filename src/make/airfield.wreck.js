@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-var Item = require("../item");
+const Item = require("../item");
 
 // Make airfield wreck item
 module.exports = function makeAirfieldWreck(airfield, item) {
@@ -12,8 +12,8 @@ module.exports = function makeAirfieldWreck(airfield, item) {
 
 	// TODO: Limit number of wrecks per airfield
 
-	var rand = this.rand;
-	var wreck;
+	const rand = this.rand;
+	let wreck;
 
 	// 25% chance to use vehicle for wreck
 	if (rand.bool(0.25)) {
@@ -28,14 +28,14 @@ module.exports = function makeAirfieldWreck(airfield, item) {
 		return;
 	}
 
-	var wreckItem = this.createItem("Block", false);
-	var damageItem = new Item("Damaged");
+	const wreckItem = this.createItem("Block", false);
+	const damageItem = new Item("Damaged");
 
-	var positionX = item[1];
-	var positionY = item[2];
-	var positionZ = item[3];
-	var orientation = item[4];
-	var orientationOffset = 15;
+	const positionX = item[1];
+	const positionY = item[2];
+	const positionZ = item[3];
+	let orientation = item[4];
+	const orientationOffset = 15;
 
 	// Slightly vary/randomize wreck item orientation
 	orientation = orientation + rand.real(-orientationOffset, orientationOffset);
@@ -58,24 +58,24 @@ function getWreckItems(mission) {
 	
 	// TODO: Filter out certain items (like Italian planes, etc)
 
-	var wreckItems = {
+	const wreckItems = {
 		planes: [],
 		vehicles: []
 	};
 
-	var foundStatics = Object.create(null);
+	const foundStatics = Object.create(null);
 
 	// Collect plane static blocks
-	for (var planeID in mission.planes) {
+	for (const planeID in mission.planes) {
 
-		var planeData = mission.planes[planeID];
+		const planeData = mission.planes[planeID];
 
 		// Ignore plane groups and planes without static blocks
 		if (Array.isArray(planeData) || !planeData.static) {
 			continue;
 		}
 
-		for (var plane of planeData.static) {
+		for (const plane of planeData.static) {
 
 			if (foundStatics[plane.script]) {
 				continue;
@@ -91,15 +91,15 @@ function getWreckItems(mission) {
 	}
 
 	// Collect vehicle static blocks
-	for (var countryID in mission.staticVehicles) {
+	for (const countryID in mission.staticVehicles) {
 
-		var staticVehiclesByCountry = mission.staticVehicles[countryID];
+		const staticVehiclesByCountry = mission.staticVehicles[countryID];
 
-		for (var vehicleType in staticVehiclesByCountry) {
+		for (const vehicleType in staticVehiclesByCountry) {
 
-			var staticVehiclesByType = staticVehiclesByCountry[vehicleType];
+			const staticVehiclesByType = staticVehiclesByCountry[vehicleType];
 
-			for (var vehicle of staticVehiclesByType) {
+			for (const vehicle of staticVehiclesByType) {
 
 				if (foundStatics[vehicle.static.script]) {
 					continue;
