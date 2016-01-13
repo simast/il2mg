@@ -6,7 +6,7 @@
 	"author": "Simas Toleikis <simast@gmail.com>",
 	"dependencies": {
 		"commander": "2.9.0",
-		"moment": "2.11.0",
+		"moment": "2.11.1",
 		"require-directory": "2.1.1",
 		"lex": "1.7.9",
 		"random-js": "1.0.8",
@@ -25,7 +25,7 @@
 		"grunt-contrib-clean": "0.7.0",
 		"grunt-jscs": "2.6.0",
 		"json5": "0.4.0",
-		"enclose": "1.0.6",
+		"enclose": "1.0.7",
 		"sloc": "0.1.9"
 	}
 }

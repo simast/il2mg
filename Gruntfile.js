@@ -4,7 +4,7 @@
 module.exports = function(grunt) {
 
 	// All source files	used with JSCS and JSHint tasks
-	var sourceFiles = [
+	const sourceFiles = [
 		"Gruntfile.js",
 		"src/**/*.js",
 		"build/**/*.js"

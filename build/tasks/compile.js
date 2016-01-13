@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 		const extension = (process.platform === "win32") ? ".exe" : "";
 		const binaryFilePath = "../" + buildName + extension;
 
-		options.push("--version", "5.3.0");
+		options.push("--version", "5.4.0");
 		options.push("--features", "no"); // Support all CPUs (don't use SSE3/AVX/etc)
 		options.push("--config", "../enclose.js");
 		options.push("--loglevel", "error");
