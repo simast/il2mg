@@ -13,17 +13,20 @@ module.exports = function(grunt) {
 		const buildName = grunt.config("pkg.name");
 		const buildDir = "build/" + buildName + "/";
 
-		// Convert data JSON5 files to JSON format for binary executable use
-		grunt.file.expand("data/**/*.json").forEach((dataFile) => {
-
-			const jsonData = JSON5.parse(grunt.file.read(dataFile));
-
-			grunt.file.write(buildDir + dataFile, JSON.stringify(jsonData));
+		// Copy over plain JSON data and app source files
+		grunt.file.expand([
+			"data/**/*.json",
+			"src/**/*.js"
+		]).forEach((file) => {
+			grunt.file.copy(file, buildDir + file);
 		});
-
-		// Copy over app source files
-		grunt.file.expand("src/**/*.js").forEach((sourceFile) => {
-			grunt.file.copy(sourceFile, buildDir + sourceFile);
+		
+		// Convert JSON5 data files to plain JSON format for binary executable use
+		grunt.file.expand("data/**/*.json5").forEach((dataFile) => {
+			
+			grunt.file.write(buildDir + dataFile.slice(0, -1), JSON.stringify(
+				JSON5.parse(grunt.file.read(dataFile))
+			));
 		});
 
 		const options = [];

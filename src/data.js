@@ -118,6 +118,7 @@ DATA.planAction = Object.freeze({
 // Map colors as RGB array values
 DATA.mapColor = Object.freeze({
 	ATTACK: [156, 156, 156],
+	// NOTE: Special color values that will change in-game based on user settings
 	ENEMY: [10, 0, 0],
 	FRIEND: [0, 0, 10]
 });
@@ -138,15 +139,16 @@ DATA.briefingColor = Object.freeze({
 	if (useJSON5) {
 
 		// NOTE: Having JSON5 module name as two separate string literals will trick
-		// enclose to not included it in the binary file.
+		// enclose to not included it in the binary file when compiling.
 		const JSON5 = require("json" + "5");
 
-		useJSON5 = require.extensions[".json"];
-
-		// Temporary override native JSON loader to handle JSON5 data files
-		require.extensions[".json"] = (module, filename) => {
+		// Add new require() loader to handle JSON5 data files
+		require.extensions[".json5"] = (module, filename) => {
 			module.exports = JSON5.parse(fs.readFileSync(filename, "utf8"));
 		};
+		
+		// JSON5 support for require-directory
+		requireDir.defaults.extensions.push("json5");
 	}
 
 	DATA.vehicles = Object.freeze(require("../data/vehicles"));
@@ -175,7 +177,7 @@ DATA.briefingColor = Object.freeze({
 
 	// Load planes
 	const planeData = requireDir(module, "../data/planes");
-
+	
 	for (const planeGroup in planeData) {
 		for (const planeID in planeData[planeGroup]) {
 			DATA.planes[planeID] = planeData[planeGroup][planeID];
@@ -239,11 +241,6 @@ DATA.briefingColor = Object.freeze({
 
 		Object.freeze(battle.countries);
 		Object.freeze(battle.units);
-	}
-
-	// Restore original/native JSON loader
-	if (useJSON5) {
-		require.extensions[".json"] = useJSON5;
 	}
 }());
 
