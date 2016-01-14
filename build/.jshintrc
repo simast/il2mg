@@ -4,7 +4,11 @@
 	"validthis": true,
 	"globals": {
 		"log": true,
-		"DATA": true
+		"DATA": true,
+		"$V": true,
+		"$M": true,
+		"$L": true,
+		"$P": true
 	},
 	"-W053": true,
 	"-W055": true,

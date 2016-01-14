@@ -61,6 +61,19 @@ DATA.frontLine = Object.freeze({
 	ATTACK: 2 // Attack arrow
 });
 
+// Coalitions
+DATA.coalition = Object.freeze({
+	ALLIES: 1,
+	AXIS: 2
+});
+
+// Territory types
+// NOTE: Any positive territory type ID is a coalition ID
+DATA.territory = Object.freeze({
+	FRONT: -1,
+	UNKNOWN: 0
+});
+
 // Plane size constants (types/IDs)
 DATA.planeSize = Object.freeze({
 	SMALL: 1,
@@ -104,7 +117,9 @@ DATA.planAction = Object.freeze({
 
 // Map colors as RGB array values
 DATA.mapColor = Object.freeze({
-	ATTACK: [156, 156, 156]
+	ATTACK: [156, 156, 156],
+	ENEMY: [10, 0, 0],
+	FRIEND: [0, 0, 10]
 });
 
 // Briefing colors as HTML hex color values
@@ -148,7 +163,7 @@ DATA.briefingColor = Object.freeze({
 	DATA.tasks = Object.create(null);
 
 	// Load countries
-	for (let countryID in DATA.countries) {
+	for (const countryID in DATA.countries) {
 
 		const country = DATA.countries[countryID];
 		const countryPath = "../data/countries/" + countryID + "/";
@@ -161,8 +176,8 @@ DATA.briefingColor = Object.freeze({
 	// Load planes
 	const planeData = requireDir(module, "../data/planes");
 
-	for (let planeGroup in planeData) {
-		for (let planeID in planeData[planeGroup]) {
+	for (const planeGroup in planeData) {
+		for (const planeID in planeData[planeGroup]) {
 			DATA.planes[planeID] = planeData[planeGroup][planeID];
 		}
 	}
@@ -172,8 +187,8 @@ DATA.briefingColor = Object.freeze({
 	// Load tasks
 	const taskData = requireDir(module, "../data/tasks");
 
-	for (let taskGroup in taskData) {
-		for (let taskID in taskData[taskGroup]) {
+	for (const taskGroup in taskData) {
+		for (const taskID in taskData[taskGroup]) {
 			DATA.tasks[taskID] = taskData[taskGroup][taskID];
 		}
 	}
@@ -182,7 +197,7 @@ DATA.briefingColor = Object.freeze({
 
 	// Load battles
 	// TODO: Load only required mission battle data
-	for (let battleID in DATA.battles) {
+	for (const battleID in DATA.battles) {
 
 		const battle = DATA.battles[battleID];
 		const battlePath = "../data/battles/" + battleID + "/";
@@ -210,8 +225,8 @@ DATA.briefingColor = Object.freeze({
 			const unitsDataCountry = unitsData[unitCountryID];
 
 			// Build units list
-			for (let unitGroup in unitsDataCountry) {
-				for (let unitID in unitsDataCountry[unitGroup]) {
+			for (const unitGroup in unitsDataCountry) {
+				for (const unitID in unitsDataCountry[unitGroup]) {
 
 					battle.units[unitID] = unitsDataCountry[unitGroup][unitID];
 					battle.units[unitID].country = unitCountryID;
