@@ -1,5 +1,6 @@
 /node_modules
 /docs
+/build/temp
 /build/il2mg
 /build/il2mg.exe
 *.mission

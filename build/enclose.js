@@ -3,11 +3,11 @@
 
 module.exports = {
 	dirs: [
-		"il2mg/src/**/",
-		"il2mg/data/**/"
+		"temp/src/**/",
+		"temp/data/**/"
 	],
 	scripts: [
-		"il2mg/src/**/*.js",
-		"il2mg/data/**/*.json"
+		"temp/src/**/*.js",
+		"temp/data/**/*.json"
 	]
 };

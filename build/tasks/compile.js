@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
 		const done = this.async();
 		const buildName = grunt.config("pkg.name");
-		const buildDir = "build/" + buildName + "/";
+		const buildDir = "build/temp/";
 
 		// Copy over plain JSON data and app source files
 		grunt.file.expand([

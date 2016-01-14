@@ -41,6 +41,7 @@ module.exports = function(grunt) {
 		// Clean task
 		clean: {
 			compile: [
+				"build/temp",
 				"build/il2mg",
 				"build/il2mg.exe"
 			],
