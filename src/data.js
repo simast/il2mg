@@ -68,10 +68,10 @@ DATA.coalition = Object.freeze({
 });
 
 // Territory types
-// NOTE: Any positive territory type ID is a coalition ID
 DATA.territory = Object.freeze({
 	FRONT: -1,
 	UNKNOWN: 0
+	// NOTE: Any positive territory type ID is a coalition ID
 });
 
 // Plane size constants (types/IDs)
@@ -153,7 +153,6 @@ DATA.briefingColor = Object.freeze({
 
 	DATA.vehicles = Object.freeze(require("../data/vehicles"));
 	DATA.clouds = Object.freeze(require("../data/clouds"));
-	DATA.coalitions = Object.freeze(require("../data/coalitions"));
 	DATA.time = Object.freeze(require("../data/time"));
 	DATA.items = Object.freeze(require("../data/items"));
 	DATA.effects = Object.freeze(require("../data/effects"));

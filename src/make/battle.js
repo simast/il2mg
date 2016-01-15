@@ -36,10 +36,13 @@ module.exports = function makeBattle() {
 
 		battle.countries.forEach((countryID) => {
 			
-			const coalition = DATA.countries[countryID].coalition;
+			const coalitionID = DATA.countries[countryID].coalition;
 			
-			coalitions.push(coalition);
-			countries.push([countryID, coalition]);
+			if (coalitions.indexOf(coalitionID) === -1) {
+				coalitions.push(coalitionID);
+			}
+			
+			countries.push([countryID, coalitionID]);
 		});
 
 		return countries;

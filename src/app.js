@@ -182,9 +182,8 @@ params.option("-C, --coalition <coalition>", (() => {
 
 	let desc = "select a coalition" + EOL + EOL;
 
-	for (const coalitionID in DATA.coalitions) {
-		desc += util.format('\t"%s" - %s' + EOL, coalitionID, DATA.coalitions[coalitionID].name);
-	}
+	desc += '\t"' + DATA.coalition.ALLIES + '" - Allies' + EOL;
+	desc += '\t"' + DATA.coalition.AXIS + '" - Axis' + EOL;
 
 	return desc;
 })(), parseInt);
@@ -348,7 +347,9 @@ appDomain.run(() => {
 	}
 
 	// --coalition
-	if (params.coalition !== undefined && !DATA.coalitions[params.coalition]) {
+	if (params.coalition !== undefined &&
+		[DATA.coalition.ALLIES, DATA.coalition.AXIS].indexOf(params.coalition) === -1) {
+		
 		throw ["Unknown coalition!", {coalition: params.coalition}];
 	}
 

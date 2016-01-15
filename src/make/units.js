@@ -249,9 +249,9 @@ module.exports = function makeUnits() {
 			unitsByAirfield[unit.airfield][unitID] = unit;
 
 			// Register unit to coalition index
-			const coalition = DATA.countries[unit.country].coalition;
-			unitsByCoalition[coalition] = unitsByCoalition[coalition] || Object.create(null);
-			unitsByCoalition[coalition][unitID] = unit;
+			const coalitionID = DATA.countries[unit.country].coalition;
+			unitsByCoalition[coalitionID] = unitsByCoalition[coalitionID] || Object.create(null);
+			unitsByCoalition[coalitionID][unitID] = unit;
 
 			// Register unit to country index
 			unitsByCountry[unit.country] = unitsByCountry[unit.country] || Object.create(null);

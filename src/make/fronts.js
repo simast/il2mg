@@ -18,20 +18,11 @@ const GRID_SIZE_HALF = GRID_SIZE / 2;
 // Generate mission fronts and territories
 module.exports = function makeFronts() {
 	
-	const mission = this;
-	
 	// Territories X/Z grid
 	const territories = new Map();
 	
-	// Location index for front points
-	const locationsFronts = this.locations.fronts = new Location.Index();
-	
-	// Location indexes for territories (by coalition)
-	const locationsTerritories = this.locations.territories = Object.create(null);
-	
-	this.coalitions.forEach((coalitionID) => {
-		locationsTerritories[coalitionID] = new Location.Index();
-	});
+	// Location indexes for territories (for fronts and for each coalition)
+	const locations = this.locations.territories = Object.create(null);
 	
 	// Resolve required fronts file based on mission date
 	const frontsFile = this.battle.fronts[this.date.format("YYYY-MM-DD")];
@@ -43,7 +34,7 @@ module.exports = function makeFronts() {
 	// Set debug mode flag
 	let debugFronts = false;
 	
-	if (mission.debug && mission.debug.fronts) {
+	if (this.debug && this.debug.fronts) {
 		debugFronts = true;
 	}
 
@@ -75,22 +66,11 @@ module.exports = function makeFronts() {
 		z: Math.floor(this.map.width / GRID_SIZE)
 	};
 	
-	// List of found front point locations
-	const frontPointLocations = [];
-
-	// Process front points
-	for (let pointID = 0; pointID < frontsData.length; pointID++) {
-		makeFrontPoint(pointID);
-	}
+	// List of found territory locations
+	const locationsData = Object.create(null);
 	
-	// Build territories grid and location indexes
-	makeTerritories.call(this);
-	
-	// Load found front points into locations index
-	locationsFronts.load(frontPointLocations);
-
 	// Make front point icon item
-	function makeFrontPoint(pointID) {
+	const makeFrontPoint = (pointID) => {
 
 		// Point item is already created
 		if (pointItems.has(pointID)) {
@@ -105,7 +85,7 @@ module.exports = function makeFronts() {
 		const pointItem = frontsGroup.createItem("MCU_Icon");
 
 		pointItem.setPosition(pointX, pointZ);
-		pointItem.Coalitions = mission.coalitions;
+		pointItem.Coalitions = this.coalitions;
 
 		// Front border line
 		if (pointType === frontLine.BORDER) {
@@ -118,7 +98,6 @@ module.exports = function makeFronts() {
 			}
 			
 			// TODO: Follow bezier curves and generate more points for precision?
-			frontPointLocations.push(new Location(pointX, pointZ));
 			
 			// Set territory grid to the front line type
 			const gridX = Math.floor(pointX / GRID_SIZE);
@@ -208,10 +187,15 @@ module.exports = function makeFronts() {
 				}
 			}
 		}
+	};
+
+	// Process front points
+	for (let pointID = 0; pointID < frontsData.length; pointID++) {
+		makeFrontPoint(pointID);
 	}
 	
-	// Make territories
-	function makeTerritories() {
+	// Build territories grid and location indexes
+	(() => {
 		
 		// Run ray tracing over each map dimension (for precision)
 		["x", "z"].forEach((dimension) => {
@@ -352,6 +336,24 @@ module.exports = function makeFronts() {
 			return;
 		}
 		
+		// Index location square zone (for fast lookup in the R-tree index)
+		const indexLocation = (x, z, type) => {
+			
+			const location = new Location(
+				x * GRID_SIZE,
+				z * GRID_SIZE,
+				// FIXME: Locations can overlap?
+				x * GRID_SIZE + GRID_SIZE,
+				z * GRID_SIZE + GRID_SIZE
+			);
+			
+			if (!(type in locationsData)) {
+				locationsData[type] = [];
+			}
+			
+			locationsData[type].push(location);
+		};
+		
 		// Mark remaining territory gaps (that were not detected by ray tracing)
 		const gapPoints = [];
 		let gapType = null;
@@ -367,38 +369,49 @@ module.exports = function makeFronts() {
 				territories.set(x, territoriesZ);
 			}
 			
-			let z = (x % 2 === 0 ? 0 : gridMax.z);
+			const isZForward = (x % 2 === 0);
 			
-			// Alternate iteration over the Z axis
+			// Iterate over Z axis in alternating direction
+			let z = (isZForward ? 0 : gridMax.z);
+			
 			while (z >= 0 && z <= gridMax.z) {
 				
 				let point = territoriesZ.get(z);
 				
-				if (point && point.type > 0) {
-					gapType = point.type;
-				}
-				else if (!point) {
+				if (point) {
 					
-					point = {};
+					indexLocation(x, z, point.type);
+					
+					// Paint unknown previous gaps with this territory coalition type
+					if (point.type > 0) {
+						gapType = point.type;
+					}
+				}
+				else {
+					
+					point = {x, z};
 					
 					gapPoints.push(point);
 					territoriesZ.set(z, point);
 				}
-				
-				if (gapType) {
 					
-					while (gapPoints.length) {
-						
-						const gapPoint = gapPoints.shift();
-						gapPoint.type = gapType;
-					}
+				// Mark previous points with found territorry type
+				while (gapType && gapPoints.length) {
+					
+					point = gapPoints.shift();
+					point.type = gapType;
+					
+					indexLocation(point.x, point.z, gapType);
+					
+					// NOTE: Not needed for the territory grid
+					delete point.x;
+					delete point.z;
 				}
 				
-				// Iterate Z
-				z = (x % 2 === 0 ? z + 1 : z - 1);
+				// Iterate Z axis
+				z += (isZForward ? 1 : -1);
 			}
 		}
-		
 		
 		if (!debugFronts) {
 			return;
@@ -413,10 +426,8 @@ module.exports = function makeFronts() {
 			lineItemFrom.setPosition(posFrom);
 			lineItemTo.setPosition(posTo);
 			
-			lineItemFrom.LineType = MCU_Icon.LINE_SECTOR_2;
-
-			lineItemFrom.Coalitions = this.coalitions;
-			lineItemTo.Coalitions = this.coalitions;
+			lineItemFrom.LineType = lineItemTo.LineType = MCU_Icon.LINE_SECTOR_2;
+			lineItemFrom.Coalitions = lineItemTo.Coalitions = this.coalitions;
 
 			lineItemFrom.setColor(color);
 			lineItemTo.setColor(color);
@@ -424,14 +435,19 @@ module.exports = function makeFronts() {
 			lineItemFrom.addTarget(lineItemTo);
 		};
 		
-		// Paint territory ranges with debug lines
+		// Paint territories as lines in debug mode
 		this.make.push(() => {
 			
-			const playerCoalitionID = DATA.countries[this.player.flight.country].coalition;
+			const playerCountryID = this.player.flight.country;
+			const playerCoalitionID = DATA.countries[playerCountryID].coalition;
 			
 			territories.forEach((territoriesZ, x) => {
 				
 				const posX = (x * GRID_SIZE) + GRID_SIZE_HALF;
+				
+				if (posX >= this.map.height) {
+					return;
+				}
 				
 				let type = null;
 				let posFrom = null;
@@ -447,7 +463,7 @@ module.exports = function makeFronts() {
 						
 						if (type !== null) {
 							
-							if (color) {
+							if (color && posFrom !== posTo) {
 								drawDebugLine(posFrom, posTo, color);
 							}
 							
@@ -467,10 +483,11 @@ module.exports = function makeFronts() {
 					}
 					
 					if (!posFrom) {
-						posFrom = [posX, 0, z * GRID_SIZE];
+						posFrom = posTo = [posX, 0, z * GRID_SIZE];
 					}
-
-					posTo = [posX, 0, (z * GRID_SIZE) + GRID_SIZE];
+					else {
+						posTo = [posX, 0, (z * GRID_SIZE) + GRID_SIZE];
+					}
 					
 					if (!color) {
 						
@@ -483,5 +500,12 @@ module.exports = function makeFronts() {
 				}
 			});
 		});
+	})();
+	
+	// Load found territory data into location indexes
+	for (const territoryType in locationsData) {
+		
+		locations[territoryType] = new Location.Index();
+		locations[territoryType].load(locationsData[territoryType]);
 	}
 };
