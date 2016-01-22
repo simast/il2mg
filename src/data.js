@@ -209,6 +209,7 @@ DATA.briefingColor = Object.freeze({
 		battle.map = Object.freeze(require(battlePath + "map"));
 		battle.weather = Object.freeze(require(battlePath + "weather"));
 		battle.airfields = requireDir(module, battlePath + "airfields");
+		battle.roles = Object.freeze(requireDir(module, battlePath + "roles/"));
 		battle.units = Object.create(null);
 
 		// Load battle unit data

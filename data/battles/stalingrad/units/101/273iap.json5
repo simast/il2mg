@@ -6,6 +6,7 @@
 			["273 IAP", "start", "1942-11-21"],
 			["31 GIAP", "1942-11-22", "end"]
 		],
+		role: "fighter",
 		airfields: [
 			// 268 IAD
 			["illarionovsky", "start", "1942-07-22"],

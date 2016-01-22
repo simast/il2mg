@@ -2,6 +2,7 @@
 	// 293 IAP
 	"293iap": {
 		name: "293 IAP",
+		role: "fighter",
 		airfields: [
 			// 287 IAD
 			["zhitkur", "1942-10-14", "1942-10-14", 0],

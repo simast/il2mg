@@ -2,6 +2,7 @@
 	// 126 IAP
 	"126iap": {
 		name: "126 IAP",
+		role: "fighter",
 		airfields: [
 			["solodovka", "1942-08-28", "1942-09-18"]
 		],

@@ -1,7 +1,8 @@
 {
 	// Jagdgeschwader 53 "Pik As"
 	"jg53": {
-		alias: "Pik As"
+		alias: "Pik As",
+		role: "fighter"
 	},
 
 	// I./JG 53
@@ -29,6 +30,7 @@
 	"jg53_i_stab": {
 		name: "Stab I./JG 53",
 		parent: "jg53_i",
+		role: "fighter_stab",
 		planesMin: 3,
 		planesMax: 5,
 		pilots: [

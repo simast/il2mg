@@ -2,6 +2,7 @@
 	// 148 IAP
 	"148iap": {
 		name: "148 IAP",
+		role: "fighter",
 		airfields: [
 			// 269 IAD
 			["kachalinskaya", "1942-07-26", "1942-08-05"],

@@ -1,6 +1,8 @@
 {
 	// Schlachtgeschwader 1
-	"schg1": {},
+	"schg1": {
+		role: "ground_attack"
+	},
 
 	// Stab/SchG 1
 	"schg1_stab": {

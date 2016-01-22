@@ -2,6 +2,7 @@
 	// 296 IAP
 	"296iap": {
 		name: "296 IAP",
+		role: "fighter",
 		airfields: [
 			// 220 IAD
 			["ventsy", "start", "1942-07-22"],

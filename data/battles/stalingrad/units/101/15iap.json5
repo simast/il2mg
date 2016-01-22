@@ -2,6 +2,7 @@
 	// 15 IAP
 	"15iap": {
 		name: "15 IAP",
+		role: "fighter",
 		airfields: [
 			// 287 IAD
 			["srednyaya_ahtuba", "1942-09-04", "1942-09-24"],

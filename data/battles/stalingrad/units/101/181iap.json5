@@ -2,6 +2,7 @@
 	// 181 IAP
 	"181iap": {
 		name: "181 IAP",
+		role: "fighter",
 		airfields: [
 			// 235 IAD
 			["elton", "1942-11-07", "1942-11-07", 0],

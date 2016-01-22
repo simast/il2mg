@@ -1,5 +1,7 @@
 {
-	"437iap": {},
+	"437iap": {
+		role: "fighter"
+	},
 	
 	// 437 IAP
 	"437iap_1": {

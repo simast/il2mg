@@ -2,6 +2,7 @@
 	// 13 IAP
 	"13iap": {
 		name: "13 IAP",
+		role: "fighter",
 		airfields: [
 			// 235 IAD
 			["kalach", "start", "1942-07-24"],

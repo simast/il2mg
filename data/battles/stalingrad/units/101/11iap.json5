@@ -2,6 +2,7 @@
 	// 11 IAP
 	"11iap": {
 		name: "11 IAP",
+		role: "fighter",
 		airfields: [
 			["zaplavnoe", "1942-08-28", "1942-11-03"],
 			["konstitutsiya", "1942-11-03", "1942-12-25"] // Kapustin Yar

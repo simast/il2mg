@@ -2,6 +2,7 @@
 	// 274 IAP
 	"274iap": {
 		name: "274 IAP",
+		role: "fighter",
 		airfields: [
 			// 288 IAD and 226 SAD
 			["kamyshin", "1942-09-04", "1942-09-04", 0],

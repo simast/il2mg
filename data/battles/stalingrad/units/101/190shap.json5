@@ -2,6 +2,7 @@
 	// 190 ShAP
 	"190shap": {
 		name: "190 ShAP",
+		role: "ground_attack",
 		airfields: [
 			// 214 ShAD
 			["bolshevik", "1942-11-12", "1942-11-12", 0],

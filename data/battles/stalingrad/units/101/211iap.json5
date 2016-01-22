@@ -2,6 +2,7 @@
 	// 211 IAP
 	"211iap": {
 		name: "211 IAP",
+		role: "fighter",
 		airfields: [
 			// 220 IAD
 			["bol_ivanovka", "1942-09-02", "1942-10-02"]

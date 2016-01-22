@@ -2,6 +2,7 @@
 	// 581 IAP
 	"581iap": {
 		name: "581 IAP",
+		role: "fighter",
 		airfields: [
 			// 220 IAD
 			["davydovka", "1942-09-02", "1942-12-01"], // Semyonovka

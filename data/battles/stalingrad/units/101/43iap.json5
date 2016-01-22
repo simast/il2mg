@@ -5,6 +5,10 @@
 			["43 IAP PVO", "start", "1942-08-13"],
 			["43 IAP", "1942-08-14", "end"]
 		],
+		role: [
+			["fighter_pvo", "start", "1942-08-13"],
+			["fighter", "1942-08-14", "end"]
+		],
 		airfields: [
 			// 102 IAD/PVO
 			["voroponovo", "1942-07-28", "1942-08-13"],

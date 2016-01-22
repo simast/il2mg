@@ -1,6 +1,8 @@
 {
 	// Jagdgeschwader 52
-	"jg52": {},
+	"jg52": {
+		role: "fighter"
+	},
 
 	// I./JG 52
 	"jg52_i": {
@@ -17,6 +19,7 @@
 	"jg52_i_stab": {
 		name: "Stab I./JG 52",
 		parent: "jg52_i",
+		role: "fighter_stab",
 		planesMin: 3,
 		planesMax: 5
 	},
@@ -54,6 +57,7 @@
 	"jg52_ii_stab": {
 		name: "Stab II./JG 52",
 		parent: "jg52_ii",
+		role: "fighter_stab",
 		planesMin: 3,
 		planesMax: 5
 	},
@@ -74,6 +78,7 @@
 	"jg52_iii": {
 		name: "III./JG 52",
 		alias: "Stalingrad",
+		role: "jg52_iii",
 		parent: "jg52",
 		airfields: [
 			["tuzov", "1942-08-21", "1942-09-10"],

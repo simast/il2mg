@@ -2,6 +2,7 @@
 	// 9 GIAP
 	"9giap": {
 		name: "9 GIAP",
+		role: "fighter",
 		airfields: [
 			// 268 IAD
 			["ventsy", "start", "1942-07-22"],

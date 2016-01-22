@@ -1,6 +1,8 @@
 {
 	// Sturzkampfgeschwader 77
-	"stg77": {},
+	"stg77": {
+		role: "dive_bomber"
+	},
 	
 	// Stab/StG 77
 	"stg77_stab": {

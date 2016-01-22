@@ -2,6 +2,7 @@
 	// 6 IAP
 	"6iap": {
 		name: "6 IAP",
+		role: "fighter",
 		airfields: [
 			// 269 IAD
 			["illarionovsky", "start", "1942-07-22"],

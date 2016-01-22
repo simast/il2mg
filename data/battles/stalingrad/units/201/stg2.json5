@@ -1,7 +1,8 @@
 {
 	// Sturzkampfgeschwader 2 "Immelmann"
 	"stg2": {
-		alias: "Immelmann"
+		alias: "Immelmann",
+		role: "dive_bomber"
 	},
 
 	// Stab/StG 2

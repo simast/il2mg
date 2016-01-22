@@ -1,13 +1,15 @@
 {
 	// Jagdgeschwader 3 "Udet"
 	"jg3": {
-		alias: "Udet"
+		alias: "Udet",
+		role: "fighter"
 	},
 
 	// Stab/JG 3
 	"jg3_stab": {
 		name: "Stab/JG 3",
 		parent: "jg3",
+		role: "fighter_stab",
 		airfields: [
 			["millerovo", "start", "1942-07-22"],
 			["tatsinskaya", "1942-07-22", "1942-07-28"], // Nowy-Cholan ("a field near Tazinskaya")
@@ -89,6 +91,7 @@
 	"jg3_i_stab": {
 		name: "Stab I./JG 3",
 		parent: "jg3_i",
+		role: "fighter_stab",
 		planesMin: 3,
 		planesMax: 5,
 		pilots: [
@@ -157,6 +160,7 @@
 	"jg3_ii_stab": {
 		name: "Stab II./JG 3",
 		parent: "jg3_ii",
+		role: "fighter_stab",
 		planesMin: 3,
 		planesMax: 5
 	},
@@ -223,6 +227,7 @@
 	"jg3_iii_stab": {
 		name: "Stab III./JG 3",
 		parent: "jg3_iii",
+		role: "fighter_stab",
 		planesMin: 3,
 		planesMax: 5,
 		pilots: [
@@ -262,6 +267,7 @@
 	"jg3_pitomnik": {
 		name: "Platzschutzstaffel",
 		alias: "Pitomnik",
+		role: "jg3_pitomnik",
 		parent: "jg3",
 		airfields: [
 			["pitomnik", "1942-11-29", "1943-01-16"],

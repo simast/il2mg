@@ -2,6 +2,7 @@
 	// 572 IAP PVO
 	"572iap": {
 		name: "572 IAP PVO",
+		role: "fighter_pvo",
 		airfields: [
 			["srednyaya_ahtuba", "1942-09-19", "1942-10-16"]
 		],

@@ -1,6 +1,8 @@
 {
 	// Sturzkampfgeschwader 1
-	"stg1": {},
+	"stg1": {
+		role: "dive_bomber"
+	},
 
 	// II./StG 1
 	"stg1_ii": {

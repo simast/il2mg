@@ -2,6 +2,7 @@
 	// 3 GIAP
 	"3giap": {
 		name: "3 GIAP",
+		role: "fighter",
 		airfields: [
 			// 235 IAD
 			["elton", "1942-11-07", "1942-11-07", 0],
