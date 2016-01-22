@@ -331,7 +331,30 @@ module.exports = function makeFronts() {
 			});
 		});
 		
-		// Initial ray tracing did not find any territories
+		// Use active airfields list to mark (seed) coalition territory grid.
+		// NOTE: This also fixes issue where the ray tracing did not hit any front
+		// lines (due to small pockets) and the rest of the territory is unknown.
+		for (const coalitionID in this.airfieldsByCoalition) {
+			for (const airfield of this.airfieldsByCoalition[coalitionID]) {
+				
+				if (airfield.offmap) {
+					continue;
+				}
+				
+				const gridX = Math.floor(airfield.position[0] / GRID_SIZE);
+				const gridZ = Math.floor(airfield.position[2] / GRID_SIZE);
+				
+				if (gridX >= 0 && gridZ >= 0 && gridX <= gridMax.x && gridZ <= gridMax.z) {
+				
+					const territoriesZ = territories.get(gridX) || new Map();
+					
+					territoriesZ.set(gridZ, {type: +coalitionID});
+					territories.set(gridX, territoriesZ);
+				}
+			}
+		}
+		
+		// Initial ray tracing and airfield seed did not find any territories
 		if (!territories.size) {
 			return;
 		}
@@ -483,10 +506,10 @@ module.exports = function makeFronts() {
 					}
 					
 					if (!posFrom) {
-						posFrom = posTo = [posX, 0, z * GRID_SIZE];
+						posFrom = posTo = [posX, 0, Math.min(z * GRID_SIZE, this.map.width)];
 					}
 					else {
-						posTo = [posX, 0, (z * GRID_SIZE) + GRID_SIZE];
+						posTo = [posX, 0, Math.min((z * GRID_SIZE) + GRID_SIZE, this.map.width)];
 					}
 					
 					if (!color) {
