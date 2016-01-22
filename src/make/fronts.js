@@ -21,6 +21,24 @@ module.exports = function makeFronts() {
 	// Territories X/Z grid
 	const territories = new Map();
 	
+	// Exported public utility method to get territory type based on position
+	makeFronts.getTerritory = (posX, posZ) => {
+		
+		const territoriesZ = territories.get(Math.floor(posX / GRID_SIZE));
+		
+		if (territoriesZ) {
+			
+			const gridPoint = territoriesZ.get(Math.floor(posZ / GRID_SIZE));
+			
+			// Found territory grid point type
+			if (gridPoint) {
+				return gridPoint.type;
+			}
+		}
+		
+		return territory.UNKNOWN;
+	};
+	
 	// Location indexes for territories (for fronts and for each coalition)
 	const locations = this.locations.territories = Object.create(null);
 	
