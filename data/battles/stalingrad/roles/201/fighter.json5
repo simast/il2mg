@@ -1,5 +1,6 @@
 // Fighter (jagdflieger) role
 {
 	cover: 2,
-	free: 1
+	test: 1,
+	practice: 1
 }

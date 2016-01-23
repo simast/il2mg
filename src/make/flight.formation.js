@@ -5,7 +5,7 @@
 module.exports = function makeFlightFormation(flight) {
 
 	const rand = this.rand;
-	const task = this.tasks[flight.task];
+	const task = flight.task;
 	const unit = this.units[flight.unit];
 	const formations = this.formations[flight.country];
 	let formation;
@@ -156,7 +156,7 @@ module.exports = function makeFlightFormation(flight) {
 	
 	// Could not match unit to any of the required formations
 	if (!formation) {
-		throw ["No valid flight formation!", {unit: unit.id, task: flight.task}];
+		throw ["No valid flight formation!", {unit: unit.id, task: flight.task.id}];
 	}
 	
 	flight.elements = [];

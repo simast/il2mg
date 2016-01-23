@@ -22,8 +22,8 @@ function makeFlight(params) {
 		throw new TypeError("Invalid flight unit ID value.");
 	}
 	
-	// Validate required task parameter
-	if (!params.task || !this.tasks[params.task]) {
+	// Validate optional task parameter
+	if (params.task && !this.tasks[params.task]) {
 		throw new TypeError("Invalid flight task value.");
 	}
 	
@@ -34,14 +34,8 @@ function makeFlight(params) {
 	if (params.player) {
 		isPlayer = true;
 	}
-
-	let taskID = params.task;
-	let unitID = params.unit;
 	
-	// Resolve task from task group
-	while (Array.isArray(this.tasks[taskID])) {
-		taskID = rand.pick(this.tasks[taskID]);
-	}
+	let unitID = params.unit;
 
 	// Resolve unit from unit group
 	while (Array.isArray(this.units[unitID])) {
@@ -50,8 +44,31 @@ function makeFlight(params) {
 	
 	const unit = this.units[unitID];
 	const airfield = this.airfields[unit.airfield];
+	const taskID = params.task;
+	let task;
 	
-	flight.task = taskID;
+	// Try to find matching unit task by specified ID
+	if (taskID) {
+		
+		for (const unitTask of rand.shuffle(unit.tasks)) {
+			
+			if (unitTask.id === taskID) {
+				
+				task = unitTask;
+				break;
+			}
+		}
+	}
+	// Pick a random (weighted) unit task
+	else {
+		task = rand.pick(unit.tasks);
+	}
+	
+	if (!task) {
+		throw new Error("Invalid flight unit task.");
+	}
+	
+	flight.task = task;
 	flight.unit = unitID;
 	flight.airfield = unit.airfield;
 	flight.country = unit.country;

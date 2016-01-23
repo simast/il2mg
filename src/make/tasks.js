@@ -4,75 +4,86 @@
 // Generate available mission tasks
 module.exports = function makeTasks() {
 
-	// Tasks index table and weighted list
+	// Tasks index list
 	const tasks = Object.create(null);
-	const tasksWeighted = [];
 	
 	// Process all tasks and build index list
 	for (const taskID in DATA.tasks) {
 
-		let taskData = DATA.tasks[taskID];
-
-		// Ignore dummy task definitions (and groups used to catalog tasks)
-		if (!taskData || !taskData.name) {
+		const task = DATA.tasks[taskID];
+		
+		// Ignore dummy task definitions
+		if (!task || !task.name) {
 			continue;
 		}
-
-		const task = Object.create(null);
 		
 		task.id = taskID;
 
-		// Build task data and register parent/group hierarchy
-		while (taskData) {
-
-			// Collect/copy task data from current hierarchy
-			for (const prop in taskData) {
-				
-				if (task[prop] === undefined) {
-					task[prop] = taskData[prop];
-				}
-			}
-
-			const taskParentID = taskData.parent;
-
-			if (!taskParentID) {
-				break;
-			}
-			// Set task group as a top-most parent
-			else {
-				task.group = taskParentID;
-			}
-
-			taskData = DATA.tasks[taskParentID];
-
-			// Register task in the parent group hierarchy
-			const taskGroup = tasks[taskParentID] || [];
-
-			// Register a new child task in the task group
-			if (Array.isArray(taskGroup)) {
-
-				taskGroup.push(taskID);
-
-				if (taskData.parent !== undefined) {
-					taskGroup.parent = taskData.parent;
-				}
-
-				tasks[taskParentID] = taskGroup;
-			}
-		}
-
 		// Register task to ID index
 		tasks[taskID] = task;
-		
-		// Add task to weighted list
-		const weight = +task.weight || 1;
-		
-		for (let i = 0; i < weight; i++) {
-			tasksWeighted.push(taskID);
-		}
 	}
 	
-	// Static tasks index and weighted list
+	// Static cached unit tasks lists
+	// TODO: Support dynamic lists with rebase missions
+	const tasksByRole = Object.create(null);
+	
+	// Build unit tasks lists
+	for (const unitID in this.units) {
+		
+		const unit = this.units[unitID];
+		
+		// Ignore unit groups
+		if (Array.isArray(unit)) {
+			continue;
+		}
+		
+		const countryID = unit.country;
+		
+		tasksByRole[countryID] = tasksByRole[countryID] || Object.create(null);
+		let unitTasks = tasksByRole[countryID][unit.role];
+		
+		// Create a new unit tasks list for this role
+		if (!unitTasks) {
+			
+			unitTasks = tasksByRole[countryID][unit.role] = [];
+			const role = this.battle.roles[countryID][unit.role];
+			
+			for (const taskID in role) {
+				
+				const task = tasks[taskID];
+				let roleTask = role[taskID];
+				
+				// Ignore invalid roles
+				if (!task || !roleTask) {
+					continue;
+				}
+				
+				let weight;
+				
+				// Role task data set as a single weight number
+				if (Number.isInteger(roleTask)) {
+					
+					weight = roleTask;
+					roleTask = Object.create(task);
+					roleTask.weight = weight;
+				}
+				// Role task data set as an object for customizing base task
+				else {
+					
+					weight = roleTask.weight = roleTask.weight || 1;
+					Object.setPrototypeOf(roleTask, task);
+				}
+				
+				// Add task to the weighted role tasks list
+				for (let i = 0; i < weight; i++) {
+					unitTasks.push(roleTask);
+				}
+			}
+		}
+		
+		unit.tasks = unitTasks;
+	}
+	
+	// Static tasks index list
 	this.tasks = Object.freeze(tasks);
-	this.tasksWeighted = Object.freeze(tasksWeighted);
 };

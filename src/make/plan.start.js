@@ -9,7 +9,7 @@ module.exports = function makePlanStart(action, element, flight, input) {
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];
 	const isAirStart = (typeof element.state === "number");
-	const task = this.tasks[flight.task];
+	const task = flight.task;
 
 	// Set element planes to an air start position
 	if (isAirStart) {

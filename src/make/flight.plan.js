@@ -25,22 +25,14 @@ module.exports = function makeFlightPlan(flight) {
 	// Form up plan action
 	plan.push({type: planAction.FORM});
 
-	let taskID = flight.task;
+	let taskID = flight.task.id;
 	
 	// Make task specific plan
-	do {
-		
-		const makeTask = makeParts["task." + taskID];
-		
-		if (makeTask) {
-			
-			makeTask.call(this, flight);
-			break;
-		}
-		
-		taskID = this.tasks[taskID].parent;
+	const makeTask = makeParts["task." + taskID];
+	
+	if (makeTask) {
+		makeTask.call(this, flight);
 	}
-	while (taskID);
 
 	// Land plan action
 	plan.land = plan[plan.push({type: planAction.LAND}) - 1];

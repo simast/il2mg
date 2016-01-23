@@ -395,7 +395,7 @@ appDomain.run(() => {
 	// Save mission files
 	mission.save(params.args[0]).then(
 		() => {
-			log.D(mission.name);
+			log.D(mission.title);
 		},
 		(error) => {
 			appDomain.emit("error", error);

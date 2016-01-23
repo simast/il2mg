@@ -11,14 +11,13 @@ module.exports = function makeForces() {
 	const player = this.player;
 	const force = [];
 	let flight;
-	let unitID;
 
 	this.forces = [];
 
 	// Select player unit from a weighted unit list (by plane count)
-	unitID = rand.pick(this.unitsWeighted.filter((unitID) => {
-		return (player.units.indexOf(unitID) !== -1);
-	}));
+	const unit = this.units[rand.pick(this.unitsWeighted.filter((unitID) => {
+		return (player.units.indexOf(unitID) !== -1 && this.units[unitID].tasks.length);
+	}))];
 
 	// FIXME: Make a number of active and shedulled flights
 	do {
@@ -28,8 +27,7 @@ module.exports = function makeForces() {
 			flight = makeFlight.call(this, {
 				player: true,
 				state: player.state,
-				unit: unitID,
-				task: rand.pick(this.tasksWeighted)
+				unit: unit.id
 			});
 		}
 		catch (error) {

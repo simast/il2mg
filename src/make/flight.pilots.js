@@ -10,7 +10,7 @@ module.exports = function makeFlightPilots(flight) {
 	// TODO: Support female pilots/names
 
 	const rand = this.rand;
-	const task = this.tasks[flight.task];
+	const task = flight.task;
 	const player = this.player;
 	const unit = this.units[flight.unit];
 	const ranks = DATA.countries[unit.country].ranks;

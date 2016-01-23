@@ -17,26 +17,26 @@ module.exports = function makeBriefing() {
 	const rand = this.rand;
 	const options = this.items.Options;
 	const flight = this.player.flight;
-	const task = this.tasks[flight.task];
+	const task = flight.task;
 	let briefing = [];
 
-	// Mission name
-	let name = this.battle.name;
+	// Mission title
+	let title = this.battle.name;
 	
-	// Use task name
-	if (task.name) {
+	// Use task title
+	if (task.title) {
 		
-		name = task.name;
+		title = task.title;
 		
-		if (!Array.isArray(name)) {
-			name = [name];
+		if (!Array.isArray(title)) {
+			title = [title];
 		}
 		
-		name = makeBriefingText.call(this, rand.pick(name));
+		title = makeBriefingText.call(this, rand.pick(title));
 	}
 	
-	options.setName(this.getLC(name));
-	this.name = name;
+	options.setName(this.getLC(title));
+	this.title = title;
 
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
