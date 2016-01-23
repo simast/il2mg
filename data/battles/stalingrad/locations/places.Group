@@ -1,0 +1,2787 @@
+Group
+{
+  Name = "Places";
+  Index = 11434;
+  Desc = "";
+  MCU_H_ReferencePoint
+  {
+    Index = 11435;
+    Name = "TOWN:Verhne-Grachevsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 214554.050;
+    YPos = 121.128;
+    ZPos = 37894.115;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1594.78;
+    Backward = 733.314;
+    Left = 1308.77;
+    Right = 2006.88;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11436;
+    Name = "VILLAGE:Razmetny";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 218159.367;
+    YPos = 170.082;
+    ZPos = 39769.089;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1278.02;
+    Backward = 440.381;
+    Left = 437.465;
+    Right = 716.085;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11437;
+    Name = "VILLAGE:Pochtovy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 213537.369;
+    YPos = 152.946;
+    ZPos = 13510.126;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 435.05;
+    Backward = 670.997;
+    Left = 1682.22;
+    Right = 1543.69;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11438;
+    Name = "VILLAGE:Botanovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 212086.414;
+    YPos = 190.588;
+    ZPos = 8123.494;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 812.121;
+    Backward = 721.676;
+    Left = 392.251;
+    Right = 448.816;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11439;
+    Name = "VILLAGE:Donskoy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 212956.460;
+    YPos = 188.774;
+    ZPos = 1700.934;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 639.222;
+    Backward = 535.969;
+    Left = 821.297;
+    Right = 644.128;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11440;
+    Name = "VILLAGE:Rogozhkino";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 214350.259;
+    YPos = 182.860;
+    ZPos = 45417.651;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1272.75;
+    Backward = 917.117;
+    Left = 487.509;
+    Right = 642.336;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11441;
+    Name = "VILLAGE:Yablonevy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 206560.030;
+    YPos = 207.342;
+    ZPos = 19934.110;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 573.242;
+    Backward = 381.143;
+    Left = 615.007;
+    Right = 804.578;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11442;
+    Name = "TOWN:Vyaznensky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 201921.489;
+    YPos = 120.770;
+    ZPos = 3953.187;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1580.62;
+    Backward = 1830.5;
+    Left = 1399.41;
+    Right = 2019.01;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11443;
+    Name = "TOWN:Popovka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 197236.640;
+    YPos = 113.377;
+    ZPos = 14650.552;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1146.91;
+    Backward = 1305.41;
+    Left = 1311.89;
+    Right = 1959.35;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11444;
+    Name = "VILLAGE:Stoyanov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 199669.455;
+    YPos = 126.588;
+    ZPos = 24510.314;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 560.133;
+    Backward = 554.182;
+    Left = 858.702;
+    Right = 961.521;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11445;
+    Name = "VILLAGE:Cherepevka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 194835.618;
+    YPos = 103.175;
+    ZPos = 10462.221;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 625.723;
+    Backward = 594.265;
+    Left = 647.356;
+    Right = 688.17;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11446;
+    Name = "VILLAGE:Gusinka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 207411.116;
+    YPos = 128.696;
+    ZPos = 36221.801;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 648.316;
+    Backward = 769.893;
+    Left = 913.952;
+    Right = 799.714;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11447;
+    Name = "VILLAGE:Krasnaya zvezda";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 199507.750;
+    YPos = 175.514;
+    ZPos = 37555.838;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 756.273;
+    Backward = 770.672;
+    Left = 714.791;
+    Right = 597.09;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11448;
+    Name = "VILLAGE:Astakovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 189213.389;
+    YPos = 131.249;
+    ZPos = 36231.274;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 584.16;
+    Backward = 775.453;
+    Left = 810.41;
+    Right = 917.412;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11449;
+    Name = "VILLAGE:Novo-Kalinovka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 181096.155;
+    YPos = 98.148;
+    ZPos = 16595.858;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 629.519;
+    Backward = 804.077;
+    Left = 1340.03;
+    Right = 752.851;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11450;
+    Name = "VILLAGE:Smolin";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 172809.301;
+    YPos = 154.300;
+    ZPos = 21251.694;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 463.683;
+    Backward = 443.9;
+    Left = 397.568;
+    Right = 390.484;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11451;
+    Name = "TOWN:Ponomarev";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 176201.280;
+    YPos = 127.066;
+    ZPos = 32649.677;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 850.64;
+    Backward = 1162.28;
+    Left = 1360.56;
+    Right = 1931.76;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11452;
+    Name = "VILLAGE:Verbovka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 187027.810;
+    YPos = 106.008;
+    ZPos = 53046.486;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 761.182;
+    Backward = 756.706;
+    Left = 899.045;
+    Right = 895.82;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11453;
+    Name = "VILLAGE:Kalinovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 205804.397;
+    YPos = 102.716;
+    ZPos = 53026.949;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 772.177;
+    Backward = 872.151;
+    Left = 976.008;
+    Right = 1165.19;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11454;
+    Name = "VILLAGE:Alekseev";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 170196.525;
+    YPos = 125.307;
+    ZPos = 42638.220;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1744.64;
+    Backward = 818.434;
+    Left = 672.869;
+    Right = 934.607;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11455;
+    Name = "VILLAGE:Pervomayskoe";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 151357.867;
+    YPos = 77.518;
+    ZPos = 13256.238;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 979.583;
+    Backward = 1170.88;
+    Left = 698.657;
+    Right = 934.607;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11456;
+    Name = "VILLAGE:Varlamov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 155949.175;
+    YPos = 105.907;
+    ZPos = 50772.511;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 919.112;
+    Backward = 928.995;
+    Left = 737.139;
+    Right = 879.633;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11457;
+    Name = "VILLAGE:Sazonovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 156376.724;
+    YPos = 108.801;
+    ZPos = 59702.536;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 676.346;
+    Backward = 671.289;
+    Left = 563.027;
+    Right = 636.741;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11458;
+    Name = "TOWN:Paramonov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 166268.928;
+    YPos = 106.646;
+    ZPos = 69990.957;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1073.31;
+    Backward = 1187.65;
+    Left = 1473.81;
+    Right = 1797.43;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11459;
+    Name = "VILLAGE:Belavin";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 200824.438;
+    YPos = 107.280;
+    ZPos = 70697.446;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 710.999;
+    Backward = 738.458;
+    Left = 921.855;
+    Right = 549.102;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11460;
+    Name = "VILLAGE:Dubovskoy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 212256.230;
+    YPos = 126.070;
+    ZPos = 74606.207;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1157.93;
+    Backward = 539.149;
+    Left = 1296.31;
+    Right = 537.023;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11461;
+    Name = "VILLAGE:Rubashkin";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 213180.321;
+    YPos = 126.070;
+    ZPos = 76140.063;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 639.74;
+    Backward = 578.337;
+    Left = 579.265;
+    Right = 433.506;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11462;
+    Name = "VILLAGE:Kotovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 214398.949;
+    YPos = 126.503;
+    ZPos = 95107.424;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 836.43;
+    Backward = 832.131;
+    Left = 509.472;
+    Right = 934.748;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11463;
+    Name = "VILLAGE:Kalmykovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 215841.703;
+    YPos = 137.366;
+    ZPos = 99086.499;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 715.543;
+    Backward = 770.216;
+    Left = 1371.86;
+    Right = 1297.39;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11464;
+    Name = "TOWN:Bolshoy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 209155.729;
+    YPos = 108.864;
+    ZPos = 95153.380;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1671.25;
+    Backward = 1228.07;
+    Left = 998.611;
+    Right = 1675.4;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11465;
+    Name = "VILLAGE:Klinovoy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 208101.597;
+    YPos = 135.648;
+    ZPos = 99596.920;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 615.014;
+    Backward = 619.229;
+    Left = 652.37;
+    Right = 681.352;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11466;
+    Name = "VILLAGE:Karasev";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 195953.195;
+    YPos = 106.872;
+    ZPos = 89354.359;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 500.272;
+    Backward = 451.896;
+    Left = 642.808;
+    Right = 623.981;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11467;
+    Name = "VILLAGE:Berezyanka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 175775.589;
+    YPos = 129.179;
+    ZPos = 89469.904;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 697.716;
+    Backward = 632.117;
+    Left = 419.53;
+    Right = 399.725;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11468;
+    Name = "VILLAGE:Leontevsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 171253.426;
+    YPos = 85.424;
+    ZPos = 77706.559;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 668.53;
+    Backward = 599.412;
+    Left = 442.303;
+    Right = 403.894;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11469;
+    Name = "TOWN:Chernyshevskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 168507.695;
+    YPos = 83.518;
+    ZPos = 78934.261;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 858.271;
+    Backward = 709.849;
+    Left = 1173.03;
+    Right = 990.349;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11470;
+    Name = "VILLAGE:Arzhanovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 158004.654;
+    YPos = 76.809;
+    ZPos = 86322.312;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 613.526;
+    Backward = 510.031;
+    Left = 1095.47;
+    Right = 500.151;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11471;
+    Name = "TOWN:Kalach-Kurtlak";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 166247.284;
+    YPos = 86.117;
+    ZPos = 101324.333;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 870.756;
+    Backward = 603.569;
+    Left = 1136.39;
+    Right = 1160.76;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11472;
+    Name = "VILLAGE:Borisovka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 135333.276;
+    YPos = 72.397;
+    ZPos = 27595.825;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 717.751;
+    Backward = 571.223;
+    Left = 678.668;
+    Right = 627.896;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11473;
+    Name = "TOWN:Uspensky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 128874.259;
+    YPos = 62.761;
+    ZPos = 21344.465;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1017.41;
+    Backward = 1056.41;
+    Left = 1632.11;
+    Right = 845.826;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11474;
+    Name = "VILLAGE:Gusarovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 124059.430;
+    YPos = 139.405;
+    ZPos = 27208.516;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 499.49;
+    Backward = 428.029;
+    Left = 555.21;
+    Right = 643.726;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11475;
+    Name = "TOWN:Lobachev";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 120353.754;
+    YPos = 73.899;
+    ZPos = 7909.121;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1237.99;
+    Backward = 1159.56;
+    Left = 695.13;
+    Right = 767.043;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11476;
+    Name = "VILLAGE:Lesnoy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 112076.741;
+    YPos = 66.803;
+    ZPos = 26146.578;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 603.94;
+    Backward = 637.36;
+    Left = 861.204;
+    Right = 775.663;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11477;
+    Name = "VILLAGE:Agro-Proletarskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 126775.670;
+    YPos = 91.930;
+    ZPos = 50927.055;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 767.543;
+    Backward = 704.006;
+    Left = 519.506;
+    Right = 506.103;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11478;
+    Name = "TOWN:Russko-Vlasovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 100153.717;
+    YPos = 69.079;
+    ZPos = 39810.887;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 2496.21;
+    Backward = 2071.34;
+    Left = 1748.2;
+    Right = 1145.25;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11479;
+    Name = "TOWN:Morozovskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 96178.279;
+    YPos = 81.650;
+    ZPos = 54705.065;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1586.94;
+    Backward = 1286.06;
+    Left = 2244.17;
+    Right = 2371.39;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11480;
+    Name = "VILLAGE:Obshchiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 107435.310;
+    YPos = 102.156;
+    ZPos = 55671.732;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 649.305;
+    Backward = 658.189;
+    Left = 407.773;
+    Right = 402.938;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11481;
+    Name = "TOWN:Tatsinskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 80616.586;
+    YPos = 92.895;
+    ZPos = 12939.687;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1135.78;
+    Backward = 789.472;
+    Left = 1370.91;
+    Right = 1661.38;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11482;
+    Name = "VILLAGE:Nikolaev";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 76273.344;
+    YPos = 43.603;
+    ZPos = 1606.336;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 535.314;
+    Backward = 685.261;
+    Left = 576.188;
+    Right = 659.308;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11483;
+    Name = "TOWN:Krylov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 74044.247;
+    YPos = 144.735;
+    ZPos = 30746.581;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 2211.22;
+    Backward = 1075.7;
+    Left = 1959.41;
+    Right = 2403.2;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11484;
+    Name = "VILLAGE:Vishnevka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 81266.626;
+    YPos = 136.603;
+    ZPos = 46810.927;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 590.138;
+    Backward = 711.062;
+    Left = 616.913;
+    Right = 700.246;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11485;
+    Name = "VILLAGE:Shiroko-Atamanskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 85719.241;
+    YPos = 135.708;
+    ZPos = 57454.019;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 654.395;
+    Backward = 586.187;
+    Left = 448.118;
+    Right = 548.255;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11486;
+    Name = "VILLAGE:Medvedevka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 72628.087;
+    YPos = 141.218;
+    ZPos = 44454.761;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 544.434;
+    Backward = 686.587;
+    Left = 663.26;
+    Right = 471.76;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11487;
+    Name = "TOWN:Pokrovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 91045.088;
+    YPos = 159.755;
+    ZPos = 73708.568;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1654.62;
+    Backward = 1486.37;
+    Left = 1276.02;
+    Right = 1116.86;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11488;
+    Name = "VILLAGE:Svobodny";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 57047.141;
+    YPos = 129.996;
+    ZPos = 18045.314;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 703.858;
+    Backward = 730.004;
+    Left = 1270.67;
+    Right = 534.465;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11489;
+    Name = "VILLAGE:Zemlyanika";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 54272.733;
+    YPos = 134.331;
+    ZPos = 49420.231;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 720.257;
+    Backward = 687.791;
+    Left = 1099.97;
+    Right = 517.505;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11490;
+    Name = "VILLAGE:Trofimov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 45521.216;
+    YPos = 76.475;
+    ZPos = 12159.293;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 539.102;
+    Backward = 605.174;
+    Left = 467.676;
+    Right = 473.459;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11491;
+    Name = "VILLAGE:Gorelovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 44012.020;
+    YPos = 76.459;
+    ZPos = 12087.850;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 338.937;
+    Backward = 325.897;
+    Left = 386.372;
+    Right = 408.169;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11492;
+    Name = "TOWN:Sevastiyanov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 63869.621;
+    YPos = 58.062;
+    ZPos = 66419.009;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1045.57;
+    Backward = 1009.45;
+    Left = 1330.73;
+    Right = 1160.86;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11493;
+    Name = "VILLAGE:Chertkovskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 43533.164;
+    YPos = 62.498;
+    ZPos = 63513.273;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 750.693;
+    Backward = 567.679;
+    Left = 679.389;
+    Right = 875.078;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11494;
+    Name = "TOWN:Kargalsko-Belyanskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 30389.403;
+    YPos = 67.191;
+    ZPos = 37625.822;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 767.885;
+    Backward = 1281.16;
+    Left = 1573.39;
+    Right = 1107.17;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11495;
+    Name = "VILLAGE:Saveliev";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 25898.209;
+    YPos = 28.078;
+    ZPos = 22175.228;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 664.441;
+    Backward = 992.385;
+    Left = 805.624;
+    Right = 669.874;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11496;
+    Name = "TOWN:Nikolaevskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 15898.275;
+    YPos = 21.292;
+    ZPos = 26805.811;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1495.65;
+    Backward = 1167.01;
+    Left = 1951.07;
+    Right = 2048.47;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11497;
+    Name = "VILLAGE:Pirozhok";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 5607.412;
+    YPos = 14.716;
+    ZPos = 20817.256;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 705.198;
+    Backward = 1049.99;
+    Left = 1239.79;
+    Right = 856.234;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11498;
+    Name = "TOWN:Krasnoyarskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 16628.781;
+    YPos = 27.767;
+    ZPos = 69093.348;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 2186.25;
+    Backward = 1530.45;
+    Left = 2493.18;
+    Right = 2955.34;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11499;
+    Name = "VILLAGE:Paramonov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 6707.659;
+    YPos = 23.689;
+    ZPos = 69805.281;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1137.69;
+    Backward = 991.844;
+    Left = 1237.92;
+    Right = 1372.57;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11500;
+    Name = "TOWN:Chekalov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 24907.249;
+    YPos = 32.389;
+    ZPos = 81393.697;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1969.99;
+    Backward = 1829.35;
+    Left = 2194.24;
+    Right = 1944.36;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11501;
+    Name = "VILLAGE:Terehin";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 28665.410;
+    YPos = 35.953;
+    ZPos = 82053.881;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1231.35;
+    Backward = 627.796;
+    Left = 591.197;
+    Right = 1053.93;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11502;
+    Name = "VILLAGE:Flipovskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 24993.671;
+    YPos = 27.588;
+    ZPos = 97018.456;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 740.023;
+    Backward = 533.966;
+    Left = 805.782;
+    Right = 984.511;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11503;
+    Name = "VILLAGE:Karnauhovskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 33138.835;
+    YPos = 35.937;
+    ZPos = 87949.817;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1062.58;
+    Backward = 944.606;
+    Left = 657.289;
+    Right = 699.025;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11504;
+    Name = "TOWN:Nov. Tsymlyanskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 46456.990;
+    YPos = 40.498;
+    ZPos = 95422.799;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 920.542;
+    Backward = 1127.1;
+    Left = 1716.97;
+    Right = 1947.28;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11505;
+    Name = "VILLAGE:Darhanov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 29277.908;
+    YPos = 34.070;
+    ZPos = 127122.065;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 729.483;
+    Backward = 1500.28;
+    Left = 1087.45;
+    Right = 813.714;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11506;
+    Name = "VILLAGE:Komarov 1";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 44343.621;
+    YPos = 51.642;
+    ZPos = 118526.151;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 781.002;
+    Backward = 1021.89;
+    Left = 940.253;
+    Right = 1755.77;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11507;
+    Name = "VILLAGE:Morskoy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 65387.644;
+    YPos = 74.381;
+    ZPos = 110196.753;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 790.735;
+    Backward = 1301.75;
+    Left = 881.264;
+    Right = 864.664;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11508;
+    Name = "TOWN:Tormosin";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 73240.048;
+    YPos = 53.455;
+    ZPos = 117715.683;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1098.84;
+    Backward = 1080.34;
+    Left = 1709.9;
+    Right = 1700.81;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11509;
+    Name = "TOWN:Zaharov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 73829.416;
+    YPos = 48.962;
+    ZPos = 122567.118;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1116.92;
+    Backward = 1165.38;
+    Left = 1426;
+    Right = 1163.9;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11510;
+    Name = "VILLAGE:Aleshkinsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 82749.767;
+    YPos = 58.640;
+    ZPos = 115517.357;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 612.67;
+    Backward = 913.336;
+    Left = 1177.17;
+    Right = 1044.17;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11511;
+    Name = "TOWN:Popov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 74194.537;
+    YPos = 42.918;
+    ZPos = 131086.513;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 870.265;
+    Backward = 714.62;
+    Left = 1581.96;
+    Right = 1176.65;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11512;
+    Name = "TOWN:Verhnegnutov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 83303.634;
+    YPos = 61.300;
+    ZPos = 84874.920;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1849.83;
+    Backward = 2365.4;
+    Left = 1007.23;
+    Right = 1346.33;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11513;
+    Name = "VILLAGE:Sokolov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 86179.095;
+    YPos = 62.148;
+    ZPos = 89142.750;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1049;
+    Backward = 655.302;
+    Left = 973.411;
+    Right = 614.427;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11514;
+    Name = "TOWN:Volotsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 97171.436;
+    YPos = 91.930;
+    ZPos = 82846.487;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1250.45;
+    Backward = 1178.28;
+    Left = 1048.57;
+    Right = 1001.1;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11515;
+    Name = "TOWN:Chernishkovskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 103612.930;
+    YPos = 85.066;
+    ZPos = 84038.805;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1556.96;
+    Backward = 1108.81;
+    Left = 1155.64;
+    Right = 1323;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11516;
+    Name = "VILLAGE:Nizhne-Verbovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 104446.875;
+    YPos = 79.790;
+    ZPos = 80454.575;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 730.471;
+    Backward = 654.241;
+    Left = 1263.08;
+    Right = 1851.95;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11517;
+    Name = "TOWN:Solonetsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 116157.956;
+    YPos = 61.409;
+    ZPos = 88929.476;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1573.76;
+    Backward = 2840.37;
+    Left = 1131.19;
+    Right = 1413.5;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11518;
+    Name = "TOWN:Karaichev";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 125387.852;
+    YPos = 60.381;
+    ZPos = 84411.774;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1485.6;
+    Backward = 1642.38;
+    Left = 1960.9;
+    Right = 961.43;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11519;
+    Name = "VILLAGE:Gusynka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 136669.825;
+    YPos = 94.428;
+    ZPos = 78417.000;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 501.207;
+    Backward = 504.768;
+    Left = 1165.09;
+    Right = 842.508;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11520;
+    Name = "TOWN:Verhne-Aksenovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 93671.566;
+    YPos = 71.454;
+    ZPos = 114035.764;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1932.11;
+    Backward = 1384.77;
+    Left = 835.967;
+    Right = 896.181;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11521;
+    Name = "VILLAGE:Peshchersky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 93494.517;
+    YPos = 58.241;
+    ZPos = 127931.254;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 572.178;
+    Backward = 604.041;
+    Left = 471.421;
+    Right = 446.922;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11522;
+    Name = "TOWN:Oblivskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 115120.440;
+    YPos = 69.735;
+    ZPos = 105164.220;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1213.64;
+    Backward = 866.658;
+    Left = 2049.4;
+    Right = 2361.35;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11523;
+    Name = "VILLAGE:Kovylinskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 117770.896;
+    YPos = 52.202;
+    ZPos = 112288.042;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 827.282;
+    Backward = 991.675;
+    Left = 949.887;
+    Right = 788.16;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11524;
+    Name = "VILLAGE:Frolov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 125199.505;
+    YPos = 64.177;
+    ZPos = 106391.101;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 724.128;
+    Backward = 931.502;
+    Left = 580.253;
+    Right = 770.968;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11525;
+    Name = "TOWN:Nesterkin";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 129048.899;
+    YPos = 68.621;
+    ZPos = 105575.503;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1482.39;
+    Backward = 1355.03;
+    Left = 1469.57;
+    Right = 1214.31;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11526;
+    Name = "VILLAGE:Sekretov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 121269.068;
+    YPos = 53.959;
+    ZPos = 117615.609;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1375.51;
+    Backward = 601.454;
+    Left = 982.96;
+    Right = 493.766;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11527;
+    Name = "VILLAGE:Dubovy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 124971.999;
+    YPos = 64.210;
+    ZPos = 119794.157;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 712.178;
+    Backward = 716.326;
+    Left = 849.439;
+    Right = 822.755;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11528;
+    Name = "VILLAGE:Star. Derbanovskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 118777.723;
+    YPos = 48.708;
+    ZPos = 118802.643;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 892.697;
+    Backward = 939.826;
+    Left = 582.959;
+    Right = 582.063;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11529;
+    Name = "TOWN:Nov. Derbenovskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 115705.623;
+    YPos = 48.708;
+    ZPos = 119972.945;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1788.99;
+    Backward = 1151.77;
+    Left = 3054.66;
+    Right = 2715.74;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11530;
+    Name = "VILLAGE:Nizh. Osinovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 124877.933;
+    YPos = 56.101;
+    ZPos = 126207.019;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 686.013;
+    Backward = 706.265;
+    Left = 1215.58;
+    Right = 953.385;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11531;
+    Name = "TOWN:Surovikino";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 122093.731;
+    YPos = 41.160;
+    ZPos = 131772.432;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1712.74;
+    Backward = 1393.96;
+    Left = 1954.85;
+    Right = 1932.31;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11532;
+    Name = "TOWN:Novo-Stepanovka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 140655.323;
+    YPos = 85.377;
+    ZPos = 94450.660;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 923.278;
+    Backward = 1448.15;
+    Left = 2196.23;
+    Right = 2152.1;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11533;
+    Name = "VILLAGE:Novosibirsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 144391.336;
+    YPos = 153.358;
+    ZPos = 111832.282;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 671.446;
+    Backward = 562.743;
+    Left = 1001.94;
+    Right = 537.696;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11534;
+    Name = "VILLAGE:Lobakin";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 143372.848;
+    YPos = 126.988;
+    ZPos = 130141.676;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 494.988;
+    Backward = 430.474;
+    Left = 623.058;
+    Right = 561.747;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11535;
+    Name = "VILLAGE:Novo-Sergievsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 160339.236;
+    YPos = 159.363;
+    ZPos = 114187.058;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1089.36;
+    Backward = 721.101;
+    Left = 559.076;
+    Right = 881.376;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11536;
+    Name = "VILLAGE:Srednyaya Gusynka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 162817.321;
+    YPos = 117.961;
+    ZPos = 112121.720;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 572.418;
+    Backward = 803.655;
+    Left = 1216.53;
+    Right = 1037.44;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11537;
+    Name = "VILLAGE:Kalmykov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 167224.440;
+    YPos = 117.681;
+    ZPos = 129222.265;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 746.744;
+    Backward = 704.399;
+    Left = 883.803;
+    Right = 820.428;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11538;
+    Name = "VILLAGE:Perelazovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 182199.919;
+    YPos = 98.840;
+    ZPos = 112614.879;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1506.09;
+    Backward = 1565.5;
+    Left = 952.858;
+    Right = 777.956;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11539;
+    Name = "VILLAGE:Zhirki";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 196890.039;
+    YPos = 123.043;
+    ZPos = 112373.160;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1666.98;
+    Backward = 957.428;
+    Left = 659.491;
+    Right = 667.558;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11540;
+    Name = "VILLAGE:Kozinovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 204800.675;
+    YPos = 106.895;
+    ZPos = 131199.134;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 441.492;
+    Backward = 449.062;
+    Left = 507.699;
+    Right = 520.156;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11541;
+    Name = "TOWN:Bazkovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 213919.456;
+    YPos = 65.105;
+    ZPos = 127320.265;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1402.33;
+    Backward = 1554.97;
+    Left = 1851.5;
+    Right = 1447.57;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11542;
+    Name = "VILLAGE:Bobrovsky 2";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 220413.390;
+    YPos = 69.798;
+    ZPos = 126374.064;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 748.878;
+    Backward = 921.067;
+    Left = 1044.11;
+    Right = 1038.88;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11543;
+    Name = "VILLAGE:Glubokovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 217813.641;
+    YPos = 56.249;
+    ZPos = 137913.114;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 500.215;
+    Backward = 468.384;
+    Left = 599.232;
+    Right = 580.929;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11544;
+    Name = "TOWN:Raspopinskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 210993.892;
+    YPos = 59.058;
+    ZPos = 134507.817;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 935.492;
+    Backward = 907.083;
+    Left = 1573.98;
+    Right = 1601.99;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11545;
+    Name = "TOWN:Podleshinsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 212640.242;
+    YPos = 54.093;
+    ZPos = 149892.913;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1373.74;
+    Backward = 1718.67;
+    Left = 1962.77;
+    Right = 1148.29;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11546;
+    Name = "TOWN:Kletskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 199948.096;
+    YPos = 62.677;
+    ZPos = 148727.727;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1171.12;
+    Backward = 1113.42;
+    Left = 1153.59;
+    Right = 1204.32;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11547;
+    Name = "VILLAGE:Podnizhny";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 201274.669;
+    YPos = 62.319;
+    ZPos = 146754.748;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 679.975;
+    Backward = 516.847;
+    Left = 677.653;
+    Right = 825.636;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11548;
+    Name = "VILLAGE:Molo-Kletsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 198643.584;
+    YPos = 57.580;
+    ZPos = 153033.631;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 515.053;
+    Backward = 494.857;
+    Left = 655.663;
+    Right = 1051.03;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11549;
+    Name = "VILLAGE:Zaharov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 185737.293;
+    YPos = 132.567;
+    ZPos = 136962.443;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 510.221;
+    Backward = 499.54;
+    Left = 639.65;
+    Right = 624.264;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11550;
+    Name = "TOWN:Manoyli";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 166796.230;
+    YPos = 126.405;
+    ZPos = 136271.637;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 985.037;
+    Backward = 790.503;
+    Left = 1457.2;
+    Right = 1661.15;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11551;
+    Name = "TOWN:Evseev";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 158381.135;
+    YPos = 98.381;
+    ZPos = 151191.910;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1592.75;
+    Backward = 1822.27;
+    Left = 1815.3;
+    Right = 1252.18;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11552;
+    Name = "TOWN:Nizhne Chirskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 95997.053;
+    YPos = 45.237;
+    ZPos = 149347.629;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1771.16;
+    Backward = 1246.53;
+    Left = 1211.97;
+    Right = 1120.1;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11553;
+    Name = "VILLAGE:Lipovskiy";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 89000.396;
+    YPos = 45.231;
+    ZPos = 147910.674;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 685.144;
+    Backward = 576.581;
+    Left = 490.034;
+    Right = 454.455;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11554;
+    Name = "VILLAGE:Suvorovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 79638.190;
+    YPos = 40.599;
+    ZPos = 143051.322;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 907.85;
+    Backward = 851.024;
+    Left = 755.044;
+    Right = 1142.31;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11555;
+    Name = "TOWN:Verh. Rubezhny";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 81349.226;
+    YPos = 43.121;
+    ZPos = 152904.856;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 2342.88;
+    Backward = 1616.57;
+    Left = 1995.12;
+    Right = 961.669;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11556;
+    Name = "VILLAGE:Podstepensky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 65833.436;
+    YPos = 40.568;
+    ZPos = 144778.390;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 709.35;
+    Backward = 674.964;
+    Left = 1056.87;
+    Right = 1002.62;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11557;
+    Name = "VILLAGE:Nizhny Yablochny";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 37638.699;
+    YPos = 33.019;
+    ZPos = 144561.549;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 938.442;
+    Backward = 988.01;
+    Left = 1002.28;
+    Right = 878.727;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11558;
+    Name = "VILLAGE:Safronov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 33360.665;
+    YPos = 33.019;
+    ZPos = 145235.331;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 852.562;
+    Backward = 816.423;
+    Left = 732.503;
+    Right = 773.744;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11559;
+    Name = "VILLAGE:Novo-Aksay";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 31740.426;
+    YPos = 33.019;
+    ZPos = 144236.595;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 583.282;
+    Backward = 641.301;
+    Left = 644.685;
+    Right = 671.047;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11560;
+    Name = "VILLAGE:Mayorsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 19059.453;
+    YPos = 46.560;
+    ZPos = 138491.709;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 752.062;
+    Backward = 655.276;
+    Left = 1376.25;
+    Right = 866.325;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11561;
+    Name = "VILLAGE:Semichny";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 13392.517;
+    YPos = 45.672;
+    ZPos = 142542.572;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 739.705;
+    Backward = 582.559;
+    Left = 930.278;
+    Right = 880.527;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11562;
+    Name = "TOWN:Kotelnikovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 13595.759;
+    YPos = 48.374;
+    ZPos = 150263.870;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1646.03;
+    Backward = 1549.49;
+    Left = 1134.37;
+    Right = 942.215;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11563;
+    Name = "VILLAGE:Kotelnikovo";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 14588.924;
+    YPos = 47.961;
+    ZPos = 153339.783;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 902.411;
+    Backward = 823.078;
+    Left = 784.066;
+    Right = 748.734;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11564;
+    Name = "TOWN:Novomaksimovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 107608.451;
+    YPos = 50.973;
+    ZPos = 153577.080;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1308.57;
+    Backward = 1039.15;
+    Left = 1218.36;
+    Right = 1295.57;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11565;
+    Name = "TOWN:Verkhne Chirskaya";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 103355.592;
+    YPos = 49.191;
+    ZPos = 156010.237;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1239.41;
+    Backward = 1134.83;
+    Left = 1579.06;
+    Right = 1109.08;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11566;
+    Name = "VILLAGE:Tuzov";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 119788.533;
+    YPos = 49.751;
+    ZPos = 155345.037;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 507.705;
+    Backward = 450.842;
+    Left = 558.416;
+    Right = 550.445;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11567;
+    Name = "VILLAGE:Zryaninsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 124552.220;
+    YPos = 55.183;
+    ZPos = 155221.254;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 537.606;
+    Backward = 612.423;
+    Left = 459.083;
+    Right = 558.482;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11568;
+    Name = "VILLAGE:Mayorovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 153592.555;
+    YPos = 87.831;
+    ZPos = 156358.333;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 653.806;
+    Backward = 602.861;
+    Left = 419.378;
+    Right = 435.024;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11569;
+    Name = "VILLAGE:Kozinovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 207010.447;
+    YPos = 63.346;
+    ZPos = 161659.889;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 584.869;
+    Backward = 572.421;
+    Left = 1040.59;
+    Right = 582.395;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11570;
+    Name = "TOWN:Verhne-Buzinovka";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 171540.343;
+    YPos = 125.720;
+    ZPos = 158773.047;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1203.38;
+    Backward = 870.747;
+    Left = 1360.78;
+    Right = 1506.52;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11571;
+    Name = "VILLAGE:Suhanovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 156151.571;
+    YPos = 86.833;
+    ZPos = 160846.772;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1276.13;
+    Backward = 865.314;
+    Left = 1116.45;
+    Right = 901.921;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11572;
+    Name = "VILLAGE:Skvorin";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 145094.295;
+    YPos = 72.062;
+    ZPos = 160422.256;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 1078.64;
+    Backward = 873.312;
+    Left = 1004.15;
+    Right = 962.79;
+  }
+  
+
+  MCU_H_ReferencePoint
+  {
+    Index = 11573;
+    Name = "VILLAGE:Generalovsky";
+    Desc = "";
+    Targets = [];
+    Objects = [];
+    XPos = 55121.874;
+    YPos = 46.716;
+    ZPos = 157511.788;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Forward = 894.786;
+    Backward = 661.632;
+    Left = 840.521;
+    Right = 897.571;
+  }
+  
+
+}
+
