@@ -45,7 +45,8 @@
 		abbr: "Lt.",
 		type: {
 			pilot: 30,
-			leader: 3
+			leader: 3,
+			liaison: 3
 		}
 	},
 	"9": {
@@ -53,7 +54,8 @@
 		abbr: "St.Lt.",
 		type: {
 			pilot: 11,
-			leader: 1
+			leader: 1,
+			liaison: 1
 		}
 	},
 	"10": {

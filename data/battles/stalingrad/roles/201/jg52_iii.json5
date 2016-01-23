@@ -1,4 +1,5 @@
 // III./JG 52 "Stalingrad" unit role
 {
+	patrol: 1,
 	cover: 1
 }

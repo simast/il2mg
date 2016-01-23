@@ -1,0 +1,12 @@
+// Defensive fighter sweep over own territory
+{
+	name: "Defensive patrol",
+	title: "Patrol flight from {{airfield}}",
+	story: [
+		"An urgent request just came in over the radio from local army headquarters! Air liaison officer {{{rank.liaison}}} {{name.last}} is reporting alarming enemy air activity in the area between grid 198:3 and the Osinsky village. We are to fly an air cover mission and provide fighter protection for the ground troops and any friendly aircraft encountered in the area."
+	],
+	time: "day",
+	planes: {
+		fighter_light: "fighter"
+	}
+}
