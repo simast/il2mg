@@ -80,11 +80,11 @@ module.exports = function(grunt) {
 
 			totalBattles++;
 		}
-
+		
 		// Write items type JSON data file
 		grunt.file.write(
 			"data/items.json",
-			JSON.stringify(DATA.blocks, null, "\t")
+			JSON.stringify(DATA.items, null, "\t")
 		);
 
 		let message = "";

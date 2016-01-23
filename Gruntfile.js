@@ -76,6 +76,7 @@ module.exports = function(grunt) {
 		"check",
 		"build:sloc",
 		"build:blocks",
+		"build:locations",
 		"build:airfields",
 		"build:fronts"
 	]);

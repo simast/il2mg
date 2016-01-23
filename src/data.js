@@ -61,6 +61,13 @@ DATA.frontLine = Object.freeze({
 	ATTACK: 2 // Attack arrow
 });
 
+// Location item types
+DATA.location = Object.freeze({
+	VILLAGE: 1, // Small village
+	TOWN: 2, // Medium town
+	CITY: 3 // Large city
+});
+
 // Coalitions
 DATA.coalition = Object.freeze({
 	ALLIES: 1,
@@ -194,6 +201,7 @@ DATA.briefingColor = Object.freeze({
 
 		battle.countries = [];
 		battle.blocks = Object.freeze(require(battlePath + "blocks"));
+		battle.locations = Object.freeze(require(battlePath + "locations"));
 		battle.fronts = Object.freeze(require(battlePath + "fronts"));
 		battle.map = Object.freeze(require(battlePath + "map"));
 		battle.weather = Object.freeze(require(battlePath + "weather"));
