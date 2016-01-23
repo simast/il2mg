@@ -18,17 +18,22 @@ module.exports = function makeForces() {
 	const unit = this.units[rand.pick(this.unitsWeighted.filter((unitID) => {
 		return (player.units.indexOf(unitID) !== -1 && this.units[unitID].tasks.length);
 	}))];
+	
+	const flightParams = {
+		player: true,
+		state: player.state,
+		unit: unit.id
+	};
+	
+	if (player.task) {
+		flightParams.task = player.task;
+	}
 
 	// FIXME: Make a number of active and shedulled flights
 	do {
 
 		try {
-
-			flight = makeFlight.call(this, {
-				player: true,
-				state: player.state,
-				unit: unit.id
-			});
+			flight = makeFlight.call(this, flightParams);
 		}
 		catch (error) {
 

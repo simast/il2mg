@@ -30,6 +30,7 @@ const COMPLEX_SEED_PARAMS = [
 	"time",
 	"coalition",
 	"country",
+	"task",
 	"pilot",
 	"state",
 	"airfield",
@@ -78,11 +79,11 @@ function Mission(params) {
 	require("./make/vehicles").call(this);
 	require("./make/weather").call(this);
 	require("./make/airfields").call(this);
+	require("./make/tasks").call(this);
 	require("./make/player").call(this);
 	require("./make/fronts").call(this);
 	require("./make/blocks").call(this);
 	require("./make/formations").call(this);
-	require("./make/tasks").call(this);
 	require("./make/forces").call(this);
 	require("./make/briefing").call(this);
 

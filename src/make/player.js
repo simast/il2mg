@@ -50,6 +50,32 @@ module.exports = function makePlayer() {
 		});
 	}
 
+	// Validate desired task param
+	if (params.task) {
+
+		// Unknown task
+		if (!this.tasks[params.task]) {
+			throw ["Unknown task!", {task: params.task}];
+		}
+
+		player.task = params.task;
+
+		// Filter units based on task
+		unitsList = unitsList.filter((unitID) => {
+			
+			const unit = this.units[unitID];
+
+			// Filter out unit groups
+			if (Array.isArray(unit)) {
+				return false;
+			}
+			
+			const validTasks = Object.keys(this.battle.roles[unit.country][unit.role]);
+			
+			return (validTasks.indexOf(player.task) !== -1);
+		});
+	}
+	
 	// Validate desired airfield param
 	if (params.airfield) {
 
@@ -114,8 +140,10 @@ module.exports = function makePlayer() {
 			if (Array.isArray(unit)) {
 				return false;
 			}
+			
+			const airfield = this.airfields[unit.airfield];
 
-			return !!this.airfields[unit.airfield].taxi;
+			return (airfield.taxi && Object.keys(airfield.taxi).length);
 		});
 	}
 
@@ -123,7 +151,7 @@ module.exports = function makePlayer() {
 	if (!unitsList.length) {
 		throw "No valid units found!";
 	}
-
+	
 	// Set valid player units list
 	player.units = unitsList;
 };

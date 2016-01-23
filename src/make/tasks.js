@@ -4,7 +4,7 @@
 // Generate available mission tasks
 module.exports = function makeTasks() {
 
-	// Tasks index list
+	// Index list for base/static tasks
 	const tasks = Object.create(null);
 	
 	// Process all tasks and build index list
@@ -24,7 +24,7 @@ module.exports = function makeTasks() {
 	}
 	
 	// Static cached unit tasks lists
-	// TODO: Support dynamic lists with rebase missions
+	// TODO: Support dynamic lists with rebase/transfer missions
 	const tasksByRole = Object.create(null);
 	
 	// Build unit tasks lists
@@ -63,7 +63,7 @@ module.exports = function makeTasks() {
 				// Role task data set as a single weight number
 				if (Number.isInteger(roleTask)) {
 					
-					weight = roleTask;
+					weight = Math.max(roleTask, 1);
 					roleTask = Object.create(task);
 					roleTask.weight = weight;
 				}
@@ -73,6 +73,8 @@ module.exports = function makeTasks() {
 					weight = roleTask.weight = roleTask.weight || 1;
 					Object.setPrototypeOf(roleTask, task);
 				}
+				
+				roleTask = Object.freeze(roleTask);
 				
 				// Add task to the weighted role tasks list
 				for (let i = 0; i < weight; i++) {
@@ -84,6 +86,5 @@ module.exports = function makeTasks() {
 		unit.tasks = unitTasks;
 	}
 	
-	// Static tasks index list
 	this.tasks = Object.freeze(tasks);
 };

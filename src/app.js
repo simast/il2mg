@@ -200,6 +200,25 @@ params.option("-c, --country <country>", (() => {
 	return desc;
 })(), parseInt);
 
+// Select desired task (--task)
+params.option("-T, --task <task>", (() => {
+
+	let desc = "select a task" + EOL + EOL;
+
+	for (const taskID in DATA.tasks) {
+		
+		const task =  DATA.tasks[taskID];
+		
+		if (task.name) {
+			desc += util.format('\t"%s" - %s.' + EOL, taskID, task.name);
+		}
+	}
+
+	return desc;
+})(), (value) => {
+	return String(value).trim();
+});
+
 // Set a custom pilot (--pilot)
 params.option("-p, --pilot <rank,name>", (() => {
 
@@ -264,7 +283,6 @@ params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
 /**
  * TODO: Support other command-line params:
  *
- * --task - Select task.
  * --unit - Select unit.
  * --plane - Select plane.
  * --players - Number of players.
@@ -358,6 +376,11 @@ appDomain.run(() => {
 		throw ["Unknown country!", {country: params.country}];
 	}
 
+	// --task
+	if (params.task !== undefined && !DATA.tasks[params.task]) {
+		throw ["Unknown task!", {task: params.task}];
+	}
+	
 	// --airfield
 	if (params.airfield !== undefined && !params.airfield.length) {
 		throw ["Invalid airfield name!", {airfield: params.airfield}];
