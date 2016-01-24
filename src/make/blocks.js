@@ -17,7 +17,7 @@ module.exports = function makeBlocks() {
 
 	blocksFiles.forEach((blocksFile) => {
 
-		const blocks = require("../../data/battles/" + this.battleID + "/blocks/" + blocksFile);
+		const blocks = require(this.battlePath + "blocks/" + blocksFile);
 
 		// Add all blocks to a group
 		for (let i = 0; i < blocks.length; i++) {

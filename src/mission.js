@@ -72,7 +72,6 @@ function Mission(params) {
 	require("./make/date").call(this);
 	require("./make/map").call(this);
 	require("./make/time").call(this);
-	require("./make/locations").call(this);
 	require("./make/people").call(this);
 	require("./make/planes").call(this);
 	require("./make/units").call(this);
@@ -81,6 +80,7 @@ function Mission(params) {
 	require("./make/airfields").call(this);
 	require("./make/tasks").call(this);
 	require("./make/player").call(this);
+	require("./make/locations").call(this);
 	require("./make/fronts").call(this);
 	require("./make/blocks").call(this);
 	require("./make/formations").call(this);

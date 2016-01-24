@@ -57,9 +57,7 @@ module.exports = function makeFronts() {
 	}
 
 	// Load fronts data file
-	// TODO: Move to data.js?
-	const frontsPath = "../../data/battles/" + this.battleID + "/fronts/";
-	const frontsData = require(frontsPath + frontsFile);
+	const frontsData = require(this.battlePath + "fronts/" + frontsFile);
 	
 	if (!frontsData || !frontsData.length) {
 		return;

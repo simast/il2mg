@@ -9,7 +9,48 @@ module.exports = function makeLocations() {
 	
 	this.locations = Object.create(null);
 	
-	// TODO: Load static map locations (places, rivers) from data files
+	// Load static map locations (places, rivers) from data files
+	this.battle.locations.forEach((locationsFile) => {
+
+		const locationsData = require(this.battlePath + "locations/" + locationsFile);
+		const locationsList = [];
+		
+		// Build locations index per each locations file
+		this.locations[locationsFile] = new Location.Index();
+
+		// Process all locations
+		for (const locationData of locationsData) {
+			
+			const x = locationData[1];
+			const y = locationData[2];
+			const z = locationData[3];
+			
+			const x1 = x - locationData[6]; // x - backward
+			const z1 = z - locationData[7]; // z - left
+			const x2 = x + locationData[4]; // x + forward
+			const z2 = z + locationData[5]; // z + right
+			
+			const location = new Location(x1, z1, x2, z2);
+			
+			// Location type
+			location.type = locationData[0];
+			
+			// Orign position/point
+			location.orign = {x, y, z};
+			
+			// Optional location name
+			const name = locationData[8];
+			
+			if (name) {
+				location.name = name;
+			}
+			
+			locationsList.push(location);
+		}
+		
+		// Load all locations to a location index
+		this.locations[locationsFile].load(locationsList);
+	});
 };
 
 // Location data entry

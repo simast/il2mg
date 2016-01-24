@@ -15,6 +15,8 @@ module.exports = function makeBattle() {
 	}
 
 	this.battleID = battleID;
+	this.battlePath = "../../data/battles/" + battleID + "/";
+	
 	const battle = this.battle = DATA.battles[battleID];
 	const coalitions = this.coalitions = [];
 
