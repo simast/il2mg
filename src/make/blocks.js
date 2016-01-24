@@ -5,8 +5,7 @@ const Item = require("../item");
 
 // Generate mission static blocks
 module.exports = function makeBlocks() {
-
-	const blocksFiles = this.battle.blocks;
+	
 	const blocksGroup = this.createItem("Group");
 
 	blocksGroup.setName("BLOCK");
@@ -15,7 +14,7 @@ module.exports = function makeBlocks() {
 	let totalBlocks = 0;
 	let totalBridges = 0;
 
-	blocksFiles.forEach((blocksFile) => {
+	this.battle.blocks.forEach((blocksFile) => {
 
 		const blocks = require(this.battlePath + "blocks/" + blocksFile);
 

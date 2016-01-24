@@ -7,7 +7,18 @@ const knn = require("rbush-knn");
 // Generate mission locations
 module.exports = function makeLocations() {
 	
+	// Locations database
 	this.locations = Object.create(null);
+	
+	// Total locations count
+	let totalLocations = 0;
+	
+	// Total unique locations counts for set of types
+	const totalLocationsByType = {
+		villages: new Set(),
+		towns: new Set(),
+		cities: new Set()
+	};
 	
 	// Load static map locations (places, rivers) from data files
 	this.battle.locations.forEach((locationsFile) => {
@@ -33,7 +44,7 @@ module.exports = function makeLocations() {
 			const location = new Location(x1, z1, x2, z2);
 			
 			// Location type
-			location.type = locationData[0];
+			const locationType = location.type = locationData[0];
 			
 			// Orign position/point
 			location.orign = {x, y, z};
@@ -46,11 +57,41 @@ module.exports = function makeLocations() {
 			}
 			
 			locationsList.push(location);
+			
+			// Track total location counts
+			totalLocations++;
+			
+			// Track unique location type counts
+			if (name) {
+				
+				let totalLocationType;
+				
+				if (locationType === DATA.location.VILLAGE) {
+					totalLocationType = "villages";
+				}
+				else if (locationType === DATA.location.TOWN) {
+					totalLocationType = "towns";
+				}
+				else if (locationType === DATA.location.CITY) {
+					totalLocationType = "cities";
+				}
+				
+				if (totalLocationType) {
+					totalLocationsByType[totalLocationType].add(name);
+				}
+			}
 		}
 		
 		// Load all locations to a location index
 		this.locations[locationsFile].load(locationsList);
 	});
+	
+	// Log mission locations info
+	for (const type in totalLocationsByType) {
+		totalLocationsByType[type] = totalLocationsByType[type].size;
+	}
+	
+	log.I("Locations:", totalLocations, totalLocationsByType);
 };
 
 // Location data entry
