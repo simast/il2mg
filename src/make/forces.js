@@ -51,11 +51,13 @@ module.exports = function makeForces() {
 	force.push(flight);
 	this.forces.push(force);
 
-	// Set player flight and task force references
+	// Set player flight info references
 	if (flight.player) {
 
 		player.force = force;
 		player.flight = flight;
+		player.plane = flight.player.plane;
+		player.item = flight.player.item;
 
 		// Find player element
 		for (const element of flight.elements) {

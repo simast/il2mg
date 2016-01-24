@@ -52,7 +52,7 @@ module.exports = function makeBattle() {
 	
 	// Set PlayerConfig property to selected player plane item
 	this.make.push(() => {
-		options.PlayerConfig = this.player.flight.player.item.Script;
+		options.PlayerConfig = this.player.item.Script;
 	});
 
 	// Save "Options" mission item reference

@@ -418,7 +418,7 @@ appDomain.run(() => {
 	// Save mission files
 	mission.save(params.args[0]).then(
 		() => {
-			log.D(mission.title);
+			log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")");
 		},
 		(error) => {
 			appDomain.emit("error", error);
