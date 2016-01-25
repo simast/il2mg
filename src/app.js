@@ -5,61 +5,15 @@ const os = require("os");
 const util = require("util");
 const domain = require("domain");
 const moment = require("moment");
-const winston = require("winston");
 
-// Load static global data
+// FIXME: Load static global data
 require("./data");
 
+const log = require("./log");
 const Mission = require("./mission");
 const flightState = DATA.flightState;
 const weatherState = DATA.weatherState;
 const EOL = os.EOL;
-
-const logColors = {
-	D: "green", // Done
-	E: "red", // Error
-	W: "yellow", // Warning
-	I: "gray" // Info
-};
-
-const logLevels = {};
-Object.keys(logColors).forEach((value, index) => {
-	logLevels[value] = index;
-});
-
-// Setup winston logger
-const log = global.log = new (winston.Logger)({
-	levels: logLevels,
-	colors: logColors,
-	transports: [
-		new winston.transports.Console({
-			level: "E", // Default log reporting level
-			colorize: true
-		})
-	]
-});
-
-// NOTE: Workaround for log.profile()
-log.info = log.I;
-
-// NOTE: Intercept all console.error traffic (commander error messages) and log
-// them as winston "error" level log messages.
-console.error = function() {
-
-	if (!arguments.length) {
-		return;
-	}
-
-	let message = String(arguments[0]).trim();
-
-	if (message.length) {
-
-		message = message.replace(/^error:\s*/i, "");
-
-		arguments[0] = message;
-		log.E.apply(log, arguments);
-	}
-};
 
 // Setup command line interface
 const params = require("commander");

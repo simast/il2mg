@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const log = require("../log");
 const Item = require("../item");
 
 // Generate mission battle info

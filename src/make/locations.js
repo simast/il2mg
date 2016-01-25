@@ -3,6 +3,7 @@
 
 const rbush = require("rbush");
 const knn = require("rbush-knn");
+const log = require("../log");
 
 // Generate mission locations
 module.exports = function makeLocations() {

@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const log = require("../log");
+
 // Flight make parts
 const makeFlight = require("./flight");
 

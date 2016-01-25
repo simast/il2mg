@@ -9,6 +9,7 @@ const os = require("os");
 const util = require("util");
 const path = require("path");
 const Random = require("random-js");
+const log = require("./log");
 const Item = require("./item");
 
 // Mission file extensions

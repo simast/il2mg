@@ -2,6 +2,7 @@
 "use strict";
 
 const moment = require("moment");
+const log = require("../log");
 
 // Generate mission date
 module.exports = function makeDate() {

@@ -2,6 +2,7 @@
 "use strict";
 
 const moment = require("moment");
+const log = require("../log");
 
 // Generate available mission units
 module.exports = function makeUnits() {

@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const log = require("../log");
+
 // TOOD: Move these constants to settings?
 const MAX_WIND_SPEED = 13; // Maximum wind speed (m/s)
 const MIN_WIND_SPEED = 0.25; // Minimum wind speed (m/s)

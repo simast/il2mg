@@ -3,6 +3,7 @@
 
 const moment = require("moment");
 const suncalc = require("suncalc");
+const log = require("../log");
 
 // Generate mission time
 module.exports = function makeTime() {
