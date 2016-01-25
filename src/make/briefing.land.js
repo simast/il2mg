@@ -1,8 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Data constants
-const briefingColor = DATA.briefingColor;
+const briefingColor = data.briefingColor;
 
 // Make plan land action briefing
 module.exports = function makeBriefingLand(action, flight) {

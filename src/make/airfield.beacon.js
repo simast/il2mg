@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Make airfield beacon item
 module.exports = function makeAirfieldBeacon(airfield, item) {
 
@@ -8,7 +10,7 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 		return;
 	}
 
-	const itemType = DATA.getItemType(item[5]);
+	const itemType = data.getItemType(item[5]);
 	const beaconItem = this.createItem(itemType.type, false);
 
 	beaconItem.Model = itemType.model;

@@ -1,12 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const Item = require("../item");
 const makeAirfieldVehicle = require("./airfield.vehicle");
 
 // Data constants
-const itemTag = DATA.itemTag;
-const itemFlag = DATA.itemFlag;
+const itemTag = data.itemTag;
+const itemFlag = data.itemFlag;
 
 // Make airfield vehicle routes
 module.exports = function makeAirfieldRoutes(airfield, routes) {

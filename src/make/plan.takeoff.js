@@ -1,12 +1,16 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
+// Data constants
+const flightState = data.flightState;
+
 // Make plan takeoff action
 module.exports = function makePlanTakeoff(action, element, flight, input) {
 	
 	const rand = this.rand;
 	const leaderPlaneItem = element[0].item;
-	const flightState = DATA.flightState;
 	const isAirStart = (typeof element.state === "number");
 	const isLeadingElement = (element === flight.elements[0]);
 	const isLastElement = (element === flight.elements[flight.elements.length - 1]);

@@ -5,14 +5,14 @@ const os = require("os");
 const util = require("util");
 const domain = require("domain");
 const moment = require("moment");
-
-// FIXME: Load static global data
-require("./data");
-
+const data = require("./data");
 const log = require("./log");
 const Mission = require("./mission");
-const flightState = DATA.flightState;
-const weatherState = DATA.weatherState;
+
+// Data constants
+const flightState = data.flightState;
+const weatherState = data.weatherState;
+
 const EOL = os.EOL;
 
 // Setup command line interface
@@ -22,14 +22,15 @@ const params = require("commander");
 params.usage("[options] [mission file and/or path]");
 
 // --version output
-params.version(DATA.name + " " + DATA.version + " " + DATA.copyright);
+params.version(data.name + " " + data.version + " " + data.copyright);
 
-// Set mission seed value (--seed)
-params.option("-S, --seed <seed>", "set mission seed value");
+// NOTE: For development mode only when not compiled to binary!
+if (!data.isBinary) {
+	
+	// Set mission seed value (--seed)
+	params.option("-S, --seed <seed>", "set mission seed value");
 
-// Turn on debug mode (--debug)
-if (!DATA.isBinary) {
-
+	// Turn on debug mode (--debug)
 	params.option("-D, --debug [features]", (() => {
 
 		let desc = "use debug (development) mode" + EOL + EOL;
@@ -60,8 +61,8 @@ params.option("-f, --format <format>", (() => {
 
 	let desc = "set mission file format" + EOL + EOL;
 
-	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_TEXT, "Text format.");
 	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_BINARY, "Binary format (default).");
+	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_TEXT, "Text format.");
 
 	return desc;
 })());
@@ -71,8 +72,8 @@ params.option("-b, --battle <battle>", (() => {
 
 	let desc = "select a battle" + EOL + EOL;
 
-	for (const battleID in DATA.battles) {
-		desc += util.format('\t"%s" - %s' + EOL, battleID, DATA.battles[battleID].name);
+	for (const battleID in data.battles) {
+		desc += util.format('\t"%s" - %s' + EOL, battleID, data.battles[battleID].name);
 	}
 
 	return desc;
@@ -85,9 +86,9 @@ params.option("-d, --date <YYYY-MM-DD>", (() => {
 
 	desc += "\tValid date values will depend on the selected battle:" + EOL + EOL;
 
-	for (const battleID in DATA.battles) {
+	for (const battleID in data.battles) {
 
-		const battle = DATA.battles[battleID];
+		const battle = data.battles[battleID];
 		const battleFrom = moment(battle.from).format("YYYY-MM-DD");
 		const battleTo = moment(battle.to).format("YYYY-MM-DD");
 
@@ -114,8 +115,8 @@ params.option("-t, --time <HH:MM>", (() => {
 
 	desc += "\tTime can also be specified using special values:" + EOL + EOL;
 
-	for (const timeID in DATA.time) {
-		desc += util.format('\t"%s" - %s' + EOL, timeID, DATA.time[timeID].description);
+	for (const timeID in data.time) {
+		desc += util.format('\t"%s" - %s' + EOL, timeID, data.time[timeID].description);
 	}
 
 	return desc;
@@ -136,8 +137,8 @@ params.option("-C, --coalition <coalition>", (() => {
 
 	let desc = "select a coalition" + EOL + EOL;
 
-	desc += '\t"' + DATA.coalition.ALLIES + '" - Allies' + EOL;
-	desc += '\t"' + DATA.coalition.AXIS + '" - Axis' + EOL;
+	desc += '\t"' + data.coalition.ALLIES + '" - Allies' + EOL;
+	desc += '\t"' + data.coalition.AXIS + '" - Axis' + EOL;
 
 	return desc;
 })(), parseInt);
@@ -147,8 +148,8 @@ params.option("-c, --country <country>", (() => {
 
 	let desc = "select a country" + EOL + EOL;
 
-	for (const countryID in DATA.countries) {
-		desc += util.format('\t"%s" - %s' + EOL, countryID, DATA.countries[countryID].name);
+	for (const countryID in data.countries) {
+		desc += util.format('\t"%s" - %s' + EOL, countryID, data.countries[countryID].name);
 	}
 
 	return desc;
@@ -159,9 +160,9 @@ params.option("-T, --task <task>", (() => {
 
 	let desc = "select a task" + EOL + EOL;
 
-	for (const taskID in DATA.tasks) {
+	for (const taskID in data.tasks) {
 		
-		const task =  DATA.tasks[taskID];
+		const task =  data.tasks[taskID];
 		
 		if (task.name) {
 			desc += util.format('\t"%s" - %s.' + EOL, taskID, task.name);
@@ -234,6 +235,10 @@ params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
 	return String(value).trim();
 });
 
+params.on("--help airfields", function() {
+	console.log(arguments);
+});
+
 /**
  * TODO: Support other command-line params:
  *
@@ -298,7 +303,7 @@ appDomain.run(() => {
 	}
 
 	// --battle
-	if (params.battle && !DATA.battles[params.battle]) {
+	if (params.battle && !data.battles[params.battle]) {
 		throw ["Unknown battle!", {battle: params.battle}];
 	}
 
@@ -314,24 +319,24 @@ appDomain.run(() => {
 	}
 
 	// --time
-	if (params.time && typeof params.time === "string" && !DATA.time[params.time]) {
+	if (params.time && typeof params.time === "string" && !data.time[params.time]) {
 		throw ["Invalid mission time!", {time: params.time}];
 	}
 
 	// --coalition
 	if (params.coalition !== undefined &&
-		[DATA.coalition.ALLIES, DATA.coalition.AXIS].indexOf(params.coalition) === -1) {
+		[data.coalition.ALLIES, data.coalition.AXIS].indexOf(params.coalition) === -1) {
 		
 		throw ["Unknown coalition!", {coalition: params.coalition}];
 	}
 
 	// --country
-	if (params.country !== undefined && !DATA.countries[params.country]) {
+	if (params.country !== undefined && !data.countries[params.country]) {
 		throw ["Unknown country!", {country: params.country}];
 	}
 
 	// --task
-	if (params.task !== undefined && !DATA.tasks[params.task]) {
+	if (params.task !== undefined && !data.tasks[params.task]) {
 		throw ["Unknown task!", {task: params.task}];
 	}
 	

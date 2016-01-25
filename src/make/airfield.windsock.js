@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Make airfield windsock item
 module.exports = function makeAirfieldWindsock(airfield, item) {
 
@@ -8,7 +10,7 @@ module.exports = function makeAirfieldWindsock(airfield, item) {
 		return;
 	}
 
-	const itemType = DATA.getItemType(item[5]);
+	const itemType = data.getItemType(item[5]);
 	const windsockItem = this.createItem(itemType.type, false);
 
 	windsockItem.Model = itemType.model;

@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Generate available mission tasks
 module.exports = function makeTasks() {
 
@@ -8,9 +10,9 @@ module.exports = function makeTasks() {
 	const tasks = Object.create(null);
 	
 	// Process all tasks and build index list
-	for (const taskID in DATA.tasks) {
+	for (const taskID in data.tasks) {
 
-		const task = DATA.tasks[taskID];
+		const task = data.tasks[taskID];
 		
 		// Ignore dummy task definitions
 		if (!task || !task.name) {

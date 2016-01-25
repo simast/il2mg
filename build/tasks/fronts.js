@@ -1,10 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Load static global data
-require("../../src/data");
-
 const numeral = require("numeral");
+const data = require("../../src/data");
 const Item = require("../../src/item");
 
 module.exports = function(grunt) {
@@ -16,9 +14,9 @@ module.exports = function(grunt) {
 		let totalItems = 0;
 
 		// Process fronts for each battle
-		for (const battleID in DATA.battles) {
+		for (const battleID in data.battles) {
 
-			const battle = DATA.battles[battleID];
+			const battle = data.battles[battleID];
 			const frontsPath = "data/battles/" + battleID + "/fronts/";
 			const frontsProcessed = Object.create(null);
 
@@ -69,7 +67,7 @@ module.exports = function(grunt) {
 						if (item instanceof Item.MCU_Waypoint) {
 
 							// Process supported front line item
-							if (DATA.frontLine[item.Name]) {
+							if (data.frontLine[item.Name]) {
 
 								const point = [];
 								const pointIndex = item.Index;
@@ -77,7 +75,7 @@ module.exports = function(grunt) {
 								const pointID = json.push(point) - 1;
 
 								// Point item type
-								point.push(DATA.frontLine[item.Name]);
+								point.push(data.frontLine[item.Name]);
 
 								// Point item position
 								point.push(Math.round(item.XPos));

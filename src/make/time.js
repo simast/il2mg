@@ -3,18 +3,19 @@
 
 const moment = require("moment");
 const suncalc = require("suncalc");
+const data = require("../data");
 const log = require("../log");
+
+// Main period time lengths
+const TIME_DAWN = data.time.dawn.period;
+const TIME_SUNRISE = data.time.sunrise.period;
+const TIME_NOON = data.time.noon.period;
+const TIME_SUNSET = data.time.sunset.period;
+const TIME_DUSK = data.time.dusk.period;
+const TIME_MIDNIGHT = data.time.midnight.period;
 
 // Generate mission time
 module.exports = function makeTime() {
-
-	// Main period time lengths
-	const TIME_DAWN = DATA.time.dawn.period;
-	const TIME_SUNRISE = DATA.time.sunrise.period;
-	const TIME_NOON = DATA.time.noon.period;
-	const TIME_SUNSET = DATA.time.sunset.period;
-	const TIME_DUSK = DATA.time.dusk.period;
-	const TIME_MIDNIGHT = DATA.time.midnight.period;
 
 	const date = this.date.startOf("day");
 	const rand = this.rand;
@@ -83,9 +84,9 @@ module.exports = function makeTime() {
 		const weightedPeriods = [];
 
 		// Build a weighted period array
-		for (const periodID in DATA.time) {
+		for (const periodID in data.time) {
 
-			const period = DATA.time[periodID];
+			const period = data.time[periodID];
 
 			if (period.weight) {
 

@@ -9,6 +9,7 @@ const os = require("os");
 const util = require("util");
 const path = require("path");
 const Random = require("random-js");
+const data = require("./data");
 const log = require("./log");
 const Item = require("./item");
 
@@ -287,7 +288,7 @@ Mission.prototype.getLC = function(text) {
  */
 Mission.prototype.getCallsign = function(type) {
 
-	if (!DATA.callsigns[type]) {
+	if (!data.callsigns[type]) {
 		throw new TypeError("Invalid callsign type value.");
 	}
 
@@ -299,7 +300,7 @@ Mission.prototype.getCallsign = function(type) {
 	// Initialize/shuffle callsign list data
 	if (this.lastCallsign[type] === undefined) {
 
-		this.rand.shuffle(DATA.callsigns[type]);
+		this.rand.shuffle(data.callsigns[type]);
 		this.lastCallsign[type] = 0;
 	}
 	// Use next available callsign
@@ -308,12 +309,12 @@ Mission.prototype.getCallsign = function(type) {
 		this.lastCallsign[type]++;
 
 		// Cycle callsign list
-		if (this.lastCallsign[type] >= DATA.callsigns[type].length) {
+		if (this.lastCallsign[type] >= data.callsigns[type].length) {
 			this.lastCallsign[type] = 0;
 		}
 	}
 
-	const callsign = DATA.callsigns[type][this.lastCallsign[type]];
+	const callsign = data.callsigns[type][this.lastCallsign[type]];
 
 	// Return selected callsign info
 	return {
@@ -346,7 +347,7 @@ Mission.prototype.save = function(fileName) {
 	}
 	// Generate mission file path and name if not specified
 	else {
-		fileName = DATA.name + "-" + this.seed;
+		fileName = data.name + "-" + this.seed;
 	}
 
 	// Save text format file
@@ -546,7 +547,7 @@ Mission.prototype.saveLang = function(fileName) {
 
 	const promises = [];
 
-	DATA.languages.forEach((lang) => {
+	data.languages.forEach((lang) => {
 
 		const profileName = "Saving ." + lang;
 

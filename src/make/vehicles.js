@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Generate available mission vehicles
 module.exports = function makeVehicles() {
 
@@ -18,9 +20,9 @@ module.exports = function makeVehicles() {
 	});
 
 	// Process all vehicles and build index lists per country and type
-	for (let i = 0; i < DATA.vehicles.length; i++) {
+	for (let i = 0; i < data.vehicles.length; i++) {
 
-		const vehicle = DATA.vehicles[i];
+		const vehicle = data.vehicles[i];
 
 		// Filter out vehicles with from/to dates
 		if ((vehicle.from && this.date.isBefore(vehicle.from)) ||

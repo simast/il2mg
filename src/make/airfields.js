@@ -1,12 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const log = require("../log");
 const Item = require("../item");
 
 // Data constants
-const itemTag = DATA.itemTag;
-const planeSize = DATA.planeSize;
+const itemTag = data.itemTag;
+const planeSize = data.planeSize;
 
 // Airfield make parts
 const makeAirfieldLimits = require("./airfield.limits");
@@ -134,7 +135,7 @@ module.exports = function makeAirfields() {
 			airfield.country = airfield.countries[0];
 
 			// Airfield coalition
-			airfield.coalition = DATA.countries[airfield.country].coalition;
+			airfield.coalition = data.countries[airfield.country].coalition;
 
 			if (!airfieldsByCoalition[airfield.coalition]) {
 				airfieldsByCoalition[airfield.coalition] = [];
@@ -270,7 +271,7 @@ module.exports = function makeAirfields() {
 				
 				airfieldIcon1.LineType = Item.MCU_Icon.LINE_BOLD;
 				airfieldIcon1.setName(mission.getLC(airfield.planes + "\u2708"));
-				airfieldIcon1.setColor(DATA.countries[airfield.country].color);
+				airfieldIcon1.setColor(data.countries[airfield.country].color);
 				
 				airfieldIcon1.Coalitions = mission.coalitions;
 				airfieldIcon2.Coalitions = mission.coalitions;

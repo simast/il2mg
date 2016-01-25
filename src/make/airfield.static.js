@@ -1,12 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const itemFlag = DATA.itemFlag;
+const data = require("../data");
+
+// Data constants
+const itemFlag = data.itemFlag;
 
 // Make airfield static item
 module.exports = function makeAirfieldStatic(airfield, item) {
 
-	const itemType = DATA.getItemType(item[0]);
+	const itemType = data.getItemType(item[0]);
 	const staticItem = this.createItem(itemType.type, false);
 
 	staticItem.Model = itemType.model;

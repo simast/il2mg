@@ -1,13 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const Plane = require("../item").Plane;
 const makeAirfieldTaxi = require("./airfield.taxi");
 
 // Data constants
-const planeSize = DATA.planeSize;
-const itemFlag = DATA.itemFlag;
-const flightState = DATA.flightState;
+const planeSize = data.planeSize;
+const itemFlag = data.itemFlag;
+const flightState = data.flightState;
 
 // Make mission flight plane item objects
 module.exports = function makeFlightPlanes(flight) {

@@ -1,9 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const Vehicle = require("../item").Vehicle;
 const MCU_CMD_AttackArea = require("../item").MCU_CMD_AttackArea;
-const itemTag = DATA.itemTag;
+
+// Data constants
+const itemTag = data.itemTag;
 
 // Make airfield vehicle item
 module.exports = function makeAirfieldVehicle(airfield, item, isLive) {

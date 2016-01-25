@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Flight make parts
 const makeFlightFormation = require("./flight.formation");
 const makeFlightPilots = require("./flight.pilots");
@@ -9,7 +11,7 @@ const makeFlightPlan = require("./flight.plan");
 const makeAirfieldTaxi = require("./airfield.taxi");
 
 // Data constants
-const flightState = DATA.flightState;
+const flightState = data.flightState;
 
 // Make mission flight
 function makeFlight(params) {

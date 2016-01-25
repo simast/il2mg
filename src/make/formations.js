@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Generate available mission formations
 module.exports = function makeFormations() {
 
@@ -13,9 +15,9 @@ module.exports = function makeFormations() {
 		formations[countryID] = Object.create(null);
 
 		// Process all formations and build index list
-		for (const formationID in DATA.countries[countryID].formations) {
+		for (const formationID in data.countries[countryID].formations) {
 
-			let formationData = DATA.countries[countryID].formations[formationID];
+			let formationData = data.countries[countryID].formations[formationID];
 
 			// Ignore dummy formation definitions (and groups used to catalog formations)
 			if (!formationData || !formationData.elements) {
@@ -60,7 +62,7 @@ module.exports = function makeFormations() {
 					formation.group = formationParentID;
 				}
 
-				formationData = DATA.countries[countryID].formations[formationParentID];
+				formationData = data.countries[countryID].formations[formationParentID];
 
 				// Register formation in the parent group hierarchy
 				const formationGroup = formations[countryID][formationParentID] || [];

@@ -1,9 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Data constants
-const itemFlag = DATA.itemFlag;
-const planeSize = DATA.planeSize;
+const itemFlag = data.itemFlag;
+const planeSize = data.planeSize;
 
 // Make airfield plane item
 module.exports = function makeAirfieldPlane(airfield, item) {

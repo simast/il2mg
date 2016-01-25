@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const log = require("../log");
 
 // TOOD: Move these constants to settings?
@@ -15,8 +16,8 @@ const MAX_PRESSURE_CHANGE = 15; // Maximum atmospheric pressure change (mmHg)
 const MAX_CLOUD_COVER = 110;
 
 // Weather state and precipitation constants
-const weatherState = DATA.weatherState;
-const precipitation = DATA.precipitation;
+const weatherState = data.weatherState;
+const precipitation = data.precipitation;
 
 // Maximum weather state points distribution (%)
 const weatherPoints = {
@@ -165,11 +166,11 @@ function makeClouds(weather) {
 	const points = this.weather.points.clouds;
 	const maxCover = weatherLimits[this.weather.state].clouds;
 	const requiredCover = maxCover * (points / weatherPoints.CLOUDS);
-	const clouds = Object.keys(DATA.clouds);
+	const clouds = Object.keys(data.clouds);
 
 	// Sort cloud configs based on cover
 	rand.shuffle(clouds).sort((a, b) => {
-		return DATA.clouds[b].cover - DATA.clouds[a].cover;
+		return data.clouds[b].cover - data.clouds[a].cover;
 	});
 
 	let config;
@@ -177,12 +178,12 @@ function makeClouds(weather) {
 	// Use first config matching (closest to) required cloud cover
 	for (config of clouds) {
 
-		if (DATA.clouds[config].cover <= requiredCover) {
+		if (data.clouds[config].cover <= requiredCover) {
 			break;
 		}
 	}
 
-	const cloudsData = DATA.clouds[config];
+	const cloudsData = data.clouds[config];
 	const altitude = cloudsData.altitude;
 	const thickness = cloudsData.thickness;
 	const cover = cloudsData.cover;

@@ -1,15 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Load static global data
-require("../../src/data");
-
-const itemTag = DATA.itemTag;
-const itemFlag = DATA.itemFlag;
-const planeSize = DATA.planeSize;
-
 const numeral = require("numeral");
+const data = require("../../src/data");
 const Item = require("../../src/item");
+
+// Data constants
+const itemTag = data.itemTag;
+const itemFlag = data.itemFlag;
+const planeSize = data.planeSize;
 
 module.exports = function(grunt) {
 
@@ -21,9 +20,9 @@ module.exports = function(grunt) {
 		let totalItems = 0;
 
 		// Process airfields for each battle
-		for (const battleID in DATA.battles) {
+		for (const battleID in data.battles) {
 
-			const battle = DATA.battles[battleID];
+			const battle = data.battles[battleID];
 			const airfieldsPath = "data/battles/" + battleID + "/airfields/";
 
 			// Process all airfields
@@ -211,12 +210,12 @@ module.exports = function(grunt) {
 							else if (item.Name === "BEACON" || item.Name === "WINDSOCK") {
 
 								itemTypeID = itemTag[item.Name];
-								itemData.push(DATA.registerItemType(itemTypeData));
+								itemData.push(data.registerItemType(itemTypeData));
 							}
 							// Normal item
 							else {
 
-								itemTypeID = DATA.registerItemType(itemTypeData);
+								itemTypeID = data.registerItemType(itemTypeData);
 
 								// Decoration item flag
 								if (item.Name === "DECO") {
@@ -331,7 +330,7 @@ module.exports = function(grunt) {
 								const taxiPoints = item.items[0].items;
 
 								// Taxi route airfield item type ID
-								taxiRoute.push(DATA.registerItemType(itemTypeData));
+								taxiRoute.push(data.registerItemType(itemTypeData));
 
 								// Taxi route runway ID and invertible flag
 								taxiRoute.push(taxiRunwayID);
@@ -462,7 +461,7 @@ module.exports = function(grunt) {
 		// Write items type JSON data file
 		grunt.file.write(
 			"data/items.json",
-			JSON.stringify(DATA.items, null, "\t")
+			JSON.stringify(data.items, null, "\t")
 		);
 
 		let message = "";

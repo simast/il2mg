@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const log = require("../log");
 const Item = require("../item");
 
@@ -23,7 +24,7 @@ module.exports = function makeBlocks() {
 		for (let i = 0; i < blocks.length; i++) {
 
 			const blockItem = blocks[i];
-			const itemType = DATA.getItemType(blockItem[0]);
+			const itemType = data.getItemType(blockItem[0]);
 			const block = blocksGroup.createItem(itemType.type);
 
 			block.Model = itemType.model;

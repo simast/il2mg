@@ -1,10 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Data constants
-const flightState = DATA.flightState;
-const briefingColor = DATA.briefingColor;
-const itemFlag = DATA.itemFlag;
+const flightState = data.flightState;
+const briefingColor = data.briefingColor;
+const itemFlag = data.itemFlag;
 
 // Make plan takeoff action briefing
 module.exports = function makeBriefingTakeoff(action, flight) {

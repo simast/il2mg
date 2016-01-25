@@ -4,28 +4,28 @@
 const fs = require("fs");
 const requireDir = require("require-directory");
 
-const DATA = Object.create(null);
+const data = module.exports = Object.create(null);
 
 // Application name
-DATA.name = "il2mg";
+data.name = "il2mg";
 
 // Application version
-DATA.version = "r4";
+data.version = "r4";
 
 // Application copyright
-DATA.copyright = "(C) Simas Toleikis, 2015-2016";
+data.copyright = "(C) Simas Toleikis, 2015-2016";
 
 // Flag used to identify the data as binary (compiled to an executable)
 // TODO: Improve the check for binary/compiled mode detection
-DATA.isBinary = (process.argv[1].indexOf(".exe") !== -1);
+data.isBinary = (process.argv[1].indexOf(".exe") !== -1);
 
 // List of supported mission localization languages
-DATA.languages = Object.freeze([
+data.languages = Object.freeze([
 	"eng" // English
 ]);
 
 // Data tags for special airfield items
-DATA.itemTag = Object.freeze({
+data.itemTag = Object.freeze({
 	PLANE: -1, // Plane spot
 	TRUCK_CARGO: -2, // Cargo truck
 	TRUCK_FUEL: -3, // Fuel truck
@@ -41,7 +41,7 @@ DATA.itemTag = Object.freeze({
 });
 
 // Data flags for airfield items
-DATA.itemFlag = Object.freeze({
+data.itemFlag = Object.freeze({
 	BLOCK_DECO: 1, // Decoration
 	BLOCK_FUEL: 2, // Fuel item
 	PLANE_CAMO: 1, // Camouflage plane spot
@@ -56,33 +56,33 @@ DATA.itemFlag = Object.freeze({
 });
 
 // Front line item types
-DATA.frontLine = Object.freeze({
+data.frontLine = Object.freeze({
 	BORDER: 1, // Border line
 	ATTACK: 2 // Attack arrow
 });
 
 // Location item types
-DATA.location = Object.freeze({
+data.location = Object.freeze({
 	VILLAGE: 1, // Small village
 	TOWN: 2, // Medium town
 	CITY: 3 // Large city
 });
 
 // Coalitions
-DATA.coalition = Object.freeze({
+data.coalition = Object.freeze({
 	ALLIES: 1,
 	AXIS: 2
 });
 
 // Territory types
-DATA.territory = Object.freeze({
+data.territory = Object.freeze({
 	FRONT: -1,
 	UNKNOWN: 0
 	// NOTE: Any positive territory type ID is a coalition ID
 });
 
 // Plane size constants (types/IDs)
-DATA.planeSize = Object.freeze({
+data.planeSize = Object.freeze({
 	SMALL: 1,
 	MEDIUM: 2,
 	LARGE: 3,
@@ -90,7 +90,7 @@ DATA.planeSize = Object.freeze({
 });
 
 // Weather state/condition constants
-DATA.weatherState = Object.freeze({
+data.weatherState = Object.freeze({
 	PERFECT: 1,
 	GOOD: 2,
 	BAD: 3,
@@ -98,7 +98,7 @@ DATA.weatherState = Object.freeze({
 });
 
 // Precipitation type constants
-DATA.precipitation = Object.freeze({
+data.precipitation = Object.freeze({
 	NONE: 0,
 	RAIN: 1,
 	SNOW: 2
@@ -106,14 +106,14 @@ DATA.precipitation = Object.freeze({
 
 // Flight states
 // NOTE: Numeric (0..1) flight states represent aircraft in the air at various mission states
-DATA.flightState = Object.freeze({
+data.flightState = Object.freeze({
 	START: "start", // Parking, engine not running
 	TAXI: "taxi", // On the taxiway, engine running, taxiing to runway
 	RUNWAY: "runway" // On the runway, engine running, ready for takeoff
 });
 
 // Common flight plan actions
-DATA.planAction = Object.freeze({
+data.planAction = Object.freeze({
 	START: "start", // Initial start action
 	TAKEOFF: "takeoff", // Taxi (optionally) and takeoff from airfield
 	FORM: "form", // Form up (set formations and element cover)
@@ -123,7 +123,7 @@ DATA.planAction = Object.freeze({
 });
 
 // Map colors as RGB array values
-DATA.mapColor = Object.freeze({
+data.mapColor = Object.freeze({
 	ATTACK: [156, 156, 156],
 	// NOTE: Special color values that will change in-game based on user settings
 	ENEMY: [10, 0, 0],
@@ -131,7 +131,7 @@ DATA.mapColor = Object.freeze({
 });
 
 // Briefing colors as HTML hex color values
-DATA.briefingColor = Object.freeze({
+data.briefingColor = Object.freeze({
 	LIGHT: "#fbfbfb",
 	DARK: "#959595"
 });
@@ -141,7 +141,7 @@ DATA.briefingColor = Object.freeze({
 
 	// NOTE: For performance reasons JSON files in the binary/compiled mode will
 	// be loaded using native JSON object.
-	let useJSON5 = !DATA.isBinary;
+	let useJSON5 = !data.isBinary;
 
 	if (useJSON5) {
 
@@ -158,22 +158,22 @@ DATA.briefingColor = Object.freeze({
 		requireDir.defaults.extensions.push("json5");
 	}
 
-	DATA.vehicles = Object.freeze(require("../data/vehicles"));
-	DATA.clouds = Object.freeze(require("../data/clouds"));
-	DATA.time = Object.freeze(require("../data/time"));
-	DATA.items = Object.freeze(require("../data/items"));
-	DATA.effects = Object.freeze(require("../data/effects"));
-	DATA.grounds = Object.freeze(require("../data/grounds"));
-	DATA.callsigns = Object.freeze(require("../data/callsigns"));
-	DATA.countries = Object.freeze(require("../data/countries"));
-	DATA.battles = Object.freeze(require("../data/battles"));
-	DATA.tasks = Object.freeze(requireDir(module, "../data/tasks"));
-	DATA.planes = Object.create(null);
+	data.vehicles = Object.freeze(require("../data/vehicles"));
+	data.clouds = Object.freeze(require("../data/clouds"));
+	data.time = Object.freeze(require("../data/time"));
+	data.items = Object.freeze(require("../data/items"));
+	data.effects = Object.freeze(require("../data/effects"));
+	data.grounds = Object.freeze(require("../data/grounds"));
+	data.callsigns = Object.freeze(require("../data/callsigns"));
+	data.countries = Object.freeze(require("../data/countries"));
+	data.battles = Object.freeze(require("../data/battles"));
+	data.tasks = Object.freeze(requireDir(module, "../data/tasks"));
+	data.planes = Object.create(null);
 
 	// Load countries
-	for (const countryID in DATA.countries) {
+	for (const countryID in data.countries) {
 
-		const country = DATA.countries[countryID];
+		const country = data.countries[countryID];
 		const countryPath = "../data/countries/" + countryID + "/";
 
 		country.formations = require(countryPath + "formations");
@@ -186,17 +186,17 @@ DATA.briefingColor = Object.freeze({
 	
 	for (const planeGroup in planeData) {
 		for (const planeID in planeData[planeGroup]) {
-			DATA.planes[planeID] = planeData[planeGroup][planeID];
+			data.planes[planeID] = planeData[planeGroup][planeID];
 		}
 	}
 
-	Object.freeze(DATA.planes);
+	Object.freeze(data.planes);
 
 	// Load battles
 	// TODO: Load only required mission battle data
-	for (const battleID in DATA.battles) {
+	for (const battleID in data.battles) {
 
-		const battle = DATA.battles[battleID];
+		const battle = data.battles[battleID];
 		const battlePath = "../data/battles/" + battleID + "/";
 
 		battle.countries = [];
@@ -217,7 +217,7 @@ DATA.briefingColor = Object.freeze({
 			unitCountryID = parseInt(unitCountryID, 10);
 
 			// Ignore invalid country IDs
-			if (isNaN(unitCountryID) || !DATA.countries[unitCountryID]) {
+			if (isNaN(unitCountryID) || !data.countries[unitCountryID]) {
 				continue;
 			}
 
@@ -247,7 +247,7 @@ DATA.briefingColor = Object.freeze({
  * @param {object} item Item data.
  * @returns {number} Item type ID.
  */
-DATA.registerItemType = function(item) {
+data.registerItemType = function(item) {
 
 	if (typeof item !== "object" || !item.type || !item.script || !item.model) {
 		throw new TypeError("Invalid item data.");
@@ -297,7 +297,7 @@ DATA.registerItemType = function(item) {
  * @param {number|string} itemTypeID Item type ID or script name.
  * @returns {object} Item type data.
  */
-DATA.getItemType = function(itemTypeID) {
+data.getItemType = function(itemTypeID) {
 
 	// Look up item type ID by script name
 	if (typeof itemTypeID === "string") {
@@ -312,5 +312,3 @@ DATA.getItemType = function(itemTypeID) {
 
 	return itemType;
 };
-
-global.DATA = DATA;

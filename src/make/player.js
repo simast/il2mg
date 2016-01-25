@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Generate mission player choice data
 module.exports = function makePlayer() {
 
@@ -29,7 +31,7 @@ module.exports = function makePlayer() {
 	if (params.country) {
 
 		// Make sure country is part of requested coalition
-		if (player.coalition && DATA.countries[params.country].coalition !== player.coalition) {
+		if (player.coalition && data.countries[params.country].coalition !== player.coalition) {
 
 			throw ["Country is not part of coalition!", {
 				country: params.country,
@@ -122,7 +124,7 @@ module.exports = function makePlayer() {
 	}
 
 	// Set player flight state
-	player.state = DATA.flightState.START;
+	player.state = data.flightState.START;
 
 	if (params.state !== undefined) {
 		player.state = params.state;

@@ -1,8 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
+const data = require("../data");
+
 // Data constants
-const planAction = DATA.planAction;
+const planAction = data.planAction;
 
 // Make mission test flight task
 module.exports = function makeTaskTest(flight) {

@@ -2,9 +2,10 @@
 "use strict";
 
 const requireDir = require("require-directory");
+const data = require("../data");
 
 // Data constants
-const planAction = DATA.planAction;
+const planAction = data.planAction;
 
 // Plan action and task make parts
 const makeParts = requireDir(module, {include: /(plan|task)\..+\.js$/});

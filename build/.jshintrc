@@ -3,7 +3,6 @@
 	"esnext": true,
 	"validthis": true,
 	"globals": {
-		"DATA": true,
 		"$V": true,
 		"$M": true,
 		"$L": true,

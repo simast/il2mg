@@ -2,6 +2,7 @@
 "use strict";
 
 const moment = require("moment");
+const data = require("../data");
 const log = require("../log");
 
 // Generate available mission units
@@ -506,7 +507,7 @@ module.exports = function makeUnits() {
 			unitsByAirfield[unit.airfield][unitID] = unit;
 
 			// Register unit to coalition index
-			const coalitionID = DATA.countries[unit.country].coalition;
+			const coalitionID = data.countries[unit.country].coalition;
 			unitsByCoalition[coalitionID] = unitsByCoalition[coalitionID] || Object.create(null);
 			unitsByCoalition[coalitionID][unitID] = unit;
 

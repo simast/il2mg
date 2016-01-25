@@ -1,8 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const people = require("./people");
+const data = require("../data");
 const Plane = require("../item").Plane;
+const people = require("./people");
 
 // Make mission flight pilots
 module.exports = function makeFlightPilots(flight) {
@@ -13,7 +14,7 @@ module.exports = function makeFlightPilots(flight) {
 	const task = flight.task;
 	const player = this.player;
 	const unit = this.units[flight.unit];
-	const ranks = DATA.countries[unit.country].ranks;
+	const ranks = data.countries[unit.country].ranks;
 	const pilotIDs = Object.create(null);
 	
 	// Build an index list of weighted pilot ranks by type
@@ -268,7 +269,7 @@ module.exports = function makeFlightPilots(flight) {
 			return;
 		}
 		
-		const ranksWeighted = DATA.countries[unit.country].ranks.weighted.pilot;
+		const ranksWeighted = data.countries[unit.country].ranks.weighted.pilot;
 		let pilotFound;
 		let pilotIndex;
 		let pilotRank;
@@ -324,7 +325,7 @@ module.exports = function makeFlightPilots(flight) {
 	// Get an unknown (fake) pilot
 	function getPilotUnknown(unit, rankRange) {
 
-		const names = DATA.countries[unit.country].names;
+		const names = data.countries[unit.country].names;
 		const pilot = Object.create(null);
 		let name;
 
@@ -360,7 +361,7 @@ module.exports = function makeFlightPilots(flight) {
 	function getPilotPlayer(unit, rankRange) {
 		
 		let pilot = Object.create(null);
-		const ranks = DATA.countries[unit.country].ranks;
+		const ranks = data.countries[unit.country].ranks;
 		const playerName = player.pilot.name;
 		const playerRank = player.pilot.rank;
 		

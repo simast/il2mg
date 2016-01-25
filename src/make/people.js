@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Generate mission people
 module.exports = function makePeople() {
 
@@ -74,7 +76,7 @@ module.exports = function makePeople() {
 	// Get a rank
 	function getRank(rankID, countryID) {
 
-		const ranks = DATA.countries[countryID].ranks;
+		const ranks = data.countries[countryID].ranks;
 
 		// Generate a random weighted rank based on type and/or range bounds
 		if (typeof rankID === "object") {

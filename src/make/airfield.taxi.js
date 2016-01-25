@@ -1,8 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const Item = require("../item");
-const itemFlag = DATA.itemFlag;
+
+// Data constants
+const itemFlag = data.itemFlag;
 
 // Make airfield taxi route
 module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
@@ -28,7 +31,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		return (activeTaxiRoutes[runwayID] === taxiRouteID);
 	}
 
-	const itemType = DATA.getItemType(taxiRoute[0]);
+	const itemType = data.getItemType(taxiRoute[0]);
 	const isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV);
 	const basePoint = taxiRoute[3];
 	

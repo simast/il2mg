@@ -2,6 +2,7 @@
 "use strict";
 
 const mustache = require("mustache");
+const data = require("../data");
 const people = require("./people");
 
 // Default string constants
@@ -60,8 +61,8 @@ module.exports = function makeBriefingText(template, view) {
 
 		const playerPlane = this.planes[flight.player.plane];
 		const playerElement = this.player.element;
-		const names = DATA.countries[flight.country].names;
-		const ranks = DATA.countries[flight.country].ranks;
+		const names = data.countries[flight.country].names;
+		const ranks = data.countries[flight.country].ranks;
 		
 		// Flight home airfield name
 		context.airfield = this.airfields[flight.airfield].name;

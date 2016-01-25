@@ -1,12 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const MCU_CMD_Effect = require("../item").MCU_CMD_Effect;
-const itemTag = DATA.itemTag;
-const itemFlag = DATA.itemFlag;
-const effects = DATA.effects;
-const grounds = DATA.grounds;
-const precipitation = DATA.precipitation;
+
+// Data constants
+const itemTag = data.itemTag;
+const itemFlag = data.itemFlag;
+const effects = data.effects;
+const grounds = data.grounds;
+const precipitation = data.precipitation;
 
 // Make airfield effect item
 module.exports = function makeAirfieldEffect(airfield, item) {

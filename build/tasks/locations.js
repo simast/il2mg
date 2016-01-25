@@ -1,13 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-// Load static global data
-require("../../src/data");
-
-const location = DATA.location;
-
 const numeral = require("numeral");
+const data = require("../../src/data");
 const Item = require("../../src/item");
+
+// Data constants
+const location = data.location;
 
 module.exports = function(grunt) {
 
@@ -18,9 +17,9 @@ module.exports = function(grunt) {
 		let totalItems = 0;
 
 		// Process locations for each battle
-		for (const battleID in DATA.battles) {
+		for (const battleID in data.battles) {
 
-			const battle = DATA.battles[battleID];
+			const battle = data.battles[battleID];
 			const locationsPath = "data/battles/" + battleID + "/locations/";
 
 			// Process all location files

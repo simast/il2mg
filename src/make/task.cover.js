@@ -2,11 +2,12 @@
 "use strict";
 
 const numeral = require("numeral");
-const makeBriefingText = require("./briefing.text");
+const data = require("../data");
 const Item = require("../item");
+const makeBriefingText = require("./briefing.text");
 
 // Data constants
-const planAction = DATA.planAction;
+const planAction = data.planAction;
 
 // First (intro) plan description segments
 const introSegments = [

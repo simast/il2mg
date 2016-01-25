@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const log = require("../log");
 const Item = require("../item");
 
@@ -12,19 +13,19 @@ module.exports = function makeBattle() {
 
 	// Select random battle
 	if (!battleID) {
-		battleID = this.rand.pick(Object.keys(DATA.battles));
+		battleID = this.rand.pick(Object.keys(data.battles));
 	}
 
 	this.battleID = battleID;
 	this.battlePath = "../../data/battles/" + battleID + "/";
 	
-	const battle = this.battle = DATA.battles[battleID];
+	const battle = this.battle = data.battles[battleID];
 	const coalitions = this.coalitions = [];
 
 	// Create main mission Options item
 	const options = this.createItem("Options");
 
-	options.LCAuthor = this.getLC(DATA.name + " " + DATA.version);
+	options.LCAuthor = this.getLC(data.name + " " + data.version);
 	options.MissionType = 0; // Single-player mission
 	options.AqmId = 0; // TODO: ?
 
@@ -39,7 +40,7 @@ module.exports = function makeBattle() {
 
 		battle.countries.forEach((countryID) => {
 			
-			const coalitionID = DATA.countries[countryID].coalition;
+			const coalitionID = data.countries[countryID].coalition;
 			
 			if (coalitions.indexOf(coalitionID) === -1) {
 				coalitions.push(coalitionID);

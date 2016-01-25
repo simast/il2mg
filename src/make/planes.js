@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
+
 // Generate available mission planes
 module.exports = function makePlanes() {
 
@@ -23,9 +25,9 @@ module.exports = function makePlanes() {
 	const planeAlias = Object.create(null);
 
 	// Process all planes and build index lists
-	for (const planeID in DATA.planes) {
+	for (const planeID in data.planes) {
 
-		let planeData = DATA.planes[planeID];
+		let planeData = data.planes[planeID];
 
 		// Alias reference to another plane type
 		if (typeof planeData === "string") {
@@ -74,7 +76,7 @@ module.exports = function makePlanes() {
 				plane.group = planeParentID;
 			}
 
-			planeData = DATA.planes[planeParentID];
+			planeData = data.planes[planeParentID];
 
 			// Register plane in the parent group hierarchy
 			const planeGroup = planes[planeParentID] || [];

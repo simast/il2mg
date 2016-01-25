@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const MCU_Icon = require("../item").MCU_Icon;
 
 // Make plan start action
@@ -39,7 +40,7 @@ module.exports = function makePlanStart(action, element, flight, input) {
 		const startIcon = flight.startIcon = flight.group.createItem("MCU_Icon");
 		
 		startIcon.setPosition(airfield.position);
-		startIcon.Coalitions = [DATA.countries[flight.country].coalition];
+		startIcon.Coalitions = [data.countries[flight.country].coalition];
 		
 		// Use action point icon for local tasks
 		if (task.local) {

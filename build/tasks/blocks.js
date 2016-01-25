@@ -1,10 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Load static global data
-require("../../src/data");
-
 const numeral = require("numeral");
+const data = require("../../src/data");
 const Item = require("../../src/item");
 
 module.exports = function(grunt) {
@@ -16,9 +14,9 @@ module.exports = function(grunt) {
 		let totalItems = 0;
 
 		// Process blocks for each battle
-		for (const battleID in DATA.battles) {
+		for (const battleID in data.battles) {
 
-			const battle = DATA.battles[battleID];
+			const battle = data.battles[battleID];
 			const blocksPath = "data/battles/" + battleID + "/blocks/";
 
 			// Process all blocks files
@@ -41,7 +39,7 @@ module.exports = function(grunt) {
 						// TODO: Also import block damage (from Damaged child items)
 						if (block instanceof Item.Block || block instanceof Item.Bridge) {
 
-							const itemTypeID = DATA.registerItemType({
+							const itemTypeID = data.registerItemType({
 								type: block.type,
 								script: block.Script,
 								model: block.Model
@@ -84,7 +82,7 @@ module.exports = function(grunt) {
 		// Write items type JSON data file
 		grunt.file.write(
 			"data/items.json",
-			JSON.stringify(DATA.items, null, "\t")
+			JSON.stringify(data.items, null, "\t")
 		);
 
 		let message = "";

@@ -3,6 +3,7 @@
 
 const rbush = require("rbush");
 const knn = require("rbush-knn");
+const data = require("../data");
 const log = require("../log");
 
 // Generate mission locations
@@ -67,13 +68,13 @@ module.exports = function makeLocations() {
 				
 				let totalLocationType;
 				
-				if (locationType === DATA.location.VILLAGE) {
+				if (locationType === data.location.VILLAGE) {
 					totalLocationType = "villages";
 				}
-				else if (locationType === DATA.location.TOWN) {
+				else if (locationType === data.location.TOWN) {
 					totalLocationType = "towns";
 				}
-				else if (locationType === DATA.location.CITY) {
+				else if (locationType === data.location.CITY) {
 					totalLocationType = "cities";
 				}
 				

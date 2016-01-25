@@ -1,14 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const Location = require("./locations").Location;
+const data = require("../data");
 const MCU_Icon = require("../item").MCU_Icon;
+const Location = require("./locations").Location;
 
 // Data constants
-const frontLine = DATA.frontLine;
-const mapColor = DATA.mapColor;
-const territory = DATA.territory;
-const coalition = DATA.coalition;
+const frontLine = data.frontLine;
+const mapColor = data.mapColor;
+const territory = data.territory;
+const coalition = data.coalition;
 
 // Map grid size
 // NOTE: Territories will be more precise with smaller grid size
@@ -478,7 +479,7 @@ module.exports = function makeFronts() {
 		this.make.push(() => {
 			
 			const playerCountryID = this.player.flight.country;
-			const playerCoalitionID = DATA.countries[playerCountryID].coalition;
+			const playerCoalitionID = data.countries[playerCountryID].coalition;
 			
 			territories.forEach((territoriesZ, x) => {
 				

@@ -2,6 +2,7 @@
 "use strict";
 
 const moment = require("moment");
+const data = require("../data");
 
 // Generate mission map data
 module.exports = function makeMap() {
