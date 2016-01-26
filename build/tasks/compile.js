@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const path = require("path");
 const JSON5 = require("json5");
 const enclose = require("enclose");
 
@@ -12,21 +13,36 @@ module.exports = function(grunt) {
 		const done = this.async();
 		const buildName = grunt.config("pkg.name");
 		const buildDir = "build/temp/";
-
-		// Copy over plain JSON data and app source files
-		grunt.file.expand([
-			"data/**/*.json",
-			"src/**/*.js"
-		]).forEach((file) => {
-			grunt.file.copy(file, buildDir + file);
-		});
 		
-		// Convert JSON5 data files to plain JSON format for binary executable use
-		grunt.file.expand("data/**/*.json5").forEach((dataFile) => {
+		// Convert JSON5 data files to PSON format for binary executable use
+		grunt.file.expand("@(data|src)/**/*.@(js|json|json5)").forEach((file) => {
 			
-			grunt.file.write(buildDir + dataFile.slice(0, -1), JSON.stringify(
-				JSON5.parse(grunt.file.read(dataFile))
-			));
+			const fileExt = path.extname(file);
+			
+			// Copy over app JavaScript source code files
+			// TODO: Use UglifyJS to uglify the code?
+			if (fileExt === ".js") {
+				grunt.file.copy(file, buildDir + file);
+			}
+			// Convert JSON5 data files to JSON format
+			else {
+				
+				let jsonParse = JSON.parse;
+				
+				if (fileExt === ".json5") {
+					jsonParse = JSON5.parse;
+				}
+				
+				// Rename file path to always use .json extension
+				const fileJSON = path.join(
+					path.dirname(file),
+					path.basename(file, path.extname(file)) + ".json"
+				);
+				
+				grunt.file.write(buildDir + fileJSON, JSON.stringify(
+					jsonParse(grunt.file.read(file))
+				));
+			}
 		});
 
 		const options = [];
