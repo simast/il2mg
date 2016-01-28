@@ -9,13 +9,9 @@ module.exports = function makePlanes() {
 	const battle = this.battle;
 
 	// Skin data array index to use when building valid/weighted plane skin list
-	const skinDataIndex = [
-		"spring",
-		"summer",
-		"autumn",
-		"winter",
-		"desert"
-	].indexOf(this.map.season);
+	const skinDataIndex = Object.keys(data.season).map((season) => {
+		return data.season[season];
+	}).indexOf(this.map.season);
 
 	// Plane index tables
 	const planes = Object.create(null);

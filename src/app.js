@@ -12,6 +12,7 @@ const Mission = require("./mission");
 // Data constants
 const flightState = data.flightState;
 const weatherState = data.weatherState;
+const season = data.season;
 
 const EOL = os.EOL;
 
@@ -94,6 +95,26 @@ params.option("-d, --date <YYYY-MM-DD>", (() => {
 
 		desc += util.format('\t%s (from "%s" to "%s")' + EOL, battle.name, battleFrom, battleTo);
 	}
+	
+	desc += EOL + "\tDate can also be specified using special season values:" + EOL;
+	desc += EOL + "\t";
+	
+	Object.keys(season).filter((type) => {
+		return season[type] !== season.DESERT; // A special "season" used for desert plane skins
+	}).forEach((type, index, seasons) => {
+		
+		if (index === seasons.length - 1) {
+			desc += " or ";
+		}
+		
+		desc += '"' + season[type] + '"';
+		
+		if (index < seasons.length - 2) {
+			desc += ", ";
+		}
+	});
+	
+	desc += "." + EOL;
 
 	return desc;
 })(), (value) => {
@@ -309,12 +330,27 @@ appDomain.run(() => {
 
 	// --date
 	if (params.date) {
-
-		if (typeof params.date !== "object") {
-			throw ["Invalid mission date!", {date: params.date}];
+		
+		if (typeof params.date === "object") {
+			params.date = params.date.format("YYYY-MM-DD");
 		}
 		else {
-			params.date = params.date.format("YYYY-MM-DD");
+			
+			// Validate date as a special season value
+			let isDateSeason = false;
+			
+			for (const type in season) {
+				
+				if (params.date === season[type] && season[type] !== season.DESERT) {
+					
+					isDateSeason = true;
+					break;
+				}
+			}
+			
+			if (!isDateSeason) {
+				throw ["Invalid mission date!", {date: params.date}];
+			}
 		}
 	}
 

@@ -68,6 +68,16 @@ data.location = Object.freeze({
 	CITY: 3 // Large city
 });
 
+// Map season types
+// NOTE: Order is important (used when defining plane skins for each season)!
+data.season = Object.freeze({
+	SPRING: "spring",
+	SUMMER: "summer",
+	AUTUMN: "autumn",
+	WINTER: "winter",
+	DESERT: "desert"
+});
+
 // Coalitions
 data.coalition = Object.freeze({
 	ALLIES: 1,

@@ -15,9 +15,10 @@ const MAX_PRESSURE_CHANGE = 15; // Maximum atmospheric pressure change (mmHg)
 // NOTE: Extra 10 points is a workaround to make full overcasts more common
 const MAX_CLOUD_COVER = 110;
 
-// Weather state and precipitation constants
+// Data constants
 const weatherState = data.weatherState;
 const precipitation = data.precipitation;
+const season = data.season;
 
 // Maximum weather state points distribution (%)
 const weatherPoints = {
@@ -222,7 +223,7 @@ function makePrecipitation(weather) {
 		if (hasPrecipitation) {
 
 			// Use snow only in the winter season
-			if (this.map.season === "winter") {
+			if (this.map.season === season.WINTER) {
 				precData.type = precipitation.SNOW;
 			}
 			// Use rain for other seasons

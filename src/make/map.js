@@ -21,8 +21,7 @@ module.exports = function makeMap() {
 		const mapTo = moment(mapData.to);
 
 		// Found matching season map
-		if (date.isSame(mapFrom, "day") || date.isSame(mapTo, "day") ||
-				date.isBetween(mapFrom, mapTo)) {
+		if (date.isSameOrAfter(mapFrom, "day") && date.isSameOrBefore(mapTo, "day")) {
 
 			map.season = season;
 			map.data = mapData;
