@@ -4,13 +4,15 @@
 const MCU = require("./MCU");
 
 // Activate item
-function MCU_Activate() {
-
-	// Call parent constructor
-	MCU.apply(this, arguments);
-}
-
-MCU_Activate.prototype = Object.create(MCU.prototype);
-MCU_Activate.prototype.typeID = 44;
-
-module.exports = MCU_Activate;
+module.exports = class MCU_Activate extends MCU {
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		yield* super.toBinary(index, 44);
+	}
+};

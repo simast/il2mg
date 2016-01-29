@@ -4,38 +4,36 @@
 const MCU = require("./MCU");
 
 // Land command item
-function MCU_CMD_Land() {
-
-	// Call parent constructor
-	MCU.apply(this, arguments);
+class MCU_CMD_Land extends MCU {
 	
-	this.Priority = MCU_CMD_Land.PRIORITY_MEDIUM;
-}
+	constructor() {
+		super();
+		
+		this.Priority = MCU_CMD_Land.PRIORITY_MEDIUM;
+	}
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		
+		yield* super.toBinary(index, 16);
 
-MCU_CMD_Land.prototype = Object.create(MCU.prototype);
-MCU_CMD_Land.prototype.typeID = 16;
+		const buffer = new Buffer(4);
+
+		// Priority
+		this.writeUInt32(buffer, this.Priority);
+
+		yield buffer;
+	}
+}
 
 // Land command priority constants
 MCU_CMD_Land.PRIORITY_LOW = 0;
 MCU_CMD_Land.PRIORITY_MEDIUM = 1;
 MCU_CMD_Land.PRIORITY_HIGH = 2;
-
-/**
- * Get binary representation of the item.
- *
- * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the item.
- */
-MCU_CMD_Land.prototype.toBinary = function* (index) {
-	
-	yield* MCU.prototype.toBinary.apply(this, arguments);
-
-	const buffer = new Buffer(4);
-
-	// Priority
-	this.writeUInt32(buffer, this.Priority);
-
-	yield buffer;
-};
 
 module.exports = MCU_CMD_Land;

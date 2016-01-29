@@ -4,13 +4,15 @@
 const MCU = require("./MCU");
 
 // Take off command item
-function MCU_CMD_TakeOff() {
-
-	// Call parent constructor
-	MCU.apply(this, arguments);
-}
-
-MCU_CMD_TakeOff.prototype = Object.create(MCU.prototype);
-MCU_CMD_TakeOff.prototype.typeID = 15;
-
-module.exports = MCU_CMD_TakeOff;
+module.exports = class MCU_CMD_TakeOff extends MCU {
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		yield* super.toBinary(index, 15);
+	}
+};

@@ -4,34 +4,30 @@
 const MCU = require("./MCU");
 
 // Mission End item
-function MCU_TR_MissionEnd() {
-
-	// Call parent constructor
-	MCU.apply(this, arguments);
-
-	this.Enabled = 1;
-	this.Succeeded = 1;
-}
-
-MCU_TR_MissionEnd.prototype = Object.create(MCU.prototype);
-MCU_TR_MissionEnd.prototype.typeID = 29;
-
-/**
- * Get binary representation of the item.
- *
- * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the item.
- */
-MCU_TR_MissionEnd.prototype.toBinary = function* (index) {
+module.exports = class MCU_TR_MissionEnd extends MCU {
 	
-	yield* MCU.prototype.toBinary.apply(this, arguments);
+	constructor() {
+		super();
 
-	const buffer = new Buffer(1);
+		this.Enabled = 1;
+		this.Succeeded = 1;
+	}
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		
+		yield* super.toBinary(index, 29);
 
-	// Succeeded
-	this.writeUInt8(buffer, this.Succeeded);
+		const buffer = new Buffer(1);
 
-	yield buffer;
+		// Succeeded
+		this.writeUInt8(buffer, this.Succeeded);
+
+		yield buffer;
+	}
 };
-
-module.exports = MCU_TR_MissionEnd;

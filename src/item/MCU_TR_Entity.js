@@ -4,19 +4,17 @@
 const MCU = require("./MCU");
 
 // Entity item
-function MCU_TR_Entity() {
+module.exports = class MCU_TR_Entity extends MCU {
+	
+	constructor() {
+		super();
 
-	// Call parent constructor
-	MCU.apply(this, arguments);
-
-	this.Enabled = 1;
-}
-
-MCU_TR_Entity.prototype = Object.create(MCU.prototype, {
+		this.Enabled = 1;
+	}
 	
 	// Valid Entity event type name and ID constants
-	EVENTS: {
-		value: {
+	get EVENTS() {
+		return {
 			OnPilotKilled: 0,
 			OnPilotWounded: 1,
 			OnPlaneCrashed: 2,
@@ -55,55 +53,51 @@ MCU_TR_Entity.prototype = Object.create(MCU.prototype, {
 			OnFlagCapturedBy15: 40,
 			OnFlagCapturedBy16: 41,
 			OnSpottingStarted: 74
-		}
-	},
-
+		};
+	}
+	
 	// Valid Entity report type name and ID constants
-	REPORTS: {
-		value: {
+	get REPORTS() {
+		return {
 			OnSpawned: 0,
 			OnTargetAttacked: 1,
 			OnAreaAttacked: 2,
 			OnTookOff: 3,
 			OnLanded: 4
-		}
+		};
 	}
-});
-
-MCU_TR_Entity.prototype.typeID = 30;
-
-/**
- * Get binary representation of the item.
- *
- * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the item.
- */
-MCU_TR_Entity.prototype.toBinary = function* (index) {
 	
-	yield* MCU.prototype.toBinary.apply(this, arguments);
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		
+		yield* super.toBinary(index, 30);
 
-	let size = 12;
+		let size = 12;
 
-	if (this.events) {
-		size += this.events.items.length * 8;
+		if (this.events) {
+			size += this.events.items.length * 8;
+		}
+
+		if (this.reports) {
+			size += this.reports.items.length * 12;
+		}
+
+		const buffer = new Buffer(size);
+
+		// Events list
+		this.writeEvents(buffer);
+
+		// MisObjID
+		this.writeUInt32(buffer, this.MisObjID || 0);
+
+		// Reports list
+		this.writeReports(buffer);
+
+		yield buffer;
 	}
-
-	if (this.reports) {
-		size += this.reports.items.length * 12;
-	}
-
-	const buffer = new Buffer(size);
-
-	// Events list
-	this.writeEvents(buffer);
-
-	// MisObjID
-	this.writeUInt32(buffer, this.MisObjID || 0);
-
-	// Reports list
-	this.writeReports(buffer);
-
-	yield buffer;
 };
-
-module.exports = MCU_TR_Entity;

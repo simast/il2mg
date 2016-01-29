@@ -4,23 +4,83 @@
 const MCU = require("./MCU");
 
 // Icon item
-function MCU_Icon() {
+class MCU_Icon extends MCU {
+	
+	constructor() {
+		super();
 
-	// Call parent constructor
-	MCU.apply(this, arguments);
+		this.Enabled = 1;
+		this.LCName = 0;
+		this.LCDesc = 0;
+		this.IconId = MCU_Icon.ICON_NONE;
+		this.RColor = 0;
+		this.GColor = 0;
+		this.BColor = 0;
+		this.LineType = MCU_Icon.LINE_NORMAL;
+	}
+	
+	/**
+	 * Set icon item color value.
+	 *
+	 * @param {number[]} color Color value as RGB array.
+	 */
+	setColor(color) {
+		
+		// Validate color value
+		if (!Array.isArray(color) || color.length !== 3) {
+			throw new Error("Invalid icon item color value.");
+		}
+		
+		this.RColor = color[0];
+		this.GColor = color[1];
+		this.BColor = color[2];
+	}
 
-	this.Enabled = 1;
-	this.LCName = 0;
-	this.LCDesc = 0;
-	this.IconId = MCU_Icon.ICON_NONE;
-	this.RColor = 0;
-	this.GColor = 0;
-	this.BColor = 0;
-	this.LineType = MCU_Icon.LINE_NORMAL;
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		
+		yield* super.toBinary(index, 35);
+
+		let size = 32;
+
+		if (Array.isArray(this.Coalitions)) {
+			size += this.Coalitions.length * 4;
+		}
+
+		const buffer = new Buffer(size);
+
+		// IconId
+		this.writeUInt32(buffer, this.IconId);
+
+		// RColor
+		this.writeUInt32(buffer, this.RColor);
+
+		// GColor
+		this.writeUInt32(buffer, this.GColor);
+
+		// BColor
+		this.writeUInt32(buffer, this.BColor);
+
+		// LineType
+		this.writeUInt32(buffer, this.LineType);
+
+		// LCName
+		this.writeUInt32(buffer, this.LCName);
+
+		// LCDesc
+		this.writeUInt32(buffer, this.LCDesc);
+
+		// Coalitions
+		this.writeUInt32Array(buffer, this.Coalitions || []);
+
+		yield buffer;
+	}
 }
-
-MCU_Icon.prototype = Object.create(MCU.prototype);
-MCU_Icon.prototype.typeID = 35;
 
 // Icon type constants
 MCU_Icon.ICON_NONE = 0;
@@ -85,67 +145,5 @@ MCU_Icon.LINE_POSITION_6 = 19;
 MCU_Icon.LINE_POSITION_7 = 20;
 MCU_Icon.LINE_POSITION_8 = 21;
 MCU_Icon.LINE_POSITION_9 = 22;
-
-/**
- * Set icon item color value.
- *
- * @param {number[]} color Color value as RGB array.
- */
-MCU_Icon.prototype.setColor = function(color) {
-	
-	// Validate color value
-	if (!Array.isArray(color) || color.length !== 3) {
-		throw new Error("Invalid icon item color value.");
-	}
-	
-	this.RColor = color[0];
-	this.GColor = color[1];
-	this.BColor = color[2];
-};
-
-/**
- * Get binary representation of the item.
- *
- * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the item.
- */
-MCU_Icon.prototype.toBinary = function* (index) {
-	
-	yield* MCU.prototype.toBinary.apply(this, arguments);
-
-	let size = 32;
-
-	if (Array.isArray(this.Coalitions)) {
-		size += this.Coalitions.length * 4;
-	}
-
-	const buffer = new Buffer(size);
-
-	// IconId
-	this.writeUInt32(buffer, this.IconId);
-
-	// RColor
-	this.writeUInt32(buffer, this.RColor);
-
-	// GColor
-	this.writeUInt32(buffer, this.GColor);
-
-	// BColor
-	this.writeUInt32(buffer, this.BColor);
-
-	// LineType
-	this.writeUInt32(buffer, this.LineType);
-
-	// LCName
-	this.writeUInt32(buffer, this.LCName);
-
-	// LCDesc
-	this.writeUInt32(buffer, this.LCDesc);
-
-	// Coalitions
-	this.writeUInt32Array(buffer, this.Coalitions || []);
-
-	yield buffer;
-};
 
 module.exports = MCU_Icon;

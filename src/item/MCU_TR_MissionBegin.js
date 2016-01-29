@@ -4,15 +4,21 @@
 const MCU = require("./MCU");
 
 // Mission Begin item
-function MCU_TR_MissionBegin() {
+module.exports = class MCU_TR_MissionBegin extends MCU {
+	
+	constructor() {
+		super();
 
-	// Call parent constructor
-	MCU.apply(this, arguments);
-
-	this.Enabled = 1;
-}
-
-MCU_TR_MissionBegin.prototype = Object.create(MCU.prototype);
-MCU_TR_MissionBegin.prototype.typeID = 28;
-
-module.exports = MCU_TR_MissionBegin;
+		this.Enabled = 1;
+	}
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		yield* super.toBinary(index, 28);
+	}
+};

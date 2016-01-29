@@ -5,173 +5,166 @@ const moment = require("moment");
 const Item = require("../item");
 
 // Options item
-function Options() {
+module.exports = class Options extends Item {
 
-}
-
-Options.prototype = Object.create(Item.prototype);
-Options.prototype.typeID = 25;
-Options.prototype.hasIndex = false;
-
-/**
- * Get binary representation of the item.
- *
- * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the item.
- */
-Options.prototype.toBinary = function* (index) {
-
-	const date = moment(this.Date, "D.M.YYYY", true);
-	const time = moment(this.Time, "H:m:s", true);
-
-	const hmapLength = Buffer.byteLength(this.HMap);
-	const texturesLength = Buffer.byteLength(this.Textures);
-	const forestsLength = Buffer.byteLength(this.Forests);
-	const guiMapLength = Buffer.byteLength(this.GuiMap);
-	const layersLength = Buffer.byteLength(this.Layers);
-	const seasonPrefixLength = Buffer.byteLength(this.SeasonPrefix);
-	const playerConfigLength = Buffer.byteLength(this.PlayerConfig);
-	const cloudConfigLength = Buffer.byteLength(this.CloudConfig);
-
-	let size = 144;
-
-	size += hmapLength;
-	size += texturesLength;
-	size += forestsLength;
-	size += guiMapLength;
-	size += layersLength;
-	size += seasonPrefixLength;
-	size += playerConfigLength;
-	size += cloudConfigLength;
-
-	size += this.WindLayers.length * 8 * 3;
-	size += this.Countries.length * 4 * 2;
-
-	const buffer = new Buffer(size);
-
-	// Item binary type ID (or file version?)
-	this.writeUInt32(buffer, this.typeID);
-
-	// MissionType
-	this.writeUInt32(buffer, this.MissionType);
-
-	// AqmId
-	this.writeUInt32(buffer, this.AqmId);
-
-	// Day
-	this.writeUInt32(buffer, date.date());
-
-	// Month
-	this.writeUInt32(buffer, date.month() + 1);
-
-	// Year
-	this.writeUInt32(buffer, date.year());
-
-	// Seconds
-	this.writeUInt32(buffer, time.seconds());
-
-	// Minutes
-	this.writeUInt32(buffer, time.minutes());
-
-	// Hours
-	this.writeUInt32(buffer, time.hours());
-
-	// HMap
-	this.writeString(buffer, hmapLength, this.HMap);
-
-	// Textures
-	this.writeString(buffer, texturesLength, this.Textures);
-
-	// Forests
-	this.writeString(buffer, forestsLength, this.Forests);
-
-	// Layers
-	this.writeString(buffer, layersLength, this.Layers);
-
-	// GuiMap
-	this.writeString(buffer, guiMapLength, this.GuiMap);
-
-	// SeasonPrefix
-	this.writeString(buffer, seasonPrefixLength, this.SeasonPrefix);
-
-	// LCName
-	this.writeUInt32(buffer, this.LCName);
-
-	// LCAuthor
-	this.writeUInt32(buffer, this.LCAuthor);
-
-	// LCDesc
-	this.writeUInt32(buffer, this.LCDesc);
+	get hasIndex() { return false; }
 	
-	// PlayerConfig
-	this.writeString(buffer, playerConfigLength, this.PlayerConfig);
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
 
-	// Unknown 4 bytes (always zero)
-	// TODO: Investigate, could this be a non-localized indexed Name and Desc properties?
-	this.writeUInt32(buffer, 0);
+		const date = moment(this.Date, "D.M.YYYY", true);
+		const time = moment(this.Time, "H:m:s", true);
 
-	// CloudLevel
-	this.writeUInt32(buffer, this.CloudLevel);
+		const hmapLength = Buffer.byteLength(this.HMap);
+		const texturesLength = Buffer.byteLength(this.Textures);
+		const forestsLength = Buffer.byteLength(this.Forests);
+		const guiMapLength = Buffer.byteLength(this.GuiMap);
+		const layersLength = Buffer.byteLength(this.Layers);
+		const seasonPrefixLength = Buffer.byteLength(this.SeasonPrefix);
+		const playerConfigLength = Buffer.byteLength(this.PlayerConfig);
+		const cloudConfigLength = Buffer.byteLength(this.CloudConfig);
 
-	// CloudHeight
-	this.writeUInt32(buffer, this.CloudHeight);
+		let size = 144;
 
-	// PrecLevel
-	this.writeUInt32(buffer, this.PrecLevel);
+		size += hmapLength;
+		size += texturesLength;
+		size += forestsLength;
+		size += guiMapLength;
+		size += layersLength;
+		size += seasonPrefixLength;
+		size += playerConfigLength;
+		size += cloudConfigLength;
 
-	// PrecType
-	this.writeUInt32(buffer, this.PrecType);
+		size += this.WindLayers.length * 8 * 3;
+		size += this.Countries.length * 4 * 2;
 
-	// Turbulence
-	this.writeDouble(buffer, this.Turbulence);
+		const buffer = new Buffer(size);
 
-	// TempPressLevel
-	this.writeDouble(buffer, this.TempPressLevel);
+		// Item binary type ID (or file version?)
+		this.writeUInt32(buffer, 25);
 
-	// Temperature
-	this.writeDouble(buffer, this.Temperature);
+		// MissionType
+		this.writeUInt32(buffer, this.MissionType);
 
-	// Pressure
-	this.writeDouble(buffer, this.Pressure);
+		// AqmId
+		this.writeUInt32(buffer, this.AqmId);
 
-	// CloudConfig
-	this.writeString(buffer, cloudConfigLength, this.CloudConfig);
+		// Day
+		this.writeUInt32(buffer, date.date());
 
-	// SeaState
-	this.writeUInt32(buffer, this.SeaState);
+		// Month
+		this.writeUInt32(buffer, date.month() + 1);
 
-	// WindLayers length
-	this.writeUInt32(buffer, this.WindLayers.length);
+		// Year
+		this.writeUInt32(buffer, date.year());
 
-	// WindLayers
-	this.WindLayers.forEach((windLayer) => {
+		// Seconds
+		this.writeUInt32(buffer, time.seconds());
 
-		// WindLayer ground height
-		this.writeDouble(buffer, windLayer[0]);
+		// Minutes
+		this.writeUInt32(buffer, time.minutes());
 
-		// WindLayer direction
-		this.writeDouble(buffer, windLayer[1]);
+		// Hours
+		this.writeUInt32(buffer, time.hours());
 
-		// WindLayer speed
-		this.writeDouble(buffer, windLayer[2]);
+		// HMap
+		this.writeString(buffer, hmapLength, this.HMap);
 
-	}, this);
+		// Textures
+		this.writeString(buffer, texturesLength, this.Textures);
 
-	// Countries length
-	this.writeUInt32(buffer, this.Countries.length);
+		// Forests
+		this.writeString(buffer, forestsLength, this.Forests);
 
-	// Countries
-	this.Countries.forEach((country) => {
+		// Layers
+		this.writeString(buffer, layersLength, this.Layers);
 
-		// Country ID
-		this.writeUInt32(buffer, country[0]);
+		// GuiMap
+		this.writeString(buffer, guiMapLength, this.GuiMap);
 
-		// Coalition ID
-		this.writeUInt32(buffer, country[1]);
+		// SeasonPrefix
+		this.writeString(buffer, seasonPrefixLength, this.SeasonPrefix);
 
-	}, this);
+		// LCName
+		this.writeUInt32(buffer, this.LCName);
 
-	yield buffer;
+		// LCAuthor
+		this.writeUInt32(buffer, this.LCAuthor);
+
+		// LCDesc
+		this.writeUInt32(buffer, this.LCDesc);
+		
+		// PlayerConfig
+		this.writeString(buffer, playerConfigLength, this.PlayerConfig);
+
+		// Unknown 4 bytes (always zero)
+		// TODO: Investigate, could this be a non-localized indexed Name and Desc properties?
+		this.writeUInt32(buffer, 0);
+
+		// CloudLevel
+		this.writeUInt32(buffer, this.CloudLevel);
+
+		// CloudHeight
+		this.writeUInt32(buffer, this.CloudHeight);
+
+		// PrecLevel
+		this.writeUInt32(buffer, this.PrecLevel);
+
+		// PrecType
+		this.writeUInt32(buffer, this.PrecType);
+
+		// Turbulence
+		this.writeDouble(buffer, this.Turbulence);
+
+		// TempPressLevel
+		this.writeDouble(buffer, this.TempPressLevel);
+
+		// Temperature
+		this.writeDouble(buffer, this.Temperature);
+
+		// Pressure
+		this.writeDouble(buffer, this.Pressure);
+
+		// CloudConfig
+		this.writeString(buffer, cloudConfigLength, this.CloudConfig);
+
+		// SeaState
+		this.writeUInt32(buffer, this.SeaState);
+
+		// WindLayers length
+		this.writeUInt32(buffer, this.WindLayers.length);
+
+		// WindLayers
+		this.WindLayers.forEach((windLayer) => {
+
+			// WindLayer ground height
+			this.writeDouble(buffer, windLayer[0]);
+
+			// WindLayer direction
+			this.writeDouble(buffer, windLayer[1]);
+
+			// WindLayer speed
+			this.writeDouble(buffer, windLayer[2]);
+		});
+
+		// Countries length
+		this.writeUInt32(buffer, this.Countries.length);
+
+		// Countries
+		this.Countries.forEach((country) => {
+
+			// Country ID
+			this.writeUInt32(buffer, country[0]);
+
+			// Coalition ID
+			this.writeUInt32(buffer, country[1]);
+		});
+
+		yield buffer;
+	}
 };
-
-module.exports = Options;

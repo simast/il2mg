@@ -4,37 +4,33 @@
 const MCU = require("./MCU");
 
 // Timer item
-function MCU_Timer() {
+module.exports = class MCU_Timer extends MCU {
 
-	// Call parent constructor
-	MCU.apply(this, arguments);
+	constructor() {
+		super();
+		
+		this.Time = 0;
+		this.Random = 100;
+	}
 	
-	this.Time = 0;
-	this.Random = 100;
-}
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		
+		yield* super.toBinary(index, 41);
 
-MCU_Timer.prototype = Object.create(MCU.prototype);
-MCU_Timer.prototype.typeID = 41;
+		const buffer = new Buffer(9);
 
-/**
- * Get binary representation of the item.
- *
- * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the item.
- */
-MCU_Timer.prototype.toBinary = function* (index) {
-	
-	yield* MCU.prototype.toBinary.apply(this, arguments);
+		// Time
+		this.writeDouble(buffer, this.Time);
 
-	const buffer = new Buffer(9);
+		// Random
+		this.writeUInt8(buffer, this.Random);
 
-	// Time
-	this.writeDouble(buffer, this.Time);
-
-	// Random
-	this.writeUInt8(buffer, this.Random);
-
-	yield buffer;
+		yield buffer;
+	}
 };
-
-module.exports = MCU_Timer;

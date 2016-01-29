@@ -4,13 +4,15 @@
 const Block = require("./Block");
 
 // Bridge item
-function Bridge() {
-
-	// Call parent constructor
-	Block.apply(this, arguments);
-}
-
-Bridge.prototype = Object.create(Block.prototype);
-Bridge.prototype.typeID = 5;
-
-module.exports = Bridge;
+module.exports = class Bridge extends Block {
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		yield* super.toBinary(index, 5);
+	}
+};

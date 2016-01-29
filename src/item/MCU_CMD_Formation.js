@@ -4,17 +4,36 @@
 const MCU = require("./MCU");
 
 // Formation command item
-function MCU_CMD_Formation() {
-
-	// Call parent constructor
-	MCU.apply(this, arguments);
+class MCU_CMD_Formation extends MCU {
 	
-	this.FormationType = MCU_CMD_Formation.TYPE_PLANE_NONE;
-	this.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE;
-}
+	constructor() {
+		super();
+		
+		this.FormationType = MCU_CMD_Formation.TYPE_PLANE_NONE;
+		this.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE;
+	}
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		
+		yield* super.toBinary(index, 19);
 
-MCU_CMD_Formation.prototype = Object.create(MCU.prototype);
-MCU_CMD_Formation.prototype.typeID = 19;
+		const buffer = new Buffer(8);
+
+		// FormationType
+		this.writeUInt32(buffer, this.FormationType);
+
+		// FormationDensity
+		this.writeUInt32(buffer, this.FormationDensity);
+
+		yield buffer;
+	}
+}
 
 // Formation command type constants
 MCU_CMD_Formation.TYPE_PLANE_NONE = 0; // Plane: None
@@ -35,26 +54,5 @@ MCU_CMD_Formation.TYPE_VEHICLE_CONTINUE = 11; // Vehicle: Continue Moving
 MCU_CMD_Formation.DENSITY_DENSE = 0;
 MCU_CMD_Formation.DENSITY_SAFE = 1;
 MCU_CMD_Formation.DENSITY_LOOSE = 2;
-
-/**
- * Get binary representation of the item.
- *
- * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the item.
- */
-MCU_CMD_Formation.prototype.toBinary = function* (index) {
-	
-	yield* MCU.prototype.toBinary.apply(this, arguments);
-
-	const buffer = new Buffer(8);
-
-	// FormationType
-	this.writeUInt32(buffer, this.FormationType);
-
-	// FormationDensity
-	this.writeUInt32(buffer, this.FormationDensity);
-
-	yield buffer;
-};
 
 module.exports = MCU_CMD_Formation;

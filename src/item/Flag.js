@@ -4,71 +4,70 @@
 const Item = require("../item");
 
 // Flag item
-function Flag() {
-
-	this.StartHeight = 0;
-	this.SpeedFactor = 1;
-	this.BlockThreshold = 1;
-	this.Radius = 1;
-	this.Type = 0;
-	this.CountPlanes = 0;
-	this.CountVehicles = 0;
-}
-
-Flag.prototype = Object.create(Item.prototype);
-Flag.prototype.typeID = 13;
-
-/**
- * Get binary representation of the item.
- *
- * @param {object} index Binary data index object.
- * @returns {Buffer} Binary representation of the item.
- */
-Flag.prototype.toBinary = function* (index) {
+module.exports = class Flag extends Item {
 	
-	yield* Item.prototype.toBinary.apply(this, arguments);
+	constructor() {
+		super();
+		
+		this.StartHeight = 0;
+		this.SpeedFactor = 1;
+		this.BlockThreshold = 1;
+		this.Radius = 1;
+		this.Type = 0;
+		this.CountPlanes = 0;
+		this.CountVehicles = 0;
+	}
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		
+		yield* super.toBinary(index, 13);
 
-	let size = 38;
-	const scriptLength = Buffer.byteLength(this.Script);
+		let size = 38;
+		const scriptLength = Buffer.byteLength(this.Script);
 
-	size += scriptLength;
+		size += scriptLength;
 
-	const buffer = new Buffer(size);
+		const buffer = new Buffer(size);
 
-	// LinkTrId
-	this.writeUInt32(buffer, this.LinkTrId || 0);
+		// LinkTrId
+		this.writeUInt32(buffer, this.LinkTrId || 0);
 
-	// Country
-	this.writeUInt16(buffer, this.Country || Item.DEFAULT_COUNTRY);
+		// Country
+		this.writeUInt16(buffer, this.Country || Item.DEFAULT_COUNTRY);
 
-	// Unknown data
-	this.writeUInt16(buffer, 0);
+		// Unknown data
+		this.writeUInt16(buffer, 0);
 
-	// StartHeight
-	this.writeFloat(buffer, this.StartHeight);
+		// StartHeight
+		this.writeFloat(buffer, this.StartHeight);
 
-	// SpeedFactor
-	this.writeFloat(buffer, this.SpeedFactor);
+		// SpeedFactor
+		this.writeFloat(buffer, this.SpeedFactor);
 
-	// BlockThreshold
-	this.writeFloat(buffer, this.BlockThreshold);
+		// BlockThreshold
+		this.writeFloat(buffer, this.BlockThreshold);
 
-	// Radius
-	this.writeDouble(buffer, this.Radius);
+		// Radius
+		this.writeDouble(buffer, this.Radius);
 
-	// Type
-	this.writeUInt32(buffer, this.Type);
+		// Type
+		this.writeUInt32(buffer, this.Type);
 
-	// CountPlanes
-	this.writeUInt8(buffer, this.CountPlanes);
+		// CountPlanes
+		this.writeUInt8(buffer, this.CountPlanes);
 
-	// CountVehicles
-	this.writeUInt8(buffer, this.CountVehicles);
+		// CountVehicles
+		this.writeUInt8(buffer, this.CountVehicles);
 
-	// Script
-	this.writeString(buffer, scriptLength, this.Script);
+		// Script
+		this.writeString(buffer, scriptLength, this.Script);
 
-	yield buffer;
+		yield buffer;
+	}
 };
-
-module.exports = Flag;

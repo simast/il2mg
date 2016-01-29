@@ -4,13 +4,15 @@
 const MCU = require("./MCU");
 
 // Delete item
-function MCU_Delete() {
-
-	// Call parent constructor
-	MCU.apply(this, arguments);
-}
-
-MCU_Delete.prototype = Object.create(MCU.prototype);
-MCU_Delete.prototype.typeID = 50;
-
-module.exports = MCU_Delete;
+module.exports = class MCU_Delete extends MCU {
+	
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param {object} index Binary data index object.
+	 * @returns {Buffer} Binary representation of the item.
+	 */
+	*toBinary(index) {
+		yield* super.toBinary(index, 50);
+	}
+};
