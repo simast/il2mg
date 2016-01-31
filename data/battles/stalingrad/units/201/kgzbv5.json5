@@ -61,6 +61,12 @@
 			["he111h6", [19, 15], "1943-01-01", "end"]
 		]
 	},
+	"kgzbv5_stab": {
+		name: "Stab/KGzbV 5",
+		parent: "kgzbv5",
+		planesMin: 1,
+		planesMax: 3
+	},
 	"kgzbv5_1": {
 		name: "1./KGzbV 5",
 		parent: "kgzbv5"
