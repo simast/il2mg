@@ -53,5 +53,7 @@
 	},
 	"disallowSpaceBeforeComma": true,
 	"disallowSpaceBeforeSemicolon": true,
-	"disallowVar": true
+	"disallowVar": true,
+	"requireSemicolons": true,
+	"requireCapitalizedConstructors": true
 }

@@ -32,6 +32,8 @@
 		parent: "lagg3",
 		model: "graphics\\planes\\lagg3s29\\lagg3s29.mgm",
 		script: "luascripts\\worldobjects\\planes\\lagg3s29.txt",
+		speed: 440,
+		range: 720,
 		skins: {
 			"101": {
 				"": [-4, -4, -4, 1],

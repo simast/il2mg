@@ -160,8 +160,8 @@ data.briefingColor = Object.freeze({
 		const JSON5 = require("json" + "5");
 
 		// Add new require() loader to handle JSON5 data files
-		require.extensions[".json5"] = (module, filename) => {
-			module.exports = JSON5.parse(fs.readFileSync(filename, "utf8"));
+		require.extensions[".json5"] = (module, file) => {
+			module.exports = JSON5.parse(fs.readFileSync(file, "utf8"));
 		};
 		
 		// JSON5 support for require-directory

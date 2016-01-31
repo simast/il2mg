@@ -56,7 +56,7 @@
 		parent: "jg3",
 		airfields: [
 			["millerovo", "start", "1942-07-18"],
-			["morozovskiy_west", "1942-07-18", "1942-07-27"],
+			["morozovskiy_south", "1942-07-18", "1942-07-27"],
 			["frolov", "1942-07-27", "1942-08-10"],
 			["tuzov", "1942-08-10", "1942-09-07"],
 			["novocherkassk", "1942-09-07", "1942-09-25", 0], // Rest and refit

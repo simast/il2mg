@@ -18,6 +18,14 @@
 		]
 	},
 
+	// Pe-2 ser.35
+	"pe2s35": {
+		name: "Pe-2 ser.35",
+		parent: "pe2",
+		model: "graphics\\planes\\pe2s35\\pe2s35.mgm",
+		script: "luascripts\\worldobjects\\planes\\pe2s35.txt"
+	},
+	
 	// Pe-2 ser.87
 	"pe2s87": {
 		name: "Pe-2 ser.87",

@@ -19,6 +19,14 @@
 		]
 	},
 
+	// Il-2 mod.1941
+	"il2m41": {
+		name: "Il-2 mod.1941",
+		parent: "il2",
+		model: "graphics\\planes\\il2m41\\il2m41.mgm",
+		script: "luascripts\\worldobjects\\planes\\il2m41.txt"
+	},
+	
 	// Il-2 mod.1942
 	"il2m42": {
 		name: "Il-2 mod.1942",

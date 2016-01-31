@@ -35,6 +35,8 @@
 		name: "P-40 E-1",
 		parent: "p40e",
 		model: "graphics\\planes\\p40e1\\p40e1.mgm",
-		script: "luascripts\\worldobjects\\planes\\p40e1.txt"
+		script: "luascripts\\worldobjects\\planes\\p40e1.txt",
+		speed: 450,
+		range: 920
 	}
 }
