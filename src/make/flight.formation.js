@@ -197,5 +197,5 @@ module.exports = function makeFlightFormation(flight) {
 		
 		flight.elements.push(element);
 		
-	}, this);
+	});
 };
