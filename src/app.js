@@ -256,10 +256,6 @@ params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
 	return String(value).trim();
 });
 
-params.on("--help airfields", function() {
-	console.log(arguments);
-});
-
 /**
  * TODO: Support other command-line params:
  *
