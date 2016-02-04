@@ -999,6 +999,26 @@
 			"type": "Block",
 			"script": "luascripts\\worldobjects\\blocks\\arf_caponiers_4_r_6.txt",
 			"model": "graphics\\blocks\\arf_caponiers_4_r_6.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\vl_wagon_pass.txt",
+			"model": "graphics\\blocks\\vl_wagon_pass.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\vl_3wagons.txt",
+			"model": "graphics\\blocks\\vl_3wagons.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\arf_caponiers_3_v_5.txt",
+			"model": "graphics\\blocks\\arf_caponiers_3_v_5.mgm"
+		},
+		{
+			"type": "Block",
+			"script": "luascripts\\worldobjects\\blocks\\vl_2wagons.txt",
+			"model": "graphics\\blocks\\vl_2wagons.mgm"
 		}
 	],
 	"index": {
@@ -1201,6 +1221,10 @@
 		"luascripts\\worldobjects\\blocks\\arf_caponiers_5_r_7.txt": 196,
 		"luascripts\\worldobjects\\blocks\\arf_caponiers_12_h_5.txt": 197,
 		"luascripts\\worldobjects\\blocks\\tank_position.txt": 198,
-		"luascripts\\worldobjects\\blocks\\arf_caponiers_4_r_6.txt": 199
+		"luascripts\\worldobjects\\blocks\\arf_caponiers_4_r_6.txt": 199,
+		"luascripts\\worldobjects\\blocks\\vl_wagon_pass.txt": 200,
+		"luascripts\\worldobjects\\blocks\\vl_3wagons.txt": 201,
+		"luascripts\\worldobjects\\blocks\\arf_caponiers_3_v_5.txt": 202,
+		"luascripts\\worldobjects\\blocks\\vl_2wagons.txt": 203
 	}
 }
