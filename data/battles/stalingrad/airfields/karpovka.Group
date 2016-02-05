@@ -100,7 +100,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 8;
+    Index = 7;
     LinkTrId = 0;
     XPos = 134869.733;
     YPos = 60.770;
@@ -122,7 +122,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 10;
+    Index = 8;
     LinkTrId = 0;
     XPos = 134606.293;
     YPos = 60.770;
@@ -144,7 +144,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 11;
+    Index = 9;
     LinkTrId = 0;
     XPos = 134408.208;
     YPos = 60.770;
@@ -166,7 +166,7 @@ Group
   Block
   {
     Name = "FUEL";
-    Index = 12;
+    Index = 10;
     LinkTrId = 0;
     XPos = 136349.183;
     YPos = 60.770;
@@ -188,7 +188,7 @@ Group
   Block
   {
     Name = "FUEL";
-    Index = 13;
+    Index = 11;
     LinkTrId = 0;
     XPos = 135453.379;
     YPos = 60.770;
@@ -210,7 +210,7 @@ Group
   Block
   {
     Name = "FUEL";
-    Index = 14;
+    Index = 12;
     LinkTrId = 0;
     XPos = 134321.849;
     YPos = 60.770;
@@ -232,7 +232,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 15;
+    Index = 13;
     LinkTrId = 0;
     XPos = 135251.784;
     YPos = 60.770;
@@ -254,7 +254,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 16;
+    Index = 14;
     LinkTrId = 0;
     XPos = 135310.283;
     YPos = 60.770;
@@ -276,7 +276,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 17;
+    Index = 15;
     LinkTrId = 0;
     XPos = 135275.765;
     YPos = 60.770;
@@ -298,7 +298,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 18;
+    Index = 16;
     LinkTrId = 0;
     XPos = 135019.705;
     YPos = 60.770;
@@ -320,7 +320,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 19;
+    Index = 17;
     LinkTrId = 0;
     XPos = 135221.588;
     YPos = 60.770;
@@ -342,7 +342,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 20;
+    Index = 18;
     LinkTrId = 0;
     XPos = 134733.206;
     YPos = 60.770;
@@ -364,7 +364,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 21;
+    Index = 19;
     LinkTrId = 0;
     XPos = 134942.297;
     YPos = 60.770;
@@ -386,7 +386,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 22;
+    Index = 20;
     LinkTrId = 0;
     XPos = 134860.604;
     YPos = 60.770;
@@ -408,7 +408,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 23;
+    Index = 21;
     LinkTrId = 0;
     XPos = 134782.729;
     YPos = 60.770;
@@ -430,7 +430,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 24;
+    Index = 22;
     LinkTrId = 0;
     XPos = 134582.841;
     YPos = 60.770;
@@ -452,7 +452,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 25;
+    Index = 23;
     LinkTrId = 0;
     XPos = 135562.560;
     YPos = 60.770;
@@ -474,7 +474,7 @@ Group
   Block
   {
     Name = "FUEL";
-    Index = 26;
+    Index = 24;
     LinkTrId = 0;
     XPos = 136072.004;
     YPos = 60.770;
@@ -496,7 +496,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 27;
+    Index = 25;
     LinkTrId = 0;
     XPos = 135863.260;
     YPos = 60.770;
@@ -518,7 +518,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 28;
+    Index = 26;
     LinkTrId = 0;
     XPos = 135903.314;
     YPos = 60.770;
@@ -540,7 +540,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 29;
+    Index = 27;
     LinkTrId = 0;
     XPos = 134774.961;
     YPos = 60.770;
@@ -562,7 +562,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 30;
+    Index = 28;
     LinkTrId = 0;
     XPos = 134741.053;
     YPos = 60.770;
@@ -584,7 +584,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 31;
+    Index = 29;
     LinkTrId = 0;
     XPos = 134422.174;
     YPos = 60.770;
@@ -606,7 +606,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 32;
+    Index = 30;
     LinkTrId = 0;
     XPos = 134716.273;
     YPos = 60.770;
@@ -628,7 +628,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 33;
+    Index = 31;
     LinkTrId = 0;
     XPos = 135514.886;
     YPos = 60.770;
@@ -650,7 +650,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 34;
+    Index = 32;
     LinkTrId = 0;
     XPos = 135604.422;
     YPos = 60.770;
@@ -672,7 +672,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 35;
+    Index = 33;
     LinkTrId = 0;
     XPos = 135698.049;
     YPos = 60.770;
@@ -694,7 +694,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 36;
+    Index = 34;
     LinkTrId = 0;
     XPos = 134953.564;
     YPos = 60.770;
@@ -716,7 +716,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 37;
+    Index = 35;
     LinkTrId = 0;
     XPos = 134950.505;
     YPos = 60.770;
@@ -738,7 +738,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 38;
+    Index = 36;
     LinkTrId = 0;
     XPos = 136256.939;
     YPos = 60.770;
@@ -760,7 +760,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 39;
+    Index = 37;
     LinkTrId = 0;
     XPos = 136019.556;
     YPos = 60.770;
@@ -782,7 +782,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 40;
+    Index = 38;
     LinkTrId = 0;
     XPos = 134106.396;
     YPos = 60.770;
@@ -804,7 +804,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 41;
+    Index = 39;
     LinkTrId = 0;
     XPos = 133962.409;
     YPos = 60.770;
@@ -826,7 +826,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 42;
+    Index = 40;
     LinkTrId = 0;
     XPos = 134583.552;
     YPos = 60.770;
@@ -848,7 +848,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 43;
+    Index = 41;
     LinkTrId = 0;
     XPos = 134588.308;
     YPos = 60.770;
@@ -870,12 +870,12 @@ Group
   Group
   {
     Name = "BEACON";
-    Index = 44;
+    Index = 42;
     Desc = "";
     Vehicle
     {
       Name = "BEACON";
-      Index = 45;
+      Index = 43;
       LinkTrId = 0;
       XPos = 135625.723;
       YPos = 60.770;
@@ -905,7 +905,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 46;
+      Index = 44;
       LinkTrId = 0;
       XPos = 135625.964;
       YPos = 60.770;
@@ -930,7 +930,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 47;
+    Index = 45;
     LinkTrId = 0;
     XPos = 135465.829;
     YPos = 60.770;
@@ -952,7 +952,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 48;
+    Index = 46;
     LinkTrId = 0;
     XPos = 134507.986;
     YPos = 60.770;
@@ -974,7 +974,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 49;
+    Index = 47;
     LinkTrId = 0;
     XPos = 134571.602;
     YPos = 60.770;
@@ -996,7 +996,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 50;
+    Index = 48;
     LinkTrId = 0;
     XPos = 134630.642;
     YPos = 60.770;
@@ -1018,7 +1018,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 51;
+    Index = 49;
     LinkTrId = 0;
     XPos = 134605.265;
     YPos = 60.770;
@@ -1040,7 +1040,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 52;
+    Index = 50;
     LinkTrId = 0;
     XPos = 134497.442;
     YPos = 60.770;
@@ -1062,7 +1062,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 53;
+    Index = 51;
     LinkTrId = 0;
     XPos = 134595.561;
     YPos = 60.770;
@@ -1084,7 +1084,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 54;
+    Index = 52;
     LinkTrId = 0;
     XPos = 134568.755;
     YPos = 60.770;
@@ -1106,7 +1106,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 55;
+    Index = 53;
     LinkTrId = 0;
     XPos = 134572.258;
     YPos = 60.770;
@@ -1128,7 +1128,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 56;
+    Index = 54;
     LinkTrId = 0;
     XPos = 134434.828;
     YPos = 60.770;
@@ -1150,7 +1150,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 57;
+    Index = 55;
     LinkTrId = 0;
     XPos = 134723.097;
     YPos = 60.770;
@@ -1172,7 +1172,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 58;
+    Index = 56;
     LinkTrId = 0;
     XPos = 134390.082;
     YPos = 60.770;
@@ -1194,7 +1194,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 59;
+    Index = 57;
     LinkTrId = 0;
     XPos = 134111.708;
     YPos = 60.770;
@@ -1216,7 +1216,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 60;
+    Index = 58;
     LinkTrId = 0;
     XPos = 134107.602;
     YPos = 60.770;
@@ -1238,7 +1238,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 61;
+    Index = 59;
     LinkTrId = 0;
     XPos = 134097.446;
     YPos = 60.770;
@@ -1260,7 +1260,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 62;
+    Index = 60;
     LinkTrId = 0;
     XPos = 134348.712;
     YPos = 60.770;
@@ -1282,7 +1282,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 63;
+    Index = 61;
     LinkTrId = 0;
     XPos = 134718.441;
     YPos = 60.770;
@@ -1304,7 +1304,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 64;
+    Index = 62;
     LinkTrId = 0;
     XPos = 134724.063;
     YPos = 60.770;
@@ -1326,7 +1326,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 65;
+    Index = 63;
     LinkTrId = 0;
     XPos = 134824.259;
     YPos = 60.770;
@@ -1348,7 +1348,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 66;
+    Index = 64;
     LinkTrId = 0;
     XPos = 134870.872;
     YPos = 60.770;
@@ -1370,7 +1370,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 67;
+    Index = 65;
     LinkTrId = 0;
     XPos = 134951.450;
     YPos = 60.770;
@@ -1392,7 +1392,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 68;
+    Index = 66;
     LinkTrId = 0;
     XPos = 134746.566;
     YPos = 60.770;
@@ -1414,7 +1414,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 69;
+    Index = 67;
     LinkTrId = 0;
     XPos = 134519.940;
     YPos = 60.770;
@@ -1436,7 +1436,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 70;
+    Index = 68;
     LinkTrId = 0;
     XPos = 134531.041;
     YPos = 60.770;
@@ -1458,7 +1458,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 71;
+    Index = 69;
     LinkTrId = 0;
     XPos = 134525.326;
     YPos = 60.770;
@@ -1480,7 +1480,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 72;
+    Index = 70;
     LinkTrId = 0;
     XPos = 134532.281;
     YPos = 60.770;
@@ -1502,7 +1502,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 73;
+    Index = 71;
     LinkTrId = 0;
     XPos = 134987.883;
     YPos = 60.770;
@@ -1524,7 +1524,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 74;
+    Index = 72;
     LinkTrId = 0;
     XPos = 134518.388;
     YPos = 60.770;
@@ -1546,7 +1546,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 75;
+    Index = 73;
     LinkTrId = 0;
     XPos = 134550.745;
     YPos = 60.770;
@@ -1568,7 +1568,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 76;
+    Index = 74;
     LinkTrId = 0;
     XPos = 134598.166;
     YPos = 60.770;
@@ -1590,7 +1590,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 77;
+    Index = 75;
     LinkTrId = 0;
     XPos = 134658.516;
     YPos = 60.770;
@@ -1612,7 +1612,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 78;
+    Index = 76;
     LinkTrId = 0;
     XPos = 134704.297;
     YPos = 60.770;
@@ -1634,7 +1634,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 79;
+    Index = 77;
     LinkTrId = 0;
     XPos = 134684.666;
     YPos = 60.770;
@@ -1656,7 +1656,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 80;
+    Index = 78;
     LinkTrId = 0;
     XPos = 134700.999;
     YPos = 60.770;
@@ -1678,7 +1678,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 81;
+    Index = 79;
     LinkTrId = 0;
     XPos = 135166.716;
     YPos = 60.770;
@@ -1700,7 +1700,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 82;
+    Index = 80;
     LinkTrId = 0;
     XPos = 135231.890;
     YPos = 60.770;
@@ -1722,7 +1722,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 83;
+    Index = 81;
     LinkTrId = 0;
     XPos = 135380.352;
     YPos = 60.770;
@@ -1744,7 +1744,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 84;
+    Index = 82;
     LinkTrId = 0;
     XPos = 135578.200;
     YPos = 60.770;
@@ -1766,7 +1766,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 85;
+    Index = 83;
     LinkTrId = 0;
     XPos = 135563.318;
     YPos = 60.770;
@@ -1788,7 +1788,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 86;
+    Index = 84;
     LinkTrId = 0;
     XPos = 135558.108;
     YPos = 60.770;
@@ -1810,7 +1810,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 87;
+    Index = 85;
     LinkTrId = 0;
     XPos = 135569.769;
     YPos = 60.770;
@@ -1832,7 +1832,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 88;
+    Index = 86;
     LinkTrId = 0;
     XPos = 135568.151;
     YPos = 60.770;
@@ -1854,7 +1854,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 89;
+    Index = 87;
     LinkTrId = 0;
     XPos = 135561.133;
     YPos = 60.770;
@@ -1876,7 +1876,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 90;
+    Index = 88;
     LinkTrId = 0;
     XPos = 135555.354;
     YPos = 60.770;
@@ -1898,7 +1898,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 91;
+    Index = 89;
     LinkTrId = 0;
     XPos = 135704.990;
     YPos = 60.770;
@@ -1920,7 +1920,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 92;
+    Index = 90;
     LinkTrId = 0;
     XPos = 135621.842;
     YPos = 60.770;
@@ -1942,7 +1942,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 93;
+    Index = 91;
     LinkTrId = 0;
     XPos = 135736.949;
     YPos = 60.770;
@@ -1964,7 +1964,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 94;
+    Index = 92;
     LinkTrId = 0;
     XPos = 135896.916;
     YPos = 60.770;
@@ -1986,7 +1986,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 95;
+    Index = 93;
     LinkTrId = 0;
     XPos = 135969.757;
     YPos = 60.770;
@@ -2008,7 +2008,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 97;
+    Index = 94;
     LinkTrId = 0;
     XPos = 135955.826;
     YPos = 60.770;
@@ -2030,7 +2030,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 98;
+    Index = 95;
     LinkTrId = 0;
     XPos = 135970.334;
     YPos = 60.770;
@@ -2052,7 +2052,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 99;
+    Index = 96;
     LinkTrId = 0;
     XPos = 134624.139;
     YPos = 60.770;
@@ -2074,7 +2074,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 100;
+    Index = 97;
     LinkTrId = 0;
     XPos = 135659.848;
     YPos = 60.770;
@@ -2096,7 +2096,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 101;
+    Index = 98;
     LinkTrId = 0;
     XPos = 135166.415;
     YPos = 60.770;
@@ -2118,7 +2118,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 102;
+    Index = 99;
     LinkTrId = 0;
     XPos = 135047.961;
     YPos = 60.770;
@@ -2140,7 +2140,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 103;
+    Index = 100;
     LinkTrId = 0;
     XPos = 134784.652;
     YPos = 60.770;
@@ -2162,7 +2162,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 104;
+    Index = 101;
     LinkTrId = 0;
     XPos = 135241.024;
     YPos = 60.770;
@@ -2184,7 +2184,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 105;
+    Index = 102;
     LinkTrId = 0;
     XPos = 135236.619;
     YPos = 60.770;
@@ -2206,7 +2206,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 106;
+    Index = 103;
     LinkTrId = 0;
     XPos = 135047.985;
     YPos = 60.770;
@@ -2228,7 +2228,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 107;
+    Index = 104;
     LinkTrId = 0;
     XPos = 135093.247;
     YPos = 60.770;
@@ -2250,7 +2250,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 108;
+    Index = 105;
     LinkTrId = 0;
     XPos = 135480.061;
     YPos = 60.770;
@@ -2272,7 +2272,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 109;
+    Index = 106;
     LinkTrId = 0;
     XPos = 134742.098;
     YPos = 60.770;
@@ -2294,7 +2294,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 110;
+    Index = 107;
     LinkTrId = 0;
     XPos = 133947.271;
     YPos = 60.770;
@@ -2311,7 +2311,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 111;
+    Index = 108;
     LinkTrId = 0;
     XPos = 135213.868;
     YPos = 60.770;
@@ -2328,7 +2328,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 112;
+    Index = 109;
     LinkTrId = 0;
     XPos = 135254.723;
     YPos = 60.770;
@@ -2345,7 +2345,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 113;
+    Index = 110;
     LinkTrId = 0;
     XPos = 134773.583;
     YPos = 60.770;
@@ -2362,7 +2362,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 114;
+    Index = 111;
     LinkTrId = 0;
     XPos = 136046.076;
     YPos = 60.770;
@@ -2379,7 +2379,7 @@ Group
   Effect
   {
     Name = "EFFECT:SMOKE";
-    Index = 115;
+    Index = 112;
     LinkTrId = 0;
     XPos = 134925.496;
     YPos = 60.770;
@@ -2396,10 +2396,10 @@ Group
   Effect
   {
     Name = "EFFECT:SIREN";
-    Index = 116;
+    Index = 113;
     LinkTrId = 0;
     XPos = 135066.163;
-    YPos = 63.770;
+    YPos = 60.770;
     ZPos = 214690.856;
     XOri = 0.00;
     YOri = 0.00;
@@ -2413,10 +2413,10 @@ Group
   Effect
   {
     Name = "EFFECT:SIREN";
-    Index = 117;
+    Index = 114;
     LinkTrId = 0;
     XPos = 134346.347;
-    YPos = 63.770;
+    YPos = 60.770;
     ZPos = 214404.410;
     XOri = 0.00;
     YOri = 0.00;
@@ -2430,12 +2430,12 @@ Group
   Group
   {
     Name = "EFFECT:CAMP";
-    Index = 118;
+    Index = 115;
     Desc = "";
     Effect
     {
       Name = "EFFECT:CAMP";
-      Index = 119;
+      Index = 116;
       LinkTrId = 0;
       XPos = 134831.878;
       YPos = 60.770;
@@ -2452,7 +2452,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 120;
+      Index = 117;
       LinkTrId = 0;
       XPos = 134821.850;
       YPos = 60.770;
@@ -2477,12 +2477,12 @@ Group
   Group
   {
     Name = "EFFECT:CAMP";
-    Index = 121;
+    Index = 118;
     Desc = "";
     Effect
     {
       Name = "EFFECT:CAMP";
-      Index = 122;
+      Index = 119;
       LinkTrId = 0;
       XPos = 136240.128;
       YPos = 60.770;
@@ -2499,7 +2499,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 123;
+      Index = 120;
       LinkTrId = 0;
       XPos = 136242.502;
       YPos = 60.770;
@@ -2524,12 +2524,12 @@ Group
   Group
   {
     Name = "EFFECT:CAMP";
-    Index = 124;
+    Index = 121;
     Desc = "";
     Effect
     {
       Name = "EFFECT:CAMP";
-      Index = 125;
+      Index = 122;
       LinkTrId = 0;
       XPos = 135129.676;
       YPos = 60.770;
@@ -2546,7 +2546,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 126;
+      Index = 123;
       LinkTrId = 0;
       XPos = 135129.685;
       YPos = 60.770;
@@ -2571,12 +2571,12 @@ Group
   Group
   {
     Name = "EFFECT:CAMP";
-    Index = 127;
+    Index = 124;
     Desc = "";
     Effect
     {
       Name = "EFFECT:CAMP";
-      Index = 128;
+      Index = 125;
       LinkTrId = 0;
       XPos = 135286.000;
       YPos = 60.770;
@@ -2593,7 +2593,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 129;
+      Index = 126;
       LinkTrId = 0;
       XPos = 135292.614;
       YPos = 60.770;
@@ -2618,12 +2618,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 130;
+    Index = 127;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 131;
+      Index = 128;
       LinkTrId = 0;
       XPos = 134481.847;
       YPos = 60.770;
@@ -2653,7 +2653,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 132;
+      Index = 129;
       LinkTrId = 0;
       XPos = 134481.845;
       YPos = 60.770;
@@ -2675,7 +2675,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 133;
+      Index = 130;
       LinkTrId = 0;
       XPos = 134489.297;
       YPos = 60.770;
@@ -2697,12 +2697,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 134;
+      Index = 131;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 135;
+        Index = 132;
         LinkTrId = 0;
         XPos = 134491.716;
         YPos = 60.770;
@@ -2730,12 +2730,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 136;
+    Index = 133;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 137;
+      Index = 134;
       LinkTrId = 0;
       XPos = 133994.090;
       YPos = 60.770;
@@ -2765,7 +2765,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 138;
+      Index = 135;
       LinkTrId = 0;
       XPos = 133994.090;
       YPos = 60.770;
@@ -2787,7 +2787,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 139;
+      Index = 136;
       LinkTrId = 0;
       XPos = 133990.025;
       YPos = 60.770;
@@ -2812,12 +2812,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 140;
+    Index = 137;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 141;
+      Index = 138;
       LinkTrId = 0;
       XPos = 134685.607;
       YPos = 60.770;
@@ -2847,7 +2847,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 142;
+      Index = 139;
       LinkTrId = 0;
       XPos = 134685.614;
       YPos = 60.770;
@@ -2869,7 +2869,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 143;
+      Index = 140;
       LinkTrId = 0;
       XPos = 134694.575;
       YPos = 60.770;
@@ -2894,7 +2894,7 @@ Group
   Block
   {
     Name = "TRUCK:CARGO";
-    Index = 144;
+    Index = 141;
     LinkTrId = 0;
     XPos = 134683.326;
     YPos = 60.770;
@@ -2916,7 +2916,7 @@ Group
   Block
   {
     Name = "TRUCK:CARGO";
-    Index = 145;
+    Index = 142;
     LinkTrId = 0;
     XPos = 135224.804;
     YPos = 60.770;
@@ -2938,12 +2938,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 146;
+    Index = 143;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 147;
+      Index = 144;
       LinkTrId = 0;
       XPos = 135209.515;
       YPos = 60.770;
@@ -2973,7 +2973,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 148;
+      Index = 145;
       LinkTrId = 0;
       XPos = 135209.505;
       YPos = 60.770;
@@ -2995,7 +2995,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 149;
+      Index = 146;
       LinkTrId = 0;
       XPos = 135211.465;
       YPos = 60.770;
@@ -3020,12 +3020,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 150;
+    Index = 147;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 151;
+      Index = 148;
       LinkTrId = 0;
       XPos = 134865.277;
       YPos = 60.770;
@@ -3055,7 +3055,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 152;
+      Index = 149;
       LinkTrId = 0;
       XPos = 134865.270;
       YPos = 60.770;
@@ -3077,7 +3077,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 153;
+      Index = 150;
       LinkTrId = 0;
       XPos = 134860.112;
       YPos = 60.770;
@@ -3102,12 +3102,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 154;
+    Index = 151;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 155;
+      Index = 152;
       LinkTrId = 0;
       XPos = 135337.193;
       YPos = 60.770;
@@ -3137,7 +3137,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 156;
+      Index = 153;
       LinkTrId = 0;
       XPos = 135337.178;
       YPos = 60.770;
@@ -3159,7 +3159,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 157;
+      Index = 154;
       LinkTrId = 0;
       XPos = 135331.183;
       YPos = 60.770;
@@ -3184,12 +3184,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 158;
+    Index = 155;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 159;
+      Index = 156;
       LinkTrId = 0;
       XPos = 135988.628;
       YPos = 60.770;
@@ -3219,7 +3219,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 160;
+      Index = 157;
       LinkTrId = 0;
       XPos = 135988.623;
       YPos = 60.770;
@@ -3241,7 +3241,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 161;
+      Index = 158;
       LinkTrId = 0;
       XPos = 135990.189;
       YPos = 60.770;
@@ -3263,12 +3263,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 162;
+      Index = 159;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 163;
+        Index = 160;
         LinkTrId = 0;
         XPos = 135978.973;
         YPos = 60.770;
@@ -3296,12 +3296,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 164;
+    Index = 161;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 165;
+      Index = 162;
       LinkTrId = 0;
       XPos = 134936.514;
       YPos = 60.770;
@@ -3331,7 +3331,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 166;
+      Index = 163;
       LinkTrId = 0;
       XPos = 134936.519;
       YPos = 60.770;
@@ -3356,12 +3356,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 167;
+    Index = 164;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 168;
+      Index = 165;
       LinkTrId = 0;
       XPos = 134658.283;
       YPos = 60.770;
@@ -3391,7 +3391,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 169;
+      Index = 166;
       LinkTrId = 0;
       XPos = 134658.275;
       YPos = 60.770;
@@ -3413,7 +3413,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 170;
+      Index = 167;
       LinkTrId = 0;
       XPos = 134657.151;
       YPos = 60.770;
@@ -3435,12 +3435,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 171;
+      Index = 168;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 172;
+        Index = 169;
         LinkTrId = 0;
         XPos = 134655.414;
         YPos = 60.770;
@@ -3468,12 +3468,12 @@ Group
   Group
   {
     Name = "AA:MG";
-    Index = 173;
+    Index = 170;
     Desc = "";
     Vehicle
     {
       Name = "AA:MG";
-      Index = 174;
+      Index = 171;
       LinkTrId = 0;
       XPos = 134960.860;
       YPos = 60.770;
@@ -3503,7 +3503,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 175;
+      Index = 172;
       LinkTrId = 0;
       XPos = 134960.868;
       YPos = 60.770;
@@ -3525,7 +3525,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 176;
+      Index = 173;
       LinkTrId = 0;
       XPos = 134962.045;
       YPos = 60.770;
@@ -3550,7 +3550,7 @@ Group
   Block
   {
     Name = "TRUCK:FUEL";
-    Index = 177;
+    Index = 174;
     LinkTrId = 0;
     XPos = 134300.632;
     YPos = 60.770;
@@ -3572,7 +3572,7 @@ Group
   Block
   {
     Name = "TRUCK:FUEL";
-    Index = 178;
+    Index = 175;
     LinkTrId = 0;
     XPos = 136329.332;
     YPos = 60.770;
@@ -3594,7 +3594,7 @@ Group
   Block
   {
     Name = "TRUCK:FUEL";
-    Index = 179;
+    Index = 176;
     LinkTrId = 0;
     XPos = 136393.559;
     YPos = 60.770;
@@ -3616,7 +3616,7 @@ Group
   Block
   {
     Name = "TRUCK:FUEL";
-    Index = 180;
+    Index = 177;
     LinkTrId = 0;
     XPos = 136065.679;
     YPos = 60.770;
@@ -3638,7 +3638,7 @@ Group
   Block
   {
     Name = "TRUCK:FUEL";
-    Index = 181;
+    Index = 178;
     LinkTrId = 0;
     XPos = 135423.913;
     YPos = 60.770;
@@ -3660,12 +3660,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 182;
+    Index = 179;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 183;
+      Index = 180;
       LinkTrId = 0;
       XPos = 134449.422;
       YPos = 60.770;
@@ -3695,7 +3695,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 184;
+      Index = 181;
       LinkTrId = 0;
       XPos = 134449.439;
       YPos = 60.770;
@@ -3717,7 +3717,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 185;
+      Index = 182;
       LinkTrId = 0;
       XPos = 134454.568;
       YPos = 60.770;
@@ -3739,12 +3739,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 186;
+      Index = 183;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 187;
+        Index = 184;
         LinkTrId = 0;
         XPos = 134466.436;
         YPos = 60.770;
@@ -3772,12 +3772,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 188;
+    Index = 185;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 189;
+      Index = 186;
       LinkTrId = 0;
       XPos = 133860.557;
       YPos = 60.770;
@@ -3807,7 +3807,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 190;
+      Index = 187;
       LinkTrId = 0;
       XPos = 133859.304;
       YPos = 60.770;
@@ -3829,7 +3829,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 191;
+      Index = 188;
       LinkTrId = 0;
       XPos = 133867.667;
       YPos = 60.770;
@@ -3851,12 +3851,12 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 192;
+      Index = 189;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 193;
+        Index = 190;
         LinkTrId = 0;
         XPos = 133879.095;
         YPos = 60.770;
@@ -3886,7 +3886,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 194;
+        Index = 191;
         LinkTrId = 0;
         XPos = 133878.944;
         YPos = 60.770;
@@ -3911,12 +3911,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 195;
+      Index = 192;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 196;
+        Index = 193;
         LinkTrId = 0;
         XPos = 133881.964;
         YPos = 60.770;
@@ -3944,12 +3944,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 197;
+    Index = 194;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 198;
+      Index = 195;
       LinkTrId = 0;
       XPos = 134937.505;
       YPos = 60.770;
@@ -3979,7 +3979,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 199;
+      Index = 196;
       LinkTrId = 0;
       XPos = 134937.494;
       YPos = 60.770;
@@ -4001,7 +4001,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 200;
+      Index = 197;
       LinkTrId = 0;
       XPos = 134931.685;
       YPos = 60.770;
@@ -4023,12 +4023,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 201;
+      Index = 198;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 202;
+        Index = 199;
         LinkTrId = 0;
         XPos = 134931.282;
         YPos = 60.770;
@@ -4050,7 +4050,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 203;
+        Index = 200;
         LinkTrId = 0;
         XPos = 134926.100;
         YPos = 60.770;
@@ -4078,12 +4078,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 204;
+    Index = 201;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 205;
+      Index = 202;
       LinkTrId = 0;
       XPos = 135504.511;
       YPos = 60.770;
@@ -4113,7 +4113,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 206;
+      Index = 203;
       LinkTrId = 0;
       XPos = 135504.486;
       YPos = 60.770;
@@ -4135,7 +4135,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 207;
+      Index = 204;
       LinkTrId = 0;
       XPos = 135510.411;
       YPos = 60.770;
@@ -4160,12 +4160,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 208;
+    Index = 205;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 209;
+      Index = 206;
       LinkTrId = 0;
       XPos = 134683.206;
       YPos = 60.770;
@@ -4195,7 +4195,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 210;
+      Index = 207;
       LinkTrId = 0;
       XPos = 134682.792;
       YPos = 60.770;
@@ -4217,7 +4217,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 211;
+      Index = 208;
       LinkTrId = 0;
       XPos = 134689.994;
       YPos = 60.770;
@@ -4239,12 +4239,12 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 212;
+      Index = 209;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 213;
+        Index = 210;
         LinkTrId = 0;
         XPos = 134677.644;
         YPos = 60.770;
@@ -4274,7 +4274,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 214;
+        Index = 211;
         LinkTrId = 0;
         XPos = 134677.526;
         YPos = 60.770;
@@ -4299,12 +4299,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 215;
+      Index = 212;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 216;
+        Index = 213;
         LinkTrId = 0;
         XPos = 134689.118;
         YPos = 60.770;
@@ -4332,12 +4332,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 217;
+    Index = 214;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 218;
+      Index = 215;
       LinkTrId = 0;
       XPos = 136177.725;
       YPos = 60.770;
@@ -4367,7 +4367,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 219;
+      Index = 216;
       LinkTrId = 0;
       XPos = 136178.354;
       YPos = 60.770;
@@ -4389,7 +4389,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 220;
+      Index = 217;
       LinkTrId = 0;
       XPos = 136181.113;
       YPos = 60.770;
@@ -4411,12 +4411,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 221;
+      Index = 218;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 222;
+        Index = 219;
         LinkTrId = 0;
         XPos = 136172.291;
         YPos = 60.770;
@@ -4438,7 +4438,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 223;
+        Index = 220;
         LinkTrId = 0;
         XPos = 136165.406;
         YPos = 60.770;
@@ -4466,12 +4466,12 @@ Group
   Group
   {
     Name = "LIGHT:SEARCH";
-    Index = 224;
+    Index = 221;
     Desc = "";
     Vehicle
     {
       Name = "LIGHT:SEARCH";
-      Index = 225;
+      Index = 222;
       LinkTrId = 0;
       XPos = 136187.408;
       YPos = 60.770;
@@ -4501,7 +4501,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 226;
+      Index = 223;
       LinkTrId = 0;
       XPos = 136187.409;
       YPos = 60.770;
@@ -4523,7 +4523,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 227;
+      Index = 224;
       LinkTrId = 0;
       XPos = 136197.703;
       YPos = 60.770;
@@ -4548,12 +4548,12 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 228;
+    Index = 225;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 229;
+      Index = 226;
       LinkTrId = 0;
       XPos = 135898.042;
       YPos = 60.770;
@@ -4583,7 +4583,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 230;
+      Index = 227;
       LinkTrId = 0;
       XPos = 135898.230;
       YPos = 60.770;
@@ -4605,7 +4605,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 231;
+      Index = 228;
       LinkTrId = 0;
       XPos = 135907.878;
       YPos = 60.770;
@@ -4627,12 +4627,12 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 232;
+      Index = 229;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 233;
+        Index = 230;
         LinkTrId = 0;
         XPos = 135904.980;
         YPos = 60.770;
@@ -4662,7 +4662,7 @@ Group
       Block
       {
         Name = "Block";
-        Index = 234;
+        Index = 231;
         LinkTrId = 0;
         XPos = 135905.740;
         YPos = 60.770;
@@ -4687,12 +4687,12 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 235;
+      Index = 232;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 236;
+        Index = 233;
         LinkTrId = 0;
         XPos = 135892.547;
         YPos = 60.770;
@@ -4714,7 +4714,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 237;
+        Index = 234;
         LinkTrId = 0;
         XPos = 135888.109;
         YPos = 60.770;
@@ -4742,15 +4742,15 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 238;
+    Index = 235;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 239;
+      Index = 236;
       LinkTrId = 0;
       XPos = 137279.868;
-      YPos = 60.770;
+      YPos = 63.252;
       ZPos = 216571.979;
       XOri = 359.93;
       YOri = 119.99;
@@ -4777,10 +4777,10 @@ Group
     Block
     {
       Name = "Block";
-      Index = 240;
+      Index = 237;
       LinkTrId = 0;
       XPos = 137279.986;
-      YPos = 60.770;
+      YPos = 63.263;
       ZPos = 216573.972;
       XOri = 0.00;
       YOri = 83.72;
@@ -4799,10 +4799,10 @@ Group
     Block
     {
       Name = "Block";
-      Index = 241;
+      Index = 238;
       LinkTrId = 0;
       XPos = 137255.605;
-      YPos = 60.770;
+      YPos = 63.002;
       ZPos = 216545.374;
       XOri = 0.00;
       YOri = 53.14;
@@ -4821,10 +4821,10 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 242;
+      Index = 239;
       LinkTrId = 0;
       XPos = 137250.940;
-      YPos = 60.770;
+      YPos = 63.092;
       ZPos = 216553.125;
       XOri = 0.00;
       YOri = 61.28;
@@ -4843,10 +4843,10 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 243;
+      Index = 240;
       LinkTrId = 0;
       XPos = 137284.031;
-      YPos = 60.770;
+      YPos = 63.194;
       ZPos = 216565.413;
       XOri = 0.00;
       YOri = 343.45;
@@ -4865,15 +4865,15 @@ Group
     Group
     {
       Name = "AA:MG";
-      Index = 244;
+      Index = 241;
       Desc = "";
       Vehicle
       {
         Name = "AA:MG";
-        Index = 245;
+        Index = 242;
         LinkTrId = 0;
         XPos = 137255.306;
-        YPos = 60.770;
+        YPos = 63.274;
         ZPos = 216572.086;
         XOri = 0.22;
         YOri = 115.79;
@@ -4900,10 +4900,10 @@ Group
       Block
       {
         Name = "Block";
-        Index = 246;
+        Index = 243;
         LinkTrId = 0;
         XPos = 137255.286;
-        YPos = 60.770;
+        YPos = 63.274;
         ZPos = 216572.046;
         XOri = 0.00;
         YOri = 135.48;
@@ -4925,15 +4925,15 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 247;
+      Index = 244;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 248;
+        Index = 245;
         LinkTrId = 0;
         XPos = 137264.399;
-        YPos = 60.770;
+        YPos = 62.910;
         ZPos = 216538.287;
         XOri = 0.00;
         YOri = 198.53;
@@ -4958,15 +4958,15 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 249;
+    Index = 246;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 250;
+      Index = 247;
       LinkTrId = 0;
       XPos = 132228.628;
-      YPos = 60.770;
+      YPos = 60.041;
       ZPos = 215619.904;
       XOri = 359.65;
       YOri = 87.01;
@@ -4993,10 +4993,10 @@ Group
     Block
     {
       Name = "Block";
-      Index = 251;
+      Index = 248;
       LinkTrId = 0;
       XPos = 132229.139;
-      YPos = 60.770;
+      YPos = 60.032;
       ZPos = 215621.148;
       XOri = 0.00;
       YOri = 60.06;
@@ -5015,10 +5015,10 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 252;
+      Index = 249;
       LinkTrId = 0;
       XPos = 132225.143;
-      YPos = 60.770;
+      YPos = 60.107;
       ZPos = 215612.324;
       XOri = 0.00;
       YOri = 124.51;
@@ -5037,15 +5037,15 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 253;
+      Index = 250;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 254;
+        Index = 251;
         LinkTrId = 0;
         XPos = 132209.121;
-        YPos = 60.770;
+        YPos = 60.196;
         ZPos = 215615.136;
         XOri = 0.47;
         YOri = 330.74;
@@ -5072,10 +5072,10 @@ Group
       Block
       {
         Name = "Block";
-        Index = 255;
+        Index = 252;
         LinkTrId = 0;
         XPos = 132209.134;
-        YPos = 60.770;
+        YPos = 60.195;
         ZPos = 215615.153;
         XOri = 0.00;
         YOri = 85.40;
@@ -5097,15 +5097,15 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 256;
+      Index = 253;
       Desc = "";
       Block
       {
         Name = "DECO";
-        Index = 257;
+        Index = 254;
         LinkTrId = 0;
         XPos = 132210.418;
-        YPos = 60.770;
+        YPos = 60.229;
         ZPos = 215607.935;
         XOri = 0.00;
         YOri = 214.51;
@@ -5124,10 +5124,10 @@ Group
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 258;
+        Index = 255;
         LinkTrId = 0;
         XPos = 132207.850;
-        YPos = 60.770;
+        YPos = 60.278;
         ZPos = 215602.350;
         XOri = 0.00;
         YOri = 201.53;
@@ -5152,15 +5152,15 @@ Group
   Group
   {
     Name = "AA:FLAK";
-    Index = 259;
+    Index = 256;
     Desc = "";
     Vehicle
     {
       Name = "AA:FLAK";
-      Index = 260;
+      Index = 257;
       LinkTrId = 0;
       XPos = 135308.937;
-      YPos = 60.770;
+      YPos = 61.888;
       ZPos = 212357.732;
       XOri = 0.65;
       YOri = 33.20;
@@ -5187,10 +5187,10 @@ Group
     Block
     {
       Name = "Block";
-      Index = 261;
+      Index = 258;
       LinkTrId = 0;
       XPos = 135308.949;
-      YPos = 60.770;
+      YPos = 61.888;
       ZPos = 212357.766;
       XOri = 0.00;
       YOri = 100.14;
@@ -5209,10 +5209,10 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 262;
+      Index = 259;
       LinkTrId = 0;
       XPos = 135307.006;
-      YPos = 60.770;
+      YPos = 61.950;
       ZPos = 212352.262;
       XOri = 0.00;
       YOri = 256.64;
@@ -5231,10 +5231,10 @@ Group
     Block
     {
       Name = "Block";
-      Index = 263;
+      Index = 260;
       LinkTrId = 0;
       XPos = 135366.502;
-      YPos = 60.770;
+      YPos = 62.008;
       ZPos = 212358.616;
       XOri = 0.00;
       YOri = 135.19;
@@ -5253,10 +5253,10 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 264;
+      Index = 261;
       LinkTrId = 0;
       XPos = 135363.265;
-      YPos = 60.770;
+      YPos = 61.834;
       ZPos = 212371.406;
       XOri = 0.00;
       YOri = 186.28;
@@ -5275,15 +5275,15 @@ Group
     Group
     {
       Name = "LIGHT:SEARCH";
-      Index = 265;
+      Index = 262;
       Desc = "";
       Vehicle
       {
         Name = "LIGHT:SEARCH";
-        Index = 266;
+        Index = 263;
         LinkTrId = 0;
         XPos = 135322.399;
-        YPos = 60.770;
+        YPos = 62.467;
         ZPos = 212324.183;
         XOri = 358.90;
         YOri = 191.99;
@@ -5310,10 +5310,10 @@ Group
       Block
       {
         Name = "Block";
-        Index = 267;
+        Index = 264;
         LinkTrId = 0;
         XPos = 135321.809;
-        YPos = 60.770;
+        YPos = 62.492;
         ZPos = 212322.942;
         XOri = 0.00;
         YOri = 239.59;
@@ -5335,15 +5335,15 @@ Group
     Group
     {
       Name = "AA:MG";
-      Index = 268;
+      Index = 265;
       Desc = "";
       Vehicle
       {
         Name = "AA:MG";
-        Index = 269;
+        Index = 266;
         LinkTrId = 0;
         XPos = 135357.198;
-        YPos = 60.770;
+        YPos = 61.644;
         ZPos = 212384.999;
         XOri = 359.84;
         YOri = 113.22;
@@ -5370,10 +5370,10 @@ Group
       Block
       {
         Name = "Block";
-        Index = 270;
+        Index = 267;
         LinkTrId = 0;
         XPos = 135357.174;
-        YPos = 60.770;
+        YPos = 61.644;
         ZPos = 212385.000;
         XOri = 0.00;
         YOri = 102.97;
@@ -5395,15 +5395,15 @@ Group
     Group
     {
       Name = "TRUCK:CARGO";
-      Index = 271;
+      Index = 268;
       Desc = "";
       Block
       {
         Name = "TRUCK:CARGO";
-        Index = 272;
+        Index = 269;
         LinkTrId = 0;
         XPos = 135349.973;
-        YPos = 60.770;
+        YPos = 61.923;
         ZPos = 212361.951;
         XOri = 0.00;
         YOri = 284.36;
@@ -5422,10 +5422,10 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 273;
+        Index = 270;
         LinkTrId = 0;
         XPos = 135350.730;
-        YPos = 60.770;
+        YPos = 61.837;
         ZPos = 212368.799;
         XOri = 0.00;
         YOri = 80.26;
@@ -5450,12 +5450,12 @@ Group
   Group
   {
     Name = "LIGHT:SEARCH";
-    Index = 274;
+    Index = 271;
     Desc = "";
     Vehicle
     {
       Name = "LIGHT:SEARCH";
-      Index = 275;
+      Index = 272;
       LinkTrId = 0;
       XPos = 134896.745;
       YPos = 60.770;
@@ -5485,7 +5485,7 @@ Group
     Block
     {
       Name = "DECO";
-      Index = 276;
+      Index = 273;
       LinkTrId = 0;
       XPos = 134899.016;
       YPos = 60.770;
@@ -5510,12 +5510,12 @@ Group
   Group
   {
     Name = "LIGHT:SEARCH";
-    Index = 277;
+    Index = 274;
     Desc = "";
     Vehicle
     {
       Name = "LIGHT:SEARCH";
-      Index = 278;
+      Index = 275;
       LinkTrId = 0;
       XPos = 135354.127;
       YPos = 60.770;
@@ -5545,7 +5545,7 @@ Group
     Block
     {
       Name = "Block";
-      Index = 279;
+      Index = 276;
       LinkTrId = 0;
       XPos = 135354.065;
       YPos = 60.770;
@@ -5570,14 +5570,14 @@ Group
   Group
   {
     Name = "ROUTE:1";
-    Index = 280;
+    Index = 277;
     Desc = "";
     MCU_Waypoint
     {
-      Index = 281;
+      Index = 278;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [282];
+      Targets = [279];
       Objects = [];
       XPos = 134766.156;
       YPos = 60.770;
@@ -5593,10 +5593,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 282;
+      Index = 279;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [284];
+      Targets = [281];
       Objects = [];
       XPos = 134642.039;
       YPos = 60.770;
@@ -5612,10 +5612,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 284;
+      Index = 281;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [286];
+      Targets = [283];
       Objects = [];
       XPos = 134641.971;
       YPos = 60.770;
@@ -5631,10 +5631,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 286;
+      Index = 283;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [288];
+      Targets = [285];
       Objects = [];
       XPos = 134744.039;
       YPos = 60.770;
@@ -5650,10 +5650,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 288;
+      Index = 285;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [290];
+      Targets = [287];
       Objects = [];
       XPos = 134795.882;
       YPos = 60.770;
@@ -5669,10 +5669,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 290;
+      Index = 287;
       Name = "ROUTE:1:STOP";
       Desc = "";
-      Targets = [292];
+      Targets = [289];
       Objects = [];
       XPos = 134772.749;
       YPos = 60.770;
@@ -5688,10 +5688,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 292;
+      Index = 289;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [294];
+      Targets = [291];
       Objects = [];
       XPos = 134785.437;
       YPos = 60.770;
@@ -5707,10 +5707,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 294;
+      Index = 291;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [296];
+      Targets = [293];
       Objects = [];
       XPos = 134923.530;
       YPos = 60.770;
@@ -5726,10 +5726,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 296;
+      Index = 293;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [298];
+      Targets = [295];
       Objects = [];
       XPos = 134958.108;
       YPos = 60.770;
@@ -5745,10 +5745,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 298;
+      Index = 295;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [300];
+      Targets = [297];
       Objects = [];
       XPos = 134991.511;
       YPos = 60.770;
@@ -5764,10 +5764,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 300;
+      Index = 297;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [302];
+      Targets = [299];
       Objects = [];
       XPos = 135055.545;
       YPos = 60.770;
@@ -5783,10 +5783,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 302;
+      Index = 299;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [304];
+      Targets = [301];
       Objects = [];
       XPos = 135104.858;
       YPos = 60.770;
@@ -5802,10 +5802,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 304;
+      Index = 301;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [306];
+      Targets = [303];
       Objects = [];
       XPos = 135138.223;
       YPos = 60.770;
@@ -5821,10 +5821,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 306;
+      Index = 303;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [308];
+      Targets = [305];
       Objects = [];
       XPos = 135115.492;
       YPos = 60.770;
@@ -5840,10 +5840,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 308;
+      Index = 305;
       Name = "ROUTE:1:STOP";
       Desc = "";
-      Targets = [310];
+      Targets = [307];
       Objects = [];
       XPos = 135097.601;
       YPos = 60.770;
@@ -5859,10 +5859,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 310;
+      Index = 307;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [312];
+      Targets = [309];
       Objects = [];
       XPos = 135052.877;
       YPos = 60.770;
@@ -5878,10 +5878,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 312;
+      Index = 309;
       Name = "ROUTE:1";
       Desc = "";
-      Targets = [281];
+      Targets = [278];
       Objects = [];
       XPos = 134878.413;
       YPos = 60.770;
@@ -5901,14 +5901,14 @@ Group
   Group
   {
     Name = "ROUTE:2";
-    Index = 314;
+    Index = 311;
     Desc = "";
     MCU_Waypoint
     {
-      Index = 315;
+      Index = 312;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [316];
+      Targets = [313];
       Objects = [];
       XPos = 135706.026;
       YPos = 60.770;
@@ -5924,10 +5924,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 316;
+      Index = 313;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [318];
+      Targets = [315];
       Objects = [];
       XPos = 135620.206;
       YPos = 60.770;
@@ -5943,10 +5943,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 318;
+      Index = 315;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [320];
+      Targets = [317];
       Objects = [];
       XPos = 135534.194;
       YPos = 60.770;
@@ -5962,10 +5962,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 320;
+      Index = 317;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [322];
+      Targets = [319];
       Objects = [];
       XPos = 135396.850;
       YPos = 60.770;
@@ -5981,10 +5981,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 322;
+      Index = 319;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [324];
+      Targets = [321];
       Objects = [];
       XPos = 135283.084;
       YPos = 60.770;
@@ -6000,10 +6000,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 324;
+      Index = 321;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [326];
+      Targets = [323];
       Objects = [];
       XPos = 135146.387;
       YPos = 60.770;
@@ -6019,10 +6019,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 326;
+      Index = 323;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [328];
+      Targets = [325];
       Objects = [];
       XPos = 134999.002;
       YPos = 60.770;
@@ -6038,10 +6038,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 328;
+      Index = 325;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [330];
+      Targets = [327];
       Objects = [];
       XPos = 134971.776;
       YPos = 60.770;
@@ -6057,10 +6057,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 330;
+      Index = 327;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [332];
+      Targets = [329];
       Objects = [];
       XPos = 134936.364;
       YPos = 60.770;
@@ -6076,10 +6076,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 333;
+      Index = 330;
       Name = "ROUTE:2:STOP";
       Desc = "";
-      Targets = [334];
+      Targets = [331];
       Objects = [];
       XPos = 134921.132;
       YPos = 60.770;
@@ -6095,10 +6095,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 334;
+      Index = 331;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [336];
+      Targets = [333];
       Objects = [];
       XPos = 134971.874;
       YPos = 60.770;
@@ -6114,10 +6114,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 336;
+      Index = 333;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [338];
+      Targets = [335];
       Objects = [];
       XPos = 135090.108;
       YPos = 60.770;
@@ -6133,10 +6133,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 338;
+      Index = 335;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [340];
+      Targets = [337];
       Objects = [];
       XPos = 135275.484;
       YPos = 60.770;
@@ -6152,10 +6152,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 340;
+      Index = 337;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [342];
+      Targets = [339];
       Objects = [];
       XPos = 135444.594;
       YPos = 60.770;
@@ -6171,10 +6171,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 342;
+      Index = 339;
       Name = "ROUTE:2:STOP";
       Desc = "";
-      Targets = [344];
+      Targets = [341];
       Objects = [];
       XPos = 135607.840;
       YPos = 60.770;
@@ -6190,10 +6190,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 344;
+      Index = 341;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [346];
+      Targets = [343];
       Objects = [];
       XPos = 135725.237;
       YPos = 60.770;
@@ -6209,10 +6209,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 346;
+      Index = 343;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [315];
+      Targets = [312];
       Objects = [];
       XPos = 135765.864;
       YPos = 60.770;
@@ -6228,10 +6228,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 332;
+      Index = 329;
       Name = "ROUTE:2";
       Desc = "";
-      Targets = [333];
+      Targets = [330];
       Objects = [];
       XPos = 134935.517;
       YPos = 60.770;
@@ -6251,14 +6251,14 @@ Group
   Group
   {
     Name = "ROUTE:3";
-    Index = 349;
+    Index = 346;
     Desc = "";
     MCU_Waypoint
     {
-      Index = 350;
+      Index = 347;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [351];
+      Targets = [348];
       Objects = [];
       XPos = 134373.662;
       YPos = 60.770;
@@ -6274,10 +6274,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 351;
+      Index = 348;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [353];
+      Targets = [350];
       Objects = [];
       XPos = 134438.140;
       YPos = 60.770;
@@ -6293,10 +6293,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 353;
+      Index = 350;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [355];
+      Targets = [352];
       Objects = [];
       XPos = 134453.627;
       YPos = 60.770;
@@ -6312,10 +6312,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 355;
+      Index = 352;
       Name = "ROUTE:3:STOP";
       Desc = "";
-      Targets = [357];
+      Targets = [354];
       Objects = [];
       XPos = 134436.706;
       YPos = 60.770;
@@ -6331,10 +6331,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 357;
+      Index = 354;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [359];
+      Targets = [356];
       Objects = [];
       XPos = 134406.013;
       YPos = 60.770;
@@ -6350,10 +6350,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 359;
+      Index = 356;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [361];
+      Targets = [358];
       Objects = [];
       XPos = 134446.367;
       YPos = 60.770;
@@ -6369,10 +6369,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 361;
+      Index = 358;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [363];
+      Targets = [360];
       Objects = [];
       XPos = 134614.924;
       YPos = 60.770;
@@ -6388,10 +6388,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 363;
+      Index = 360;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [365];
+      Targets = [362];
       Objects = [];
       XPos = 134704.632;
       YPos = 60.770;
@@ -6407,10 +6407,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 365;
+      Index = 362;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [367];
+      Targets = [364];
       Objects = [];
       XPos = 134768.904;
       YPos = 60.770;
@@ -6426,10 +6426,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 368;
+      Index = 365;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [369];
+      Targets = [366];
       Objects = [];
       XPos = 134878.808;
       YPos = 60.770;
@@ -6445,10 +6445,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 369;
+      Index = 366;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [371];
+      Targets = [368];
       Objects = [];
       XPos = 134918.827;
       YPos = 60.770;
@@ -6464,10 +6464,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 371;
+      Index = 368;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [373];
+      Targets = [370];
       Objects = [];
       XPos = 134900.987;
       YPos = 60.770;
@@ -6483,10 +6483,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 373;
+      Index = 370;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [375];
+      Targets = [372];
       Objects = [];
       XPos = 134788.657;
       YPos = 60.770;
@@ -6502,10 +6502,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 376;
+      Index = 373;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [377];
+      Targets = [374];
       Objects = [];
       XPos = 134438.769;
       YPos = 60.770;
@@ -6521,10 +6521,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 377;
+      Index = 374;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [379];
+      Targets = [376];
       Objects = [];
       XPos = 134383.534;
       YPos = 60.770;
@@ -6540,10 +6540,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 379;
+      Index = 376;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [381];
+      Targets = [378];
       Objects = [];
       XPos = 134380.559;
       YPos = 60.770;
@@ -6559,10 +6559,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 381;
+      Index = 378;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [383];
+      Targets = [380];
       Objects = [];
       XPos = 134321.772;
       YPos = 60.770;
@@ -6578,10 +6578,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 383;
+      Index = 380;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [385];
+      Targets = [382];
       Objects = [];
       XPos = 134287.394;
       YPos = 60.770;
@@ -6597,10 +6597,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 385;
+      Index = 382;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [387];
+      Targets = [384];
       Objects = [];
       XPos = 134309.099;
       YPos = 60.770;
@@ -6616,10 +6616,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 387;
+      Index = 384;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [389];
+      Targets = [386];
       Objects = [];
       XPos = 134299.808;
       YPos = 60.770;
@@ -6635,10 +6635,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 389;
+      Index = 386;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [391];
+      Targets = [388];
       Objects = [];
       XPos = 134319.668;
       YPos = 60.770;
@@ -6654,10 +6654,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 391;
+      Index = 388;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [350];
+      Targets = [347];
       Objects = [];
       XPos = 134337.116;
       YPos = 60.770;
@@ -6673,10 +6673,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 367;
+      Index = 364;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [368];
+      Targets = [365];
       Objects = [];
       XPos = 134806.825;
       YPos = 60.770;
@@ -6692,10 +6692,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 394;
+      Index = 391;
       Name = "ROUTE:3";
       Desc = "";
-      Targets = [376];
+      Targets = [373];
       Objects = [];
       XPos = 134673.580;
       YPos = 60.770;
@@ -6711,10 +6711,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 375;
+      Index = 372;
       Name = "ROUTE:3:STOP";
       Desc = "";
-      Targets = [394];
+      Targets = [391];
       Objects = [];
       XPos = 134739.703;
       YPos = 60.770;
@@ -6734,14 +6734,14 @@ Group
   Group
   {
     Name = "ROUTE:4";
-    Index = 396;
+    Index = 393;
     Desc = "";
     MCU_Waypoint
     {
-      Index = 397;
+      Index = 394;
       Name = "ROUTE:4:STOP";
       Desc = "";
-      Targets = [398];
+      Targets = [395];
       Objects = [];
       XPos = 136269.305;
       YPos = 60.770;
@@ -6757,10 +6757,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 398;
+      Index = 395;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [400];
+      Targets = [397];
       Objects = [];
       XPos = 136351.820;
       YPos = 60.770;
@@ -6776,10 +6776,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 400;
+      Index = 397;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [402];
+      Targets = [399];
       Objects = [];
       XPos = 136373.317;
       YPos = 60.770;
@@ -6795,10 +6795,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 402;
+      Index = 399;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [404];
+      Targets = [401];
       Objects = [];
       XPos = 136345.857;
       YPos = 60.770;
@@ -6814,10 +6814,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 404;
+      Index = 401;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [406];
+      Targets = [403];
       Objects = [];
       XPos = 136313.099;
       YPos = 60.770;
@@ -6833,10 +6833,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 406;
+      Index = 403;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [408];
+      Targets = [405];
       Objects = [];
       XPos = 136225.534;
       YPos = 60.770;
@@ -6852,10 +6852,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 408;
+      Index = 405;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [410];
+      Targets = [407];
       Objects = [];
       XPos = 136092.168;
       YPos = 60.770;
@@ -6871,10 +6871,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 410;
+      Index = 407;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [412];
+      Targets = [409];
       Objects = [];
       XPos = 136018.688;
       YPos = 60.770;
@@ -6890,10 +6890,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 412;
+      Index = 409;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [414];
+      Targets = [411];
       Objects = [];
       XPos = 135965.128;
       YPos = 60.770;
@@ -6909,10 +6909,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 414;
+      Index = 411;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [416];
+      Targets = [413];
       Objects = [];
       XPos = 135932.349;
       YPos = 60.770;
@@ -6928,10 +6928,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 416;
+      Index = 413;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [418];
+      Targets = [415];
       Objects = [];
       XPos = 135808.989;
       YPos = 60.770;
@@ -6947,10 +6947,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 418;
+      Index = 415;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [420];
+      Targets = [417];
       Objects = [];
       XPos = 135712.402;
       YPos = 60.770;
@@ -6966,10 +6966,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 420;
+      Index = 417;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [422];
+      Targets = [419];
       Objects = [];
       XPos = 135574.347;
       YPos = 60.770;
@@ -6985,10 +6985,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 422;
+      Index = 419;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [424];
+      Targets = [421];
       Objects = [];
       XPos = 135441.343;
       YPos = 60.770;
@@ -7004,10 +7004,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 424;
+      Index = 421;
       Name = "ROUTE:4:STOP";
       Desc = "";
-      Targets = [426];
+      Targets = [423];
       Objects = [];
       XPos = 135313.676;
       YPos = 60.770;
@@ -7023,10 +7023,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 426;
+      Index = 423;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [428];
+      Targets = [425];
       Objects = [];
       XPos = 135309.955;
       YPos = 60.770;
@@ -7042,10 +7042,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 428;
+      Index = 425;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [430];
+      Targets = [427];
       Objects = [];
       XPos = 135431.515;
       YPos = 60.770;
@@ -7061,10 +7061,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 430;
+      Index = 427;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [432];
+      Targets = [429];
       Objects = [];
       XPos = 135543.878;
       YPos = 60.770;
@@ -7080,10 +7080,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 432;
+      Index = 429;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [434];
+      Targets = [431];
       Objects = [];
       XPos = 135723.664;
       YPos = 60.770;
@@ -7099,10 +7099,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 434;
+      Index = 431;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [436];
+      Targets = [433];
       Objects = [];
       XPos = 135813.545;
       YPos = 60.770;
@@ -7118,10 +7118,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 436;
+      Index = 433;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [438];
+      Targets = [435];
       Objects = [];
       XPos = 135976.277;
       YPos = 60.770;
@@ -7137,10 +7137,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 438;
+      Index = 435;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [440];
+      Targets = [437];
       Objects = [];
       XPos = 136097.112;
       YPos = 60.770;
@@ -7156,10 +7156,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 440;
+      Index = 437;
       Name = "ROUTE:4";
       Desc = "";
-      Targets = [397];
+      Targets = [394];
       Objects = [];
       XPos = 136179.806;
       YPos = 60.770;
@@ -7179,14 +7179,14 @@ Group
   Group
   {
     Name = "ROUTE:5";
-    Index = 442;
+    Index = 439;
     Desc = "";
     MCU_Waypoint
     {
-      Index = 443;
+      Index = 440;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [444];
+      Targets = [441];
       Objects = [];
       XPos = 134658.453;
       YPos = 60.770;
@@ -7202,10 +7202,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 444;
+      Index = 441;
       Name = "ROUTE:5:STOP";
       Desc = "";
-      Targets = [446];
+      Targets = [443];
       Objects = [];
       XPos = 134675.310;
       YPos = 60.770;
@@ -7221,10 +7221,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 446;
+      Index = 443;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [448];
+      Targets = [445];
       Objects = [];
       XPos = 134646.989;
       YPos = 60.770;
@@ -7240,10 +7240,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 448;
+      Index = 445;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [450];
+      Targets = [447];
       Objects = [];
       XPos = 134532.874;
       YPos = 60.770;
@@ -7259,10 +7259,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 450;
+      Index = 447;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [452];
+      Targets = [449];
       Objects = [];
       XPos = 134351.745;
       YPos = 60.770;
@@ -7278,10 +7278,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 452;
+      Index = 449;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [454];
+      Targets = [451];
       Objects = [];
       XPos = 134187.382;
       YPos = 60.770;
@@ -7297,10 +7297,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 454;
+      Index = 451;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [456];
+      Targets = [453];
       Objects = [];
       XPos = 134065.857;
       YPos = 60.770;
@@ -7316,10 +7316,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 456;
+      Index = 453;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [458];
+      Targets = [455];
       Objects = [];
       XPos = 133972.098;
       YPos = 60.770;
@@ -7335,10 +7335,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 458;
+      Index = 455;
       Name = "ROUTE:5:STOP";
       Desc = "";
-      Targets = [460];
+      Targets = [457];
       Objects = [];
       XPos = 133975.969;
       YPos = 60.770;
@@ -7354,10 +7354,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 460;
+      Index = 457;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [462];
+      Targets = [459];
       Objects = [];
       XPos = 133994.855;
       YPos = 60.770;
@@ -7373,10 +7373,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 462;
+      Index = 459;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [464];
+      Targets = [461];
       Objects = [];
       XPos = 134061.416;
       YPos = 60.770;
@@ -7392,10 +7392,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 464;
+      Index = 461;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [466];
+      Targets = [463];
       Objects = [];
       XPos = 134084.431;
       YPos = 60.770;
@@ -7411,10 +7411,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 466;
+      Index = 463;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [468];
+      Targets = [465];
       Objects = [];
       XPos = 134117.447;
       YPos = 60.770;
@@ -7430,10 +7430,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 468;
+      Index = 465;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [470];
+      Targets = [467];
       Objects = [];
       XPos = 134270.387;
       YPos = 60.770;
@@ -7449,10 +7449,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 470;
+      Index = 467;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [472];
+      Targets = [469];
       Objects = [];
       XPos = 134388.238;
       YPos = 60.770;
@@ -7468,10 +7468,10 @@ Group
 
     MCU_Waypoint
     {
-      Index = 472;
+      Index = 469;
       Name = "ROUTE:5";
       Desc = "";
-      Targets = [443];
+      Targets = [440];
       Objects = [];
       XPos = 134528.500;
       YPos = 60.770;
@@ -7491,12 +7491,12 @@ Group
   Group
   {
     Name = "WRECK";
-    Index = 474;
+    Index = 471;
     Desc = "";
     Block
     {
       Name = "WRECK";
-      Index = 475;
+      Index = 472;
       LinkTrId = 0;
       XPos = 134398.143;
       YPos = 60.770;
@@ -7522,7 +7522,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 476;
+      Index = 473;
       LinkTrId = 0;
       XPos = 134362.867;
       YPos = 60.770;
@@ -7548,7 +7548,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 477;
+      Index = 474;
       LinkTrId = 0;
       XPos = 134130.240;
       YPos = 60.770;
@@ -7574,7 +7574,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 478;
+      Index = 475;
       LinkTrId = 0;
       XPos = 134377.835;
       YPos = 60.770;
@@ -7600,7 +7600,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 479;
+      Index = 476;
       LinkTrId = 0;
       XPos = 133878.978;
       YPos = 60.770;
@@ -7626,7 +7626,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 480;
+      Index = 477;
       LinkTrId = 0;
       XPos = 134643.464;
       YPos = 60.770;
@@ -7652,7 +7652,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 481;
+      Index = 478;
       LinkTrId = 0;
       XPos = 134656.604;
       YPos = 60.770;
@@ -7678,7 +7678,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 482;
+      Index = 479;
       LinkTrId = 0;
       XPos = 135953.423;
       YPos = 60.770;
@@ -7704,7 +7704,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 483;
+      Index = 480;
       LinkTrId = 0;
       XPos = 135382.389;
       YPos = 60.770;
@@ -7730,7 +7730,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 484;
+      Index = 481;
       LinkTrId = 0;
       XPos = 135004.253;
       YPos = 60.770;
@@ -7756,7 +7756,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 485;
+      Index = 482;
       LinkTrId = 0;
       XPos = 135585.701;
       YPos = 60.770;
@@ -7782,7 +7782,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 486;
+      Index = 483;
       LinkTrId = 0;
       XPos = 134383.327;
       YPos = 60.770;
@@ -7808,7 +7808,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 487;
+      Index = 484;
       LinkTrId = 0;
       XPos = 135719.638;
       YPos = 60.770;
@@ -7834,7 +7834,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 488;
+      Index = 485;
       LinkTrId = 0;
       XPos = 135113.663;
       YPos = 60.770;
@@ -7860,7 +7860,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 489;
+      Index = 486;
       LinkTrId = 0;
       XPos = 134900.077;
       YPos = 60.770;
@@ -7886,7 +7886,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 490;
+      Index = 487;
       LinkTrId = 0;
       XPos = 135796.852;
       YPos = 60.770;
@@ -7912,7 +7912,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 491;
+      Index = 488;
       LinkTrId = 0;
       XPos = 135137.594;
       YPos = 60.770;
@@ -7938,7 +7938,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 492;
+      Index = 489;
       LinkTrId = 0;
       XPos = 134867.791;
       YPos = 60.770;
@@ -7964,10 +7964,10 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 493;
+      Index = 490;
       LinkTrId = 0;
       XPos = 134993.155;
-      YPos = 60.770;
+      YPos = 59.540;
       ZPos = 215867.548;
       XOri = 0.00;
       YOri = 201.59;
@@ -7990,7 +7990,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 494;
+      Index = 491;
       LinkTrId = 0;
       XPos = 136584.929;
       YPos = 60.770;
@@ -8016,7 +8016,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 495;
+      Index = 492;
       LinkTrId = 0;
       XPos = 135923.819;
       YPos = 60.770;
@@ -8042,7 +8042,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 496;
+      Index = 493;
       LinkTrId = 0;
       XPos = 135056.436;
       YPos = 60.770;
@@ -8068,7 +8068,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 497;
+      Index = 494;
       LinkTrId = 0;
       XPos = 134145.560;
       YPos = 60.770;
@@ -8094,7 +8094,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 498;
+      Index = 495;
       LinkTrId = 0;
       XPos = 133773.044;
       YPos = 60.770;
@@ -8120,7 +8120,7 @@ Group
     Block
     {
       Name = "WRECK";
-      Index = 499;
+      Index = 496;
       LinkTrId = 0;
       XPos = 134096.368;
       YPos = 60.770;
@@ -8149,12 +8149,12 @@ Group
   Group
   {
     Name = "PLANE:1";
-    Index = 500;
+    Index = 497;
     Desc = "";
     Block
     {
       Name = "PLANE:1:1:LARGE:CAMO";
-      Index = 501;
+      Index = 498;
       LinkTrId = 0;
       XPos = 134538.930;
       YPos = 60.770;
@@ -8176,7 +8176,7 @@ Group
     Block
     {
       Name = "PLANE:1:1:HUGE";
-      Index = 502;
+      Index = 499;
       LinkTrId = 0;
       XPos = 134739.185;
       YPos = 60.770;
@@ -8198,7 +8198,7 @@ Group
     Block
     {
       Name = "PLANE:1:1:HUGE:CAMO";
-      Index = 503;
+      Index = 500;
       LinkTrId = 0;
       XPos = 134672.418;
       YPos = 60.770;
@@ -8220,7 +8220,7 @@ Group
     Block
     {
       Name = "PLANE:1:HUGE";
-      Index = 504;
+      Index = 501;
       LinkTrId = 0;
       XPos = 134651.432;
       YPos = 60.770;
@@ -8242,7 +8242,7 @@ Group
     Block
     {
       Name = "PLANE:1:HUGE:CAMO";
-      Index = 505;
+      Index = 502;
       LinkTrId = 0;
       XPos = 134620.172;
       YPos = 60.770;
@@ -8264,7 +8264,7 @@ Group
     Block
     {
       Name = "PLANE:1:-1:LARGE:CAMO";
-      Index = 506;
+      Index = 503;
       LinkTrId = 0;
       XPos = 134535.493;
       YPos = 60.770;
@@ -8286,12 +8286,12 @@ Group
     Group
     {
       Name = "PLANE:1:1:LARGE";
-      Index = 507;
+      Index = 504;
       Desc = "";
       Block
       {
         Name = "PLANE:1:1:LARGE";
-        Index = 508;
+        Index = 505;
         LinkTrId = 0;
         XPos = 134675.203;
         YPos = 60.770;
@@ -8313,12 +8313,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 509;
+        Index = 506;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 510;
+          Index = 507;
           LinkTrId = 0;
           XPos = 134649.870;
           YPos = 60.770;
@@ -8346,12 +8346,12 @@ Group
     Group
     {
       Name = "PLANE:1:-1:LARGE";
-      Index = 511;
+      Index = 508;
       Desc = "";
       Block
       {
         Name = "PLANE:1:-1:LARGE";
-        Index = 512;
+        Index = 509;
         LinkTrId = 0;
         XPos = 134741.010;
         YPos = 60.770;
@@ -8373,7 +8373,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 513;
+        Index = 510;
         LinkTrId = 0;
         XPos = 134752.184;
         YPos = 60.770;
@@ -8398,12 +8398,12 @@ Group
     Group
     {
       Name = "PLANE:1:HUGE";
-      Index = 514;
+      Index = 511;
       Desc = "";
       Block
       {
         Name = "PLANE:1:HUGE";
-        Index = 515;
+        Index = 512;
         LinkTrId = 0;
         XPos = 134582.962;
         YPos = 60.770;
@@ -8425,12 +8425,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 516;
+        Index = 513;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 517;
+          Index = 514;
           LinkTrId = 0;
           XPos = 134561.437;
           YPos = 60.770;
@@ -8452,7 +8452,7 @@ Group
         Block
         {
           Name = "DECO";
-          Index = 518;
+          Index = 515;
           LinkTrId = 0;
           XPos = 134563.992;
           YPos = 60.770;
@@ -8480,12 +8480,12 @@ Group
     Group
     {
       Name = "PLANE:1:LARGE:CAMO";
-      Index = 519;
+      Index = 516;
       Desc = "";
       Block
       {
         Name = "PLANE:1:LARGE:CAMO";
-        Index = 520;
+        Index = 517;
         LinkTrId = 0;
         XPos = 134726.913;
         YPos = 60.770;
@@ -8507,7 +8507,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 521;
+        Index = 518;
         LinkTrId = 0;
         XPos = 134730.292;
         YPos = 60.770;
@@ -8532,12 +8532,12 @@ Group
     Group
     {
       Name = "PLANE:1:1:LARGE";
-      Index = 522;
+      Index = 519;
       Desc = "";
       Block
       {
         Name = "PLANE:1:1:LARGE";
-        Index = 523;
+        Index = 520;
         LinkTrId = 0;
         XPos = 134476.088;
         YPos = 60.770;
@@ -8559,7 +8559,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 524;
+        Index = 521;
         LinkTrId = 0;
         XPos = 134471.332;
         YPos = 60.770;
@@ -8581,12 +8581,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 525;
+        Index = 522;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 526;
+          Index = 523;
           LinkTrId = 0;
           XPos = 134492.631;
           YPos = 60.770;
@@ -8614,12 +8614,12 @@ Group
     Group
     {
       Name = "PLANE:1:1:LARGE";
-      Index = 527;
+      Index = 524;
       Desc = "";
       Block
       {
         Name = "PLANE:1:1:LARGE";
-        Index = 528;
+        Index = 525;
         LinkTrId = 0;
         XPos = 134606.457;
         YPos = 60.770;
@@ -8641,7 +8641,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 529;
+        Index = 526;
         LinkTrId = 0;
         XPos = 134624.893;
         YPos = 60.770;
@@ -8669,12 +8669,12 @@ Group
   Group
   {
     Name = "PLANE:2";
-    Index = 530;
+    Index = 527;
     Desc = "";
     Block
     {
       Name = "PLANE:2:2:MEDIUM";
-      Index = 531;
+      Index = 528;
       LinkTrId = 0;
       XPos = 135572.316;
       YPos = 60.770;
@@ -8696,7 +8696,7 @@ Group
     Block
     {
       Name = "PLANE:2:SMALL";
-      Index = 532;
+      Index = 529;
       LinkTrId = 0;
       XPos = 135561.369;
       YPos = 60.770;
@@ -8718,7 +8718,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:SMALL";
-      Index = 533;
+      Index = 530;
       LinkTrId = 0;
       XPos = 135563.845;
       YPos = 60.770;
@@ -8740,7 +8740,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:MEDIUM";
-      Index = 534;
+      Index = 531;
       LinkTrId = 0;
       XPos = 135566.794;
       YPos = 60.770;
@@ -8762,7 +8762,7 @@ Group
     Block
     {
       Name = "PLANE:2:2:LARGE:CAMO";
-      Index = 535;
+      Index = 532;
       LinkTrId = 0;
       XPos = 135685.360;
       YPos = 60.770;
@@ -8784,7 +8784,7 @@ Group
     Block
     {
       Name = "PLANE:2:LARGE:CAMO";
-      Index = 536;
+      Index = 533;
       LinkTrId = 0;
       XPos = 135709.170;
       YPos = 60.770;
@@ -8806,12 +8806,12 @@ Group
     Group
     {
       Name = "PLANE:2:LARGE:CAMO";
-      Index = 537;
+      Index = 534;
       Desc = "";
       Block
       {
         Name = "PLANE:2:LARGE:CAMO";
-        Index = 538;
+        Index = 535;
         LinkTrId = 0;
         XPos = 135611.472;
         YPos = 60.770;
@@ -8833,7 +8833,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 539;
+        Index = 536;
         LinkTrId = 0;
         XPos = 135624.029;
         YPos = 60.770;
@@ -8855,12 +8855,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 540;
+        Index = 537;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 541;
+          Index = 538;
           LinkTrId = 0;
           XPos = 135629.954;
           YPos = 60.770;
@@ -8888,12 +8888,12 @@ Group
     Group
     {
       Name = "PLANE:2:LARGE";
-      Index = 542;
+      Index = 539;
       Desc = "";
       Block
       {
         Name = "PLANE:2:LARGE";
-        Index = 543;
+        Index = 540;
         LinkTrId = 0;
         XPos = 135670.561;
         YPos = 60.770;
@@ -8915,12 +8915,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 544;
+        Index = 541;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 545;
+          Index = 542;
           LinkTrId = 0;
           XPos = 135665.180;
           YPos = 60.770;
@@ -8948,12 +8948,12 @@ Group
     Group
     {
       Name = "PLANE:2:LARGE";
-      Index = 546;
+      Index = 543;
       Desc = "";
       Block
       {
         Name = "PLANE:2:LARGE";
-        Index = 547;
+        Index = 544;
         LinkTrId = 0;
         XPos = 135579.971;
         YPos = 60.770;
@@ -8975,12 +8975,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 548;
+        Index = 545;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 549;
+          Index = 546;
           LinkTrId = 0;
           XPos = 135582.608;
           YPos = 60.770;
@@ -9008,12 +9008,12 @@ Group
     Group
     {
       Name = "PLANE:2:-2:SMALL";
-      Index = 550;
+      Index = 547;
       Desc = "";
       Block
       {
         Name = "PLANE:2:-2:SMALL";
-        Index = 551;
+        Index = 548;
         LinkTrId = 0;
         XPos = 135559.776;
         YPos = 60.770;
@@ -9035,12 +9035,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 552;
+        Index = 549;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 553;
+          Index = 550;
           LinkTrId = 0;
           XPos = 135579.362;
           YPos = 60.770;
@@ -9068,12 +9068,12 @@ Group
     Group
     {
       Name = "PLANE:2:2:HUGE";
-      Index = 554;
+      Index = 551;
       Desc = "";
       Block
       {
         Name = "PLANE:2:2:HUGE";
-        Index = 555;
+        Index = 552;
         LinkTrId = 0;
         XPos = 135661.059;
         YPos = 60.770;
@@ -9095,7 +9095,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 556;
+        Index = 553;
         LinkTrId = 0;
         XPos = 135667.389;
         YPos = 60.770;
@@ -9120,12 +9120,12 @@ Group
     Group
     {
       Name = "PLANE:2:2:LARGE";
-      Index = 557;
+      Index = 554;
       Desc = "";
       Block
       {
         Name = "PLANE:2:2:LARGE";
-        Index = 558;
+        Index = 555;
         LinkTrId = 0;
         XPos = 135612.900;
         YPos = 60.770;
@@ -9147,7 +9147,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 559;
+        Index = 556;
         LinkTrId = 0;
         XPos = 135602.190;
         YPos = 60.770;
@@ -9172,12 +9172,12 @@ Group
     Group
     {
       Name = "PLANE:2:LARGE:CAMO";
-      Index = 560;
+      Index = 557;
       Desc = "";
       Block
       {
         Name = "PLANE:2:LARGE:CAMO";
-        Index = 561;
+        Index = 558;
         LinkTrId = 0;
         XPos = 135506.294;
         YPos = 60.770;
@@ -9199,7 +9199,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 562;
+        Index = 559;
         LinkTrId = 0;
         XPos = 135500.103;
         YPos = 60.770;
@@ -9227,12 +9227,12 @@ Group
   Group
   {
     Name = "PLANE:3";
-    Index = 563;
+    Index = 560;
     Desc = "";
     Block
     {
       Name = "PLANE:3:3:LARGE";
-      Index = 564;
+      Index = 561;
       LinkTrId = 0;
       XPos = 135913.409;
       YPos = 60.770;
@@ -9254,7 +9254,7 @@ Group
     Block
     {
       Name = "PLANE:3:3:LARGE";
-      Index = 565;
+      Index = 562;
       LinkTrId = 0;
       XPos = 135969.445;
       YPos = 60.770;
@@ -9276,7 +9276,7 @@ Group
     Block
     {
       Name = "PLANE:3:3:HUGE:CAMO";
-      Index = 566;
+      Index = 563;
       LinkTrId = 0;
       XPos = 135807.358;
       YPos = 60.770;
@@ -9298,7 +9298,7 @@ Group
     Block
     {
       Name = "PLANE:3:-3:LARGE:CAMO";
-      Index = 567;
+      Index = 564;
       LinkTrId = 0;
       XPos = 135961.058;
       YPos = 60.770;
@@ -9320,7 +9320,7 @@ Group
     Block
     {
       Name = "PLANE:3:3:MEDIUM:CAMO";
-      Index = 568;
+      Index = 565;
       LinkTrId = 0;
       XPos = 135953.960;
       YPos = 60.770;
@@ -9342,7 +9342,7 @@ Group
     Block
     {
       Name = "PLANE:3:MEDIUM:CAMO";
-      Index = 569;
+      Index = 566;
       LinkTrId = 0;
       XPos = 135944.901;
       YPos = 60.770;
@@ -9364,7 +9364,7 @@ Group
     Block
     {
       Name = "PLANE:3:MEDIUM:CAMO";
-      Index = 570;
+      Index = 567;
       LinkTrId = 0;
       XPos = 135788.966;
       YPos = 60.770;
@@ -9386,17 +9386,17 @@ Group
     Group
     {
       Name = "PLANE:3:3:LARGE:CAMO";
-      Index = 571;
+      Index = 568;
       Desc = "";
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 572;
+        Index = 569;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 573;
+          Index = 570;
           LinkTrId = 0;
           XPos = 135922.328;
           YPos = 60.770;
@@ -9421,7 +9421,7 @@ Group
       Block
       {
         Name = "PLANE:3:3:LARGE:CAMO";
-        Index = 574;
+        Index = 571;
         LinkTrId = 0;
         XPos = 135943.311;
         YPos = 60.770;
@@ -9446,12 +9446,12 @@ Group
     Group
     {
       Name = "PLANE:3:MEDIUM";
-      Index = 575;
+      Index = 572;
       Desc = "";
       Block
       {
         Name = "PLANE:3:MEDIUM";
-        Index = 576;
+        Index = 573;
         LinkTrId = 0;
         XPos = 135965.007;
         YPos = 60.770;
@@ -9473,12 +9473,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 577;
+        Index = 574;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 578;
+          Index = 575;
           LinkTrId = 0;
           XPos = 135959.526;
           YPos = 60.770;
@@ -9506,12 +9506,12 @@ Group
     Group
     {
       Name = "PLANE:3:3:LARGE";
-      Index = 579;
+      Index = 576;
       Desc = "";
       Block
       {
         Name = "PLANE:3:3:LARGE";
-        Index = 580;
+        Index = 577;
         LinkTrId = 0;
         XPos = 135841.771;
         YPos = 60.770;
@@ -9533,7 +9533,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 581;
+        Index = 578;
         LinkTrId = 0;
         XPos = 135851.355;
         YPos = 60.770;
@@ -9558,12 +9558,12 @@ Group
     Group
     {
       Name = "PLANE:3:LARGE";
-      Index = 582;
+      Index = 579;
       Desc = "";
       Block
       {
         Name = "PLANE:3:LARGE";
-        Index = 583;
+        Index = 580;
         LinkTrId = 0;
         XPos = 135864.929;
         YPos = 60.770;
@@ -9585,12 +9585,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 584;
+        Index = 581;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 585;
+          Index = 582;
           LinkTrId = 0;
           XPos = 135868.730;
           YPos = 60.770;
@@ -9615,7 +9615,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 586;
+        Index = 583;
         LinkTrId = 0;
         XPos = 135877.559;
         YPos = 60.770;
@@ -9640,12 +9640,12 @@ Group
     Group
     {
       Name = "PLANE:3:-3:LARGE";
-      Index = 587;
+      Index = 584;
       Desc = "";
       Block
       {
         Name = "PLANE:3:-3:LARGE";
-        Index = 588;
+        Index = 585;
         LinkTrId = 0;
         XPos = 135826.908;
         YPos = 60.770;
@@ -9667,7 +9667,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 589;
+        Index = 586;
         LinkTrId = 0;
         XPos = 135817.097;
         YPos = 60.770;
@@ -9692,12 +9692,12 @@ Group
     Group
     {
       Name = "PLANE:3:-3:HUGE";
-      Index = 590;
+      Index = 587;
       Desc = "";
       Block
       {
         Name = "PLANE:3:-3:HUGE";
-        Index = 591;
+        Index = 588;
         LinkTrId = 0;
         XPos = 135766.971;
         YPos = 60.770;
@@ -9719,12 +9719,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 592;
+        Index = 589;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 593;
+          Index = 590;
           LinkTrId = 0;
           XPos = 135756.842;
           YPos = 60.770;
@@ -9749,7 +9749,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 594;
+        Index = 591;
         LinkTrId = 0;
         XPos = 135758.060;
         YPos = 60.770;
@@ -9777,12 +9777,12 @@ Group
   Group
   {
     Name = "PLANE:4";
-    Index = 595;
+    Index = 592;
     Desc = "";
     Block
     {
       Name = "PLANE:4:4:LARGE";
-      Index = 596;
+      Index = 593;
       LinkTrId = 0;
       XPos = 134584.704;
       YPos = 60.770;
@@ -9804,7 +9804,7 @@ Group
     Block
     {
       Name = "PLANE:4:4:SMALL";
-      Index = 597;
+      Index = 594;
       LinkTrId = 0;
       XPos = 134521.068;
       YPos = 60.770;
@@ -9826,7 +9826,7 @@ Group
     Block
     {
       Name = "PLANE:4:4:MEDIUM:CAMO";
-      Index = 598;
+      Index = 595;
       LinkTrId = 0;
       XPos = 134596.417;
       YPos = 60.770;
@@ -9848,7 +9848,7 @@ Group
     Block
     {
       Name = "PLANE:4:4:LARGE:CAMO";
-      Index = 599;
+      Index = 596;
       LinkTrId = 0;
       XPos = 134463.832;
       YPos = 60.770;
@@ -9870,7 +9870,7 @@ Group
     Block
     {
       Name = "PLANE:4:LARGE";
-      Index = 600;
+      Index = 597;
       LinkTrId = 0;
       XPos = 134624.829;
       YPos = 60.770;
@@ -9892,7 +9892,7 @@ Group
     Block
     {
       Name = "PLANE:4:-4:HUGE:CAMO";
-      Index = 601;
+      Index = 598;
       LinkTrId = 0;
       XPos = 134601.021;
       YPos = 60.770;
@@ -9914,7 +9914,7 @@ Group
     Block
     {
       Name = "PLANE:4:LARGE:CAMO";
-      Index = 602;
+      Index = 599;
       LinkTrId = 0;
       XPos = 134423.771;
       YPos = 60.770;
@@ -9936,12 +9936,12 @@ Group
     Group
     {
       Name = "PLANE:4:LARGE";
-      Index = 603;
+      Index = 600;
       Desc = "";
       Block
       {
         Name = "PLANE:4:LARGE";
-        Index = 604;
+        Index = 601;
         LinkTrId = 0;
         XPos = 134556.058;
         YPos = 60.770;
@@ -9963,12 +9963,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 605;
+        Index = 602;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 606;
+          Index = 603;
           LinkTrId = 0;
           XPos = 134541.755;
           YPos = 60.770;
@@ -9996,12 +9996,12 @@ Group
     Group
     {
       Name = "PLANE:4:0:LARGE";
-      Index = 607;
+      Index = 604;
       Desc = "";
       Block
       {
         Name = "PLANE:4:0:LARGE";
-        Index = 608;
+        Index = 605;
         LinkTrId = 0;
         XPos = 134504.695;
         YPos = 60.770;
@@ -10023,7 +10023,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 609;
+        Index = 606;
         LinkTrId = 0;
         XPos = 134504.234;
         YPos = 60.770;
@@ -10045,12 +10045,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 610;
+        Index = 607;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 611;
+          Index = 608;
           LinkTrId = 0;
           XPos = 134507.508;
           YPos = 60.770;
@@ -10078,12 +10078,12 @@ Group
     Group
     {
       Name = "PLANE:4:4:LARGE";
-      Index = 612;
+      Index = 609;
       Desc = "";
       Block
       {
         Name = "PLANE:4:4:LARGE";
-        Index = 613;
+        Index = 610;
         LinkTrId = 0;
         XPos = 134623.208;
         YPos = 60.770;
@@ -10105,12 +10105,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 614;
+        Index = 611;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 615;
+          Index = 612;
           LinkTrId = 0;
           XPos = 134619.298;
           YPos = 60.770;
@@ -10138,12 +10138,12 @@ Group
     Group
     {
       Name = "PLANE:4:4:LARGE";
-      Index = 616;
+      Index = 613;
       Desc = "";
       Block
       {
         Name = "PLANE:4:4:LARGE";
-        Index = 617;
+        Index = 614;
         LinkTrId = 0;
         XPos = 134606.738;
         YPos = 60.770;
@@ -10165,7 +10165,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 618;
+        Index = 615;
         LinkTrId = 0;
         XPos = 134602.926;
         YPos = 60.770;
@@ -10190,12 +10190,12 @@ Group
     Group
     {
       Name = "PLANE:4:HUGE";
-      Index = 619;
+      Index = 616;
       Desc = "";
       Block
       {
         Name = "PLANE:4:HUGE";
-        Index = 620;
+        Index = 617;
         LinkTrId = 0;
         XPos = 134426.485;
         YPos = 60.770;
@@ -10217,7 +10217,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 621;
+        Index = 618;
         LinkTrId = 0;
         XPos = 134441.160;
         YPos = 60.770;
@@ -10242,12 +10242,12 @@ Group
     Group
     {
       Name = "PLANE:4:LARGE";
-      Index = 622;
+      Index = 619;
       Desc = "";
       Block
       {
         Name = "PLANE:4:LARGE";
-        Index = 623;
+        Index = 620;
         LinkTrId = 0;
         XPos = 134500.057;
         YPos = 60.770;
@@ -10269,7 +10269,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 624;
+        Index = 621;
         LinkTrId = 0;
         XPos = 134493.144;
         YPos = 60.770;
@@ -10291,12 +10291,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 625;
+        Index = 622;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 626;
+          Index = 623;
           LinkTrId = 0;
           XPos = 134493.165;
           YPos = 60.770;
@@ -10327,12 +10327,12 @@ Group
   Group
   {
     Name = "PLANE:5";
-    Index = 627;
+    Index = 624;
     Desc = "";
     Block
     {
       Name = "PLANE:5:5:SMALL";
-      Index = 628;
+      Index = 625;
       LinkTrId = 0;
       XPos = 134811.247;
       YPos = 60.770;
@@ -10354,7 +10354,7 @@ Group
     Block
     {
       Name = "PLANE:5:5:SMALL";
-      Index = 629;
+      Index = 626;
       LinkTrId = 0;
       XPos = 134874.702;
       YPos = 60.770;
@@ -10376,7 +10376,7 @@ Group
     Block
     {
       Name = "PLANE:5:5:MEDIUM";
-      Index = 630;
+      Index = 627;
       LinkTrId = 0;
       XPos = 134736.180;
       YPos = 60.770;
@@ -10398,7 +10398,7 @@ Group
     Block
     {
       Name = "PLANE:5:5:LARGE:CAMO";
-      Index = 631;
+      Index = 628;
       LinkTrId = 0;
       XPos = 134802.089;
       YPos = 60.770;
@@ -10420,7 +10420,7 @@ Group
     Block
     {
       Name = "PLANE:5:-5:LARGE";
-      Index = 632;
+      Index = 629;
       LinkTrId = 0;
       XPos = 134871.253;
       YPos = 60.770;
@@ -10442,12 +10442,12 @@ Group
     Group
     {
       Name = "PLANE:5:5:MEDIUM:CAMO";
-      Index = 633;
+      Index = 630;
       Desc = "";
       Block
       {
         Name = "PLANE:5:5:MEDIUM:CAMO";
-        Index = 634;
+        Index = 631;
         LinkTrId = 0;
         XPos = 134972.071;
         YPos = 60.770;
@@ -10469,12 +10469,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 635;
+        Index = 632;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 636;
+          Index = 633;
           LinkTrId = 0;
           XPos = 134965.039;
           YPos = 60.770;
@@ -10502,12 +10502,12 @@ Group
     Group
     {
       Name = "PLANE:5:LARGE:CAMO";
-      Index = 637;
+      Index = 634;
       Desc = "";
       Block
       {
         Name = "PLANE:5:LARGE:CAMO";
-        Index = 638;
+        Index = 635;
         LinkTrId = 0;
         XPos = 135012.507;
         YPos = 60.770;
@@ -10529,7 +10529,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 639;
+        Index = 636;
         LinkTrId = 0;
         XPos = 135011.749;
         YPos = 60.770;
@@ -10554,12 +10554,12 @@ Group
     Group
     {
       Name = "PLANE:5:-5:MEDIUM:CAMO";
-      Index = 640;
+      Index = 637;
       Desc = "";
       Block
       {
         Name = "PLANE:5:-5:MEDIUM:CAMO";
-        Index = 641;
+        Index = 638;
         LinkTrId = 0;
         XPos = 134904.238;
         YPos = 60.770;
@@ -10581,7 +10581,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 642;
+        Index = 639;
         LinkTrId = 0;
         XPos = 134899.081;
         YPos = 60.770;
@@ -10606,12 +10606,12 @@ Group
     Group
     {
       Name = "PLANE:5:LARGE";
-      Index = 643;
+      Index = 640;
       Desc = "";
       Block
       {
         Name = "PLANE:5:LARGE";
-        Index = 644;
+        Index = 641;
         LinkTrId = 0;
         XPos = 134812.378;
         YPos = 60.770;
@@ -10633,12 +10633,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 645;
+        Index = 642;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 646;
+          Index = 643;
           LinkTrId = 0;
           XPos = 134811.501;
           YPos = 60.770;
@@ -10663,7 +10663,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 647;
+        Index = 644;
         LinkTrId = 0;
         XPos = 134808.482;
         YPos = 60.770;
@@ -10688,12 +10688,12 @@ Group
     Group
     {
       Name = "PLANE:5:LARGE";
-      Index = 648;
+      Index = 645;
       Desc = "";
       Block
       {
         Name = "PLANE:5:LARGE";
-        Index = 649;
+        Index = 646;
         LinkTrId = 0;
         XPos = 134748.527;
         YPos = 60.770;
@@ -10715,12 +10715,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 650;
+        Index = 647;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 651;
+          Index = 648;
           LinkTrId = 0;
           XPos = 134728.971;
           YPos = 60.770;
@@ -10745,7 +10745,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 652;
+        Index = 649;
         LinkTrId = 0;
         XPos = 134734.566;
         YPos = 60.770;
@@ -10770,12 +10770,12 @@ Group
     Group
     {
       Name = "PLANE:5:LARGE";
-      Index = 653;
+      Index = 650;
       Desc = "";
       Block
       {
         Name = "PLANE:5:LARGE";
-        Index = 654;
+        Index = 651;
         LinkTrId = 0;
         XPos = 134740.322;
         YPos = 60.770;
@@ -10797,7 +10797,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 655;
+        Index = 652;
         LinkTrId = 0;
         XPos = 134732.819;
         YPos = 60.770;
@@ -10822,12 +10822,12 @@ Group
     Group
     {
       Name = "PLANE:5:5:SMALL";
-      Index = 656;
+      Index = 653;
       Desc = "";
       Block
       {
         Name = "PLANE:5:5:SMALL";
-        Index = 657;
+        Index = 654;
         LinkTrId = 0;
         XPos = 134936.945;
         YPos = 60.770;
@@ -10849,7 +10849,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 658;
+        Index = 655;
         LinkTrId = 0;
         XPos = 134939.174;
         YPos = 60.770;
@@ -10877,12 +10877,12 @@ Group
   Group
   {
     Name = "PLANE:6";
-    Index = 659;
+    Index = 656;
     Desc = "";
     Block
     {
       Name = "PLANE:6:6:SMALL";
-      Index = 660;
+      Index = 657;
       LinkTrId = 0;
       XPos = 134577.825;
       YPos = 60.770;
@@ -10904,7 +10904,7 @@ Group
     Block
     {
       Name = "PLANE:6:-6:SMALL";
-      Index = 661;
+      Index = 658;
       LinkTrId = 0;
       XPos = 134588.676;
       YPos = 60.770;
@@ -10926,7 +10926,7 @@ Group
     Block
     {
       Name = "PLANE:6:6:LARGE:CAMO";
-      Index = 662;
+      Index = 659;
       LinkTrId = 0;
       XPos = 134580.987;
       YPos = 60.770;
@@ -10948,7 +10948,7 @@ Group
     Block
     {
       Name = "PLANE:6:6:LARGE";
-      Index = 663;
+      Index = 660;
       LinkTrId = 0;
       XPos = 134469.403;
       YPos = 60.770;
@@ -10970,7 +10970,7 @@ Group
     Block
     {
       Name = "PLANE:6:LARGE:CAMO";
-      Index = 664;
+      Index = 661;
       LinkTrId = 0;
       XPos = 134596.107;
       YPos = 60.770;
@@ -10992,7 +10992,7 @@ Group
     Block
     {
       Name = "PLANE:6:-6:LARGE:CAMO";
-      Index = 665;
+      Index = 662;
       LinkTrId = 0;
       XPos = 134490.752;
       YPos = 60.770;
@@ -11014,12 +11014,12 @@ Group
     Group
     {
       Name = "PLANE:6:LARGE";
-      Index = 666;
+      Index = 663;
       Desc = "";
       Block
       {
         Name = "PLANE:6:LARGE";
-        Index = 667;
+        Index = 664;
         LinkTrId = 0;
         XPos = 134555.961;
         YPos = 60.770;
@@ -11041,12 +11041,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 668;
+        Index = 665;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 669;
+          Index = 666;
           LinkTrId = 0;
           XPos = 134559.468;
           YPos = 60.770;
@@ -11071,7 +11071,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 670;
+        Index = 667;
         LinkTrId = 0;
         XPos = 134545.597;
         YPos = 60.770;
@@ -11096,12 +11096,12 @@ Group
     Group
     {
       Name = "PLANE:6:6:MEDIUM";
-      Index = 671;
+      Index = 668;
       Desc = "";
       Block
       {
         Name = "PLANE:6:6:MEDIUM";
-        Index = 672;
+        Index = 669;
         LinkTrId = 0;
         XPos = 134569.497;
         YPos = 60.770;
@@ -11123,12 +11123,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 673;
+        Index = 670;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 674;
+          Index = 671;
           LinkTrId = 0;
           XPos = 134559.700;
           YPos = 60.770;
@@ -11156,12 +11156,12 @@ Group
     Group
     {
       Name = "PLANE:6:LARGE:CAMO";
-      Index = 675;
+      Index = 672;
       Desc = "";
       Block
       {
         Name = "PLANE:6:LARGE:CAMO";
-        Index = 676;
+        Index = 673;
         LinkTrId = 0;
         XPos = 134460.280;
         YPos = 60.770;
@@ -11183,7 +11183,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 677;
+        Index = 674;
         LinkTrId = 0;
         XPos = 134450.720;
         YPos = 60.770;
@@ -11208,12 +11208,12 @@ Group
     Group
     {
       Name = "PLANE:6:LARGE";
-      Index = 678;
+      Index = 675;
       Desc = "";
       Block
       {
         Name = "PLANE:6:LARGE";
-        Index = 679;
+        Index = 676;
         LinkTrId = 0;
         XPos = 134535.818;
         YPos = 60.770;
@@ -11235,12 +11235,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 680;
+        Index = 677;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 681;
+          Index = 678;
           LinkTrId = 0;
           XPos = 134519.743;
           YPos = 60.770;
@@ -11265,7 +11265,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 682;
+        Index = 679;
         LinkTrId = 0;
         XPos = 134522.211;
         YPos = 60.770;
@@ -11290,12 +11290,12 @@ Group
     Group
     {
       Name = "PLANE:6:6:SMALL";
-      Index = 683;
+      Index = 680;
       Desc = "";
       Block
       {
         Name = "PLANE:6:6:SMALL";
-        Index = 684;
+        Index = 681;
         LinkTrId = 0;
         XPos = 134592.517;
         YPos = 60.770;
@@ -11317,7 +11317,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 685;
+        Index = 682;
         LinkTrId = 0;
         XPos = 134586.417;
         YPos = 60.770;
@@ -11342,12 +11342,12 @@ Group
     Group
     {
       Name = "PLANE:6:6:LARGE";
-      Index = 686;
+      Index = 683;
       Desc = "";
       Block
       {
         Name = "PLANE:6:6:LARGE";
-        Index = 687;
+        Index = 684;
         LinkTrId = 0;
         XPos = 134506.870;
         YPos = 60.770;
@@ -11369,7 +11369,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 688;
+        Index = 685;
         LinkTrId = 0;
         XPos = 134509.717;
         YPos = 60.770;
@@ -11397,12 +11397,12 @@ Group
   Group
   {
     Name = "PLANE:7";
-    Index = 689;
+    Index = 686;
     Desc = "";
     Block
     {
       Name = "PLANE:7:7:SMALL";
-      Index = 690;
+      Index = 687;
       LinkTrId = 0;
       XPos = 134106.512;
       YPos = 60.770;
@@ -11424,7 +11424,7 @@ Group
     Block
     {
       Name = "PLANE:7:7:SMALL";
-      Index = 691;
+      Index = 688;
       LinkTrId = 0;
       XPos = 134105.876;
       YPos = 60.770;
@@ -11446,7 +11446,7 @@ Group
     Block
     {
       Name = "PLANE:7:7:MEDIUM";
-      Index = 692;
+      Index = 689;
       LinkTrId = 0;
       XPos = 134109.196;
       YPos = 60.770;
@@ -11468,7 +11468,7 @@ Group
     Block
     {
       Name = "PLANE:7:7:MEDIUM:CAMO";
-      Index = 693;
+      Index = 690;
       LinkTrId = 0;
       XPos = 134105.494;
       YPos = 60.770;
@@ -11490,12 +11490,12 @@ Group
     Group
     {
       Name = "PLANE:7:7:SMALL";
-      Index = 694;
+      Index = 691;
       Desc = "";
       Block
       {
         Name = "PLANE:7:7:SMALL";
-        Index = 695;
+        Index = 692;
         LinkTrId = 0;
         XPos = 134106.866;
         YPos = 60.770;
@@ -11517,7 +11517,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 696;
+        Index = 693;
         LinkTrId = 0;
         XPos = 134109.183;
         YPos = 60.770;
@@ -11542,12 +11542,12 @@ Group
     Group
     {
       Name = "PLANE:7:7:MEDIUM";
-      Index = 697;
+      Index = 694;
       Desc = "";
       Block
       {
         Name = "PLANE:7:7:MEDIUM";
-        Index = 698;
+        Index = 695;
         LinkTrId = 0;
         XPos = 134127.151;
         YPos = 60.770;
@@ -11569,12 +11569,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 699;
+        Index = 696;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 700;
+          Index = 697;
           LinkTrId = 0;
           XPos = 134114.555;
           YPos = 60.770;
@@ -11599,7 +11599,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 701;
+        Index = 698;
         LinkTrId = 0;
         XPos = 134120.252;
         YPos = 60.770;
@@ -11624,12 +11624,12 @@ Group
     Group
     {
       Name = "PLANE:7:MEDIUM";
-      Index = 702;
+      Index = 699;
       Desc = "";
       Block
       {
         Name = "PLANE:7:MEDIUM";
-        Index = 703;
+        Index = 700;
         LinkTrId = 0;
         XPos = 134132.782;
         YPos = 60.770;
@@ -11651,12 +11651,12 @@ Group
       Group
       {
         Name = "TRUCK:FUEL";
-        Index = 704;
+        Index = 701;
         Desc = "";
         Block
         {
           Name = "TRUCK:FUEL";
-          Index = 705;
+          Index = 702;
           LinkTrId = 0;
           XPos = 134144.584;
           YPos = 60.770;
@@ -11684,12 +11684,12 @@ Group
     Group
     {
       Name = "PLANE:7:MEDIUM:CAMO";
-      Index = 706;
+      Index = 703;
       Desc = "";
       Block
       {
         Name = "PLANE:7:MEDIUM:CAMO";
-        Index = 707;
+        Index = 704;
         LinkTrId = 0;
         XPos = 134076.540;
         YPos = 60.770;
@@ -11711,7 +11711,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 708;
+        Index = 705;
         LinkTrId = 0;
         XPos = 134068.261;
         YPos = 60.770;
@@ -11739,12 +11739,12 @@ Group
   Group
   {
     Name = "PLANE:8";
-    Index = 709;
+    Index = 706;
     Desc = "";
     Block
     {
       Name = "PLANE:8:0:LARGE";
-      Index = 710;
+      Index = 707;
       LinkTrId = 0;
       XPos = 135014.453;
       YPos = 60.770;
@@ -11766,7 +11766,7 @@ Group
     Block
     {
       Name = "PLANE:8:LARGE:CAMO";
-      Index = 711;
+      Index = 708;
       LinkTrId = 0;
       XPos = 134932.988;
       YPos = 60.770;
@@ -11788,7 +11788,7 @@ Group
     Block
     {
       Name = "PLANE:8:LARGE:CAMO";
-      Index = 712;
+      Index = 709;
       LinkTrId = 0;
       XPos = 135046.959;
       YPos = 60.770;
@@ -11810,12 +11810,12 @@ Group
     Group
     {
       Name = "PLANE:8:LARGE";
-      Index = 713;
+      Index = 710;
       Desc = "";
       Block
       {
         Name = "PLANE:8:LARGE";
-        Index = 714;
+        Index = 711;
         LinkTrId = 0;
         XPos = 135062.243;
         YPos = 60.770;
@@ -11837,12 +11837,12 @@ Group
       Group
       {
         Name = "TRUCK:CARGO";
-        Index = 715;
+        Index = 712;
         Desc = "";
         Block
         {
           Name = "TRUCK:CARGO";
-          Index = 716;
+          Index = 713;
           LinkTrId = 0;
           XPos = 135050.996;
           YPos = 60.770;
@@ -11867,7 +11867,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 717;
+        Index = 714;
         LinkTrId = 0;
         XPos = 135051.180;
         YPos = 60.770;
@@ -11892,12 +11892,12 @@ Group
     Group
     {
       Name = "PLANE:8:0:HUGE";
-      Index = 718;
+      Index = 715;
       Desc = "";
       Block
       {
         Name = "PLANE:8:0:HUGE";
-        Index = 719;
+        Index = 716;
         LinkTrId = 0;
         XPos = 135008.098;
         YPos = 60.770;
@@ -11919,7 +11919,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 720;
+        Index = 717;
         LinkTrId = 0;
         XPos = 135000.138;
         YPos = 60.770;
@@ -11944,12 +11944,12 @@ Group
     Group
     {
       Name = "PLANE:8:0:HUGE";
-      Index = 721;
+      Index = 718;
       Desc = "";
       Block
       {
         Name = "PLANE:8:0:HUGE";
-        Index = 722;
+        Index = 719;
         LinkTrId = 0;
         XPos = 134904.683;
         YPos = 60.770;
@@ -11971,7 +11971,7 @@ Group
       Block
       {
         Name = "DECO";
-        Index = 723;
+        Index = 720;
         LinkTrId = 0;
         XPos = 134894.413;
         YPos = 60.770;
@@ -11999,7 +11999,7 @@ Group
   Airfield
   {
     Name = "TAXI:1:1";
-    Index = 724;
+    Index = 721;
     LinkTrId = 0;
     XPos = 134541.788;
     YPos = 60.770;
@@ -12143,7 +12143,7 @@ Group
   Airfield
   {
     Name = "TAXI:2:1";
-    Index = 725;
+    Index = 722;
     LinkTrId = 0;
     XPos = 135613.450;
     YPos = 60.770;
@@ -12311,7 +12311,7 @@ Group
   Airfield
   {
     Name = "TAXI:3:1";
-    Index = 726;
+    Index = 723;
     LinkTrId = 0;
     XPos = 135877.868;
     YPos = 60.770;
@@ -12449,7 +12449,7 @@ Group
   Airfield
   {
     Name = "TAXI:4:2:INV";
-    Index = 727;
+    Index = 724;
     LinkTrId = 0;
     XPos = 134553.144;
     YPos = 60.770;
@@ -12629,7 +12629,7 @@ Group
   Airfield
   {
     Name = "TAXI:5:2:INV";
-    Index = 728;
+    Index = 725;
     LinkTrId = 0;
     XPos = 134794.022;
     YPos = 60.770;
@@ -12821,7 +12821,7 @@ Group
   Airfield
   {
     Name = "TAXI:6:2:INV";
-    Index = 729;
+    Index = 726;
     LinkTrId = 0;
     XPos = 134535.619;
     YPos = 60.770;
@@ -12995,7 +12995,7 @@ Group
   Airfield
   {
     Name = "TAXI:7:2:INV";
-    Index = 730;
+    Index = 727;
     LinkTrId = 0;
     XPos = 134141.015;
     YPos = 60.770;
@@ -13157,7 +13157,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 731;
+    Index = 728;
     LinkTrId = 0;
     XPos = 135948.830;
     YPos = 60.770;
@@ -13179,7 +13179,7 @@ Group
   Block
   {
     Name = "DECO";
-    Index = 732;
+    Index = 729;
     LinkTrId = 0;
     XPos = 135946.691;
     YPos = 60.770;
@@ -13201,7 +13201,7 @@ Group
   Block
   {
     Name = "Block";
-    Index = 733;
+    Index = 730;
     LinkTrId = 0;
     XPos = 134611.501;
     YPos = 60.770;
