@@ -6,12 +6,12 @@
 	"author": "Simas Toleikis <simast@gmail.com>",
 	"dependencies": {
 		"commander": "2.9.0",
-		"moment": "2.11.1",
+		"moment": "2.11.2",
 		"require-directory": "2.1.1",
 		"lex": "1.7.9",
 		"random-js": "1.0.8",
 		"winston": "2.1.1",
-		"speakingurl": "8.0.2",
+		"speakingurl": "9.0.0",
 		"mustache": "2.2.1",
 		"numeral": "1.5.3",
 		"rbush": "1.4.2",
@@ -26,6 +26,6 @@
 		"grunt-jscs": "2.7.0",
 		"json5": "0.4.0",
 		"enclose": "1.1.0",
-		"sloc": "0.1.9"
+		"sloc": "0.1.10"
 	}
 }
