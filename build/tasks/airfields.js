@@ -234,7 +234,7 @@ module.exports = function(grunt) {
 
 							// Item position
 							jsonItem.push(positionX);
-							jsonItem.push(positionY === json.position[1] ? 0 : positionY);
+							jsonItem.push(positionY);
 							jsonItem.push(positionZ);
 
 							// Item orientation

@@ -311,11 +311,6 @@ module.exports = function makeAirfields() {
 			items.forEach((item) => {
 
 				const itemTypeID = item[0];
-				
-				// Set item Y position to airfield Y position when the value is 0
-				if (item[2] === 0) {
-					item[2] = airfield.position[1];
-				}
 
 				// Process item group
 				if (Array.isArray(itemTypeID)) {
