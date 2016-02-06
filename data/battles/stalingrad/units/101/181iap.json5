@@ -6,7 +6,9 @@
 		airfields: [
 			// 235 IAD
 			["elton", "1942-11-07", "1942-11-07", 0],
-			["konstitutsiya", "1942-11-07", "end"]
+			["konstitutsiya", "1942-11-07", "1942-12-04"],
+			["abganerovo", "1942-12-04", "1943-01-23"],
+			["kotelnikovsky", "1943-01-23", "end"]
 		],
 		planes: [
 			// TOE 015/284 (32 aircraft)

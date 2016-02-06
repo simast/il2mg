@@ -1,0 +1,15 @@
+{
+	// 873 ShAP
+	"873shap": {
+		name: "873 ShAP",
+		role: "ground_attack",
+		airfields: [
+			// 206 IAD/ShAD
+			["aksay", "start", "1942-08-02"],
+			["beketovka", "1942-08-02", "1942-08-22"]
+		],
+		planes: [
+			["il2m42", [18, 6], "start", "1942-08-22"]
+		]
+	}
+}
