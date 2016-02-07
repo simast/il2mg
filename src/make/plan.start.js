@@ -1,7 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
 const MCU_Icon = require("../item").MCU_Icon;
 
 // Make plan start action
@@ -10,7 +9,6 @@ module.exports = function makePlanStart(action, element, flight, input) {
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];
 	const isAirStart = (typeof element.state === "number");
-	const task = flight.task;
 
 	// Set element planes to an air start position
 	if (isAirStart) {
@@ -40,16 +38,9 @@ module.exports = function makePlanStart(action, element, flight, input) {
 		const startIcon = flight.startIcon = flight.group.createItem("MCU_Icon");
 		
 		startIcon.setPosition(airfield.position);
-		startIcon.Coalitions = [data.countries[flight.country].coalition];
-		
-		// Use action point icon for local tasks
-		if (task.local) {
-			startIcon.IconId = MCU_Icon.ICON_ACTION_POINT;
-		}
-		// Use regular take off icon
-		else {
-			startIcon.IconId = MCU_Icon.ICON_TAKE_OFF;
-		}
+		startIcon.Coalitions = [flight.coalition];
+		startIcon.IconId = MCU_Icon.ICON_ACTION_POINT;
+		startIcon.LineType = MCU_Icon.LINE_SECTOR_4;
 	}
 
 	// Player-only spawn without valid taxi route

@@ -24,6 +24,9 @@ data.languages = Object.freeze([
 	"eng" // English
 ]);
 
+// Map grid size (in meters) for territories and fronts
+data.gridSize = 5000; // 5 km
+
 // Data tags for special airfield items
 data.itemTag = Object.freeze({
 	PLANE: -1, // Plane spot
@@ -135,6 +138,7 @@ data.planAction = Object.freeze({
 // Map colors as RGB array values
 data.mapColor = Object.freeze({
 	ATTACK: [156, 156, 156],
+	ROUTE: [48, 48, 48],
 	// NOTE: Special color values that will change in-game based on user settings
 	ENEMY: [10, 0, 0],
 	FRIEND: [0, 0, 10]

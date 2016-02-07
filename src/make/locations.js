@@ -3,6 +3,7 @@
 
 const rbush = require("rbush");
 const knn = require("rbush-knn");
+const Vector = require("sylvester").Vector;
 const data = require("../data");
 const log = require("../log");
 
@@ -128,6 +129,11 @@ class Location {
 	get z() { return (this.z1 + this.z2) / 2; }
 	set x(x) { this.x1 = this.x2 = x; }
 	set z(z) { this.z1 = this.z2 = z; }
+	
+	// Get location as a 2D vector object
+	get vector() {
+		return Vector.create([this.x, this.z]);
+	}
 }
 
 // Location index (based on an optimized R-tree data structure)

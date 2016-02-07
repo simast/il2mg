@@ -74,6 +74,7 @@ function makeFlight(params) {
 	flight.unit = unitID;
 	flight.airfield = unit.airfield;
 	flight.country = unit.country;
+	flight.coalition = unit.coalition;
 	flight.state = params.state;
 
 	// Set default flight state (parking start without engine running)

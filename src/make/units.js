@@ -507,7 +507,7 @@ module.exports = function makeUnits() {
 			unitsByAirfield[unit.airfield][unitID] = unit;
 
 			// Register unit to coalition index
-			const coalitionID = data.countries[unit.country].coalition;
+			const coalitionID = unit.coalition = data.countries[unit.country].coalition;
 			unitsByCoalition[coalitionID] = unitsByCoalition[coalitionID] || Object.create(null);
 			unitsByCoalition[coalitionID][unitID] = unit;
 
