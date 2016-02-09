@@ -13,7 +13,7 @@ const coalition = data.coalition;
 
 // Map grid size
 // NOTE: Territories will be more precise with smaller grid size
-const GRID_SIZE = data.gridSize;
+const GRID_SIZE = 5000; // 5 km
 const GRID_SIZE_HALF = GRID_SIZE / 2;
 
 // Generate mission fronts and territories

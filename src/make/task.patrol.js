@@ -8,72 +8,107 @@ const makeFlightRoute = require("./flight.route");
 // Data constants
 const planAction = data.planAction;
 const territory = data.territory;
-const gridSize = data.gridSize;
 
 // Make mission defensive patrol task
 module.exports = function makeTaskPatrol(flight) {
 	
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];
-	const fronts = this.locations.territories[territory.FRONT];
-	let foundFronts;
-	let from = airfield.position;
-	const homeLocation = new Location(from[0], from[2]);
+	const territories = this.locations.territories;
+	const patrolStart = new Location(airfield.position[0], airfield.position[2]);
 	
-	// 50% chance to use nearby fronts for patrol area
-	if (rand.bool(0.5)) {
+	// Max patrol area range is 25% of max aircraft fuel range
+	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
+	const maxPatrolRange = maxPlaneRange * 0.25;
+	
+	// Patrol area bounds as a rectangular location around the start point
+	const patrolBounds = new Location(
+		patrolStart.x - maxPatrolRange,
+		patrolStart.z - maxPatrolRange,
+		patrolStart.x + maxPatrolRange,
+		patrolStart.z + maxPatrolRange
+	);
+	
+	// Min/max distance for patrol area points (depends on max aircraft range)
+	const minArea = maxPlaneRange / 20; // 5% max range
+	const maxArea = maxPlaneRange / 10; // 10% max range
+	
+	let patrolA;
+	let patrolB;
+	
+	// Select base two (A and B) front points for patrol area
+	const findPatrolPoints = (locations) => {
 		
-		// NOTE: Get all front points over ~50 Km front. On average there will be
-		// three front points per grid size (one on the front line and two nearby).
-		const maxPoints = Math.max(Math.round((50000 * 3) / gridSize), 2);
+		if (!locations.length) {
+			return;
+		}
 		
-		foundFronts = fronts.findNear(homeLocation, maxPoints);
-	}
-	// 25% chance to select patrol area from all fronts
-	else {
-		foundFronts = fronts.findAll();
-	}
-	
-	// TODO: Use offmap enemy reference points when front lines are not available
-	
-	// Make sure front point selection is randomized
-	rand.shuffle(foundFronts);
-	
-	const route = [];
-	let ingress;
-	let egress;
-	
-	// Select two points for ingress/egress
-	for (const location of foundFronts) {
+		// Make sure location selection is randomized
+		rand.shuffle(locations);
 		
-		// Use first (random) ingress front location
-		if (!ingress) {
+		do {
 			
-			// TODO: Ignore front points outside 20% fuel range
-			if (homeLocation.vector.distanceFrom(location.vector) > 100000) {
+			const location = locations.shift();
+			const locationVector = location.vector;
+			const distance = patrolStart.vector.distanceFrom(locationVector);
+			
+			// Ignore front points outside max patrol range
+			// NOTE: Required as search results from r-tree are within rectangle bounds
+			if (distance > maxPatrolRange) {
 				continue;
 			}
 			
-			ingress = location;
-			continue;
+			// NOTE: Chance to use this location will decrease with distance (with
+			// at least 10% always guaranteed chance).
+			const useLocation = rand.bool(Math.max(0.1, 1 - (distance / maxPatrolRange)));
+			
+			// Use location for another chance pass
+			if (!useLocation && locations.length) {
+				
+				locations.push(location);
+				continue;
+			}
+			
+			// Pick location A
+			if (!patrolA) {
+				patrolA = location;
+			}
+			// Pick location B
+			else {
+				
+				const distanceAB = patrolA.vector.distanceFrom(locationVector);
+				
+				// Search for a location matching min/max patrol area bounds
+				if (distanceAB >= minArea && distanceAB <= maxArea) {
+					
+					patrolB = location;
+					break; // Found both locations
+				}
+			}
 		}
+		while (locations.length);
+	};
+	
+	// Option 1: Find patrol points from fronts within max patrol range
+	findPatrolPoints(territories[territory.FRONT].findIn(patrolBounds));
+	
+	// Option 2: Find patrol points on friendly territory within max patrol range
+	if (!patrolA || !patrolB) {
 		
-		egress = location;
-		
-		const egressDistance = ingress.vector.distanceFrom(location.vector);
-		
-		// Search for an egress location between 25 and 50 Km away from ingress
-		if (egressDistance >= 25000 && egressDistance <= 50000) {
-			break;
-		}
+		// TODO: Use enemy offmap airfields as a reference for front direction
+		findPatrolPoints(territories[flight.coalition].findIn(patrolBounds));
 	}
 	
-	for (const location of [ingress, egress]) {
+	const route = [];
+	let fromPoint = airfield.position;
+	
+	// TODO: Generate two additional patrol area points
+	for (const location of [patrolA, patrolB]) {
 		
 		const options = {};
 		
 		// Hide route map lines for patrol area spots
-		if (location !== ingress) {
+		if (location !== patrolA) {
 			options.hidden = true;
 		}
 		// Mark route as ingress
@@ -81,22 +116,22 @@ module.exports = function makeTaskPatrol(flight) {
 			options.ingress = true;
 		}
 		
-		const to = [
+		const toPoint = [
 			rand.integer(location.x1, location.x2),
 			1500, // TODO
 			rand.integer(location.z1, location.z2)
 		];
 		
-		const spots = makeFlightRoute.call(this, flight, from, to, options);
+		const spots = makeFlightRoute.call(this, flight, fromPoint, toPoint, options);
 		
 		route.push.apply(route, spots);
-		from = spots.pop().point;
+		fromPoint = spots.pop().point;
 	}
 	
-	// Make final (back to the airfield) egress route
+	// Make final (back to the base) egress route
 	route.push.apply(
 		route,
-		makeFlightRoute.call(this, flight, from, null, {egress: true})
+		makeFlightRoute.call(this, flight, fromPoint, null, {egress: true})
 	);
 	
 	// Add patrol task fly action

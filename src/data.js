@@ -24,9 +24,6 @@ data.languages = Object.freeze([
 	"eng" // English
 ]);
 
-// Map grid size (in meters) for territories and fronts
-data.gridSize = 5000; // 5 km
-
 // Data tags for special airfield items
 data.itemTag = Object.freeze({
 	PLANE: -1, // Plane spot

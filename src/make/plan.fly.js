@@ -11,13 +11,13 @@ const mapColor = data.mapColor;
 module.exports = function makePlanFly(action, element, flight, input) {
 
 	const leaderElement = flight.elements[0];
+	const route = action.route;
 
-	// Proccess fly action only for leading element
-	if (element !== leaderElement) {
+	// Proccess fly action only for leading element and with valid route
+	if (element !== leaderElement || !Array.isArray(route) || !route.length) {
 		return;
 	}
 	
-	const route = action.route;
 	const leaderPlaneItem = element[0].item;
 	let lastWaypoint = null;
 	
