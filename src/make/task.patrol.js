@@ -18,6 +18,7 @@ module.exports = function makeTaskPatrol(flight) {
 	const territories = this.locations.territories;
 	const startLocation = new Location(airfield.position[0], airfield.position[2]);
 	const startVector = startLocation.vector;
+	const isPlayerFlightLeader = (flight.player === flight.leader);
 	
 	// Max patrol area range is 25% of max aircraft fuel range
 	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
@@ -180,12 +181,8 @@ module.exports = function makeTaskPatrol(flight) {
 		
 		const options = Object.create(null);
 		
-		// Hide route map lines for patrol area spots
-		if (point !== ingressPoint) {
-			options.hidden = true;
-		}
 		// Mark route as ingress
-		else {
+		if (point === ingressPoint) {
 			options.ingress = true;
 		}
 		
@@ -216,12 +213,24 @@ module.exports = function makeTaskPatrol(flight) {
 	// Make final (back to the base) egress route
 	route.push.apply(
 		route,
-		makeFlightRoute.call(this, flight, ingressPoint, null, {egress: true})
+		makeFlightRoute.call(
+			this,
+			flight,
+			ingressPoint,
+			null, // Use flight airfield
+			{
+				egress: true,
+				hidden: true // Don't show map egress route lines for patrol task
+			}
+		)
 	);
 	
 	// Add patrol task fly action
 	flight.plan.push({
 		type: planAction.FLY,
-		route: route
+		route: route,
+		draw: Boolean(flight.player) && !isPlayerFlightLeader
 	});
+	
+	// TODO: Draw patrol area zone when player is flight leader
 };

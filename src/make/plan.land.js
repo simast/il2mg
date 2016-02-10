@@ -6,7 +6,15 @@ module.exports = function makePlanLand(action, element, flight, input) {
 
 	// TODO: Remove/delete flight planes at destination if it's not possible to land
 	if (!flight.taxi) {
-		return;
+		return input;
+	}
+	
+	const isPlayerFlightLeader = (flight.player === flight.leader);
+	const debugFlights = Boolean(this.debug && this.debug.flights);
+	
+	// NOTE: Land command will not be generated when player is a flight leader!
+	if (isPlayerFlightLeader && !debugFlights) {
+		return input;
 	}
 	
 	const rand = this.rand;

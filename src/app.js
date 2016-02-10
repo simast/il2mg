@@ -38,6 +38,7 @@ if (!data.isBinary) {
 
 		desc += '\t"airfields" - Debug airfields.' + EOL;
 		desc += '\t"fronts" - Debug fronts and territories.' + EOL;
+		desc += '\t"flights" - Debug flights.' + EOL;
 
 		return desc;
 	})(), (value) => {

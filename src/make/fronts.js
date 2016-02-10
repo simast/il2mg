@@ -51,11 +51,7 @@ module.exports = function makeFronts() {
 	}
 	
 	// Set debug mode flag
-	let debugFronts = false;
-	
-	if (this.debug && this.debug.fronts) {
-		debugFronts = true;
-	}
+	const debugFronts = Boolean(this.debug && this.debug.fronts);
 
 	// Load fronts data file
 	const frontsData = require(this.battlePath + "fronts/" + frontsFile);

@@ -19,67 +19,86 @@ module.exports = function makePlanFly(action, element, flight, input) {
 	}
 	
 	const leaderPlaneItem = element[0].item;
+	const isPlayerFlightLeader = (flight.player === flight.leader);
+	const debugFlights = Boolean(this.debug && this.debug.flights);
 	let lastWaypoint = null;
+	let enableCommands = true;
+	let drawIcons = Boolean(action.draw) || debugFlights;
 	
-	for (const spot of route) {
+	// NOTE: No route commands will be generated when player is a flight leader!
+	if (isPlayerFlightLeader && !debugFlights) {
+		enableCommands = false;
+	}
+	
+	for (let spot of route) {
 		
 		// Support for special flight route loop pattern marker
 		if (Array.isArray(spot)) {
 			
-			const loopWaypoint = route[spot[0]].waypoint;
-			const waitCounter = flight.group.createItem("MCU_Counter");
-			const waitTimer = flight.group.createItem("MCU_Timer");
+			const loopSpotIndex = spot[0];
+			const loopTime = spot[1];
 			
-			waitTimer.Time = spot[1];
-			waitCounter.setPositionNear(loopWaypoint);
-			waitTimer.setPositionNear(waitCounter);
+			spot = route[loopSpotIndex];
 			
-			// NOTE: Using a counter to make sure loop timer is activated only once!
+			if (enableCommands) {
 			
-			lastWaypoint.addTarget(loopWaypoint);
-			loopWaypoint.addTarget(waitCounter);
-			waitCounter.addTarget(waitTimer);
+				// NOTE: Using a counter to make sure loop timer is activated only once!
+				const waitCounter = flight.group.createItem("MCU_Counter");
+				const waitTimer = flight.group.createItem("MCU_Timer");
+				
+				waitTimer.Time = loopTime;
+				waitCounter.setPositionNear(spot.waypoint);
+				waitTimer.setPositionNear(waitCounter);
+				
+				lastWaypoint.addTarget(spot.waypoint);
+				spot.waypoint.addTarget(waitCounter);
+				waitCounter.addTarget(waitTimer);
+				
+				lastWaypoint = waitTimer;
+			}
+		}
+		// Create waypoint for a non-looping spot
+		else if (enableCommands && !spot.waypoint) {
 			
-			lastWaypoint = waitTimer;
+			const waypoint = spot.waypoint = flight.group.createItem("MCU_Waypoint");
 			
-			continue;
+			waypoint.addObject(leaderPlaneItem);
+			waypoint.setPosition(spot.point);
+			
+			// TODO:
+			waypoint.Speed = spot.speed;
+			waypoint.Area = 1000;
+			
+			if (spot.priority !== undefined) {
+				waypoint.Priority = spot.priority;
+			}
+			
+			// Connect initial (first) waypoint with previous action
+			// TODO: Leading element should wait for other elements
+			if (!lastWaypoint) {
+				input(waypoint);
+			}
+			// Connect this waypoint to last waypoint
+			else {
+				lastWaypoint.addTarget(waypoint);
+			}
+			
+			lastWaypoint = waypoint;
 		}
 		
-		const isLastSpot = (spot === route[route.length - 1]);
-		const waypoint = spot.waypoint = flight.group.createItem("MCU_Waypoint");
-		
-		waypoint.addObject(leaderPlaneItem);
-		waypoint.setPosition(spot.point);
-		
-		// TODO:
-		waypoint.Speed = spot.speed;
-		waypoint.Area = 1000;
-		
-		if (spot.priority !== undefined) {
-			waypoint.Priority = spot.priority;
-		}
-		
-		// Connect initial (first) waypoint with previous action
-		// TODO: Leading element should wait for other elements
-		if (!lastWaypoint) {
-			input(waypoint);
-		}
-		// Connect this waypoint to last waypoint
-		else {
-			lastWaypoint.addTarget(waypoint);
-		}
-		
-		lastWaypoint = waypoint;
-		
-		// Draw flight route on the map for a player flight
-		// TODO: Draw only when player is not a flight leader
-		if (flight.player) {
+		// Draw flight route on the map
+		if (drawIcons && !spot.hidden) {
 			
+			const isFinalSpot = (spot === route[route.length - 1]);
 			const lastSpotIcon = flight.lastSpotIcon || flight.startIcon;
 			let spotIcon;
 			
+			// Reuse already existing icon (from a looping pattern)
+			if (spot.icon) {
+				spotIcon = spot.icon;
+			}
 			// Reuse starting icon for last home return (egress) spot
-			if (spot.egress && isLastSpot) {
+			else if (spot.egress && isFinalSpot) {
 				spotIcon = flight.startIcon;
 			}
 			// Create a new spot icon
@@ -92,23 +111,24 @@ module.exports = function makePlanFly(action, element, flight, input) {
 				spotIcon.IconId = MCU_Icon.ICON_WAYPOINT;
 			}
 			
-			if (!spot.hidden) {
-				
-				lastSpotIcon.addTarget(spotIcon);
-				lastSpotIcon.setColor(mapColor.ROUTE);
-				
-				// Use dashed line for return egress route
-				if (spot.egress) {
-					lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_4;
-				}
-				// Use normal solid route line
-				else {
-					lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_3;
-				}
+			lastSpotIcon.addTarget(spotIcon);
+			lastSpotIcon.setColor(mapColor.ROUTE);
+			
+			// Use normal solid line for ingress route
+			if (spot.ingress && !spot.icon) {
+				lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_3;
+			}
+			// Use dashed line for other routes
+			else {
+				lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_4;
 			}
 			
-			flight.lastSpotIcon = spotIcon;
+			flight.lastSpotIcon = spot.icon = spotIcon;
 		}
+	}
+	
+	if (!enableCommands) {
+		return input;
 	}
 
 	// Connect next plan action with last waypoint
