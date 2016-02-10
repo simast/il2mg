@@ -23,8 +23,30 @@ module.exports = function makePlanFly(action, element, flight, input) {
 	
 	for (const spot of route) {
 		
+		// Support for special flight route loop pattern marker
+		if (Array.isArray(spot)) {
+			
+			const loopWaypoint = route[spot[0]].waypoint;
+			const waitCounter = flight.group.createItem("MCU_Counter");
+			const waitTimer = flight.group.createItem("MCU_Timer");
+			
+			waitTimer.Time = spot[1];
+			waitCounter.setPositionNear(loopWaypoint);
+			waitTimer.setPositionNear(waitCounter);
+			
+			// NOTE: Using a counter to make sure loop timer is activated only once!
+			
+			lastWaypoint.addTarget(loopWaypoint);
+			loopWaypoint.addTarget(waitCounter);
+			waitCounter.addTarget(waitTimer);
+			
+			lastWaypoint = waitTimer;
+			
+			continue;
+		}
+		
 		const isLastSpot = (spot === route[route.length - 1]);
-		const waypoint = flight.group.createItem("MCU_Waypoint");
+		const waypoint = spot.waypoint = flight.group.createItem("MCU_Waypoint");
 		
 		waypoint.addObject(leaderPlaneItem);
 		waypoint.setPosition(spot.point);

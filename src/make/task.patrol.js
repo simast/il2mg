@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
+const Vector = require("sylvester").Vector;
 const data = require("../data");
 const Location = require("./locations").Location;
 const makeFlightRoute = require("./flight.route");
@@ -9,13 +10,14 @@ const makeFlightRoute = require("./flight.route");
 const planAction = data.planAction;
 const territory = data.territory;
 
-// Make mission defensive patrol task
+// Make mission patrol area task
 module.exports = function makeTaskPatrol(flight) {
 	
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];
 	const territories = this.locations.territories;
-	const patrolStart = new Location(airfield.position[0], airfield.position[2]);
+	const startLocation = new Location(airfield.position[0], airfield.position[2]);
+	const startVector = startLocation.vector;
 	
 	// Max patrol area range is 25% of max aircraft fuel range
 	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
@@ -23,10 +25,10 @@ module.exports = function makeTaskPatrol(flight) {
 	
 	// Patrol area bounds as a rectangular location around the start point
 	const patrolBounds = new Location(
-		patrolStart.x - maxPatrolRange,
-		patrolStart.z - maxPatrolRange,
-		patrolStart.x + maxPatrolRange,
-		patrolStart.z + maxPatrolRange
+		startLocation.x - maxPatrolRange,
+		startLocation.z - maxPatrolRange,
+		startLocation.x + maxPatrolRange,
+		startLocation.z + maxPatrolRange
 	);
 	
 	// Min/max distance for patrol area points (depends on max aircraft range)
@@ -50,7 +52,7 @@ module.exports = function makeTaskPatrol(flight) {
 			
 			const location = locations.shift();
 			const locationVector = location.vector;
-			const distance = patrolStart.vector.distanceFrom(locationVector);
+			const distance = startVector.distanceFrom(locationVector);
 			
 			// Ignore front points outside max patrol range
 			// NOTE: Required as search results from r-tree are within rectangle bounds
@@ -99,16 +101,87 @@ module.exports = function makeTaskPatrol(flight) {
 		findPatrolPoints(territories[flight.coalition].findIn(patrolBounds));
 	}
 	
+	const patrolPoints = [];
+	
+	// Build base patrol area points
+	for (const location of rand.shuffle([patrolA, patrolB])) {
+		
+		patrolPoints.push([
+			rand.integer(location.x1, location.x2),
+			rand.integer(location.z1, location.z2)
+		]);
+	}
+	
+	// TODO: Use less extra points for larger patrol areas?
+	const numExtraPoints = rand.integer(1, 2);
+	
+	// Generate one or two additional patrol area points
+	for (let p = 0; p < numExtraPoints; p++) {
+		
+		const pointA = patrolPoints[p];
+		const pointB = patrolPoints[(p + 1) % 2];
+		
+		// Distance vector between both base points
+		let vectorAB = Vector.create([
+			pointB[0] - pointA[0],
+			pointB[1] - pointA[1]
+		]);
+		
+		// Rotate vector to the right by random angle
+		// TODO: Use lower rotation angles for larger patrol areas?
+		const rotMin = Math.PI / 6; // 30 degrees in radians
+		const rotMax = Math.PI / 3; // 60 degrees in radians
+		const rotDelta = rotMax - rotMin; // 30 degrees in radians
+		const rotAngle = rand.real(rotMin, rotMax, true);
+		
+		vectorAB = vectorAB.rotate(rotAngle, Vector.Zero(2));
+		
+		// Scale vector based on the rotation
+		const scaleMin = 1 / 3; // 33%
+		const scaleMax = 1 - 1 / 3; // 66%
+		const scaleDelta = scaleMax - scaleMin; // 33%
+		const scaleFactor = scaleMin + scaleDelta * (1 - (rotAngle - rotMin) / rotDelta);
+		
+		vectorAB = vectorAB.multiply(scaleFactor);
+		
+		// Build final (result) point vector
+		const pointVector = Vector.create(pointA).add(vectorAB);
+		
+		patrolPoints.push([
+			Math.round(pointVector.e(1)),
+			Math.round(pointVector.e(2))
+		]);
+	}
+	
+	// Sort patrol area points based on distance from patrol start
+	patrolPoints.sort((a, b) => {
+		
+		const distanceA = startVector.distanceFrom(Vector.create(a));
+		const distanceB = startVector.distanceFrom(Vector.create(b));
+		
+		return distanceA - distanceB;
+	});
+	
+	// NOTE: The first (ingress) patrol point will always be the closest one and
+	// the rest will be shuffled (may produce intersecting pattern with 4 points).
+	let ingressPoint = patrolPoints.shift();
+	rand.shuffle(patrolPoints);
+	patrolPoints.unshift(ingressPoint);
+	
+	// TODO: Set patrol altitude based on plane type and cloud coverage
+	const altitude = 1500;
+	
 	const route = [];
+	let loopSpotIndex = 0;
 	let fromPoint = airfield.position;
 	
-	// TODO: Generate two additional patrol area points
-	for (const location of [patrolA, patrolB]) {
+	// Build patrol area route points
+	for (const point of patrolPoints) {
 		
-		const options = {};
+		const options = Object.create(null);
 		
 		// Hide route map lines for patrol area spots
-		if (location !== patrolA) {
+		if (point !== ingressPoint) {
 			options.hidden = true;
 		}
 		// Mark route as ingress
@@ -116,22 +189,34 @@ module.exports = function makeTaskPatrol(flight) {
 			options.ingress = true;
 		}
 		
-		const toPoint = [
-			rand.integer(location.x1, location.x2),
-			1500, // TODO
-			rand.integer(location.z1, location.z2)
-		];
-		
-		const spots = makeFlightRoute.call(this, flight, fromPoint, toPoint, options);
+		// Plan patrol flight route for each point
+		const spots = makeFlightRoute.call(
+			this,
+			flight,
+			fromPoint,
+			[point[0], altitude, point[1]],
+			options
+		);
 		
 		route.push.apply(route, spots);
 		fromPoint = spots.pop().point;
+		
+		// Mark spot index for a repeating patrol loop pattern
+		if (point === ingressPoint) {
+			
+			ingressPoint = fromPoint;
+			loopSpotIndex = route.length - 1;
+		}
 	}
+	
+	// Add loop pattern route marker (back to ingress point)
+	// TODO: Set loop pattern fly time!
+	route.push([loopSpotIndex, 60 * 10]);
 	
 	// Make final (back to the base) egress route
 	route.push.apply(
 		route,
-		makeFlightRoute.call(this, flight, fromPoint, null, {egress: true})
+		makeFlightRoute.call(this, flight, ingressPoint, null, {egress: true})
 	);
 	
 	// Add patrol task fly action
