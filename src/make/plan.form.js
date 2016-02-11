@@ -8,6 +8,8 @@ module.exports = function makePlanForm(action, element, flight, input) {
 	
 	const leaderPlaneItem = element[0].item;
 	const isLeadingElement = (element === flight.elements[0]);
+	const isPlayerFlightLeader = (flight.player === flight.leader);
+	const debugFlights = Boolean(this.debug && this.debug.flights);
 	
 	// Set cover command for non-leading elements
 	if (!isLeadingElement) {
@@ -32,6 +34,11 @@ module.exports = function makePlanForm(action, element, flight, input) {
 		formationCommand.setPositionNear(leaderPlaneItem);
 
 		input(formationCommand);
+	}
+	
+	// NOTE: No more commands should be generated when player is a flight leader!
+	if (isPlayerFlightLeader && !debugFlights) {
+		return;
 	}
 
 	// Connect form up to next action

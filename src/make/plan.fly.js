@@ -19,16 +19,9 @@ module.exports = function makePlanFly(action, element, flight, input) {
 	}
 	
 	const leaderPlaneItem = element[0].item;
-	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
 	let lastWaypoint = null;
-	let enableCommands = true;
 	let drawIcons = Boolean(action.draw) || debugFlights;
-	
-	// NOTE: No route commands will be generated when player is a flight leader!
-	if (isPlayerFlightLeader && !debugFlights) {
-		enableCommands = false;
-	}
 	
 	for (let spot of route) {
 		
@@ -40,7 +33,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 			
 			spot = route[loopSpotIndex];
 			
-			if (enableCommands) {
+			if (input) {
 			
 				// NOTE: Using a counter to make sure loop timer is activated only once!
 				const waitCounter = flight.group.createItem("MCU_Counter");
@@ -58,7 +51,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 			}
 		}
 		// Create waypoint for a non-looping spot
-		else if (enableCommands && !spot.waypoint) {
+		else if (input && !spot.waypoint) {
 			
 			const waypoint = spot.waypoint = flight.group.createItem("MCU_Waypoint");
 			
@@ -127,8 +120,8 @@ module.exports = function makePlanFly(action, element, flight, input) {
 		}
 	}
 	
-	if (!enableCommands) {
-		return input;
+	if (!input) {
+		return;
 	}
 
 	// Connect next plan action with last waypoint

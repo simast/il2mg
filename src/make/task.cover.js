@@ -37,6 +37,10 @@ module.exports = function makeTaskCover(flight) {
 
 // Make mission cover airfield plan action
 function makeTaskCoverAction(action, element, flight, input) {
+	
+	if (!input) {
+		return;
+	}
 
 	const leaderElement = flight.elements[0];
 
@@ -48,8 +52,6 @@ function makeTaskCoverAction(action, element, flight, input) {
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];
 	const leaderPlaneItem = element[0].item;
-	const isPlayerFlightLeader = (flight.player === flight.leader);
-	const debugFlights = Boolean(this.debug && this.debug.flights);
 	const beacon = airfield.beacon;
 
 	let climbAltitude = 0;
@@ -61,7 +63,7 @@ function makeTaskCoverAction(action, element, flight, input) {
 	}
 
 	// Use climb waypoint above the airfield as a cover command
-	if ((!isPlayerFlightLeader || debugFlights) && climbAltitude) {
+	if (climbAltitude) {
 
 		coverCommand = flight.group.createItem("MCU_Waypoint");
 

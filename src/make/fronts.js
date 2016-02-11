@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const Line = require("sylvester").Line;
 const data = require("../data");
 const MCU_Icon = require("../item").MCU_Icon;
 const Location = require("./locations").Location;
@@ -187,7 +188,7 @@ module.exports = function makeFronts() {
 							// Use the same line object for all grid items
 							if (!line) {
 								
-								line = $L(
+								line = Line.create(
 									[linePos1.x, 0, linePos1.z],
 									[linePos2.x - linePos1.x, 0, linePos2.z - linePos1.z]
 								);
@@ -243,7 +244,7 @@ module.exports = function makeFronts() {
 				rayLineAnchor[axisIndexDimension] = rayPos;
 				rayLineDirection[axisIndexRay] = 1;
 				
-				const rayLine = $L(rayLineAnchor, rayLineDirection);
+				const rayLine = Line.create(rayLineAnchor, rayLineDirection);
 				
 				// Check for valid intersections
 				for (const line of lineList) {

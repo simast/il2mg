@@ -1,9 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// FIXME: Global vector/matrix/line/plane shorthand functions
-require("sylvester");
-
 const fs = require("fs");
 const os = require("os");
 const util = require("util");

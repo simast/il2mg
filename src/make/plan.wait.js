@@ -3,6 +3,10 @@
 
 // Make plan wait action
 module.exports = function makePlanWait(action, element, flight, input) {
+	
+	if (!input) {
+		return;
+	}
 
 	const leaderElement = flight.elements[0];
 
@@ -10,15 +14,8 @@ module.exports = function makePlanWait(action, element, flight, input) {
 	if (element !== leaderElement) {
 		return;
 	}
-
-	const leaderPlaneItem = element[0].item;
-	const isPlayerFlightLeader = (flight.player === flight.leader);
-	const debugFlights = Boolean(this.debug && this.debug.flights);
 	
-	// NOTE: Wait command will not be generated when player is a flight leader!
-	if (isPlayerFlightLeader && !debugFlights) {
-		return input;
-	}
+	const leaderPlaneItem = element[0].item;
 	
 	// Wait using timer command
 	const waitTimer = flight.group.createItem("MCU_Timer");

@@ -40,7 +40,8 @@ module.exports = function makeFlightPlan(flight) {
 	
 	// TODO: Fast-forward plan to required flight state
 
-	// List of output callback functions for previous plan action (for each element)
+	// List of output callback functions from previous plan action (for each
+	// element, used as input for the next plan action).
 	let outputPrev = [];
 
 	// Process pending plan actions
@@ -48,18 +49,14 @@ module.exports = function makeFlightPlan(flight) {
 		
 		let makePlanAction;
 		
-		// Use default/common plan make action
-		if (action.type) {
-			makePlanAction = makeParts["plan." + action.type];
-		}
-		
 		// Use custom plan make action
 		if (typeof action.makeAction === "function") {
 			makePlanAction = action.makeAction;
 		}
-		// Boolean flag used to skip making plan actions
-		else if (action.makeAction === false) {
-			makePlanAction = null;
+		// Use default/common plan make action
+		// NOTE: Boolean flag can be used to skip making plan action
+		else if (action.makeAction !== false && action.type) {
+			makePlanAction = makeParts["plan." + action.type];
 		}
 	
 		if (!makePlanAction) {
@@ -69,14 +66,10 @@ module.exports = function makeFlightPlan(flight) {
 		const output = [];
 
 		// Multiple flight elements will share a single plan, but can use a different
-		// command set (as with second element on guard duty for first leading element).
+		// command set (as with second element on cover duty for first leading element).
 		flight.elements.forEach((element, elementIndex) => {
 
 			let input = outputPrev[elementIndex];
-
-			if (typeof input !== "function") {
-				input = function() {};
-			}
 
 			output.push(makePlanAction.call(
 				this,

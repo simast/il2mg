@@ -2,12 +2,6 @@
 	"node": true,
 	"esnext": true,
 	"validthis": true,
-	"globals": {
-		"$V": true,
-		"$M": true,
-		"$L": true,
-		"$P": true
-	},
 	"-W053": true,
 	"-W055": true,
 	"-W083": true
