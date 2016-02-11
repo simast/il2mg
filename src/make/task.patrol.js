@@ -5,10 +5,15 @@ const Vector = require("sylvester").Vector;
 const data = require("../data");
 const Location = require("./locations").Location;
 const makeFlightRoute = require("./flight.route");
+const MCU_Icon = require("../item").MCU_Icon;
+
+// Extra patrol zone padding (used to enclose patrol points)
+const ZONE_PADDING = 1500; // 1.5 Km
 
 // Data constants
 const planAction = data.planAction;
 const territory = data.territory;
+const mapColor = data.mapColor;
 
 // Make mission patrol area task
 module.exports = function makeTaskPatrol(flight) {
@@ -175,6 +180,8 @@ module.exports = function makeTaskPatrol(flight) {
 	const route = [];
 	let loopSpotIndex = 0;
 	let fromPoint = airfield.position;
+	let totalX = 0;
+	let totalZ = 0;
 	
 	// Build patrol area route points
 	for (const point of patrolPoints) {
@@ -204,6 +211,10 @@ module.exports = function makeTaskPatrol(flight) {
 			ingressPoint = fromPoint;
 			loopSpotIndex = route.length - 1;
 		}
+		
+		// Collect X/Z coordinate totals (to get average patrol area center point)
+		totalX += point[0];
+		totalZ += point[1];
 	}
 	
 	// Add loop pattern route marker (back to ingress point)
@@ -219,8 +230,8 @@ module.exports = function makeTaskPatrol(flight) {
 			ingressPoint,
 			null, // Use flight airfield
 			{
-				egress: true,
-				hidden: true // Don't show map egress route lines for patrol task
+				// Don't show map egress route lines for patrol task
+				hidden: true
 			}
 		)
 	);
@@ -229,8 +240,78 @@ module.exports = function makeTaskPatrol(flight) {
 	flight.plan.push({
 		type: planAction.FLY,
 		route: route,
-		draw: Boolean(flight.player) && !isPlayerFlightLeader
+		visible: Boolean(flight.player) && !isPlayerFlightLeader
 	});
 	
-	// TODO: Draw patrol area zone when player is flight leader
+	// Draw patrol area zone only when player is a flight leader
+	if (!isPlayerFlightLeader) {
+		return;
+	}
+	
+	const zoneVectors = [];
+	const zoneOrigin = Vector.Zero(2);
+	const zoneXAxis = Vector.create([1, 0]);
+	const zoneCenter = Vector.create([
+		totalX / patrolPoints.length,
+		totalZ / patrolPoints.length
+	]);
+	
+	// Build list of zone vectors (translated to 0,0 origin coordinate)
+	for (const point of patrolPoints) {
+		
+		let vector = Vector.create([
+			point[0] - zoneCenter.e(1),
+			point[1] - zoneCenter.e(2)
+		]);
+		
+		// Compute vector angle (from X coordinate axis)
+		let vectorAngleX = zoneXAxis.angleFrom(vector);
+		
+		// NOTE: Convert to full 2π range as angleFrom() returns from 0 to +π
+		if (vector.e(2) < 0) {
+			vectorAngleX = Math.PI + (Math.PI - vectorAngleX);
+		}
+		
+		const zonePadding = Vector.create([ZONE_PADDING, 0])
+			.rotate(vectorAngleX, zoneOrigin);
+		
+		vector = vector.add(zonePadding);
+		vector._angleX = vectorAngleX; // Used in sorting
+		
+		zoneVectors.push(vector);
+	}
+	
+	// Sort zone vectors based on angle from origin X coordinate
+	zoneVectors.sort((a, b) => {
+		return a._angleX - b._angleX;
+	});
+	
+	let firstZoneIcon;
+	let lastZoneIcon;
+	
+	// Draw patrol area zone
+	for (let vector of zoneVectors) {
+		
+		// Translate 0,0 origin vector back to original position
+		vector = zoneCenter.add(vector);
+		
+		const zoneIcon = flight.group.createItem("MCU_Icon");
+		
+		zoneIcon.setPosition(vector.e(1), altitude, vector.e(2));
+		zoneIcon.setColor(mapColor.ROUTE);
+		zoneIcon.Coalitions = [flight.coalition];
+		zoneIcon.LineType = MCU_Icon.LINE_SECTOR_2;
+		
+		if (!firstZoneIcon) {
+			firstZoneIcon = zoneIcon;
+		}
+		else {
+			lastZoneIcon.addTarget(zoneIcon);
+		}
+		
+		lastZoneIcon = zoneIcon;
+	}
+	
+	// Connect zone icons in a loop
+	lastZoneIcon.addTarget(firstZoneIcon);
 };

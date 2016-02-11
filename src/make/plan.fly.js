@@ -18,10 +18,15 @@ module.exports = function makePlanFly(action, element, flight, input) {
 		return;
 	}
 	
-	const leaderPlaneItem = element[0].item;
 	const debugFlights = Boolean(this.debug && this.debug.flights);
+	let drawIcons = Boolean(action.visible) || debugFlights;
+	
+	if (!input && !drawIcons) {
+		return;
+	}
+	
+	const leaderPlaneItem = element[0].item;
 	let lastWaypoint = null;
-	let drawIcons = Boolean(action.draw) || debugFlights;
 	
 	for (let spot of route) {
 		
@@ -120,7 +125,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 		}
 	}
 	
-	if (!input) {
+	if (!lastWaypoint) {
 		return;
 	}
 

@@ -16,10 +16,12 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 		Object.assign(spot, options);
 	}
 	
-	// Plan a route back home (to the airfield) when target point is not specified
+	// Plan an egress route (back to the airfield) when target point is not specified
 	if (!to) {
 		
 		const airfield = this.airfields[flight.airfield];
+		
+		spot.egress = true;
 		
 		// FIXME:
 		to = [
