@@ -7,8 +7,18 @@ const Location = require("./locations").Location;
 const makeFlightRoute = require("./flight.route");
 const MCU_Icon = require("../item").MCU_Icon;
 
+// Max patrol area range (as a percent from total aircraft fuel range)
+const MAX_RANGE_PERCENT = 25;
+
+// Min/max patrol area size (as a percent from total aircraft fuel range)
+const MIN_AREA_PERCENT = 5;
+const MAX_AREA_PERCENT = 10;
+
+// Absolute max allowed patrol area distance (ignoring aircraft fuel range)
+const MAX_AREA_DISTANCE = 60000; // 60 Km
+
 // Extra patrol zone padding (used to enclose patrol points)
-const ZONE_PADDING = 1500; // 1.5 Km
+const ZONE_PADDING = 2500; // 2.5 Km
 
 // Data constants
 const planAction = data.planAction;
@@ -24,10 +34,11 @@ module.exports = function makeTaskPatrol(flight) {
 	const startLocation = new Location(airfield.position[0], airfield.position[2]);
 	const startVector = startLocation.vector;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
+	const debugFlights = Boolean(this.debug && this.debug.flights);
 	
-	// Max patrol area range is 25% of max aircraft fuel range
+	// Max patrol area range based on max aircraft fuel range
 	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
-	const maxPatrolRange = maxPlaneRange * 0.25;
+	const maxPatrolRange = maxPlaneRange * (MAX_RANGE_PERCENT / 100);
 	
 	// Patrol area bounds as a rectangular location around the start point
 	const patrolBounds = new Location(
@@ -38,11 +49,16 @@ module.exports = function makeTaskPatrol(flight) {
 	);
 	
 	// Min/max distance for patrol area points (depends on max aircraft range)
-	const minArea = maxPlaneRange / 20; // 5% max range
-	const maxArea = maxPlaneRange / 10; // 10% max range
+	let minArea = maxPlaneRange * (MIN_AREA_PERCENT / 100);
+	let maxArea = maxPlaneRange * (MAX_AREA_PERCENT / 100);
+	
+	// Apply hard limits to patrol area size (independent of max aircraft range)
+	maxArea = Math.min(maxArea, MAX_AREA_DISTANCE);
+	minArea = Math.min(minArea, maxArea * MIN_AREA_PERCENT / MAX_AREA_PERCENT);
 	
 	let patrolA;
 	let patrolB;
+	let distanceAB;
 	
 	// Select base two (A and B) front points for patrol area
 	const findPatrolPoints = (locations) => {
@@ -84,7 +100,7 @@ module.exports = function makeTaskPatrol(flight) {
 			// Pick location B
 			else {
 				
-				const distanceAB = patrolA.vector.distanceFrom(locationVector);
+				distanceAB = patrolA.vector.distanceFrom(locationVector);
 				
 				// Search for a location matching min/max patrol area bounds
 				if (distanceAB >= minArea && distanceAB <= maxArea) {
@@ -107,6 +123,8 @@ module.exports = function makeTaskPatrol(flight) {
 		findPatrolPoints(territories[flight.coalition].findIn(patrolBounds));
 	}
 	
+	// TODO: Reject outside or close to map border points for player flight
+	
 	const patrolPoints = [];
 	
 	// Build base patrol area points
@@ -116,6 +134,17 @@ module.exports = function makeTaskPatrol(flight) {
 			rand.integer(location.x1, location.x2),
 			rand.integer(location.z1, location.z2)
 		]);
+		
+		// Mark base patrol area points with icons when player is a flight leader
+		if (isPlayerFlightLeader && !debugFlights) {
+			
+			const patrolIcon = flight.group.createItem("MCU_Icon");
+			
+			patrolIcon.setPosition(location.x, location.z);
+			patrolIcon.setColor(mapColor.ROUTE);
+			patrolIcon.Coalitions = [flight.coalition];
+			patrolIcon.IconId = MCU_Icon.ICON_WAYPOINT;
+		}
 	}
 	
 	// TODO: Use less extra points for larger patrol areas?
@@ -127,17 +156,21 @@ module.exports = function makeTaskPatrol(flight) {
 		const pointA = patrolPoints[p];
 		const pointB = patrolPoints[(p + 1) % 2];
 		
-		// Distance vector between both base points
+		// Distance vector between both base points (translated to 0,0 origin)
 		let vectorAB = Vector.create([
 			pointB[0] - pointA[0],
 			pointB[1] - pointA[1]
 		]);
 		
 		// Rotate vector to the right by random angle
-		// TODO: Use lower rotation angles for larger patrol areas?
 		const rotMin = Math.PI / 6; // 30 degrees in radians
-		const rotMax = Math.PI / 3; // 60 degrees in radians
-		const rotDelta = rotMax - rotMin; // 30 degrees in radians
+		let rotMax = rotMin;
+		
+		// Up to max 60 degrees in radians
+		// NOTE: Using lower rotation angle the larger the patrol area
+		rotMax += Math.PI / 6 * (distanceAB - minArea) / (maxArea - minArea);
+		
+		const rotDelta = rotMax - rotMin;
 		const rotAngle = rand.real(rotMin, rotMax, true);
 		
 		vectorAB = vectorAB.rotate(rotAngle, Vector.Zero(2));
@@ -146,7 +179,11 @@ module.exports = function makeTaskPatrol(flight) {
 		const scaleMin = 1 / 3; // 33%
 		const scaleMax = 1 - 1 / 3; // 66%
 		const scaleDelta = scaleMax - scaleMin; // 33%
-		const scaleFactor = scaleMin + scaleDelta * (1 - (rotAngle - rotMin) / rotDelta);
+		let scaleFactor = scaleMin + scaleDelta * (1 - (rotAngle - rotMin) / rotDelta);
+		
+		// Use +-10% randomness when placing additional patrol area points
+		scaleFactor *= rand.real(0.9, 1.1, true);
+		scaleFactor = Math.min(Math.max(scaleFactor, scaleMin), scaleMax);
 		
 		vectorAB = vectorAB.multiply(scaleFactor);
 		
@@ -297,7 +334,7 @@ module.exports = function makeTaskPatrol(flight) {
 		
 		const zoneIcon = flight.group.createItem("MCU_Icon");
 		
-		zoneIcon.setPosition(vector.e(1), altitude, vector.e(2));
+		zoneIcon.setPosition(vector.e(1), vector.e(2));
 		zoneIcon.setColor(mapColor.ROUTE);
 		zoneIcon.Coalitions = [flight.coalition];
 		zoneIcon.LineType = MCU_Icon.LINE_SECTOR_2;

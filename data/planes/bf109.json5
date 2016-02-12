@@ -50,7 +50,7 @@
 		parent: "bf109f",
 		model: "graphics\\planes\\bf109f2\\bf109f2.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109f2.txt",
-		speed: 500,
+		speed: 430,
 		range: 650
 	},
 	
@@ -60,7 +60,7 @@
 		parent: "bf109f",
 		model: "graphics\\planes\\bf109f4\\bf109f4.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109f4.txt",
-		speed: 500,
+		speed: 430,
 		range: 670,
 		skins: {
 			"201": {
@@ -86,7 +86,7 @@
 		parent: "bf109g",
 		model: "graphics\\planes\\bf109g2\\bf109g2.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109g2.txt",
-		speed: 500,
+		speed: 430,
 		range: 630,
 		skins: {
 			"201": {

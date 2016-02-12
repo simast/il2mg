@@ -135,7 +135,7 @@ data.planAction = Object.freeze({
 // Map colors as RGB array values
 data.mapColor = Object.freeze({
 	ATTACK: [156, 156, 156],
-	ROUTE: [48, 48, 48],
+	ROUTE: [52, 52, 52],
 	// NOTE: Special color values that will change in-game based on user settings
 	ENEMY: [10, 0, 0],
 	FRIEND: [0, 0, 10]
