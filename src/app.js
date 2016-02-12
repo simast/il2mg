@@ -26,7 +26,7 @@ params.usage("[options] [mission file and/or path]");
 params.version(data.name + " " + data.version + " " + data.copyright);
 
 // NOTE: For development mode only when not compiled to binary!
-if (!data.isBinary) {
+if (!process.versions.enclose) {
 	
 	// Set mission seed value (--seed)
 	params.option("-S, --seed <seed>", "set mission seed value");

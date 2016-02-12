@@ -15,10 +15,6 @@ data.version = "r4";
 // Application copyright
 data.copyright = "(C) Simas Toleikis, 2015-2016";
 
-// Flag used to identify the data as binary (compiled to an executable)
-// TODO: Improve the check for binary/compiled mode detection
-data.isBinary = (process.argv[1].indexOf(".exe") !== -1);
-
 // List of supported mission localization languages
 data.languages = Object.freeze([
 	"eng" // English
@@ -152,7 +148,7 @@ data.briefingColor = Object.freeze({
 
 	// NOTE: For performance reasons JSON files in the binary/compiled mode will
 	// be loaded using native JSON object.
-	let useJSON5 = !data.isBinary;
+	let useJSON5 = !process.versions.enclose;
 
 	if (useJSON5) {
 
