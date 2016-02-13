@@ -124,6 +124,7 @@ module.exports = function makeTaskPatrol(flight) {
 	}
 	
 	// TODO: Reject outside or close to map border points for player flight
+	// TODO: Reject task when we can't find base two patrol reference points
 	
 	const patrolPoints = [];
 	
@@ -146,6 +147,9 @@ module.exports = function makeTaskPatrol(flight) {
 			patrolIcon.IconId = MCU_Icon.ICON_WAYPOINT;
 		}
 	}
+	
+	// Register base two patrol reference points as flight target
+	flight.target = patrolPoints.slice();
 	
 	// TODO: Use less extra points for larger patrol areas?
 	const numExtraPoints = rand.integer(1, 2);

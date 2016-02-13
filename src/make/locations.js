@@ -49,8 +49,8 @@ module.exports = function makeLocations() {
 			// Location type
 			const locationType = location.type = locationData[0];
 			
-			// Orign position/point
-			location.orign = {x, y, z};
+			// Origin position/point
+			location.origin = {x, y, z};
 			
 			// Optional location name
 			const name = locationData[8];

@@ -4,6 +4,7 @@
 const mustache = require("mustache");
 const data = require("../data");
 const people = require("./people");
+const makeBriefingLocation = require("./briefing.location");
 
 // Default string constants
 const PLANE = "plane";
@@ -25,6 +26,9 @@ const planeTypeNames = {
  * Supported template tags:
  *
  * 	{{airfield}} - Name of the player flight airfield.
+ *  
+ *  {{target.air}} - Player task target location description (in the air).
+ *  {{target.ground}} - Player task target location description (on the ground).
  * 	
  * 	{{{plane}}} - Any player plane name representation.
  * 	{{plane.name}} - Player plane model name.
@@ -37,7 +41,7 @@ const planeTypeNames = {
  * 	{{name.first}} - Any first name.
  * 	{{name.last}} - Any last name.
  *
- * 	Rank TYPE values: commander, pilot
+ * 	Rank TYPE values: commander, pilot, leader, liaison, aa, brass
  * 	{{{rank.TYPE}}} - Any TYPE level full rank name.
  * 	{{{rank.TYPE.abbr}}} - Any TYPE level abbreviated rank name.
  *
@@ -66,6 +70,12 @@ module.exports = function makeBriefingText(template, view) {
 		
 		// Flight home airfield name
 		context.airfield = this.airfields[flight.airfield].name;
+		
+		// Flight target location description
+		context.target = {
+			air: makeBriefingLocation.bind(this, flight.target, true),
+			ground: makeBriefingLocation.bind(this, flight.target, false)
+		};
 		
 		// {{plane}} template tag
 		const planeTag = context.plane = Object.create(null);

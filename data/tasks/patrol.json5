@@ -3,7 +3,7 @@
 	name: "Patrol area",
 	title: "Patrol flight from {{airfield}}",
 	story: [
-		"An urgent request just came in over the radio from local army headquarters! Liaison officer {{{rank.liaison}}} {{name.last}} is reporting alarming enemy air activity between grid 198:3 and the Osinsky village. We are to fly an air cover mission and provide fighter protection for the ground troops and any friendly aircraft encountered in the assigned patrol zone."
+		"An urgent request just came in over the radio from local army headquarters! Liaison officer {{{rank.liaison}}} {{name.last}} is reporting alarming enemy air activity {{target.air}}. We are to fly an air cover mission and provide fighter protection for the ground troops and any friendly aircraft encountered in the assigned patrol zone."
 	],
 	time: "day",
 	planes: {
