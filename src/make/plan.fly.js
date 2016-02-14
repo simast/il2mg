@@ -3,6 +3,7 @@
 
 const data = require("../data");
 const MCU_Icon = require("../item").MCU_Icon;
+const MCU_Waypoint = require("../item").MCU_Waypoint;
 
 // Data constants
 const mapColor = data.mapColor;
@@ -49,6 +50,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 				waitTimer.setPositionNear(waitCounter);
 				
 				lastWaypoint.addTarget(spot.waypoint);
+				lastWaypoint.setOrientationTo(spot.waypoint);
 				spot.waypoint.addTarget(waitCounter);
 				waitCounter.addTarget(waitTimer);
 				
@@ -78,7 +80,12 @@ module.exports = function makePlanFly(action, element, flight, input) {
 			}
 			// Connect this waypoint to last waypoint
 			else {
+				
 				lastWaypoint.addTarget(waypoint);
+				
+				if (lastWaypoint instanceof MCU_Waypoint) {
+					lastWaypoint.setOrientationTo(waypoint);
+				}
 			}
 			
 			lastWaypoint = waypoint;

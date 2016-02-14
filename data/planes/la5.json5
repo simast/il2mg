@@ -33,7 +33,7 @@
 		parent: "la5",
 		model: "graphics\\planes\\la5s8\\la5s8.mgm",
 		script: "luascripts\\worldobjects\\planes\\la5s8.txt",
-		speed: 450,
+		speed: 400,
 		range: 610,
 		skins: {
 			"101": {
