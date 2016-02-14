@@ -77,7 +77,7 @@ module.exports = function makeBriefingText(template, view) {
 			ground: makeBriefingLocation.bind(this, flight.target, false)
 		};
 		
-		// {{plane}} template tag
+		// {{{plane}}} template tag
 		const planeTag = context.plane = Object.create(null);
 		
 		planeTag.name = playerPlane.name;

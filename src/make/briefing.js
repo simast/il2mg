@@ -51,9 +51,19 @@ module.exports = function makeBriefing() {
 			story = [story];
 		}
 		
-		if (story.length) {
-			briefing.push(makeBriefingText.call(this, rand.pick(story)));
+		let selectedStory;
+		
+		// Force using specific story from the story param
+		if (this.params.story) {
+			selectedStory = story[this.params.story - 1];
 		}
+		
+		// Pick random task story
+		if (selectedStory === undefined) {
+			selectedStory = rand.pick(story);
+		}
+		
+		briefing.push(makeBriefingText.call(this, selectedStory));
 	}
 
 	// Flight elements and pilot info

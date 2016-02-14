@@ -131,17 +131,19 @@ module.exports = function makeTaskPatrol(flight) {
 	// Build base patrol area points
 	for (const location of rand.shuffle([patrolA, patrolB])) {
 		
-		patrolPoints.push([
+		const point = [
 			rand.integer(location.x1, location.x2),
 			rand.integer(location.z1, location.z2)
-		]);
+		];
+		
+		patrolPoints.push(point);
 		
 		// Mark base patrol area points with icons when player is a flight leader
 		if (isPlayerFlightLeader && !debugFlights) {
 			
 			const patrolIcon = flight.group.createItem("MCU_Icon");
 			
-			patrolIcon.setPosition(location.x, location.z);
+			patrolIcon.setPosition(point[0], point[1]);
 			patrolIcon.setColor(mapColor.ROUTE);
 			patrolIcon.Coalitions = [flight.coalition];
 			patrolIcon.IconId = MCU_Icon.ICON_WAYPOINT;
@@ -172,7 +174,8 @@ module.exports = function makeTaskPatrol(flight) {
 		
 		// Up to max 60 degrees in radians
 		// NOTE: Using lower rotation angle the larger the patrol area
-		rotMax += Math.PI / 6 * (distanceAB - minArea) / (maxArea - minArea);
+		rotMax += Math.PI / 6 * (1 - (distanceAB - minArea) / (maxArea - minArea));
+		rotMax = Math.max(rotMin, rotMax);
 		
 		const rotDelta = rotMax - rotMin;
 		const rotAngle = rand.real(rotMin, rotMax, true);
@@ -180,10 +183,14 @@ module.exports = function makeTaskPatrol(flight) {
 		vectorAB = vectorAB.rotate(rotAngle, Vector.Zero(2));
 		
 		// Scale vector based on the rotation
-		const scaleMin = 1 / 3; // 33%
-		const scaleMax = 1 - 1 / 3; // 66%
-		const scaleDelta = scaleMax - scaleMin; // 33%
-		let scaleFactor = scaleMin + scaleDelta * (1 - (rotAngle - rotMin) / rotDelta);
+		const scaleMin = 1 / 4; // 25%
+		const scaleMax = 1 - 1 / 4; // 75%
+		const scaleDelta = scaleMax - scaleMin; // 50%
+		let scaleFactor = scaleMax;
+		
+		if (rotDelta > 0) {
+			scaleFactor = scaleMin + scaleDelta * (1 - (rotAngle - rotMin) / rotDelta);
+		}
 		
 		// Use +-10% randomness when placing additional patrol area points
 		scaleFactor *= rand.real(0.9, 1.1, true);

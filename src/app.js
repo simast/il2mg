@@ -369,8 +369,20 @@ appDomain.run(() => {
 	}
 
 	// --task
-	if (params.task !== undefined && !data.tasks[params.task]) {
-		throw ["Unknown task!", {task: params.task}];
+	if (params.task !== undefined) {
+		
+		// NOTE: The special ~ symbol can be used to specify task story!
+		const task = params.task.split(/~(.+)?/);
+		
+		params.task = task[0];
+		
+		if (task[1]) {
+			params.story = parseInt(task[1], 10);
+		}
+		
+		if (!data.tasks[params.task]) {
+			throw ["Unknown task!", {task: params.task}];
+		}
 	}
 	
 	// --airfield

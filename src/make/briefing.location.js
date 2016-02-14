@@ -115,11 +115,16 @@ module.exports = function makeBriefingLocation(target, isAir) {
 				
 				if (placeType) {
 					
-					// Combine same place types into a single type description
-					if (nextPlace instanceof Location && nextPlace.type === place.type) {
+					// Combine same village/town place types into a single type description
+					if (nextPlace instanceof Location && nextPlace.type === place.type &&
+							[location.VILLAGE, location.TOWN].indexOf(place.type) >= 0) {
 						
 						placeType += "s";
 						isPlaceTypeCombined = true;
+					}
+					
+					if (!nextPlace) {
+						placeName += "the ";
 					}
 					
 					placeName += placeType + " of ";
@@ -131,15 +136,24 @@ module.exports = function makeBriefingLocation(target, isAir) {
 		// Use map grid reference as a place name
 		else {
 			
-			// NOTE: Map grid is not based on normal X/Z left/bottom coordinate space
+			// Map grid is not based on normal X/Z left/bottom coordinate space
 			const gridMaxZ = 1 + Math.floor(this.map.width / GRID_SIZE);
-			const gridX = Math.floor((this.map.height - place[0]) / GRID_SIZE);
-			const gridZ = Math.floor(place[1] / GRID_SIZE);
-			const grid = (gridX * gridMaxZ) + 1 + gridZ;
+			const gridX = (this.map.height - place[0]) / GRID_SIZE;
+			const gridZ = place[1] / GRID_SIZE;
+			const grid = Math.floor(gridX) * gridMaxZ + 1 + Math.floor(gridZ);
 			
-			// TODO: Use sub-grid reference points!
+			// Each grid is sub-divided into 9 smaller sub-grids
+			const subgridSize = Math.sqrt(9);
+			const subgridX = (1 - gridX % 1) * subgridSize;
+			const subgridZ = (gridZ % 1) * subgridSize;
+			const subgrid = Math.floor(subgridX) * subgridSize + 1 + Math.floor(subgridZ);
 			
-			placeName = "grid " + grid;
+			placeName = "grid " + ("000" + grid).substr(-3, 3);
+			
+			// NOTE: Subgrid number 5 is not visible on the map
+			if (subgrid !== 5) {
+				placeName += ":" + subgrid;
+			}
 		}
 		
 		placeNames.push(placeName);
