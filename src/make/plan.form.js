@@ -1,13 +1,18 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const MCU_CMD_Formation = require("../item").MCU_CMD_Formation;
+
+// Data constants
+const flightState = data.flightState;
 
 // Make plan form up action
 module.exports = function makePlanForm(action, element, flight, input) {
 	
 	const rand = this.rand;
 	const leaderPlaneItem = element[0].item;
+	const isFlightAirStart = (typeof flight.state === "number");
 	const isLeadingElement = (element === flight.elements[0]);
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
@@ -59,6 +64,53 @@ module.exports = function makePlanForm(action, element, flight, input) {
 	// NOTE: No more commands should be generated when player is a flight leader!
 	if (isPlayerFlightLeader && !debugFlights) {
 		return;
+	}
+	
+	// NOTE: Leading element (in a multi element formation) will wait for other
+	// elements still on the ground before executing further task plan actions.
+	if (isLeadingElement && !isFlightAirStart && flight.elements.length > 1) {
+		
+		const groundStartElements = [];
+		
+		// Collect all ground start elements in a priority list
+		flight.elements.forEach((element) => {
+			
+			const startData = {
+				priority: {
+					[flightState.START]: 1,
+					[flightState.TAXI]: 2,
+					[flightState.RUNWAY]: 3
+				}[element.state],
+				element: element
+			};
+			
+			if (startData.priority) {
+				groundStartElements.push(startData);
+			}
+		});
+		
+		let lastStartingElement;
+		
+		if (groundStartElements.length) {
+			
+			// Pick last starting ground element based on starting priority
+			lastStartingElement = groundStartElements.sort((a, b) => {
+				return a.priority - b.priority;
+			})[0].element;
+		}
+	
+		if (lastStartingElement && lastStartingElement !== element) {
+			
+			// Connect form up action using last ground element "took off" report
+			return (input) => {
+				
+				lastStartingElement[0].item.entity.addReport(
+					"OnTookOff",
+					flight.takeoffCommand,
+					input
+				);
+			};
+		}
 	}
 
 	// Connect form up to next action

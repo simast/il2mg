@@ -137,7 +137,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 	}
 
 	// Connect next plan action with last waypoint
-	return function(input) {
+	return (input) => {
 		lastWaypoint.addTarget(input);
 	};
 };

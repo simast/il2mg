@@ -15,7 +15,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	const isLeadingElement = (element === flight.elements[0]);
 	const isLastElement = (element === flight.elements[flight.elements.length - 1]);
 	const airfield = this.airfields[flight.airfield];
-	let takeoffCommand = action.takeoffCommand;
+	let takeoffCommand = flight.takeoffCommand;
 	let taxiRoute;
 	
 	if (airfield.taxi) {
@@ -26,11 +26,13 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	// NOTE: Flight will use a single take off command for all elements
 	if (!takeoffCommand && taxiRoute && !isAirStart) {
 
-		takeoffCommand = action.takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
+		takeoffCommand = flight.group.createItem("MCU_CMD_TakeOff");
 
 		// Set takeoff command position and orientation
 		takeoffCommand.setPosition(taxiRoute.takeoffStart);
 		takeoffCommand.setOrientationTo(taxiRoute.takeoffEnd);
+		
+		flight.takeoffCommand = takeoffCommand;
 	}
 
 	// Add a short timer before takeoff from runway start
@@ -75,7 +77,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		waitTimerAfter.setPositionNear(leaderPlaneItem);
 	}
 	
-	// Deactivate command used to make sure the subsequent take off command actions
+	// Use deactivate command to make sure the subsequent take off command actions
 	// are not repeated after the second take off (for player flight only)
 	if (element.player && !isAirStart) {
 
@@ -85,60 +87,35 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		deactivateAfter.addTarget(waitTimerAfter);
 		waitTimerAfter.addTarget(deactivateAfter);
 	}
-
-	// FIXME!
-	if (!isAirStart && isLastElement) {
-		
-		const tookOffTargets = [waitTimerAfter];
-		
-		// Also connect queued wait timer that will activate leading element
-		// commands (after the last element took off report).
-		if (action.waitTimerAfter) {
-			
-			tookOffTargets.push(action.waitTimerAfter);
-			delete action.waitTimerAfter;
-		}
+	
+	// Activate takeoff wait timer from ground start
+	if (!isAirStart) {
 		
 		// Set element leader take off report event action
 		if (takeoffCommand) {
 
-			tookOffTargets.forEach((target) => {
-
-				leaderPlaneItem.entity.addReport(
-					"OnTookOff",
-					takeoffCommand,
-					target
-				);
-			});
+			leaderPlaneItem.entity.addReport(
+				"OnTookOff",
+				takeoffCommand,
+				waitTimerAfter
+			);
 		}
 		// Set take off event action for player-only spawn
 		else {
-
-			tookOffTargets.forEach((target) => {
-
-				leaderPlaneItem.entity.addEvent(
-					"OnPlaneTookOff",
-					target
-				);
-			});
+			
+			leaderPlaneItem.entity.addEvent(
+				"OnPlaneTookOff",
+				waitTimerAfter
+			);
 		}
 	}
+	// Activate takeoff wait timer from (forced) air start
 	else {
-		
-		// Activate next command chain from (forced) element air start
-		if (!isLeadingElement || isLastElement) {
-			input(waitTimerAfter);
-		}
-		// NOTE: We can't connect wait timer with previous action for the leading
-		// element at this point. There are other elements that may still be taking
-		// off from runway and/or start position.
-		else {
-			action.waitTimerAfter = waitTimerAfter;
-		}
+		input(waitTimerAfter);
 	}
 
 	// Connect takeoff command to next action
-	return function(input) {
+	return (input) => {
 		waitTimerAfter.addTarget(input);
 	};
 };

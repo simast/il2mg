@@ -27,7 +27,7 @@ module.exports = function makePlanWait(action, element, flight, input) {
 	input(waitTimer);
 
 	// Connect timer command to next action
-	return function(input) {
+	return (input) => {
 		waitTimer.addTarget(input);
 	};
 };

@@ -57,7 +57,7 @@ module.exports = function makePlanStart(action, element, flight, input) {
 	}
 
 	// Connect next plan action with onStart event command
-	return function(input) {
+	return (input) => {
 		flight.onStart.addTarget(input);
 	};
 };

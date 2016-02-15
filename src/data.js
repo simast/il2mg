@@ -111,7 +111,7 @@ data.precipitation = Object.freeze({
 });
 
 // Flight states
-// NOTE: Numeric (0..1) flight states represent aircraft in the air at various mission states
+// NOTE: Numeric (0..1) states represent aircraft in the air.
 data.flightState = Object.freeze({
 	START: "start", // Parking, engine not running
 	TAXI: "taxi", // On the taxiway, engine running, taxiing to runway
