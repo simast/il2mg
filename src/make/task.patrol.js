@@ -10,15 +10,20 @@ const MCU_Icon = require("../item").MCU_Icon;
 // Max patrol area range (as a percent from total aircraft fuel range)
 const MAX_RANGE_PERCENT = 25;
 
-// Min/max patrol area size (as a percent from total aircraft fuel range)
-const MIN_AREA_PERCENT = 5;
-const MAX_AREA_PERCENT = 10;
+// Min/max patrol area size (in meters, between two base points)
+const MIN_AREA = 30000;
+const MAX_AREA = 60000;
 
-// Absolute max allowed patrol area distance (ignoring aircraft fuel range)
-const MAX_AREA_DISTANCE = 60000; // 60 Km
+// Min/max patrol altitude (in meters)
+const MIN_ALTITUDE = 1500;
+const MAX_ALTITUDE = 3500;
 
-// Extra patrol zone padding (used to enclose patrol points)
-const ZONE_PADDING = 2500; // 2.5 Km
+// Extra patrol zone padding (in meters)
+// NOTE: Used to enclose patrol points when player is a flight leader
+const ZONE_PADDING = 2500;
+
+// Restricted zone around map area border (for player flight only)
+const RESTRICTED_BORDER = 10000; // 10 Km
 
 // Data constants
 const planAction = data.planAction;
@@ -35,26 +40,36 @@ module.exports = function makeTaskPatrol(flight) {
 	const startVector = startLocation.vector;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
+	const clouds = this.weather.clouds;
+	const map = this.map;
 	
 	// Max patrol area range based on max aircraft fuel range
 	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
 	const maxPatrolRange = maxPlaneRange * (MAX_RANGE_PERCENT / 100);
 	
+	// Restrict patrol zone to not use areas around map border zone
+	const restrictedBorder = flight.player ? RESTRICTED_BORDER : 0;
+	
+	// Check if point is valid (is not within restricted zone)
+	const isPointValid = (point) => {
+	
+		if (!flight.player) {
+			return true;
+		}
+		
+		return point[0] >= restrictedBorder &&
+			point[0] <= (map.height - restrictedBorder) &&
+			point[1] >= restrictedBorder &&
+			point[1] <= (map.width - restrictedBorder);
+	};
+	
 	// Patrol area bounds as a rectangular location around the start point
 	const patrolBounds = new Location(
-		startLocation.x - maxPatrolRange,
-		startLocation.z - maxPatrolRange,
-		startLocation.x + maxPatrolRange,
-		startLocation.z + maxPatrolRange
+		Math.max(startLocation.x - maxPatrolRange, restrictedBorder),
+		Math.max(startLocation.z - maxPatrolRange, restrictedBorder),
+		Math.min(startLocation.x + maxPatrolRange, map.height - restrictedBorder),
+		Math.min(startLocation.z + maxPatrolRange, map.width - restrictedBorder)
 	);
-	
-	// Min/max distance for patrol area points (depends on max aircraft range)
-	let minArea = maxPlaneRange * (MIN_AREA_PERCENT / 100);
-	let maxArea = maxPlaneRange * (MAX_AREA_PERCENT / 100);
-	
-	// Apply hard limits to patrol area size (independent of max aircraft range)
-	maxArea = Math.min(maxArea, MAX_AREA_DISTANCE);
-	minArea = Math.min(minArea, maxArea * MIN_AREA_PERCENT / MAX_AREA_PERCENT);
 	
 	let patrolA;
 	let patrolB;
@@ -66,6 +81,8 @@ module.exports = function makeTaskPatrol(flight) {
 		if (!locations.length) {
 			return;
 		}
+		
+		let iteration = 0;
 		
 		// Make sure location selection is randomized
 		rand.shuffle(locations);
@@ -82,12 +99,23 @@ module.exports = function makeTaskPatrol(flight) {
 				continue;
 			}
 			
+			iteration++;
+			
+			const distanceRatio = distance / maxPatrolRange;
+			
 			// NOTE: Chance to use this location will decrease with distance (with
 			// at least 10% always guaranteed chance).
-			const useLocation = rand.bool(Math.max(0.1, 1 - (distance / maxPatrolRange)));
+			let useLocation = Math.max(0.1, 1 - distanceRatio);
+			
+			// Try to choose first patrol point from locations within 50% max range
+			if (!patrolA && distanceRatio > 0.5 &&
+					(iteration <= locations.length / 2)) {
+				
+				useLocation = 0;
+			}
 			
 			// Use location for another chance pass
-			if (!useLocation && locations.length) {
+			if (!rand.bool(useLocation) && locations.length) {
 				
 				locations.push(location);
 				continue;
@@ -103,7 +131,7 @@ module.exports = function makeTaskPatrol(flight) {
 				distanceAB = patrolA.vector.distanceFrom(locationVector);
 				
 				// Search for a location matching min/max patrol area bounds
-				if (distanceAB >= minArea && distanceAB <= maxArea) {
+				if (distanceAB >= MIN_AREA && distanceAB <= MAX_AREA) {
 					
 					patrolB = location;
 					break; // Found both locations
@@ -123,7 +151,6 @@ module.exports = function makeTaskPatrol(flight) {
 		findPatrolPoints(territories[flight.coalition].findIn(patrolBounds));
 	}
 	
-	// TODO: Reject outside or close to map border points for player flight
 	// TODO: Reject task when we can't find base two patrol reference points
 	
 	const patrolPoints = [];
@@ -153,8 +180,19 @@ module.exports = function makeTaskPatrol(flight) {
 	// Register base two patrol reference points as flight target
 	flight.target = patrolPoints.slice();
 	
-	// TODO: Use less extra points for larger patrol areas?
-	const numExtraPoints = rand.integer(1, 2);
+	// Chosen area ratio from min/max allowed size
+	const areaRatio = (distanceAB - MIN_AREA) / (MAX_AREA - MIN_AREA);
+	
+	// NOTE: The chance to use another extra point (with 2 points in total) is
+	// 100% percent up to 0.25 area size ratio, then decreasing chance from 100%
+	// to 0% between 0.25 and 0.75 ratio. At 0.75 and above ratio - chance is 0%.
+	// Hence, the larger the area - the less extra points will be used.
+	const twoExtraPointsChance = Math.min(1, Math.max(0, 1.5 - (areaRatio * 2)));
+	let numExtraPoints = 1;
+	
+	if (rand.bool(twoExtraPointsChance)) {
+		numExtraPoints++;
+	}
 	
 	// Generate one or two additional patrol area points
 	for (let p = 0; p < numExtraPoints; p++) {
@@ -169,14 +207,9 @@ module.exports = function makeTaskPatrol(flight) {
 		]);
 		
 		// Rotate vector to the right by random angle
-		const rotMin = Math.PI / 6; // 30 degrees in radians
-		let rotMax = rotMin;
-		
-		// Up to max 60 degrees in radians
 		// NOTE: Using lower rotation angle the larger the patrol area
-		rotMax += Math.PI / 6 * (1 - (distanceAB - minArea) / (maxArea - minArea));
-		rotMax = Math.max(rotMin, rotMax);
-		
+		const rotMin = Math.PI / 6;
+		const rotMax = Math.max(rotMin, rotMin + Math.PI / 6 * (1 - areaRatio));
 		const rotDelta = rotMax - rotMin;
 		const rotAngle = rand.real(rotMin, rotMax, true);
 		
@@ -198,13 +231,22 @@ module.exports = function makeTaskPatrol(flight) {
 		
 		vectorAB = vectorAB.multiply(scaleFactor);
 		
-		// Build final (result) point vector
+		// Build final (result) point
 		const pointVector = Vector.create(pointA).add(vectorAB);
-		
-		patrolPoints.push([
+		const point = [
 			Math.round(pointVector.e(1)),
 			Math.round(pointVector.e(2))
-		]);
+		];
+		
+		// Validated point
+		if (!isPointValid(point)) {
+			
+			// NOTE: One of the points (on either side) will be always valid!
+			numExtraPoints = 2;
+			continue;
+		}
+		
+		patrolPoints.push(point);
 	}
 	
 	// Sort patrol area points based on distance from patrol start
@@ -217,13 +259,64 @@ module.exports = function makeTaskPatrol(flight) {
 	});
 	
 	// NOTE: The first (ingress) patrol point will always be the closest one and
-	// the rest will be shuffled (may produce intersecting pattern with 4 points).
+	// the second point will be the one with "best" angle from the ingress point.
+	// The rest will be shuffled (may produce intersecting pattern with 4 points).
 	let ingressPoint = patrolPoints.shift();
-	rand.shuffle(patrolPoints);
-	patrolPoints.unshift(ingressPoint);
+	let ingressVector = Vector.create(ingressPoint);
 	
-	// TODO: Set patrol altitude based on plane type and cloud coverage
-	const altitude = 1500;
+	// Sort the rest of patrol area points based on distance from ingress point
+	patrolPoints.sort((a, b) => {
+		
+		const distanceA = ingressVector.distanceFrom(Vector.create(a));
+		const distanceB = ingressVector.distanceFrom(Vector.create(b));
+		
+		return distanceA - distanceB;
+	});
+	
+	// Translate ingress vector to 0,0 origin coordinate
+	ingressVector = Vector.create([
+		ingressPoint[0] - startLocation.x,
+		ingressPoint[1] - startLocation.z
+	]);
+	
+	let entryPointIndex;
+	let entryPointAngle;
+	
+	// Check next 2 nearest patrol points to find "best" (least sharp) entry point
+	for (let i = 0; i < 2; i++) {
+		
+		// Point vector at 0,0 origin coordinate
+		const entryVector = Vector.create([
+			patrolPoints[i][0] - ingressPoint[0],
+			patrolPoints[i][1] - ingressPoint[1]
+		]);
+		
+		const angleDiff = ingressVector.angleFrom(entryVector);
+		
+		// Use entry point with smallest angle from ingress point
+		if (entryPointAngle === undefined || angleDiff < entryPointAngle) {
+			
+			entryPointAngle = angleDiff;
+			entryPointIndex = i;
+		}
+	}
+	
+	const entryPoint = patrolPoints.splice(entryPointIndex, 1)[0];
+	
+	rand.shuffle(patrolPoints);
+	patrolPoints.unshift(ingressPoint, entryPoint);
+	
+	// Set patrol altitude
+	let minAltitude = MIN_ALTITUDE;
+	
+	if (clouds.cover > 0) {
+		
+		minAltitude = clouds.altitude + clouds.thickness + 500;
+		minAltitude = Math.max(minAltitude, MIN_ALTITUDE);
+		minAltitude = Math.min(minAltitude, MAX_ALTITUDE - 500);
+	}
+	
+	const altitude = rand.integer(minAltitude, MAX_ALTITUDE);
 	
 	const route = [];
 	let loopSpotIndex = 0;

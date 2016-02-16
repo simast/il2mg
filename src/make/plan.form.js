@@ -101,13 +101,21 @@ module.exports = function makePlanForm(action, element, flight, input) {
 	
 		if (lastStartingElement && lastStartingElement !== element) {
 			
-			// Connect form up action using last ground element "took off" report
 			return (input) => {
 				
+				// Add a small timer so that other elements can link up with the rest of
+				// the flight after take off (just before proceeding with the task).
+				const waitTimerLink = flight.group.createItem("MCU_Timer");
+	
+				waitTimerLink.Time = +(rand.real(25, 40).toFixed(3));
+				waitTimerLink.setPositionNear(flight.takeoffCommand);
+				waitTimerLink.addTarget(input);
+				
+				// Connect form up action using last ground element "took off" report
 				lastStartingElement[0].item.entity.addReport(
 					"OnTookOff",
 					flight.takeoffCommand,
-					input
+					waitTimerLink
 				);
 			};
 		}
