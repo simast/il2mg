@@ -2,8 +2,6 @@
 "use strict";
 
 const log = require("../log");
-
-// Flight make parts
 const makeFlight = require("./flight");
 
 // Generate mission task forces

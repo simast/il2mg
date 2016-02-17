@@ -90,31 +90,20 @@ function makeFlight(params) {
 		return;
 	}
 	
-	// Option 1: Attempt to pick taxi route/sector where static unit planes are present
-	(() => {
+	// Cache of already known invalid sectors for this flight
+	const invalidTaxiSectors = new Set();
+	
+	// Find flight taxi route (from a list of valid sectors)
+	const findTaxiRoute = (sectors) => {
 
-		const unitPlaneItems = airfield.planeItemsByUnit[unitID];
-		
-		if (!unitPlaneItems) {
-			return;
-		}
-		
-		const unitSectors = Object.keys(unitPlaneItems);
+		for (const sector of sectors) {
+			
+			// Skip already validated sectors
+			if (invalidTaxiSectors.has(sector)) {
+				continue;
+			}
 
-		if (flight.planes > 1) {
-
-			// Order the unit sector list by number of planes present
-			unitSectors.sort((a, b) => {
-				return unitPlaneItems[b].length - unitPlaneItems[a].length;
-			});
-		}
-		else {
-			rand.shuffle(unitSectors);
-		}
-
-		for (const unitSectorID of unitSectors) {
-
-			const taxiSpawns = airfield.taxiSpawnsBySector[unitSectorID];
+			const taxiSpawns = airfield.taxiSpawnsBySector[sector];
 			const validSpawns = [];
 			let usePlayerOnlySpawns = false;
 			
@@ -133,10 +122,12 @@ function makeFlight(params) {
 			
 			// Continue to another sector where unit planes are present
 			if (!taxiRoutes.length && !validSpawns.length) {
+				
+				invalidTaxiSectors.add(sector);
 				continue;
 			}
 			
-			flight.sector = Number(unitSectorID);
+			flight.sector = Number(sector);
 			flight.spawns = validSpawns;
 			
 			if (taxiRoutes.length) {
@@ -155,54 +146,62 @@ function makeFlight(params) {
 			
 			break;
 		}
-	}).call(this);
+	};
 	
-	// Option 2: Attempt to pick any taxi route/sector where the same plane group units are present
-	if (flight.taxi === undefined) {
+	// Attempt to pick taxi route/sector
+	(() => {
 		
-		const leaderPlaneGroup = this.planes[flight.leader.plane].group;
-		const leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
+		const unitPlaneItems = airfield.planeItemsByUnit[unitID];
 		
-		if (leaderPlaneGroupTaxiSectors) {
-
-			const taxiSectorID = rand.pick(leaderPlaneGroupTaxiSectors);
-			const taxiSpawns = airfield.taxiSpawnsBySector[taxiSectorID];
-
-			const taxiRoutes = Object.keys(taxiSpawns).filter((value) => {
-				return value > 0;
-			});
+		// 1: Pick taxi route from sectors where static unit planes are present
+		if (unitPlaneItems) {
 			
-			if (taxiRoutes.length) {
+			const sectors = Object.keys(unitPlaneItems);
 
-				flight.taxi = Number(rand.pick(taxiRoutes));
-				flight.sector = Number(taxiSectorID);
-				flight.spawns = taxiSpawns[flight.taxi];
+			if (flight.planes > 1) {
+
+				// Sort sectors list by number of planes present
+				sectors.sort((a, b) => {
+					return unitPlaneItems[b].length - unitPlaneItems[a].length;
+				});
+			}
+			else {
+				rand.shuffle(sectors);
+			}
+			
+			findTaxiRoute(sectors);
+		}
+		
+		// 2: Pick taxi route from sectors where same plane group units are present
+		if (flight.taxi === undefined) {
+			
+			const planeGroup = this.planes[flight.leader.plane].group;
+			const planeGroupSectors = airfield.taxiSectorsByPlaneGroup[planeGroup];
+			
+			if (planeGroupSectors) {
+				
+				const sectors = Object.keys(planeGroupSectors);
+				
+				if (flight.planes > 1) {
+				
+					// Sort plane group sector list by number of planes present
+					sectors.sort((a, b) => {
+						return planeGroupSectors[b] - planeGroupSectors[a];
+					});
+				}
+				else {
+					rand.shuffle(sectors);
+				}
+				
+				findTaxiRoute(sectors);
 			}
 		}
-	}
-	
-	// Option 3: Pick any random taxi route/sector
-	if (flight.taxi === undefined) {
 		
-		const taxiSectors = rand.shuffle(Object.keys(airfield.taxiSpawnsBySector));
-		
-		for (const taxiSectorID of taxiSectors) {
-			
-			const taxiSpawns = airfield.taxiSpawnsBySector[taxiSectorID];
-			const taxiRoutes = Object.keys(taxiSpawns).filter((value) => {
-				return value > 0;
-			});
-			
-			if (taxiRoutes.length) {
-				
-				flight.taxi = Number(rand.pick(taxiRoutes));
-				flight.sector = Number(taxiSectorID);
-				flight.spawns = taxiSpawns[flight.taxi];
-				
-				break;
-			}
+		// 3: Pick taxi route from any random sector
+		if (flight.taxi === undefined) {
+			findTaxiRoute(rand.shuffle(Object.keys(airfield.taxiSpawnsBySector)));
 		}
-	}
+	})();
 	
 	// Make sure the taxi route on the airfield is valid and exists
 	if (flight.taxi && !airfield.taxi[flight.taxi]) {

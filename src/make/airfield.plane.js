@@ -167,15 +167,24 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	
 	// Assign static plane item object to current taxi point
 	if (taxiSpawn) {
-		
 		taxiSpawn.plane = planeIndexData;
-		
-		// Weighted array of taxi spawn sector IDs by plane group (used when spawning flights)
-		if (taxiRoute > 0) {
-			
-			airfield.taxiSectorsByPlaneGroup[plane.group] = airfield.taxiSectorsByPlaneGroup[plane.group] || [];
-			airfield.taxiSectorsByPlaneGroup[plane.group].push(sector);
-		}
+	}
+	
+	// Build a counted list of planes (by plane group) in each sector
+	// NOTE: This is used as a backup when spawning flights on the airfield
+	let planeGroupSectors = airfield.taxiSectorsByPlaneGroup;
+	
+	if (!planeGroupSectors[plane.group]) {
+		planeGroupSectors[plane.group] = Object.create(null);
+	}
+	
+	planeGroupSectors = planeGroupSectors[plane.group];
+	
+	if (!planeGroupSectors[sector]) {
+		planeGroupSectors[sector] = 1;
+	}
+	else {
+		planeGroupSectors[sector]++;
 	}
 
 	return [planeItem];
