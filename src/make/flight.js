@@ -159,29 +159,49 @@ function makeFlight(params) {
 	
 	// Option 2: Attempt to pick any taxi route/sector where the same plane group units are present
 	if (flight.taxi === undefined) {
+		
+		const leaderPlaneGroup = this.planes[flight.leader.plane].group;
+		const leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
+		
+		if (leaderPlaneGroupTaxiSectors) {
 
-		(() => {
+			const taxiSectorID = rand.pick(leaderPlaneGroupTaxiSectors);
+			const taxiSpawns = airfield.taxiSpawnsBySector[taxiSectorID];
 
-			const leaderPlaneGroup = this.planes[flight.leader.plane].group;
-			const leaderPlaneGroupTaxiSectors = airfield.taxiSectorsByPlaneGroup[leaderPlaneGroup];
+			const taxiRoutes = Object.keys(taxiSpawns).filter((value) => {
+				return value > 0;
+			});
 			
-			if (leaderPlaneGroupTaxiSectors) {
+			if (taxiRoutes.length) {
 
-				const taxiSectorID = rand.pick(leaderPlaneGroupTaxiSectors);
-				const taxiSpawns = airfield.taxiSpawnsBySector[taxiSectorID];
-
-				const taxiRoutes = Object.keys(taxiSpawns).filter((value) => {
-					return value > 0;
-				});
-				
-				if (taxiRoutes.length) {
-
-					flight.taxi = Number(rand.pick(taxiRoutes));
-					flight.sector = Number(taxiSectorID);
-					flight.spawns = taxiSpawns[flight.taxi];
-				}
+				flight.taxi = Number(rand.pick(taxiRoutes));
+				flight.sector = Number(taxiSectorID);
+				flight.spawns = taxiSpawns[flight.taxi];
 			}
-		}).call(this);
+		}
+	}
+	
+	// Option 3: Pick any random taxi route/sector
+	if (flight.taxi === undefined) {
+		
+		const taxiSectors = rand.shuffle(Object.keys(airfield.taxiSpawnsBySector));
+		
+		for (const taxiSectorID of taxiSectors) {
+			
+			const taxiSpawns = airfield.taxiSpawnsBySector[taxiSectorID];
+			const taxiRoutes = Object.keys(taxiSpawns).filter((value) => {
+				return value > 0;
+			});
+			
+			if (taxiRoutes.length) {
+				
+				flight.taxi = Number(rand.pick(taxiRoutes));
+				flight.sector = Number(taxiSectorID);
+				flight.spawns = taxiSpawns[flight.taxi];
+				
+				break;
+			}
+		}
 	}
 	
 	// Make sure the taxi route on the airfield is valid and exists

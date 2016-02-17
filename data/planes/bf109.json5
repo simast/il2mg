@@ -34,8 +34,11 @@
 		parent: "bf109e",
 		model: "graphics\\planes\\bf109e7\\bf109e7.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109e7.txt",
-		speed: 450, // Max cruising speed (km/h) at ~1.5 km altitude
-		range: 620 // Max range at cruising speed (km)
+		// Base cruising speed with ~65% throttle as measured at ~1.5 km altitude.
+		// Interval is used to set speed for temperatures between +25°C and -25°C.
+		speed: [400, 401],
+		// Max range at cruising speed (km)
+		range: 620
 	},
 	
 	// Bf 109 F
@@ -50,7 +53,7 @@
 		parent: "bf109f",
 		model: "graphics\\planes\\bf109f2\\bf109f2.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109f2.txt",
-		speed: 430,
+		speed: [430, 431],
 		range: 650
 	},
 	
@@ -60,7 +63,7 @@
 		parent: "bf109f",
 		model: "graphics\\planes\\bf109f4\\bf109f4.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109f4.txt",
-		speed: 430,
+		speed: [430, 431],
 		range: 670,
 		skins: {
 			"201": {
@@ -86,7 +89,7 @@
 		parent: "bf109g",
 		model: "graphics\\planes\\bf109g2\\bf109g2.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109g2.txt",
-		speed: 430,
+		speed: [430, 431],
 		range: 630,
 		skins: {
 			"201": {

@@ -28,8 +28,8 @@
 		parent: "yak1",
 		model: "graphics\\planes\\yak1s69\\yak1s69.mgm",
 		script: "luascripts\\worldobjects\\planes\\yak1s69.txt",
-		speed: 420,
-		range: 620,
+		speed: [390, 440],
+		range: 640,
 		skins: {
 			"101": {
 				"": [-4, -4, -4, 1],

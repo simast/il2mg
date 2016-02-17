@@ -30,7 +30,7 @@
 		parent: "mc202",
 		model: "graphics\\planes\\mc202s8\\mc202s8.mgm",
 		script: "luascripts\\worldobjects\\planes\\mc202s8.txt",
-		speed: 460,
+		speed: [460, 461],
 		range: 660
 	}
 }

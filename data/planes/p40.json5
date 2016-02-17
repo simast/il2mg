@@ -26,17 +26,17 @@
 
 	// P-40 E
 	"p40e": {
-		name: "P-40 E",
+		name: "P-40E",
 		parent: "p40"
 	},
 	
 	// P-40 E-1
 	"p40e1": {
-		name: "P-40 E-1",
+		name: "P-40E-1",
 		parent: "p40e",
 		model: "graphics\\planes\\p40e1\\p40e1.mgm",
 		script: "luascripts\\worldobjects\\planes\\p40e1.txt",
-		speed: 310,
-		range: 920
+		speed: [350, 400],
+		range: 1120
 	}
 }
