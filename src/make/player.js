@@ -82,7 +82,7 @@ module.exports = function makePlayer() {
 	if (params.airfield) {
 
 		const airfieldID = params.airfield.toLowerCase();
-
+		
 		// Unknown airfield ID/name
 		if (!this.airfields[airfieldID]) {
 			throw ["Unknown airfield name!", {airfield: params.airfield}];
@@ -130,24 +130,32 @@ module.exports = function makePlayer() {
 		player.state = params.state;
 	}
 
-	// Limit to units stationed on airfields with available taxi route data (unless
-	// the player explicitly requests an air start or specifies an airfield).
-	if (typeof player.state !== "number" && player.airfield === undefined) {
+	// TODO: Filter units in one pass
+	unitsList = unitsList.filter((unitID) => {
 
-		unitsList = unitsList.filter((unitID) => {
+		const unit = this.units[unitID];
 
-			const unit = this.units[unitID];
-
-			// Filter out unit groups
-			if (Array.isArray(unit)) {
-				return false;
-			}
-			
-			const airfield = this.airfields[unit.airfield];
-
-			return (airfield.taxi && Object.keys(airfield.taxi).length);
-		});
-	}
+		// Filter out unit groups
+		if (Array.isArray(unit)) {
+			return false;
+		}
+		
+		const airfield = this.airfields[unit.airfield];
+		
+		// Limit to units stationed on airfields with available taxi routes (unless
+		// player explicitly requested an air start or specified an airfield)
+		if (typeof player.state !== "number" && player.airfield === undefined) {
+	
+			return Boolean(
+				!airfield.offmap &&
+				airfield.taxi &&
+				Object.keys(airfield.taxi).length
+			);
+		}
+		
+		// FIXME: Allow starting on offmap airfields!
+		return !airfield.offmap;
+	});
 
 	// TODO: Retry mission generation when unit list is empty
 	if (!unitsList.length) {

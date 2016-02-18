@@ -41,6 +41,7 @@ module.exports = function makeAirfields() {
 	// Total airfield counts
 	let totalAirfields = 0;
 	let totalActive = 0;
+	let totalOffmap = 0;
 	
 	// FIXME: Remove from this scope!
 	let airfieldData;
@@ -55,7 +56,15 @@ module.exports = function makeAirfields() {
 
 		airfield.id = airfieldID;
 		airfield.name = airfieldData.name;
-		airfield.position = airfieldData.position;
+		const position = airfield.position = airfieldData.position;
+		
+		// Identify offmap airfield
+		if (position[0] < 0 || position[0] > this.map.height ||
+				position[2] < 0 || position[2] > this.map.width) {
+			
+			airfield.offmap = true;
+			totalOffmap++;
+		}
 		
 		// Getter for airfield items group
 		Object.defineProperty(airfield, "group", {
@@ -258,7 +267,7 @@ module.exports = function makeAirfields() {
 			})();
 			
 			// Show airfield icon with number of planes in debug mode
-			if (mission.debug && mission.debug.airfields) {
+			if (mission.debug && mission.debug.airfields && !airfield.offmap) {
 				
 				// NOTE: Icon text can only have a custom color if it is linked to another
 				// icon. As a workaround - we are creating two icons at the same location.
@@ -266,8 +275,8 @@ module.exports = function makeAirfields() {
 				const airfieldIcon2 = airfield.group.createItem("MCU_Icon");
 				
 				// TODO: Show icon at the edge of the map for off-map airfields
-				airfieldIcon1.setPosition(airfield.position);
-				airfieldIcon2.setPosition(airfield.position);
+				airfieldIcon1.setPosition(position);
+				airfieldIcon2.setPosition(position);
 				
 				airfieldIcon1.LineType = Item.MCU_Icon.LINE_BOLD;
 				airfieldIcon1.setName(mission.getLC(airfield.planes + "\u2708"));
@@ -420,7 +429,7 @@ module.exports = function makeAirfields() {
 			const airfield = mission.airfields[airfieldID];
 			
 			// Ignore airfields without taxi routes or with empty value (no active planes/units)
-			if (!airfield.value || !airfield.taxi) {
+			if (airfield.offmap || !airfield.value || !airfield.taxi) {
 				continue;
 			}
 			
@@ -440,5 +449,8 @@ module.exports = function makeAirfields() {
 	});
 
 	// Log mission airfields info
-	log.I("Airfields:", totalAirfields, {active: totalActive});
+	log.I("Airfields:", totalAirfields, {
+		offmap: totalOffmap,
+		active: totalActive
+	});
 };

@@ -33,6 +33,8 @@
 		name: "I-16 type 24",
 		parent: "i16",
 		model: "graphics\\planes\\i16t24\\i16t24.mgm",
-		script: "luascripts\\worldobjects\\planes\\i16t24.txt"
+		script: "luascripts\\worldobjects\\planes\\i16t24.txt",
+		speed: 355,
+		range: 390
 	}
 }

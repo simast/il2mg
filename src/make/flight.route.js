@@ -1,6 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+// Cold temperature speed boost effect (+0.24% km/h for each -1°C)
+const COLD_BOOST = 0.0024;
+
 // Make mission flight route
 module.exports = function makeFlightRoute(flight, from, to, options) {
 	
@@ -34,17 +37,12 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 	
 	spot.point = to;
 	
-	// Compute waypoint speed based on current temperature
-	const speedP25 = leaderPlaneData.speed[0];
-	const speedM25 = leaderPlaneData.speed[1];
-	const temperature = this.weather.temperature.level;
+	// Set waypoint speed based on current temperature (and some randomness)
+	const baseSpeed = leaderPlaneData.speed;
+	const tempFactor = baseSpeed * COLD_BOOST * this.weather.temperature.level;
 	
-	// NOTE: Speed data is for +25°C to -25°C interval
-	const tempFactor = 1 - (temperature + 25) / 50;
-	const speed = speedP25 + (speedM25 - speedP25) * tempFactor;
-	
-	// Use +-1% random speed variation
-	spot.speed = Math.round(speed * rand.real(0.99, 1.01, true));
+	// TODO: Apply altitude factor
+	spot.speed = Math.round((baseSpeed - tempFactor) * rand.real(0.99, 1.01));
 	
 	return [spot];
 };

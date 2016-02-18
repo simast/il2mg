@@ -5,7 +5,7 @@ const Vector = require("sylvester").Vector;
 const data = require("../data");
 const Location = require("./locations").Location;
 const makeFlightRoute = require("./flight.route");
-const MCU_Icon = require("../item").MCU_Icon;
+const Item = require("../item");
 
 // Max patrol area range (as a percent from total aircraft fuel range)
 const MAX_RANGE_PERCENT = 25;
@@ -23,7 +23,7 @@ const MAX_ALTITUDE = 3500;
 const ZONE_PADDING = 2500;
 
 // Restricted zone around map area border (for player flight only)
-const RESTRICTED_BORDER = 10000; // 10 Km
+const RESTRICTED_BORDER = 12500; // 12.5 Km
 
 // Data constants
 const planAction = data.planAction;
@@ -173,7 +173,7 @@ module.exports = function makeTaskPatrol(flight) {
 			patrolIcon.setPosition(point[0], point[1]);
 			patrolIcon.setColor(mapColor.ROUTE);
 			patrolIcon.Coalitions = [flight.coalition];
-			patrolIcon.IconId = MCU_Icon.ICON_WAYPOINT;
+			patrolIcon.IconId = Item.MCU_Icon.ICON_WAYPOINT;
 		}
 	}
 	
@@ -333,6 +333,10 @@ module.exports = function makeTaskPatrol(flight) {
 		if (point === ingressPoint) {
 			options.ingress = true;
 		}
+		// Set route waypoints to low priority (for patrol area only)
+		else {
+			options.priority = Item.MCU_Waypoint.PRIORITY_LOW;
+		}
 		
 		// Plan patrol flight route for each point
 		const spots = makeFlightRoute.call(
@@ -441,7 +445,7 @@ module.exports = function makeTaskPatrol(flight) {
 		zoneIcon.setPosition(vector.e(1), vector.e(2));
 		zoneIcon.setColor(mapColor.ROUTE);
 		zoneIcon.Coalitions = [flight.coalition];
-		zoneIcon.LineType = MCU_Icon.LINE_SECTOR_2;
+		zoneIcon.LineType = Item.MCU_Icon.LINE_SECTOR_2;
 		
 		if (!firstZoneIcon) {
 			firstZoneIcon = zoneIcon;
