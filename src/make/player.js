@@ -5,14 +5,10 @@ const data = require("../data");
 
 // Generate mission player choice data
 module.exports = function makePlayer() {
-
-	const rand = this.rand;
+	
 	const params = this.params;
 	const player = this.player = Object.create(null);
-
-	// Initial valid units list (all units)
-	let unitsList = Object.keys(this.units);
-
+	
 	// Validate desired coalition param
 	if (params.coalition) {
 
@@ -22,16 +18,14 @@ module.exports = function makePlayer() {
 		}
 
 		player.coalition = params.coalition;
-
-		// Filter units based on coalition
-		unitsList = Object.keys(this.unitsByCoalition[player.coalition]);
 	}
-
+	
 	// Validate desired country param
 	if (params.country) {
 
 		// Make sure country is part of requested coalition
-		if (player.coalition && data.countries[params.country].coalition !== player.coalition) {
+		if (player.coalition &&
+			data.countries[params.country].coalition !== player.coalition) {
 
 			throw ["Country is not part of coalition!", {
 				country: params.country,
@@ -45,13 +39,8 @@ module.exports = function makePlayer() {
 		}
 
 		player.country = params.country;
-
-		// Filter units based on country
-		unitsList = unitsList.filter((unitID) => {
-			return (unitID in this.unitsByCountry[player.country]);
-		});
 	}
-
+	
 	// Validate desired task param
 	if (params.task) {
 
@@ -61,45 +50,23 @@ module.exports = function makePlayer() {
 		}
 
 		player.task = params.task;
-
-		// Filter units based on task
-		unitsList = unitsList.filter((unitID) => {
-			
-			const unit = this.units[unitID];
-
-			// Filter out unit groups
-			if (Array.isArray(unit)) {
-				return false;
-			}
-			
-			const validTasks = Object.keys(this.battle.roles[unit.country][unit.role]);
-			
-			return (validTasks.indexOf(player.task) !== -1);
-		});
 	}
 	
 	// Validate desired airfield param
 	if (params.airfield) {
-
-		const airfieldID = params.airfield.toLowerCase();
 		
 		// Unknown airfield ID/name
-		if (!this.airfields[airfieldID]) {
-			throw ["Unknown airfield name!", {airfield: params.airfield}];
+		if (!this.airfields[params.airfield]) {
+			throw ["Unknown airfield!", {airfield: params.airfield}];
 		}
 		// Inactive airfield
-		else if (!this.unitsByAirfield[airfieldID]) {
+		else if (!this.unitsByAirfield[params.airfield]) {
 			throw ["Airfield is not active!", {airfield: params.airfield}];
 		}
 
-		player.airfield = airfieldID;
-
-		// Filter units by player chosen airfield
-		unitsList = unitsList.filter((unitID) => {
-			return (unitID in this.unitsByAirfield[player.airfield]);
-		});
+		player.airfield = params.airfield;
 	}
-
+	
 	// Set desired pilot param data
 	if (params.pilot) {
 
@@ -122,42 +89,67 @@ module.exports = function makePlayer() {
 			}
 		}
 	}
-
+	
 	// Set player flight state
 	player.state = data.flightState.START;
 
 	if (params.state !== undefined) {
 		player.state = params.state;
 	}
-
-	// TODO: Filter units in one pass
-	unitsList = unitsList.filter((unitID) => {
+	
+	// Filter out units based on player choices
+	const unitsList = Object.keys(this.units).filter((unitID) => {
 
 		const unit = this.units[unitID];
-
+		
 		// Filter out unit groups
 		if (Array.isArray(unit)) {
 			return false;
 		}
 		
+		// Coalition filter
+		if (player.coalition && unit.coalition !== player.coalition) {
+			return false;
+		}
+		
+		// Country filter
+		if (player.country && unit.country !== player.country) {
+			return false;
+		}
+		
+		// Task filter
+		if (player.task) {
+			
+			const validTasks = Object.keys(this.battle.roles[unit.country][unit.role]);
+			
+			if (validTasks.indexOf(player.task) === -1) {
+				return false;
+			}
+		}
+		
+		// Airfield filter
+		if (player.airfield && unit.airfield !== player.airfield) {
+			return false;
+		}
+		
+		// Filter units based on selected flight state
 		const airfield = this.airfields[unit.airfield];
 		
 		// Limit to units stationed on airfields with available taxi routes (unless
 		// player explicitly requested an air start or specified an airfield)
 		if (typeof player.state !== "number" && player.airfield === undefined) {
-	
-			return Boolean(
-				!airfield.offmap &&
-				airfield.taxi &&
-				Object.keys(airfield.taxi).length
-			);
+			
+			const taxiData = airfield.taxi;
+			
+			if (!taxiData || !Object.keys(taxiData).length) {
+				return false;
+			}
 		}
 		
-		// FIXME: Allow starting on offmap airfields!
+		// TODO: Allow starting from offmap airfields!
 		return !airfield.offmap;
 	});
-
-	// TODO: Retry mission generation when unit list is empty
+	
 	if (!unitsList.length) {
 		throw "No valid units found!";
 	}

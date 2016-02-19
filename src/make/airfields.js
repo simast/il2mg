@@ -37,6 +37,7 @@ module.exports = function makeAirfields() {
 	// Airfield index tables
 	const airfields = Object.create(null);
 	const airfieldsByCoalition = Object.create(null);
+	const airfieldsTaxi = new Set();
 
 	// Total airfield counts
 	let totalAirfields = 0;
@@ -288,6 +289,11 @@ module.exports = function makeAirfields() {
 				airfieldIcon1.addTarget(airfieldIcon2);
 			}
 
+			// Mark airfield to be enabled/activated for taxi
+			if (!airfield.offmap && airfield.value && airfield.taxi) {
+				airfieldsTaxi.add(airfield);
+			}
+			
 			totalActive++;
 		}
 
@@ -421,17 +427,10 @@ module.exports = function makeAirfields() {
 	// Enable not used taxi routes for all active airfields
 	// NOTE: When the flights are created they will enable taxi routes that match
 	// parking spots of the planes. The code below makes sure to enable the remaining
-	// taxi routes for all active airfields that were not activated by flights code.
+	// taxi routes for all active airfields that were not activated by flights.
 	mission.make.push(() => {
 
-		for (const airfieldID in mission.airfields) {
-			
-			const airfield = mission.airfields[airfieldID];
-			
-			// Ignore airfields without taxi routes or with empty value (no active planes/units)
-			if (airfield.offmap || !airfield.value || !airfield.taxi) {
-				continue;
-			}
+		for (const airfield of airfieldsTaxi) {
 			
 			// Choose taxi routes randomly
 			const taxiRoutes = rand.shuffle(Object.keys(airfield.taxi));
