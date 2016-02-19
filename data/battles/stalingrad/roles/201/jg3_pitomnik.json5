@@ -1,5 +1,5 @@
 // Platzschutzstaffel "Pitomnik" unit role
 {
-	patrol: 1,
+	patrol: 2,
 	cover: 1
 }

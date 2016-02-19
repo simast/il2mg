@@ -1,7 +1,7 @@
 // Fighter (IAP) role
 {
-	patrol: 2,
-	cover: 2,
+	patrol: 3,
+	cover: 1,
 	test: 1,
 	practice: 1
 }

@@ -1,5 +1,5 @@
 // Fighter (jagdflieger) role for Stab units
 {
-	patrol: 1,
+	patrol: 2,
 	cover: 1
 }
