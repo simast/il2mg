@@ -38,6 +38,9 @@ module.exports = function makeAirfields() {
 	const airfields = Object.create(null);
 	const airfieldsByCoalition = Object.create(null);
 	const airfieldsTaxi = new Set();
+	
+	// Offmap "hot" spots by coalition (based on offmap airfield positions)
+	const offmapSpotsByCoalition = Object.create(null);
 
 	// Total airfield counts
 	let totalAirfields = 0;
@@ -147,11 +150,25 @@ module.exports = function makeAirfields() {
 			// Airfield coalition
 			airfield.coalition = data.countries[airfield.country].coalition;
 
+			// Index airfield by coalition
 			if (!airfieldsByCoalition[airfield.coalition]) {
 				airfieldsByCoalition[airfield.coalition] = [];
 			}
 
 			airfieldsByCoalition[airfield.coalition].push(airfield);
+			
+			// Index offmap spots by coalition
+			if (airfield.offmap) {
+				
+				if (!offmapSpotsByCoalition[airfield.coalition]) {
+					offmapSpotsByCoalition[airfield.coalition] = [];
+				}
+				
+				offmapSpotsByCoalition[airfield.coalition].push([
+					airfield.position[0],
+					airfield.position[2]
+				]);
+			}
 
 			// Build a list of sectors indexed by plane size
 			for (const sectorID in airfieldData.sectors) {
@@ -240,16 +257,19 @@ module.exports = function makeAirfields() {
 
 						// Collect info when unitPlanes.length is greater than 0 (could not
 						// distribute all unit planes - not enough parking spots).
-						unitPlanes.forEach((planeData) => {
+						if (!airfield.offmap) {
 							
-							const planeID = planeData[0];
-							
-							if (!logData[planeID]) {
-								logData[planeID] = 0;
-							}
-							
-							logData[planeID]++;
-						});
+							unitPlanes.forEach((planeData) => {
+								
+								const planeID = planeData[0];
+								
+								if (!logData[planeID]) {
+									logData[planeID] = 0;
+								}
+								
+								logData[planeID]++;
+							});
+						}
 					});
 				}
 				
@@ -423,6 +443,7 @@ module.exports = function makeAirfields() {
 	// Static airfield data index objects
 	mission.airfields = Object.freeze(airfields);
 	mission.airfieldsByCoalition = Object.freeze(airfieldsByCoalition);
+	mission.offmapSpotsByCoalition = Object.freeze(offmapSpotsByCoalition);
 	
 	// Enable not used taxi routes for all active airfields
 	// NOTE: When the flights are created they will enable taxi routes that match

@@ -38,6 +38,8 @@ module.exports = function makeTaskPatrol(flight) {
 	const territories = this.locations.territories;
 	const startLocation = new Location(airfield.position[0], airfield.position[2]);
 	const startVector = startLocation.vector;
+	const startX = startLocation.x;
+	const startZ = startLocation.z;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
 	const clouds = this.weather.clouds;
@@ -65,10 +67,10 @@ module.exports = function makeTaskPatrol(flight) {
 	
 	// Patrol area bounds as a rectangular location around the start point
 	const patrolBounds = new Location(
-		Math.max(startLocation.x - maxPatrolRange, restrictedBorder),
-		Math.max(startLocation.z - maxPatrolRange, restrictedBorder),
-		Math.min(startLocation.x + maxPatrolRange, map.height - restrictedBorder),
-		Math.min(startLocation.z + maxPatrolRange, map.width - restrictedBorder)
+		Math.max(startX - maxPatrolRange, restrictedBorder),
+		Math.max(startZ - maxPatrolRange, restrictedBorder),
+		Math.min(startX + maxPatrolRange, map.height - restrictedBorder),
+		Math.min(startZ + maxPatrolRange, map.width - restrictedBorder)
 	);
 	
 	let patrolA;
@@ -76,7 +78,7 @@ module.exports = function makeTaskPatrol(flight) {
 	let distanceAB;
 	
 	// Select base two (A and B) front points for patrol area
-	const findPatrolPoints = (locations) => {
+	const findPatrolPoints = (locations, directions) => {
 		
 		if (!locations.length) {
 			return;
@@ -90,6 +92,33 @@ module.exports = function makeTaskPatrol(flight) {
 		do {
 			
 			const location = locations.shift();
+			let direction;
+			
+			// Filter out locations based on forbidden directions
+			if (directions) {
+				
+				const locationX = location.x;
+				const locationZ = location.z;
+				
+				if (locationX > startX && locationZ > startZ) {
+					direction = "tr";
+				}
+				else if (locationX < startX && locationZ > startZ) {
+					direction = "br";
+				}
+				else if (locationX < startX && locationZ < startZ) {
+					direction = "bl";
+				}
+				else {
+					direction = "tl";
+				}
+				
+				// Direction is forbidden
+				if (directions[direction] < 0) {
+					continue;
+				}
+			}
+			
 			const locationVector = location.vector;
 			const distance = startVector.distanceFrom(locationVector);
 			
@@ -106,6 +135,8 @@ module.exports = function makeTaskPatrol(flight) {
 			// NOTE: Chance to use this location will decrease with distance (with
 			// at least 10% always guaranteed chance).
 			let useLocation = Math.max(0.1, 1 - distanceRatio);
+			
+			// TODO: Set location chance based on direction weight (when available)
 			
 			// Try to choose first patrol point from locations within 50% max range
 			if (!patrolA && distanceRatio > 0.5 &&
@@ -141,14 +172,61 @@ module.exports = function makeTaskPatrol(flight) {
 		while (locations.length);
 	};
 	
+	// Adjust (align and face) bounds based on a list of "hot" points
+	const alignBoundsToPoints = (bounds, points) => {
+		
+		// Four "corners" of the bounds area
+		let tl = 0;
+		let tr = 0;
+		let bl = 0;
+		let br = 0;
+		
+		// Mark availability (and popularity) of each corner
+		for (const point of points) {
+			
+			const pointX = point[0];
+			const pointZ = point[1];
+			
+			if (pointX > startX) {
+				tl++; tr++; bl--; br--;
+			}
+			else if (pointX < startX) {
+				tl--; tr--; bl++; br++;
+			}
+			
+			if (pointZ > startZ) {
+				tl--; tr++; bl--; br++;
+			}
+			else if (pointZ < startZ) {
+				tl++; tr--; bl++; br--;
+			}
+		}
+		
+		// TODO: Resize bounds area to only include available (positive) corners
+		return {tl, tr, bl, br};
+	};
+	
 	// Option 1: Find patrol points from fronts within max patrol range
 	findPatrolPoints(territories[territory.FRONT].findIn(patrolBounds));
 	
 	// Option 2: Find patrol points on friendly territory within max patrol range
 	if (!patrolA || !patrolB) {
 		
-		// TODO: Use enemy offmap airfields as a reference for front direction
-		findPatrolPoints(territories[flight.coalition].findIn(patrolBounds));
+		const enemyCoalition = this.getEnemyCoalition(flight.coalition);
+		const enemyOffmapSpots = this.offmapSpotsByCoalition[enemyCoalition];
+		let directions;
+		
+		// Adjust patrol bounds to align with and face any enemy offmap spots
+		// NOTE: This is done so that flights will not go on patrol in a completely
+		// different direction to where the enemy is.
+		if (enemyOffmapSpots) {
+			directions = alignBoundsToPoints(patrolBounds, enemyOffmapSpots);
+		}
+		
+		findPatrolPoints(
+			territories[flight.coalition].findIn(patrolBounds),
+			directions
+		);
 	}
 	
 	// TODO: Reject task when we can't find base two patrol reference points
@@ -275,8 +353,8 @@ module.exports = function makeTaskPatrol(flight) {
 	
 	// Translate ingress vector to 0,0 origin coordinate
 	ingressVector = Vector.create([
-		ingressPoint[0] - startLocation.x,
-		ingressPoint[1] - startLocation.z
+		ingressPoint[0] - startX,
+		ingressPoint[1] - startZ
 	]);
 	
 	let entryPointIndex;

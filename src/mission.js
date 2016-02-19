@@ -318,6 +318,24 @@ class Mission {
 			name: callsign[1]
 		};
 	}
+	
+	/**
+	 * Get opposing (enemy) coalition.
+	 *
+	 * @param {number} coalition Friendly coalition ID.
+	 * @returns {number} Enemy coalition ID.
+	 */
+	getEnemyCoalition(coalition) {
+		
+		if (coalition === data.coalition.ALLIES) {
+			return data.coalition.AXIS;
+		}
+		else if (coalition === data.coalition.AXIS) {
+			return data.coalition.ALLIES;
+		}
+		
+		return 0; // Unknown/neutral
+	}
 
 	/**
 	 * Save mission files.
