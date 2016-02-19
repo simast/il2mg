@@ -442,7 +442,7 @@ module.exports = function makeTaskPatrol(flight) {
 	
 	// Add loop pattern route marker (back to ingress point)
 	// TODO: Set loop pattern fly time!
-	route.push([loopSpotIndex, 60 * 10]);
+	route.push([loopSpotIndex, 60 * rand.integer(15, 30)]);
 	
 	// Make final (back to the base) egress route
 	route.push.apply(

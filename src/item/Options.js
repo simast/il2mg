@@ -45,8 +45,8 @@ module.exports = class Options extends Item {
 
 		const buffer = new Buffer(size);
 
-		// Item binary type ID (or file version?)
-		this.writeUInt32(buffer, 25);
+		// File version
+		this.writeUInt32(buffer, 26);
 
 		// MissionType
 		this.writeUInt32(buffer, this.MissionType);
