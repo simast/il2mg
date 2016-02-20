@@ -10,7 +10,7 @@ const data = module.exports = Object.create(null);
 data.name = "il2mg";
 
 // Application version
-data.version = "r4";
+data.version = "r5";
 
 // Application copyright
 data.copyright = "(C) Simas Toleikis, 2015-2016";

@@ -383,14 +383,24 @@ module.exports = function makeUnits() {
 		const unitParts = [
 			unit // Original unit
 		];
-
+		
 		// Split unit into separate parts (based on number of airfields)
 		// NOTE: Don't split units with planesMin/planesMax
-		if (unitAirfields.length && !unit.planesMin && !unit.planesMax) {
+		if (unitAirfields.length > 1 && !unit.planesMin && !unit.planesMax) {
+			
+			let lastSplitUnitIndex = unitAirfields.length - 1;
+			let unitTotalPlanes = 0;
+			
+			unitPlaneStorages.forEach((planeStorage) => {
+				unitTotalPlanes += planeStorage[1];
+			});
+			
+			// Make sure not to split unit into more parts than planes available
+			lastSplitUnitIndex = Math.min(lastSplitUnitIndex, unitTotalPlanes - 1);
 
 			// Split unit into separate parts for each extra airfield
-			for (let i = 1; i < unitAirfields.length; i++) {
-
+			for (let i = 1; i <= lastSplitUnitIndex; i++) {
+				
 				// Create a new unit part based on the original
 				const unitPart = JSON.parse(JSON.stringify(unit));
 
@@ -527,7 +537,8 @@ module.exports = function makeUnits() {
 		// TODO: Pick planes based on rating
 
 		let planeCount = planeStorage[1];
-
+		let unitIndex = planeStorage.units.length - 1;
+		
 		while (planeCount > 0) {
 
 			let planeID = planeStorage[0];
@@ -537,9 +548,18 @@ module.exports = function makeUnits() {
 			if (Array.isArray(plane)) {
 				planeID = rand.pick(plane);
 			}
-
-			// Pick random unit
-			const unitID = rand.pick(planeStorage.units);
+			
+			let unitID;
+			
+			// Make sure unit will receive at least one plane!
+			if (unitIndex >= 0) {
+				unitID = planeStorage.units[unitIndex--];
+			}
+			// Use random plane distribution among all available units
+			else {
+				unitID = rand.pick(planeStorage.units);
+			}
+			
 			const unit = units[unitID];
 
 			if (unit.planes.max !== undefined && unit.planes.length >= unit.planes.max) {
