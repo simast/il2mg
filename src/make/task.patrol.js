@@ -36,10 +36,10 @@ module.exports = function makeTaskPatrol(flight) {
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];
 	const territories = this.locations.territories;
-	const startLocation = new Location(airfield.position[0], airfield.position[2]);
+	const startX = airfield.position[0];
+	const startZ = airfield.position[2];
+	const startLocation = new Location(startX, startZ);
 	const startVector = startLocation.vector;
-	const startX = startLocation.x;
-	const startZ = startLocation.z;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
 	const clouds = this.weather.clouds;
