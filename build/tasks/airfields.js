@@ -279,7 +279,7 @@ module.exports = function(grunt) {
 
 							// Effect position
 							effect.push(positionX);
-							effect.push(positionY === json.position[1] ? 0 : positionY);
+							effect.push(positionY);
 							effect.push(positionZ);
 
 							// Effect type ID
