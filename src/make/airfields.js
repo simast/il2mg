@@ -188,8 +188,6 @@ module.exports = function makeAirfields() {
 
 			// Assign planes to sectors
 			(() => {
-				
-				const logData = Object.create(null);
 
 				// NOTE: During distribution large size planes take priority over small size
 				for (let planeSizeID = planeSizeMax; planeSizeID >= planeSizeMin; planeSizeID--) {
@@ -254,36 +252,7 @@ module.exports = function makeAirfields() {
 								}
 							}
 						}
-
-						// Collect info when unitPlanes.length is greater than 0 (could not
-						// distribute all unit planes - not enough parking spots).
-						if (!airfield.offmap) {
-							
-							unitPlanes.forEach((planeData) => {
-								
-								const planeID = planeData[0];
-								
-								if (!logData[planeID]) {
-									logData[planeID] = 0;
-								}
-								
-								logData[planeID]++;
-							});
-						}
 					});
-				}
-				
-				// Log a warning for each plane type (with number of planes) that could
-				// not be distributed on the airfield (due to missing plane spots).
-				for (const planeID in logData) {
-					
-					const logParams = {
-						airfield: airfieldID
-					};
-					
-					logParams[planeID] = logData[planeID];
-					
-					log.W("Not enough plane spots!", logParams);
 				}
 			})();
 			
