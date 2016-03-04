@@ -3,6 +3,7 @@
 
 const fs = require("fs");
 const requireDir = require("require-directory");
+const moment = require("moment");
 
 const data = module.exports = Object.create(null);
 
@@ -318,4 +319,87 @@ data.getItemType = function(itemTypeID) {
 	}
 
 	return itemType;
+};
+
+/**
+ * Match a valid date range (from data files with special date from/to values).
+ *
+ * @param {object} match Match data (battle from/to and target match date).
+ * @param {string} dateFrom From date range value.
+ * @param {string} dateTo To date range value.
+ * @returns {object|boolean} Matched from/to range or boolean false on failure.
+ */
+data.matchDateRange = function(match, dateFrom, dateTo) {
+	
+	// Always match if date range is undefined
+	if (!dateFrom && !dateTo) {
+		
+		return {
+			from: match.from,
+			to: match.to
+		};
+	}
+	
+	const range = {};
+	
+	if (dateFrom) {
+		range.from = dateFrom;
+	}
+	
+	if (dateTo) {
+		range.to = dateTo;
+	}
+	
+	// Parse each from/to date string
+	for (const type in range) {
+		
+		const date = range[type];
+		
+		// Special "start" value means the start (min) date of the match
+		if (date === "start") {
+			range[type] = match.from;
+		}
+		// Special "end" value means the end (max) date of the match
+		else if (date === "end") {
+			range[type] = match.to;
+		}
+		// Other date format
+		else {
+
+			const dateParts = date.split("-");
+			const momentDate = moment();
+
+			momentDate.year(dateParts[0]);
+			momentDate.month(Number(dateParts[1]) - 1);
+
+			// Only month format (YYYY-MM) or start of the month format (YYYY-MM-start)
+			if (dateParts[2] === undefined || dateParts[2] === "start") {
+				momentDate.startOf("month");
+			}
+			// End of the month format (YYYY-MM-end)
+			else if (dateParts[2] === "end") {
+				momentDate.endOf("month");
+			}
+			// Full date format (YYYY-MM-DD)
+			else {
+				momentDate.date(Number(dateParts[2]));
+			}
+
+			range[type] = momentDate;
+		}
+	}
+
+	// Match to the end of the month when dateTo is not provided
+	if (!dateTo) {
+		range.to = moment(range.from).endOf("month");
+	}
+
+	if (!match.date.isBefore(range.from, "day") &&
+		!match.date.isAfter(range.to, "day")) {
+
+		// Return from/to matching range as moment date objects
+		return range;
+	}
+
+	return false;
 };

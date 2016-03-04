@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
 	// All source files	used with JSCS and JSHint tasks
 	const sourceFiles = [
-		"Gruntfile.js",
+		"gruntfile.js",
 		"src/**/*.js",
 		"build/**/*.js"
 	];
@@ -78,7 +78,8 @@ module.exports = function(grunt) {
 		"build:blocks",
 		"build:locations",
 		"build:airfields",
-		"build:fronts"
+		"build:fronts",
+		"build:index"
 	]);
 	
 	// Task to build and compile the project

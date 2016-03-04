@@ -1,7 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const moment = require("moment");
 const data = require("../data");
 const log = require("../log");
 
@@ -12,72 +11,12 @@ module.exports = function makeUnits() {
 	const rand = this.rand;
 	const planeStorages = new Set();
 	
-	// Utility function used to parse special date values in unit data files
-	const parseDate = (date) => {
-
-		// Special "start" value means the start date of the battle
-		if (date === "start") {
-			return this.battleFrom;
-		}
-		// Special "end" value means the end date of the battle
-		else if (date === "end") {
-			return this.battleTo;
-		}
-		// Other date format
-		else {
-
-			const dateParts = date.split("-");
-			const momentDate = moment();
-
-			momentDate.year(dateParts[0]);
-			momentDate.month(Number(dateParts[1]) - 1);
-
-			// Only month format (YYYY-MM) or start of the month format (YYYY-MM-start)
-			if (dateParts[2] === undefined || dateParts[2] === "start") {
-				momentDate.startOf("month");
-			}
-			// End of the month format (YYYY-MM-end)
-			else if (dateParts[2] === "end") {
-				momentDate.endOf("month");
-			}
-			// Full date format (YYYY-MM-DD)
-			else {
-				momentDate.date(Number(dateParts[2]));
-			}
-
-			return momentDate;
-		}
-	};
-	
-	// Utility function used to validate to/from date ranges based on mission date
-	const missionDateIsBetween = (dateFrom, dateTo, returnRange) => {
-
-		dateFrom = parseDate(dateFrom).startOf("day");
-
-		// Match to the end of the month when dateTo is not provided
-		if (dateTo === undefined) {
-			dateTo = moment(dateFrom).endOf("month").endOf("day");
-		}
-		else {
-			dateTo = parseDate(dateTo).endOf("day");
-		}
-
-		if (!this.date.isBefore(dateFrom) && !this.date.isAfter(dateTo)) {
-
-			// Return from/to range as moment date objects
-			if (returnRange) {
-
-				return {
-					from: dateFrom,
-					to: dateTo
-				};
-			}
-
-			return true;
-		}
-
-		return false;
-	};
+	// Utility function used to match to/from date ranges based on mission date
+	const matchMissionDateRange = data.matchDateRange.bind(undefined, {
+		from: this.battleFrom,
+		to: this.battleTo,
+		date: this.date
+	});
 	
 	// Make unit airfields
 	const makeAirfields = (unitData) => {
@@ -97,7 +36,7 @@ module.exports = function makeUnits() {
 
 			const airfieldID = airfield[0];
 
-			if (missionDateIsBetween(airfield[1], airfield[2])) {
+			if (matchMissionDateRange(airfield[1], airfield[2])) {
 
 				let availability = 1;
 
@@ -131,10 +70,8 @@ module.exports = function makeUnits() {
 
 		// Find matching pilots based on to/from date ranges
 		for (const pilot of dataPilots) {
-
-			const pilotFrom = pilot[2];
-
-			if (pilotFrom === undefined || missionDateIsBetween(pilotFrom, pilot[3])) {
+			
+			if (matchMissionDateRange(pilot[2], pilot[3])) {
 
 				// Add matching pilot entry
 				pilots.push({
@@ -162,7 +99,7 @@ module.exports = function makeUnits() {
 		// Find matching plane storages based on to/from date ranges
 		dataPlanes.forEach((planeStorage) => {
 
-			const dateRange = missionDateIsBetween(planeStorage[2], planeStorage[3], true);
+			const dateRange = matchMissionDateRange(planeStorage[2], planeStorage[3]);
 
 			if (dateRange) {
 
@@ -214,21 +151,6 @@ module.exports = function makeUnits() {
 	const makeName = (unitData) => {
 
 		let name = unitData.name;
-		
-		// Unit name as an array (for name changes based on date)
-		if (Array.isArray(name)) {
-
-			name = null;
-
-			for (const dataName of unitData.name) {
-
-				if (missionDateIsBetween(dataName[1], dataName[2])) {
-
-					name = dataName[0];
-					break;
-				}
-			}
-		}
 
 		// Validate unit name
 		if (typeof name !== "string" || !name.length) {
@@ -250,7 +172,7 @@ module.exports = function makeUnits() {
 
 			for (const dataRole of unitData.role) {
 				
-				if (missionDateIsBetween(dataRole[1], dataRole[2])) {
+				if (matchMissionDateRange(dataRole[1], dataRole[2])) {
 
 					role = dataRole[0];
 					break;

@@ -1,18 +1,28 @@
 {
-	// 2 IAP
-	"2iap": {
-		name: [
-			["2 IAP PVO", "start", "1942-08-23"],
-			["2 IAP", "1942-08-24", "end"]
-		],
-		role: [
-			["fighter_pvo", "start", "1942-08-23"],
-			["fighter", "1942-08-24", "end"]
-		],
+	"2iap": {},
+	
+	// 2 IAP PVO
+	"2iap_1": {
+		name: "2 IAP PVO",
+		parent: "2iap",
+		role: "fighter_pvo",
 		airfields: [
 			// 102 IAD/PVO
 			["voroponovo", "1942-07-27", "1942-08-23"],
-			["zhitkur", "1942-08-23", "1942-08-23", 0],
+			["zhitkur", "1942-08-23", "1942-08-23", 0]
+		],
+		planes: [
+			// TOE 015/174 (20 aircraft)
+			["yak1s69", [19, 8], "1942-07-27", "1942-08-23"]
+		]
+	},
+	
+	// 2 IAP
+	"2iap_2": {
+		name: "2 IAP",
+		parent: "2iap",
+		role: "fighter",
+		airfields: [
 			// ... was in 8 VA reserve, did not fly combat missions
 			// TODO: 226 SAD
 			// 287 IAD and 268 IAD (reserve?)
@@ -20,8 +30,6 @@
 			["elton", "1943-01-04", "1943-01-04", 0]
 		],
 		planes: [
-			// TOE 015/174 (20 aircraft)
-			["yak1s69", [19, 8], "1942-07-27", "1942-08-23"],
 			// TOE 015/284 (32 aircraft)
 			// TODO: 226 SAD
 			["yak1s69", [25, 11], "1942-10-22", "1942-12-10"],
