@@ -1,0 +1,112 @@
+{
+	// Kampfgeschwader 1 "Hindenburg"
+	"kg1": {
+		alias: "Hindenburg",
+		role: "bomber"
+	},
+	
+	// Stab/KG 1
+	"kg1_stab": {
+		name: "Stab/KG 1",
+		parent: "kg1",
+		airfields: [
+			["morozovskiy_south", "1942-10-07", "1942-11-03"]
+		],
+		planes: [
+			["ju88a4", [3, 4], "1942-10-07", "1942-11-03"]
+		],
+		pilots: [
+			["Heinrich Lau", 15]
+		]
+	},
+	
+	// I./KG 1
+	"kg1_i": {
+		parent: "kg1",
+		airfields: [
+			["morozovskiy_south", "1942-10-07", "1942-11-03"]
+		],
+		planes: [
+			["ju88a5", [16, 10], "1942-10-07", "1942-10-20"],
+			["ju88a5", [10, 9], "1942-10-21", "1942-11-03"]
+		]
+	},
+	// NOTE: Only 1./KG 1 and 3./KG 1 at Morozovskiy
+	"kg1_1": {
+		name: "1./KG 1",
+		parent: "kg1_i"
+	},
+	"kg1_3": {
+		name: "3./KG 1",
+		parent: "kg1_i"
+	},
+	
+	// II./KG 1
+	"kg1_ii": {
+		parent: "kg1",
+		airfields: [
+			["morozovskiy_west", "1942-10-07", "1942-11-03"]
+		],
+		planes: [
+			["ju88a4", [26, 22], "1942-10-07", "1942-10-20"],
+			["ju88a4", [22, 25], "1942-10-21", "1942-11-03"]
+		]
+	},
+	"kg1_ii_stab": {
+		name: "Stab II./KG 1",
+		parent: "kg1_ii",
+		planesMin: 3,
+		planesMax: 5,
+		pilots: [
+			["Heinz Laube", 14]
+		]
+	},
+	"kg1_4": {
+		name: "4./KG 1",
+		parent: "kg1_ii"
+	},
+	"kg1_5": {
+		name: "5./KG 1",
+		parent: "kg1_ii"
+	},
+	"kg1_6": {
+		name: "6./KG 1",
+		parent: "kg1_ii"
+	},
+	
+	// III./KG 1
+	"kg1_iii": {
+		parent: "kg1",
+		airfields: [
+			["morozovskiy_south", "1942-10-07", "1942-10-31"]
+		],
+		planes: [
+			["ju88a4", [27, 22], "1942-10-07", "1942-10-20"],
+			["ju88a4", [22, 20], "1942-10-21", "1942-10-31"]
+		]
+	},
+	"kg1_iii_stab": {
+		name: "Stab III./KG 1",
+		parent: "kg1_iii",
+		planesMin: 3,
+		planesMax: 5,
+		pilots: [
+			["Werner Kanther", 14]
+		]
+	},
+	"kg1_7": {
+		name: "7./KG 1",
+		parent: "kg1_iii"
+	},
+	"kg1_8": {
+		name: "8./KG 1",
+		parent: "kg1_iii",
+		pilots: [
+			["Franz Joswig", 9, "start", "1942-10-21"]
+		]
+	},
+	"kg1_9": {
+		name: "9./KG 1",
+		parent: "kg1_iii"
+	}
+}

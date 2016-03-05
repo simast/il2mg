@@ -56,6 +56,34 @@ module.exports = function(grunt) {
 			const battleTo = moment(battle.to);
 			let lastRecordKey = 0;
 			
+			// Build an indexed list of airfields for ground/air start
+			const airfieldsIndex = Object.create(null);
+			
+			for (const airfieldID in battle.airfields) {
+				
+				const airfield = battle.airfields[airfieldID];
+				const position = airfield.position;
+				let isGroundStart = false;
+				let isOffmap = false;
+				
+				// Check for offmap airfields
+				if (position[0] < 0 || position[0] > battle.map.height ||
+					position[2] < 0 || position[2] > battle.map.width) {
+					
+					isOffmap = true;
+				}
+				
+				// Mark airfields with taxi routes (for ground starts)
+				if (airfield.taxi && Object.keys(airfield.taxi).length) {
+					isGroundStart = true;
+				}
+				
+				// TODO: Also include offmap airfields as valid air start!
+				if (!isOffmap) {
+					airfieldsIndex[airfieldID] = isGroundStart;
+				}
+			}
+			
 			const json = {
 				name: battle.name
 			};
@@ -68,7 +96,7 @@ module.exports = function(grunt) {
 				"planes",
 				"tasks",
 				"records",
-				"dates"
+				"days"
 			].forEach((dataType) => {
 				json[dataType] = Object.create(null);
 			});
@@ -97,20 +125,36 @@ module.exports = function(grunt) {
 					unitTo = moment(unitData.to);
 				}
 				
+				const unitRoles = [];
 				const unitAirfields = [];
 				const unitPlanes = [];
 				
 				// Collect unit data
 				while (unitData) {
 					
+					// Unit roles
+					if (unitData.role) {
+						
+						let roles = unitData.role;
+						
+						if (!Array.isArray(roles)) {
+							roles = [[roles]];
+						}
+						
+						unitRoles.push(roles);
+					}
+					
+					// Unit airfields
 					if (unitData.airfields) {
 						unitAirfields.push(unitData.airfields);
 					}
 					
+					// Unit planes
 					if (unitData.planes) {
 						unitPlanes.push(unitData.planes);
 					}
 					
+					// Unit alias
 					if (!unitAlias && unitData.alias) {
 						unitAlias = unitData.alias;
 					}
@@ -118,13 +162,15 @@ module.exports = function(grunt) {
 					unitData = battle.units[unitData.parent];
 				}
 				
-				if (!unitAirfields.length || !unitPlanes.length) {
+				if (!unitRoles.length || !unitAirfields.length || !unitPlanes.length) {
 					continue;
 				}
 				
 				// Index unit for each day of the battle
 				const date = moment(unitFrom);
 				for (; date.isSameOrBefore(unitTo, "day"); date.add(1, "day")) {
+					
+					const dateKey = date.format("YYYY-MM-DD");
 					
 					// Utility function used to match to/from date ranges
 					const matchDateRange = data.matchDateRange.bind(undefined, {
@@ -133,7 +179,34 @@ module.exports = function(grunt) {
 						date
 					});
 					
-					const dateKey = date.format("YYYY-MM-DD");
+					const tasks = new Set();
+					
+					// Find matching tasks
+					for (const dataRoles of unitRoles) {
+						
+						if (tasks.size) {
+							break;
+						}
+						
+						for (const dataRole of dataRoles) {
+							
+							if (matchDateRange(dataRole[1], dataRole[2])) {
+								
+								const roleData = battle.roles[unitCountry][dataRole[0]];
+								
+								for (const taskID in roleData) {
+									tasks.add(taskID);
+								}
+								
+								break;
+							}
+						}
+					}
+					
+					if (!tasks.size) {
+						continue;
+					}
+					
 					const planes = new Set();
 					
 					// Find matching planes
@@ -190,8 +263,10 @@ module.exports = function(grunt) {
 						for (const dataAirfield of dataAirfields) {
 							
 							const airfieldID = dataAirfield[0];
+							const isGroundStart = airfieldsIndex[airfieldID];
 							
-							if (!battle.airfields[airfieldID]) {
+							// Invalid airfield ID
+							if (isGroundStart === undefined) {
 								continue;
 							}
 
@@ -204,7 +279,7 @@ module.exports = function(grunt) {
 								}
 								
 								if (availability > 0) {
-									airfields.set(airfieldID, true);
+									airfields.set(airfieldID, isGroundStart);
 								}
 							}
 						}
@@ -238,37 +313,48 @@ module.exports = function(grunt) {
 							json.planes[planeID] = data.planes[planeID].name;
 						}
 						
-						airfields.forEach((isGroundStart, airfieldID) => {
+						tasks.forEach((taskID) => {
 							
-							const recordKey = [
-								unitCountry,
-								unitID,
-								planeID,
-								airfieldID
-							].join("~");
-							
-							let recordID = json.records[recordKey];
-							
-							// Register new record ID
-							if (!recordID) {
-								recordID = json.records[recordKey] = ++lastRecordKey;
+							// Register new task
+							if (!json.tasks[taskID]) {
+								json.tasks[taskID] = data.tasks[taskID].name;
 							}
-							
-							// Register new airfield
-							if (!json.airfields[airfieldID]) {
-								json.airfields[airfieldID] = battle.airfields[airfieldID].name;
-							}
-							
-							// Register new date index
-							/*
-							const dateIndex = json.dates[dateKey] || [];
-							
-							if (dateIndex.indexOf(recordID) === -1) {
-								dateIndex.push(recordID);
-							}
-							
-							json.dates[dateKey] = dateIndex;
-							*/
+						
+							airfields.forEach((isGroundStart, airfieldID) => {
+								
+								const recordKey = [
+									unitCountry,
+									unitID,
+									planeID,
+									airfieldID,
+									taskID
+								].join("~");
+								
+								let recordID = json.records[recordKey];
+								
+								// Register new record ID
+								if (!recordID) {
+									
+									recordID = ++lastRecordKey;
+									recordID = isGroundStart ? recordID : -recordID;
+									
+									json.records[recordKey] = recordID;
+								}
+								
+								// Register new airfield
+								if (!json.airfields[airfieldID]) {
+									json.airfields[airfieldID] = battle.airfields[airfieldID].name;
+								}
+								
+								// Register new day index
+								const dayIndex = json.days[dateKey] || [];
+								
+								if (dayIndex.indexOf(recordID) === -1) {
+									dayIndex.push(recordID);
+								}
+								
+								json.days[dateKey] = dayIndex;
+							});
 						});
 					});
 				}
