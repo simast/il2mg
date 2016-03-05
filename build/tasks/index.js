@@ -54,6 +54,7 @@ module.exports = function(grunt) {
 			const battle = data.battles[battleID];
 			const battleFrom = moment(battle.from);
 			const battleTo = moment(battle.to);
+			const seasonIndex = Object.create(null);
 			let lastRecordKey = 0;
 			
 			// Build an indexed list of airfields for ground/air start
@@ -96,7 +97,8 @@ module.exports = function(grunt) {
 				"planes",
 				"tasks",
 				"records",
-				"days"
+				"seasons",
+				"dates"
 			].forEach((dataType) => {
 				json[dataType] = Object.create(null);
 			});
@@ -289,6 +291,44 @@ module.exports = function(grunt) {
 						continue;
 					}
 					
+					let season = seasonIndex[dateKey];
+					
+					if (season === undefined) {
+						
+						let foundSeason = false;
+						
+						// Find matching map season
+						for (season in battle.map.season) {
+							
+							const seasonData = battle.map.season[season];
+							const seasonFrom = moment(seasonData.from);
+							const seasonTo = moment(seasonData.to);
+							
+							if (!date.isBefore(seasonFrom, "day") &&
+									!date.isAfter(seasonTo, "day")) {
+								
+								foundSeason = season;
+								break;
+							}
+						}
+						
+						seasonIndex[dateKey] = season = foundSeason;
+					}
+					
+					// Register new season index
+					if (season) {
+
+						let jsonSeason = json.seasons[season];
+						
+						if (!jsonSeason) {
+							jsonSeason = json.seasons[season] = [];
+						}
+						
+						if (jsonSeason.indexOf(dateKey) === -1) {
+							jsonSeason.push(dateKey);
+						}
+					}
+					
 					// Register new country
 					if (!json.countries[unitCountry]) {
 						json.countries[unitCountry] = data.countries[unitCountry].name;
@@ -346,14 +386,14 @@ module.exports = function(grunt) {
 									json.airfields[airfieldID] = battle.airfields[airfieldID].name;
 								}
 								
-								// Register new day index
-								const dayIndex = json.days[dateKey] || [];
+								// Register new date index
+								const dateIndex = json.dates[dateKey] || [];
 								
-								if (dayIndex.indexOf(recordID) === -1) {
-									dayIndex.push(recordID);
+								if (dateIndex.indexOf(recordID) === -1) {
+									dateIndex.push(recordID);
 								}
 								
-								json.days[dateKey] = dayIndex;
+								json.dates[dateKey] = dateIndex;
 							});
 						});
 					});

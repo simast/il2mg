@@ -95,7 +95,9 @@ module.exports = function makeTaskPatrol(flight) {
 			let direction;
 			
 			// Filter out locations based on forbidden directions
-			if (directions) {
+			// FIXME: Forbidden directions may contain the only locations in range of
+			// patrol area min/max range (in relation to patrolA point).
+			if (directions && false) {
 				
 				const locationX = location.x;
 				const locationZ = location.z;

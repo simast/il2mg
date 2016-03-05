@@ -67,6 +67,7 @@ class Mission {
 		// Make mission parts
 		// NOTE: Order is very important!
 		require("./make/battle").call(this);
+		require("./make/choice").call(this);
 		require("./make/date").call(this);
 		require("./make/map").call(this);
 		require("./make/time").call(this);
@@ -77,7 +78,6 @@ class Mission {
 		require("./make/weather").call(this);
 		require("./make/airfields").call(this);
 		require("./make/tasks").call(this);
-		require("./make/player").call(this);
 		require("./make/locations").call(this);
 		require("./make/fronts").call(this);
 		require("./make/blocks").call(this);

@@ -11,8 +11,8 @@ module.exports = function makeFlightPilots(flight) {
 	// TODO: Support female pilots/names
 
 	const rand = this.rand;
+	const params = this.params;
 	const task = flight.task;
-	const player = this.player;
 	const unit = this.units[flight.unit];
 	const ranks = data.countries[unit.country].ranks;
 	const pilotIDs = Object.create(null);
@@ -131,7 +131,7 @@ module.exports = function makeFlightPilots(flight) {
 			let pilot;
 			
 			// Set a custom player pilot and rank
-			if (player.pilot && plane === flight.player) {
+			if (params.pilot && plane === flight.player) {
 				pilot = getPilotPlayer(unit, rankRange);
 			}
 			// Generate a known or unknown pilot
@@ -360,10 +360,28 @@ module.exports = function makeFlightPilots(flight) {
 	// Get a custom player pilot
 	function getPilotPlayer(unit, rankRange) {
 		
+		const pilotParts = params.pilot.split(/\s*,\s*/);
+		let playerName;
+		let playerRank;
+
+		// Pilot name
+		playerName = pilotParts;
+
+		// Check for optional pilot rank number
+		if (/^[0-9]+/.test(pilotParts)) {
+
+			const pilotRank = parseInt(pilotParts[0], 10);
+
+			// Pilot rank and name
+			if (!isNaN(pilotRank)) {
+
+				playerName = pilotParts.slice(1);
+				playerRank = pilotRank;
+			}
+		}
+		
 		let pilot = Object.create(null);
 		const ranks = data.countries[unit.country].ranks;
-		const playerName = player.pilot.name;
-		const playerRank = player.pilot.rank;
 		
 		// Only rank set by the player
 		if (!playerName || !playerName.length || !playerName[0].length) {

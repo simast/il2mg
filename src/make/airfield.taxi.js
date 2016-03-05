@@ -41,7 +41,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		airfield.callsign = this.getCallsign("airfield");
 
 		// Make sure the callsign used for player home airfield is unique
-		if (this.player.flight) {
+		if (this.player && this.player.flight) {
 			
 			const playerAirfield = this.airfields[this.player.flight.airfield];
 			

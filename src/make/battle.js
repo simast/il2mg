@@ -22,6 +22,9 @@ module.exports = function makeBattle() {
 	const battle = this.battle = data.battles[battleID];
 	const coalitions = this.coalitions = [];
 
+	// Load battle index database
+	const index = this.index = require(this.battlePath);
+	
 	// Create main mission Options item
 	const options = this.createItem("Options");
 
@@ -61,5 +64,5 @@ module.exports = function makeBattle() {
 	this.items.Options = options;
 
 	// Log mission battle
-	log.I("Battle:", battle.name);
+	log.I("Battle:", battle.name, {days: Object.keys(index.dates).length});
 };

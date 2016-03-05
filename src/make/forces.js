@@ -8,7 +8,7 @@ const makeFlight = require("./flight");
 module.exports = function makeForces() {
 
 	const rand = this.rand;
-	const player = this.player;
+	const params = this.params;
 	const force = [];
 	let flight;
 
@@ -16,17 +16,17 @@ module.exports = function makeForces() {
 
 	// Select player unit from a weighted unit list (by plane count)
 	const unit = this.units[rand.pick(this.unitsWeighted.filter((unitID) => {
-		return (player.units.indexOf(unitID) !== -1 && this.units[unitID].tasks.length);
+		return this.validChoices.has(unitID + "~" + this.units[unitID].airfield);
 	}))];
 	
 	const flightParams = {
 		player: true,
-		state: player.state,
+		state: params.state,
 		unit: unit.id
 	};
 	
-	if (player.task) {
-		flightParams.task = player.task;
+	if (params.task) {
+		flightParams.task = params.task;
 	}
 
 	// FIXME: Make a number of active and shedulled flights
@@ -53,6 +53,8 @@ module.exports = function makeForces() {
 
 	// Set player flight info references
 	if (flight.player) {
+		
+		const player = this.player = Object.create(null);
 
 		player.force = force;
 		player.flight = flight;
