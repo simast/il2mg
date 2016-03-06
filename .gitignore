@@ -3,6 +3,7 @@
 /build/temp
 /build/il2mg
 /build/il2mg.exe
+/data/**/*.json
 *.mission
 *.eng
 *.ger

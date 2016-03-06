@@ -159,15 +159,15 @@ module.exports = function makeChoice() {
 			if (!choice) {
 				
 				choice = choices[unitID] = {
-					plane: new Set(),
-					airfield: new Set(),
-					task: new Set()
+					planes: new Set(),
+					airfields: new Set(),
+					tasks: new Set()
 				};
 			}
 			
-			choice.plane.add(recordData[2]);
-			choice.airfield.add(recordData[3]);
-			choice.task.add(recordData[4]);
+			choice.planes.add(recordData[2]);
+			choice.airfields.add(recordData[3]);
+			choice.tasks.add(recordData[4]);
 		}
 	}
 	

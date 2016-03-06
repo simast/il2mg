@@ -46,6 +46,7 @@ module.exports = function(grunt) {
 				"build/il2mg.exe"
 			],
 			data: [
+				"data/**/*.json",
 				"data/**/*.eng",
 				"data/**/*.ger",
 				"data/**/*.pol",

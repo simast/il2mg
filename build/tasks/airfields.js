@@ -45,14 +45,13 @@ module.exports = function(grunt) {
 
 					continue;
 				}
-
-				// Read airfield JSON data file
-				const json = grunt.file.readJSON(fileDestination);
-
-				json.items = [];
-				json.sectors = {};
-				json.taxi = {};
-				json.routes = [];
+				
+				const json = {
+					items: [],
+					sectors: {},
+					taxi: {},
+					routes: []
+				};
 
 				// Collected airfield routes data index
 				const routesData = {};
@@ -445,6 +444,9 @@ module.exports = function(grunt) {
 
 					json.routes.push(jsonRoute);
 				}
+				
+				// Assign generated airfield data
+				Object.assign(battle.airfields[airfieldID], json);
 
 				// Write output JSON items file
 				grunt.file.write(

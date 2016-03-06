@@ -165,11 +165,20 @@ data.briefingColor = Object.freeze({
 		// JSON5 support for require-directory
 		requireDir.defaults.extensions.push("json5");
 	}
+	
+	data.items = {
+		items: [],
+		index: {}
+	};
+	
+	try {
+		data.items = Object.freeze(require("../data/items"));
+	}
+	catch (e) {}
 
 	data.vehicles = Object.freeze(require("../data/vehicles"));
 	data.clouds = Object.freeze(require("../data/clouds"));
 	data.time = Object.freeze(require("../data/time"));
-	data.items = Object.freeze(require("../data/items"));
 	data.effects = Object.freeze(require("../data/effects"));
 	data.grounds = Object.freeze(require("../data/grounds"));
 	data.callsigns = Object.freeze(require("../data/callsigns"));
@@ -213,7 +222,7 @@ data.briefingColor = Object.freeze({
 		battle.fronts = Object.freeze(require(battlePath + "fronts"));
 		battle.map = Object.freeze(require(battlePath + "map"));
 		battle.weather = Object.freeze(require(battlePath + "weather"));
-		battle.airfields = requireDir(module, battlePath + "airfields");
+		battle.airfields = Object.freeze(require(battlePath + "airfields"));
 		battle.roles = Object.freeze(requireDir(module, battlePath + "roles/"));
 		battle.units = Object.create(null);
 

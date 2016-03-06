@@ -54,8 +54,19 @@ module.exports = function makeAirfields() {
 	for (const airfieldID in battle.airfields) {
 
 		totalAirfields++;
-
+		
 		airfieldData = battle.airfields[airfieldID];
+		
+		// Load airfield JSON data file
+		try {
+			
+			Object.assign(
+				airfieldData,
+				require(this.battlePath + "airfields/" + airfieldID)
+			);
+		}
+		catch (e) {}
+		
 		const airfield = airfields[airfieldID] = Object.create(null);
 
 		airfield.id = airfieldID;

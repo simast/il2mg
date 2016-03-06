@@ -26,7 +26,7 @@ module.exports = function makeForces() {
 		
 		const unit = this.units[unitID];
 		
-		if (choice.airfield !== unit.airfield) {
+		if (!choice.airfields.has(unit.airfield)) {
 			return false;
 		}
 		

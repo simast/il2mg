@@ -386,23 +386,9 @@ module.exports = function makeUnits() {
 				unit.airfield = airfield.id;
 				unit.availability = airfield.availability;
 				
-				// Update valid player choices list
-				if (choices[unitID] || (unit.split && choices[unit.split])) {
-					
-					let choicesData = choices[unitID];
-					
-					// Clone original choices object
-					if (!choicesData) {
-						
-						const origChoices = choices[unit.split];
-						
-						choicesData = choices[unitID] = {
-							plane: new Set(origChoices.plane),
-							task: new Set(origChoices.task)
-						};
-					}
-					
-					choicesData.airfield = unit.airfield;
+				// Update valid player choices list (with each new split unit)
+				if (unit.split && choices[unit.split]) {
+					choices[unitID] = choices[unit.split];
 				}
 			}
 
