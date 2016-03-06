@@ -27,6 +27,7 @@ const COMPLEX_SEED_PARAMS = [
 	"country",
 	"task",
 	"pilot",
+	"plane",
 	"state",
 	"airfield",
 	"weather"

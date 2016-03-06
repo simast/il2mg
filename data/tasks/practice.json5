@@ -11,7 +11,7 @@
 	local: true,
 	rankMax: 0.5,
 	planes: {
-		fighter_light: 1,
+		fighter: 1,
 		ground_attack: 1
 	}
 }

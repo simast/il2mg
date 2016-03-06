@@ -31,10 +31,11 @@ function makeFlight(params) {
 	
 	let isPlayer = false;
 
-	// Player flight
-	// TODO: Support player param as a requested player plane ID
+	// Player flight (and choices)
 	if (params.player) {
+		
 		isPlayer = true;
+		flight.choice = params.player;
 	}
 	
 	let unitID = params.unit;

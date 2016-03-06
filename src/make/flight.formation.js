@@ -13,6 +13,8 @@ module.exports = function makeFlightFormation(flight) {
 	// List of valid (assigned) plane IDs to use for flight formation
 	let validPlanes = [];
 	
+	// TODO: Respect player plane preference from flight.choice param
+	
 	// Make sure to pick planes from unit plane inventory at random
 	rand.shuffle(unit.planes);
 	
@@ -196,6 +198,5 @@ module.exports = function makeFlightFormation(flight) {
 		element.state = flight.state;
 		
 		flight.elements.push(element);
-		
 	});
 };

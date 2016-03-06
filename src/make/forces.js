@@ -9,18 +9,32 @@ module.exports = function makeForces() {
 
 	const rand = this.rand;
 	const params = this.params;
+	const choices = this.choices;
 	const force = [];
 	let flight;
 
 	this.forces = [];
-
+	
 	// Select player unit from a weighted unit list (by plane count)
 	const unit = this.units[rand.pick(this.unitsWeighted.filter((unitID) => {
-		return this.validChoices.has(unitID + "~" + this.units[unitID].airfield);
+		
+		const choice = choices[unitID];
+		
+		if (!choice) {
+			return false;
+		}
+		
+		const unit = this.units[unitID];
+		
+		if (choice.airfield !== unit.airfield) {
+			return false;
+		}
+		
+		return true;
 	}))];
 	
 	const flightParams = {
-		player: true,
+		player: choices[unit.id],
 		state: params.state,
 		unit: unit.id
 	};

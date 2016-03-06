@@ -13,8 +13,9 @@ module.exports = function(grunt) {
 		let totalBattles = 0;
 		let totalUnits = 0;
 		
-		// Build a list of planes indexed by parent group
+		// Build plane data indexes
 		const planeGroupIndex = Object.create(null);
+		const planeTaskIndex = Object.create(null);
 		
 		for (const planeID in data.planes) {
 			
@@ -29,6 +30,25 @@ module.exports = function(grunt) {
 			
 			// Register plane parent/group index hierarchy
 			while (planeData) {
+				
+				// Build an index of valid plane tasks (based on type)
+				if (planeData.type && !planeTaskIndex[planeID]) {
+					
+					const validTasks = [];
+					
+					for (const taskID in data.tasks) {
+						for (const planeType in data.tasks[taskID].planes) {
+							
+							if (planeData.type.indexOf(planeType) >= 0) {
+								
+								validTasks.push(taskID);
+								break;
+							}
+						}
+					}
+					
+					planeTaskIndex[planeID] = validTasks;
+				}
 				
 				const planeParentID = planeData.parent;
 				
@@ -55,6 +75,7 @@ module.exports = function(grunt) {
 			const battleFrom = moment(battle.from);
 			const battleTo = moment(battle.to);
 			const seasonIndex = Object.create(null);
+			const datesIndex = Object.create(null);
 			let lastRecordKey = 0;
 			
 			// Build an indexed list of airfields for ground/air start
@@ -291,69 +312,85 @@ module.exports = function(grunt) {
 						continue;
 					}
 					
-					let season = seasonIndex[dateKey];
-					
-					if (season === undefined) {
+					planes.forEach((planeID) => {
 						
-						let foundSeason = false;
+						const validTasks = [];
 						
-						// Find matching map season
-						for (season in battle.map.season) {
+						// Filter out tasks not valid for this plane type
+						for (const taskID of tasks) {
 							
-							const seasonData = battle.map.season[season];
-							const seasonFrom = moment(seasonData.from);
-							const seasonTo = moment(seasonData.to);
+							if (planeTaskIndex[planeID].length &&
+									planeTaskIndex[planeID].indexOf(taskID) >= 0) {
 							
-							if (!date.isBefore(seasonFrom, "day") &&
-									!date.isAfter(seasonTo, "day")) {
-								
-								foundSeason = season;
-								break;
+								validTasks.push(taskID);
 							}
 						}
 						
-						seasonIndex[dateKey] = season = foundSeason;
-					}
-					
-					// Register new season index
-					if (season) {
-
-						let jsonSeason = json.seasons[season];
-						
-						if (!jsonSeason) {
-							jsonSeason = json.seasons[season] = [];
+						if (!validTasks.length) {
+							return;
 						}
 						
-						if (jsonSeason.indexOf(dateKey) === -1) {
-							jsonSeason.push(dateKey);
+						let season = seasonIndex[dateKey];
+						
+						if (season === undefined) {
+							
+							let foundSeason = false;
+							
+							// Find matching map season
+							for (season in battle.map.season) {
+								
+								const seasonData = battle.map.season[season];
+								const seasonFrom = moment(seasonData.from);
+								const seasonTo = moment(seasonData.to);
+								
+								if (!date.isBefore(seasonFrom, "day") &&
+										!date.isAfter(seasonTo, "day")) {
+									
+									foundSeason = season;
+									break;
+								}
+							}
+							
+							seasonIndex[dateKey] = season = foundSeason;
 						}
-					}
-					
-					// Register new country
-					if (!json.countries[unitCountry]) {
-						json.countries[unitCountry] = data.countries[unitCountry].name;
-					}
-					
-					// Register new unit
-					if (!json.units[unitID]) {
 						
-						let name = unitName;
-						
-						if (unitAlias) {
-							name += " “" + unitAlias + "”";
+						// Register new season index
+						if (season) {
+	
+							let jsonSeason = json.seasons[season];
+							
+							if (!jsonSeason) {
+								jsonSeason = json.seasons[season] = [];
+							}
+							
+							if (jsonSeason.indexOf(dateKey) === -1) {
+								jsonSeason.push(dateKey);
+							}
 						}
 						
-						json.units[unitID] = name;
-					}
-					
-					planes.forEach((planeID) => {
+						// Register new country
+						if (!json.countries[unitCountry]) {
+							json.countries[unitCountry] = data.countries[unitCountry].name;
+						}
+						
+						// Register new unit
+						if (!json.units[unitID]) {
+							
+							let name = unitName;
+							
+							if (unitAlias) {
+								name += " “" + unitAlias + "”";
+							}
+							
+							json.units[unitID] = name;
+						}
 						
 						// Register new plane
 						if (!json.planes[planeID]) {
 							json.planes[planeID] = data.planes[planeID].name;
 						}
 						
-						tasks.forEach((taskID) => {
+						validTasks.forEach((taskID) => {
 							
 							// Register new task
 							if (!json.tasks[taskID]) {
@@ -387,13 +424,13 @@ module.exports = function(grunt) {
 								}
 								
 								// Register new date index
-								const dateIndex = json.dates[dateKey] || [];
+								const dateIndex = datesIndex[dateKey] || Object.create(null);
 								
-								if (dateIndex.indexOf(recordID) === -1) {
-									dateIndex.push(recordID);
+								if (!dateIndex[recordID]) {
+									dateIndex[recordID] = true;
 								}
 								
-								json.dates[dateKey] = dateIndex;
+								datesIndex[dateKey] = dateIndex;
 							});
 						});
 					});
@@ -401,6 +438,21 @@ module.exports = function(grunt) {
 				
 				totalUnits++;
 			}
+			
+			// Sort season data
+			for (const season in json.seasons) {
+				json.seasons[season].sort();
+			}
+			
+			// Sort and build dates index
+			Object.keys(datesIndex).sort().forEach((date) => {
+				
+				json.dates[date] = [];
+				
+				for (const recordID in datesIndex[date]) {
+					json.dates[date].push(+recordID);
+				}
+			});
 			
 			// Write battle JSON index file
 			grunt.file.write(

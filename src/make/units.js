@@ -1,20 +1,22 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const moment = require("moment");
 const data = require("../data");
 const log = require("../log");
 
 // Generate available mission units
 module.exports = function makeUnits() {
 	
-	const battle = this.battle;
 	const rand = this.rand;
+	const battle = this.battle;
+	const choices = this.choices;
 	const planeStorages = new Set();
 	
 	// Utility function used to match to/from date ranges based on mission date
 	const matchMissionDateRange = data.matchDateRange.bind(undefined, {
-		from: this.battleFrom,
-		to: this.battleTo,
+		from: moment(battle.from).startOf("day"),
+		to: moment(battle.to).endOf("day"),
 		date: this.date
 	});
 	
@@ -326,6 +328,9 @@ module.exports = function makeUnits() {
 				// Create a new unit part based on the original
 				const unitPart = JSON.parse(JSON.stringify(unit));
 
+				// Mark unit part as a split from original unit ID
+				unitPart.split = unitPart.id;
+				
 				// Assign new unique unit ID
 				unitPart.id = unitPart.id + "_" + i + rand.hex(3);
 
@@ -380,6 +385,25 @@ module.exports = function makeUnits() {
 
 				unit.airfield = airfield.id;
 				unit.availability = airfield.availability;
+				
+				// Update valid player choices list
+				if (choices[unitID] || (unit.split && choices[unit.split])) {
+					
+					let choicesData = choices[unitID];
+					
+					// Clone original choices object
+					if (!choicesData) {
+						
+						const origChoices = choices[unit.split];
+						
+						choicesData = choices[unitID] = {
+							plane: new Set(origChoices.plane),
+							task: new Set(origChoices.task)
+						};
+					}
+					
+					choicesData.airfield = unit.airfield;
+				}
 			}
 
 			// Remove invalid unit definition (without plane storages or invalid airfield)

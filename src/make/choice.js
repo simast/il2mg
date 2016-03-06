@@ -66,15 +66,31 @@ module.exports = function makeChoice() {
 		filter.task = params.task;
 	}
 	
+	// Validate desired plane param
+	if (params.plane) {
+		
+		const plane = getDataID(params.plane);
+		
+		// Unknown plane
+		if (!data.planes[plane]) {
+			throw ["Unknown plane!", {plane: params.plane}];
+		}
+		
+		// NOTE: Allow filtering on plane groups!
+		filter.plane = plane + ".*?";
+	}
+	
 	// Validate desired airfield param
 	if (params.airfield) {
 		
+		const airfield = getDataID(params.airfield, true);
+		
 		// Unknown airfield ID/name
-		if (!index.airfields[params.airfield]) {
+		if (!index.airfields[airfield]) {
 			throw ["Unknown airfield!", {airfield: params.airfield}];
 		}
 
-		filter.airfield = params.airfield;
+		filter.airfield = airfield;
 	}
 	
 	let isGroundStartOnly = true;
@@ -87,7 +103,7 @@ module.exports = function makeChoice() {
 		isGroundStartOnly = (typeof params.state !== "number");
 	}
 	
-	const validChoices = this.validChoices = new Set();
+	const choices = this.choices = Object.create(null);
 	const validRecords = Object.create(null);
 	
 	// Build regular expression object used to scan battle index records
@@ -135,9 +151,23 @@ module.exports = function makeChoice() {
 			
 			validRecords[recordID] = true;
 			
-			// Mark valid matching unit and airfield choice
+			// Mark valid matching unit choices
 			const recordData = record.split("~");
-			validChoices.add(recordData[1] + "~" + recordData[3]);
+			const unitID = recordData[1];
+			let choice = choices[unitID];
+			
+			if (!choice) {
+				
+				choice = choices[unitID] = {
+					plane: new Set(),
+					airfield: new Set(),
+					task: new Set()
+				};
+			}
+			
+			choice.plane.add(recordData[2]);
+			choice.airfield.add(recordData[3]);
+			choice.task.add(recordData[4]);
 		}
 	}
 	
@@ -172,15 +202,36 @@ module.exports = function makeChoice() {
 	
 	if (!validDates.length) {
 		
-		const error = ["No valid missions found!"];
+		const errorParams = Object.create(null);
 		
 		if (params.date !== undefined) {
-			error.push({date: params.date});
+			filter.date = params.date;
 		}
 		
-		throw error;
+		// Log original params with error message
+		for (const type in filter) {
+			errorParams[type] = params[type];
+		}
+		
+		throw ["No valid missions found!", errorParams];
 	}
 	
 	// Pick a random valid battle date
-	params.date = rand.pick(validDates);	
+	params.date = rand.pick(validDates);
 };
+
+// Get a normalized data ID from an input/query string
+function getDataID(input, useWS) {
+	
+	// Replace multiple spaces with a single space character
+	input = input.trim().replace(/\s{2,}/g, " ");
+	
+	// Remove invalid characters
+	input = input.replace(/([^a-z0-9_\s]+)/gi, "");
+	
+	// Replace whitespace
+	input = input.replace(/\s/g, useWS ? "_" : "");
+	
+	// All data IDs are lowercase
+	return input.toLowerCase();
+}

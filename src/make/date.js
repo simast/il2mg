@@ -10,17 +10,23 @@ module.exports = function makeDate() {
 	const params = this.params;
 	const index = this.index;
 	const options = this.items.Options;
-	const battle = this.battle;
-	
-	this.battleFrom = moment(battle.from).startOf("day");
-	this.battleTo = moment(battle.to).endOf("day");
 	
 	// Parse date as moment object
-	const date = this.date = moment(params.date, "YYYY-MM-DD", true);
+	const date = this.date = moment(params.date);
+	
+	// Find matching season based on mission date
+	for (const season in index.seasons) {
+		
+		if (index.seasons[season].indexOf(params.date) >= 0) {
+			
+			this.season = season;
+			break;
+		}
+	}
 
 	// Set mission options date
 	options.Date = new String(date.format("D.M.YYYY"));
 
-	// Log mission date
-	log.I("Date:", date.format("YYYY-MM-DD"));
+	// Log mission date and season
+	log.I("Date:", params.date, this.season);
 };

@@ -197,7 +197,7 @@ params.option("-T, --task <task>", (() => {
 });
 
 // Set a custom pilot (--pilot)
-params.option("-p, --pilot <rank,name>", (() => {
+params.option("-P, --pilot <rank,name>", (() => {
 
 	let desc = "set a custom pilot" + EOL + EOL;
 
@@ -252,6 +252,11 @@ params.option("-w, --weather <weather>", (() => {
 	return String(value).trim();
 });
 
+// Select desired plane (--plane)
+params.option("-p, --plane <plane>", "select a plane", (value) => {
+	return String(value).trim();
+});
+
 // Select desired airfield (--airfield)
 params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
 	return String(value).trim();
@@ -261,7 +266,6 @@ params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
  * TODO: Support other command-line params:
  *
  * --unit - Select unit.
- * --plane - Select plane.
  * --players - Number of players.
  * --complexity - Mission complexity (detail level).
  * --difficulty - Mission difficulty level.
@@ -385,14 +389,19 @@ appDomain.run(() => {
 		}
 	}
 	
-	// --airfield
-	if (params.airfield !== undefined && !params.airfield.length) {
-		throw ["Invalid airfield name!", {airfield: params.airfield}];
-	}
-
 	// --pilot
 	if (params.pilot !== undefined && !params.pilot.length) {
 		throw ["Invalid pilot name!", {pilot: params.pilot}];
+	}
+	
+	// --plane
+	if (params.plane !== undefined && !params.plane.length) {
+		throw ["Invalid plane name!", {plane: params.plane}];
+	}
+	
+	// --airfield
+	if (params.airfield !== undefined && !params.airfield.length) {
+		throw ["Invalid airfield name!", {airfield: params.airfield}];
 	}
 
 	// --state

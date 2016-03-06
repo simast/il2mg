@@ -146,7 +146,7 @@ module.exports = function makeBriefingWeather() {
 	
 	// 25% chance to add season as part of weather state, e.g. "perfect summer"
 	if (rand.bool(0.25)) {
-		context.state += " " + this.map.season;
+		context.state += " " + this.season;
 	}
 	
 	// Set specific weather time context (if any)

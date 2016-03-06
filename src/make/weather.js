@@ -190,7 +190,7 @@ function makeClouds(weather) {
 	const cover = cloudsData.cover;
 
 	// Register clouds data in mission Options block
-	options.CloudConfig = this.map.data.clouds + "\\" + config;
+	options.CloudConfig = this.map.clouds + "\\" + config;
 	options.CloudLevel = altitude;
 	options.CloudHeight = thickness;
 
@@ -223,7 +223,7 @@ function makePrecipitation(weather) {
 		if (hasPrecipitation) {
 
 			// Use snow only in the winter season
-			if (this.map.season === season.WINTER) {
+			if (this.season === season.WINTER) {
 				precData.type = precipitation.SNOW;
 			}
 			// Use rain for other seasons
