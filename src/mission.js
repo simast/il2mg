@@ -30,7 +30,8 @@ const COMPLEX_SEED_PARAMS = [
 	"plane",
 	"state",
 	"airfield",
-	"weather"
+	"weather",
+	"unit"
 ];
 
 class Mission {

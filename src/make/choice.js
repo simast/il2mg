@@ -13,7 +13,7 @@ module.exports = function makeChoice() {
 	// Index scan filter data
 	const filter = Object.create(null);
 	
-	// Validate desired coalition param
+	// Filter on desired coalition param
 	if (params.coalition) {
 		
 		const countries = [];
@@ -31,10 +31,11 @@ module.exports = function makeChoice() {
 			throw ["Coalition is not active!", {coalition: params.coalition}];
 		}
 		
+		filter.coalition = params.coalition;
 		filter.country = countries;
 	}
 	
-	// Validate desired country param
+	// Filter on desired country param
 	if (params.country) {
 
 		// Make sure country is part of requested coalition
@@ -55,7 +56,7 @@ module.exports = function makeChoice() {
 		filter.country = params.country;
 	}
 	
-	// Validate desired task param
+	// Filter on desired task param
 	if (params.task) {
 
 		// Unknown task
@@ -66,31 +67,51 @@ module.exports = function makeChoice() {
 		filter.task = params.task;
 	}
 	
-	// Validate desired plane param
+	// Filter on desired plane param
 	if (params.plane) {
 		
-		const plane = getDataID(params.plane);
+		const query = getDataID(params.plane);
 		
-		// Unknown plane
-		if (!data.planes[plane]) {
+		// Unknown plane ID
+		if (!data.planes[query]) {
 			throw ["Unknown plane!", {plane: params.plane}];
 		}
-		
-		// NOTE: Allow filtering on plane groups!
-		filter.plane = plane + ".*?";
+		// Exact matching plane ID provided
+		else if (index.planes[query]) {
+			filter.plane = query;
+		}
+		// Filter as a partial plane ID query (to match groups)
+		else {
+			filter.plane = query + ".*?";
+		}
 	}
 	
-	// Validate desired airfield param
+	// Filter on desired unit param
+	if (params.unit) {
+		
+		const query = getDataID(params.unit);
+		
+		// Exact matching unit ID provided
+		if (index.units[query]) {
+			filter.unit = query;
+		}
+		// Filter as a partial unit ID query
+		else {
+			filter.unit = ".*?" + query + ".*?";
+		}
+	}
+	
+	// Filter on desired airfield param
 	if (params.airfield) {
 		
-		const airfield = getDataID(params.airfield, true);
+		const query = getDataID(params.airfield, true);
 		
 		// Unknown airfield ID/name
-		if (!index.airfields[airfield]) {
+		if (!index.airfields[query]) {
 			throw ["Unknown airfield!", {airfield: params.airfield}];
 		}
 
-		filter.airfield = airfield;
+		filter.airfield = query;
 	}
 	
 	let isGroundStartOnly = true;
@@ -105,36 +126,40 @@ module.exports = function makeChoice() {
 	
 	const choices = this.choices = Object.create(null);
 	const validRecords = Object.create(null);
+	let scanRegExp = (Object.keys(filter).length > 0);
 	
-	// Build regular expression object used to scan battle index records
-	let scanRegExp = [];
+	if (scanRegExp) {
 	
-	["country", "unit", "plane", "airfield", "task"].forEach((type) => {
+		// Build regular expression object used to scan battle index records
+		scanRegExp = [];
 		
-		let filterData = filter[type];
-		
-		// No specific filter on this data type
-		if (filterData === undefined) {
-			scanRegExp.push(".+?");
-		}
-		else {
+		["country", "unit", "plane", "airfield", "task"].forEach((type) => {
 			
-			if (!Array.isArray(filterData)) {
-				filterData = [filterData];
-			}
+			let filterData = filter[type];
 			
-			// Filter on multiple data types (as OR condition)
-			if (filterData.length > 1) {
-				scanRegExp.push("(" + filterData.join("|") + ")");
+			// No specific filter on this data type
+			if (filterData === undefined) {
+				scanRegExp.push(".+?");
 			}
-			// Filter on a single data type
 			else {
-				scanRegExp.push(filterData[0]);
+				
+				if (!Array.isArray(filterData)) {
+					filterData = [filterData];
+				}
+				
+				// Filter on multiple data types (as OR condition)
+				if (filterData.length > 1) {
+					scanRegExp.push("(" + filterData.join("|") + ")");
+				}
+				// Filter on a single data type
+				else {
+					scanRegExp.push(filterData[0]);
+				}
 			}
-		}
-	});
-	
-	scanRegExp = new RegExp("^" + scanRegExp.join("~") + "$");
+		});
+		
+		scanRegExp = new RegExp("^" + scanRegExp.join("~") + "$");
+	}
 	
 	// Scan for valid battle index records
 	for (const record in index.records) {
@@ -147,7 +172,7 @@ module.exports = function makeChoice() {
 		}
 		
 		// Match valid records
-		if (scanRegExp.test(record)) {
+		if (!scanRegExp || scanRegExp.test(record)) {
 			
 			validRecords[recordID] = true;
 			
@@ -210,7 +235,10 @@ module.exports = function makeChoice() {
 		
 		// Log original params with error message
 		for (const type in filter) {
-			errorParams[type] = params[type];
+			
+			if (params[type] !== undefined) {
+				errorParams[type] = params[type];
+			}
 		}
 		
 		throw ["No valid missions found!", errorParams];

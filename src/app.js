@@ -257,6 +257,11 @@ params.option("-p, --plane <plane>", "select a plane", (value) => {
 	return String(value).trim();
 });
 
+// Select desired unit (--unit)
+params.option("-u, --unit <unit>", "select a unit", (value) => {
+	return String(value).trim();
+});
+
 // Select desired airfield (--airfield)
 params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
 	return String(value).trim();
@@ -265,7 +270,6 @@ params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
 /**
  * TODO: Support other command-line params:
  *
- * --unit - Select unit.
  * --players - Number of players.
  * --complexity - Mission complexity (detail level).
  * --difficulty - Mission difficulty level.
@@ -397,6 +401,11 @@ appDomain.run(() => {
 	// --plane
 	if (params.plane !== undefined && !params.plane.length) {
 		throw ["Invalid plane name!", {plane: params.plane}];
+	}
+	
+	// --unit
+	if (params.unit !== undefined && !params.unit.length) {
+		throw ["Invalid unit name!", {unit: params.unit}];
 	}
 	
 	// --airfield
