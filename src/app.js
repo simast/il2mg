@@ -376,12 +376,12 @@ appDomain.run(() => {
 	if (params.task !== undefined) {
 		
 		// NOTE: The special ~ symbol can be used to specify task story!
-		const task = params.task.split(/~(.+)?/);
+		const task = params.task.split(/~+?/);
 		
 		params.task = task[0];
 		
-		if (task[1]) {
-			params.story = parseInt(task[1], 10);
+		if (task.length > 1) {
+			params.story = task.slice(1);
 		}
 		
 		if (!data.tasks[params.task]) {

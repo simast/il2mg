@@ -21,13 +21,74 @@ module.exports = function makeBriefing() {
 	const task = flight.task;
 	let briefing = [];
 
+	// Date and time
+	briefing.push(makeBriefingDateAndTime.call(this));
+	
+	let storyType;
+	
+	// Task intro story
+	if (task.story) {
+		
+		const paramsStory = this.params.story;
+		let story = task.story;
+		let paramsStoryID;
+		let paramsStoryType;
+		
+		// Set params story ID and type
+		if (paramsStory) {
+			
+			paramsStoryID = parseInt(paramsStory[0], 10);
+			
+			if (isNaN(paramsStoryID)) {
+				
+				paramsStoryType = paramsStory[0];
+				paramsStoryID = parseInt(paramsStory[1], 10);
+			}
+		}
+		
+		if (typeof story === "object" && !Array.isArray(story)) {
+			
+			if (paramsStoryType) {
+				storyType = paramsStoryType;
+			}
+			else {
+				storyType = rand.pick(Object.keys(story));
+			}
+			
+			story = story[storyType];
+		}
+		
+		if (!Array.isArray(story)) {
+			story = [story];
+		}
+		
+		let selectedStory;
+		
+		// Force using specific story from the story param
+		if (paramsStoryID) {
+			selectedStory = story[paramsStoryID - 1];
+		}
+		
+		// Pick random task story
+		if (selectedStory === undefined) {
+			selectedStory = rand.pick(story);
+		}
+		
+		briefing.push(makeBriefingText.call(this, selectedStory));
+	}
+	
 	// Mission title
 	let title = this.battle.name;
 	
 	// Use task title
 	if (task.title) {
 		
-		title = task.title;
+		if (typeof task.title === "object" && storyType) {
+			title = task.title[storyType];
+		}
+		else {
+			title = task.title;
+		}
 		
 		if (!Array.isArray(title)) {
 			title = [title];
@@ -38,33 +99,6 @@ module.exports = function makeBriefing() {
 	
 	options.setName(this.getLC(title));
 	this.title = title;
-
-	// Date and time
-	briefing.push(makeBriefingDateAndTime.call(this));
-	
-	// Task intro story
-	if (task.story) {
-		
-		let story = task.story;
-		
-		if (!Array.isArray(story)) {
-			story = [story];
-		}
-		
-		let selectedStory;
-		
-		// Force using specific story from the story param
-		if (this.params.story) {
-			selectedStory = story[this.params.story - 1];
-		}
-		
-		// Pick random task story
-		if (selectedStory === undefined) {
-			selectedStory = rand.pick(story);
-		}
-		
-		briefing.push(makeBriefingText.call(this, selectedStory));
-	}
 
 	// Flight elements and pilot info
 	briefing.push(makeBriefingFlight.call(this));

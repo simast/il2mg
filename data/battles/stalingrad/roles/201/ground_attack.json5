@@ -1,5 +1,4 @@
 // Ground attack (schlachtflieger) role
 {
-	test: 1,
-	practice: 1
+	free: 1
 }
