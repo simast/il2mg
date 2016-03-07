@@ -9,32 +9,81 @@ module.exports = function makeForces() {
 
 	const rand = this.rand;
 	const params = this.params;
-	const choices = this.choices;
+	const choice = this.choice;
 	const force = [];
 	let flight;
 
 	this.forces = [];
 	
-	// Select player unit from a weighted unit list (by plane count)
+	// Select a matching player unit (from a weighted list filtered by choices)
+	// FIXME: Filter only unique units (not a weighted list)
 	const unit = this.units[rand.pick(this.unitsWeighted.filter((unitID) => {
 		
-		const choice = choices[unitID];
-		
-		if (!choice) {
+		// Filter out not matching unit IDs
+		if (choice.unit && !choice.unit.has(unitID)) {
 			return false;
 		}
 		
 		const unit = this.units[unitID];
 		
-		if (!choice.airfields.has(unit.airfield)) {
+		// Filter out not matching countries
+		if (choice.country && !choice.country.has(unit.country)) {
 			return false;
+		}
+		
+		// Filter out units without tasks
+		if (!unit.tasks.length) {
+			return false;
+		}
+		
+		// Filter out not matching airfields
+		if (choice.airfield && !choice.airfield.has(unit.airfield)) {
+			return false;
+		}
+		
+		// Allow only units with matching tasks
+		if (choice.task) {
+			
+			let hasValidTask = false;
+			
+			for (const task of unit.tasks) {
+				
+				if (choice.task.has(task.id)) {
+					
+					hasValidTask = true;
+					break;
+				}
+			}
+			
+			if (!hasValidTask) {
+				return false;
+			}
+		}
+		
+		// Allow only units with matching planes
+		if (choice.plane) {
+			
+			let hasValidPlane = false;
+			
+			for (const planeID of unit.planes) {
+				
+				if (choice.plane.has(planeID)) {
+					
+					hasValidPlane = true;
+					break;
+				}
+			}
+			
+			if (!hasValidPlane) {
+				return false;
+			}
 		}
 		
 		return true;
 	}))];
 	
 	const flightParams = {
-		player: choices[unit.id],
+		player: true,
 		state: params.state,
 		unit: unit.id
 	};

@@ -3,6 +3,18 @@
 
 const data = require("../data");
 
+// List of unit data params used as combined record key
+const RECORD_PARAMS = [
+	"country",
+	"unit",
+	"plane",
+	"airfield",
+	"task"
+];
+
+// Separator used for building unique record keys
+const RECORD_SEP = "~";
+
 // Generate mission player choice data
 module.exports = function makeChoice() {
 	
@@ -124,7 +136,10 @@ module.exports = function makeChoice() {
 		isGroundStartOnly = (typeof params.state !== "number");
 	}
 	
-	const choices = this.choices = Object.create(null);
+	const choice = this.choice = {
+		airfield: new Set() // Always track airfield choice (for air/ground start)
+	};
+	
 	const validRecords = Object.create(null);
 	let scanRegExp = (Object.keys(filter).length > 0);
 	
@@ -133,11 +148,11 @@ module.exports = function makeChoice() {
 		// Build regular expression object used to scan battle index records
 		scanRegExp = [];
 		
-		["country", "unit", "plane", "airfield", "task"].forEach((type) => {
+		RECORD_PARAMS.forEach((param) => {
 			
-			let filterData = filter[type];
+			let filterData = filter[param];
 			
-			// No specific filter on this data type
+			// No specific filter on this data param
 			if (filterData === undefined) {
 				scanRegExp.push(".+?");
 			}
@@ -151,14 +166,16 @@ module.exports = function makeChoice() {
 				if (filterData.length > 1) {
 					scanRegExp.push("(" + filterData.join("|") + ")");
 				}
-				// Filter on a single data type
+				// Filter on a single data param
 				else {
 					scanRegExp.push(filterData[0]);
 				}
+				
+				choice[param] = new Set();
 			}
 		});
 		
-		scanRegExp = new RegExp("^" + scanRegExp.join("~") + "$");
+		scanRegExp = new RegExp("^" + scanRegExp.join(RECORD_SEP) + "$");
 	}
 	
 	// Scan for valid battle index records
@@ -176,23 +193,23 @@ module.exports = function makeChoice() {
 			
 			validRecords[recordID] = true;
 			
-			// Mark valid matching unit choices
-			const recordData = record.split("~");
-			const unitID = recordData[1];
-			let choice = choices[unitID];
+			const recordData = record.split(RECORD_SEP);
 			
-			if (!choice) {
+			// Mark valid matching player choices
+			RECORD_PARAMS.forEach((param, paramIndex) => {
 				
-				choice = choices[unitID] = {
-					planes: new Set(),
-					airfields: new Set(),
-					tasks: new Set()
-				};
-			}
-			
-			choice.planes.add(recordData[2]);
-			choice.airfields.add(recordData[3]);
-			choice.tasks.add(recordData[4]);
+				if (choice[param]) {
+					
+					let paramData = recordData[paramIndex];
+					
+					// Country choice is a number
+					if (param === "country") {
+						paramData = Number(paramData);
+					}
+					
+					choice[param].add(paramData);
+				}
+			});
 		}
 	}
 	

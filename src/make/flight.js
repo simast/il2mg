@@ -31,11 +31,9 @@ function makeFlight(params) {
 	
 	let isPlayer = false;
 
-	// Player flight (and choices)
+	// Player flight
 	if (params.player) {
-		
 		isPlayer = true;
-		flight.choice = params.player;
 	}
 	
 	let unitID = params.unit;

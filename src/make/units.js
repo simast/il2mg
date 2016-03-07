@@ -10,7 +10,7 @@ module.exports = function makeUnits() {
 	
 	const rand = this.rand;
 	const battle = this.battle;
-	const choices = this.choices;
+	const choice = this.choice;
 	const planeStorages = new Set();
 	
 	// Utility function used to match to/from date ranges based on mission date
@@ -327,9 +327,6 @@ module.exports = function makeUnits() {
 				
 				// Create a new unit part based on the original
 				const unitPart = JSON.parse(JSON.stringify(unit));
-
-				// Mark unit part as a split from original unit ID
-				unitPart.split = unitPart.id;
 				
 				// Assign new unique unit ID
 				unitPart.id = unitPart.id + "_" + i + rand.hex(3);
@@ -348,6 +345,11 @@ module.exports = function makeUnits() {
 				}
 
 				unitParts.push(unitPart);
+				
+				// Update valid player unit choice list (for each new split unit)
+				if (choice.unit && choice.unit.has(unitID)) {
+					choice.unit.add(unitPart.id);
+				}
 			}
 		}
 
@@ -385,11 +387,6 @@ module.exports = function makeUnits() {
 
 				unit.airfield = airfield.id;
 				unit.availability = airfield.availability;
-				
-				// Update valid player choices list (with each new split unit)
-				if (unit.split && choices[unit.split]) {
-					choices[unitID] = choices[unit.split];
-				}
 			}
 
 			// Remove invalid unit definition (without plane storages or invalid airfield)
