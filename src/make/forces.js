@@ -84,5 +84,33 @@ module.exports = function makeForces() {
 				break;
 			}
 		}
+		
+		// Log player flight info
+		const logData = ["Flight:"];
+		
+		// Flight unit name
+		const unit = this.units[player.flight.unit];
+		let unitName = unit.name;
+		
+		if (unit.alias) {
+			unitName += " “" + unit.alias + "”";
+		}
+		
+		logData.push(unitName);
+		
+		// Flight formation and state (for player element)
+		const formation = player.flight.formation;
+		let formationID = formation.id;
+		
+		if (!formationID) {
+			formationID = formation.elements.join(":");
+		}
+		
+		logData.push({
+			formation: formationID,
+			state: player.element.state
+		});
+		
+		log.I.apply(log, logData);
 	}
 };
