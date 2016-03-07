@@ -6,8 +6,8 @@ const data = require("../data");
 // Data constants
 const planAction = data.planAction;
 
-// Make mission test flight task
-module.exports = function makeTaskTest(flight) {
+// Make mission free flight task
+module.exports = function makeTaskFree(flight) {
 	
 	const rand = this.rand;
 	
