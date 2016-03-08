@@ -25,6 +25,7 @@ module.exports = function makeAirfieldLimits(airfield) {
 	limits[itemTag.CAR] = 0;
 	limits[itemTag.AA_MG] = 0;
 	limits[itemTag.AA_FLAK] = 0;
+	limits[itemTag.AA_TRAIN] = 0;
 	limits[itemTag.LIGHT_SEARCH] = 0;
 
 	// Effects
@@ -44,6 +45,7 @@ module.exports = function makeAirfieldLimits(airfield) {
 		// Anti-aircraft vehicle limits
 		limits[itemTag.AA_MG] = round(min(max(value / (time.night ? 37.5 : 25), 2), 7));
 		limits[itemTag.AA_FLAK] = round(min(max(value / (time.night ? 45 : 30), 0), 5));
+		limits[itemTag.AA_TRAIN] = round(0.25 + rand.real(0, 0.75));
 
 		// Only add search lights for dark time periods
 		if (isDark) {

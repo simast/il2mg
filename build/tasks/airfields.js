@@ -93,7 +93,8 @@ module.exports = function(grunt) {
 
 						// Process supported item types
 						if ((item instanceof Item.Block && !(item instanceof Item.Airfield)) ||
-								item instanceof Item.Vehicle || item instanceof Item.Flag) {
+								item instanceof Item.Vehicle || item instanceof Item.Flag ||
+								item instanceof Item.Train) {
 
 							let itemTypeID = null;
 							const itemData = [];
@@ -192,6 +193,10 @@ module.exports = function(grunt) {
 							// Anti-aircraft position (Flak)
 							else if (item.Name === "AA:FLAK") {
 								itemTypeID = itemTag.AA_FLAK;
+							}
+							// Anti-aircraft position (Train platform)
+							else if (item.Name === "AA:TRAIN") {
+								itemTypeID = itemTag.AA_TRAIN;
 							}
 							// Search light
 							else if (item.Name === "LIGHT:SEARCH") {

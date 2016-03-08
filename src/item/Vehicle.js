@@ -3,7 +3,7 @@
 
 const Item = require("../item");
 
-// Vehicle
+// Vehicle item
 class Vehicle extends Item {
 	
 	constructor() {
@@ -28,11 +28,12 @@ class Vehicle extends Item {
 	 * Get binary representation of the item.
 	 *
 	 * @param {object} index Binary data index object.
+	 * @param {number} typeID Binary item type ID.
 	 * @returns {Buffer} Binary representation of the item.
 	 */
-	*toBinary(index) {
+	*toBinary(index, typeID) {
 
-		yield* super.toBinary(index, 2);
+		yield* super.toBinary(index, typeID || 2);
 
 		let size = 39;
 		const scriptLength = Buffer.byteLength(this.Script);
@@ -68,7 +69,7 @@ class Vehicle extends Item {
 		this.writeUInt32(buffer, this.AILevel);
 
 		// NumberInFormation
-		this.writeUInt32(buffer, this.NumberInFormation);
+		this.writeUInt32(buffer, this.NumberInFormation || 0);
 
 		// Vulnerable
 		this.writeUInt8(buffer, this.Vulnerable);
@@ -92,7 +93,7 @@ class Vehicle extends Item {
 		this.writeUInt8(buffer, this.DeleteAfterDeath);
 
 		// CoopStart
-		this.writeUInt8(buffer, this.CoopStart);
+		this.writeUInt8(buffer, this.CoopStart || 0);
 
 		yield buffer;
 	}

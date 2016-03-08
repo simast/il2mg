@@ -24,6 +24,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 
 	let vehicleType;
 	let isStatic = false;
+	let isTrain = false;
 	let useAttackArea = false;
 
 	switch (itemTagID) {
@@ -62,6 +63,14 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 			useAttackArea = true;
 			break;
 		}
+		// Anti-aircraft (Train platform)
+		case itemTag.AA_TRAIN: {
+
+			vehicleType = "train_aa";
+			useAttackArea = true;
+			isTrain = true;
+			break;
+		}
 		// Search light
 		case itemTag.LIGHT_SEARCH: {
 
@@ -88,9 +97,18 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	if (isStatic && !vehicle.static) {
 		return;
 	}
+	
+	let itemType = "Vehicle";
+	
+	if (isStatic) {
+		itemType = "Block";
+	}
+	else if (isTrain) {
+		itemType = "Train";
+	}
 
 	// Create vehicle item
-	const vehicleItem = this.createItem(isStatic ? "Block" : "Vehicle", false);
+	const vehicleItem = this.createItem(itemType, false);
 
 	let positionX = item[1];
 	let positionY = item[2];

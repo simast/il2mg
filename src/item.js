@@ -459,7 +459,7 @@ class Item {
 				}
 
 				isArray = Array.isArray(propValue);
-				isArrayComplex = isArray && Array.isArray(propValue[0]);
+				isArrayComplex = isArray && (typeof propValue[0] === "object");
 			}
 
 			value += os.EOL + indent + "  " + propName;
@@ -493,7 +493,19 @@ class Item {
 				value += os.EOL + indent + "  {";
 
 				propValue.forEach((itemValue) => {
-					value += os.EOL + indent + "    " + itemValue.join(":") + ";";
+					
+					value += os.EOL + indent + "    ";
+					
+					// Inner list of items joined by ":" symbol
+					if (Array.isArray(itemValue)) {
+						value += itemValue.join(":");
+					}
+					// Item as a quoted string
+					else {
+						value += '"' + itemValue + '"';
+					}
+					
+					value += ";";
 				});
 
 				value += os.EOL + indent + "  }";
@@ -849,6 +861,7 @@ module.exports = Item;
 	require("./item/MCU_Waypoint"),
 	require("./item/Options"),
 	require("./item/Plane"),
+	require("./item/Train"),
 	require("./item/Vehicle")
 ]
 .forEach((item) => {

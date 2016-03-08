@@ -348,5 +348,35 @@
 		countries: [101],
 		model: "graphics\\artillery\\searchlights\\searchlightsu.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\searchlightsu.txt"
-	}
+	},
+	
+	// Trains
+	{
+		name: "61-K (Platform)",
+		type: ["train", "train_aa"],
+		countries: [101],
+		model: "graphics\\trains\\wagons\\platformaa-61k.mgm",
+		script: "luascripts\\worldobjects\\trains\\platformaa-61k.txt"
+	},
+	{
+		name: "FlaK 38 (Platform)",
+		type: ["train", "train_aa"],
+		countries: [201],
+		model: "graphics\\trains\\wagons\\platformaa-flak38.mgm",
+		script: "luascripts\\worldobjects\\trains\\platformaa-flak38.txt"
+	},
+	{
+		name: "Quad Maxim AA (Platform)",
+		type: ["train", "train_aa"],
+		countries: [101],
+		model: "graphics\\trains\\wagons\\platformaa-m4.mgm",
+		script: "luascripts\\worldobjects\\trains\\platformaa-m4.txt"
+	},
+	{
+		name: "MG 34 AA (Platform)",
+		type: ["train", "train_aa"],
+		countries: [201],
+		model: "graphics\\trains\\wagons\\platformaa-mg34.mgm",
+		script: "luascripts\\worldobjects\\trains\\platformaa-mg34.txt"
+	},
 ]

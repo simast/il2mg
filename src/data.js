@@ -29,12 +29,13 @@ data.itemTag = Object.freeze({
 	CAR: -4, // Car vehicle
 	AA_MG: -5, // Anti-aircraft (MG)
 	AA_FLAK: -6, // Anti-aircraft (Flak)
-	LIGHT_SEARCH: -7, // Search light
-	LIGHT_LAND: -8, // Landing light
-	BEACON: -9, // Beacon
-	WINDSOCK: -10, // Windsock
-	EFFECT: -11, // Effect
-	WRECK: -12 // Wreckage
+	AA_TRAIN: -7, // Anti-aircraft (Train platform)
+	LIGHT_SEARCH: -8, // Search light
+	LIGHT_LAND: -9, // Landing light
+	BEACON: -10, // Beacon
+	WINDSOCK: -11, // Windsock
+	EFFECT: -12, // Effect
+	WRECK: -13 // Wreckage
 });
 
 // Data flags for airfield items
