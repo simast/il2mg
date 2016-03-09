@@ -82,10 +82,28 @@ module.exports = function makeChoice() {
 	// Filter on desired plane param
 	if (params.plane) {
 		
-		const query = getDataID(params.plane);
+		let query = getDataID(params.plane);
+		let isPlaneKnown = Boolean(data.planes[query]);
+		
+		// Try to find matching plane ID when query is given as a plane name
+		if (!isPlaneKnown) {
+			
+			for (const planeID in data.planes) {
+				
+				const plane = data.planes[planeID];
+			
+				if (plane && typeof plane === "object" && plane.name &&
+					query === getDataID(plane.name)) {
+					
+					query = planeID;
+					isPlaneKnown = true;
+					break;
+				}
+			}
+		}
 		
 		// Unknown plane ID
-		if (!data.planes[query]) {
+		if (!isPlaneKnown) {
 			throw ["Unknown plane!", {plane: params.plane}];
 		}
 		// Exact matching plane ID provided

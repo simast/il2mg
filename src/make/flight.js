@@ -82,7 +82,7 @@ function makeFlight(params) {
 	}
 	
 	// Make flight formation (elements/sections)
-	makeFlightFormation.call(this, flight);
+	makeFlightFormation.call(this, flight, isPlayer);
 	
 	// No planes are available for the flight
 	if (!flight.planes) {

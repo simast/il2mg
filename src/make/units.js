@@ -471,12 +471,17 @@ module.exports = function makeUnits() {
 		while (planeCount > 0) {
 
 			let planeID = planeStorage[0];
-			const plane = this.planes[planeID];
-
-			// Handle plane groups
-			if (Array.isArray(plane)) {
+			let plane = this.planes[planeID];
+			
+			// Resolve plane groups
+			while (Array.isArray(plane)) {
+				
 				planeID = rand.pick(plane);
+				plane = this.planes[planeID];
 			}
+			
+			// Resolve to a mapped (aliased) plane ID (if any)
+			planeID = plane.id;
 			
 			let unitID;
 			
@@ -489,26 +494,52 @@ module.exports = function makeUnits() {
 				unitID = rand.pick(planeStorage.units);
 			}
 			
-			const unit = units[unitID];
-
-			if (unit.planes.max !== undefined && unit.planes.length >= unit.planes.max) {
-				continue;
+			const targetUnits = {
+				[unitID]: false
+			};
+			
+			// HACK: Since battle index does not contain split units and can't detect
+			// a case where only a single plane is available in the inventory (to be
+			// distributed to multiple units) - we have to duplicate player choosen
+			// plane type for each unit (and have at least one such type in inventory).
+			if (choice.plane && choice.plane.has(planeID)) {
+				
+				for (const unitID of planeStorage.units) {
+					
+					// Force unit to have at least one plane of this type
+					if (units[unitID].planes.indexOf(planeID) === -1) {
+						targetUnits[unitID] = true;
+					}
+				}
 			}
+			
+			for (const unitID in targetUnits) {
+			
+				const unit = units[unitID];
+				const isForced = targetUnits[unitID];
+				
+				if (!isForced && unit.planes.max !== undefined &&
+					unit.planes.length >= unit.planes.max) {
+					
+					continue;
+				}
 
-			unit.planes.push(planeID);
-			unitsWeighted.push(unitID);
+				unit.planes.push(planeID);
+				unitsWeighted.push(unitID);
 
-			// Set unit max pilots count (used to figure out known and unknown pilot ratio)
-			if (unit.pilots) {
+				// Set unit max pilots count (used to figure out known and unknown pilot ratio)
+				if (unit.pilots) {
 
-				// NOTE: We don't track exact pilot numbers per unit, but for each plane in
-				// the unit we assign randomized 1.5 to 2.5 pilot count.
-				unit.pilots.max = unit.pilots.max || 0;
-				unit.pilots.max += rand.real(1.5, 2.5);
+					// NOTE: We don't track exact pilot numbers per unit, but for each plane in
+					// the unit we assign randomized 1.5 to 2.5 pilot count.
+					unit.pilots.max = unit.pilots.max || 0;
+					unit.pilots.max += rand.real(1.5, 2.5);
+				}
+				
+				totalPlanes++;
 			}
-
+			
 			planeCount--;
-			totalPlanes++;
 		}
 	});
 

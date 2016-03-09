@@ -2,9 +2,10 @@
 "use strict";
 
 // Make mission flight formation
-module.exports = function makeFlightFormation(flight) {
+module.exports = function makeFlightFormation(flight, isPlayer) {
 
 	const rand = this.rand;
+	const choice = this.choice;
 	const task = flight.task;
 	const unit = this.units[flight.unit];
 	const formations = this.formations[flight.country];
@@ -12,8 +13,6 @@ module.exports = function makeFlightFormation(flight) {
 	
 	// List of valid (assigned) plane IDs to use for flight formation
 	let validPlanes = [];
-	
-	// TODO: Respect player plane choice (from this.choice.plane set)
 	
 	// Make sure to pick planes from unit plane inventory at random
 	rand.shuffle(unit.planes);
@@ -34,6 +33,7 @@ module.exports = function makeFlightFormation(flight) {
 		}
 		
 		// Check formations in random order
+		// TODO: Support weighted formation selection
 		for (const taskFormation of rand.shuffle(taskFormations)) {
 			
 			// Ignore known invalid formations (when they are repeated for distribution)
@@ -93,8 +93,9 @@ module.exports = function makeFlightFormation(flight) {
 					
 					const plane = this.planes[planeID];
 					
-					// Check for plane to be of the required type
-					if (Array.isArray(plane.type) && plane.type.indexOf(planeType) >= 0) {
+					// Check for plane to be of the required type (and player choice)
+					if (Array.isArray(plane.type) && plane.type.indexOf(planeType) >= 0 &&
+						(!isPlayer || !choice.plane || choice.plane.has(planeID))) {
 						
 						let validPlanesGroup = validPlanesByGroup[plane.group];
 						
