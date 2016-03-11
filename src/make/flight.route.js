@@ -37,12 +37,19 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 	
 	spot.point = to;
 	
-	// Set waypoint speed based on current temperature (and some randomness)
-	const baseSpeed = leaderPlaneData.speed;
-	const tempFactor = baseSpeed * COLD_BOOST * this.weather.temperature.level;
+	// Set base flight speed
+	if (!flight.speed) {
+		
+		// Set flight speed based on current temperature (and some randomness)
+		const baseSpeed = leaderPlaneData.speed;
+		const tempFactor = baseSpeed * COLD_BOOST * this.weather.temperature.level;
+		
+		// TODO: Apply altitude factor
+		flight.speed = Math.round(baseSpeed - tempFactor);
+	}
 	
-	// TODO: Apply altitude factor
-	spot.speed = Math.round((baseSpeed - tempFactor) * rand.real(0.99, 1.01));
+	// Use some ~2% randomness for spot speed
+	spot.speed = Math.round(flight.speed * rand.real(0.99, 1.01));
 	
 	return [spot];
 };

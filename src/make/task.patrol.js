@@ -92,31 +92,15 @@ module.exports = function makeTaskPatrol(flight) {
 		do {
 			
 			const location = locations.shift();
-			let direction;
+			let directionChance;
 			
 			// Filter out locations based on forbidden directions
-			// FIXME: Forbidden directions may contain the only locations in range of
-			// patrol area min/max range (in relation to patrolA point).
-			if (directions && false) {
+			if (directions) {
 				
-				const locationX = location.x;
-				const locationZ = location.z;
-				
-				if (locationX > startX && locationZ > startZ) {
-					direction = "tr";
-				}
-				else if (locationX < startX && locationZ > startZ) {
-					direction = "br";
-				}
-				else if (locationX < startX && locationZ < startZ) {
-					direction = "bl";
-				}
-				else {
-					direction = "tl";
-				}
+				directionChance = directions[getDirection(location)];
 				
 				// Direction is forbidden
-				if (directions[direction] < 0) {
+				if (directionChance <= 0) {
 					continue;
 				}
 			}
@@ -138,12 +122,12 @@ module.exports = function makeTaskPatrol(flight) {
 			// at least 10% always guaranteed chance).
 			let useLocation = Math.max(0.1, 1 - distanceRatio);
 			
-			// TODO: Set location chance based on direction weight (when available)
-			
 			// Try to choose first patrol point from locations within 50% max range
-			if (!patrolA && distanceRatio > 0.5 &&
-					(iteration <= locations.length / 2)) {
-				
+			if (!patrolA && distanceRatio > 0.5 && (iteration <= locations.length / 2)) {
+				useLocation = 0;
+			}
+			// Use location based on provided direction weight/chance
+			else if (directions && !rand.bool(directionChance)) {
 				useLocation = 0;
 			}
 			
@@ -172,6 +156,26 @@ module.exports = function makeTaskPatrol(flight) {
 			}
 		}
 		while (locations.length);
+	};
+	
+	// Get direction value for location (in relation to origin position)
+	const getDirection = (location) => {
+		
+		const locationX = location.x;
+		const locationZ = location.z;
+		
+		if (locationX > startX && locationZ > startZ) {
+			return "tr";
+		}
+		else if (locationX < startX && locationZ > startZ) {
+			return "br";
+		}
+		else if (locationX < startX && locationZ < startZ) {
+			return "bl";
+		}
+		else {
+			return "tl";
+		}
 	};
 	
 	// Adjust (align and face) bounds based on a list of "hot" points
@@ -204,8 +208,51 @@ module.exports = function makeTaskPatrol(flight) {
 			}
 		}
 		
-		// TODO: Resize bounds area to only include available (positive) corners
-		return {tl, tr, bl, br};
+		const directions = {tl, tr, bl, br};
+		let maxWeight = 0;
+		
+		// Compute max direction weight value
+		for (const direction in directions) {
+			
+			const weight = directions[direction];
+			
+			if (weight >= 0) {
+				maxWeight += (weight + 1);
+			}
+		}
+		
+		// Compute direction chance values
+		for (const direction in directions) {
+			
+			const weight = directions[direction];
+			
+			if (weight < 0) {
+				directions[direction] = 0;
+			}
+			else {
+				directions[direction] = (weight + 1) / maxWeight;
+			}
+		}
+		
+		// Resize bounds area to only include available (positive) corners
+		
+		if (tl < 0 && tr < 0) {
+			bounds.x2 = startX;
+		}
+		
+		if (tr < 0 && br < 0) {
+			bounds.z2 = startZ;
+		}
+		
+		if (br < 0 && bl < 0) {
+			bounds.x1 = startX;
+		}
+		
+		if (bl < 0 && tl < 0) {
+			bounds.z1 = startZ;
+		}
+		
+		return directions;
 	};
 	
 	// Option 1: Find patrol points from fronts within max patrol range
@@ -223,6 +270,26 @@ module.exports = function makeTaskPatrol(flight) {
 		// different direction to where the enemy is.
 		if (enemyOffmapSpots) {
 			directions = alignBoundsToPoints(patrolBounds, enemyOffmapSpots);
+		}
+		
+		if (patrolA) {
+			
+			// If we can't find both patrol area points based on front lines (when
+			// front lines are either very small in size or too far away) - there is
+			// a 50% chance to select both patrol area points on friendly territory.
+			if (rand.bool(0.5)) {
+				patrolA = null;
+			}
+			// Validate patrolA location to not be from forbidden direction
+			else {
+				
+				const direction = getDirection(patrolA);
+				
+				// Direction is forbidden
+				if (directions[direction] <= 0) {
+					patrolA = null;
+				}
+			}
 		}
 		
 		findPatrolPoints(
@@ -343,6 +410,7 @@ module.exports = function makeTaskPatrol(flight) {
 	// The rest will be shuffled (may produce intersecting pattern with 4 points).
 	let ingressPoint = patrolPoints.shift();
 	let ingressVector = Vector.create(ingressPoint);
+	const ingressDistance = ingressVector.distanceFrom(startVector);
 	
 	// Sort the rest of patrol area points based on distance from ingress point
 	patrolPoints.sort((a, b) => {
@@ -442,9 +510,25 @@ module.exports = function makeTaskPatrol(flight) {
 		totalZ += point[1];
 	}
 	
+	// Set patrol loop pattern fly time
+	let patrolTimeMin;
+	let patrolTimeMax;
+	
+	patrolTimeMax = (maxPlaneRange - (ingressDistance * 2)) / 1000;
+	patrolTimeMax = patrolTimeMax / flight.speed * 60 * 0.75;
+	patrolTimeMin = patrolTimeMax * 0.5;
+	
+	// Use shorter patrol time with player flight
+	if (flight.player) {
+		
+		patrolTimeMin = Math.min(patrolTimeMin, 15);
+		patrolTimeMax = Math.min(patrolTimeMin * 2, patrolTimeMax);
+	}
+	
+	const patrolTime = rand.real(patrolTimeMin, patrolTimeMax);
+	
 	// Add loop pattern route marker (back to ingress point)
-	// TODO: Set loop pattern fly time!
-	route.push([loopSpotIndex, 60 * rand.integer(15, 30)]);
+	route.push([loopSpotIndex, Math.round(60 * patrolTime)]);
 	
 	// Make final (back to the base) egress route
 	route.push.apply(
