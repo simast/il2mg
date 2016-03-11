@@ -2,12 +2,14 @@
 "use strict";
 
 const numeral = require("numeral");
+const Vector = require("sylvester").Vector;
 const data = require("../data");
 const Item = require("../item");
 const makeBriefingText = require("./briefing.text");
 
 // Data constants
 const planAction = data.planAction;
+const mapColor = data.mapColor;
 
 // First (intro) plan description segments
 const introSegments = [
@@ -132,6 +134,41 @@ function makeTaskCoverBriefing(action, flight) {
 	if (playerElement.length > 1 && flight.player === this.player.element[0]) {
 		isPlayerElementLeader = true;
 	}
+	
+	// Draw cover area zone
+	const airfield = this.airfields[flight.airfield];
+	const startVector = Vector.create([airfield.position[0], airfield.position[2]]);
+	let firstZoneIcon;
+	let lastZoneIcon;
+	
+	// NOTE: Using three points to define encircled area around the airfield
+	[0, 120, 240].forEach((degrees) => {
+		
+		let vector = Vector.create([4500 + rand.integer(0, 1000), 0]);
+		const rotateRad = (degrees + rand.integer(-15, 15)) * (Math.PI / 180);
+		
+		// Build zone point vector
+		vector = startVector.add(vector.rotate(rotateRad, Vector.Zero(2)));
+		
+		const zoneIcon = flight.group.createItem("MCU_Icon");
+		
+		zoneIcon.setPosition(vector.e(1), vector.e(2));
+		zoneIcon.setColor(mapColor.ROUTE);
+		zoneIcon.Coalitions = [flight.coalition];
+		zoneIcon.LineType = Item.MCU_Icon.LINE_SECTOR_2;
+		
+		if (!firstZoneIcon) {
+			firstZoneIcon = zoneIcon;
+		}
+		else {
+			lastZoneIcon.addTarget(zoneIcon);
+		}
+		
+		lastZoneIcon = zoneIcon;
+	});
+	
+	// Connect zone icons in a loop
+	lastZoneIcon.addTarget(firstZoneIcon);
 
 	// Make intro segment
 	if (flight.planes > 1) {
