@@ -1,9 +1,14 @@
 {
 	"name": "il2mg",
+	"productName": "il2mg - Mission Generator",
+	"electronVersion": "0.37.0",
 	"version": "0.0.0",
 	"private": true,
 	"main": "./src/app.js",
 	"author": "Simas Toleikis <simast@gmail.com>",
+	"scripts": {
+		"start": "electron ./gui/"
+	},
 	"dependencies": {
 		"commander": "2.9.0",
 		"moment": "2.12.0",
@@ -24,6 +29,8 @@
 		"grunt-contrib-jshint": "1.0.0",
 		"grunt-contrib-clean": "1.0.0",
 		"grunt-jscs": "2.8.0",
+		"electron-prebuilt": "0.37.0",
+		"electron-packager": "5.2.1",
 		"json5": "0.4.0",
 		"enclose": "1.3.1",
 		"sloc": "0.1.10"
