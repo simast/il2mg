@@ -1,5 +1,6 @@
 // III./JG 52 "Stalingrad" unit role
 {
+	sweep: 3,
 	patrol: 2,
 	cover: 1
 }

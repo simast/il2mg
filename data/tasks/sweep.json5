@@ -1,0 +1,12 @@
+// Offensive fighter sweep over an assigned area
+{
+	name: "Fighter sweep",
+	title: "Fighter sweep from {{airfield}}",
+	story: [
+		"TODO"
+	],
+	time: "day",
+	planes: {
+		fighter_light: "fighter"
+	}
+}
