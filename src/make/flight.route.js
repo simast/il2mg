@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Cold temperature speed boost effect (+0.24% km/h for each -1°C)
-const COLD_BOOST = 0.0024;
+// Flight make parts
+const makeFlightSpeed = require("./flight.speed");
 
 // Make mission flight route
 module.exports = function makeFlightRoute(flight, from, to, options) {
@@ -13,7 +13,6 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 	// TODO: Use landmarks (places, rivers) for navigation
 	
 	const rand = this.rand;
-	const leaderPlaneData = this.planes[flight.leader.plane];
 	const spot = {};
 	
 	if (options) {
@@ -37,19 +36,13 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 	
 	spot.point = to;
 	
-	// Set base flight speed
-	if (!flight.speed) {
-		
-		// Set flight speed based on current temperature (and some randomness)
-		const baseSpeed = leaderPlaneData.speed;
-		const tempFactor = baseSpeed * COLD_BOOST * this.weather.temperature.level;
-		
-		// TODO: Apply altitude factor
-		flight.speed = Math.round(baseSpeed - tempFactor);
-	}
+	// Use some +-200 meters randomness for each spot point altitude
+	spot.point[1] = spot.point[1] + rand.integer(-200, 200);
 	
-	// Use some ~2% randomness for spot speed
-	spot.speed = Math.round(flight.speed * rand.real(0.99, 1.01));
+	const speed = makeFlightSpeed.call(this, flight, to[1]);
+	
+	// Use some ~2% randomness for each spot speed
+	spot.speed = Math.round(speed * rand.real(0.99, 1.01));
 	
 	return [spot];
 };

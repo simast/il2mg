@@ -5,7 +5,10 @@ const numeral = require("numeral");
 const Vector = require("sylvester").Vector;
 const data = require("../data");
 const Item = require("../item");
+
+// Flight make parts
 const makeBriefingText = require("./briefing.text");
+const makeFlightSpeed = require("./flight.speed");
 
 // Data constants
 const planAction = data.planAction;
@@ -56,27 +59,27 @@ function makeTaskCoverAction(action, element, flight, input) {
 	const leaderPlaneItem = element[0].item;
 	const beacon = airfield.beacon;
 
-	let climbAltitude = 0;
+	let altitude = 0;
 	let coverCommand;
 
 	// Only climb above airfield with low cloud cover
 	if (this.weather.clouds.cover < 50) {
-		action.climbAltitude = climbAltitude = rand.integer(1200, 2200);
+		action.altitude = altitude = rand.integer(1200, 2200);
 	}
 
 	// Use climb waypoint above the airfield as a cover command
-	if (climbAltitude) {
+	if (altitude) {
 
 		coverCommand = flight.group.createItem("MCU_Waypoint");
 
 		coverCommand.Area = rand.integer(75, 125);
-		coverCommand.Speed = 280;
+		coverCommand.Speed = makeFlightSpeed.call(this, flight, altitude);
 		coverCommand.Priority = Item.MCU_Waypoint.PRIORITY_LOW;
 
 		// Set waypoint position above the airfield
 		coverCommand.setPosition(
 			airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
-			airfield.position[1] + climbAltitude,
+			airfield.position[1] + altitude,
 			airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
 		);
 
@@ -90,7 +93,7 @@ function makeTaskCoverAction(action, element, flight, input) {
 
 		// TODO: Disable this altitude timer at some point?
 
-		altitudeTimer.Time = rand.integer(25, 35);
+		altitudeTimer.Time = rand.integer(30, 40);
 		altitudeTimer.setPositionNear(coverCommand);
 
 		coverCommand.addTarget(altitudeTimer);
@@ -202,10 +205,10 @@ function makeTaskCoverBriefing(action, flight) {
 	}).join(" and "));
 
 	// Add climb altitude briefing segment
-	if (action.climbAltitude) {
+	if (action.altitude) {
 
 		// TODO: Use feets for other countries?
-		let altitudeStr = Math.round(action.climbAltitude / 100) * 100;
+		let altitudeStr = Math.round(action.altitude / 100) * 100;
 		altitudeStr = numeral(altitudeStr).format("0,0");
 
 		briefing.push("Climb to " + altitudeStr + " meters altitude");

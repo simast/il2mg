@@ -4,8 +4,11 @@
 const Vector = require("sylvester").Vector;
 const data = require("../data");
 const Location = require("./locations").Location;
-const makeFlightRoute = require("./flight.route");
 const Item = require("../item");
+
+// Flight make parts
+const makeFlightAltitude = require("./flight.altitude");
+const makeFlightRoute = require("./flight.route");
 
 // Max patrol area range (as a percent from total aircraft fuel range)
 const MAX_RANGE_PERCENT = 25;
@@ -13,10 +16,6 @@ const MAX_RANGE_PERCENT = 25;
 // Min/max patrol area size (in meters, between two base points)
 const MIN_AREA = 30000;
 const MAX_AREA = 60000;
-
-// Min/max patrol altitude (in meters)
-const MIN_ALTITUDE = 1500;
-const MAX_ALTITUDE = 3500;
 
 // Extra patrol zone padding (in meters)
 // NOTE: Used to enclose patrol points when player is a flight leader
@@ -42,7 +41,6 @@ module.exports = function makeTaskPatrol(flight) {
 	const startVector = startLocation.vector;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
-	const clouds = this.weather.clouds;
 	const map = this.map;
 	
 	// Max patrol area range based on max aircraft fuel range
@@ -454,23 +452,15 @@ module.exports = function makeTaskPatrol(flight) {
 	rand.shuffle(patrolPoints);
 	patrolPoints.unshift(ingressPoint, entryPoint);
 	
-	// Set patrol altitude
-	let minAltitude = MIN_ALTITUDE;
-	
-	if (clouds.cover > 0) {
-		
-		minAltitude = clouds.altitude + clouds.thickness + 500;
-		minAltitude = Math.max(minAltitude, MIN_ALTITUDE);
-		minAltitude = Math.min(minAltitude, MAX_ALTITUDE - 500);
-	}
-	
-	const altitude = rand.integer(minAltitude, MAX_ALTITUDE);
+	// Make patrol altitude
+	const altitude = makeFlightAltitude.call(this, flight);
 	
 	const route = [];
 	let loopSpotIndex = 0;
 	let fromPoint = airfield.position;
 	let totalX = 0;
 	let totalZ = 0;
+	let speed;
 	
 	// Build patrol area route points
 	for (const point of patrolPoints) {
@@ -496,7 +486,11 @@ module.exports = function makeTaskPatrol(flight) {
 		);
 		
 		route.push.apply(route, spots);
-		fromPoint = spots.pop().point;
+		
+		const lastSpot = spots.pop();
+		
+		fromPoint = lastSpot.point;
+		speed = lastSpot.speed;
 		
 		// Mark spot index for a repeating patrol loop pattern
 		if (point === ingressPoint) {
@@ -515,7 +509,7 @@ module.exports = function makeTaskPatrol(flight) {
 	let patrolTimeMax;
 	
 	patrolTimeMax = (maxPlaneRange - (ingressDistance * 2)) / 1000;
-	patrolTimeMax = patrolTimeMax / flight.speed * 60 * 0.75;
+	patrolTimeMax = patrolTimeMax / speed * 60 * 0.75;
 	patrolTimeMin = patrolTimeMax * 0.5;
 	
 	// Use shorter patrol time with player flight
