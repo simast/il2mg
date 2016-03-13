@@ -13997,5 +13997,63 @@ Group
   }
   
 
+  Group
+  {
+    Name = "AA:TRAIN";
+    Index = 795;
+    Desc = "";
+    Train
+    {
+      Name = "AA:TRAIN";
+      Index = 796;
+      LinkTrId = 0;
+      XPos = 94406.853;
+      YPos = 105.479;
+      ZPos = 54735.192;
+      XOri = 0.00;
+      YOri = 91.51;
+      ZOri = 0.00;
+      Script = "LuaScripts\WorldObjects\Trains\platformaa-flak38.txt";
+      Model = "graphics\trains\wagons\platformaa-flak38.mgm";
+      Desc = "";
+      Country = 0;
+      Vulnerable = 1;
+      Engageable = 1;
+      LimitAmmo = 1;
+      AILevel = 2;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+      Spotter = -1;
+      BeaconChannel = 0;
+      Callsign = 0;
+    }
+    
+
+    Block
+    {
+      Name = "DECO";
+      Index = 797;
+      LinkTrId = 0;
+      XPos = 94398.776;
+      YPos = 105.479;
+      ZPos = 54742.882;
+      XOri = 0.00;
+      YOri = 193.37;
+      ZOri = 0.00;
+      Model = "graphics\blocks\art_position_amb2.mgm";
+      Script = "LuaScripts\WorldObjects\Blocks\art_position_amb2.txt";
+      Country = 0;
+      Desc = "";
+      Durability = 25000;
+      DamageReport = 50;
+      DamageThreshold = 1;
+      DeleteAfterDeath = 1;
+    }
+    
+
+  }
+  
+
 }
 
