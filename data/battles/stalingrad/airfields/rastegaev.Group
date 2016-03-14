@@ -1,0 +1,95 @@
+Group
+{
+  Name = "Rastegaev";
+  Index = 953;
+  Desc = "";
+  Block
+  {
+    Name = "Block";
+    Index = 571;
+    LinkTrId = 0;
+    XPos = 143532.181;
+    YPos = 30.623;
+    ZPos = 329497.413;
+    XOri = 0.00;
+    YOri = 180.87;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_tower_2.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_tower_2.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 572;
+    LinkTrId = 0;
+    XPos = 143691.261;
+    YPos = 30.623;
+    ZPos = 329479.928;
+    XOri = 0.00;
+    YOri = 243.92;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_ammo_4.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_ammo_4.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 573;
+    LinkTrId = 0;
+    XPos = 143763.172;
+    YPos = 30.623;
+    ZPos = 329580.445;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_gsm_1.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_gsm_1.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 574;
+    LinkTrId = 0;
+    XPos = 143915.933;
+    YPos = 30.623;
+    ZPos = 329323.223;
+    XOri = 0.00;
+    YOri = 187.58;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_dugouts_1.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_dugouts_1.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+}
+

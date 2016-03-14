@@ -47,10 +47,7 @@ module.exports = function(grunt) {
 				}
 				
 				const json = {
-					items: [],
-					sectors: {},
-					taxi: {},
-					routes: []
+					items: []
 				};
 
 				// Collected airfield routes data index
@@ -158,6 +155,10 @@ module.exports = function(grunt) {
 								}
 								else if (planeFlag !== undefined) {
 									grunt.fail.fatal("Invalid plane flag in: " + item.Name);
+								}
+								
+								if (!json.sectors) {
+									json.sectors = {};
 								}
 
 								let sector = json.sectors[planeSector];
@@ -358,6 +359,10 @@ module.exports = function(grunt) {
 								}
 
 								taxiRoute.push(taxiPointsData);
+								
+								if (!json.taxi) {
+									json.taxi = {};
+								}
 
 								json.taxi[taxiID] = taxiRoute;
 							}
@@ -446,6 +451,10 @@ module.exports = function(grunt) {
 						nextWaypoint = routeData[nextWaypoint].target;
 					}
 					while (nextWaypoint !== routeData.first);
+					
+					if (!json.routes) {
+						json.routes = [];
+					}
 
 					json.routes.push(jsonRoute);
 				}

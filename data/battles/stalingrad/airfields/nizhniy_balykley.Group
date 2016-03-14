@@ -1,0 +1,95 @@
+Group
+{
+  Name = "Nizhniy Balykley";
+  Index = 941;
+  Desc = "";
+  Block
+  {
+    Name = "Block";
+    Index = 544;
+    LinkTrId = 0;
+    XPos = 220044.587;
+    YPos = 20.934;
+    ZPos = 300295.200;
+    XOri = 0.00;
+    YOri = 284.69;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_ammo_4.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_ammo_4.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 545;
+    LinkTrId = 0;
+    XPos = 220053.274;
+    YPos = 20.934;
+    ZPos = 300247.002;
+    XOri = 0.00;
+    YOri = 336.46;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_gsm_2.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_gsm_2.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 546;
+    LinkTrId = 0;
+    XPos = 219826.738;
+    YPos = 20.934;
+    ZPos = 300801.497;
+    XOri = 0.00;
+    YOri = 311.77;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_dugouts_1.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_dugouts_1.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 547;
+    LinkTrId = 0;
+    XPos = 220068.926;
+    YPos = 20.934;
+    ZPos = 300716.765;
+    XOri = 0.00;
+    YOri = 0.00;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_tower_2.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_tower_2.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+}
+

@@ -1,0 +1,205 @@
+Group
+{
+  Name = "Sekretov";
+  Index = 911;
+  Desc = "";
+  Block
+  {
+    Name = "Block";
+    Index = 398;
+    LinkTrId = 0;
+    XPos = 121795.905;
+    YPos = 52.506;
+    ZPos = 119128.474;
+    XOri = 0.00;
+    YOri = 128.93;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_gsm_1.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_gsm_1.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 399;
+    LinkTrId = 0;
+    XPos = 121976.813;
+    YPos = 52.506;
+    ZPos = 119119.136;
+    XOri = 0.00;
+    YOri = 331.06;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_ammo_4.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_ammo_4.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 400;
+    LinkTrId = 0;
+    XPos = 123032.257;
+    YPos = 52.506;
+    ZPos = 119120.738;
+    XOri = 0.00;
+    YOri = 173.28;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_ammo_1.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_ammo_1.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 401;
+    LinkTrId = 0;
+    XPos = 122853.018;
+    YPos = 52.506;
+    ZPos = 119018.955;
+    XOri = 0.00;
+    YOri = 351.77;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_gsm_2.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_gsm_2.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 402;
+    LinkTrId = 0;
+    XPos = 122853.783;
+    YPos = 52.506;
+    ZPos = 118897.041;
+    XOri = 0.00;
+    YOri = 224.70;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_caponiers_10_h_3.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_10_h_3.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 403;
+    LinkTrId = 0;
+    XPos = 121343.132;
+    YPos = 52.506;
+    ZPos = 118704.761;
+    XOri = 0.00;
+    YOri = 61.44;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_caponiers_1_v_5.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_caponiers_1_v_5.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 404;
+    LinkTrId = 0;
+    XPos = 121654.991;
+    YPos = 52.506;
+    ZPos = 118321.505;
+    XOri = 0.00;
+    YOri = 9.45;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_dugouts_1.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_dugouts_1.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 405;
+    LinkTrId = 0;
+    XPos = 122750.629;
+    YPos = 52.462;
+    ZPos = 119332.597;
+    XOri = 0.00;
+    YOri = 260.46;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_ammo_4.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_ammo_4.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+  Block
+  {
+    Name = "Block";
+    Index = 406;
+    LinkTrId = 0;
+    XPos = 122142.140;
+    YPos = 52.506;
+    ZPos = 118614.177;
+    XOri = 0.00;
+    YOri = 270.05;
+    ZOri = 0.00;
+    Model = "graphics\blocks\arf_tower_1.mgm";
+    Script = "LuaScripts\WorldObjects\Blocks\arf_tower_1.txt";
+    Country = 0;
+    Desc = "";
+    Durability = 25000;
+    DamageReport = 50;
+    DamageThreshold = 1;
+    DeleteAfterDeath = 1;
+  }
+  
+
+}
+
