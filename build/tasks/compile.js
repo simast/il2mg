@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 		const buildName = grunt.config("pkg.name");
 		const buildDir = "build/temp/";
 		
-		// Convert JSON5 data files to PSON format for binary executable use
+		// Process all source and data files
 		grunt.file.expand("@(data|src)/**/*.@(js|json|json5)").forEach((file) => {
 			
 			const fileExt = path.extname(file);
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 		options.push("--config", "../enclose.js");
 		options.push("--loglevel", "error");
 		options.push("--output", binaryFilePath);
-		options.push(grunt.config("pkg.main"));
+		options.push("./src/cli.js");
 
 		grunt.file.setBase(buildDir);
 

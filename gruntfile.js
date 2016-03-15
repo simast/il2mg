@@ -5,9 +5,9 @@ module.exports = function(grunt) {
 
 	// All source files	used with JSCS and JSHint tasks
 	const sourceFiles = [
-		"gruntfile.js",
-		"src/**/*.js",
-		"build/**/*.js"
+		"./gruntfile.js",
+		"./src/**/*.js",
+		"./build/**/*.js"
 	];
 
 	grunt.initConfig({
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 		// JavaScript code style checker task
 		jscs: {
 			all: {
-				src: grunt.file.match("**/*.js", sourceFiles),
+				src: sourceFiles,
 				options: {
 					config: "build/.jscsrc",
 					esnext: true
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
 		// JSHint validator task
 		jshint: {
 			all: {
-				src: grunt.file.match("**/*.js", sourceFiles),
+				src: sourceFiles,
 				options: {
 					jshintrc: "build/.jshintrc"
 				}

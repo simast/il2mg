@@ -1,13 +1,11 @@
 {
 	"name": "il2mg",
-	"productName": "il2mg - Mission Generator",
-	"electronVersion": "0.37.2",
 	"version": "0.0.0",
 	"private": true,
-	"main": "./src/app.js",
+	"main": "./src/run.js",
 	"author": "Simas Toleikis <simast@gmail.com>",
 	"scripts": {
-		"start": "electron ./gui/"
+		"start": "electron ."
 	},
 	"dependencies": {
 		"commander": "2.9.0",

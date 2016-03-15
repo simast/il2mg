@@ -8,7 +8,7 @@ const BrowserWindow = electron.BrowserWindow;
 
 let mainWindow = null;
 
-// Make sure only a single app instance is allowed to run
+// Make sure only a single app instance is allowed to run at the same time
 const isOtherInstance = app.makeSingleInstance(() => {
 	
 	if (mainWindow) {
@@ -24,9 +24,7 @@ const isOtherInstance = app.makeSingleInstance(() => {
 });
 
 if (isOtherInstance) {
-	
-	app.quit();
-	return;
+	app.exit(0);
 }
 
 // Quit when all windows are closed
@@ -38,7 +36,7 @@ app.on("window-all-closed", () => {
 app.on("ready", () => {
 	
 	mainWindow = new BrowserWindow({
-		title: app.getName(),
+		title: "il2mg - Mission Generator",
 		useContentSize: true,
 		width: 800,
 		minWidth: 800,

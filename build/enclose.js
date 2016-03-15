@@ -3,11 +3,11 @@
 
 module.exports = {
 	dirs: [
-		"temp/src/**/",
-		"temp/data/**/"
+		"temp/src/!(gui)/**",
+		"temp/data/**"
 	],
 	scripts: [
-		"temp/src/**/*.js",
+		"temp/src/!(gui)/**/*.js",
 		"temp/data/**/*.json"
 	]
 };
