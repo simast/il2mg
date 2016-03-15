@@ -18,7 +18,7 @@ if (require.main === module) {
 
 module.exports = function(grunt) {
 
-	// All source files	used with JSCS and JSHint tasks
+	// All source files
 	const sourceFiles = [
 		"src/**/*.js",
 		"build/**/*.js"
@@ -33,8 +33,7 @@ module.exports = function(grunt) {
 			all: {
 				src: sourceFiles,
 				options: {
-					config: "build/.jscsrc",
-					esnext: true
+					config: true
 				}
 			}
 		},
@@ -44,7 +43,7 @@ module.exports = function(grunt) {
 			all: {
 				src: sourceFiles,
 				options: {
-					jshintrc: "build/.jshintrc"
+					jshintrc: true
 				}
 			}
 		},

@@ -6,6 +6,7 @@ const electron = require("electron");
 // Electron built-in modules
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const ipcMain = electron.ipcMain;
 
 // Disable legacy built-in module require style
 electron.hideInternalModules();
@@ -37,6 +38,11 @@ const path = require("path");
 // Window size
 const WINDOW_WIDTH = 800;
 const WINDOW_HEIGHT = 600;
+
+// Show Developer Tools
+ipcMain.on("showDevTools", () => {
+	mainWindow.webContents.openDevTools({detach: true});
+});
 
 // Global JSON configuration data object
 const config = global.config = {};

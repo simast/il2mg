@@ -1,4 +1,5 @@
 {
+	"esnext": true,
 	"requireCurlyBraces": ["if", "else", "for", "while", "do", "switch", "default", "try", "catch", "finally"],
 	"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "case", "return", "try", "catch", "finally"],
 	"requireSpaceAfterLineComment": true,
