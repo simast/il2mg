@@ -53,6 +53,7 @@
 	},
 	"disallowSpaceBeforeComma": true,
 	"disallowSpaceBeforeSemicolon": true,
+	"disallowShorthandArrowFunctions": true,
 	"disallowVar": true,
 	"requireSemicolons": true,
 	"requireCapitalizedConstructors": true

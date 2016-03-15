@@ -1,13 +1,27 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+// Run application (invoked as package.json main script)
+if (require.main === module) {
+	
+	// Electron GUI application
+	if (process.versions.electron) {
+		require("./src/gui/app");
+	}
+	// CLI application
+	else {
+		require("./src/app");
+	}
+	
+	return;
+}
+
 module.exports = function(grunt) {
 
 	// All source files	used with JSCS and JSHint tasks
 	const sourceFiles = [
-		"./gruntfile.js",
-		"./src/**/*.js",
-		"./build/**/*.js"
+		"src/**/*.js",
+		"build/**/*.js"
 	];
 
 	grunt.initConfig({

@@ -54,7 +54,7 @@ module.exports = function(grunt) {
 		options.push("--config", "../enclose.js");
 		options.push("--loglevel", "error");
 		options.push("--output", binaryFilePath);
-		options.push("./src/cli.js");
+		options.push("./src/app.js");
 
 		grunt.file.setBase(buildDir);
 

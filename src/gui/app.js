@@ -1,10 +1,14 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const {app, BrowserWindow, hideInternalModules} = require("electron");
+const electron = require("electron");
+
+// Electron built-in modules
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
 
 // Disable legacy built-in module require style
-hideInternalModules();
+electron.hideInternalModules();
 
 let mainWindow = null;
 
@@ -30,10 +34,9 @@ if (isOtherInstance) {
 const fs = require("fs");
 const path = require("path");
 
-// Default window size and constraints
+// Window size
 const WINDOW_WIDTH = 800;
 const WINDOW_HEIGHT = 600;
-const WINDOW_HEIGHT_MIN = 450;
 
 // Global JSON configuration data object
 const config = global.config = {};
@@ -58,12 +61,13 @@ app.on("ready", () => {
 	const windowConfig = {
 		title: "il2mg - Mission Generator",
 		useContentSize: true,
-		minWidth: WINDOW_WIDTH,
-		maxWidth: WINDOW_WIDTH,
-		minHeight: WINDOW_HEIGHT_MIN,
+		width: WINDOW_WIDTH,
+		height: WINDOW_HEIGHT,
+		resizable: false,
 		maximizable: false,
 		acceptFirstMouse: true,
 		fullscreenable: false,
+		autoHideMenuBar: true,
 		webPreferences: {
 			webgl: false,
 			webaudio: false,
@@ -72,27 +76,30 @@ app.on("ready", () => {
 		}
 	};
 	
-	// Use existing (saved) window size and position
+	// Use existing (saved) window position
 	if (config.window) {
 		
-		windowConfig.center = false;
-		windowConfig.x = config.window.x;
-		windowConfig.y = config.window.y;
-		windowConfig.width = config.window.width;
-		windowConfig.height = config.window.height;
-	}
-	// Use default window size and position
-	else {
+		const {workArea} = electron.screen.getDisplayMatching(config.window);
+		let {x, y, width, height} = config.window;
 		
-		windowConfig.width = WINDOW_WIDTH;
-		windowConfig.height = WINDOW_HEIGHT;
+		// Make sure window is not outside display work area
+		x = Math.min(Math.max(x, workArea.x), workArea.x + workArea.width - width);
+		y = Math.min(Math.max(y, workArea.y), workArea.y + workArea.height - height);
+		
+		Object.assign(windowConfig, {center: false, x, y});
 	}
 	
 	mainWindow = new BrowserWindow(windowConfig);
 	
 	mainWindow.setMenu(null);
-	mainWindow.loadURL("file://" + __dirname + "/index.html");
-
+	mainWindow.loadURL("file://" + __dirname + "/main.html");
+	
+	// Save main window position and size
+	mainWindow.on("close", () => {
+		config.window = mainWindow.getBounds();
+	});
+	
+	// Invalidate main window reference
 	mainWindow.on("closed", () => {
 		mainWindow = null;
 	});
@@ -101,20 +108,7 @@ app.on("ready", () => {
 // Write application configuration data
 app.on("before-quit", () => {
 	
-	if (!configPath || !mainWindow) {
-		return;
+	if (configPath) {
+		fs.writeFileSync(configPath, JSON.stringify(config, null, "\t"));
 	}
-	
-	const bounds = mainWindow.getBounds();
-	const contentSize = mainWindow.getContentSize();
-	
-	// Save main window position and content size
-	config.window = {
-		x: bounds.x,
-		y: bounds.y,
-		width: contentSize[0],
-		height: contentSize[1]
-	};
-	
-	fs.writeFileSync(configPath, JSON.stringify(config, null, "\t"));
 });

@@ -2,7 +2,7 @@
 	"name": "il2mg",
 	"version": "0.0.0",
 	"private": true,
-	"main": "./src/run.js",
+	"main": "./gruntfile.js",
 	"author": "Simas Toleikis <simast@gmail.com>",
 	"scripts": {
 		"start": "electron ."
