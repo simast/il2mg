@@ -6,19 +6,24 @@
 
 const {ipcRenderer} = require("electron");
 
-// Show Developer Tools (with F12 keyboard shortcut)
-// TODO: Also show Developer Tools when any JavaScript errors are detected?
+// Add some local development mode keyboard shortcuts
 document.addEventListener("keydown", (event) => {
 	
-	if (event.code !== "F12") {
+	// Show Developer Tools (with F12)
+	// TODO: Also show Developer Tools when any JavaScript errors are detected?
+	if (event.code === "F12") {
+		ipcRenderer.send("showDevTools");
+	}
+	// Force reload (with F5)
+	else if (event.code === "F5") {
+		ipcRenderer.send("forceReload");
+	}
+	else {
 		return;
 	}
 	
 	event.preventDefault();
 	event.stopPropagation();
-	event.stopImmediatePropagation();
-	
-	ipcRenderer.send("showDevTools");
 	
 }, true);
 

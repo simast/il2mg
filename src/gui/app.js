@@ -44,6 +44,11 @@ ipcMain.on("showDevTools", () => {
 	mainWindow.webContents.openDevTools({detach: true});
 });
 
+// Force reload
+ipcMain.on("forceReload", () => {
+	mainWindow.webContents.reloadIgnoringCache();
+});
+
 // Global JSON configuration data object
 const config = global.config = {};
 let configPath;
