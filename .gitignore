@@ -1,8 +1,7 @@
 /node_modules
 /docs
 /build/temp
-/build/il2mg
-/build/il2mg.exe
+/build/il2mg*
 /data/**/*.json
 *.mission
 *.eng

@@ -53,10 +53,9 @@ module.exports = function(grunt) {
 
 		// Clean task
 		clean: {
-			compile: [
+			release: [
 				"build/temp",
-				"build/il2mg",
-				"build/il2mg.exe"
+				"build/il2mg*"
 			],
 			data: [
 				"data/**/*.json",
@@ -96,10 +95,10 @@ module.exports = function(grunt) {
 		"build:index"
 	]);
 	
-	// Task to build and compile the project
-	grunt.registerTask("compile", [
-		"clean:compile",
+	// Task to build a release package for the project
+	grunt.registerTask("release", [
+		"clean:release",
 		"default",
-		"build:compile"
+		"build:release"
 	]);
 };
