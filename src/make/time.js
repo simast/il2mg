@@ -191,8 +191,8 @@ module.exports = function makeTime() {
 			// Night (from dusk to dawn)
 			case "night": {
 				
-				time = moment(dawnStart);
-				time.subtract(randValue * duskEnd.diff(time), "ms");
+				time = moment(duskEnd);
+				time.add(randValue * moment(dawnStart).add(1, "d").diff(duskEnd), "ms");
 
 				break;
 			}
