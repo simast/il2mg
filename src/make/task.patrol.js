@@ -34,274 +34,31 @@ module.exports = function makeTaskPatrol(flight) {
 	
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];
-	const territories = this.locations.territories;
 	const startX = airfield.position[0];
 	const startZ = airfield.position[2];
 	const startLocation = new Location(startX, startZ);
 	const startVector = startLocation.vector;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
-	const map = this.map;
 	
 	// Max patrol area range based on max aircraft fuel range
 	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
 	const maxPatrolRange = maxPlaneRange * (MAX_RANGE_PERCENT / 100);
 	
-	// Restrict patrol zone to not use areas around map border zone
-	const restrictedBorder = flight.player ? RESTRICTED_BORDER : 0;
-	
-	// Check if point is valid (is not within restricted zone)
-	const isPointValid = (point) => {
-	
-		if (!flight.player) {
-			return true;
-		}
-		
-		return point[0] >= restrictedBorder &&
-			point[0] <= (map.height - restrictedBorder) &&
-			point[1] >= restrictedBorder &&
-			point[1] <= (map.width - restrictedBorder);
-	};
-	
-	// Patrol area bounds as a rectangular location around the start point
-	const patrolBounds = new Location(
-		Math.max(startX - maxPatrolRange, restrictedBorder),
-		Math.max(startZ - maxPatrolRange, restrictedBorder),
-		Math.min(startX + maxPatrolRange, map.height - restrictedBorder),
-		Math.min(startZ + maxPatrolRange, map.width - restrictedBorder)
-	);
-	
-	let patrolA;
-	let patrolB;
-	let distanceAB;
-	
-	// Select base two (A and B) front points for patrol area
-	const findPatrolPoints = (locations, directions) => {
-		
-		if (!locations.length) {
-			return;
-		}
-		
-		let iteration = 0;
-		
-		// Make sure location selection is randomized
-		rand.shuffle(locations);
-		
-		do {
-			
-			const location = locations.shift();
-			let directionChance;
-			
-			// Filter out locations based on forbidden directions
-			if (directions) {
-				
-				directionChance = directions[getDirection(location)];
-				
-				// Direction is forbidden
-				if (directionChance <= 0) {
-					continue;
-				}
-			}
-			
-			const locationVector = location.vector;
-			const distance = startVector.distanceFrom(locationVector);
-			
-			// Ignore front points outside max patrol range
-			// NOTE: Required as search results from r-tree are within rectangle bounds
-			if (distance > maxPatrolRange) {
-				continue;
-			}
-			
-			iteration++;
-			
-			const distanceRatio = distance / maxPatrolRange;
-			
-			// NOTE: Chance to use this location will decrease with distance (with
-			// at least 10% always guaranteed chance).
-			let useLocation = Math.max(0.1, 1 - distanceRatio);
-			
-			// Try to choose first patrol point from locations within 50% max range
-			if (!patrolA && distanceRatio > 0.5 && (iteration <= locations.length / 2)) {
-				useLocation = 0;
-			}
-			// Use location based on provided direction weight/chance
-			else if (directions && !rand.bool(directionChance)) {
-				useLocation = 0;
-			}
-			
-			// Use location for another chance pass
-			if (!rand.bool(useLocation) && locations.length) {
-				
-				locations.push(location);
-				continue;
-			}
-			
-			// Pick location A
-			if (!patrolA) {
-				patrolA = location;
-			}
-			// Pick location B
-			else {
-				
-				distanceAB = patrolA.vector.distanceFrom(locationVector);
-				
-				// Search for a location matching min/max patrol area bounds
-				if (distanceAB >= MIN_AREA && distanceAB <= MAX_AREA) {
-					
-					patrolB = location;
-					break; // Found both locations
-				}
-			}
-		}
-		while (locations.length);
-	};
-	
-	// Get direction value for location (in relation to origin position)
-	const getDirection = (location) => {
-		
-		const locationX = location.x;
-		const locationZ = location.z;
-		
-		if (locationX > startX && locationZ > startZ) {
-			return "tr";
-		}
-		else if (locationX < startX && locationZ > startZ) {
-			return "br";
-		}
-		else if (locationX < startX && locationZ < startZ) {
-			return "bl";
-		}
-		else {
-			return "tl";
-		}
-	};
-	
-	// Adjust (align and face) bounds based on a list of "hot" points
-	const alignBoundsToPoints = (bounds, points) => {
-		
-		// Four "corners" of the bounds area
-		let tl = 0;
-		let tr = 0;
-		let bl = 0;
-		let br = 0;
-		
-		// Mark availability (and popularity) of each corner
-		for (const point of points) {
-			
-			const pointX = point[0];
-			const pointZ = point[1];
-			
-			if (pointX > startX) {
-				tl++; tr++; bl--; br--;
-			}
-			else if (pointX < startX) {
-				tl--; tr--; bl++; br++;
-			}
-			
-			if (pointZ > startZ) {
-				tl--; tr++; bl--; br++;
-			}
-			else if (pointZ < startZ) {
-				tl++; tr--; bl++; br--;
-			}
-		}
-		
-		const directions = {tl, tr, bl, br};
-		let maxWeight = 0;
-		
-		// Compute max direction weight value
-		for (const direction in directions) {
-			
-			const weight = directions[direction];
-			
-			if (weight >= 0) {
-				maxWeight += (weight + 1);
-			}
-		}
-		
-		// Compute direction chance values
-		for (const direction in directions) {
-			
-			const weight = directions[direction];
-			
-			if (weight < 0) {
-				directions[direction] = 0;
-			}
-			else {
-				directions[direction] = (weight + 1) / maxWeight;
-			}
-		}
-		
-		// Resize bounds area to only include available (positive) corners
-		
-		if (tl < 0 && tr < 0) {
-			bounds.x2 = startX;
-		}
-		
-		if (tr < 0 && br < 0) {
-			bounds.z2 = startZ;
-		}
-		
-		if (br < 0 && bl < 0) {
-			bounds.x1 = startX;
-		}
-		
-		if (bl < 0 && tl < 0) {
-			bounds.z1 = startZ;
-		}
-		
-		return directions;
-	};
-	
-	// Option 1: Find patrol points from fronts within max patrol range
-	findPatrolPoints(territories[territory.FRONT].findIn(patrolBounds));
-	
-	// Option 2: Find patrol points on friendly territory within max patrol range
-	if (!patrolA || !patrolB) {
-		
-		const enemyCoalition = this.getEnemyCoalition(flight.coalition);
-		const enemyOffmapSpots = this.offmapSpotsByCoalition[enemyCoalition];
-		let directions;
-		
-		// Adjust patrol bounds to align with and face any enemy offmap spots
-		// NOTE: This is done so that flights will not go on patrol in a completely
-		// different direction to where the enemy is.
-		if (enemyOffmapSpots) {
-			directions = alignBoundsToPoints(patrolBounds, enemyOffmapSpots);
-		}
-		
-		if (patrolA) {
-			
-			// If we can't find both patrol area points based on front lines (when
-			// front lines are either very small in size or too far away) - there is
-			// a 50% chance to select both patrol area points on friendly territory.
-			if (rand.bool(0.5)) {
-				patrolA = null;
-			}
-			// Validate patrolA location to not be from forbidden direction
-			else {
-				
-				const direction = getDirection(patrolA);
-				
-				// Direction is forbidden
-				if (directions[direction] <= 0) {
-					patrolA = null;
-				}
-			}
-		}
-		
-		findPatrolPoints(
-			territories[flight.coalition].findIn(patrolBounds),
-			directions
-		);
-	}
+	// Find base two patrol area reference points
+	const points = findBasePoints.call(this, flight, {
+		start: startLocation,
+		maxRange: maxPatrolRange,
+		minDistance: MIN_AREA,
+		maxDistance: MAX_AREA
+	});
 	
 	// TODO: Reject task when we can't find base two patrol reference points
 	
 	const patrolPoints = [];
 	
 	// Build base patrol area points
-	for (const location of rand.shuffle([patrolA, patrolB])) {
+	for (const location of rand.shuffle([points.a, points.b])) {
 		
 		const point = [
 			rand.integer(location.x1, location.x2),
@@ -326,7 +83,7 @@ module.exports = function makeTaskPatrol(flight) {
 	flight.target = patrolPoints.slice();
 	
 	// Chosen area ratio from min/max allowed size
-	const areaRatio = (distanceAB - MIN_AREA) / (MAX_AREA - MIN_AREA);
+	const areaRatio = (points.distance - MIN_AREA) / (MAX_AREA - MIN_AREA);
 	
 	// NOTE: The chance to use another extra point (with 2 points in total) is
 	// 100% percent up to 0.25 area size ratio, then decreasing chance from 100%
@@ -384,7 +141,7 @@ module.exports = function makeTaskPatrol(flight) {
 		];
 		
 		// Validated point
-		if (!isPointValid(point)) {
+		if (!points.isValid(point)) {
 			
 			// NOTE: One of the points (on either side) will be always valid!
 			numExtraPoints = 2;
@@ -618,3 +375,296 @@ module.exports = function makeTaskPatrol(flight) {
 	// Connect zone icons in a loop
 	lastZoneIcon.addTarget(firstZoneIcon);
 };
+
+// Find base reference points (for patrol area or fighter sweep route)
+function findBasePoints(flight, params) {
+	
+	const rand = this.rand;
+	const map = this.map;
+	const territories = this.locations.territories;
+	const start = params.start;
+	const startX = start.x;
+	const startZ = start.z;
+	const startVector = start.vector;
+	const maxRange = params.maxRange;
+	const minDistance = params.minDistance;
+	const maxDistance = params.maxDistance;
+	const minAngle = params.minAngle;
+	const maxAngle = params.maxAngle;
+	
+	// Player flight restriction to not use areas around map border zone
+	const restrictedBorder = flight.player ? RESTRICTED_BORDER : 0;
+	
+	// Points area bounds as a rectangular location around the start location
+	const bounds = new Location(
+		Math.max(startX - maxRange, restrictedBorder),
+		Math.max(startZ - maxRange, restrictedBorder),
+		Math.min(startX + maxRange, map.height - restrictedBorder),
+		Math.min(startZ + maxRange, map.width - restrictedBorder)
+	);
+	
+	let pointA;
+	let pointAVector;
+	let pointAOrigin; // Vector translated to 0,0 origin (from start location)
+	let pointB;
+	let distanceAB;
+	let angleAB;
+	
+	// Find base two (A and B) reference points
+	const findPoints = (locations, directions) => {
+		
+		if (!locations.length) {
+			return;
+		}
+		
+		let iteration = 0;
+		
+		// Make sure location selection is randomized
+		rand.shuffle(locations);
+		
+		do {
+			
+			const location = locations.shift();
+			let directionChance;
+			
+			// Filter out locations based on forbidden directions
+			if (directions) {
+				
+				directionChance = directions[getDirection(location)];
+				
+				// Direction is forbidden
+				if (directionChance <= 0) {
+					continue;
+				}
+			}
+			
+			const locationVector = location.vector;
+			const distance = startVector.distanceFrom(locationVector);
+			
+			// Ignore front points outside max allowed range
+			// NOTE: Required as search results from r-tree are within rectangle bounds
+			if (distance > maxRange) {
+				continue;
+			}
+			
+			iteration++;
+			
+			const distanceRatio = distance / maxRange;
+			
+			// NOTE: Chance to use this location will decrease with distance (with
+			// at least 10% always guaranteed chance).
+			let useLocation = Math.max(0.1, 1 - distanceRatio);
+			
+			// Try to choose first point from locations within 50% max range
+			if (!pointA && distanceRatio > 0.5 && (iteration <= locations.length / 2)) {
+				useLocation = 0;
+			}
+			// Use location based on provided direction weight/chance
+			else if (directions && !rand.bool(directionChance)) {
+				useLocation = 0;
+			}
+			
+			// Use location for another chance pass
+			if (!rand.bool(useLocation) && locations.length) {
+				
+				locations.push(location);
+				continue;
+			}
+			
+			// Pick location A
+			if (!pointA) {
+				
+				pointA = location;
+				pointAVector = pointA.vector;
+				pointAOrigin = Vector.create([pointA.x - startX, pointA.z - startZ]);
+			}
+			// Pick location B
+			else {
+				
+				// Calculate distance (in meters) between two reference points
+				if (minDistance || maxDistance) {
+					distanceAB = pointAVector.distanceFrom(locationVector);
+				}
+				
+				// Calculate angle (in degrees) between two reference points
+				if (minAngle || maxAngle) {
+					
+					angleAB = pointAOrigin.angleFrom(
+						Vector.create([location.x - startX, location.z - startZ])
+					) * (180 / Math.PI);
+				}
+				
+				// Search for a location matching min/max distance and angle restrictions
+				if ((minDistance === undefined || distanceAB >= minDistance) &&
+						(maxDistance === undefined || distanceAB <= maxDistance) &&
+						(minAngle === undefined || angleAB >= minAngle) &&
+						(maxAngle === undefined || angleAB <= maxAngle)) {
+					
+					pointB = location;
+					break; // Found both locations
+				}
+			}
+		}
+		while (locations.length);
+	};
+	
+	// Get direction value for location (in relation to origin position)
+	const getDirection = (location) => {
+		
+		const locationX = location.x;
+		const locationZ = location.z;
+		
+		if (locationX > startX && locationZ > startZ) {
+			return "tr";
+		}
+		else if (locationX < startX && locationZ > startZ) {
+			return "br";
+		}
+		else if (locationX < startX && locationZ < startZ) {
+			return "bl";
+		}
+		else {
+			return "tl";
+		}
+	};
+	
+	// Adjust (align and face) bounds based on a list of "hot" points
+	const alignBoundsToPoints = (bounds, points) => {
+		
+		// Four "corners" of the bounds area
+		let tl = 0;
+		let tr = 0;
+		let bl = 0;
+		let br = 0;
+		
+		// Mark availability (and popularity) of each corner
+		for (const point of points) {
+			
+			const pointX = point[0];
+			const pointZ = point[1];
+			
+			if (pointX > startX) {
+				tl++; tr++; bl--; br--;
+			}
+			else if (pointX < startX) {
+				tl--; tr--; bl++; br++;
+			}
+			
+			if (pointZ > startZ) {
+				tl--; tr++; bl--; br++;
+			}
+			else if (pointZ < startZ) {
+				tl++; tr--; bl++; br--;
+			}
+		}
+		
+		const directions = {tl, tr, bl, br};
+		let maxWeight = 0;
+		
+		// Compute max direction weight value
+		for (const direction in directions) {
+			
+			const weight = directions[direction];
+			
+			if (weight >= 0) {
+				maxWeight += (weight + 1);
+			}
+		}
+		
+		// Compute direction chance values
+		for (const direction in directions) {
+			
+			const weight = directions[direction];
+			
+			if (weight < 0) {
+				directions[direction] = 0;
+			}
+			else {
+				directions[direction] = (weight + 1) / maxWeight;
+			}
+		}
+		
+		// Resize bounds area to only include available (positive) corners
+		
+		if (tl < 0 && tr < 0) {
+			bounds.x2 = startX;
+		}
+		
+		if (tr < 0 && br < 0) {
+			bounds.z2 = startZ;
+		}
+		
+		if (br < 0 && bl < 0) {
+			bounds.x1 = startX;
+		}
+		
+		if (bl < 0 && tl < 0) {
+			bounds.z1 = startZ;
+		}
+		
+		return directions;
+	};
+	
+	// Option 1: Find points from fronts within max allowed range
+	findPoints(territories[territory.FRONT].findIn(bounds));
+	
+	// Option 2: Find points on friendly territory within max allowed range
+	if (!pointA || !pointB) {
+		
+		const enemyCoalition = this.getEnemyCoalition(flight.coalition);
+		const enemyOffmapSpots = this.offmapSpotsByCoalition[enemyCoalition];
+		let directions;
+		
+		// Adjust bounds to align with and face any enemy offmap spots
+		// NOTE: This is done so that flights will not go on a route in a completely
+		// different direction to where the enemy is.
+		if (enemyOffmapSpots) {
+			directions = alignBoundsToPoints(bounds, enemyOffmapSpots);
+		}
+		
+		if (pointA) {
+			
+			// If we can't find both patrol area points based on front lines (when
+			// front lines are either very small in size or too far away) - there is
+			// a 50% chance to select both patrol area points on friendly territory.
+			if (rand.bool(0.5)) {
+				pointA = null;
+			}
+			// Validate patrolA location to not be from forbidden direction
+			else {
+				
+				const direction = getDirection(pointA);
+				
+				// Direction is forbidden
+				if (directions[direction] <= 0) {
+					pointA = null;
+				}
+			}
+		}
+		
+		findPoints(territories[flight.coalition].findIn(bounds), directions);
+	}
+	
+	// Return found points data
+	return {
+		a: pointA,
+		b: pointB,
+		distance: distanceAB,
+		angle: angleAB,
+		
+		// Check if a given point is valid (is not within restricted zone)
+		isValid(point) {
+			
+			if (!flight.player) {
+				return true;
+			}
+			
+			return point[0] >= restrictedBorder &&
+				point[0] <= (map.height - restrictedBorder) &&
+				point[1] >= restrictedBorder &&
+				point[1] <= (map.width - restrictedBorder);
+		}
+	};
+}
+
+module.exports.findBasePoints = findBasePoints;
