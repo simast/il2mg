@@ -11,7 +11,7 @@ const enclose = require("enclose");
 module.exports = function(grunt) {
 
 	// Grunt task used to build a release package
-	grunt.registerTask("build:release", "Build release package.", function() {
+	grunt.registerTask("build:release", "Build a release package.", function() {
 
 		const done = this.async();
 		const pkg = grunt.config("pkg");
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 		const buildDir = outDir + "temp/";
 		const appDir = buildDir + "app/";
 		
-		// Set production mode (required for React)
+		// Set production mode (required for React.js)
 		process.env.NODE_ENV = "production";
 		
 		// Build CLI application
@@ -131,7 +131,7 @@ module.exports = function(grunt) {
 			return new Promise((resolve, reject) => {
 				
 				electronPackager({
-					arch: "ia32", // TODO: Use 64-bit build of Electron?
+					arch: "x64",
 					platform: process.platform,
 					dir: appDir,
 					out: outDir,
@@ -159,14 +159,13 @@ module.exports = function(grunt) {
 				grunt.file.setBase(buildDir);
 		
 				options.push("--version", "5.6.0");
+				options.push("--x64"); // Build 64-bit binary
 				options.push("--features", "no"); // Support all CPUs (don't use SSE3/AVX/etc)
 				options.push("--config", "../enclose.js");
 				options.push("--loglevel", "error");
 				options.push("--output", binaryFilePath);
 				options.push("./src/app.js");
 				
-				// TODO: Use 64-bit build of enclose?
-		
 				enclose.exec(options, (error) => {
 					
 					grunt.file.setBase("../../");
