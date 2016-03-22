@@ -56,6 +56,7 @@ module.exports = function makeTaskSweep(flight) {
 	// TODO: Reject task when we can't find base two reference points
 	
 	const sweepPoints = [];
+	let baseDistance = 0;
 	
 	// Build base ingress/egress fighter sweep area points
 	for (let location of rand.shuffle([points.a, points.b])) {
@@ -68,6 +69,7 @@ module.exports = function makeTaskSweep(flight) {
 			rand.integer(location.z1, location.z2)
 		);
 		
+		// Use shift vector
 		if (getTerritory(location.x, location.z) === territory.FRONT) {
 			
 			shiftVector = Vector.create([
@@ -79,8 +81,9 @@ module.exports = function makeTaskSweep(flight) {
 		}
 		
 		// Constants used for shifting initial ingress/egress points
-		const shiftDistance = 3000; // 3 km
-		const minFrontDistance = 3000; // 3 km
+		const minShiftDistance = 1000; // 1 km
+		const maxShiftDistance = 1500; // 1.5 km
+		const minFrontDistance = 2500; // 2.5 km
 		
 		// Find nearest front line following shift vector (from starting location)
 		while (shiftVector) {
@@ -88,14 +91,18 @@ module.exports = function makeTaskSweep(flight) {
 			const locationVector = location.vector;
 			const nearestFront = territories[territory.FRONT].findNear(location, 1);
 			
-			// Make sure base entry/exit point is some distance away from front lines
+			// Make sure ingress/egress point is some distance away from front lines
 			if (nearestFront.length &&
 				locationVector.distanceFrom(nearestFront[0].vector) < minFrontDistance) {
 				
 				break;
 			}
 			
-			const pointVector = locationVector.add(shiftVector.x(shiftDistance));
+			// Shift point forwards
+			const pointVector = locationVector.add(
+				shiftVector.x(rand.integer(minShiftDistance, maxShiftDistance))
+			);
+			
 			const posX = pointVector.e(1);
 			const posZ = pointVector.e(2);
 			
@@ -108,6 +115,12 @@ module.exports = function makeTaskSweep(flight) {
 		}
 		
 		sweepPoints.push([location.x, location.z]);
+		
+		// Track distance from start location to base point
+		baseDistance += Vector.create([
+			location.x - startX,
+			location.z - startZ
+		]).modulus();
 	}
 	
 	for (const point of sweepPoints) {
