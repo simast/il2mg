@@ -15,11 +15,13 @@ const makeFlightRoute = require("./flight.route");
 // Max fighter sweep route range (as a percent from total aircraft fuel range)
 const MAX_RANGE_PERCENT = 75;
 
-// Min/max angle and distance between two base reference points
+// Min/max angle between two base reference points (in degrees)
 const MIN_ANGLE = 35;
 const MAX_ANGLE = 120;
-const MIN_DISTANCE = 25000; // 25 km
-const MAX_DISTANCE = 120000; // 120 km
+
+// Min/max distance between two base reference points (in meters)
+const MIN_DISTANCE = 25000;
+const MAX_DISTANCE = 120000;
 
 // Data constants
 const planAction = data.planAction;
@@ -58,7 +60,7 @@ module.exports = function makeTaskSweep(flight) {
 	// Build base ingress/egress fighter sweep area points
 	for (let location of rand.shuffle([points.a, points.b])) {
 		
-		let frontDistance;
+		let shiftVector;
 		
 		// Clone and randomize initial location point
 		location = new Location(
@@ -66,43 +68,43 @@ module.exports = function makeTaskSweep(flight) {
 			rand.integer(location.z1, location.z2)
 		);
 		
-		// Constants used for adjusting initial ingress/egress points
-		const shiftDistance = 3000; // 3 km
-		const minFrontDistance = 1000; // 1 km
-		const minStartDistance = 9000; // 9 km
-		
-		// TODO: Use forward direction instead of shifting backwards?
-		
-		// Shift point closer to the starting position (over friendly territory)
-		// NOTE: Also make sure adjusted point is some distance away from front
-		while (getTerritory(location.x, location.z) !== flight.coalition ||
-					(frontDistance !== undefined && frontDistance < minFrontDistance)) {
+		if (getTerritory(location.x, location.z) === territory.FRONT) {
 			
-			let pointVector = Vector.create([
+			shiftVector = Vector.create([
 				location.x - startX,
-				location.z - startZ 
-			]);
+				location.z - startZ
+			]).toUnitVector();
 			
-			const distance = pointVector.modulus();
-			
-			// Don't shift base points too close to the starting location
-			if (distance < minStartDistance) {
-				break;
-			}
+			location = startLocation;
+		}
+		
+		// Constants used for shifting initial ingress/egress points
+		const shiftDistance = 3000; // 3 km
+		const minFrontDistance = 3000; // 3 km
+		
+		// Find nearest front line following shift vector (from starting location)
+		while (shiftVector) {
 			
 			const locationVector = location.vector;
 			const nearestFront = territories[territory.FRONT].findNear(location, 1);
 			
-			if (nearestFront.length) {
-				frontDistance = locationVector.distanceFrom(nearestFront[0].vector);
+			// Make sure base entry/exit point is some distance away from front lines
+			if (nearestFront.length &&
+				locationVector.distanceFrom(nearestFront[0].vector) < minFrontDistance) {
+				
+				break;
 			}
 			
-			// Move point closer to the starting location
-			pointVector = locationVector.add(
-				pointVector.x(-1).toUnitVector().x(shiftDistance)
-			);
+			const pointVector = locationVector.add(shiftVector.x(shiftDistance));
+			const posX = pointVector.e(1);
+			const posZ = pointVector.e(2);
 			
-			location = new Location(pointVector.e(1), pointVector.e(2));
+			// End shift when we reach front lines
+			if (getTerritory(posX, posZ) !== flight.coalition) {
+				break;
+			}
+			
+			location = new Location(posX, posZ);
 		}
 		
 		sweepPoints.push([location.x, location.z]);

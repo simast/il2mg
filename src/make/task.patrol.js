@@ -13,9 +13,9 @@ const makeFlightRoute = require("./flight.route");
 // Max patrol area range (as a percent from total aircraft fuel range)
 const MAX_RANGE_PERCENT = 25;
 
-// Min/max patrol area size (in meters, between two base points)
-const MIN_AREA = 30000;
-const MAX_AREA = 60000;
+// Min/max patrol area distance (in meters, between two base points)
+const MIN_DISTANCE = 30000;
+const MAX_DISTANCE = 60000;
 
 // Extra patrol zone padding (in meters)
 // NOTE: Used to enclose patrol points when player is a flight leader
@@ -49,8 +49,8 @@ module.exports = function makeTaskPatrol(flight) {
 	const points = findBasePoints.call(this, flight, {
 		start: startLocation,
 		maxRange: maxPatrolRange,
-		minDistance: MIN_AREA,
-		maxDistance: MAX_AREA
+		minDistance: MIN_DISTANCE,
+		maxDistance: MAX_DISTANCE
 	});
 	
 	// TODO: Reject task when we can't find base two patrol reference points
@@ -83,7 +83,7 @@ module.exports = function makeTaskPatrol(flight) {
 	flight.target = patrolPoints.slice();
 	
 	// Chosen area ratio from min/max allowed size
-	const areaRatio = (points.distance - MIN_AREA) / (MAX_AREA - MIN_AREA);
+	const areaRatio = (points.distance - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE);
 	
 	// NOTE: The chance to use another extra point (with 2 points in total) is
 	// 100% percent up to 0.25 area size ratio, then decreasing chance from 100%
