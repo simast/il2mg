@@ -155,6 +155,10 @@
 		name: "Krasnaya zarya",
 		position: [167706.58, 30.62, 316183.64]
 	},
+	krasnodar: {
+		name: "Krasnodar",
+		position: [-262232, 0, -152877]
+	},
 	kumovka: {
 		name: "Kumovka",
 		position: [123499.68, 44.8, 178226.54]

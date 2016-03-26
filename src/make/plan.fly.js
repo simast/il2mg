@@ -102,10 +102,6 @@ module.exports = function makePlanFly(action, element, flight, input) {
 			if (spot.icon) {
 				spotIcon = spot.icon;
 			}
-			// Reuse starting icon for last home return (egress) spot
-			else if (spot.egress && isFinalSpot) {
-				spotIcon = flight.startIcon;
-			}
 			// Create a new spot icon
 			else {
 				
@@ -113,7 +109,14 @@ module.exports = function makePlanFly(action, element, flight, input) {
 	
 				spotIcon.setPosition(spot.point);
 				spotIcon.Coalitions = [flight.coalition];
-				spotIcon.IconId = MCU_Icon.ICON_WAYPOINT;
+				
+				if (!isFinalSpot) {
+					spotIcon.IconId = MCU_Icon.ICON_WAYPOINT;
+				}
+				
+				if (spot.iconID !== undefined) {
+					spotIcon.IconId = spot.iconID;
+				}
 			}
 			
 			lastSpotIcon.addTarget(spotIcon);
