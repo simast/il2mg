@@ -12,8 +12,9 @@ const getTerritory = require("./fronts").getTerritory;
 const makeFlightAltitude = require("./flight.altitude");
 const makeFlightRoute = require("./flight.route");
 
-// Max fighter sweep route range (as a percent from total aircraft fuel range)
-const MAX_RANGE_PERCENT = 75;
+// Max fighter sweep route range restrictions
+const MAX_RANGE_FUEL = 75; // 75%
+const MAX_RANGE_DISTANCE = 300000; // 300 km
 
 // Min/max angle between two base reference points (in degrees)
 const MIN_ANGLE = 30;
@@ -44,7 +45,11 @@ module.exports = function makeTaskSweep(flight) {
 	
 	// Max fighter sweep route range based on max aircraft fuel range
 	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
-	const maxRouteRange = maxPlaneRange * (MAX_RANGE_PERCENT / 100);
+	let maxRouteRange = maxPlaneRange * (MAX_RANGE_FUEL / 100);
+	
+	// Enforce max fighter sweep route distance
+	maxRouteRange = Math.min(maxRouteRange, MAX_RANGE_DISTANCE);
+	
 	const maxRouteRangeSegment = Math.round(maxRouteRange / 3);
 	
 	// Find base two fighter sweep reference points
