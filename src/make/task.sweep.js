@@ -14,14 +14,14 @@ const makeFlightRoute = require("./flight.route");
 
 // Max fighter sweep route range restrictions
 const MAX_RANGE_FUEL = 75; // 75%
-const MAX_RANGE_DISTANCE = 300000; // 300 km
+const MAX_RANGE_DISTANCE = 450000; // 450 km
 
 // Min/max angle between two base reference points (in degrees)
-const MIN_ANGLE = 30;
-const MAX_ANGLE = 120;
+const MIN_ANGLE = 25;
+const MAX_ANGLE = 90;
 
 // Min/max distance between two base reference points (in meters)
-const MIN_DISTANCE = 20000;
+const MIN_DISTANCE = 15000;
 const MAX_DISTANCE = 120000;
 
 // Data constants
@@ -50,7 +50,7 @@ module.exports = function makeTaskSweep(flight) {
 	// Enforce max fighter sweep route distance
 	maxRouteRange = Math.min(maxRouteRange, MAX_RANGE_DISTANCE);
 	
-	const maxRouteRangeSegment = Math.round(maxRouteRange / 3);
+	const maxRouteRangeSegment = Math.round(maxRouteRange / 4);
 	
 	// Find base two fighter sweep reference points
 	const points = findBasePoints.call(this, flight, {
@@ -89,8 +89,8 @@ module.exports = function makeTaskSweep(flight) {
 	const sweepPoints = [];
 	let ingressPoint, ingressVector;
 	let egressPoint, egressVector;
-	let routeRange = 0;
 	let rotateDirection = 1;
+	let sideRatio;
 	
 	// Step 1: Make base ingress/egress points
 	for (let location of rand.shuffle([points.a, points.b])) {
@@ -118,16 +118,20 @@ module.exports = function makeTaskSweep(flight) {
 		const minShiftDistance = 1000; // 1 km
 		const maxShiftDistance = 1500; // 1.5 km
 		const minFrontDistance = 4000; // 4 km
+		const minStartDistance = 10000; // 10 km
+		const maxStartDistance = Math.round(maxRouteRangeSegment * 0.5);
 		
 		// Find nearest front line following shift vector (from starting location)
 		while (shiftVector) {
 			
 			const locationVector = location.vector;
+			const startDistance = locationVector.distanceFrom(startVector);
+			const hasMinStartDistance = (startDistance >= minStartDistance);
 			const nearestFront = territories[territory.FRONT].findNear(location, 1);
 			
 			// Make sure ingress/egress point is some distance away from front lines
-			if (nearestFront.length &&
-				locationVector.distanceFrom(nearestFront[0].vector) < minFrontDistance) {
+			if (hasMinStartDistance && nearestFront.length &&
+				locationVector.distanceFrom(nearestFront[0].vector) <= minFrontDistance) {
 				
 				break;
 			}
@@ -139,9 +143,13 @@ module.exports = function makeTaskSweep(flight) {
 			
 			const posX = pointVector.e(1);
 			const posZ = pointVector.e(2);
+			const shiftTerritory = getTerritory(posX, posZ);
 			
-			// End shift when we reach front lines
-			if (getTerritory(posX, posZ) !== flight.coalition) {
+			// End shift when we reach front lines or max distance from start position
+			if (shiftTerritory === territory.UNKNOWN ||
+					(hasMinStartDistance && shiftTerritory !== flight.coalition) ||
+					(startDistance >= maxStartDistance)) {
+				
 				break;
 			}
 			
@@ -166,9 +174,6 @@ module.exports = function makeTaskSweep(flight) {
 			egressPoint = point;
 			egressVector = pointVector.toUnitVector();
 		}
-		
-		// Track total route range/distance
-		routeRange += pointVector.modulus();
 	}
 	
 	// Step 2: Make the middle (distance) point
@@ -178,10 +183,13 @@ module.exports = function makeTaskSweep(flight) {
 			ingressPoint[1] - startZ
 		]).toUnitVector();
 		
+		const maxDistance = Math.round(maxRouteRangeSegment * 1.5);
+		const minDistance = Math.round(maxRouteRangeSegment * 1.0);
+		
 		// Set random middle point distance (from the starting position)
 		pointVector = pointVector.multiply(rand.integer(
-			Math.round(maxRouteRangeSegment - routeRange / 2),
-			maxRouteRangeSegment
+			minDistance,
+			maxDistance
 		));
 		
 		// Translate middle point vector back to the world coordinate origin
@@ -200,8 +208,15 @@ module.exports = function makeTaskSweep(flight) {
 			startVector
 		);
 		
+		const point = makeValidPoint(pointVector, startVector);
+		const distance = Vector.create(point).distanceFrom(startVector);
+		
+		// Set side point ratio based on middle point distance
+		sideRatio = (distance - minDistance) / (maxDistance - minDistance);
+		sideRatio = 1 - Math.max(sideRatio, 0);
+		
 		// Register middle point
-		sweepPoints.push(makeValidPoint(pointVector, startVector));
+		sweepPoints.push(point);
 	}
 	
 	// Step 3: Make the fourth (side) point
@@ -239,7 +254,6 @@ module.exports = function makeTaskSweep(flight) {
 				originVector
 			);
 			
-			result.distance = sideVector.modulus();
 			result.directionVector = directionVector;
 			result.sideVector = sideVector = baseVector.add(sideVector);
 			
@@ -281,18 +295,17 @@ module.exports = function makeTaskSweep(flight) {
 		
 		const sideRotateMax = (Math.PI / 4); // 45 degrees
 		const sideRotate = rand.real(-(sideRotateMax / 2), sideRotateMax / 2, true);
+		const maxDistance = Math.round(maxRouteRangeSegment * 0.75);
+		const minDistance = Math.round(maxRouteRangeSegment * 0.25);
 		
 		// Make fourth side point
 		const pointVector = side.sideVector.add(side.directionVector
 			.rotate(sideRotate, originVector)
-			.multiply(side.distance * rand.real(0.5, 1.5, true))
+			.multiply(minDistance + ((maxDistance - minDistance) * sideRatio))
 		);
 		
 		sweepPoints.push(makeValidPoint(pointVector, side.sideVector));
 	}
-	
-	// Randomize middle and side point order (may produce intersecting pattern)
-	rand.shuffle(sweepPoints);
 	
 	// Register ingress/egress points
 	sweepPoints.unshift(ingressPoint);
@@ -309,15 +322,16 @@ module.exports = function makeTaskSweep(flight) {
 		
 		const options = Object.create(null);
 		
-		// Mark route as ingress
+		// Use solid ingress route line (when player is not flight leader)
 		if (point === ingressPoint) {
 			
-			options.ingress = true;
-			
-			// Hide ingress route when player is flight leader
-			if (isPlayerFlightLeader && !debugFlights) {
-				options.hidden = true;
+			if (!isPlayerFlightLeader || debugFlights) {
+				options.solid = true;
 			}
+		}
+		// Set waypoints to low priority (for sweep route only)
+		else {
+			options.priority = Item.MCU_Waypoint.PRIORITY_LOW;
 		}
 		
 		// Plan fighter sweep route for each point
@@ -334,7 +348,16 @@ module.exports = function makeTaskSweep(flight) {
 	}
 	
 	// Make final (back to the base) egress route
-	const spots =	makeFlightRoute.call(this, flight, egressPoint);
+	const spots =	makeFlightRoute.call(
+		this,
+		flight,
+		egressPoint,
+		null, // Use flight airfield
+		{
+			// Hide egress route when player is flight leader
+			hidden: (isPlayerFlightLeader && !debugFlights)
+		}
+	);
 	
 	if (spots && spots.length) {
 		route.push.apply(route, spots);

@@ -7,6 +7,6 @@
 	],
 	time: "day",
 	planes: {
-		fighter_light: "fighter"
+		fighter: "fighter"
 	}
 }

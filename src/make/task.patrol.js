@@ -22,7 +22,7 @@ const MAX_DISTANCE = 60000;
 const ZONE_PADDING = 2500;
 
 // Restricted zone around map area border (for player flight only)
-const RESTRICTED_BORDER = 12500; // 12.5 Km
+const RESTRICTED_BORDER = 15000; // 15 Km
 
 // Data constants
 const planAction = data.planAction;
@@ -224,9 +224,9 @@ module.exports = function makeTaskPatrol(flight) {
 		
 		const options = Object.create(null);
 		
-		// Mark route as ingress
+		// Use solid ingress route line
 		if (point === ingressPoint) {
-			options.ingress = true;
+			options.solid = true;
 		}
 		// Set route waypoints to low priority (for patrol area only)
 		else {

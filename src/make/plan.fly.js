@@ -29,7 +29,11 @@ module.exports = function makePlanFly(action, element, flight, input) {
 	const leaderPlaneItem = element[0].item;
 	let lastWaypoint = null;
 	
-	for (let spot of route) {
+	// Process each route spot
+	for (let i = 0; i < route.length; i++) {
+		
+		let spot = route[i];
+		const nextSpot = route[i + 1];
 		
 		// Support for special flight route loop pattern marker
 		if (Array.isArray(spot)) {
@@ -91,10 +95,13 @@ module.exports = function makePlanFly(action, element, flight, input) {
 			lastWaypoint = waypoint;
 		}
 		
+		const isNextSpotVisible = (nextSpot && !nextSpot.hidden);
+		
 		// Draw flight route on the map
-		if (drawIcons && !spot.hidden) {
+		// NOTE: Only draw icons for visible spots or when the next spot is visible
+		// (to allow route line connections).
+		if (drawIcons && (!spot.hidden || isNextSpotVisible)) {
 			
-			const isFinalSpot = (spot === route[route.length - 1]);
 			const lastSpotIcon = flight.lastSpotIcon || flight.startIcon;
 			let spotIcon;
 			
@@ -110,25 +117,24 @@ module.exports = function makePlanFly(action, element, flight, input) {
 				spotIcon.setPosition(spot.point);
 				spotIcon.Coalitions = [flight.coalition];
 				
-				if (!isFinalSpot) {
+				if (!spot.hidden && isNextSpotVisible) {
 					spotIcon.IconId = MCU_Icon.ICON_WAYPOINT;
 				}
+			}
+			
+			if (!spot.hidden) {
 				
-				if (spot.iconID !== undefined) {
-					spotIcon.IconId = spot.iconID;
+				lastSpotIcon.addTarget(spotIcon);
+				lastSpotIcon.setColor(mapColor.ROUTE);
+				
+				// Use solid line
+				if (spot.solid && !spot.icon) {
+					lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_3;
 				}
-			}
-			
-			lastSpotIcon.addTarget(spotIcon);
-			lastSpotIcon.setColor(mapColor.ROUTE);
-			
-			// Use normal solid line for ingress route
-			if (spot.ingress && !spot.icon) {
-				lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_3;
-			}
-			// Use dashed line for other routes
-			else {
-				lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_4;
+				// Use dashed line
+				else {
+					lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_4;
+				}
 			}
 			
 			flight.lastSpotIcon = spot.icon = spotIcon;
