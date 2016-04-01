@@ -4,7 +4,7 @@
 const data = require("../data");
 const log = require("../log");
 
-// TOOD: Move these constants to settings?
+// TODO: Move these constants to settings?
 const MAX_WIND_SPEED = 13; // Maximum wind speed (m/s)
 const MIN_WIND_SPEED = 0.25; // Minimum wind speed (m/s)
 const MAX_WIND_CHANGE = 30; // Maximum wind layer direction change (degrees)
@@ -14,6 +14,9 @@ const MAX_PRESSURE_CHANGE = 15; // Maximum atmospheric pressure change (mmHg)
 // Maximum cloud cover (%)
 // NOTE: Extra 10 points is a workaround to make full overcasts more common
 const MAX_CLOUD_COVER = 110;
+
+// Maximum wind speed allowed with mist weather effect
+const MIST_MAX_WIND_SPEED = 4;
 
 // Data constants
 const weatherState = data.weatherState;
@@ -30,15 +33,15 @@ const weatherPoints = {
 const weatherLimits = {
 	[weatherState.PERFECT]: {
 		clouds: 10, // Maximum cloud cover (%)
-		winds: 3 // Maximum wind speed (m/s)
+		winds: 2 // Maximum wind speed (m/s)
 	},
 	[weatherState.GOOD]: {
 		clouds: 40,
-		winds: 5
+		winds: 4
 	},
 	[weatherState.BAD]: {
 		clouds: 99,
-		winds: 7
+		winds: 6
 	},
 	[weatherState.EXTREME]: {
 		clouds: MAX_CLOUD_COVER,
@@ -120,10 +123,11 @@ module.exports = function makeWeather() {
 
 	// Make weather parts
 	makeTemperature.call(this, weather);
-	makeClouds.call(this, weather);
-	makePrecipitation.call(this, weather);
 	makeWind.call(this, weather);
 	makeTurbulence.call(this, weather);
+	makeMist.call(this, weather);
+	makeClouds.call(this, weather);
+	makePrecipitation.call(this, weather);
 	makeSea.call(this, weather);
 	makePressure.call(this, weather);
 
@@ -147,6 +151,11 @@ module.exports = function makeWeather() {
 	else if (this.weather.precipitation.type === precipitation.SNOW) {
 		logData.push("snow");
 	}
+	
+	// Log mist state
+	if (this.weather.mist) {
+		logData.push("mist");
+	}
 
 	// Log other weather info
 	logData.push({
@@ -159,6 +168,26 @@ module.exports = function makeWeather() {
 	log.I.apply(log, logData);
 };
 
+// Make mission mist state
+function makeMist(weather) {
+	
+	const rand = this.rand;
+	const time = this.time;
+	const windSpeed = this.weather.wind[0].speed;
+	
+	let hasMist = false;
+	
+	// Use mist weather effect based on time and wind speed
+	// TODO: Improve mist algorithm!
+	if ((time.dusk || time.night || time.dawn || time.sunrise) &&
+		windSpeed <= MIST_MAX_WIND_SPEED) {
+		
+		hasMist = rand.bool(0.75); // 75%
+	}
+	
+	this.weather.mist = hasMist;
+}
+
 // Make mission clouds
 function makeClouds(weather) {
 
@@ -168,7 +197,7 @@ function makeClouds(weather) {
 	const maxCover = weatherLimits[this.weather.state].clouds;
 	const requiredCover = maxCover * (points / weatherPoints.CLOUDS);
 	const clouds = Object.keys(data.clouds);
-
+	
 	// Sort cloud configs based on cover
 	rand.shuffle(clouds).sort((a, b) => {
 		return data.clouds[b].cover - data.clouds[a].cover;
@@ -176,10 +205,14 @@ function makeClouds(weather) {
 
 	let config;
 
-	// Use first config matching (closest to) required cloud cover
+	// Use first config matching (closest to) required cloud cover (and mist state)
 	for (config of clouds) {
+		
+		const cloudConfig = data.clouds[config];
 
-		if (data.clouds[config].cover <= requiredCover) {
+		if (cloudConfig.cover <= requiredCover &&
+			cloudConfig.mist === this.weather.mist) {
+			
 			break;
 		}
 	}

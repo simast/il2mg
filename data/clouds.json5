@@ -3,259 +3,309 @@
 	"00_clear_00\\sky.ini": {
 		altitude: 500, // Start altitude of cloud base layer
 		thickness: 200, // Cloud layer thickness
-		cover: 0 // Percentage of sky covered with clouds
+		cover: 0, // Percentage of sky covered with clouds
+		mist: false // Mist state
 	},
 	"00_clear_01\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: true
 	},
 	"00_clear_02\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: false
 	},
 	"00_clear_03\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: true
 	},
 	"00_clear_04\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: false
 	},
 	"00_clear_05\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: true
 	},
 	"00_clear_06\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: false
 	},
 	"00_clear_07\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: true
 	},
 	"00_clear_08\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: false
 	},
 	"00_clear_09\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 0
+		cover: 0,
+		mist: true
 	},
 
 	// Light
 	"01_Light_00\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 4
+		cover: 4,
+		mist: false
 	},
 	"01_Light_01\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 7
+		cover: 7,
+		mist: true
 	},
 	"01_Light_02\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 4
+		cover: 4,
+		mist: false
 	},
 	"01_Light_03\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 5
+		cover: 5,
+		mist: true
 	},
 	"01_Light_04\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 8
+		cover: 8,
+		mist: false
 	},
 	"01_Light_05\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 6
+		cover: 6,
+		mist: true
 	},
 	"01_Light_06\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 18
+		cover: 18,
+		mist: false
 	},
 	"01_Light_07\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 12
+		cover: 12,
+		mist: true
 	},
 	"01_Light_08\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 9
+		cover: 9,
+		mist: false
 	},
 	"01_Light_09\\sky.ini": {
 		altitude: 700,
 		thickness: 600,
-		cover: 2
+		cover: 2,
+		mist: true
 	},
 
 	// Medium
 	"02_Medium_00\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 23
+		cover: 23,
+		mist: false
 	},
 	"02_Medium_01\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 29
+		cover: 29,
+		mist: true
 	},
 	"02_Medium_02\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 32
+		cover: 32,
+		mist: false
 	},
 	"02_Medium_03\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 21
+		cover: 21,
+		mist: true
 	},
 	"02_Medium_04\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 32
+		cover: 32,
+		mist: false
 	},
 	"02_Medium_05\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 38
+		cover: 38,
+		mist: true
 	},
 	"02_Medium_06\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 34
+		cover: 34,
+		mist: false
 	},
 	"02_Medium_07\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 34
+		cover: 34,
+		mist: true
 	},
 	 "02_Medium_08\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 40
+		cover: 40,
+		mist: false
 	},
 	"02_Medium_09\\sky.ini": {
 		altitude: 600,
 		thickness: 900,
-		cover: 54
+		cover: 54,
+		mist: true
 	},
 
 	// Heavy
 	"03_Heavy_00\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 75
+		cover: 75,
+		mist: false
 	},
 	"03_Heavy_01\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 74
+		cover: 74,
+		mist: true
 	},
 	"03_Heavy_02\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 80
+		cover: 80,
+		mist: false
 	},
 	"03_Heavy_03\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 54
+		cover: 54,
+		mist: true
 	},
 	"03_Heavy_04\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 79
+		cover: 79,
+		mist: false
 	},
 	"03_Heavy_05\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 84
+		cover: 84,
+		mist: true
 	},
 	"03_Heavy_06\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 72
+		cover: 72,
+		mist: false
 	},
 	"03_Heavy_07\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 95
+		cover: 95,
+		mist: true
 	},
 	"03_Heavy_08\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 69
+		cover: 69,
+		mist: false
 	},
 	"03_Heavy_09\\sky.ini": {
 		altitude: 800,
 		thickness: 900,
-		cover: 70
+		cover: 70,
+		mist: true
 	},
 
 	// Overcast
 	"04_Overcast_00\\sky.ini": {
 		altitude: 500,
 		thickness: 200,
-		cover: 100
+		cover: 100,
+		mist: false
 	},
 	"04_Overcast_01\\sky.ini": {
 		altitude: 500,
 		thickness: 300,
-		cover: 100
+		cover: 100,
+		mist: true
 	},
 	"04_Overcast_02\\sky.ini": {
 		altitude: 500,
 		thickness: 300,
-		cover: 100
+		cover: 100,
+		mist: false
 	},
 	"04_Overcast_03\\sky.ini": {
 		altitude: 500,
 		thickness: 300,
-		cover: 100
+		cover: 100,
+		mist: true
 	},
 	"04_Overcast_04\\sky.ini": {
 		altitude: 500,
 		thickness: 400,
-		cover: 100
+		cover: 100,
+		mist: false
 	},
 	"04_Overcast_05\\sky.ini": {
 		altitude: 500,
 		thickness: 400,
-		cover: 100
+		cover: 100,
+		mist: true
 	},
 	"04_Overcast_06\\sky.ini": {
 		altitude: 500,
 		thickness: 500,
-		cover: 100
+		cover: 100,
+		mist: false
 	},
 	"04_Overcast_07\\sky.ini": {
 		altitude: 500,
 		thickness: 500,
-		cover: 100
+		cover: 100,
+		mist: true
 	},
 	"04_Overcast_08\\sky.ini": {
 		altitude: 500,
 		thickness: 600,
-		cover: 100
+		cover: 100,
+		mist: false
 	},
 	"04_Overcast_09\\sky.ini": {
 		altitude: 500,
 		thickness: 700,
-		cover: 100
+		cover: 100,
+		mist: true
 	}
 }
