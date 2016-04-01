@@ -5,26 +5,23 @@
 		name: "Bf 110",
 		type: ["fighter", "fighter_heavy"],
 		size: "large",
-		// NOTE: Static Bf 110 models are not available, using Bf 109 as a workaround
 		static: [
 			{
-				model: "graphics\\blocks\\static_bf109.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109.txt"
+				model: "graphics\\blocks\\static_bf110e2.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf110e2.txt"
 			},
 			{
-				model: "graphics\\blocks\\static_bf109_open.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109_open.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_bf109_net.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
-				camo: true
+				model: "graphics\\blocks\\static_bf110e2_open.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf110e2_open.txt"
 			}
 		]
 	},
 	
+	// Bf 110 C-5
+	"bf110c5": "bf110e2",
+	
 	// Bf 110 D-3
-	"bf110d3": null,
+	"bf110d3": "bf110e2",
 	
 	// Bf 110 E
 	"bf110e": {
@@ -37,23 +34,23 @@
 		name: "Bf 110 E-2",
 		parent: "bf110e",
 		model: "graphics\\planes\\bf110e2\\bf110e2.mgm",
-		script: "luascripts\\worldobjects\\planes\\bf110e2.txt"
+		script: "luascripts\\worldobjects\\planes\\bf110e2.txt",
+		speed: 385,
+		range: 850
 	},
 	
 	// Bf 110 E-3
-	"bf110e3": {
-		name: "Bf 110 E-3",
-		parent: "bf110e2",
-		model: "graphics\\planes\\bf110e2\\bf110e2.mgm",
-		script: "luascripts\\worldobjects\\planes\\bf110e2.txt"
-	},
+	"bf110e3": "bf110e2",
+	
+	// Bf 110 F-2
+	"bf110f2": "bf110e2",
 	
 	// Bf 110 F-3
-	"bf110f3": null,
+	"bf110f3": "bf110e2",
 	
 	// Bf 110 F-4
-	"bf110f4": null,
+	"bf110f4": "bf110e2",
 
 	// Bf 110 G-3
-	"bf110g3": null
+	"bf110g3": "bf110e2"
 }

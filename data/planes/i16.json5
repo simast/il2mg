@@ -6,23 +6,14 @@
 		alias: "Ishak",
 		type: ["fighter", "fighter_light"],
 		size: "small",
-		// NOTE: Static I-16 models are not available, using LaGG-3 as a workaround
 		static: [
 			{
-				model: "graphics\\blocks\\static_lagg3.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_lagg3.txt"
+				model: "graphics\\blocks\\static_i16.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_i16.txt"
 			},
 			{
-				model: "graphics\\blocks\\static_lagg3_w1.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_lagg3_w1.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_lagg3_w2.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_lagg3_w2.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_lagg3_net.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
+				model: "graphics\\blocks\\static_i16_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_i16_net.txt",
 				camo: true
 			}
 		]

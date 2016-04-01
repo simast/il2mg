@@ -37,7 +37,22 @@
 		// Base cruising speed as measured at 0°C temperature and ~1.5 km altitude
 		speed: 400,
 		// Max range at cruising speed (km)
-		range: 730
+		range: 730,
+		static: [
+			{
+				model: "graphics\\blocks\\static_bf109e7.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109e7.txt"
+			},
+			{
+				model: "graphics\\blocks\\static_bf109e7_net.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109e7_net.mgm",
+				camo: true
+			},
+			{
+				model: "graphics\\blocks\\static_bf109e7_open.mgm",
+				script: "luascripts\\worldobjects\\blocks\\static_bf109e7_open.mgm"
+			}
+		]
 	},
 	
 	// Bf 109 F

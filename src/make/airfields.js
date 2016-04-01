@@ -8,6 +8,7 @@ const Item = require("../item");
 // Data constants
 const itemTag = data.itemTag;
 const planeSize = data.planeSize;
+const flightState = data.flightState;
 
 // Airfield make parts
 const makeAirfieldLimits = require("./airfield.limits");
@@ -430,7 +431,9 @@ module.exports = function makeAirfields() {
 	// parking spots of the planes. The code below makes sure to enable the remaining
 	// taxi routes for all active airfields that were not activated by flights.
 	mission.make.push(() => {
-
+		
+		const playerFlight = this.player.flight;
+		
 		for (const airfield of airfieldsTaxi) {
 			
 			// Choose taxi routes randomly
@@ -442,6 +445,17 @@ module.exports = function makeAirfields() {
 				
 				// Enable one random taxi route for each runway
 				if (!airfield.activeTaxiRoutes || !airfield.activeTaxiRoutes[taxiRunwayID]) {
+					
+					// FIXME: Nearest airfield item is used with takeoff command and this
+					// could result in wrong taxi route being activated when player flight
+					// is starting from runway and not from parking spot. An ideal fix
+					// would be to move player created airfield taxi route to the runway.
+					if (airfield.id === playerFlight.airfield &&
+							playerFlight.state === flightState.RUNWAY) {
+						
+						break;
+					}
+					
 					makeAirfieldTaxi.call(mission, airfield, +taxiRouteID);
 				}
 			}
