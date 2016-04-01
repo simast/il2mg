@@ -6,10 +6,7 @@
 		countries: [201],
 		model: "graphics\\vehicles\\opel\\opel-blitz.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\opel-blitz.txt",
-		static: {
-			model: "graphics\\blocks\\static_opel.mgm",
-			script: "luascripts\\worldobjects\\blocks\\static_opel.txt"
-		}
+		static: "static_opel"
 	},
 	{
 		name: "ZIS-5",
@@ -17,10 +14,7 @@
 		countries: [101],
 		model: "graphics\\vehicles\\zis5\\zis5.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\zis5.txt",
-		static: {
-			model: "graphics\\blocks\\static_zis.mgm",
-			script: "luascripts\\worldobjects\\blocks\\static_zis.txt"
-		}
+		static: "static_zis"
 	},
 	{
 		name: "Ford G917T",
@@ -40,19 +34,13 @@
 		name: "Opel Blitz (Fuel)",
 		type: ["truck", "truck_fuel"],
 		countries: [201],
-		static: {
-			model: "graphics\\blocks\\static_opel_fuel.mgm",
-			script: "luascripts\\worldobjects\\blocks\\static_opel_fuel.txt"
-		}
+		static: "static_opel_fuel"
 	},
 	{
 		name: "ZIS-5 (Fuel)",
 		type: ["truck", "truck_fuel"],
 		countries: [101],
-		static: {
-			model: "graphics\\blocks\\static_zis_fuel.mgm",
-			script: "luascripts\\worldobjects\\blocks\\static_zis_fuel.txt"
-		}
+		static: "static_zis_fuel"
 	},
 
 	// Anti-aircraft (Flak)

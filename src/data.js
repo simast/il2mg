@@ -2,6 +2,7 @@
 "use strict";
 
 const fs = require("fs");
+const path = require("path");
 const requireDir = require("require-directory");
 const moment = require("moment");
 
@@ -167,15 +168,17 @@ data.briefingColor = Object.freeze({
 		requireDir.defaults.extensions.push("json5");
 	}
 	
-	data.items = {
-		items: [],
-		index: {}
-	};
-	
 	try {
-		data.items = Object.freeze(require("../data/items"));
+		data.items = require("../data/items");
 	}
-	catch (e) {}
+	catch (e) {
+		
+		// Initialize items data
+		data.items = {
+			list: [],
+			index: {}
+		};
+	}
 
 	data.vehicles = Object.freeze(require("../data/vehicles"));
 	data.clouds = Object.freeze(require("../data/clouds"));
@@ -271,64 +274,89 @@ data.registerItemType = function(item) {
 		throw new TypeError("Invalid item data.");
 	}
 
-	// Initialize items data
-	if (typeof this.items !== "object") {
-
-		this.items = {
-			items: [],
-			index: {}
-		};
-	}
-
-	const items = this.items.items;
+	const list = this.items.list;
 	const index = this.items.index;
 
 	// Lowercase and trim script/model paths
 	item.script = item.script.trim().toLowerCase();
 	item.model = item.model.trim().toLowerCase();
+	
+	// Item type ID as a string (lowercase file name without extension)
+	const stringTypeID = path.win32.basename(item.script, ".txt");
 
 	// Try to find existing item type ID by script index
-	let itemTypeID = index[item.script];
+	let numberTypeID = index[stringTypeID];
 
 	// Update existing item type data
-	if (itemTypeID !== undefined) {
+	if (numberTypeID !== undefined) {
 
-		items[itemTypeID].type = item.type;
-		items[itemTypeID].script = item.script;
-		items[itemTypeID].model = item.model;
+		list[numberTypeID].type = item.type;
+		list[numberTypeID].script = item.script;
+		list[numberTypeID].model = item.model;
 	}
 	// Add new item type
 	else {
 
-		itemTypeID = items.push(item) - 1;
+		numberTypeID = list.push(item) - 1;
 
-		// Create script index
-		index[item.script] = itemTypeID;
+		// Create string ID index
+		index[stringTypeID] = numberTypeID;
 	}
 
-	return itemTypeID;
+	return numberTypeID;
 };
 
 /**
  * Get item (world object) type data.
  *
- * @param {number|string} itemTypeID Item type ID or script name.
+ * @param {number|string} itemTypeID Item type ID as numeric or string value.
  * @returns {object} Item type data.
  */
 data.getItemType = function(itemTypeID) {
+	
+	const items = this.items;
+	let stringTypeID;
 
-	// Look up item type ID by script name
+	// Look up item type data by string ID
 	if (typeof itemTypeID === "string") {
-		itemTypeID = this.items.index[itemTypeID.trim().toLowerCase()];
+		
+		stringTypeID = itemTypeID;
+		itemTypeID = items.index[stringTypeID];
+		
+		// Register new empty item type
+		if (itemTypeID === undefined) {
+			itemTypeID = items.index[stringTypeID] = items.list.push({}) - 1;
+		}
 	}
 
-	const itemType = this.items.items[itemTypeID];
+	const item = items.list[itemTypeID];
 
-	if (typeof itemType !== "object") {
+	if (!item) {
 		throw new TypeError("Invalid item type ID.");
 	}
+	
+	// Initialize item extra/meta data cache
+	if (!items.meta) {
+		items.meta = new WeakSet();
+	}
+	
+	// Load item meta data
+	if (!items.meta.has(item)) {
+		
+		// Get string item type ID for meta file lookup
+		if (!stringTypeID) {
+			stringTypeID = path.win32.basename(item.script, ".txt");
+		}
+		
+		try {
+			Object.assign(item, require("../data/items/" + stringTypeID));
+		}
+		catch (e) {}
+		
+		items.meta.add(item);
+	}
 
-	return itemType;
+	return item;
 };
 
 /**

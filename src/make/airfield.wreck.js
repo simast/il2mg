@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const data = require("../data");
 const Item = require("../item");
 
 // Make airfield wreck item
@@ -100,17 +101,15 @@ function getWreckItems(mission) {
 			const staticVehiclesByType = staticVehiclesByCountry[vehicleType];
 
 			for (const vehicle of staticVehiclesByType) {
+				
+				const staticVehicle = data.getItemType(vehicle.static);
 
-				if (foundStatics[vehicle.static.script]) {
+				if (foundStatics[staticVehicle.script]) {
 					continue;
 				}
 
-				wreckItems.vehicles.push({
-					script: vehicle.static.script,
-					model: vehicle.static.model
-				});
-
-				foundStatics[vehicle.static.script] = true;
+				wreckItems.vehicles.push(staticVehicle);
+				foundStatics[staticVehicle.script] = true;
 			}
 		}
 	}

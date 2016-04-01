@@ -476,7 +476,7 @@ module.exports = function(grunt) {
 
 		// Write items type JSON data file
 		grunt.file.write(
-			"data/items.json",
+			"data/items/index.json",
 			JSON.stringify(data.items, null, "\t")
 		);
 

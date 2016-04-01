@@ -6,12 +6,7 @@
 		alias: "Tante Ju",
 		type: ["transport"],
 		size: "large",
-		static: [
-			{
-				model: "graphics\\blocks\\static_ju52.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_ju52.txt"
-			}
-		]
+		static: ["static_ju52"]
 	},
 
 	// Ju 52/3mg4e

@@ -6,19 +6,9 @@
 		type: ["fighter", "fighter_light"],
 		size: "small",
 		static: [
-			{
-				model: "graphics\\blocks\\static_bf109.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_bf109_open.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109_open.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_bf109_net.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109_net.txt",
-				camo: true
-			}
+			"static_bf109",
+			"static_bf109_open",
+			"static_bf109_net"
 		]
 	},
 	
@@ -34,25 +24,13 @@
 		parent: "bf109e",
 		model: "graphics\\planes\\bf109e7\\bf109e7.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109e7.txt",
-		// Base cruising speed as measured at 0°C temperature and ~1.5 km altitude
-		speed: 400,
-		// Max range at cruising speed (km)
-		range: 730,
 		static: [
-			{
-				model: "graphics\\blocks\\static_bf109e7.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109e7.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_bf109e7_net.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109e7_net.mgm",
-				camo: true
-			},
-			{
-				model: "graphics\\blocks\\static_bf109e7_open.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf109e7_open.mgm"
-			}
-		]
+			"static_bf109e7",
+			"static_bf109e7_net",
+			"static_bf109e7_open"
+		],
+		speed: 400, // Cruising speed at 0°C temperature and ~1.5 km altitude
+		range: 730 // Max range at cruising speed (km)
 	},
 	
 	// Bf 109 F

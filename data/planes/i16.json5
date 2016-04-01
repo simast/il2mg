@@ -7,15 +7,8 @@
 		type: ["fighter", "fighter_light"],
 		size: "small",
 		static: [
-			{
-				model: "graphics\\blocks\\static_i16.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_i16.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_i16_net.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_i16_net.txt",
-				camo: true
-			}
+			"static_i16",
+			"static_i16_net"
 		]
 	},
 

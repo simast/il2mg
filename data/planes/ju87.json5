@@ -7,19 +7,9 @@
 		type: ["ground_attack", "dive_bomber"],
 		size: "medium",
 		static: [
-			{
-				model: "graphics\\blocks\\static_ju87.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_ju87.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_ju87_open.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_ju87_open.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_ju87_net.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_ju87_net.txt",
-				camo: true
-			}
+			"static_ju87",
+			"static_ju87_open",
+			"static_ju87_net"
 		]
 	},
 

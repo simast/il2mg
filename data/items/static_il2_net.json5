@@ -1,0 +1,7 @@
+{
+	type: "Block",
+	script: "luascripts\\worldobjects\\blocks\\static_il2_net.txt",
+	model: "graphics\\blocks\\static_il2_net.mgm",
+	durability: 2000,
+	camo: true
+}

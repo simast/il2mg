@@ -6,19 +6,9 @@
 		type: ["dive_bomber", "level_bomber"],
 		size: "large",
 		static: [
-			{
-				model: "graphics\\blocks\\static_ju88.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_ju88.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_ju88_net.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_ju88_net.txt",
-				camo: true
-			},
-			{
-				model: "graphics\\blocks\\static_ju88_open.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_ju88_open.txt"
-			}
+			"static_ju88",
+			"static_ju88_net",
+			"static_ju88_open"
 		]
 	},
 

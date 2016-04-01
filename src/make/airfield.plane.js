@@ -5,7 +5,6 @@ const data = require("../data");
 
 // Data constants
 const itemFlag = data.itemFlag;
-const planeSize = data.planeSize;
 
 // Make airfield plane item
 module.exports = function makeAirfieldPlane(airfield, item) {
@@ -87,7 +86,6 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	const plane = this.planes[planeData[0]];
 	const planeItemsByUnit = airfield.planeItemsByUnit;
 	const staticPlanes = rand.shuffle(plane.static || []);
-	const planeSizeID = planeSize[String(plane.size).toUpperCase()];
 	let planeStatic;
 	let isCamo = (item[8] === itemFlag.PLANE_CAMO);
 
@@ -97,7 +95,9 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	}
 
 	// Find static plane model
-	for (const staticPlane of staticPlanes) {
+	for (const staticPlaneID of staticPlanes) {
+		
+		const staticPlane = data.getItemType(staticPlaneID);
 
 		if ((staticPlane.camo && !isCamo) || (isCamo && !staticPlane.camo)) {
 			continue;
@@ -113,7 +113,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	}
 
 	// Create static plane item
-	const planeItem = this.createItem("Block", false);
+	const planeItem = this.createItem(planeStatic.type, false);
 	
 	let positionX = item[1];
 	let positionY = item[2];
@@ -148,7 +148,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	orientation = Math.max((orientation + 360) % 360, 0);
 
 	planeItem.Country = planeData[1];
-	planeItem.Durability = 500 + (planeSizeID * 1000);
+	planeItem.Durability = planeStatic.durability;
 	planeItem.Model = planeStatic.model;
 	planeItem.Script = planeStatic.script;
 	planeItem.setPosition(positionX, positionY, positionZ);

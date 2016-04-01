@@ -4,17 +4,7 @@
 		manufacturer: "Messerschmitt",
 		name: "Bf 110",
 		type: ["fighter", "fighter_heavy"],
-		size: "large",
-		static: [
-			{
-				model: "graphics\\blocks\\static_bf110e2.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf110e2.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_bf110e2_open.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_bf110e2_open.txt"
-			}
-		]
+		size: "large"
 	},
 	
 	// Bf 110 C-5
@@ -35,6 +25,10 @@
 		parent: "bf110e",
 		model: "graphics\\planes\\bf110e2\\bf110e2.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf110e2.txt",
+		static: [
+			"static_bf110e2",
+			"static_bf110e2_open"
+		],
 		speed: 385,
 		range: 850
 	},

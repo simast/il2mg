@@ -6,23 +6,10 @@
 		type: ["fighter", "fighter_light"],
 		size: "small",
 		static: [
-			{
-				model: "graphics\\blocks\\static_lagg3.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_lagg3.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_lagg3_w1.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_lagg3_w1.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_lagg3_w2.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_lagg3_w2.txt"
-			},
-			{
-				model: "graphics\\blocks\\static_lagg3_net.mgm",
-				script: "luascripts\\worldobjects\\blocks\\static_lagg3_net.txt",
-				camo: true
-			}
+			"static_lagg3",
+			"static_lagg3_w1",
+			"static_lagg3_w2",
+			"static_lagg3_net"
 		]
 	},
 

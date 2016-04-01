@@ -92,16 +92,22 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 		return;
 	}
 
-	const vehicle = rand.pick(vehicles[countryID][vehicleType]);
+	let vehicle = rand.pick(vehicles[countryID][vehicleType]);
 
-	if (isStatic && !vehicle.static) {
-		return;
+	if (isStatic) {
+		
+		if (!vehicle.static) {
+			return;
+		}
+		
+		// Use vehicle data from static block item
+		vehicle = data.getItemType(vehicle.static);
 	}
 	
 	let itemType = "Vehicle";
 	
 	if (isStatic) {
-		itemType = "Block";
+		itemType = vehicle.type;
 	}
 	else if (isTrain) {
 		itemType = "Train";
@@ -125,13 +131,13 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	const orientation = Math.max((item[4] + rand.real(-20, 20) + 360) % 360, 0);
 
 	vehicleItem.Country = countryID;
-	vehicleItem.Model = isStatic ? vehicle.static.model : vehicle.model;
-	vehicleItem.Script = isStatic ? vehicle.static.script : vehicle.script;
+	vehicleItem.Model = vehicle.model;
+	vehicleItem.Script = vehicle.script;
 	vehicleItem.setPosition(positionX, positionY, positionZ);
 	vehicleItem.setOrientation(orientation);
 
 	if (isStatic) {
-		vehicleItem.Durability = 1500;
+		vehicleItem.Durability = vehicle.durability;
 	}
 	else {
 

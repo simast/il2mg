@@ -1,0 +1,6 @@
+{
+	type: "Block",
+	script: "luascripts\\worldobjects\\blocks\\static_bf109.txt",
+	model: "graphics\\blocks\\static_bf109.mgm",
+	durability: 1500
+}
