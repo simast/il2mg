@@ -24,11 +24,8 @@ module.exports = function makeBlocks() {
 		for (let i = 0; i < blocks.length; i++) {
 
 			const blockItem = blocks[i];
-			const itemType = data.getItemType(blockItem[0]);
-			const block = blocksGroup.createItem(itemType.type);
-
-			block.Model = itemType.model;
-			block.Script = itemType.script;
+			const block = blocksGroup.createItem(data.getItemType(blockItem[0]));
+			
 			block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
 			block.setOrientation(blockItem[4]);
 

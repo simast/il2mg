@@ -196,10 +196,19 @@ class Mission {
 	/**
 	 * Create a new mission item.
 	 *
-	 * @param {string} itemType Item type name.
+	 * @param {string|object} itemType Item type as an object or name.
 	 * @param {mixed} [parent] Add to the mission (true) or parent item (object).
 	 */
 	createItem(itemType, parent) {
+		
+		let itemData;
+		
+		// Item type as an object with meta data
+		if (typeof itemType === "object") {
+			
+			itemData = itemType;
+			itemType = itemData.type;
+		}
 
 		if (!Item[itemType]) {
 			throw new TypeError("Invalid item type value.");
@@ -225,6 +234,22 @@ class Mission {
 		Object.defineProperty(item, "mission", {
 			value: this
 		});
+		
+		// Set common item data
+		if (itemData) {
+			
+			if (itemData.model) {
+				item.Model = itemData.model;
+			}
+			
+			if (itemData.script) {
+				item.Script = itemData.script;
+			}
+			
+			if (itemData.durability) {
+				item.Durability = itemData.durability;
+			}
+		}
 
 		// Add item to parent item object
 		if (parent) {

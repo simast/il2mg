@@ -2,5 +2,6 @@
 	type: "Block",
 	script: "luascripts\\worldobjects\\blocks\\static_pe2_open.txt",
 	model: "graphics\\blocks\\static_pe2_open.mgm",
-	durability: 2500
+	durability: 2500,
+	damage: [0]
 }

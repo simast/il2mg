@@ -107,7 +107,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	let itemType = "Vehicle";
 	
 	if (isStatic) {
-		itemType = vehicle.type;
+		itemType = vehicle;
 	}
 	else if (isTrain) {
 		itemType = "Train";
@@ -131,16 +131,13 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	const orientation = Math.max((item[4] + rand.real(-20, 20) + 360) % 360, 0);
 
 	vehicleItem.Country = countryID;
-	vehicleItem.Model = vehicle.model;
-	vehicleItem.Script = vehicle.script;
 	vehicleItem.setPosition(positionX, positionY, positionZ);
 	vehicleItem.setOrientation(orientation);
+	
+	if (!isStatic) {
 
-	if (isStatic) {
-		vehicleItem.Durability = vehicle.durability;
-	}
-	else {
-
+		vehicleItem.Model = vehicle.model;
+		vehicleItem.Script = vehicle.script;
 		vehicleItem.setName(vehicle.name);
 		vehicleItem.createEntity(true);
 		

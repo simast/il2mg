@@ -7,8 +7,6 @@ const MCU_CMD_Effect = require("../item").MCU_CMD_Effect;
 // Data constants
 const itemTag = data.itemTag;
 const itemFlag = data.itemFlag;
-const effects = data.effects;
-const grounds = data.grounds;
 const precipitation = data.precipitation;
 
 // Make airfield effect item
@@ -18,10 +16,10 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 		return;
 	}
 
-	const effectType = item[4];
+	const effect = item[4];
 
 	// Enforce airfield limits
-	if (airfield.limits.effects[effectType] <= 0) {
+	if (airfield.limits.effects[effect] <= 0) {
 		return;
 	}
 
@@ -32,21 +30,21 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 	const isDark = (time.evening || time.night || time.dawn);
 	const items = [];
 	
-	let effectScript;
+	let effectType;
 	let startOnLoad = true;
 
 	// House smoke
-	if (effectType === itemFlag.EFFECT_SMOKE) {
+	if (effect === itemFlag.EFFECT_SMOKE) {
 
 		// 50% chance for smoke when raining
 		if (!isRaining || (isRaining && rand.bool(0.5))) {
-			effectScript = effects.house_smoke.script;
+			effectType = "house_smoke";
 		}
 	}
 	// Campfire
-	else if (effectType === itemFlag.EFFECT_CAMP) {
+	else if (effect === itemFlag.EFFECT_CAMP) {
 
-		effectScript = effects.landfire.script;
+		effectType = "landfire";
 
 		// When raining/dark or 75% chance - the campfire has no fire (but smoke)
 		if (isRaining || isDark || rand.bool(0.75)) {
@@ -73,11 +71,10 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 			// Make the campfire effect look more like a small fire rather than a huge
 			// landing fire by slightly lowering the effect item to the ground.
 			item[2] = campfirePosY - 0.18; // -18 cm
-
+			
 			// Create a small burned/melted ground effect (crater) underneath the campfire
-			const campfireGround = this.createItem("Ground", false);
-
-			campfireGround.Model = grounds.crater_16.model;
+			const campfireGround = this.createItem(data.getItemType("crater_16"), false);
+			
 			campfireGround.setPosition(item[1], campfirePosY - 0.28, item[3]);
 			campfireGround.setOrientation(rand.real(0, 360));
 
@@ -85,24 +82,23 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 		}
 	}
 	// Siren
-	else if (effectType === itemFlag.EFFECT_SIREN) {
+	else if (effect === itemFlag.EFFECT_SIREN) {
 
-		effectScript = effects.siren.script;
+		effectType = "siren";
 		startOnLoad = false;
 	}
 
 	// TODO: Add support for EFFECT:LAND
 	// TODO: Add support for EFFECT:SIREN
 
-	if (!effectScript) {
+	if (!effectType) {
 		return;
 	}
 
-	const effectItem = this.createItem("Effect", false);
+	const effectItem = this.createItem(data.getItemType(effectType), false);
 
 	effectItem.setPosition(item[1], item[2], item[3]);
 	effectItem.setOrientation(rand.real(0, 360));
-	effectItem.Script = effectScript;
 	effectItem.createEntity(true);
 	
 	// Attach effect to airfield "bubble" zone
@@ -134,8 +130,8 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 	items.push(effectItem);
 
 	// Update airfield limits
-	if (airfield.limits.effects[effectType]) {
-		airfield.limits.effects[effectType]--;
+	if (airfield.limits.effects[effect]) {
+		airfield.limits.effects[effect]--;
 	}
 
 	return items;

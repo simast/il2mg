@@ -9,12 +9,9 @@ module.exports = function makeAirfieldWindsock(airfield, item) {
 	if (!airfield.country) {
 		return;
 	}
-
-	const itemType = data.getItemType(item[5]);
-	const windsockItem = this.createItem(itemType.type, false);
-
-	windsockItem.Model = itemType.model;
-	windsockItem.Script = itemType.script;
+	
+	const windsockItem = this.createItem(data.getItemType(item[5]), false);
+	
 	windsockItem.setPosition(item[1], item[2], item[3]);
 	windsockItem.setOrientation(item[4]);
 	windsockItem.StartHeight = 1;

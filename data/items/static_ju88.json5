@@ -2,5 +2,7 @@
 	type: "Block",
 	script: "luascripts\\worldobjects\\blocks\\static_ju88.txt",
 	model: "graphics\\blocks\\static_ju88.mgm",
-	durability: 3000
+	durability: 3000,
+	damage: [0, 1],
+	wreck: true
 }

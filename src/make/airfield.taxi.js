@@ -30,8 +30,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	if (activeTaxiRoutes[runwayID] !== undefined) {
 		return (activeTaxiRoutes[runwayID] === taxiRouteID);
 	}
-
-	const itemType = data.getItemType(taxiRoute[0]);
+	
 	const isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV);
 	const basePoint = taxiRoute[3];
 	
@@ -60,10 +59,8 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	}
 
 	// Create airfield item
-	const airfieldItem = airfield.group.createItem(itemType.type);
-
-	airfieldItem.Model = itemType.model;
-	airfieldItem.Script = itemType.script;
+	const airfieldItem = airfield.group.createItem(data.getItemType(taxiRoute[0]));
+	
 	airfieldItem.setPosition(basePoint[0], airfield.position[1], basePoint[1]);
 	airfieldItem.setOrientation(basePoint[2]);
 	airfieldItem.Country = airfield.country;

@@ -9,12 +9,9 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 	if (!airfield.country) {
 		return;
 	}
-
-	const itemType = data.getItemType(item[5]);
-	const beaconItem = this.createItem(itemType.type, false);
-
-	beaconItem.Model = itemType.model;
-	beaconItem.Script = itemType.script;
+	
+	const beaconItem = this.createItem(data.getItemType(item[5]), false);
+	
 	beaconItem.setPosition(item[1], item[2], item[3]);
 	beaconItem.setOrientation(item[4]);
 	beaconItem.Country = airfield.country;

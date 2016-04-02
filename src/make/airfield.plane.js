@@ -113,7 +113,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	}
 
 	// Create static plane item
-	const planeItem = this.createItem(planeStatic.type, false);
+	const planeItem = this.createItem(planeStatic, false);
 	
 	let positionX = item[1];
 	let positionY = item[2];
@@ -148,9 +148,6 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	orientation = Math.max((orientation + 360) % 360, 0);
 
 	planeItem.Country = planeData[1];
-	planeItem.Durability = planeStatic.durability;
-	planeItem.Model = planeStatic.model;
-	planeItem.Script = planeStatic.script;
 	planeItem.setPosition(positionX, positionY, positionZ);
 	planeItem.setOrientation(orientation);
 	
