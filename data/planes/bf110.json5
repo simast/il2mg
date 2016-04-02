@@ -53,8 +53,20 @@
 			"static_bf110e2",
 			"static_bf110e2_open"
 		],
-		speed: 385,
-		range: 850
+		speed: 380,
+		range: 850,
+		skins: {
+			"201": {
+				"": [-5, -5, -5, 1],
+				"bf110e2\\bf110e2_skin_01.dds": [0, 0, 0, -11],
+				"bf110e2\\bf110e2_skin_02.dds": [1, 1, 1, 0],
+				"bf110e2\\bf110e2_skin_03.dds": [1, 1, 1, 0],
+				"bf110e2\\bf110e2_skin_05.dds": [1, 1, 1, 2],
+				"bf110e2\\bf110e2_skin_06.dds": [1, 1, 1, 0],
+				"bf110e2\\bf110e2_skin_09.dds": [0, 0, 0, 2],
+				"bf110e2\\bf110e2_skin_10.dds": [0, 0, 0, 4]
+			}
+		}
 	},
 	
 	// Bf 110 E-3

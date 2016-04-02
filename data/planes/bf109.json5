@@ -30,7 +30,18 @@
 			"static_bf109e7_open"
 		],
 		speed: 400, // Cruising speed at 0°C temperature and ~1.5 km altitude
-		range: 730 // Max range at cruising speed (km)
+		range: 730, // Max range at cruising speed (km)
+		skins: {
+			"201": {
+				"": [-5, -5, -5, 1],
+				"bf109e7\\bf109e7_skin_01.dds": [0, 0, 0, -15],
+				"bf109e7\\bf109e7_skin_02.dds": [1, 1, 1, 0],
+				"bf109e7\\bf109e7_skin_03.dds": [1, 1, 1, 0],
+				"bf109e7\\bf109e7_skin_04.dds": [0, 0, 0, 4],
+				"bf109e7\\bf109e7_skin_05.dds": [1, 1, 1, 0],
+				"bf109e7\\bf109e7_skin_09.dds": [1, 1, 1, 0]
+			}
+		}
 	},
 	
 	// Bf 109 F
@@ -46,7 +57,18 @@
 		model: "graphics\\planes\\bf109f2\\bf109f2.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf109f2.txt",
 		speed: 420,
-		range: 830
+		range: 830,
+		skins: {
+			"201": {
+				"": [-4, -4, -4, 1],
+				"bf109f2\\bf109f2_skin_01.dds": [0, 0, 0, -12],
+				"bf109f2\\bf109f2_skin_02.dds": [1, 1, 1, 0],
+				"bf109f2\\bf109f2_skin_03.dds": [0, 0, 0, 2],
+				"bf109f2\\bf109f2_skin_07.dds": [0, 0, 0, 5],
+				"bf109f2\\bf109f2_skin_08.dds": [1, 1, 1, 0],
+				"bf109f2\\bf109f2_skin_09.dds": [1, 1, 1, 0],
+			}
+		}
 	},
 	
 	// Bf 109 F-4

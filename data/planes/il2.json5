@@ -17,7 +17,22 @@
 		name: "Il-2 mod.1941",
 		parent: "il2",
 		model: "graphics\\planes\\il2m41\\il2m41.mgm",
-		script: "luascripts\\worldobjects\\planes\\il2m41.txt"
+		script: "luascripts\\worldobjects\\planes\\il2m41.txt",
+		skins: {
+			"101": {
+				"": [-8, -8, -8, 1],
+				"il2m41\\il2m41_skin_01.dds": [0, 0, 0, -16],
+				"il2m41\\il2m41_skin_02.dds": [1, 1, 1, 0],
+				"il2m41\\il2m41_skin_03.dds": [1, 1, 1, 0],
+				"il2m41\\il2m41_skin_04.dds": [1, 1, 1, 0],
+				"il2m41\\il2m41_skin_05.dds": [0, 0, 0, 3],
+				"il2m41\\il2m41_skin_06.dds": [1, 1, 1, 0],
+				"il2m41\\il2m41_skin_07.dds": [1, 1, 1, 0],
+				"il2m41\\il2m41_skin_08.dds": [1, 1, 1, 0],
+				"il2m41\\il2m41_skin_09.dds": [1, 1, 1, 0],
+				"il2m41\\il2m41_skin_10.dds": [1, 1, 1, 0]
+			}
+		}
 	},
 	
 	// Il-2 mod.1942

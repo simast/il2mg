@@ -3,6 +3,7 @@
 	"ju88": {
 		manufacturer: "Junkers",
 		name: "Ju 88",
+		alias: "Dreifinger",
 		type: ["dive_bomber", "level_bomber"],
 		size: "large",
 		static: [
@@ -23,7 +24,18 @@
 		name: "Ju 88 A-4",
 		parent: "ju88a",
 		model: "graphics\\planes\\bf110e2\\ju88a4.mgm",
-		script: "luascripts\\worldobjects\\planes\\ju88a4.txt"
+		script: "luascripts\\worldobjects\\planes\\ju88a4.txt",
+		skins: {
+			"201": {
+				"": [-4, -4, -4, 1],
+				"ju88a4\\ju88a4_skin_01.dds": [0, 0, 0, -12],
+				"ju88a4\\ju88a4_skin_03.dds": [1, 1, 1, 0],
+				"ju88a4\\ju88a4_skin_04.dds": [0, 0, 0, 3],
+				"ju88a4\\ju88a4_skin_06.dds": [0, 0, 0, 3],
+				"ju88a4\\ju88a4_skin_08.dds": [0, 0, 0, 1],
+				"ju88a4\\ju88a4_skin_10.dds": [1, 1, 1, 0]
+			}
+		}
 	},
 	
 	// Ju 88 A-5
