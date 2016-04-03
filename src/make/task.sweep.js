@@ -307,6 +307,9 @@ module.exports = function makeTaskSweep(flight) {
 		sweepPoints.push(makeValidPoint(pointVector, side.sideVector));
 	}
 	
+	// Register base two fighter sweep reference points as flight target
+	flight.target = sweepPoints.slice();
+	
 	// Register ingress/egress points
 	sweepPoints.unshift(ingressPoint);
 	sweepPoints.push(egressPoint);
