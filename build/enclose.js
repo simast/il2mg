@@ -2,10 +2,6 @@
 "use strict";
 
 module.exports = {
-	dirs: [
-		"temp/src/**",
-		"temp/data/**"
-	],
 	scripts: [
 		"temp/src/**/*.js",
 		"temp/data/**/*.json"

@@ -823,7 +823,7 @@ class Item {
 Item.DEFAULT_COALITION = 0; // Neutral coalition ID
 Item.DEFAULT_COUNTRY = 0; // Neutral country ID
 Item.DEFAULT_DAMAGE_REPORT = 50; // 50% of damage
-Item.DEFAULT_DURABILITY = 25000;
+Item.DEFAULT_DURABILITY = 5000;
 
 // Precision of position and orientation values (decimal places)
 Item.PRECISION_POSITION = 2;

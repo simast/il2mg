@@ -158,9 +158,8 @@ module.exports = function(grunt) {
 				
 				grunt.file.setBase(buildDir);
 		
-				options.push("--version", "5.6.0");
+				options.push("--version", "5.10.0");
 				options.push("--x64"); // Build 64-bit binary
-				options.push("--features", "no"); // Support all CPUs (don't use SSE3/AVX/etc)
 				options.push("--config", "../enclose.js");
 				options.push("--loglevel", "error");
 				options.push("--output", binaryFilePath);
