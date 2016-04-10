@@ -169,23 +169,22 @@ module.exports = function makeWeather() {
 };
 
 // Make mission mist state
-function makeMist(weather) {
+function makeMist(weatherData) {
 	
 	const rand = this.rand;
 	const time = this.time;
-	const windSpeed = this.weather.wind[0].speed;
+	const weather = this.weather;
 	
-	let hasMist = false;
-	
-	// Use mist weather effect based on time and wind speed
 	// TODO: Improve mist algorithm!
-	if ((time.dusk || time.night || time.dawn || time.sunrise) &&
-		windSpeed <= MIST_MAX_WIND_SPEED) {
-		
-		hasMist = rand.bool(0.75); // 75%
-	}
 	
-	this.weather.mist = hasMist;
+	// Don't use mist weather effect with strong winds
+	if (weather.wind[0].speed > MIST_MAX_WIND_SPEED) {
+		weather.mist = false;
+	}
+	// Use mist weather effect based on time
+	else if (time.dusk || time.night || time.dawn || time.sunrise) {
+		weather.mist = rand.bool(0.75); // 75%
+	}
 }
 
 // Make mission clouds
@@ -197,6 +196,7 @@ function makeClouds(weather) {
 	const maxCover = weatherLimits[this.weather.state].clouds;
 	const requiredCover = maxCover * (points / weatherPoints.CLOUDS);
 	const clouds = Object.keys(data.clouds);
+	const hasMist = this.weather.mist;
 	
 	// Sort cloud configs based on cover
 	rand.shuffle(clouds).sort((a, b) => {
@@ -211,7 +211,7 @@ function makeClouds(weather) {
 		const cloudConfig = data.clouds[config];
 
 		if (cloudConfig.cover <= requiredCover &&
-			cloudConfig.mist === this.weather.mist) {
+			(hasMist === undefined || cloudConfig.mist === hasMist)) {
 			
 			break;
 		}
