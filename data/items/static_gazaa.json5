@@ -1,0 +1,8 @@
+{
+	type: "Block",
+	script: "luascripts\\worldobjects\\blocks\\static_gazaa.txt",
+	model: "graphics\\blocks\\static_gazaa.mgm",
+	durability: 1500,
+	damage: [0],
+	wreck: true
+}

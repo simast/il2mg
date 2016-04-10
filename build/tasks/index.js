@@ -1,15 +1,15 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const numeral = require("numeral");
-const moment = require("moment");
-const data = require("../../src/data");
-
 module.exports = function(grunt) {
-
+	
 	// Grunt task used to build battle index database
 	grunt.registerTask("build:index", "Build index database JSON files.", () => {
 
+		const numeral = require("numeral");
+		const moment = require("moment");
+		const data = require("../../src/data");
+		
 		let totalBattles = 0;
 		let totalUnits = 0;
 		

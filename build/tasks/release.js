@@ -1,17 +1,17 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const path = require("path");
-const JSON5 = require("json5");
-const UglifyJS = require("uglify-js");
-const browserify = require("browserify");
-const electronPackager = require("electron-packager");
-const enclose = require("enclose");
-
 module.exports = function(grunt) {
 
 	// Grunt task used to build a release package
 	grunt.registerTask("build:release", "Build a release package.", function() {
+
+		const path = require("path");
+		const JSON5 = require("json5");
+		const UglifyJS = require("uglify-js");
+		const browserify = require("browserify");
+		const electronPackager = require("electron-packager");
+		const enclose = require("enclose");
 
 		const done = this.async();
 		const pkg = grunt.config("pkg");

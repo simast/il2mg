@@ -1,14 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const sloc = require("sloc");
-const path = require("path");
-const numeral = require("numeral");
-
 module.exports = function(grunt) {
 
 	// Grunt task used to analyze source code lines and comments
 	grunt.registerTask("build:sloc", "Analyze source code.", () => {
+
+		const sloc = require("sloc");
+		const path = require("path");
+		const numeral = require("numeral");
 
 		const sourceFiles = grunt.file.expand(grunt.config("sloc"));
 		let totalSource = 0;

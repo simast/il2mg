@@ -168,17 +168,12 @@ data.briefingColor = Object.freeze({
 		requireDir.defaults.extensions.push("json5");
 	}
 	
+	data.items = [];
+	
 	try {
 		data.items = require("../data/items");
 	}
-	catch (e) {
-		
-		// Initialize items data
-		data.items = {
-			list: [],
-			index: {}
-		};
-	}
+	catch (e) {}
 
 	data.vehicles = Object.freeze(require("../data/vehicles"));
 	data.clouds = Object.freeze(require("../data/clouds"));
@@ -261,19 +256,18 @@ data.briefingColor = Object.freeze({
 }());
 
 /**
- * Register a new or update existing item (world object) type.
+ * Register a new item (world object) type.
  *
  * @param {object} item Item data.
  * @returns {number} Item type ID.
  */
 data.registerItemType = function(item) {
-
+	
 	if (typeof item !== "object" || !item.type || !item.script || !item.model) {
 		throw new TypeError("Invalid item data.");
 	}
 
-	const list = this.items.list;
-	const index = this.items.index;
+	const items = this.items;
 
 	// Lowercase and trim script/model paths
 	item.script = item.script.trim().toLowerCase();
@@ -283,22 +277,26 @@ data.registerItemType = function(item) {
 	const stringTypeID = path.win32.basename(item.script, ".txt");
 
 	// Try to find existing item type ID by script index
-	let numberTypeID = index[stringTypeID];
-
-	// Update existing item type data
-	if (numberTypeID !== undefined) {
-
-		list[numberTypeID].type = item.type;
-		list[numberTypeID].script = item.script;
-		list[numberTypeID].model = item.model;
-	}
+	let numberTypeID = items.indexOf(stringTypeID);
+	
 	// Add new item type
-	else {
-
-		numberTypeID = list.push(item) - 1;
-
-		// Create string ID index
-		index[stringTypeID] = numberTypeID;
+	if (numberTypeID === -1) {
+		
+		numberTypeID = items.push(stringTypeID) - 1;
+		
+		const itemFile = "data/items/" + stringTypeID;
+		
+		try {
+			require.resolve("../" + itemFile);
+		}
+		// Write item JSON file
+		catch (e) {
+			
+			fs.writeFileSync(
+				itemFile + ".json",
+				JSON.stringify(item, null, "\t")
+			);
+		}
 	}
 
 	return numberTypeID;
@@ -312,49 +310,12 @@ data.registerItemType = function(item) {
  */
 data.getItemType = function(itemTypeID) {
 	
-	const items = this.items;
-	let stringTypeID;
-
-	// Look up item type data by string ID
-	if (typeof itemTypeID === "string") {
-		
-		stringTypeID = itemTypeID;
-		itemTypeID = items.index[stringTypeID];
-		
-		// Register new empty item type
-		if (itemTypeID === undefined) {
-			itemTypeID = items.index[stringTypeID] = items.list.push({}) - 1;
-		}
-	}
-
-	const item = items.list[itemTypeID];
-
-	if (!item) {
-		throw new TypeError("Invalid item type ID.");
+	// Look up string item type ID
+	if (typeof itemTypeID === "number") {
+		itemTypeID = this.items[itemTypeID];
 	}
 	
-	// Initialize item extra/meta data cache
-	if (!items.meta) {
-		items.meta = new WeakSet();
-	}
-	
-	// Load item meta data
-	if (!items.meta.has(item)) {
-		
-		// Get string item type ID for meta file lookup
-		if (!stringTypeID) {
-			stringTypeID = path.win32.basename(item.script, ".txt");
-		}
-		
-		try {
-			Object.assign(item, require("../data/items/" + stringTypeID));
-		}
-		catch (e) {}
-		
-		items.meta.add(item);
-	}
-
-	return item;
+	return require("../data/items/" + itemTypeID);
 };
 
 /**

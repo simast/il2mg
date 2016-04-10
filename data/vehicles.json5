@@ -21,14 +21,16 @@
 		type: ["truck", "truck_cargo"],
 		countries: [201, 202],
 		model: "graphics\\vehicles\\ford-g917\\ford-g917.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\ford-g917.txt"
+		script: "luascripts\\worldobjects\\vehicles\\ford-g917.txt",
+		static: "static_ford-g917"
 	},
 	{
 		name: "GAZ-AA",
 		type: ["truck", "truck_cargo"],
 		countries: [101],
 		model: "graphics\\vehicles\\gaz-aa\\gaz-aa.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\gaz-aa.txt"
+		script: "luascripts\\worldobjects\\vehicles\\gaz-aa.txt",
+		static: "static_gazaa"
 	},
 	{
 		name: "Opel Blitz (Fuel)",
@@ -111,7 +113,8 @@
 		type: ["tank", "tank_heavy"],
 		countries: [101],
 		model: "graphics\\vehicles\\kv1-41\\kv1-41.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\kv1-41.txt"
+		script: "luascripts\\worldobjects\\vehicles\\kv1-41.txt",
+		static: "static_kv1-41"
 	},
 	{
 		name: "KV-1 mod.1942",
@@ -125,7 +128,8 @@
 		type: ["tank", "tank_heavy", "tank_medium"],
 		countries: [201],
 		model: "graphics\\vehicles\\pziv-f1\\pziv-f1.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\pziv-f1.txt"
+		script: "luascripts\\worldobjects\\vehicles\\pziv-f1.txt",
+		static: "static_pz_ivf1"
 	},
 	{
 		name: "Pz.Kpfw.IV Ausf.G",
@@ -146,14 +150,16 @@
 		type: ["tank", "tank_medium"],
 		countries: [101],
 		model: "graphics\\vehicles\\t34-76stz\\t34-76stz.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\t34-76stz.txt"
+		script: "luascripts\\worldobjects\\vehicles\\t34-76stz.txt",
+		static: "static_t34-76"
 	},
 	{
 		name: "Pz.Kpfw.III Ausf.H",
 		type: ["tank", "tank_medium", "tank_light"],
 		countries: [201],
 		model: "graphics\\vehicles\\pziii-h\\pziii-h.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\pziii-h.txt"
+		script: "luascripts\\worldobjects\\vehicles\\pziii-h.txt",
+		static: "static_pz_iiih"
 	},
 	{
 		name: "Pz.Kpfw.III Ausf.L",
@@ -167,21 +173,24 @@
 		type: ["tank", "tank_light"],
 		countries: [101],
 		model: "graphics\\vehicles\\t70\\t70.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\t70.txt"
+		script: "luascripts\\worldobjects\\vehicles\\t70.txt",
+		static: "static_t70"
 	},
 	{
 		name: "BT-7M",
 		type: ["tank", "tank_light"],
 		countries: [101],
 		model: "graphics\\vehicles\\bt7m\\bt7m.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\bt7m.txt"
+		script: "luascripts\\worldobjects\\vehicles\\bt7m.txt",
+		static: "static_bt-7m"
 	},
 	{
 		name: "StuG III Ausf.E",
 		type: ["tank", "tank_destroyer"],
 		countries: [201],
 		model: "graphics\\vehicles\\stug37l24\\stug37l24.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\stug37l24.txt"
+		script: "luascripts\\worldobjects\\vehicles\\stug37l24.txt",
+		static: "static_stug37l24"
 	},
 	{
 		name: "StuG III Ausf.F/8",
@@ -211,7 +220,8 @@
 		type: ["apc", "scout"],
 		countries: [201],
 		model: "graphics\\vehicles\\sdkfz251-1c\\sdkfz251-1c.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\sdkfz251-1c.txt"
+		script: "luascripts\\worldobjects\\vehicles\\sdkfz251-1c.txt",
+		static: "static_sdkfz251-1c"
 	},
 	{
 		name: "Sd.Kfz.251 Wurfrahmen 40",
@@ -225,7 +235,8 @@
 		type: ["rocket_artillery"],
 		countries: [101],
 		model: "graphics\\artillery\\zis\\bm13.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\bm13.txt"
+		script: "luascripts\\worldobjects\\vehicles\\bm13.txt",
+		static: "static_bm13"
 	},
 
 	// Staff cars
@@ -234,14 +245,16 @@
 		type: ["staff_car"],
 		countries: [101],
 		model: "graphics\\vehicles\\gaz-m\\gaz-m.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\gaz-m.txt"
+		script: "luascripts\\worldobjects\\vehicles\\gaz-m.txt",
+		static: "static_gaz-m"
 	},
 	{
 		name: "Horch 830",
 		type: ["staff_car"],
 		countries: [201, 202],
 		model: "graphics\\vehicles\\horch830\\horch830.mgm",
-		script: "luascripts\\worldobjects\\vehicles\\horch830.txt"
+		script: "luascripts\\worldobjects\\vehicles\\horch830.txt",
+		static: "static_horch830"
 	},
 
 	// Machine gun

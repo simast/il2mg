@@ -1,0 +1,7 @@
+{
+	type: "Block",
+	script: "luascripts\\worldobjects\\blocks\\tank_position.txt",
+	model: "graphics\\blocks\\tank_position.mgm",
+	durability: 1500,
+	damage: [0]
+}

@@ -1,23 +1,37 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const numeral = require("numeral");
-const data = require("../../src/data");
-const Item = require("../../src/item");
-
-// Data constants
-const itemTag = data.itemTag;
-const itemFlag = data.itemFlag;
-const planeSize = data.planeSize;
-
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", () => {
+		
+		const numeral = require("numeral");
+		const data = require("../../src/data");
+		const Item = require("../../src/item");
+		
+		// Data constants
+		const itemTag = data.itemTag;
+		const itemFlag = data.itemFlag;
+		const planeSize = data.planeSize;
 
 		let totalBattles = 0;
 		let totalAirfields = 0;
 		let totalItems = 0;
+		
+		// Utility function used to get absolute Point item position
+		function getPointPosition(item, point) {
+		
+			const pointOrientation = item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X);
+			const pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X);
+			const positionX = item.XPos + pointMagnitude * Math.cos(pointOrientation);
+			const positionZ = item.ZPos + pointMagnitude * Math.sin(pointOrientation);
+		
+			return [
+				Number(positionX.toFixed(Item.PRECISION_POSITION)),
+				Number(positionZ.toFixed(Item.PRECISION_POSITION))
+			];
+		}
 
 		// Process airfields for each battle
 		for (const battleID in data.battles) {
@@ -492,17 +506,3 @@ module.exports = function(grunt) {
 		grunt.log.ok(message);
 	});
 };
-
-// Utility function used to get absolute Point item position
-function getPointPosition(item, point) {
-
-	const pointOrientation = item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X);
-	const pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X);
-	const positionX = item.XPos + pointMagnitude * Math.cos(pointOrientation);
-	const positionZ = item.ZPos + pointMagnitude * Math.sin(pointOrientation);
-
-	return [
-		Number(positionX.toFixed(Item.PRECISION_POSITION)),
-		Number(positionZ.toFixed(Item.PRECISION_POSITION))
-	];
-}
