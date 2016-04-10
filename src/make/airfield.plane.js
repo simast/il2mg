@@ -147,7 +147,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	orientation = orientation + rand.real(-orientationOffset, orientationOffset);
 	orientation = Math.max((orientation + 360) % 360, 0);
 
-	planeItem.Country = planeData[1];
+	planeItem.setCountry(planeData[1]);
 	planeItem.setPosition(positionX, positionY, positionZ);
 	planeItem.setOrientation(orientation);
 	

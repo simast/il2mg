@@ -130,7 +130,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	// Slightly vary/randomize vehicle orientation
 	const orientation = Math.max((item[4] + rand.real(-20, 20) + 360) % 360, 0);
 
-	vehicleItem.Country = countryID;
+	vehicleItem.setCountry(countryID);
 	vehicleItem.setPosition(positionX, positionY, positionZ);
 	vehicleItem.setOrientation(orientation);
 	

@@ -47,8 +47,7 @@
 	fighter_2x2: {
 		parent: "fighter_4",
 		from: "1942-10-01",
-		elements: ["fighter_2", "fighter_2"], // Finger-four
-		density: "loose"
+		elements: ["fighter_2", "fighter_2"] // Finger-four
 	},
 
 	// Bomber

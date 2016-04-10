@@ -3,7 +3,8 @@
 	
 	// 43 IAP PVO
 	"43iap_1": {
-		name: "43 IAP PVO",
+		name: "43 IAP",
+		suffix: "PVO",
 		parent: "43iap",
 		role: "fighter_pvo",
 		airfields: [

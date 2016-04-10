@@ -138,6 +138,7 @@ module.exports = function(grunt) {
 				const unitName = unitData.name;
 				let unitFrom = battleFrom;
 				let unitTo = battleTo;
+				let unitSuffix;
 				let unitAlias;
 				
 				if (unitData.from) {
@@ -175,6 +176,11 @@ module.exports = function(grunt) {
 					// Unit planes
 					if (unitData.planes) {
 						unitPlanes.push(unitData.planes);
+					}
+					
+					// Unit alias
+					if (!unitSuffix && unitData.suffix) {
+						unitSuffix = unitData.suffix;
 					}
 					
 					// Unit alias
@@ -377,6 +383,10 @@ module.exports = function(grunt) {
 						if (!json.units[unitID]) {
 							
 							let name = unitName;
+							
+							if (unitSuffix) {
+								name += " " + unitSuffix;
+							}
 							
 							if (unitAlias) {
 								name += " “" + unitAlias + "”";

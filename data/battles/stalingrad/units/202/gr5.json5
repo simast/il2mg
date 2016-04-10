@@ -1,0 +1,28 @@
+{
+	// Grupul 5 bombardament
+	"gr5": {
+		role: "bomber",
+		suffix: "bombardament",
+		airfields: [
+			["morozovskiy_west", "1942-09-25", "1942-12-18"],
+			["tatsinskaya", "1942-12-18", "1942-12-23"],
+			["novocherkassk", "1942-12-23", "1942-12-29", 0.5]
+			// TODO: Was part of Grupul mixt Iosifescu
+		],
+		planes: [
+			["he111h3", [14, 7], "1942-09-25", "1942-12-29"],
+			["he111h6", 1, "1942-09-25", "1942-12-29"]
+		]
+	},
+
+	// Escadrila 79
+	"gr5_esc79": {
+		name: "Escadrila 79",
+		parent: "gr5"
+	},
+	// Escadrila 80
+	"gr5_esc80": {
+		name: "Escadrila 80",
+		parent: "gr5"
+	}
+}

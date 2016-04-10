@@ -229,7 +229,12 @@ function makeBriefingFlight() {
 
 	// Unit name
 	output += ' of <font color="' + briefingColor.LIGHT + '">' + unit.name + "</font>";
-
+	
+	// Unit suffix
+	if (unit.suffix) {
+		output += " " + unit.suffix;
+	}
+	
 	// Unit alias
 	if (unit.alias) {
 		output += " <i>“" + unit.alias + "”</i>";

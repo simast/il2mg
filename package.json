@@ -32,13 +32,13 @@
 		"sloc": "0.1.10",
 		"uglify-js": "mishoo/UglifyJS2#harmony",
 		"electron-prebuilt": "0.37.5",
-		"electron-packager": "6.0.0",
+		"electron-packager": "6.0.2",
 		"babel-register": "6.7.2",
 		"babel-plugin-transform-react-jsx": "6.7.5",
 		"browserify": "13.0.0",
 		"babelify": "7.2.0",
-		"react": "15.0.0",
-		"react-dom": "15.0.0"
+		"react": "15.0.1",
+		"react-dom": "15.0.1"
 	},
 	"babel": {
 		"plugins": [

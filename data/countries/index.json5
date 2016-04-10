@@ -8,5 +8,11 @@
 		name: "Germany",
 		coalition: 2, // Axis
 		color: [15, 85, 129]
+	},
+	"202": {
+		name: "Romania",
+		alias: 201, // Map to Germany
+		coalition: 2, // Axis
+		color: [95, 73, 37]
 	}
 }

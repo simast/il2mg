@@ -12,9 +12,10 @@ module.exports = function makeAirfieldBeacon(airfield, item) {
 	
 	const beaconItem = this.createItem(data.getItemType(item[5]), false);
 	
+	beaconItem.setName("NOICON");
 	beaconItem.setPosition(item[1], item[2], item[3]);
 	beaconItem.setOrientation(item[4]);
-	beaconItem.Country = airfield.country;
+	beaconItem.setCountry(airfield.country);
 	beaconItem.Engageable = 0;
 	beaconItem.BeaconChannel = 0;
 	

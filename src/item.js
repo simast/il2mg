@@ -4,6 +4,7 @@
 const fs = require("fs");
 const os = require("os");
 const getSlug = require("speakingurl");
+const data = require("./data");
 
 // FIXME: Used to automatically track buffer write cursor
 Buffer.prototype._offset = 0;
@@ -306,6 +307,23 @@ class Item {
 
 		// Set item Y orientation
 		this.setOrientation(orientationY);
+	}
+	
+	/**
+	 * Set item country.
+	 *
+	 * @param {number} countryID Country ID value.
+	 */
+	setCountry(countryID) {
+		
+		if (typeof countryID !== "number") {
+			throw new TypeError("Invalid item country value.");
+		}
+		
+		// Support for "alias" (hidden) countries
+		countryID = data.countries[countryID].alias || countryID;
+
+		this.Country = countryID;
 	}
 
 	/**

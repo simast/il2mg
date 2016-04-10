@@ -18,6 +18,12 @@
 		parent: "bf109"
 	},
 
+	// Bf 109 E-3
+	"bf109e3": "bf109e7",
+	
+	// Bf 109 E-4
+	"bf109e4": "bf109e7",
+	
 	// Bf 109 E-7
 	"bf109e7": {
 		name: "Bf 109 E-7",
@@ -29,7 +35,7 @@
 			"static_bf109e7_net",
 			"static_bf109e7_open"
 		],
-		speed: 400, // Cruising speed at 0°C temperature and ~1.5 km altitude
+		speed: 395, // Cruising speed at 0°C temperature and ~1.5 km altitude
 		range: 730, // Max range at cruising speed (km)
 		skins: {
 			"201": {
@@ -40,6 +46,9 @@
 				"bf109e7\\bf109e7_skin_04.dds": [0, 0, 0, 4],
 				"bf109e7\\bf109e7_skin_05.dds": [1, 1, 1, 0],
 				"bf109e7\\bf109e7_skin_09.dds": [1, 1, 1, 0]
+			},
+			"202": {
+				"bf109e7\\bf109e7_skin_06.dds": [1, 1, 1, 1]
 			}
 		}
 	},

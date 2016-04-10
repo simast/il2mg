@@ -385,9 +385,9 @@ module.exports = function makeFlightPlanes(flight) {
 				planeItem.setName(pilot.id);
 			}
 
+			planeItem.setCountry(unit.country);
 			planeItem.Script = planeData.script;
 			planeItem.Model = planeData.model;
-			planeItem.Country = unit.country;
 			planeItem.Callsign = flight.callsign.id;
 
 			// Player plane item

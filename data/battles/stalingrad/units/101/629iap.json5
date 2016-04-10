@@ -1,7 +1,8 @@
 {
 	// 629 IAP PVO
 	"629iap": {
-		name: "629 IAP PVO",
+		name: "629 IAP",
+		suffix: "PVO",
 		role: "fighter_pvo",
 		airfields: [
 			["beketovka", "start", "1942-08-27"],

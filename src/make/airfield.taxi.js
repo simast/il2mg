@@ -63,7 +63,7 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 	
 	airfieldItem.setPosition(basePoint[0], airfield.position[1], basePoint[1]);
 	airfieldItem.setOrientation(basePoint[2]);
-	airfieldItem.Country = airfield.country;
+	airfieldItem.setCountry(airfield.country);
 	airfieldItem.Callsign = airfield.callsign.id;
 
 	const taxiPoints = taxiRoute[4];

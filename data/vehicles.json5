@@ -3,7 +3,7 @@
 	{
 		name: "Opel Blitz",
 		type: ["truck", "truck_cargo"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\vehicles\\opel\\opel-blitz.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\opel-blitz.txt",
 		static: "static_opel"
@@ -19,7 +19,7 @@
 	{
 		name: "Ford G917T",
 		type: ["truck", "truck_cargo"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\vehicles\\ford-g917\\ford-g917.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\ford-g917.txt"
 	},
@@ -33,7 +33,7 @@
 	{
 		name: "Opel Blitz (Fuel)",
 		type: ["truck", "truck_fuel"],
-		countries: [201],
+		countries: [201, 202],
 		static: "static_opel_fuel"
 	},
 	{
@@ -54,7 +54,7 @@
 	{
 		name: "FlaK 38",
 		type: ["aa", "aa_flak", "aa_flak_light"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\artillery\\flak38\\flak38.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\flak38.txt"
 	},
@@ -68,7 +68,7 @@
 	{
 		name: "FlaK 37",
 		type: ["aa", "aa_flak", "aa_flak_heavy"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\artillery\\flak37\\flak37.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\flak37.txt"
 	},
@@ -84,7 +84,7 @@
 	{
 		name: "MG 34 AA",
 		type: ["aa", "aa_mg"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\artillery\\mg34-aa\\mg34-aa.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\mg34-aa.txt"
 	},
@@ -239,7 +239,7 @@
 	{
 		name: "Horch 830",
 		type: ["staff_car"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\vehicles\\horch830\\horch830.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\horch830.txt"
 	},
@@ -310,7 +310,7 @@
 	{
 		name: "Landing light",
 		type: ["landing_light"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\artillery\\searchlightger\\landlightger.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\landlightger.txt"
 	},
@@ -326,7 +326,7 @@
 	{
 		name: "Search light",
 		type: ["search_light"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\artillery\\searchlightger\\searchlightger.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\searchlightger.txt"
 	},
@@ -349,7 +349,7 @@
 	{
 		name: "FlaK 38 (Platform)",
 		type: ["train", "train_aa"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\trains\\wagons\\platformaa-flak38.mgm",
 		script: "luascripts\\worldobjects\\trains\\platformaa-flak38.txt"
 	},
@@ -363,7 +363,7 @@
 	{
 		name: "MG 34 AA (Platform)",
 		type: ["train", "train_aa"],
-		countries: [201],
+		countries: [201, 202],
 		model: "graphics\\trains\\wagons\\platformaa-mg34.mgm",
 		script: "luascripts\\worldobjects\\trains\\platformaa-mg34.txt"
 	},

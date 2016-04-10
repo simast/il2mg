@@ -1,0 +1,7 @@
+// Fighter (Vânătoare) role
+{
+	sweep: 2,
+	patrol: 2,
+	cover: 1,
+	free: 1
+}

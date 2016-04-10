@@ -35,24 +35,30 @@ module.exports = function makeBattle() {
 	// Set country:coalition list
 	options.Countries = (() => {
 
-		const countries = [];
+		const countries = Object.create(null);
 
 		// Unknown (neutral) country and coalition
 		coalitions.push(Item.DEFAULT_COALITION);
-		countries.push([Item.DEFAULT_COUNTRY, Item.DEFAULT_COALITION]);
+		countries[Item.DEFAULT_COUNTRY] = Item.DEFAULT_COALITION;
 
 		battle.countries.forEach((countryID) => {
 			
-			const coalitionID = data.countries[countryID].coalition;
+			// Support for "alias" (hidden) countries
+			countryID = data.countries[countryID].alias || countryID;
+			
+			const country = data.countries[countryID];
+			const coalitionID = country.coalition;
 			
 			if (coalitions.indexOf(coalitionID) === -1) {
 				coalitions.push(coalitionID);
 			}
 			
-			countries.push([countryID, coalitionID]);
+			countries[countryID] = coalitionID;
 		});
 
-		return countries;
+		return Object.keys(countries).map((countryID) => {
+			return [countryID, countries[countryID]];
+		});
 	})();
 	
 	// Set PlayerConfig property to selected player plane item

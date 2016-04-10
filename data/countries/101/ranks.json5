@@ -1,10 +1,13 @@
 {
+	// Enlisted
 	"1": {
 		name: "Krasnoarmeyets"
 	},
 	"2": {
 		name: "Yefreytor"
 	},
+	
+	// Non-commissioned officers
 	"3": {
 		name: "Mladshiy Serzhant",
 		abbr: "M.Srzh.",
@@ -33,6 +36,8 @@
 			pilot: 1
 		}
 	},
+	
+	// Officers
 	"7": {
 		name: "Mladshiy Leytenant",
 		abbr: "M.Lt.",
@@ -86,6 +91,8 @@
 			brass: 1
 		}
 	},
+	
+	// Generals
 	"14": {
 		name: "General-Mayor",
 		type: {

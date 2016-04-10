@@ -1,7 +1,8 @@
 {
 	// 731 IAP PVO
 	"731iap": {
-		name: "731 IAP PVO",
+		name: "731 IAP",
+		suffix: "PVO",
 		role: "fighter_pvo",
 		airfields: [
 			["srednyaya_ahtuba", "1942-08-28", "1942-09-27"]

@@ -1,0 +1,123 @@
+{
+	// Enlisted
+	"1": {
+		name: "Elev soldat av."
+	},
+	"2": {
+		name: "Elev caporal av."
+	},
+	"3": {
+		name: "Elev sergent av."
+	},
+	
+	// Non-commissioned officers
+	"4": {
+		name: "Adjutant stagiar av.",
+		abbr: "Adj. stg. av.",
+		type: {
+			pilot: 2
+		}
+	},
+	"5": {
+		name: "Adjutant av.",
+		abbr: "Adj. av.",
+		type: {
+			pilot: 21
+		}
+	},
+	"6": {
+		name: "Adjutant major av.",
+		abbr: "Adj. maj. av.",
+		type: {
+			pilot: 1
+		}
+	},
+	"7": {
+		name: "Adjutant șef av.",
+		abbr: "Adj. șef av.",
+		type: {
+			pilot: 1
+		}
+	},
+	"8": {
+		name: "Ofiţer de echipaj clasa a III-a av.",
+		abbr: "Of. ec. cls. III"
+	},
+	"9": {
+		name: "Ofiţer de echipaj clasa a II-a av.",
+		abbr: "Of. ec. cls. II"
+	},
+	"10": {
+		name: "Ofiţer de echipaj clasa I-a av.",
+		abbr: "Of. ec. cls. I"
+	},
+	
+	// Officers
+	"11": {
+		name: "Sublocotenent av.",
+		abbr: "Slt. av.",
+		type: {
+			pilot: 5,
+			liaison: 1
+		}
+	},
+	"12": {
+		name: "Locotenent av.",
+		abbr: "Lt. av.",
+		type: {
+			pilot: 9,
+			leader: 3,
+			liaison: 1
+		}
+	},
+	"13": {
+		name: "Căpitan av.",
+		abbr: "Cpt. av.",
+		type: {
+			pilot: 2,
+			leader: 1,
+			commander: 4
+		}
+	},
+	"14": {
+		name: "Locotenent comandor av.",
+		abbr: "Lt. cdor. av.",
+		type: {
+			commander: 2,
+			aa: 1
+		}
+	},
+	"15": {
+		name: "Căpitan comandor av.",
+		abbr: "Cpt. cdor. av.",
+		type: {
+			commander: 1,
+			aa: 1
+		}
+	},
+	"16": {
+		name: "Comandor av.",
+		abbr: "Cdor. av.",
+		type: {
+			aa: 1,
+			brass: 1
+		}
+	},
+	
+	// Generals
+	"17": {
+		name: "General de escadră av.",
+		type: {
+			brass: 1
+		}
+	},
+	"18": {
+		name: "General comandant av.",
+		type: {
+			brass: 1
+		}
+	},
+	"19": {
+		name: "General inspector av."
+	}
+}

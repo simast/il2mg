@@ -29,7 +29,7 @@ module.exports = function makeAirfieldStatic(airfield, item) {
 		}
 		
 		if (this.rand.bool(countryChance)) {
-			staticItem.Country = this.rand.pick(airfield.countriesWeighted);
+			staticItem.setCountry(this.rand.pick(airfield.countriesWeighted));
 		}
 	}
 

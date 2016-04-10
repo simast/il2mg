@@ -141,6 +141,10 @@ module.exports = function makeForces() {
 		const unit = this.units[player.flight.unit];
 		let unitName = unit.name;
 		
+		if (unit.suffix) {
+			unitName += " " + unit.suffix;
+		}
+		
 		if (unit.alias) {
 			unitName += " “" + unit.alias + "”";
 		}
