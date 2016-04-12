@@ -25,6 +25,9 @@ params.usage("[options] [mission file and/or path]");
 // --version output
 params.version(data.name + " " + data.version + " " + data.copyright);
 
+// Create mission metadata file (--meta)
+params.option("-M, --meta", "create metadata file");
+
 // NOTE: For development mode only when not compiled to binary!
 if (!process.versions.enclose) {
 	

@@ -149,6 +149,7 @@ module.exports = function makeBriefing() {
 	}
 	
 	options.setDescription(this.getLC(briefing));
+	this.briefing = briefing;
 };
 
 // Make mission briefing date and time output

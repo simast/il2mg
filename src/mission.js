@@ -14,6 +14,7 @@ const Item = require("./item");
 const FILE_EXT_TEXT = "Mission";
 const FILE_EXT_BINARY = "msnbin";
 const FILE_EXT_LIST = "list";
+const FILE_EXT_META = "il2mg";
 
 // List of mission parameters that make up the complex seed value
 // NOTE: The order is important and is used to define parameter sequence
@@ -372,7 +373,8 @@ class Mission {
 	 */
 	save(fileName) {
 
-		const format = this.params.format || Mission.FORMAT_BINARY;
+		const params = this.params;
+		const format = params.format || Mission.FORMAT_BINARY;
 		const promises = [];
 
 		log.I("Saving mission...");
@@ -392,17 +394,22 @@ class Mission {
 		}
 
 		// Save text format file
-		if (format === Mission.FORMAT_TEXT || (this.debug && !this.params.format)) {
+		if (format === Mission.FORMAT_TEXT || (this.debug && !params.format)) {
 			promises.push(this.saveText(fileName));
 		}
 
 		// Save binary format file
-		if (format === Mission.FORMAT_BINARY || (this.debug && !this.params.format)) {
+		if (format === Mission.FORMAT_BINARY || (this.debug && !params.format)) {
 			promises.push(this.saveBinary(fileName));
 		}
 
 		// Save language files
 		promises.push(this.saveLang(fileName));
+		
+		// Save metadata file
+		if (params.meta) {
+			promises.push(this.saveMeta(fileName));
+		}
 
 		return Promise.all(promises);
 	}
@@ -626,6 +633,48 @@ class Mission {
 		});
 
 		return Promise.all(promises);
+	}
+	
+	/**
+	 * Save metadata .il2mg file.
+	 *
+	 * @param {string} fileName Mission file name (without extension).
+	 * @returns {Promise} Promise object.
+	 */
+	saveMeta(fileName) {
+
+		const profileName = "Saving ." + FILE_EXT_META;
+
+		log.profile(profileName);
+
+		const promise = new Promise((resolve, reject) => {
+
+			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_META);
+
+			// Write .il2mg data
+			fileStream.once("open", (fd) => {
+				
+				fileStream.write(JSON.stringify({
+					title: this.title,
+					plane: this.planes[this.player.plane].name,
+					briefing: this.briefing
+				}, null, "\t"));
+
+				fileStream.end();
+			});
+
+			// Resolve promise
+			fileStream.once("finish", resolve);
+
+			// Reject promise
+			fileStream.once("error", reject);
+		});
+
+		promise.then(() => {
+			log.profile(profileName);
+		});
+
+		return promise;
 	}
 }
 
