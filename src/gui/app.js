@@ -69,6 +69,16 @@ app.on("ready", () => {
 	}
 	catch (e) {}
 	
+	// Initialize default missions storage path
+	if (!config.missionsPath) {
+		config.missionsPath = path.join(app.getPath("documents"), app.getName());
+	}
+	
+	// Make sure missions storage directory exists
+	if (!fs.existsSync(config.missionsPath)) {
+		fs.mkdirSync(config.missionsPath);
+	}
+	
 	const windowConfig = {
 		title: "il2mg - Mission Generator",
 		useContentSize: true,
@@ -104,6 +114,11 @@ app.on("ready", () => {
 	
 	mainWindow.setMenu(null);
 	mainWindow.loadURL("file://" + __dirname + "/main.html");
+	
+	// Prevent document from changing window title
+	mainWindow.on("page-title-updated", (event) => {
+		event.preventDefault();
+	});
 	
 	// Save main window position and size
 	mainWindow.on("close", () => {

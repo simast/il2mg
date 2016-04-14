@@ -380,6 +380,7 @@ class Mission {
 		log.I("Saving mission...");
 
 		// Use specified mission file path and name
+		// TODO: Allow specifying target directory as a mission path
 		if (fileName && fileName.length) {
 
 			// Make a path without an extension
