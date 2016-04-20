@@ -2,18 +2,47 @@
 "use strict";
 
 const React = require("react");
-const {IndexLink} = require("react-router");
+const Screen = require("./Screen");
 
 // Create mission screen component
-module.exports = class CreateMission extends React.Component {
+class CreateMission extends React.Component {
+	
+	constructor(props, context) {
+		super(...arguments);
+		
+		this.router = context.router;
+	}
 	
 	// Render component
 	render() {
 		
+		const router = this.router;
+		const params = this.props.params;
+		const actions = {
+			right: new Map()
+		};
+		
+		// Create mission
+		actions.right.set("Create", {});
+		
+		// Cancel create mission
+		if (!params.type) {
+			
+			actions.right.set("Cancel", {
+				onClick() {
+					router.goBack();
+				}
+			});
+		}
+		
 		return (
-			<div>
-				<IndexLink to="/">Home</IndexLink>
-			</div>
+			<Screen id="create" actions={actions}></Screen>
 		);
 	}
 };
+
+CreateMission.contextTypes = {
+	router: React.PropTypes.object.isRequired
+};
+
+module.exports = CreateMission;

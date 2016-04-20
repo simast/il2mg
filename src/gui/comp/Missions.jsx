@@ -4,29 +4,40 @@
 const fs = require("fs");
 const path = require("path");
 const React = require("react");
-const {Link} = require("react-router");
+const Screen = require("./Screen");
 const MissionsList = require("./MissionsList");
 const MissionDetails = require("./MissionDetails");
-const config = require("electron").remote.getGlobal("config");
 
 // Mission metadata file extension
 const FILE_EXT_META = ".il2mg";
 
 // Missions screen component
-module.exports = class Missions extends React.Component {
+class Missions extends React.Component {
 	
-	constructor(props) {
-		super(props);
+	constructor(props, context) {
+		super(...arguments);
 		
+		this.router = context.router;
+		this.config = context.config;
 		this.state = {
 			missions: this.loadMissions()
 		};
 	}
 	
+	componentWillMount() {
+		
+		const missions = this.state.missions;
+		
+		// Show create mission screen when mission list is empty
+		if (!missions.list.length) {
+			this.router.replace("/create");
+		}
+	}
+	
 	// Load a list of missions (from config.missionsPath)
 	loadMissions() {
 		
-		const {missionsPath} = config;
+		const {missionsPath} = this.config;
 		const missions = {
 			list: [],
 			index: Object.create(null)
@@ -69,7 +80,7 @@ module.exports = class Missions extends React.Component {
 	
 	componentDidMount() {
 		
-		const {missionsPath} = config;
+		const {missionsPath} = this.config;
 		
 		// Watch missions directory for any changes
 		this.watcher = fs.watch(missionsPath, {persistent: false}, () => {
@@ -89,20 +100,42 @@ module.exports = class Missions extends React.Component {
 		
 		const missions = this.state.missions;
 		const missionID = this.props.params.mission;
+		const actions = {
+			left: new Map()
+		};
+		
+		// Create a new mission
+		actions.left.set("Create New", {
+			to: "/create"
+		});
 		
 		// Set active mission from query params
 		let mission;
 		
 		if (missionID) {
+			
 			mission = missions.index[missionID];
+			
+			// Remove selected mission
+			actions.left.set("Remove", {});
+			
+			// Launch selected mission
+			actions.right = new Map();
+			actions.right.set("Launch", {});
 		}
 		
 		return (
-			<div>
+			<Screen id="missions" actions={actions}>
 				<MissionsList missions={missions.list} />
 				{mission ? <MissionDetails mission={mission} /> : ""}
-				<Link to="/create">Create</Link>
-			</div>
+			</Screen>
 		);
 	}
 };
+
+Missions.contextTypes = {
+	router: React.PropTypes.object.isRequired,
+	config: React.PropTypes.object.isRequired
+};
+
+module.exports = Missions;

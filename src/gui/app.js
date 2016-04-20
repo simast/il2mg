@@ -89,6 +89,7 @@ app.on("ready", () => {
 		acceptFirstMouse: true,
 		fullscreenable: false,
 		autoHideMenuBar: true,
+		backgroundColor: "#fbe9bc", // TODO
 		webPreferences: {
 			webgl: false,
 			webaudio: false,

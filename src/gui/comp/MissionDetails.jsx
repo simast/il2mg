@@ -11,7 +11,12 @@ class MissionDetails extends React.Component {
 		
 		const mission = this.props.mission;
 		
-		return <div id="briefing" dangerouslySetInnerHTML={{__html: mission.briefing}}></div>;
+		return (
+			<section id="missionDetails">
+				<h1>{mission.title}</h1>
+				<div id="briefing" dangerouslySetInnerHTML={{__html: mission.briefing}}></div>
+			</section>
+		);
 	}
 };
 

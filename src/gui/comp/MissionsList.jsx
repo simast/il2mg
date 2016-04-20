@@ -10,7 +10,7 @@ class MissionsList extends React.Component {
 	// Render component
 	render() {
 		return (
-			<ul>
+			<ul id="missionsList">
 				{this.props.missions.map((mission) => {
 					return <MissionsList.Item key={mission.id} mission={mission} />
 				})}
