@@ -107,7 +107,7 @@ module.exports = class Airfield extends Block {
 			
 			this.writeUInt32(buffer, item.Type); // Type
 			this.writeDouble(buffer, item.X); // X
-			this.writeDouble(buffer, item.Y); // Y	
+			this.writeDouble(buffer, item.Y); // Y
 		});
 		
 		yield buffer;

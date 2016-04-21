@@ -116,7 +116,7 @@ module.exports = function makeAirfieldPlane(airfield, item) {
 	const planeItem = this.createItem(planeStatic, false);
 	
 	let positionX = item[1];
-	let positionY = item[2];
+	const positionY = item[2];
 	let positionZ = item[3];
 	let orientation = item[4];
 	let orientationOffset = 15;

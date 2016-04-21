@@ -13,6 +13,7 @@ module.exports = function(grunt) {
 		const sourceFiles = grunt.file.expand(grunt.config("sloc"));
 		let totalSource = 0;
 		let totalComments = 0;
+		let totalFiles = 0;
 
 		sourceFiles.forEach((sourceFile) => {
 
@@ -21,10 +22,13 @@ module.exports = function(grunt) {
 
 			totalSource += sourceReport.source + sourceReport.comment;
 			totalComments += sourceReport.comment;
+			totalFiles++;
 		});
 
 		let message = "";
 
+		message += numeral(totalFiles).format("0,0") + " ";
+		message += grunt.util.pluralize(totalFiles, "file/files") + " with ";
 		message += numeral(totalSource).format("0,0") + " ";
 		message += grunt.util.pluralize(totalSource, "line/lines") + " of source code";
 		message += " (" + Math.round(totalComments / totalSource * 100) + "% comments)";

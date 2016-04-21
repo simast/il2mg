@@ -26,17 +26,17 @@ const planeTypeNames = {
  * Supported template tags:
  *
  * 	{{airfield}} - Name of the player flight airfield.
- *  
+ *
  *  {{target.air}} - Player task target location description (in the air).
  *  {{target.ground}} - Player task target location description (on the ground).
- * 	
+ *
  * 	{{{plane}}} - Any player plane name representation.
  * 	{{plane.name}} - Player plane model name.
  * 	{{plane.group}} - Player plane group name.
  * 	{{plane.manufacturer}} - Player plane manufacturer name.
  * 	{{{plane.alias}}} - Player plane alias.
  * 	{{plane.type}} - Player plane type.
- * 	
+ *
  * 	{{name}} - Any full name.
  * 	{{name.first}} - Any first name.
  * 	{{name.last}} - Any last name.

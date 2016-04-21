@@ -25,11 +25,9 @@ module.exports = function makeFlightPlan(flight) {
 	
 	// Form up plan action
 	plan.push({type: planAction.FORM});
-
-	let taskID = flight.task.id;
 	
 	// Make task specific plan
-	const makeTask = makeParts["task." + taskID];
+	const makeTask = makeParts["task." + flight.task.id];
 	
 	if (makeTask) {
 		makeTask.call(this, flight);
@@ -68,15 +66,13 @@ module.exports = function makeFlightPlan(flight) {
 		// Multiple flight elements will share a single plan, but can use a different
 		// command set (as with second element on cover duty for first leading element).
 		flight.elements.forEach((element, elementIndex) => {
-
-			let input = outputPrev[elementIndex];
-
+			
 			output.push(makePlanAction.call(
 				this,
 				action,
 				element,
 				flight,
-				input
+				outputPrev[elementIndex]
 			));
 		});
 

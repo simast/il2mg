@@ -327,8 +327,8 @@ module.exports = function makeFronts() {
 					for (let i = rangeFrom; i <= rangeTo; i++) {
 						
 						// Invert dimension coordinates for Z axis ray tracing
-						let c1 = (isXDimension ? c : i);
-						let c2 = (isXDimension ? i : c);
+						const c1 = (isXDimension ? c : i);
+						const c2 = (isXDimension ? i : c);
 						
 						const territoriesAxis = territories.get(c1) || new Map();
 						const existingType = territoriesAxis.get(c2);
@@ -494,7 +494,7 @@ module.exports = function makeFronts() {
 				// NOTE: Overflowing Z axis with +1 (to draw the closing line)
 				for (let z = 0; z <= gridMax.z + 1; z++) {
 					
-					let point = territoriesZ.get(z);
+					const point = territoriesZ.get(z);
 					
 					if (!point || (type !== null && point.type !== type)) {
 						

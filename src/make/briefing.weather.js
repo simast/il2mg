@@ -150,7 +150,7 @@ module.exports = function makeBriefingWeather() {
 	}
 	
 	// Set specific weather time context (if any)
-	for (let time of ["morning", "afternoon", "evening", "night"]) {
+	for (const time of ["morning", "afternoon", "evening", "night"]) {
 		
 		if (this.time[time]) {
 			

@@ -102,7 +102,8 @@ app.on("ready", () => {
 	if (config.window) {
 		
 		const {workArea} = electron.screen.getDisplayMatching(config.window);
-		let {x, y, width, height} = config.window;
+		const {width, height} = config.window;
+		let {x, y} = config.window;
 		
 		// Make sure window is not outside display work area
 		x = Math.min(Math.max(x, workArea.x), workArea.x + workArea.width - width);

@@ -152,7 +152,7 @@ module.exports = function makeUnits() {
 	// Make unit name
 	const makeName = (unitData) => {
 
-		let name = unitData.name;
+		const name = unitData.name;
 
 		// Validate unit name
 		if (typeof name !== "string" || !name.length) {

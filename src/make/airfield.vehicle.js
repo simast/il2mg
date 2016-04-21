@@ -117,7 +117,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	const vehicleItem = this.createItem(itemType, false);
 
 	let positionX = item[1];
-	let positionY = item[2];
+	const positionY = item[2];
 	let positionZ = item[3];
 
 	// Slightly vary/randomize static vehicle position

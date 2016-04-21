@@ -20,7 +20,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 	}
 	
 	const debugFlights = Boolean(this.debug && this.debug.flights);
-	let drawIcons = Boolean(action.visible) || debugFlights;
+	const drawIcons = Boolean(action.visible) || debugFlights;
 	
 	if (!input && !drawIcons) {
 		return;

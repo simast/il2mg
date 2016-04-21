@@ -151,7 +151,7 @@ data.briefingColor = Object.freeze({
 
 	// NOTE: For performance reasons JSON files in the binary/compiled mode will
 	// be loaded using native JSON object.
-	let useJSON5 = !process.versions.enclose;
+	const useJSON5 = !process.versions.enclose;
 
 	if (useJSON5) {
 

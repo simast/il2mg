@@ -9,34 +9,49 @@
 	},
 	"extends": "eslint:recommended",
 	"rules": {
-		"no-empty": ["error", {
-			"allowEmptyCatch": true
-		}],
+		"no-empty": ["error", {"allowEmptyCatch": true}],
 		"no-console": "off",
 		"no-var": "error",
-		"brace-style": ["error", "stroustrup", {
-			"allowSingleLine": true
-		}],
+		"no-lonely-if": "error",
+		"no-multiple-empty-lines": "error",
+		"no-trailing-spaces": ["error", {"skipBlankLines": true}],
+		"no-whitespace-before-property": "error",
+		"no-nested-ternary": "error",
+		"no-new-object": "error",
+		"no-unneeded-ternary": "error",
+		"brace-style": ["error", "stroustrup", {"allowSingleLine": true}],
 		"curly": "error",
 		"eqeqeq": "error",
 		"indent": ["error", "tab", {"SwitchCase": 1}],
 		"key-spacing": "error",
-		"no-multiple-empty-lines": "error",
 		"object-curly-spacing": ["error", "never"],
+		"operator-linebreak": ["error", "after"],
+		"semi": ["error", "always"],
+		"semi-spacing": ["error", {"before": false, "after": true}],
 		"quote-props": ["error", "as-needed"],
-		"quotes": ["error", "double", {
-			"avoidEscape": true,
-			"allowTemplateLiterals": true
-		}],
+		"quotes": ["error", "double", {"avoidEscape": true, "allowTemplateLiterals": true}],
 		"radix": "error",
 		"keyword-spacing": "error",
 		"space-before-blocks": ["error", "always"],
+		"space-before-function-paren": ["error", "never"],
 		"space-in-parens": ["error", "never"],
-		"space-unary-ops": ["error", {
-			"words": true,
-			"nonwords": false
-		}],
+		"space-infix-ops": "error",
+		"space-unary-ops": ["error", {"words": true, "nonwords": false}],
+		"spaced-comment": ["error", "always"],
 		"strict": ["error", "global"],
-		"wrap-iife": ["error", "inside"]
+		"wrap-iife": ["error", "inside"],
+		"array-bracket-spacing": ["error", "never"],
+		"comma-spacing": ["error", {"before": false, "after": true}],
+		"comma-style": ["error", "last"],
+		"computed-property-spacing": ["error", "never"],
+		"new-parens": "error",
+		"arrow-body-style": ["error", "always"],
+		"arrow-parens": ["error", "always"],
+		"arrow-spacing": "error",
+		"generator-star-spacing": ["error", "before"],
+		"yield-star-spacing": ["error", "after"],
+		"prefer-arrow-callback": "error",
+		"prefer-const": "error",
+		"require-yield": "error"
 	}
 }
