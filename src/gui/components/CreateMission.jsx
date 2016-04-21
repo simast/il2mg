@@ -7,30 +7,32 @@ const Screen = require("./Screen");
 // Create mission screen component
 class CreateMission extends React.Component {
 	
-	constructor(props, context) {
-		super(...arguments);
+	// Handle create mission button click
+	onCreateClick() {
 		
-		this.router = context.router;
+		// TODO: Create mission
+		this.context.router.replace("/missions");
 	}
 	
 	// Render component
 	render() {
 		
-		const router = this.router;
-		const params = this.props.params;
+		const context = this.context;
 		const actions = {
 			right: new Map()
 		};
 		
 		// Create mission
-		actions.right.set("Create", {});
+		actions.right.set("Create", {
+			onClick: this.onCreateClick.bind(this)
+		});
 		
 		// Cancel create mission
-		if (!params.type) {
+		if (context.missions.list.length) {
 			
 			actions.right.set("Cancel", {
 				onClick() {
-					router.goBack();
+					context.router.goBack();
 				}
 			});
 		}
@@ -42,7 +44,8 @@ class CreateMission extends React.Component {
 }
 
 CreateMission.contextTypes = {
-	router: React.PropTypes.object.isRequired
+	router: React.PropTypes.object.isRequired,
+	missions: React.PropTypes.object.isRequired
 };
 
 module.exports = CreateMission;

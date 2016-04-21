@@ -17,33 +17,20 @@ class Missions extends React.Component {
 	constructor(props, context) {
 		super(...arguments);
 		
-		this.router = context.router;
-		this.config = context.config;
 		this.state = {
-			missions: this.loadMissions()
+			missions: context.missions
 		};
 	}
 	
-	componentWillMount() {
+	// Load missions from specified path
+	static loadMissions(missionsPath) {
 		
-		const missions = this.state.missions;
-		
-		// Show create mission screen when mission list is empty
-		if (!missions.list.length) {
-			this.router.replace("/create");
-		}
-	}
-	
-	// Load a list of missions (from config.missionsPath)
-	loadMissions() {
-		
-		const {missionsPath} = this.config;
 		const missions = {
 			list: [],
 			index: Object.create(null)
 		};
 		
-		// Load a list of missions (from config.missionsPath)
+		// Scan each file in the target path/directory
 		fs.readdirSync(missionsPath).forEach((fileName) => {
 			
 			// Filter out invalid files
@@ -78,15 +65,33 @@ class Missions extends React.Component {
 		return missions;
 	}
 	
+	componentWillMount() {
+		
+		// Show/select first mission when component has no active mission param
+		if (!this.props.params.mission) {
+			
+			const {missions, router} = this.context;
+			
+			if (missions.list.length) {
+				router.replace("/missions/" + missions.list[0].id);
+			}
+		}
+	}
+	
 	componentDidMount() {
 		
-		const {missionsPath} = this.config;
+		const context = this.context;
+		const {missionsPath} = context.config;
 		
 		// Watch missions directory for any changes
 		this.watcher = fs.watch(missionsPath, {persistent: false}, () => {
 			
+			// Load new missions and update component state
 			this.setState({
-				missions: this.loadMissions()
+				missions: Object.assign(
+					context.missions,
+					Missions.loadMissions(missionsPath)
+				)
 			});
 		});
 	}
@@ -135,7 +140,8 @@ class Missions extends React.Component {
 
 Missions.contextTypes = {
 	router: React.PropTypes.object.isRequired,
-	config: React.PropTypes.object.isRequired
+	config: React.PropTypes.object.isRequired,
+	missions: React.PropTypes.object.isRequired
 };
 
 module.exports = Missions;

@@ -4,9 +4,9 @@
 const React = require("react");
 const ReactDOM = require("react-dom");
 const {Router, Route, IndexRedirect, hashHistory} = require("react-router");
-const Application = require("./comp/Application");
-const Missions = require("./comp/Missions");
-const CreateMission = require("./comp/CreateMission");
+const Application = require("./components/Application");
+const Missions = require("./components/Missions");
+const CreateMission = require("./components/CreateMission");
 
 // Render application
 ReactDOM.render((

@@ -81,6 +81,7 @@ app.on("ready", () => {
 	
 	const windowConfig = {
 		title: "il2mg - Mission Generator",
+		show: false,
 		useContentSize: true,
 		width: WINDOW_WIDTH,
 		height: WINDOW_HEIGHT,
@@ -119,6 +120,19 @@ app.on("ready", () => {
 	
 	// Prevent document from changing window title
 	mainWindow.on("page-title-updated", (event) => {
+		event.preventDefault();
+	});
+	
+	// Show main window only when content is loaded
+	mainWindow.webContents.on("did-finish-load", () => {
+		
+		if (!mainWindow.isVisible()) {
+			mainWindow.show();
+		}
+	});
+	
+	// Disable opening new windows (also fixes shift+click on link issue)
+	mainWindow.webContents.on("new-window", (event) => {
 		event.preventDefault();
 	});
 	
