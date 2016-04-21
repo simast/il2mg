@@ -20,7 +20,8 @@ module.exports = function(grunt) {
 
 	// All source files
 	const sourceFiles = [
-		"src/**/*.js",
+		"gruntfile.js",
+		"src/**/*.js*",
 		"build/**/*.js"
 	];
 
@@ -28,23 +29,10 @@ module.exports = function(grunt) {
 
 		pkg: grunt.file.readJSON("package.json"),
 
-		// JavaScript code style checker task
-		jscs: {
+		// ESLint JavaScript linter
+		eslint: {
 			all: {
-				src: sourceFiles,
-				options: {
-					config: true
-				}
-			}
-		},
-
-		// JSHint validator task
-		jshint: {
-			all: {
-				src: sourceFiles,
-				options: {
-					jshintrc: true
-				}
+				src: sourceFiles
 			}
 		},
 
@@ -70,23 +58,16 @@ module.exports = function(grunt) {
 	});
 
 	// Load all required NPM Grunt tasks
-	grunt.loadNpmTasks("grunt-jscs");
-	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks("grunt-eslint");
 	grunt.loadNpmTasks("grunt-contrib-clean");
 
 	// Load custom build Grunt tasks
 	grunt.loadTasks("build/tasks");
-
-	// Task to run static code analysis using JSHint and JSCS
-	grunt.registerTask("check", [
-		"jscs",
-		"jshint"
-	]);
 	
 	// Default task used for building the project
 	grunt.registerTask("default", [
 		"clean:data",
-		"check",
+		"eslint",
 		"build:sloc",
 		"build:blocks",
 		"build:locations",

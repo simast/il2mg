@@ -27,7 +27,6 @@ const makeAirfieldTaxi = require("./airfield.taxi");
 module.exports = function makeAirfields() {
 
 	const mission = this;
-	const params = mission.params;
 	const battle = mission.battle;
 	const rand = mission.rand;
 

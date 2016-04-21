@@ -169,7 +169,7 @@ module.exports = function makeWeather() {
 };
 
 // Make mission mist state
-function makeMist(weatherData) {
+function makeMist() {
 	
 	const rand = this.rand;
 	const time = this.time;
@@ -188,7 +188,7 @@ function makeMist(weatherData) {
 }
 
 // Make mission clouds
-function makeClouds(weather) {
+function makeClouds() {
 
 	const rand = this.rand;
 	const options = this.items.Options;
@@ -236,7 +236,7 @@ function makeClouds(weather) {
 }
 
 // Make mission precipitation
-function makePrecipitation(weather) {
+function makePrecipitation() {
 
 	const rand = this.rand;
 	const options = this.items.Options;
@@ -278,7 +278,7 @@ function makePrecipitation(weather) {
 }
 
 // Make mission sea state
-function makeSea(weather) {
+function makeSea() {
 
 	// TODO: Not supported/implemented yet
 	this.items.Options.SeaState = 0;
@@ -359,7 +359,7 @@ function makeTemperature(weather) {
 }
 
 // Make mission atmospheric pressure
-function makePressure(weather) {
+function makePressure() {
 
 	const rand = this.rand;
 	const cloudCover = this.weather.clouds.cover;
@@ -413,7 +413,7 @@ function makePressure(weather) {
 }
 
 // Make mission turbulence level
-function makeTurbulence(weather) {
+function makeTurbulence() {
 
 	const rand = this.rand;
 	const options = this.items.Options;
@@ -438,7 +438,7 @@ function makeTurbulence(weather) {
 }
 
 // Make mission wind layers
-function makeWind(weather) {
+function makeWind() {
 
 	const rand = this.rand;
 	const options = this.items.Options;

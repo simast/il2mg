@@ -39,7 +39,7 @@ class CreateMission extends React.Component {
 			<Screen id="create" actions={actions}></Screen>
 		);
 	}
-};
+}
 
 CreateMission.contextTypes = {
 	router: React.PropTypes.object.isRequired

@@ -253,7 +253,7 @@ data.briefingColor = Object.freeze({
 		Object.freeze(battle.countries);
 		Object.freeze(battle.units);
 	}
-}());
+})();
 
 /**
  * Register a new item (world object) type.

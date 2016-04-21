@@ -5,7 +5,7 @@
 const COLD_BOOST = 0.0024;
 
 // Make flight speed
-module.exports = function makeFlightSpeed(flight, altitude) {
+module.exports = function makeFlightSpeed(flight) {
 	
 	// TODO: Cache speed data (per flight based on altitude)
 	

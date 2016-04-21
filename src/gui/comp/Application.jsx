@@ -7,7 +7,7 @@ const {remote} = require("electron");
 // Application component
 class Application extends React.Component {
 	
-	constructor(props) {
+	constructor() {
 		super(...arguments);
 		
 		document.addEventListener("dragover", Application.onDragAndDrop, true);
@@ -20,7 +20,7 @@ class Application extends React.Component {
 		
 		return {
 			config: this.config
-		}
+		};
 	}
 	
 	// Disable file drag and drop for application window
@@ -40,7 +40,7 @@ class Application extends React.Component {
 			</div>
 		);
 	}
-};
+}
 
 Application.childContextTypes = {
 	config: React.PropTypes.object

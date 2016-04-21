@@ -1,13 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-
 // Generate mission map data
 module.exports = function makeMap() {
 
 	const options = this.items.Options;
-	const date = this.date;
 	const map = {};
 
 	Object.assign(map, this.battle.map);

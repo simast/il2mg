@@ -365,7 +365,7 @@ module.exports = function(grunt) {
 									const taxiPointData = getPointPosition(item, taxiPoint);
 
 									// Runway point
-									if (taxiPoint.Type == 2) {
+									if (taxiPoint.Type === 2) {
 										taxiPointData.push(itemFlag.TAXI_RUNWAY);
 									}
 

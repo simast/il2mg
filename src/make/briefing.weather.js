@@ -93,7 +93,7 @@ const windTypeSegments = {
 const windDirectionSegments = {
 	
 	// 4 point directions
-	"4": [
+	4: [
 		"northerly",
 		"easterly",
 		"southerly",
@@ -101,7 +101,7 @@ const windDirectionSegments = {
 	],
 	
 	// 8 point directions
-	"8": [
+	8: [
 		"the north",
 		"northeast",
 		"the east",
@@ -113,7 +113,7 @@ const windDirectionSegments = {
 	],
 	
 	// 16 point directions
-	"16": [
+	16: [
 		"the north",
 		"north-northeast",
 		"northeast",

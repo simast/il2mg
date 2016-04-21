@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 		// Build CLI application
 		function buildCLIApp() {
 			
-			return new Promise((resolve, reject) => {
+			return new Promise((resolve) => {
 
 				// List of CLI application files to process
 				const appFiles = [
@@ -79,10 +79,10 @@ module.exports = function(grunt) {
 
 				// Build application package.json file
 				grunt.file.write(appDir + "package.json", JSON.stringify({
-					"name": pkg.name,
-					"private": true,
-					"main": appFileMain,
-					"author": pkg.author
+					name: pkg.name,
+					private: true,
+					main: appFileMain,
+					author: pkg.author
 				}, null, "\t"));
 				
 				// Build main process JavaScript file (app.js)

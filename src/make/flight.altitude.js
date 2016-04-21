@@ -6,7 +6,7 @@ const MIN_ALTITUDE = 1500;
 const MAX_ALTITUDE = 3500;
 
 // Make flight altitude
-module.exports = function makeFlightAltitude(flight) {
+module.exports = function makeFlightAltitude() {
 	
 	const rand = this.rand;
 	const clouds = this.weather.clouds;

@@ -15,7 +15,7 @@ const PLACE_RADIUS = 5000; // 5 Km
 const location = data.location;
 
 // Make briefing location description
-module.exports = function makeBriefingLocation(target, isAir) {
+module.exports = function makeBriefingLocation(target) {
 	
 	if (!Array.isArray(target) || !target.length) {
 		return;

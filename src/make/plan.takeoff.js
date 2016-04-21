@@ -12,7 +12,6 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	const rand = this.rand;
 	const leaderPlaneItem = element[0].item;
 	const isAirStart = (typeof element.state === "number");
-	const isLeadingElement = (element === flight.elements[0]);
 	const isLastElement = (element === flight.elements[flight.elements.length - 1]);
 	const airfield = this.airfields[flight.airfield];
 	let takeoffCommand = flight.takeoffCommand;

@@ -12,10 +12,9 @@ module.exports = class Options extends Item {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
 	 * @returns {Buffer} Binary representation of the item.
 	 */
-	*toBinary(index) {
+	*toBinary() {
 
 		const date = moment(this.Date, "D.M.YYYY", true);
 		const time = moment(this.Time, "H:m:s", true);

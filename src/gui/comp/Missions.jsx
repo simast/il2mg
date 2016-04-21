@@ -131,7 +131,7 @@ class Missions extends React.Component {
 			</Screen>
 		);
 	}
-};
+}
 
 Missions.contextTypes = {
 	router: React.PropTypes.object.isRequired,

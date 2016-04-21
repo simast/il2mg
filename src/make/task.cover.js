@@ -11,7 +11,6 @@ const makeBriefingText = require("./briefing.text");
 const makeFlightSpeed = require("./flight.speed");
 
 // Data constants
-const planAction = data.planAction;
 const mapColor = data.mapColor;
 
 // First (intro) plan description segments

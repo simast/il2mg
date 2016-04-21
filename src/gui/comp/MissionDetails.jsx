@@ -18,7 +18,7 @@ class MissionDetails extends React.Component {
 			</section>
 		);
 	}
-};
+}
 
 MissionDetails.propTypes = {
 	mission: React.PropTypes.object.isRequired

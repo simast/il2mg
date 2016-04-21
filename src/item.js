@@ -241,7 +241,9 @@ class Item {
 	 */
 	setOrientationTo() {
 
-		let targetX, targetY, targetZ;
+		let targetX;
+		let targetY; // eslint-disable-line no-unused-vars
+		let targetZ;
 
 		// Arguments as another target item object: setOrientationTo(item)
 		if (arguments[0] instanceof Item) {
@@ -293,7 +295,6 @@ class Item {
 		}
 
 		const sourceX = this.XPos || 0;
-		const sourceY = this.YPos || 0;
 		const sourceZ = this.ZPos || 0;
 
 		// TODO: Support 3D orientation
@@ -811,7 +812,7 @@ class Item {
 		});
 
 		// Rule for the end of item definition
-		lexer.addRule(/\s*}\s*/i, (matched) => {
+		lexer.addRule(/\s*}\s*/i, () => {
 
 			const item = itemStack.pop();
 

@@ -3,7 +3,6 @@
 
 const fs = require("fs");
 const os = require("os");
-const util = require("util");
 const path = require("path");
 const Random = require("random-js");
 const data = require("./data");
@@ -13,7 +12,6 @@ const Item = require("./item");
 // Mission file extensions
 const FILE_EXT_TEXT = "Mission";
 const FILE_EXT_BINARY = "msnbin";
-const FILE_EXT_LIST = "list";
 const FILE_EXT_META = "il2mg";
 
 // List of mission parameters that make up the complex seed value
@@ -432,7 +430,7 @@ class Mission {
 			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT);
 
 			// Write .Mission data
-			fileStream.once("open", (fd) => {
+			fileStream.once("open", () => {
 
 				// Required mission file header
 				fileStream.write("# Mission File Version = 1.0;" + os.EOL);
@@ -539,7 +537,7 @@ class Mission {
 
 			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY);
 
-			fileStream.once("open", (fd) => {
+			fileStream.once("open", () => {
 
 				// Write Options item buffers (has to be the first one in the file)
 				while (optionsBuffers.length) {
@@ -606,7 +604,7 @@ class Mission {
 
 				const fileStream = fs.createWriteStream(fileName + "." + lang);
 
-				fileStream.once("open", (fd) => {
+				fileStream.once("open", () => {
 
 					// Write UCS2 little-endian BOM
 					fileStream.write("FFFE", "hex");
@@ -653,7 +651,7 @@ class Mission {
 			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_META);
 
 			// Write .il2mg data
-			fileStream.once("open", (fd) => {
+			fileStream.once("open", () => {
 				
 				fileStream.write(JSON.stringify({
 					title: this.title,

@@ -27,7 +27,6 @@ const MAX_DISTANCE = 120000;
 // Data constants
 const planAction = data.planAction;
 const territory = data.territory;
-const mapColor = data.mapColor;
 
 // Make mission fighter sweep task
 module.exports = function makeTaskSweep(flight) {

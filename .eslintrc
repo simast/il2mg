@@ -1,0 +1,42 @@
+{
+	"root": true,
+	"parserOptions": {
+		"ecmaVersion": 6
+	},
+	"env": {
+		"node": true,
+		"es6": true
+	},
+	"extends": "eslint:recommended",
+	"rules": {
+		"no-empty": ["error", {
+			"allowEmptyCatch": true
+		}],
+		"no-console": "off",
+		"no-var": "error",
+		"brace-style": ["error", "stroustrup", {
+			"allowSingleLine": true
+		}],
+		"curly": "error",
+		"eqeqeq": "error",
+		"indent": ["error", "tab", {"SwitchCase": 1}],
+		"key-spacing": "error",
+		"no-multiple-empty-lines": "error",
+		"object-curly-spacing": ["error", "never"],
+		"quote-props": ["error", "as-needed"],
+		"quotes": ["error", "double", {
+			"avoidEscape": true,
+			"allowTemplateLiterals": true
+		}],
+		"radix": "error",
+		"keyword-spacing": "error",
+		"space-before-blocks": ["error", "always"],
+		"space-in-parens": ["error", "never"],
+		"space-unary-ops": ["error", {
+			"words": true,
+			"nonwords": false
+		}],
+		"strict": ["error", "global"],
+		"wrap-iife": ["error", "inside"]
+	}
+}

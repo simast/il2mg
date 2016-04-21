@@ -12,16 +12,12 @@ class MissionsList extends React.Component {
 		return (
 			<ul id="missionsList">
 				{this.props.missions.map((mission) => {
-					return <MissionsList.Item key={mission.id} mission={mission} />
+					return <MissionsList.Item key={mission.id} mission={mission} />;
 				})}
 			</ul>
 		);
 	}
-};
-
-MissionsList.propTypes = {
-	missions: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
-};
+}
 
 // Mission list item component
 MissionsList.Item = ({mission}) => {
