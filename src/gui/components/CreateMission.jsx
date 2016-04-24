@@ -1,23 +1,17 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
+const execSync = require("child_process").execSync;
 const React = require("react");
 const Screen = require("./Screen");
 
 // Create mission screen component
 class CreateMission extends React.Component {
 	
-	// Handle create mission button click
-	onCreateClick() {
-		
-		// TODO: Create mission
-		this.context.router.replace("/missions");
-	}
-	
 	// Render component
 	render() {
 		
-		const context = this.context;
+		const {router} = this.context;
 		const actions = {
 			right: new Map()
 		};
@@ -28,11 +22,11 @@ class CreateMission extends React.Component {
 		});
 		
 		// Cancel create mission
-		if (context.missions.list.length) {
+		if (!this.props.location.query.first) {
 			
 			actions.right.set("Cancel", {
 				onClick() {
-					context.router.goBack();
+					router.goBack();
 				}
 			});
 		}
@@ -41,11 +35,22 @@ class CreateMission extends React.Component {
 			<Screen id="create" actions={actions}></Screen>
 		);
 	}
+	
+	// Handle create mission button click
+	onCreateClick() {
+		
+		const {config, router} = this.context;
+		
+		// TODO:
+		execSync(`node . -M "${config.missionsPath}"`);
+		
+		router.replace("/missions");
+	}
 }
 
 CreateMission.contextTypes = {
 	router: React.PropTypes.object.isRequired,
-	missions: React.PropTypes.object.isRequired
+	config: React.PropTypes.object.isRequired
 };
 
 module.exports = CreateMission;

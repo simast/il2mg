@@ -4,9 +4,7 @@
 const electron = require("electron");
 
 // Electron built-in modules
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-const ipcMain = electron.ipcMain;
+const {app, BrowserWindow, ipcMain} = electron;
 
 // Disable legacy built-in module require style
 electron.hideInternalModules();
@@ -39,19 +37,16 @@ const path = require("path");
 const WINDOW_WIDTH = 800;
 const WINDOW_HEIGHT = 600;
 
-// Show Developer Tools
-ipcMain.on("showDevTools", () => {
-	mainWindow.webContents.openDevTools({detach: true});
-});
-
-// Force reload
-ipcMain.on("forceReload", () => {
-	mainWindow.webContents.reloadIgnoringCache();
-});
-
 // Global JSON configuration data object
 const config = global.config = {};
 let configPath;
+
+// Set config data from renderer process
+ipcMain.on("config", (event, data) => {
+	
+	Object.assign(config, data);
+	event.returnValue = true;
+});
 
 // Quit when all windows are closed
 app.on("window-all-closed", () => {

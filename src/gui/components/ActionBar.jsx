@@ -31,7 +31,7 @@ module.exports = ({actions}) => {
 								
 								// Render separator element
 								if (key > 1) {
-									elements.push(<span key={++key}>•</span>);
+									elements.push(<span key={++key}>▪</span>);
 								}
 								
 								elements.push(linkElement);

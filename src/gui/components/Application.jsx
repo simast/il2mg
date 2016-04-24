@@ -2,8 +2,7 @@
 "use strict";
 
 const React = require("react");
-const {remote} = require("electron");
-const Missions = require("./Missions");
+const {remote, ipcRenderer} = require("electron");
 
 // Application component
 class Application extends React.Component {
@@ -15,31 +14,20 @@ class Application extends React.Component {
 		document.addEventListener("dragover", Application.onDragAndDrop, true);
 		document.addEventListener("drop", Application.onDragAndDrop, true);
 		
+		// FIXME: It's not clear why this is needed and why config object is not
+		// automatically updated in the main process when new properties are added.
+		window.addEventListener("unload", () => {
+			ipcRenderer.sendSync("config", this.config);
+		});
+		
 		this.config = remote.getGlobal("config");
-		this.missions = Missions.loadMissions(this.config.missionsPath);
 	}
 	
 	getChildContext() {
 		
 		return {
-			config: this.config,
-			missions: this.missions
+			config: this.config
 		};
-	}
-	
-	static onDragAndDrop(event) {
-		
-		// Disable file drag and drop for application window
-		event.preventDefault();
-		event.stopPropagation();
-	}
-	
-	componentWillMount() {
-
-		// Show create mission screen when missions list is empty
-		if (!this.missions.list.length) {
-			this.context.router.replace("/create");
-		}
 	}
 	
 	// Render component
@@ -52,15 +40,17 @@ class Application extends React.Component {
 			</div>
 		);
 	}
+	
+	static onDragAndDrop(event) {
+		
+		// Disable file drag and drop for application window
+		event.preventDefault();
+		event.stopPropagation();
+	}
 }
 
 Application.childContextTypes = {
-	config: React.PropTypes.object,
-	missions: React.PropTypes.object
-};
-
-Application.contextTypes = {
-	router: React.PropTypes.object.isRequired
+	config: React.PropTypes.object
 };
 
 module.exports = Application;

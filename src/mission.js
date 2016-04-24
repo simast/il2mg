@@ -376,21 +376,40 @@ class Mission {
 		const promises = [];
 
 		log.I("Saving mission...");
+		
+		let fileDir = "";
+		let fileBase;
 
-		// Use specified mission file path and name
-		// TODO: Allow specifying target directory as a mission path
+		// Use specified mission file path and/or name
 		if (fileName && fileName.length) {
-
-			// Make a path without an extension
-			const fileDir = path.dirname(fileName);
-			const fileBase = path.basename(fileName).replace(/\.[^/.]+$/, "");
-
-			fileName = path.join(fileDir, fileBase);
+			
+			let isDirectory = false;
+			
+			if (fs.existsSync(fileName)) {
+				isDirectory = fs.statSync(fileName).isDirectory();
+			}
+			
+			if (isDirectory) {
+				fileDir = fileName;
+			}
+			else {
+				
+				fileDir = path.dirname(fileName);
+				fileBase = path.basename(fileName, path.extname(fileName));
+			}
 		}
-		// Generate mission file path and name if not specified
-		else {
-			fileName = data.name + "-" + this.seed;
+		
+		// Generate unique mission file name (based on seed value)
+		if (!fileBase) {
+			fileBase = data.name + "-" + this.seed;
 		}
+		
+		// Make specified directory path
+		if (fileDir && !fs.existsSync(fileDir)) {
+			fs.mkdirSync(fileDir);
+		}
+		
+		fileName = path.join(fileDir, fileBase);
 
 		// Save text format file
 		if (format === Mission.FORMAT_TEXT || (this.debug && !params.format)) {
@@ -654,8 +673,10 @@ class Mission {
 			fileStream.once("open", () => {
 				
 				fileStream.write(JSON.stringify({
+					version: data.version,
 					title: this.title,
 					plane: this.planes[this.player.plane].name,
+					country: this.player.flight.country,
 					briefing: this.briefing
 				}, null, "\t"));
 
