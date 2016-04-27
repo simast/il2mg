@@ -173,7 +173,7 @@ a:active {
 	pointer-events: auto;
 	margin: 140px var(--content-spacing) 0 0;
 	width: 240px;
-	padding: 5px 15px 5px 0;
+	padding: 4px 15px 4px 0;
 	max-height: 325px;
 	overflow-y: auto;
 }

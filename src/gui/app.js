@@ -37,6 +37,12 @@ const path = require("path");
 const WINDOW_WIDTH = 800;
 const WINDOW_HEIGHT = 600;
 
+// Config file name
+const CONFIG_FILE = "Config.json";
+
+// Default missions storage directory name
+const MISSIONS_DIR = "Missions";
+
 // Global JSON configuration data object
 const config = global.config = {};
 let configPath;
@@ -56,8 +62,10 @@ app.on("window-all-closed", () => {
 // Create main application window
 app.on("ready", () => {
 	
+	const userDataPath = app.getPath("userData");
+	
 	// Load JSON configuration data
-	configPath = path.join(app.getPath("userData"), "config.json");
+	configPath = path.join(userDataPath, CONFIG_FILE);
 	
 	try {
 		Object.assign(config, JSON.parse(fs.readFileSync(configPath, "utf-8")));
@@ -66,7 +74,7 @@ app.on("ready", () => {
 	
 	// Initialize default missions storage path
 	if (!config.missionsPath) {
-		config.missionsPath = path.join(app.getPath("documents"), app.getName());
+		config.missionsPath = path.join(userDataPath, MISSIONS_DIR);
 	}
 	
 	// Make sure missions storage directory exists

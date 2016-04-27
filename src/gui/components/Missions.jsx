@@ -3,7 +3,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const execFile = require("child_process").execFile;
+const spawn = require("child_process").spawn;
 const remote = require("electron").remote;
 const React = require("react");
 const Screen = require("./Screen");
@@ -13,19 +13,26 @@ const MissionDetails = require("./MissionDetails");
 // Mission metadata file extension
 const FILE_EXT_META = ".il2mg";
 
-// Game executable and autoplay.cfg paths (relative to base directory)
+// Game file and directory paths (relative to base game directory)
 const PATH_EXE = "bin\\game\\Il-2.exe";
-const PATH_AUTOPLAY = "data\\autoplay.cfg";
+const PATH_DATA = "data";
+const PATH_AUTOPLAY = PATH_DATA + "\\autoplay.cfg";
+const PATH_TRACKS = PATH_DATA + "\\Tracks";
+
+// NOTE: This is a max time (in milliseconds) to wait before removing
+// generated autoplay.cfg file after game executable is launched. This is
+// required to make sure users are not left in a permanent "autoplay" state.
+const MAX_AUTOPLAY_TIME = 6000; // 6 seconds
 
 // Default difficulty mode
 const DEFAULT_DIFFICULTY = 1;
 
-// Difficulty settings modes
-const difficultyMode = {
-	0: "Custom",
-	1: "Normal",
-	2: "Expert"
-};
+// Difficulty settings/preset modes
+const difficultyModes = new Map([
+	[1, "Normal"],
+	[2, "Expert"],
+	[0, "Custom"]
+]);
 
 // Missions screen component
 class Missions extends React.Component {
@@ -38,9 +45,13 @@ class Missions extends React.Component {
 		let difficulty = DEFAULT_DIFFICULTY;
 		
 		// Use difficulty from config
-		if (config.difficulty !== undefined && difficultyMode[config.difficulty]) {
+		if (difficultyModes.has(config.difficulty)) {
 			difficulty = config.difficulty;
 		}
+		
+		// Remove any existing autoplay.cfg file
+		// NOTE: A workaround to fix leftover file in case of a program crash
+		this.removeAutoPlay();
 		
 		// Create context menu for launch button difficulty choice
 		if (missions.list.length) {
@@ -48,19 +59,17 @@ class Missions extends React.Component {
 			const {Menu, MenuItem} = remote;
 			const launchMenu = this.launchMenu = new Menu();
 			
-			for (let mode in difficultyMode) {
-				
-				mode = +mode;
+			difficultyModes.forEach((difficultyLabel, difficultyID) => {
 				
 				launchMenu.append(new MenuItem({
-					label: difficultyMode[mode],
+					label: difficultyLabel,
 					type: "radio",
-					checked: (mode === difficulty),
+					checked: (difficultyID === difficulty),
 					click: () => {
-						this.setDifficulty(mode);
+						this.setDifficulty(difficultyID);
 					}
 				}));
-			}
+			});
 		}
 		
 		this.state = {missions, difficulty};
@@ -89,13 +98,11 @@ class Missions extends React.Component {
 		
 		this._onKeyDown = this.onKeyDown.bind(this);
 		document.addEventListener("keydown", this._onKeyDown, true);
-		this.startWatching();
 	}
 	
 	componentWillUnmount() {
 		
 		document.removeEventListener("keydown", this._onKeyDown, true);
-		this.stopWatching();
 	}
 	
 	// Render component
@@ -165,31 +172,6 @@ class Missions extends React.Component {
 		
 		event.preventDefault();
 		event.stopPropagation();
-	}
-	
-	// Start watching missions directory for file changes
-	startWatching() {
-		
-		if (this.watcher) {
-			return;
-		}
-
-		const {missionsPath} = this.context.config;
-		
-		// Watch and reload missions directory on any changes
-		this.watcher = fs.watch(missionsPath, {persistent: false}, () => {
-			this.setState({missions: this.loadMissions()});
-		});
-	}
-	
-	// Stop watching missions directory for file changes
-	stopWatching() {
-		
-		if (this.watcher) {
-			
-			this.watcher.close();
-			this.watcher = null;
-		}
 	}
 	
 	// Load missions from missions directory
@@ -281,8 +263,6 @@ class Missions extends React.Component {
 			const mission = missions.index[missionID];
 			const files = mission.files;
 			
-			this.stopWatching();
-			
 			for (const fileName of files) {
 				fs.unlinkSync(path.join(missionsPath, fileName));
 			}
@@ -310,7 +290,6 @@ class Missions extends React.Component {
 			}
 			
 			this.setState({missions});
-			this.startWatching();
 		}
 	}
 	
@@ -320,7 +299,7 @@ class Missions extends React.Component {
 		const {config} = this.context;
 		
 		// Force selecting game path on first run or when existing path is invalid
-		if (!config.gamePath || !Missions.isValidGamePath(config.gamePath)) {
+		if (!config.gamePath || !this.isValidGamePath(config.gamePath)) {
 			selectFolder = true;
 		}
 		
@@ -347,7 +326,7 @@ class Missions extends React.Component {
 			// Check for valid game path in the selected folder (and in any parents)
 			while (gamePath) {
 				
-				isValidPath = Missions.isValidGamePath(gamePath);
+				isValidPath = this.isValidGamePath(gamePath);
 				
 				// Found valid path
 				if (isValidPath) {
@@ -388,13 +367,43 @@ class Missions extends React.Component {
 		
 		const gameExePath = path.join(config.gamePath, PATH_EXE);
 		
-		this.createAutoPlay();
-		
-		// Run game executable
-		execFile(gameExePath, {cwd: path.dirname(gameExePath)});
-		
-		// Minimize window
-		remote.getCurrentWindow().minimize();
+		try {
+			
+			this.createAutoPlay();
+			
+			// Run game executable
+			const gameProcess = spawn(gameExePath, {
+				cwd: path.dirname(gameExePath),
+				stdio: "ignore",
+				detached: true
+			});
+			
+			// Don't wait for the spawned game process to exit
+			gameProcess.unref();
+			
+			// Minimize window
+			remote.getCurrentWindow().minimize();
+		}
+		finally {
+			
+			const onWindowUnload = () => {
+				this.removeAutoPlay();
+			};
+			
+			// Register window unload event (as a backup for removing autoplay.cfg
+			// file on application quit before delayed timeout event is executed).
+			window.addEventListener("unload", onWindowUnload);
+			
+			// Setup delayed autoplay.cfg file removal event - making sure game
+			// executable has enough time to actually read the generated file.
+			// TODO: Use fs.watchFile?
+			this.autoplayRemoveTS = setTimeout(() => {
+				
+				this.removeAutoPlay();
+				window.removeEventListener("unload", onWindowUnload);
+				
+			}, MAX_AUTOPLAY_TIME);
+		}
 	}
 	
 	// Set launch difficulty mode
@@ -409,6 +418,12 @@ class Missions extends React.Component {
 	// Create autoplay.cfg file
 	createAutoPlay() {
 		
+		if (this.autoplayRemoveTS) {
+			
+			clearTimeout(this.autoplayRemoveTS);
+			delete this.autoplayRemoveTS;
+		}
+		
 		const {gamePath, missionsPath} = this.context.config;
 		const missionID = this.props.params.mission;
 		
@@ -416,28 +431,67 @@ class Missions extends React.Component {
 			return;
 		}
 		
+		// Make autoplay.cfg
 		fs.writeFileSync(
 			path.join(gamePath, PATH_AUTOPLAY),
 			[
 				"&enabled=1",
 				"&missionSettingsPreset=" + this.state.difficulty,
-				'&missionPath="' + path.join(missionsPath, missionID) + '"'
+				'&missionPath="' + path.join(missionsPath, missionID) + '"',
+				// FIXME: Flight track records do not work with autoplay.cfg!
+				'&trackPath="' + path.join(gamePath, PATH_TRACKS) + '"'
 			].join("\r\n")
 		);
 	}
 	
-	// TODO: Remove autoplay.cfg file
+	// Remove autoplay.cfg file
 	removeAutoPlay() {
 		
+		if (this.autoplayRemoveTS) {
+			
+			clearTimeout(this.autoplayRemoveTS);
+			delete this.autoplayRemoveTS;
+		}
+		
+		const {gamePath} = this.context.config;
+		
+		if (!gamePath) {
+			return;
+		}
+		
+		const autoplayPath = path.join(gamePath, PATH_AUTOPLAY);
+		
+		try {
+			
+			if (fs.existsSync(autoplayPath)) {
+				fs.unlinkSync(autoplayPath);
+			}
+		}
+		catch (e) {}
 	}
 	
 	// Check if specified game path is valid
-	static isValidGamePath(gamePath) {
+	isValidGamePath(gamePath) {
 		
 		if (!gamePath) {
 			return false;
 		}
 		
+		// Check for "data" directory
+		try {
+			
+			const dataPath = path.join(gamePath, PATH_DATA);
+			const hasDataDirectory = fs.statSync(dataPath).isDirectory();
+			
+			if (!hasDataDirectory) {
+				return false;
+			}
+		}
+		catch (e) {
+			return false;
+		}
+		
+		// Check for game executable
 		return fs.existsSync(path.join(gamePath, PATH_EXE));
 	}
 }
