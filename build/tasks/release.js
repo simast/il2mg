@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 		const path = require("path");
 		const JSON5 = require("json5");
 		const UglifyJS = require("uglify-js");
+		const CleanCSS = require("clean-css");
 		const browserify = require("browserify");
 		const electronPackager = require("electron-packager");
 		const enclose = require("enclose");
@@ -75,6 +76,7 @@ module.exports = function(grunt) {
 				
 				const appFileMain = "app.js";
 				const appFileHTML = "main.html";
+				const appFileCSS = "style.css";
 				const appFileJS = "main.js";
 
 				// Build application package.json file
@@ -101,9 +103,26 @@ module.exports = function(grunt) {
 				// Build renderer process HTML file (main.html)
 				grunt.file.copy("src/gui/" + appFileHTML, appDir + appFileHTML);
 				
+				// Build renderer process CSS file (style.css)
+				grunt.file.copy("src/gui/" + appFileCSS, appDir + appFileCSS, {
+					process(content) {
+						return new CleanCSS().minify(content).styles;
+					}
+				});
+				
+				// Browserify bundling options
+				const browserifyOptions = {
+					entries: ["src/gui/" + appFileJS + "x"],
+					debug: false,
+					node: true,
+					ignoreMissing: true,
+					detectGlobals: false,
+					transform: ["babelify"],
+					extensions: [".jsx"]
+				};
+				
 				// Build renderer process JavaScript file (main.js)
-				browserify("src/gui/" + appFileJS + "x")
-					.transform("babelify")
+				browserify(browserifyOptions)
 					.bundle((error, buffer) => {
 					
 						if (error) {
@@ -120,8 +139,10 @@ module.exports = function(grunt) {
 					}
 				);
 				
-				// TODO: Build renderer process CSS file
-				// TODO: Include data and asset files
+				// Include assets
+				grunt.file.copy("src/gui/assets", appDir + "assets");
+				
+				// TODO: Include data files
 			});
 		}
 		
@@ -154,7 +175,7 @@ module.exports = function(grunt) {
 				
 				const options = [];
 				const extension = (process.platform === "win32") ? ".exe" : "";
-				const binaryFilePath = "../../" + appPath + "/resources/" + pkg.name + extension;
+				const binaryFilePath = "../../" + appPath + "/" + pkg.name + "-cli" + extension;
 				
 				grunt.file.setBase(buildDir);
 		

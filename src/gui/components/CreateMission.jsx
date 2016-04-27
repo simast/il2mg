@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const execSync = require("child_process").execSync;
+const execSync = global.require("child_process").execSync;
 const React = require("react");
 const Screen = require("./Screen");
 

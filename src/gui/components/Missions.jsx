@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const fs = require("fs");
-const path = require("path");
-const spawn = require("child_process").spawn;
+const fs = global.require("fs");
+const path = global.require("path");
+const spawn = global.require("child_process").spawn;
 const remote = require("electron").remote;
 const React = require("react");
 const Screen = require("./Screen");
