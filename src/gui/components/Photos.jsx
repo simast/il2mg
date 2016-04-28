@@ -52,6 +52,8 @@ class Photos extends React.Component {
 		
 		let i = 1;
 		
+		// TODO: Preload other photos as hidden images
+		
 		return (
 			<div id="photos">
 				{this.state.photos.map((photoID) => {

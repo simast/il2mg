@@ -10,7 +10,6 @@ module.exports = ({id, children, actions}) => {
 	
 	return (
 		<div id="screen">
-			<Photos screen={id}/>
 			<div id="container">
 				<div id="content">
 					<div id={id}>
@@ -19,6 +18,7 @@ module.exports = ({id, children, actions}) => {
 				</div>
 				<ActionBar actions={actions} />
 			</div>
+			<Photos screen={id}/>
 		</div>
 	);
 };

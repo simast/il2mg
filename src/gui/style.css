@@ -14,7 +14,7 @@ html, body, #main, #application, #screen, #container {
 body {
 	margin: 0;
 	cursor: default;
-	font-family: "Segoe UI";
+	font-family: "Segoe UI", "Helvetica Neue";
 	font-size: 14px;
 	background-image: url("assets/bg.png");
 	-webkit-user-select: none;
@@ -90,21 +90,21 @@ a:active {
 	-webkit-filter: drop-shadow(3px 1px 1px rgba(0,0,0,0.25));
 }
 #photos .create1 {
-	left: 320px;
-	top: 180px;
-	transform: rotate(-9deg);
+	right: 150px;
+	top: -50px;
+	transform: rotate(-11deg);	
 }
 #photos .create2 {
-	left: 220px;
-	top: 230px;
-	transform: rotate(14deg);
+	right: -10px;
+	top: -25px;
+	transform: rotate(9deg);
+	-webkit-filter: drop-shadow(-2px 1px 1px rgba(0,0,0,0.25));
 }
 
 /* Bottom action bar */
 #actionBar {
 	box-sizing: border-box;
 	pointer-events: auto;
-	cursor: default;
 	flex: 0 0 auto;
 	height: 75px;
 	margin: 0 var(--content-spacing);
@@ -238,7 +238,6 @@ a:active {
 /* Mission title */
 #missionDetails h1 {
 	display: block;
-	cursor: default;
 	font-weight: normal;
 	font-size: 17px;
 	line-height: var(--title-height);
@@ -305,6 +304,20 @@ a:active {
 	margin: 0;
 }
 #briefing i {
+	font-style: oblique;
+}
+
+/* Create mission screen */
+#create {
+	pointer-events: auto;
+}
+
+/* Battle title/select */
+#create h1 {
+	display: block;
+	margin: 0;
+	font-size: 24px;
+	font-weight: normal;
 	font-style: oblique;
 }
 
