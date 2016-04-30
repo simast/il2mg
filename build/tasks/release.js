@@ -11,17 +11,16 @@ module.exports = function(grunt) {
 		const UglifyJS = require("uglify-js");
 		const CleanCSS = require("clean-css");
 		const browserify = require("browserify");
+		const envify = require("envify/custom");
 		const electronPackager = require("electron-packager");
 		const enclose = require("enclose");
+		const data = require("../../src/data");
 
 		const done = this.async();
 		const pkg = grunt.config("pkg");
 		const outDir = "build/";
 		const buildDir = outDir + "temp/";
 		const appDir = buildDir + "app/";
-		
-		// Set production mode (required for React.js)
-		process.env.NODE_ENV = "production";
 		
 		// Build CLI application
 		function buildCLIApp() {
@@ -110,39 +109,36 @@ module.exports = function(grunt) {
 					}
 				});
 				
-				// Browserify bundling options
-				const browserifyOptions = {
+				// Build renderer process JavaScript file (main.js)
+				browserify({
 					entries: ["src/gui/" + appFileJS + "x"],
 					debug: false,
 					node: true,
 					ignoreMissing: true,
 					detectGlobals: false,
-					transform: ["babelify"],
+					transform: [
+						"babelify",
+						[envify({_: "purge", NODE_ENV: "production"}), {global: true}]
+					],
 					extensions: [".jsx"]
-				};
-				
-				// Build renderer process JavaScript file (main.js)
-				browserify(browserifyOptions)
-					.bundle((error, buffer) => {
+				})
+				.bundle((error, buffer) => {
 					
-						if (error) {
-							return reject(error);
-						}
-						
-						const content = buffer.toString("utf-8");
-						
-						grunt.file.write(appDir + appFileJS, UglifyJS.minify(content, {
-							fromString: true
-						}).code);
-						
-						resolve();
+					if (error) {
+						return reject(error);
 					}
-				);
+					
+					const content = buffer.toString("utf-8");
+					
+					grunt.file.write(appDir + appFileJS, UglifyJS.minify(content, {
+						fromString: true
+					}).code);
+					
+					resolve();
+				});
 				
 				// Include assets
 				grunt.file.copy("src/gui/assets", appDir + "assets");
-				
-				// TODO: Include data files
 			});
 		}
 		
@@ -156,14 +152,40 @@ module.exports = function(grunt) {
 					platform: process.platform,
 					dir: appDir,
 					out: outDir,
-					asar: true
+					asar: true,
+					"app-copyright": data.copyright,
+					"app-version": "0." + data.version.match(/[0-9]+/)[0],
+					"version-string": {
+						CompanyName: "",
+						FileDescription: pkg.description,
+						OriginalFilename: pkg.name + ".exe",
+						ProductName: pkg.name,
+						InternalName: pkg.name
+					}
 				}, (error, appPath) => {
 					
 					if (error) {
 						return reject(error);
 					}
 					
-					resolve(appPath.pop());
+					appPath = appPath.pop();
+					
+					// Clean some default files from packaged distribution
+					["version"].forEach((file) => {
+						grunt.file.delete(path.join(appPath, file));
+					});
+					
+					// Move license files to "licenses" directory
+					["LICENSE", "LICENSES.chromium.html"].forEach((file) => {
+						
+						const sourcePath = path.join(appPath, file);
+						const destinationPath = path.join(appPath, "licenses", file);
+						
+						grunt.file.copy(sourcePath, destinationPath);
+						grunt.file.delete(sourcePath);
+					});
+					
+					resolve(appPath);
 				});
 			});
 		}
@@ -175,7 +197,12 @@ module.exports = function(grunt) {
 				
 				const options = [];
 				const extension = (process.platform === "win32") ? ".exe" : "";
-				const binaryFilePath = "../../" + appPath + "/" + pkg.name + "-cli" + extension;
+				const binaryFilePath = path.join(
+					"../..",
+					appPath,
+					"resources",
+					pkg.name + "-cli" + extension
+				);
 				
 				grunt.file.setBase(buildDir);
 		

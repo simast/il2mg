@@ -6,6 +6,7 @@ const path = global.require("path");
 const spawn = global.require("child_process").spawn;
 const remote = require("electron").remote;
 const React = require("react");
+const Application = require("./Application");
 const Screen = require("./Screen");
 const MissionsList = require("./MissionsList");
 const MissionDetails = require("./MissionDetails");
@@ -348,17 +349,9 @@ class Missions extends React.Component {
 			}
 			// Show error message and abort if game path is invalid
 			else {
-
-				remote.dialog.showMessageBox(
-					remote.getCurrentWindow(),
-					{
-						type: "error",
-						title: "Error!",
-						message: "Selected folder is not a valid IL-2 Sturmovik directory:\n\n" + folder,
-						buttons: ["OK"],
-						defaultId: 0,
-						noLink: true
-					}
+				
+				Application.showErrorMessage(
+					"Selected folder is not a valid IL-2 Sturmovik directory:\n\n" + folder
 				);
 				
 				return;

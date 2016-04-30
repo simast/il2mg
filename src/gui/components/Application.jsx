@@ -47,6 +47,22 @@ class Application extends React.Component {
 		event.preventDefault();
 		event.stopPropagation();
 	}
+	
+	// Show error message dialog
+	static showErrorMessage(message) {
+
+		// Show error message dialog
+		remote.dialog.showMessageBox(
+			remote.getCurrentWindow(),
+			{
+				type: "error",
+				title: "Error!",
+				message,
+				buttons: ["OK"],
+				noLink: true
+			}
+		);
+	}
 }
 
 Application.childContextTypes = {

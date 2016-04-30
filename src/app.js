@@ -28,6 +28,9 @@ params.version(data.name + " " + data.version + " " + data.copyright);
 // Create mission metadata file (--meta)
 params.option("-M, --meta", "create metadata file");
 
+// Use quite output mode (--quiet)
+params.option("-Q, --quiet", "use quite output mode");
+
 // NOTE: For development mode only when not compiled to binary!
 if (!process.versions.enclose) {
 	
@@ -270,20 +273,6 @@ params.option("-a, --airfield <airfield>", "select an airfield", (value) => {
 	return String(value).trim();
 });
 
-/**
- * TODO: Support other command-line params:
- *
- * --players - Number of players.
- * --complexity - Mission complexity (detail level).
- * --difficulty - Mission difficulty level.
- */
-params.parse(process.argv);
-
-// Turn on verbose log level in debug mode
-if (params.debug) {
-	log.transports.console.level = "I";
-}
-
 const appDomain = domain.create();
 
 // Handle app domain error events and uncaught exceptions
@@ -299,13 +288,15 @@ appDomain.on("error", (error) => {
 	}
 	// Log exceptions/errors
 	else if (error instanceof Error) {
-
-		log.E(error.message ? error.message : error);
-
-		// Include stack trace in debug mode
+		
+		let message = error.toString();
+		
+		// Use full error message (with stack trace) in debug mode
 		if (params.debug && error.stack) {
-			console.log(error.stack);
+			message = error.stack;
 		}
+		
+		log.E(message);
 	}
 
 	process.exit(1);
@@ -313,6 +304,34 @@ appDomain.on("error", (error) => {
 
 // Run app domain logic
 appDomain.run(() => {
+	
+	/**
+	 * TODO: Support other command-line params:
+	 *
+	 * --players - Number of players.
+	 * --complexity - Mission complexity (detail level).
+	 * --difficulty - Mission difficulty level.
+	 */
+	try {
+		params.parse(process.argv);
+	}
+	finally {
+		
+		// Turn on verbose log level in debug mode
+		if (params.debug) {
+			log.transports.console.level = "I";
+		}
+		
+		// Set console output to quiet mode
+		if (params.quiet) {
+			
+			Object.assign(log.transports.console, {
+				level: "E",
+				showLevel: false,
+				colorize: false
+			});
+		}
+	}
 
 	// Validate command line params
 
@@ -443,7 +462,10 @@ appDomain.run(() => {
 	// Save mission files
 	mission.save(params.args[0]).then(
 		() => {
-			log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")");
+			
+			if (!params.quiet) {
+				log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")");
+			}
 		},
 		(error) => {
 			appDomain.emit("error", error);

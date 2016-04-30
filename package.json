@@ -1,5 +1,6 @@
 {
 	"name": "il2mg",
+	"description": "il2mg - Mission Generator",
 	"version": "0.0.0",
 	"private": true,
 	"main": "./gruntfile.js",
@@ -30,7 +31,7 @@
 		"enclose": "2.0.2",
 		"sloc": "0.1.10",
 		"uglify-js": "mishoo/UglifyJS2#harmony",
-		"electron-prebuilt": "0.37.7",
+		"electron-prebuilt": "0.37.8",
 		"electron-packager": "7.0.1",
 		"babel-register": "6.7.2",
 		"babel-eslint": "6.0.4",
@@ -38,9 +39,10 @@
 		"eslint-plugin-react": "5.0.1",
 		"browserify": "13.0.0",
 		"babelify": "7.3.0",
-		"react": "15.0.1",
-		"react-dom": "15.0.1",
-		"react-router": "2.3.0",
+		"envify": "3.4.0",
+		"react": "15.0.2",
+		"react-dom": "15.0.2",
+		"react-router": "2.4.0",
 		"clean-css": "3.4.12"
 	}
 }

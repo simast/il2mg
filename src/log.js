@@ -24,6 +24,7 @@ const log = module.exports = new (winston.Logger)({
 	transports: [
 		new winston.transports.Console({
 			level: "E", // Default log reporting level (Error + Done)
+			stderrLevels: ["E"],
 			colorize: true
 		})
 	]
@@ -32,8 +33,8 @@ const log = module.exports = new (winston.Logger)({
 // HACK: Workaround for log.profile() using hardcoded "info" level
 log.info = log.I;
 
-// Intercept all console.error calls (from commander error messages) and log
-// them as winston "error" level messages.
+// HACK: Intercept all console.error calls (from commander error messages) and
+// log them as winston "error" level messages.
 console.error = function() {
 
 	if (!arguments.length) {
@@ -44,9 +45,9 @@ console.error = function() {
 
 	if (message.length) {
 
-		message = message.replace(/^error:\s*/i, "");
+		message = message.replace(/^error:\s*/i, "").trim();
 
 		arguments[0] = message;
-		log.E.apply(log, arguments);
+		throw Array.prototype.slice.call(arguments);
 	}
 };
