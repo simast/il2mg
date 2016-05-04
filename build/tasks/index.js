@@ -382,17 +382,20 @@ module.exports = function(grunt) {
 						// Register new unit
 						if (!json.units[unitID]) {
 							
-							let name = unitName;
+							const unitIndexData = {
+								name: unitName,
+								country: unitCountry
+							};
 							
 							if (unitSuffix) {
-								name += " " + unitSuffix;
+								unitIndexData.suffix = unitSuffix;
 							}
 							
 							if (unitAlias) {
-								name += " “" + unitAlias + "”";
+								unitIndexData.alias = unitAlias;
 							}
 							
-							json.units[unitID] = name;
+							json.units[unitID] = unitIndexData;
 						}
 						
 						// Register new plane

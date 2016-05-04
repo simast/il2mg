@@ -37,10 +37,5 @@
 	},
 
 	// Yak-1 ser.96
-	"yak1s96": {
-		name: "Yak-1 ser.96",
-		parent: "yak1s69",
-		model: "graphics\\planes\\yak1s69\\yak1s69.mgm",
-		script: "luascripts\\worldobjects\\planes\\yak1s69.txt"
-	}
+	"yak1s96": "yak1s69"
 }

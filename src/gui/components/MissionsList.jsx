@@ -70,16 +70,16 @@ MissionsList.Item = ({mission, onContextMenu}) => {
 	
 	const linkProps = {
 		to: "/missions/" + mission.id,
-		activeClassName: "active",
+		activeClassName: "selected",
 		onContextMenu() {
 			onContextMenu(mission);
-		}
+		},
+		className: "country c" + mission.country
 	};
 	
 	return (
 		<li>
 			<Link {...linkProps}>
-				<span className={"country c" + mission.country}></span>
 				<em>{mission.plane}</em>
 				{mission.title}
 			</Link>

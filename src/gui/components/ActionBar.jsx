@@ -22,7 +22,10 @@ module.exports = ({actions}) => {
 								
 								let linkElement;
 								
-								if (props.to) {
+								if (props.disabled) {
+									linkElement = <span key={key}>{children}</span>;
+								}
+								else if (props.to) {
 									linkElement = <Link key={key} {...props}>{children}</Link>;
 								}
 								else {

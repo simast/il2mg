@@ -1,7 +1,7 @@
 :root {
 	--content-spacing: 25px;
 	--main-text-color: #333;
-	--separator-color: rgba(87,91,69,0.4);
+	--separator-color: rgba(51,51,51,0.35);
 }
 
 html, body, #main, #application, #screen, #container {
@@ -14,6 +14,7 @@ html, body, #main, #application, #screen, #container {
 body {
 	margin: 0;
 	cursor: default;
+	color: var(--main-text-color);
 	font-family: "Segoe UI", "Helvetica Neue";
 	font-size: 14px;
 	background-image: url("assets/bg.png");
@@ -23,6 +24,8 @@ body {
 /* Default link style */
 a {
 	text-decoration: none;
+	cursor: pointer;
+	color: var(--main-text-color);
 	-webkit-user-drag: none;
 }
 a:hover {
@@ -33,6 +36,9 @@ a:active {
 	top: 1px;
 	text-decoration: none;
 	opacity: 0.8;
+}
+a.selected {
+	font-weight: bold;
 }
 
 /* Application screen container and main flex layout */
@@ -122,18 +128,18 @@ a:active {
 #actionBar nav.right {
 	float: right;
 }
-#actionBar a {
+#actionBar a,
+#actionBar span {
 	display: inline-block;
-	cursor: pointer;
-	color: var(--main-text-color);
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 0 6px;
 }
+#actionBar a {
+	cursor: pointer;
+}
 #actionBar span {
-	display: inline-block;
 	color: var(--separator-color);
-	padding: 0 6px;
 }
 
 /* Custom difficulty */
@@ -149,18 +155,29 @@ a:active {
 	text-shadow: 0 0 30px rgba(176,76,0,1);
 }
 
-/* Country icons */
-.country {
+/* Links with country icons */
+a.country:before {
 	display: inline-block;
-	background-color: transparent;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
 	width: 14px;
-	height: 14px;
+	padding-right: 5px;
+	position: relative;
+	top: 2px;
+	opacity: 0.4;
+	-webkit-filter: grayscale(0.5);
 }
-.country.c101 { background-image: url("assets/country-101.png"); }
-.country.c201 { background-image: url("assets/country-201.png"); }
-.country.c202 { background-image: url("assets/country-202.png"); }
+a.country.c101:before {
+	content: url("assets/country-101.png");
+}
+a.country.c201:before {
+	content: url("assets/country-201.png");
+}
+a.country.c202:before {
+	content: url("assets/country-202.png");
+}
+a.country.selected:before {
+	opacity: 1;
+	-webkit-filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+}
 
 /* Missions screen */
 #missions {
@@ -179,7 +196,6 @@ a:active {
 }
 #missionsList a {
 	display: block;
-	color: var(--main-text-color);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -200,21 +216,7 @@ a:active {
 	content: "]";
 	opacity: 0.5;
 }
-#missionsList .country {
-	position: relative;
-	top: 2px;
-	margin-right: 5px;
-	opacity: 0.4;
-	-webkit-filter: grayscale(0.5);
-}
-#missionsList a.active {
-	font-weight: bold;
-}
-#missionsList a.active .country {
-	opacity: 1;
-	-webkit-filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
-}
-#missionsList a.active em {
+#missionsList a.selected em {
 	font-weight: normal;
 }
 
@@ -318,6 +320,106 @@ a:active {
 	margin: 0;
 	font-size: 24px;
 	font-weight: normal;
+	font-style: oblique;
+}
+
+/* Select misison date */
+#selectDate em {
+	display: block;
+	padding-left: 5px;
+}
+#selectDate input {
+	display: block;
+	width: 375px;
+	margin-top: 15px;
+}
+
+/* Create mission choices lists */
+#choices {
+	margin-top: 30px;
+	overflow: hidden;
+}
+#choices h2 {
+	display: block;
+	margin: 0 0 10px 0;
+	font-weight: normal;
+	font-size: 16px;
+	height: 28px;
+	line-height: 28px;
+	border-bottom: 2px dotted var(--separator-color);
+}
+#choices h2 span {
+	display: inline-block;
+	margin-left: 5px;
+}
+#choices h2 span:before {
+	content: "[";
+	opacity: 0.5;
+}
+#choices h2 span:after {
+	content: "]";
+	opacity: 0.5;
+}
+#choices h2 a {
+	float: right;
+	color: var(--separator-color);
+	font-size: 14px;
+	text-align: center;
+	line-height: 18px;
+	height: 18px;
+	width: 18px;
+	margin-top: 6px;
+}
+#choices h2 a:hover {
+	text-decoration: none;
+	color: var(--main-text-color);
+}
+#choices .choiceList {
+	float: left;
+}
+#choices .choiceList.unit {
+	width: 31%;
+}
+#choices .choiceList.plane {
+	width: 23.6%;
+}
+#choices .choiceList.task {
+	width: 23.6%;
+}
+#choices .choiceList.airfield {
+	width: 21.8%;
+}
+#choices .choiceList ul {
+	max-height: 300px;
+	overflow-y: auto;
+	padding: 5px 10px 5px 0;
+}
+#choices .choiceList h2,
+#choices .choiceList ul {
+	margin-right: 35px;
+}
+#choices .choiceList:last-child h2,
+#choices .choiceList:last-child ul {
+	margin-right: 0;
+}
+#choices .choiceList li {
+	display: block;
+	list-style-type: none;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+#choices .choiceList li a {
+	line-height: 19px;
+}
+#choices .choiceList .invalid {
+	opacity: 0.5;
+}
+#choices .choiceList .selected span,
+#choices .choiceList .selected em {
+	font-weight: normal;
+}
+#choices .choiceList em {
 	font-style: oblique;
 }
 

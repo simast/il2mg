@@ -127,10 +127,5 @@
 	},
 	
 	// Bf 109 G-4
-	"bf109g4": {
-		name: "Bf 109 G-4",
-		parent: "bf109g2",
-		model: "graphics\\planes\\bf109g2\\bf109g2.mgm",
-		script: "luascripts\\worldobjects\\planes\\bf109g2.txt"
-	}
+	"bf109g4": "bf109g2"
 }

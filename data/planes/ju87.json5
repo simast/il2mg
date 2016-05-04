@@ -20,12 +20,7 @@
 	},
 
 	// Ju 87 D-1
-	"ju87d1": {
-		name: "Ju 87 D-1",
-		parent: "ju87d3",
-		model: "graphics\\planes\\ju87d3\\ju87d3.mgm",
-		script: "luascripts\\worldobjects\\planes\\ju87d3.txt"
-	},
+	"ju87d1": "ju87d3",
 
 	// Ju 87 D-3
 	"ju87d3": {
