@@ -47,7 +47,7 @@ class ChoiceList extends React.Component {
 		}
 		
 		if (selectedCount > 0) {
-			reset = <a onClick={onChoiceReset}>✖</a>;
+			reset = <a className="reset" onClick={onChoiceReset}></a>;
 		}
 		
 		return (

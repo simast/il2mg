@@ -90,6 +90,9 @@ class CreateMission extends React.Component {
 					date={date}
 					onDateChange={(date) => {
 						this.setState({date});
+					}}
+					onDateReset={() => {
+						this.setState({date: undefined});
 					}} />
 				<div id="choices">
 					{choiceLists.map(([type, title]) => {
@@ -254,8 +257,6 @@ class CreateMission extends React.Component {
 					items.push(choice);
 				}
 			}
-			
-			// TODO: Combine choices with the same title into one
 			
 			// Sort items by data ID
 			if (choiceType !== "unit") {

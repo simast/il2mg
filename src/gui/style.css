@@ -41,6 +41,11 @@ a.selected {
 	font-weight: bold;
 }
 
+/* Disable yellow outline for keyboard navigation */
+a:focus, input:focus, textarea:focus, select:focus {
+	outline: none;
+}
+
 /* Application screen container and main flex layout */
 #container {
 	display: flex;
@@ -314,6 +319,22 @@ a.country.selected:before {
 	pointer-events: auto;
 }
 
+#create .reset {
+	color: var(--separator-color);
+	font-size: 14px;
+	text-align: center;
+	line-height: 18px;
+	height: 18px;
+	width: 18px;
+}
+#create .reset:before {
+	content: "✖";
+}
+#create .reset:hover {
+	text-decoration: none;
+	color: var(--main-text-color);
+}
+
 /* Battle title/select */
 #create h1 {
 	display: block;
@@ -324,19 +345,49 @@ a.country.selected:before {
 }
 
 /* Select misison date */
+#selectDate {
+	position: relative;
+	height: 90px;
+}
 #selectDate em {
 	display: block;
-	padding-left: 5px;
+	padding-left: 10px;
 }
 #selectDate input {
 	display: block;
+	float: left;
 	width: 375px;
-	margin-top: 15px;
+	margin: 25px 0 0 0;
+	cursor: pointer;
+	-webkit-appearance: none;
+}
+#selectDate input::-webkit-slider-runnable-track {
+	height: 6px;
+	border-radius: 2.5px;
+	box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.2), 0 0 1px 0 rgba(0,0,0,0.4);
+	/* NOTE: Dynamic background gradient is set from JavaScript! */
+}
+#selectDate input::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	margin-top: -7px;
+	border: 1px solid #333;
+	background: linear-gradient(#666, #333);
+	box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.4), 0 1px 1px 0 rgba(0,0,0,0.2);
+}
+#selectDate input::-webkit-slider-thumb:active {
+	border: 1px solid #666;
+	background: linear-gradient(#333, #666);
+}
+#selectDate .reset {
+	float: left;
+	margin: 19px 0 0 8px;
 }
 
 /* Create mission choices lists */
 #choices {
-	margin-top: 30px;
 	overflow: hidden;
 }
 #choices h2 {
@@ -360,19 +411,9 @@ a.country.selected:before {
 	content: "]";
 	opacity: 0.5;
 }
-#choices h2 a {
+#choices h2 .reset {
 	float: right;
-	color: var(--separator-color);
-	font-size: 14px;
-	text-align: center;
-	line-height: 18px;
-	height: 18px;
-	width: 18px;
 	margin-top: 6px;
-}
-#choices h2 a:hover {
-	text-decoration: none;
-	color: var(--main-text-color);
 }
 #choices .choiceList {
 	float: left;
