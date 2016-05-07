@@ -88,8 +88,18 @@ module.exports = function makeForces() {
 		unit: unit.id
 	};
 	
-	if (params.task) {
-		flightParams.task = params.task;
+	if (choice.task) {
+		
+		// Find matching unit task choice
+		for (const task of rand.shuffle(unit.tasks)) {
+			
+			if (!choice.task.has(task.id)) {
+				continue;
+			}
+			
+			flightParams.task = task.id;
+			break;
+		}
 	}
 
 	// FIXME: Make a number of active and shedulled flights

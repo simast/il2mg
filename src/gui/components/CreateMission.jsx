@@ -12,6 +12,9 @@ const ChoiceList = require("./ChoiceList");
 // Record key data parameter separator
 const RECORD_SEP = "~";
 
+// Multiple param values separator (as OR choice)
+const PARAM_SEP = ",";
+
 // List of record key data parameters
 const recordParams = [
 	["country", "countries"],
@@ -328,6 +331,7 @@ class CreateMission extends React.Component {
 	onCreateClick() {
 		
 		const {config, router} = this.context;
+		const {battle, date, choice} = this.state;
 		
 		let cliFile = path.join(process.resourcesPath, "il2mg-cli");
 		const cliParams = [];
@@ -343,10 +347,21 @@ class CreateMission extends React.Component {
 			"--quiet", // Use quite mode (with error output only and no colors)
 			"--meta", // Generate metadata .il2mg file
 			"--format", "binary", // TODO: Set mission file format from options
-			config.missionsPath
+			"--batle", battle
 		);
 		
-		// TODO: Set --battle
+		// Set selected date
+		if (date) {
+			cliParams.push("--date", date);
+		}
+		
+		// Set data choices
+		for (const param in choice) {
+			cliParams.push("--" + param, choice[param].join(PARAM_SEP));
+		}
+		
+		// Mission files path
+		cliParams.push(config.missionsPath);
 		
 		// Create mission using CLI application
 		try {

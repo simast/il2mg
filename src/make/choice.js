@@ -12,8 +12,11 @@ const RECORD_PARAMS = [
 	"task"
 ];
 
-// Separator used for building unique record keys
+// Record key data parameter separator
 const RECORD_SEP = "~";
+
+// Multiple param values separator (as OR choice)
+const PARAM_SEP = ",";
 
 // Generate mission player choice data
 module.exports = function makeChoice() {
@@ -68,80 +71,25 @@ module.exports = function makeChoice() {
 		filter.country = params.country;
 	}
 	
-	// Filter on desired task param
-	if (params.task) {
-
-		// Unknown task
-		if (!index.tasks[params.task]) {
-			throw ["Unknown task!", {task: params.task}];
+	// Filter on desired data choice params
+	for (const param of ["task", "plane", "unit", "airfield"]) {
+		
+		if (!params[param]) {
+			continue;
 		}
-
-		filter.task = params.task;
-	}
-	
-	// Filter on desired plane param
-	if (params.plane) {
 		
-		let query = getDataID(params.plane);
-		let isPlaneKnown = Boolean(data.planes[query]);
-		
-		// Try to find matching plane ID when query is given as a plane name
-		if (!isPlaneKnown) {
+		params[param].split(PARAM_SEP).forEach((value) => {
 			
-			for (const planeID in data.planes) {
-				
-				const plane = data.planes[planeID];
+			value = value.trim();
 			
-				if (plane && typeof plane === "object" && plane.name &&
-					query === getDataID(plane.name)) {
-					
-					query = planeID;
-					isPlaneKnown = true;
-					break;
-				}
+			// Unknown param value
+			if (!index[param + "s"][value]) {
+				throw ["Unknown " + param + "!", {[param]: value}];
 			}
-		}
-		
-		// Unknown plane ID
-		if (!isPlaneKnown) {
-			throw ["Unknown plane!", {plane: params.plane}];
-		}
-		// Exact matching plane ID provided
-		else if (index.planes[query]) {
-			filter.plane = query;
-		}
-		// Filter as a partial plane ID query (to match groups)
-		else {
-			filter.plane = query + ".*?";
-		}
-	}
 	
-	// Filter on desired unit param
-	if (params.unit) {
-		
-		const query = getDataID(params.unit);
-		
-		// Exact matching unit ID provided
-		if (index.units[query]) {
-			filter.unit = query;
-		}
-		// Filter as a partial unit ID query
-		else {
-			filter.unit = ".*?" + query + ".*?";
-		}
-	}
-	
-	// Filter on desired airfield param
-	if (params.airfield) {
-		
-		const query = getDataID(params.airfield, true);
-		
-		// Unknown airfield ID/name
-		if (!index.airfields[query]) {
-			throw ["Unknown airfield!", {airfield: params.airfield}];
-		}
-
-		filter.airfield = query;
+			filter[param] = filter[param] || [];
+			filter[param].push(value);
+		});
 	}
 	
 	let isGroundStartOnly = true;
@@ -182,7 +130,7 @@ module.exports = function makeChoice() {
 				
 				// Filter on multiple data types (as OR condition)
 				if (filterData.length > 1) {
-					scanRegExp.push("(" + filterData.join("|") + ")");
+					scanRegExp.push("(?:" + filterData.join("|") + ")");
 				}
 				// Filter on a single data param
 				else {
@@ -282,19 +230,3 @@ module.exports = function makeChoice() {
 	// Pick a random valid battle date
 	params.date = rand.pick(validDates);
 };
-
-// Get a normalized data ID from an input/query string
-function getDataID(input, useWS) {
-	
-	// Replace multiple spaces with a single space character
-	input = input.trim().replace(/\s{2,}/g, " ");
-	
-	// Remove invalid characters
-	input = input.replace(/([^a-z0-9_\s]+)/gi, "");
-	
-	// Replace whitespace
-	input = input.replace(/\s/g, useWS ? "_" : "");
-	
-	// All data IDs are lowercase
-	return input.toLowerCase();
-}

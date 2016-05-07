@@ -60,48 +60,63 @@ class ChoiceList extends React.Component {
 }
 
 // Data choice list item component
-ChoiceList.Item = ({choice, onChoiceClick}) => {
+ChoiceList.Item = class extends React.Component {
 	
-	const data = choice.data;
-	let suffix, alias;
-	
-	if (data.suffix) {
-		suffix = <span>{" " + data.suffix}</span>;
+	shouldComponentUpdate(nextProps) {
+		
+		const nextChoice = nextProps.choice;
+		const prevChoice = this.props.choice;
+		
+		// Update choice list item only on valid/selected state change
+		return (nextChoice.valid !== prevChoice.valid ||
+						nextChoice.selected !== prevChoice.selected);
 	}
 	
-	if (data.alias) {
-		alias = <em>{" “" + data.alias + "”"}</em>;
-	}
-	
-	const propsItem = {};
-	const propsLink = {
-		onClick: () => {
-			onChoiceClick(choice.id);
+	// Render component
+	render() {
+		
+		const {choice, onChoiceClick} = this.props;
+		const data = choice.data;
+		let suffix, alias;
+		
+		if (data.suffix) {
+			suffix = <span>{" " + data.suffix}</span>;
 		}
-	};
-	
-	const className = [];
-	
-	if (data.country) {
-		className.push("country", "c" + data.country);
+		
+		if (data.alias) {
+			alias = <em>{" “" + data.alias + "”"}</em>;
+		}
+		
+		const propsItem = {};
+		const propsLink = {
+			onClick: () => {
+				onChoiceClick(choice.id);
+			}
+		};
+		
+		const className = [];
+		
+		if (data.country) {
+			className.push("country", "c" + data.country);
+		}
+		
+		if (choice.selected) {
+			className.push("selected");
+		}
+		else if (!choice.valid) {
+			propsItem.className = "invalid";
+		}
+		
+		if (className.length) {
+			propsLink.className = className.join(" ");
+		}
+		
+		return (
+			<li {...propsItem}>
+				<a {...propsLink}>{data.name}{suffix}{alias}</a>
+			</li>
+		);
 	}
-	
-	if (choice.selected) {
-		className.push("selected");
-	}
-	else if (!choice.valid) {
-		propsItem.className = "invalid";
-	}
-	
-	if (className.length) {
-		propsLink.className = className.join(" ");
-	}
-	
-	return (
-		<li {...propsItem}>
-			<a {...propsLink}>{data.name}{suffix}{alias}</a>
-		</li>
-	);
 };
 
 module.exports = ChoiceList;

@@ -409,10 +409,6 @@ appDomain.run(() => {
 		if (task.length > 1) {
 			params.story = task.slice(1);
 		}
-		
-		if (!data.tasks[params.task]) {
-			throw ["Unknown task!", {task: params.task}];
-		}
 	}
 	
 	// --pilot

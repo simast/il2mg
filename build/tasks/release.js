@@ -153,6 +153,7 @@ module.exports = function(grunt) {
 					dir: appDir,
 					out: outDir,
 					asar: true,
+					icon: "src/gui/app.ico",
 					"app-copyright": data.copyright,
 					"app-version": "0." + data.version.match(/[0-9]+/)[0],
 					"version-string": {

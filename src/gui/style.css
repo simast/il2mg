@@ -77,7 +77,7 @@ a:focus, input:focus, textarea:focus, select:focus {
 	margin-left: 9px;
 	margin-top: 8px;
 	background-color: #fff;
-	-webkit-filter: grayscale(1) contrast(0.9) sepia(0.5) invert(0.1);
+	-webkit-filter: grayscale(0.9) contrast(0.9) brightness(0.9) sepia(0.7) invert(0.1);
 }
 #photos .photo:active img {
 	-webkit-filter: none;
