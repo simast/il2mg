@@ -6,9 +6,6 @@ const electron = require("electron");
 // Electron built-in modules
 const {app, BrowserWindow, ipcMain} = electron;
 
-// Disable legacy built-in module require style
-electron.hideInternalModules();
-
 let mainWindow = null;
 
 // Make sure only a single app instance is allowed to run at the same time
@@ -33,9 +30,11 @@ if (isOtherInstance) {
 const fs = require("fs");
 const path = require("path");
 
-// Window size
-const WINDOW_WIDTH = 800;
-const WINDOW_HEIGHT = 600;
+// Max and min window size
+const MIN_WINDOW_WIDTH = 800;
+const MAX_WINDOW_WIDTH = 1000;
+const MIN_WINDOW_HEIGHT = 600;
+const MAX_WINDOW_HEIGHT = 750;
 
 // Config file name
 const CONFIG_FILE = "Config.json";
@@ -86,14 +85,18 @@ app.on("ready", () => {
 		title: "il2mg - Mission Generator",
 		show: false,
 		useContentSize: true,
-		width: WINDOW_WIDTH,
-		height: WINDOW_HEIGHT,
-		resizable: false,
+		width: MIN_WINDOW_WIDTH,
+		height: MIN_WINDOW_HEIGHT,
+		minWidth: MIN_WINDOW_WIDTH,
+		minHeight: MIN_WINDOW_HEIGHT,
+		maxWidth: MAX_WINDOW_WIDTH,
+		maxHeight: MAX_WINDOW_HEIGHT,
+		resizable: true,
 		maximizable: false,
 		acceptFirstMouse: true,
 		fullscreenable: false,
 		autoHideMenuBar: true,
-		backgroundColor: "#fbe9bc", // TODO
+		backgroundColor: "#f8e0b4",
 		webPreferences: {
 			webgl: false,
 			webaudio: false,
@@ -113,7 +116,7 @@ app.on("ready", () => {
 		x = Math.min(Math.max(x, workArea.x), workArea.x + workArea.width - width);
 		y = Math.min(Math.max(y, workArea.y), workArea.y + workArea.height - height);
 		
-		Object.assign(windowConfig, {center: false, x, y});
+		Object.assign(windowConfig, {center: false, x, y, width, height});
 	}
 	
 	mainWindow = new BrowserWindow(windowConfig);
@@ -141,7 +144,11 @@ app.on("ready", () => {
 	
 	// Save main window position and size
 	mainWindow.on("close", () => {
-		config.window = mainWindow.getBounds();
+		
+		const {x, y} = mainWindow.getBounds();
+		const [width, height] = mainWindow.getContentSize();
+		
+		config.window = {x, y, width, height};
 	});
 	
 	// Invalidate main window reference

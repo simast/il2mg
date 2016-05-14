@@ -31,7 +31,7 @@ class MissionsList extends React.Component {
 		// Scroll active/selected mission item into view (if needed)
 		if (this.listElement) {
 			
-			const activeElement = this.listElement.querySelector(".active");
+			const activeElement = this.listElement.querySelector(".selected");
 			
 			if (activeElement) {
 				activeElement.scrollIntoViewIfNeeded();
