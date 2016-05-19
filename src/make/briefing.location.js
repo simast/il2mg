@@ -136,11 +136,9 @@ module.exports = function makeBriefingLocation(target) {
 		// Use map grid reference as a place name
 		else {
 			
-			// Map grid is not based on normal X/Z left/bottom coordinate space
-			const gridMaxZ = 1 + Math.floor(this.map.width / GRID_SIZE);
-			const gridX = (this.map.height - place[0]) / GRID_SIZE;
-			const gridZ = place[1] / GRID_SIZE;
-			const grid = Math.floor(gridX) * gridMaxZ + 1 + Math.floor(gridZ);
+			// NOTE: Map grid is based on top/left coordinate space
+			const gridX = 1 + (this.map.height - place[0]) / GRID_SIZE;
+			const gridZ = 1 + place[1] / GRID_SIZE;
 			
 			// Each grid is sub-divided into 9 smaller sub-grids
 			const subgridSize = Math.sqrt(9);
@@ -148,7 +146,9 @@ module.exports = function makeBriefingLocation(target) {
 			const subgridZ = (gridZ % 1) * subgridSize;
 			const subgrid = Math.floor(subgridX) * subgridSize + 1 + Math.floor(subgridZ);
 			
-			placeName = "grid " + ("000" + grid).substr(-3, 3);
+			placeName = "grid ";
+			placeName += ("00" + Math.floor(gridX)).substr(-2, 2);
+			placeName += ("00" + Math.floor(gridZ)).substr(-2, 2);
 			
 			// NOTE: Subgrid number 5 is not visible on the map
 			if (subgrid !== 5) {
