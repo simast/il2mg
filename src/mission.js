@@ -612,8 +612,15 @@ class Mission {
 	saveLang(fileName) {
 
 		const promises = [];
-
-		data.languages.forEach((lang) => {
+		let languages = this.params.lang;
+		
+		// Generate default (first) language only
+		if (!languages || !languages.length) {
+			languages = data.languages.slice(0, 1);
+		}
+		
+		// Make language files
+		languages.forEach((lang) => {
 
 			const profileName = "Saving ." + lang;
 

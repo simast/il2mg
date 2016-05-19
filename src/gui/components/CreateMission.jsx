@@ -346,6 +346,7 @@ class CreateMission extends React.Component {
 		cliParams.push(
 			"--quiet", // Use quite mode (with error output only and no colors)
 			"--meta", // Generate metadata .il2mg file
+			"--lang", // Create all language files
 			"--format", "binary", // TODO: Set mission file format from options
 			"--batle", battle
 		);

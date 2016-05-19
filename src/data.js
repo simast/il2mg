@@ -12,14 +12,19 @@ const data = module.exports = Object.create(null);
 data.name = "il2mg";
 
 // Application version
-data.version = "r6";
+data.version = "r7";
 
 // Application copyright
 data.copyright = "(C) Simas Toleikis, 2015-2016";
 
 // List of supported mission localization languages
 data.languages = Object.freeze([
-	"eng" // English
+	"eng", // English (default)
+	"ger", // German
+	"pol", // Polish
+	"rus", // Russian
+	"spa", // Spanish
+	"fra" // French
 ]);
 
 // Data tags for special airfield items

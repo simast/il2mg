@@ -31,6 +31,18 @@ params.option("-M, --meta", "create metadata file");
 // Use quite output mode (--quiet)
 params.option("-Q, --quiet", "use quite output mode");
 
+// Create language files (--lang)
+params.option("-L, --lang [language]", "create language files", (value) => {
+	
+	return String(value).split(",")
+		.map((lang) => {
+			return lang.trim();
+		})
+		.filter((lang) => {
+			return lang.length > 0;
+		});
+});
+
 // NOTE: For development mode only when not compiled to binary!
 if (!process.versions.enclose) {
 	
@@ -334,6 +346,21 @@ appDomain.run(() => {
 	}
 
 	// Validate command line params
+	
+	// --lang
+	if (Array.isArray(params.lang)) {
+		
+		params.lang.forEach((lang) => {
+			
+			if (data.languages.indexOf(lang) === -1) {
+				throw ["Invalid language!", {language: lang}];
+			}
+		});
+	}
+	// Make all languages when "lang" param is used without a value (as a flag)
+	else if (params.lang === true) {
+		params.lang = data.languages;
+	}
 
 	// --debug
 	if (typeof params.debug === "boolean" && params.debug) {

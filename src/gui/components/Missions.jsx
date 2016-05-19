@@ -18,12 +18,11 @@ const FILE_EXT_META = ".il2mg";
 const PATH_EXE = "bin\\game\\Il-2.exe";
 const PATH_DATA = "data";
 const PATH_AUTOPLAY = PATH_DATA + "\\autoplay.cfg";
-const PATH_TRACKS = PATH_DATA + "\\Tracks";
 
 // NOTE: This is a max time (in milliseconds) to wait before removing
 // generated autoplay.cfg file after game executable is launched. This is
 // required to make sure users are not left in a permanent "autoplay" state.
-const MAX_AUTOPLAY_TIME = 6000; // 6 seconds
+const MAX_AUTOPLAY_TIME = 10000; // 10 seconds
 
 // Default difficulty mode
 const DEFAULT_DIFFICULTY = 1;
@@ -430,9 +429,7 @@ class Missions extends React.Component {
 			[
 				"&enabled=1",
 				"&missionSettingsPreset=" + this.state.difficulty,
-				'&missionPath="' + path.join(missionsPath, missionID) + '"',
-				// FIXME: Flight track records do not work with autoplay.cfg!
-				'&trackPath="' + path.join(gamePath, PATH_TRACKS) + '"'
+				'&missionPath="' + path.join(missionsPath, missionID) + '"'
 			].join("\r\n")
 		);
 	}

@@ -30,7 +30,7 @@ if (isOtherInstance) {
 const fs = require("fs");
 const path = require("path");
 
-// Max and min window size
+// Min and max window size
 const MIN_WINDOW_WIDTH = 800;
 const MAX_WINDOW_WIDTH = 1000;
 const MIN_WINDOW_HEIGHT = 600;
