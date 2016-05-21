@@ -21,12 +21,14 @@ class Application extends React.Component {
 		});
 		
 		this.config = remote.getGlobal("config");
+		this.userDataPath = remote.app.getPath("userData");
 	}
 	
 	getChildContext() {
 		
 		return {
-			config: this.config
+			config: this.config,
+			userDataPath: this.userDataPath
 		};
 	}
 	
@@ -66,7 +68,8 @@ class Application extends React.Component {
 }
 
 Application.childContextTypes = {
-	config: React.PropTypes.object
+	config: React.PropTypes.object,
+	userDataPath: React.PropTypes.string
 };
 
 module.exports = Application;

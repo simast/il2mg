@@ -31,7 +31,7 @@
 		"enclose": "2.0.2",
 		"sloc": "0.1.10",
 		"uglify-js": "mishoo/UglifyJS2#harmony",
-		"electron-prebuilt": "1.1.0",
+		"electron-prebuilt": "1.1.1",
 		"electron-packager": "7.0.2",
 		"babel-register": "6.9.0",
 		"babel-eslint": "6.0.4",
@@ -40,9 +40,9 @@
 		"browserify": "13.0.1",
 		"babelify": "7.3.0",
 		"envify": "3.4.0",
-		"react": "15.0.2",
-		"react-dom": "15.0.2",
-		"react-router": "2.4.0",
+		"react": "15.1.0",
+		"react-dom": "15.1.0",
+		"react-router": "2.4.1",
 		"clean-css": "3.4.12"
 	}
 }

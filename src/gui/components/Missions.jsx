@@ -14,10 +14,13 @@ const MissionDetails = require("./MissionDetails");
 // Mission metadata file extension
 const FILE_EXT_META = ".il2mg";
 
+// Autoplay file name
+const FILE_AUTOPLAY = "autoplay.cfg";
+
 // Game file and directory paths (relative to base game directory)
-const PATH_EXE = "bin\\game\\Il-2.exe";
+const PATH_EXE = path.join("bin", "game", "Il-2.exe");
 const PATH_DATA = "data";
-const PATH_AUTOPLAY = PATH_DATA + "\\autoplay.cfg";
+const PATH_AUTOPLAY = path.join(PATH_DATA, FILE_AUTOPLAY);
 
 // NOTE: This is a max time (in milliseconds) to wait before removing
 // generated autoplay.cfg file after game executable is launched. This is
@@ -49,9 +52,9 @@ class Missions extends React.Component {
 			difficulty = config.difficulty;
 		}
 		
-		// Remove any existing autoplay.cfg file
+		// Restore any existing autoplay.cfg file
 		// NOTE: A workaround to fix leftover file in case of a program crash
-		this.removeAutoPlay();
+		this.restoreAutoPlay();
 		
 		// Create context menu for launch button difficulty choice
 		if (missions.list.length) {
@@ -379,19 +382,19 @@ class Missions extends React.Component {
 		finally {
 			
 			const onWindowUnload = () => {
-				this.removeAutoPlay();
+				this.restoreAutoPlay();
 			};
 			
-			// Register window unload event (as a backup for removing autoplay.cfg
+			// Register window unload event (as a backup for restoring autoplay.cfg
 			// file on application quit before delayed timeout event is executed).
 			window.addEventListener("unload", onWindowUnload);
 			
-			// Setup delayed autoplay.cfg file removal event - making sure game
+			// Setup delayed autoplay.cfg file restore event - making sure game
 			// executable has enough time to actually read the generated file.
 			// TODO: Use fs.watchFile?
 			this.autoplayRemoveTS = setTimeout(() => {
 				
-				this.removeAutoPlay();
+				this.restoreAutoPlay();
 				window.removeEventListener("unload", onWindowUnload);
 				
 			}, MAX_AUTOPLAY_TIME);
@@ -410,23 +413,36 @@ class Missions extends React.Component {
 	// Create autoplay.cfg file
 	createAutoPlay() {
 		
-		if (this.autoplayRemoveTS) {
+		if (this.autoplayRestoreTS) {
 			
-			clearTimeout(this.autoplayRemoveTS);
-			delete this.autoplayRemoveTS;
+			clearTimeout(this.autoplayRestoreTS);
+			delete this.autoplayRestoreTS;
 		}
 		
-		const {gamePath, missionsPath} = this.context.config;
+		const {userDataPath, config} = this.context;
+		const {gamePath, missionsPath} = config;
 		const missionID = this.props.params.mission;
 		
 		if (!gamePath || !missionID) {
 			return;
 		}
 		
+		const autoplayPath = path.join(gamePath, PATH_AUTOPLAY);
+		
+		// Make a backup copy of the original autoplay.cfg file
+		if (fs.existsSync(autoplayPath)) {
+			
+			fs.writeFileSync(
+				path.join(userDataPath, FILE_AUTOPLAY),
+				fs.readFileSync(autoplayPath)
+			);
+		}
+		
 		// Make autoplay.cfg
 		fs.writeFileSync(
-			path.join(gamePath, PATH_AUTOPLAY),
+			autoplayPath,
 			[
+				"&il2mg=1", // Flag used to identify generated autoplay file
 				"&enabled=1",
 				"&missionSettingsPreset=" + this.state.difficulty,
 				'&missionPath="' + path.join(missionsPath, missionID) + '"'
@@ -434,27 +450,42 @@ class Missions extends React.Component {
 		);
 	}
 	
-	// Remove autoplay.cfg file
-	removeAutoPlay() {
+	// Restore autoplay.cfg file
+	restoreAutoPlay() {
 		
-		if (this.autoplayRemoveTS) {
+		if (this.autoplayRestoreTS) {
 			
-			clearTimeout(this.autoplayRemoveTS);
-			delete this.autoplayRemoveTS;
+			clearTimeout(this.autoplayRestoreTS);
+			delete this.autoplayRestoreTS;
 		}
 		
-		const {gamePath} = this.context.config;
+		const {userDataPath, config} = this.context;
+		const {gamePath} = config;
 		
 		if (!gamePath) {
 			return;
 		}
 		
 		const autoplayPath = path.join(gamePath, PATH_AUTOPLAY);
+		const backupAutoplayPath = path.join(userDataPath, FILE_AUTOPLAY);
 		
 		try {
 			
-			if (fs.existsSync(autoplayPath)) {
-				fs.unlinkSync(autoplayPath);
+			// Restore backup copy of the original autoplay.cfg file
+			if (fs.existsSync(backupAutoplayPath)) {
+				
+				fs.writeFileSync(autoplayPath, fs.readFileSync(backupAutoplayPath));
+				fs.unlinkSync(backupAutoplayPath);
+			}
+			// Remove existing autoplay.cfg file
+			else if (fs.existsSync(autoplayPath)) {
+				
+				const autoplayContent = fs.readFileSync(autoplayPath, "utf8");
+				
+				// Remove only known/generated autoplay file
+				if (autoplayContent.indexOf("&il2mg=1") >= 0) {
+					fs.unlinkSync(autoplayPath);
+				}
 			}
 		}
 		catch (e) {}
@@ -488,7 +519,8 @@ class Missions extends React.Component {
 
 Missions.contextTypes = {
 	router: React.PropTypes.object.isRequired,
-	config: React.PropTypes.object.isRequired
+	config: React.PropTypes.object.isRequired,
+	userDataPath: React.PropTypes.string.isRequired
 };
 
 module.exports = Missions;
