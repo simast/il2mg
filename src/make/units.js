@@ -352,6 +352,20 @@ module.exports = function makeUnits() {
 				}
 			}
 		}
+		
+		const rebase = {
+			to: []
+		};
+		
+		// Mark unit airfield transfer (rebase) targets
+		if (unitAirfields.length > 1) {
+			
+			rebase.from = unitAirfields[0].id;
+			
+			for (let i = 1; i < unitAirfields.length; i++) {
+				rebase.to.push(unitAirfields[i].id);
+			}
+		}
 
 		// Randomize unit part and airfield lists
 		rand.shuffle(unitParts);
@@ -417,6 +431,11 @@ module.exports = function makeUnits() {
 				}
 
 				return;
+			}
+			
+			// Assign rebase task targets
+			if (unit.airfield === rebase.from) {
+				unit.rebase = rebase.to;
 			}
 
 			// Register unit plane storages

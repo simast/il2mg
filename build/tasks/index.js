@@ -281,6 +281,9 @@ module.exports = function(grunt) {
 					}
 					
 					const airfields = new Map();
+					const rebase = {
+						to: []
+					};
 					
 					// Find matching airfields
 					for (const dataAirfields of unitAirfields) {
@@ -307,6 +310,18 @@ module.exports = function(grunt) {
 									availability = 1;
 								}
 								
+								// Auto-assign rebase task
+								if (airfields.size) {
+									
+									// TODO: Support rebase flights to offmap airfields!
+									if (isGroundStart) {
+										rebase.to.push(airfieldID);
+									}
+								}
+								else {
+									rebase.from = airfieldID;
+								}
+								
 								if (availability > 0) {
 									airfields.set(airfieldID, isGroundStart);
 								}
@@ -316,6 +331,13 @@ module.exports = function(grunt) {
 					
 					if (!airfields.size) {
 						continue;
+					}
+					
+					if (rebase.to.length) {
+						tasks.add("rebase");
+					}
+					else {
+						delete rebase.from;
 					}
 					
 					planes.forEach((planeID) => {
@@ -411,6 +433,10 @@ module.exports = function(grunt) {
 							}
 						
 							airfields.forEach((isGroundStart, airfieldID) => {
+								
+								if (taskID === "rebase" && airfieldID !== rebase.from) {
+									return;
+								}
 								
 								const recordKey = [
 									unitCountry,
