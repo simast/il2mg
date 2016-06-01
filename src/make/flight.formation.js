@@ -116,19 +116,31 @@ module.exports = function makeFlightFormation(flight, isPlayer) {
 				
 				// NOTE: A basic (numeric) formation type does not strictly require the number
 				// of planes specified, but rather enforces a maximum of planes in a flight.
-				if (isSimpleFormation && !validPlanes.length) {
+				if (!validPlanes.length && (isSimpleFormation || isPlayer)) {
 					
 					const validPlaneGroups = Object.keys(validPlanesByGroup);
 					
-					// Use a random group of valid planes for simple numeric formations
+					// Use a random group of valid planes
 					if (validPlaneGroups.length) {
+						
 						validPlanes = validPlanesByGroup[rand.pick(validPlaneGroups)];
+						
+						// NOTE: To support player choice from battle index data (which is
+						// missing exact plane counts and does not account for split units)
+						// we have to cheat a bit by creating extra planes for the player
+						// flight when number of found matching planes is below required count.
+						if (!isSimpleFormation) {
+							
+							while (validPlanes.length < planesRequired) {
+								validPlanes.push(rand.pick(validPlanes));
+							}
+						}
 					}
 				}
 				
 				// Set found matching formation
 				if (validPlanes.length > 0 && (isSimpleFormation || validPlanes.length >= planesRequired)) {
-					
+						
 					// Basic formation type
 					if (isSimpleFormation) {
 

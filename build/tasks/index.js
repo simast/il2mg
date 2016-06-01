@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 	// Grunt task used to build battle index database
 	grunt.registerTask("build:index", "Build index database JSON files.", () => {
 
+		const Vector = require("sylvester").Vector;
 		const numeral = require("numeral");
 		const moment = require("moment");
 		const data = require("../../src/data");
@@ -313,13 +314,20 @@ module.exports = function(grunt) {
 								// Auto-assign rebase task
 								if (airfields.size) {
 									
-									// TODO: Support rebase flights to offmap airfields!
-									if (isGroundStart) {
+									const toPosition = battle.airfields[airfieldID].position;
+									const toVector = Vector.create([toPosition[0], toPosition[2]]);
+									
+									// Enforce required minimum distance between airfields
+									if (rebase.fromVector.distanceFrom(toVector) >= data.tasks.rebase.distanceMin) {
 										rebase.to.push(airfieldID);
 									}
 								}
 								else {
+									
+									const fromPosition = battle.airfields[airfieldID].position;
+									
 									rebase.from = airfieldID;
+									rebase.fromVector = Vector.create([fromPosition[0], fromPosition[2]]);
 								}
 								
 								if (availability > 0) {

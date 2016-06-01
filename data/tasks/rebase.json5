@@ -1,7 +1,7 @@
 // Transfer (rebase) flight to another airfield
 // NOTE: Rebase tasks are not assigned to a role like other tasks, but are created
 // dynamically based on unit airfield data. If the unit has multiple airfields on
-// a given day - a rebase task will be generated (with 50% total task weight).
+// a given day - a rebase task will be generated (using 50% total task weight).
 {
 	name: "Transfer flight",
 	title: "Transfer from {{airfield}} airfield",
@@ -15,5 +15,7 @@
 		dive_bomber: "bomber",
 		level_bomber: "bomber",
 		transport: "bomber"
-	}
+	},
+	// Minimum distance required between rebase airfields
+	distanceMin: 15000 // 15 km
 }

@@ -8,8 +8,6 @@ module.exports = function makeTaskRebase(flight) {
 	const unit = this.units[flight.unit];
 	const rebaseAirfield = this.airfields[rand.pick(unit.rebase)];
 	
-	console.log(rebaseAirfield);
-	
 	// Register target airfield location as flight target
 	// flight.target = patrolPoints.slice();
 };

@@ -26,7 +26,6 @@ module.exports = function makeTasks() {
 	}
 	
 	// Static cached unit tasks lists
-	// TODO: Support dynamic lists with rebase/transfer missions
 	const tasksByRole = Object.create(null);
 	
 	// Build unit tasks lists

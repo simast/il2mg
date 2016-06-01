@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const Vector = require("sylvester").Vector;
 const moment = require("moment");
 const data = require("../data");
 const log = require("../log");
@@ -24,9 +25,6 @@ module.exports = function makeUnits() {
 	const makeAirfields = (unitData) => {
 
 		const airfields = [];
-
-		// TODO: Dynamically generate rebase/transfer missions
-
 		const dataAirfields = unitData.airfields;
 
 		if (!Array.isArray(dataAirfields)) {
@@ -360,10 +358,22 @@ module.exports = function makeUnits() {
 		// Mark unit airfield transfer (rebase) targets
 		if (unitAirfields.length > 1) {
 			
-			rebase.from = unitAirfields[0].id;
+			const fromAirfield = unitAirfields[0].id;
+			const fromPosition = battle.airfields[fromAirfield].position;
+			const fromVector = Vector.create([fromPosition[0], fromPosition[2]]);
 			
+			rebase.from = fromAirfield;
+			
+			// Collect valid rebase airfield targets
 			for (let i = 1; i < unitAirfields.length; i++) {
-				rebase.to.push(unitAirfields[i].id);
+				
+				const toAirfield = unitAirfields[i].id;
+				const toPosition = battle.airfields[toAirfield].position;
+				const toVector = Vector.create([toPosition[0], toPosition[2]]);
+				
+				if (fromVector.distanceFrom(toVector) >= data.tasks.rebase.distanceMin) {
+					rebase.to.push(toAirfield);
+				}
 			}
 		}
 
@@ -434,7 +444,7 @@ module.exports = function makeUnits() {
 			}
 			
 			// Assign rebase task targets
-			if (unit.airfield === rebase.from) {
+			if (unit.airfield === rebase.from && rebase.to.length) {
 				unit.rebase = rebase.to;
 			}
 

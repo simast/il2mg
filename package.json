@@ -32,7 +32,7 @@
 		"sloc": "0.1.10",
 		"uglify-js": "mishoo/UglifyJS2#harmony",
 		"electron-prebuilt": "1.2.0",
-		"electron-packager": "7.0.2",
+		"electron-packager": "7.0.3",
 		"babel-register": "6.9.0",
 		"babel-eslint": "6.0.4",
 		"babel-plugin-transform-react-jsx": "6.8.0",
@@ -43,6 +43,6 @@
 		"react": "15.1.0",
 		"react-dom": "15.1.0",
 		"react-router": "2.4.1",
-		"clean-css": "3.4.13"
+		"clean-css": "3.4.15"
 	}
 }
