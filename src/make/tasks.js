@@ -84,13 +84,18 @@ module.exports = function makeTasks() {
 			}
 		}
 		
-		// Add rebase task (as a ~50% of total task weight)
+		// Add rebase task (as a ~75% of total task weight)
 		if (unit.rebase) {
 			
 			unitTasks = unitTasks.slice();
 			
 			const rebaseTask = Object.create(tasks.rebase);
-			rebaseTask.weight = unitTasks.length || 1;
+			
+			rebaseTask.weight = 1;
+			
+			if (unitTasks.length) {
+				rebaseTask.weight = Math.round(unitTasks.length * 1.5);
+			}
 			
 			for (let i = 0; i < rebaseTask.weight; i++) {
 				unitTasks.push(rebaseTask);

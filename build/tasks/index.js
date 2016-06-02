@@ -86,25 +86,21 @@ module.exports = function(grunt) {
 				
 				const airfield = battle.airfields[airfieldID];
 				const position = airfield.position;
-				let isGroundStart = false;
-				let isOffmap = false;
+				let startType = 0; // Onmap air start
 				
 				// Check for offmap airfields
 				if (position[0] < 0 || position[0] > battle.map.height ||
 					position[2] < 0 || position[2] > battle.map.width) {
 					
-					isOffmap = true;
+					startType = -1; // Offmap air start
 				}
 				
 				// Mark airfields with taxi routes (for ground starts)
 				if (airfield.taxi && Object.keys(airfield.taxi).length) {
-					isGroundStart = true;
+					startType = 1; // Onmap ground start
 				}
 				
-				// TODO: Also include offmap airfields as valid air start!
-				if (!isOffmap) {
-					airfieldsIndex[airfieldID] = isGroundStart;
-				}
+				airfieldsIndex[airfieldID] = startType;
 			}
 			
 			const json = {
@@ -233,10 +229,6 @@ module.exports = function(grunt) {
 						}
 					}
 					
-					if (!tasks.size) {
-						continue;
-					}
-					
 					const planes = new Set();
 					
 					// Find matching planes
@@ -296,12 +288,14 @@ module.exports = function(grunt) {
 						for (const dataAirfield of dataAirfields) {
 							
 							const airfieldID = dataAirfield[0];
-							const isGroundStart = airfieldsIndex[airfieldID];
 							
 							// Invalid airfield ID
-							if (isGroundStart === undefined) {
+							if (airfieldsIndex[airfieldID] === undefined) {
 								continue;
 							}
+							
+							const isGroundStart = (airfieldsIndex[airfieldID] > 0);
+							const isOffmap = (airfieldsIndex[airfieldID] < 0);
 
 							if (matchDateRange(dataAirfield[1], dataAirfield[2])) {
 
@@ -330,7 +324,8 @@ module.exports = function(grunt) {
 									rebase.fromVector = Vector.create([fromPosition[0], fromPosition[2]]);
 								}
 								
-								if (availability > 0) {
+								// TODO: Also include offmap airfields as valid air start!
+								if (!isOffmap && availability > 0) {
 									airfields.set(airfieldID, isGroundStart);
 								}
 							}
@@ -346,6 +341,10 @@ module.exports = function(grunt) {
 					}
 					else {
 						delete rebase.from;
+					}
+					
+					if (!tasks.size) {
+						continue;
 					}
 					
 					planes.forEach((planeID) => {

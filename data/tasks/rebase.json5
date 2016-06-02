@@ -1,10 +1,10 @@
 // Transfer (rebase) flight to another airfield
 // NOTE: Rebase tasks are not assigned to a role like other tasks, but are created
 // dynamically based on unit airfield data. If the unit has multiple airfields on
-// a given day - a rebase task will be generated (using 50% total task weight).
+// a given day - a rebase task will be generated (using 75% total task weight).
 {
 	name: "Transfer flight",
-	title: "Transfer from {{airfield}} airfield",
+	title: "Transfer flight from {{airfield}}",
 	story: [
 		"We are moving out! Orders have just been passed around with instructions for an immediate transfer of all materiel and personnel to {{target.ground}}. Our flight of {{{plane}}}s will be among the first to leave for the new destination!"
 	],
