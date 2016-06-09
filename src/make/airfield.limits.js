@@ -52,8 +52,8 @@ module.exports = function makeAirfieldLimits(airfield) {
 			limits[itemTag.LIGHT_SEARCH] = round(min(max(value / 40, 0), 4));
 		}
 
-		// Only max one staff car per airfield
-		limits[itemTag.CAR] = 1;
+		// Max 3 staff cars per airfield
+		limits[itemTag.CAR] = round(min(max(value / 20, 1), 3));
 
 		// Smoke and campfire effect limits
 		limits.effects[itemFlag.EFFECT_SMOKE] = round(min(max(value / 30, 1), 4));

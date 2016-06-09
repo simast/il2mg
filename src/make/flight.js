@@ -203,7 +203,7 @@ function makeFlight(params) {
 	})();
 	
 	// Make sure the taxi route on the airfield is valid and exists
-	if (flight.taxi && !airfield.taxi[flight.taxi]) {
+	if (flight.taxi && (!airfield.taxi || !airfield.taxi[flight.taxi])) {
 		delete flight.taxi;
 	}
 	

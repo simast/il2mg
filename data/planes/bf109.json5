@@ -15,6 +15,7 @@
 	// Bf 109 E
 	"bf109e": {
 		name: "Bf 109 E",
+		alias: "Emil",
 		parent: "bf109"
 	},
 
@@ -56,6 +57,7 @@
 	// Bf 109 F
 	"bf109f": {
 		name: "Bf 109 F",
+		alias: "Friedrich",
 		parent: "bf109"
 	},
 	
@@ -103,6 +105,7 @@
 	// Bf 109 G
 	"bf109g": {
 		name: "Bf 109 G",
+		alias: "Gustav",
 		parent: "bf109"
 	},
 	

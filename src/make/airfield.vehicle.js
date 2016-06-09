@@ -47,6 +47,7 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 		case itemTag.CAR: {
 
 			vehicleType = "staff_car";
+			isStatic = !isLive;
 			break;
 		}
 		// Anti-aircraft (Flak)
