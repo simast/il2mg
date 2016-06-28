@@ -129,12 +129,9 @@ app.on("ready", () => {
 		event.preventDefault();
 	});
 	
-	// Show main window only when content is loaded
-	mainWindow.webContents.on("did-finish-load", () => {
-		
-		if (!mainWindow.isVisible()) {
-			mainWindow.show();
-		}
+	// Show main window (without a visual flash)
+	mainWindow.once("ready-to-show", () => {
+		mainWindow.show();
 	});
 	
 	// Disable opening new windows (also fixes shift+click on link issue)

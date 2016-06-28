@@ -491,6 +491,16 @@ module.exports = function makeFlightPlanes(flight) {
 				if (!isPlayer && !isLeader && rand.bool(0.5)) {
 					planeItem.StartInAir = Plane.START_RUNWAY;
 				}
+				
+				const planeData = this.planes[plane.plane];
+				const planeSizeID = planeSize[String(planeData.size).toUpperCase()];
+				
+				// FIXME: Workaround for a bug where AI with multi-engine plane starts taxiing
+				// too soon after starting all engines (and not waiting for normal RPM).
+				// This results in an under-performing engine making the AI steer to one side.
+				if (!isPlayer && isLeader && planeSizeID >= planeSize.LARGE) {
+					planeItem.StartInAir = Plane.START_RUNWAY;
+				}
 			}
 			// Ready, taxi or runway start with engine running
 			else if (typeof element.state === "string") {

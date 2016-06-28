@@ -9,7 +9,7 @@
 		static: "static_opel"
 	},
 	{
-		name: "ZIS-5",
+		name: "ZiS-5",
 		type: ["truck", "truck_cargo"],
 		countries: [101],
 		model: "graphics\\vehicles\\zis5\\zis5.mgm",
@@ -39,7 +39,7 @@
 		static: "static_opel_fuel"
 	},
 	{
-		name: "ZIS-5 (Fuel)",
+		name: "ZiS-5 (Fuel)",
 		type: ["truck", "truck_fuel"],
 		countries: [101],
 		static: "static_zis_fuel"
@@ -74,6 +74,20 @@
 		model: "graphics\\artillery\\flak37\\flak37.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\flak37.txt"
 	},
+	{
+		name: "72-K",
+		type: ["aa", "aa_flak", "aa_flak_light"],
+		countries: [101],
+		model: "graphics\\artillery\\72k\\72k.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\72k.txt"
+	},
+	{
+		name: "FlaK 36",
+		type: ["aa", "aa_flak", "aa_flak_light"],
+		countries: [201, 202],
+		model: "graphics\\artillery\\flak36\\flak36.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\flak36.txt"
+	},
 
 	// Anti-aircraft (MG)
 	{
@@ -105,6 +119,13 @@
 		countries: [201],
 		model: "graphics\\artillery\\sdkfz10-flak38\\sdkfz10-flak38.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\sdkfz10-flak38.txt"
+	},
+	{
+		name: "ZiS-5 72-K",
+		type: ["aa", "aa_mobile"],
+		countries: [101],
+		model: "graphics\\vehicles\\zis\\zis5-72k.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\zis5-72k.txt"
 	},
 
 	// Tanks
@@ -198,6 +219,20 @@
 		countries: [201],
 		model: "graphics\\vehicles\\stug40l43\\stug40l43.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\stug40l43.txt"
+	},
+	{
+		name: "Pz.Kpfw.38(t)",
+		type: ["tank", "tank_medium", "tank_light"],
+		countries: [201],
+		model: "graphics\\vehicles\\pz38t\\pz38t.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\pz38t.txt"
+	},
+	{
+		name: "Marder III Ausf.H",
+		type: ["tank", "tank_destroyer"],
+		countries: [201],
+		model: "graphics\\vehicles\\pz38t\\marderiii-h.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\marderiii-h.txt"
 	},
 
 	// APCs, armored cars and rocket artillery
@@ -317,6 +352,20 @@
 		countries: [101],
 		model: "graphics\\artillery\\zis2gun\\zis2gun.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\zis2gun.txt"
+	},
+	{
+		name: "53-K",
+		type: ["at_gun"],
+		countries: [101],
+		model: "graphics\\artillery\\53k\\53k.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\53k.txt"
+	},
+	{
+		name: "PaK 35/36",
+		type: ["at_gun"],
+		countries: [201],
+		model: "graphics\\artillery\\pak35\\pak35.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\pak35.txt"
 	},
 
 	// Landing lights
