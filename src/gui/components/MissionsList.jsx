@@ -8,7 +8,7 @@ const {Link} = require("react-router");
 // Missions list component
 class MissionsList extends React.Component {
 	
-	constructor({missions, removeMission}) {
+	constructor({missions, removeMission, saveMission}) {
 		super(...arguments);
 		
 		// Create context menu
@@ -17,10 +17,19 @@ class MissionsList extends React.Component {
 			const {Menu, MenuItem} = remote;
 			const menu = this.menu = new Menu();
 			
+			// Remove menu
 			menu.append(new MenuItem({
 				label: "Remove",
 				click: () => {
 					removeMission(true, this.contextMission.id);
+				}
+			}));
+
+			// Save menu
+			menu.append(new MenuItem({
+				label: "Save As...",
+				click: () => {
+					saveMission(this.contextMission.id);
 				}
 			}));
 		}

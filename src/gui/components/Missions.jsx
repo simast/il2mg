@@ -11,8 +11,10 @@ const Screen = require("./Screen");
 const MissionsList = require("./MissionsList");
 const MissionDetails = require("./MissionDetails");
 
-// Mission metadata file extension
-const FILE_EXT_META = ".il2mg";
+// Mission file extensions
+const FILE_EXT_TEXT = "Mission";
+const FILE_EXT_BINARY = "msnbin";
+const FILE_EXT_META = "il2mg";
 
 // Autoplay file name
 const FILE_AUTOPLAY = "autoplay.cfg";
@@ -21,6 +23,7 @@ const FILE_AUTOPLAY = "autoplay.cfg";
 const PATH_EXE = path.join("bin", "game", "Il-2.exe");
 const PATH_DATA = "data";
 const PATH_AUTOPLAY = path.join(PATH_DATA, FILE_AUTOPLAY);
+const PATH_MISSIONS = path.join(PATH_DATA, "Missions");
 
 // NOTE: This is a max time (in milliseconds) to wait before removing
 // generated autoplay.cfg file after game executable is launched. This is
@@ -152,7 +155,8 @@ class Missions extends React.Component {
 		
 		const missionsListProps = {
 			missions: missions.list,
-			removeMission: this.removeMission.bind(this)
+			removeMission: this.removeMission.bind(this),
+			saveMission: this.saveMission.bind(this)
 		};
 		
 		return (
@@ -200,7 +204,7 @@ class Missions extends React.Component {
 			files[missionID].push(fileName);
 			
 			// Process only mission metadata files
-			if (path.extname(fileName) !== FILE_EXT_META) {
+			if (path.extname(fileName) !== ("." + FILE_EXT_META)) {
 				return;
 			}
 			
@@ -293,6 +297,78 @@ class Missions extends React.Component {
 			}
 			
 			this.setState({missions});
+		}
+	}
+	
+	// Save mission
+	saveMission(missionID) {
+		
+		if (!missionID) {
+			return;
+		}
+		
+		const {gamePath, missionsPath} = this.context.config;
+		const mission = this.state.missions.index[missionID];
+		let savePath;
+		
+		// Use missions folder as default save path destination
+		if (gamePath) {
+			savePath = path.join(gamePath, PATH_MISSIONS);
+		}
+		// Use desktop as default save path destination
+		else {
+			savePath = remote.app.getPath("desktop");
+		}
+		
+		// Suggest default mission file name
+		savePath = path.join(savePath, missionID);
+		
+		// Find main mission file extension (either binary or text)
+		let mainExtension = FILE_EXT_TEXT;
+		
+		for (const missionFile of mission.files) {
+			
+			if (path.extname(missionFile) === ("." + FILE_EXT_BINARY)) {
+				
+				mainExtension = FILE_EXT_BINARY;
+				break;
+			}
+		}
+		
+		// Show save mission dialog
+		savePath = remote.dialog.showSaveDialog(
+			remote.getCurrentWindow(),
+			{
+				defaultPath: savePath,
+				filters: [
+					{
+						name: "Mission files (*." + mainExtension + ")",
+						extensions: [mainExtension]
+					}
+				]
+			}
+		);
+		
+		// Save mission
+		if (savePath) {
+			
+			const saveDir = path.dirname(savePath);
+			const saveFile = path.basename(savePath, path.extname(savePath));
+			
+			// Save (copy) all mission files (except metadata file)
+			for (const missionFile of mission.files) {
+				
+				const extension = path.extname(missionFile);
+				
+				if (extension === ("." + FILE_EXT_META)) {
+					continue;
+				}
+				
+				fs.writeFileSync(
+					path.join(saveDir, saveFile + extension),
+					fs.readFileSync(path.join(missionsPath, missionFile))
+				);
+			}
 		}
 	}
 	
@@ -431,11 +507,7 @@ class Missions extends React.Component {
 		
 		// Make a backup copy of the original autoplay.cfg file
 		if (fs.existsSync(autoplayPath)) {
-			
-			fs.writeFileSync(
-				path.join(userDataPath, FILE_AUTOPLAY),
-				fs.readFileSync(autoplayPath)
-			);
+			fs.renameSync(autoplayPath, path.join(userDataPath, FILE_AUTOPLAY));
 		}
 		
 		// Make autoplay.cfg
@@ -473,9 +545,7 @@ class Missions extends React.Component {
 			
 			// Restore backup copy of the original autoplay.cfg file
 			if (fs.existsSync(backupAutoplayPath)) {
-				
-				fs.writeFileSync(autoplayPath, fs.readFileSync(backupAutoplayPath));
-				fs.unlinkSync(backupAutoplayPath);
+				fs.renameSync(backupAutoplayPath, autoplayPath);
 			}
 			// Remove existing autoplay.cfg file
 			else if (fs.existsSync(autoplayPath)) {
