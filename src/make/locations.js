@@ -176,17 +176,29 @@ Location.Index = class {
 	
 	// Find all intersecting location data entries within the bounding location
 	findIn(location) {
-		return this.tree.search([location.x1, location.z1, location.x2, location.z2]);
+		
+		return this.tree.search({
+			minX: location.x1,
+			minY: location.z1,
+			maxX: location.x2,
+			maxY: location.z2
+		});
 	}
 	
 	// Check for any intersecting location data entries within the bounding location
 	checkIn(location) {
-		return this.tree.collides([location.x1, location.z1, location.x2, location.z2]);
+		
+		return this.tree.collides({
+			minX: location.x1,
+			minY: location.z1,
+			maxX: location.x2,
+			maxY: location.z2
+		});
 	}
 	
 	// Find nearest location data entries around specified location point
 	findNear(location, maxLocations) {
-		return knn(this.tree, [location.x, location.z], maxLocations);
+		return knn(this.tree, location.x, location.z, maxLocations);
 	}
 };
 

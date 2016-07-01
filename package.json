@@ -18,8 +18,8 @@
 		"speakingurl": "9.0.0",
 		"mustache": "2.2.1",
 		"numeral": "1.5.3",
-		"rbush": "1.4.3",
-		"rbush-knn": "1.1.0",
+		"rbush": "2.0.1",
+		"rbush-knn": "2.0.0",
 		"suncalc": "1.7.0",
 		"sylvester": "0.0.21"
 	},
