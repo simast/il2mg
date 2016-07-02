@@ -3,6 +3,7 @@
 
 const Vector = require("sylvester").Vector;
 const makeFlightSpeed = require("./flight.speed");
+const makeFlightAltitude = require("./flight.altitude");
 
 // Final egress route constants
 const EGRESS_DISTANCE_MIN = 20000; // 20 km
@@ -19,17 +20,17 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 	
 	const rand = this.rand;
 	
-	// Plan an egress route (back to the airfield) when target point is not specified
-	if (!to) {
+	// Plan a route to an airfield (instead of a target point)
+	if (typeof to === "string" || !to) {
 		
-		const airfield = this.airfields[flight.airfield];
+		const airfield = this.airfields[to || flight.airfield];
 		const lastVector = Vector.create([
 			airfield.position[0] - from[0],
-			airfield.position[2] - from[1]
+			airfield.position[2] - from[2]
 		]);
 		
 		// Use last spot as final egress point (with short final airfield route)
-		if (lastVector.modulus() < EGRESS_DISTANCE_MIN) {
+		if (!to && lastVector.modulus() < EGRESS_DISTANCE_MIN) {
 			return;
 		}
 		
@@ -54,7 +55,7 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 		Object.assign(spot, options);
 	}
 	
-	spot.point = to;
+	spot.point = to.slice();
 	
 	// Use some +-200 meters randomness for each spot point altitude
 	spot.point[1] = spot.point[1] + rand.integer(-200, 200);

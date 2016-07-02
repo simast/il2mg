@@ -353,7 +353,7 @@ module.exports = function makeTaskSweep(flight) {
 	const spots =	makeFlightRoute.call(
 		this,
 		flight,
-		egressPoint,
+		[egressPoint[0], altitude, egressPoint[1]],
 		null, // Use flight airfield
 		{
 			// Hide egress route when player is flight leader

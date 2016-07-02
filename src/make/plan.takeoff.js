@@ -67,7 +67,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	// Short timer used to delay next command after takeoff is reported
 	const waitTimerAfter = flight.group.createItem("MCU_Timer");
 
-	waitTimerAfter.Time = +(rand.real(5, 8).toFixed(3));
+	waitTimerAfter.Time = +(rand.real(8, 12).toFixed(3));
 	
 	if (takeoffCommand) {
 		waitTimerAfter.setPositionNear(takeoffCommand);

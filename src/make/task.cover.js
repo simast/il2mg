@@ -127,50 +127,19 @@ function makeTaskCoverBriefing(action, flight) {
 
 	const rand = this.rand;
 	const playerElement = this.player.element;
+	const airfield = this.airfields[flight.airfield];
 	const isPlayerInLeadingElement = (playerElement === flight.elements[0]);
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	let isPlayerElementLeader = false;
 	const briefing = [];
 	const briefingIntro = [];
-
+	
 	if (playerElement.length > 1 && flight.player === this.player.element[0]) {
 		isPlayerElementLeader = true;
 	}
 	
 	// Draw cover area zone
-	const airfield = this.airfields[flight.airfield];
-	const startVector = Vector.create([airfield.position[0], airfield.position[2]]);
-	let firstZoneIcon;
-	let lastZoneIcon;
-	
-	// NOTE: Using three points to define encircled area around the airfield
-	[0, 120, 240].forEach((degrees) => {
-		
-		let vector = Vector.create([4500 + rand.integer(0, 1000), 0]);
-		const rotateRad = (degrees + rand.integer(-15, 15)) * (Math.PI / 180);
-		
-		// Build zone point vector
-		vector = startVector.add(vector.rotate(rotateRad, Vector.Zero(2)));
-		
-		const zoneIcon = flight.group.createItem("MCU_Icon");
-		
-		zoneIcon.setPosition(vector.e(1), vector.e(2));
-		zoneIcon.setColor(mapColor.ROUTE);
-		zoneIcon.Coalitions = [flight.coalition];
-		zoneIcon.LineType = Item.MCU_Icon.LINE_SECTOR_2;
-		
-		if (!firstZoneIcon) {
-			firstZoneIcon = zoneIcon;
-		}
-		else {
-			lastZoneIcon.addTarget(zoneIcon);
-		}
-		
-		lastZoneIcon = zoneIcon;
-	});
-	
-	// Connect zone icons in a loop
-	lastZoneIcon.addTarget(firstZoneIcon);
+	markMapArea.call(this, flight, airfield.position[0], airfield.position[2]);
 
 	// Make intro segment
 	if (flight.planes > 1) {
@@ -219,3 +188,53 @@ function makeTaskCoverBriefing(action, flight) {
 		return value.charAt(0).toUpperCase() + value.slice(1);
 	}).join(". ") + ".";
 }
+
+// Mark map area with a dotted circle
+function markMapArea(flight, posX, posZ, useIcon = false) {
+
+	const rand = this.rand;
+	const startVector = Vector.create([posX, posZ]);
+	let firstZoneIcon;
+	let lastZoneIcon;
+	
+	// NOTE: Using three points to define encircled area around the airfield
+	[0, 120, 240].forEach((degrees) => {
+		
+		let vector = Vector.create([4500 + rand.integer(0, 1000), 0]);
+		const rotateRad = (degrees + rand.integer(-15, 15)) * (Math.PI / 180);
+		
+		// Build zone point vector
+		vector = startVector.add(vector.rotate(rotateRad, Vector.Zero(2)));
+		
+		const zoneIcon = flight.group.createItem("MCU_Icon");
+		
+		zoneIcon.setPosition(vector.e(1), vector.e(2));
+		zoneIcon.setColor(mapColor.ROUTE);
+		zoneIcon.Coalitions = [flight.coalition];
+		zoneIcon.LineType = Item.MCU_Icon.LINE_SECTOR_2;
+		
+		if (!firstZoneIcon) {
+			firstZoneIcon = zoneIcon;
+		}
+		else {
+			lastZoneIcon.addTarget(zoneIcon);
+		}
+		
+		lastZoneIcon = zoneIcon;
+	});
+	
+	// Connect zone icons in a loop
+	lastZoneIcon.addTarget(firstZoneIcon);
+	
+	// Set icon on the center
+	if (useIcon) {
+		
+		const targetIcon = flight.group.createItem("MCU_Icon");
+		
+		targetIcon.setPosition(posX, posZ);
+		targetIcon.Coalitions = [flight.coalition];
+		targetIcon.IconId = Item.MCU_Icon.ICON_WAYPOINT;
+	}
+}
+
+module.exports.markMapArea = markMapArea;

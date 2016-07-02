@@ -34,7 +34,9 @@ module.exports = function makeFlightPlan(flight) {
 	}
 
 	// Land plan action
-	plan.land = plan[plan.push({type: planAction.LAND}) - 1];
+	if (!plan.land) {
+		plan.land = plan[plan.push({type: planAction.LAND}) - 1];
+	}
 	
 	// TODO: Fast-forward plan to required flight state
 
