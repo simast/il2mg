@@ -313,7 +313,7 @@ module.exports = function makeTaskSweep(flight) {
 	sweepPoints.unshift(ingressPoint);
 	sweepPoints.push(egressPoint);
 	
-	// Make fighter sweep altitude
+	// Make fighter sweep altitude profile
 	const altitude = makeFlightAltitude.call(this, flight);
 	
 	const route = [];
@@ -341,7 +341,7 @@ module.exports = function makeTaskSweep(flight) {
 			this,
 			flight,
 			fromPoint,
-			[point[0], altitude, point[1]],
+			{point, altitude},
 			options
 		);
 		
@@ -353,8 +353,11 @@ module.exports = function makeTaskSweep(flight) {
 	const spots =	makeFlightRoute.call(
 		this,
 		flight,
-		[egressPoint[0], altitude, egressPoint[1]],
-		null, // Use flight airfield
+		fromPoint,
+		{
+			altitude,
+			airfield: flight.airfield
+		},
 		{
 			// Hide egress route when player is flight leader
 			hidden: (isPlayerFlightLeader && !debugFlights)
@@ -368,7 +371,8 @@ module.exports = function makeTaskSweep(flight) {
 	// Add fighter sweep task fly action
 	flight.plan.push({
 		type: planAction.FLY,
-		route: route,
+		route,
+		altitude,
 		visible: Boolean(flight.player)
 	});
 };

@@ -209,7 +209,7 @@ module.exports = function makeTaskPatrol(flight) {
 	rand.shuffle(patrolPoints);
 	patrolPoints.unshift(ingressPoint, entryPoint);
 	
-	// Make patrol altitude
+	// Make patrol flight altitude profile
 	const altitude = makeFlightAltitude.call(this, flight);
 	
 	const route = [];
@@ -238,7 +238,7 @@ module.exports = function makeTaskPatrol(flight) {
 			this,
 			flight,
 			fromPoint,
-			[point[0], altitude, point[1]],
+			{point, altitude},
 			options
 		);
 		
@@ -288,7 +288,10 @@ module.exports = function makeTaskPatrol(flight) {
 			this,
 			flight,
 			ingressPoint,
-			null, // Use flight airfield
+			{
+				altitude,
+				airfield: flight.airfield
+			},
 			{
 				// Don't show map egress route lines for patrol task
 				hidden: true
@@ -299,7 +302,8 @@ module.exports = function makeTaskPatrol(flight) {
 	// Add patrol task fly action
 	flight.plan.push({
 		type: planAction.FLY,
-		route: route,
+		route,
+		altitude,
 		visible: Boolean(flight.player) && !isPlayerFlightLeader
 	});
 	

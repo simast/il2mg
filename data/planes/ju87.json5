@@ -28,6 +28,8 @@
 		parent: "ju87d",
 		model: "graphics\\planes\\ju87d3\\ju87d3.mgm",
 		script: "luascripts\\worldobjects\\planes\\ju87d3.txt",
+		speed: 300, // FIXME
+		range: 1000, // FIXME
 		skins: {
 			"201": {
 				"": [-3, -3, -3, 1],

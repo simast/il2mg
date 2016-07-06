@@ -5,6 +5,7 @@ const data = require("../data");
 const markMapArea = require("./task.cover").markMapArea;
 
 // Flight make parts
+const makeFlightAltitude = require("./flight.altitude");
 const makeFlightRoute = require("./flight.route");
 const makeAirfieldTaxi = require("./airfield.taxi");
 
@@ -25,11 +26,17 @@ module.exports = function makeTaskRebase(flight) {
 	
 	// TODO: Set beacon to target airfield
 	
+	// Make rebase flight altitude profile
+	const altitude = makeFlightAltitude.call(this, flight);
+	
 	const route =	makeFlightRoute.call(
 		this,
 		flight,
 		airfieldFrom.position,
-		airfieldTo.id,
+		{
+			altitude,
+			airfield: airfieldTo.id
+		},
 		{
 			hidden: (isPlayerFlightLeader && !debugFlights),
 			solid: true
@@ -39,7 +46,8 @@ module.exports = function makeTaskRebase(flight) {
 	// Add rebase task fly action
 	plan.push({
 		type: planAction.FLY,
-		route: route,
+		route,
+		altitude,
 		visible: isPlayerFlight
 	});
 	

@@ -8,6 +8,10 @@
 	story: [
 		"We are moving out! Orders have just been passed around with instructions for an immediate transfer of all materiel and personnel to {{target.ground}}. Our flight of {{{plane}}}s will be among the first to leave for the new destination!"
 	],
+	altitude: {
+		low: 1, // 50%
+		medium: 1 // 50%
+	},
 	time: "day",
 	planes: {
 		fighter: "fighter",

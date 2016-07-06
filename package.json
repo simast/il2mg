@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"commander": "2.9.0",
-		"moment": "2.13.0",
+		"moment": "2.14.1",
 		"require-directory": "2.1.1",
 		"lex": "1.7.9",
 		"random-js": "1.0.8",
@@ -32,7 +32,7 @@
 		"sloc": "0.1.10",
 		"uglify-js": "mishoo/UglifyJS2#harmony",
 		"electron-prebuilt": "1.2.5",
-		"electron-packager": "7.1.0",
+		"electron-packager": "7.2.0",
 		"babel-register": "6.9.0",
 		"babel-eslint": "6.1.0",
 		"babel-plugin-transform-react-jsx": "6.8.0",

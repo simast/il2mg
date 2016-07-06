@@ -72,7 +72,7 @@ function makeTaskCoverAction(action, element, flight, input) {
 		coverCommand = flight.group.createItem("MCU_Waypoint");
 
 		coverCommand.Area = rand.integer(75, 125);
-		coverCommand.Speed = makeFlightSpeed.call(this, flight, altitude);
+		coverCommand.Speed = makeFlightSpeed.call(this, flight);
 		coverCommand.Priority = Item.MCU_Waypoint.PRIORITY_LOW;
 
 		// Set waypoint position above the airfield

@@ -23,6 +23,8 @@
 		parent: "he111h",
 		model: "graphics\\planes\\he111h6\\he111h6.mgm",
 		script: "luascripts\\worldobjects\\planes\\he111h6.txt",
+		speed: 300, // FIXME
+		range: 1000, // FIXME
 		skins: {
 			"201": {
 				"": [-3, -3, -3, 1],

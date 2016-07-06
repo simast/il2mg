@@ -82,6 +82,13 @@ data.season = Object.freeze({
 	DESERT: "desert"
 });
 
+// Altitude level types
+data.altitudeLevel = Object.freeze({
+	LOW: "low",
+	MEDIUM: "medium",
+	HIGH: "high"
+});
+
 // Coalitions
 data.coalition = Object.freeze({
 	ALLIES: 1,

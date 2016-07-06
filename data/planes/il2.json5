@@ -6,6 +6,10 @@
 		alias: "Sturmovik",
 		type: ["ground_attack"],
 		size: "medium",
+		altitude: {
+			low: 3, // 75% (low altitude preference)
+			medium: 1 // 25%
+		},
 		static: [
 			"static_il2",
 			"static_il2_net"
@@ -41,6 +45,8 @@
 		parent: "il2",
 		model: "graphics\\planes\\il2m42\\il2m42.mgm",
 		script: "luascripts\\worldobjects\\planes\\il2m42.txt",
+		speed: 300, // FIXME
+		range: 1000, // FIXME
 		skins: {
 			"101": {
 				"": [-3, -3, -3, 1],
