@@ -298,12 +298,21 @@ module.exports = function makeAirfields() {
 		}
 
 		// Skip/continue if airfield has no items available
-		if (!airfieldData.items || !airfieldData.items.length) {
+		if (airfield.offmap || !airfieldData.items || !airfieldData.items.length) {
 			continue;
 		}
-
-		// Make airfield zone
-		makeAirfieldZone.call(mission, airfield);
+		
+		// Initialize airfield zone using a lazy getter
+		Object.defineProperty(airfield, "zone", {
+			get: function() {
+				
+				delete this.zone;
+				this.zone = makeAirfieldZone.call(mission, airfield);
+				
+				return this.zone;
+			},
+			configurable: true
+		});
 
 		// Make airfield item limits
 		makeAirfieldLimits.call(mission, airfield);

@@ -7,12 +7,8 @@ const ZONE_UNLOAD_TIME = 60 * 5; // 5 minutes
 // Make airfield zone ("bubble" activity trigger)
 module.exports = function makeAirfieldZone(airfield) {
 
-	if (!airfield.country) {
-		return;
-	}
-
-	const zone = airfield.zone = Object.create(null);
-
+	const zone = Object.create(null);
+	
 	const zoneGroup = zone.group = airfield.group.createItem("Group");
 	zoneGroup.setName("ZONE");
 
@@ -98,4 +94,6 @@ module.exports = function makeAirfieldZone(airfield) {
 	zone.onActivate = zoneActivate;
 	zone.onUnload = zoneUnload;
 	zone.onDeactivate = zoneDeactivate;
+	
+	return zone;
 };

@@ -31,7 +31,7 @@
 		"enclose": "2.1.0",
 		"sloc": "0.1.10",
 		"uglify-js": "mishoo/UglifyJS2#harmony",
-		"electron-prebuilt": "1.2.5",
+		"electron-prebuilt": "1.2.6",
 		"electron-packager": "7.2.0",
 		"babel-register": "6.9.0",
 		"babel-eslint": "6.1.0",
