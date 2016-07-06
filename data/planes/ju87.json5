@@ -28,8 +28,8 @@
 		parent: "ju87d",
 		model: "graphics\\planes\\ju87d3\\ju87d3.mgm",
 		script: "luascripts\\worldobjects\\planes\\ju87d3.txt",
-		speed: 300, // FIXME
-		range: 1000, // FIXME
+		speed: 315,
+		range: 990,
 		skins: {
 			"201": {
 				"": [-3, -3, -3, 1],
@@ -43,21 +43,6 @@
 				"ju87d3\\ju87d3_skin_10.dds": [0, 0, 0, 1]
 			}
 		}
-	},
-
-	// Ju 87 G
-	"ju87g": {
-		name: "Ju 87 G",
-		parent: "ju87"
-	},
-
-	// Ju 87 G-1
-	"ju87g1": {
-		name: "Ju 87 G-1",
-		type: ["ground_attack"],
-		parent: "ju87g",
-		model: "graphics\\planes\\ju87d3\\ju87d3.mgm",
-		script: "luascripts\\worldobjects\\planes\\ju87d3.txt"
 	},
 	
 	// Ju 87 R-2

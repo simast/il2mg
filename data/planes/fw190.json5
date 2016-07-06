@@ -20,6 +20,8 @@
 		parent: "fw190a",
 		model: "graphics\\planes\\fw190a3\\fw190a3.mgm",
 		script: "luascripts\\worldobjects\\planes\\fw190a3.txt",
+		speed: 435,
+		range: 840,
 		skins: {
 			"201": {
 				"": [-5, -4, -5, 1],

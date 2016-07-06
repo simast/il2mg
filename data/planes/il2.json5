@@ -22,6 +22,8 @@
 		parent: "il2",
 		model: "graphics\\planes\\il2m41\\il2m41.mgm",
 		script: "luascripts\\worldobjects\\planes\\il2m41.txt",
+		speed: 355,
+		range: 590,
 		skins: {
 			"101": {
 				"": [-8, -8, -8, 1],
@@ -45,8 +47,8 @@
 		parent: "il2",
 		model: "graphics\\planes\\il2m42\\il2m42.mgm",
 		script: "luascripts\\worldobjects\\planes\\il2m42.txt",
-		speed: 300, // FIXME
-		range: 1000, // FIXME
+		speed: 330,
+		range: 620,
 		skins: {
 			"101": {
 				"": [-3, -3, -3, 1],

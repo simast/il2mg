@@ -18,8 +18,8 @@
 		parent: "pe2",
 		model: "graphics\\planes\\pe2s35\\pe2s35.mgm",
 		script: "luascripts\\worldobjects\\planes\\pe2s35.txt",
-		speed: 300, // FIXME
-		range: 1000, // FIXME
+		speed: 365,
+		range: 1030,
 		skins: {
 			"101": {
 				"": [-5, -5, -5, 1],
@@ -43,8 +43,8 @@
 		parent: "pe2",
 		model: "graphics\\planes\\pe2s87\\pe2s87.mgm",
 		script: "luascripts\\worldobjects\\planes\\pe2s87.txt",
-		speed: 300, // FIXME
-		range: 1000, // FIXME
+		speed: 355,
+		range: 950,
 		skins: {
 			"101": {
 				"": [-5, -4, -5, 1],

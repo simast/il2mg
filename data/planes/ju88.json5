@@ -25,8 +25,8 @@
 		parent: "ju88a",
 		model: "graphics\\planes\\bf110e2\\ju88a4.mgm",
 		script: "luascripts\\worldobjects\\planes\\ju88a4.txt",
-		speed: 300, // FIXME
-		range: 1000, // FIXME
+		speed: 350,
+		range: 1190,
 		skins: {
 			"201": {
 				"": [-4, -4, -4, 1],
