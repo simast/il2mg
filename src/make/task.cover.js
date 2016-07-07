@@ -7,7 +7,7 @@ const data = require("../data");
 const Item = require("../item");
 
 // Flight make parts
-const makeBriefingText = require("./briefing.text");
+const {makeBriefingLeadSegment} = require("./briefing.fly");
 const makeFlightSpeed = require("./flight.speed");
 
 // Data constants
@@ -126,51 +126,20 @@ function makeTaskCoverAction(action, element, flight, input) {
 function makeTaskCoverBriefing(action, flight) {
 
 	const rand = this.rand;
-	const playerElement = this.player.element;
 	const airfield = this.airfields[flight.airfield];
-	const isPlayerInLeadingElement = (playerElement === flight.elements[0]);
-	const isPlayerFlightLeader = (flight.player === flight.leader);
-	let isPlayerElementLeader = false;
 	const briefing = [];
-	const briefingIntro = [];
-	
-	if (playerElement.length > 1 && flight.player === this.player.element[0]) {
-		isPlayerElementLeader = true;
-	}
 	
 	// Draw cover area zone
 	markMapArea.call(this, flight, airfield.position[0], airfield.position[2]);
-
+	
 	// Make intro segment
-	if (flight.planes > 1) {
-
-		let briefingLead = "";
-
-		// Use flight formation name when player is a flight leader
-		if (isPlayerFlightLeader) {
-			briefingLead = "lead your {{{formation}}}";
-		}
-		// Use element sub-formation name when player is an element leader
-		else if (isPlayerElementLeader) {
-			briefingLead = "lead your {{{formation.element}}}";
-		}
-		// Link to AI element leader
-		else if (!isPlayerInLeadingElement && playerElement.length > 1) {
-			briefingLead = "follow your {{{formation.element}}} leader " + playerElement[0].pilot.id;
-		}
-		// Link to AI flight leader
-		else {
-			briefingLead = "follow your {{{formation}}} leader " + flight.leader.pilot.id;
-		}
-
-		briefingIntro.push(briefingLead);
+	const briefingIntro = makeBriefingLeadSegment.call(this, flight);
+	
+	if (briefingIntro.length < 2) {
+		briefingIntro.push(rand.pick(introSegments));
 	}
-
-	briefingIntro.push(rand.pick(introSegments));
-
-	briefing.push(briefingIntro.map((value) => {
-		return makeBriefingText.call(this, value);
-	}).join(" and "));
+	
+	briefing.push(briefingIntro.join(" and "));
 
 	// Add climb altitude briefing segment
 	if (action.altitude) {
@@ -183,7 +152,7 @@ function makeTaskCoverBriefing(action, flight) {
 	}
 
 	briefing.push(rand.pick(outroSegments));
-
+	
 	return briefing.map((value) => {
 		return value.charAt(0).toUpperCase() + value.slice(1);
 	}).join(". ") + ".";
