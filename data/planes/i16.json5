@@ -6,6 +6,10 @@
 		alias: "Ishak",
 		type: ["fighter", "fighter_light"],
 		size: "small",
+		altitude: {
+			low: 2, // 66.6% (open cockpit!)
+			medium: 1 // 33.3%
+		},
 		static: [
 			"static_i16",
 			"static_i16_net"

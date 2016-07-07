@@ -2,7 +2,11 @@
 "use strict";
 
 const numeral = require("numeral");
+const data = require("../data");
 const makeBriefingText = require("./briefing.text");
+
+// Data constants
+const altitudeLevel = data.altitudeLevel;
 
 // First (intro) plan description segments
 const introSegments = [
@@ -38,27 +42,62 @@ module.exports = function makeBriefingFly(action, flight) {
 	// TODO: Add flight route altitude/speed data
 	if (!isPlayerFlightLeader) {
 		
-		// Follow your rotte leader Baranov on a flight route just below the clouds
-		// maintaining a low 770 meters altitude and 400 km/h speed. Keep your eyes
-		// open for any enemy contacts.
-		
 		const briefingRoute = [];
-		const altitude = action.altitude.target;
+		const clouds = this.weather.clouds;
+		const altitude = action.altitude;
 		const speed = action.route[0].speed;
-		const altitudeStr = numeral(Math.round(altitude / 100) * 100).format("0,0");
+		const altitudeStr = numeral(Math.round(altitude.target / 100) * 100).format("0,0");
 		const speedStr = numeral(Math.round(speed / 10) * 10).format("0,0");
 		
-		briefingRoute.push("on a");
+		let routeType = "designated";
 		
 		// NOTE: Avoiding multiple "flight" references in the same sentence
 		if (briefingIntro.indexOf("flight") === -1) {
-			briefingRoute.push("flight");
+			routeType += " flight";
 		}
 		
-		briefingRoute.push("route");
+		briefingRoute.push("on a " + routeType + " route");
 		
-		briefingRoute.push("just below the clouds");
-		briefingRoute.push("maintaining a low " + altitudeStr + " meters altitude and " + speedStr + " km/h speed");
+		// Include clouds level reference (for significant cover only)
+		if (clouds.cover > 20) {
+			
+			const cloudsMin = clouds.altitude;
+			const cloudsMax = clouds.altitude + clouds.thickness;
+			let cloudsDelta;
+			
+			if (altitude.target < cloudsMin) {
+				cloudsDelta = altitude.target - cloudsMin;
+			}
+			else if (altitude.target > cloudsMax) {
+				cloudsDelta = altitude.target - cloudsMax;
+			}
+			
+			if (cloudsDelta && Math.abs(cloudsDelta) < 600) {
+				
+				briefingRoute.push("just");
+				
+				if (cloudsDelta > 0) {
+					briefingRoute.push("above");
+				}
+				else {
+					briefingRoute.push("below");
+				}
+				
+				briefingRoute.push("the clouds");
+			}
+		}
+		
+		briefingRoute.push("aiming for");
+		
+		if (altitude.level === altitudeLevel.LOW) {
+			briefingRoute.push("a low");
+		}
+		else if (altitude.level === altitudeLevel.HIGH) {
+			briefingRoute.push("a high");
+		}
+		
+		briefingRoute.push(altitudeStr + " meters altitude");
+		briefingRoute.push("and " + speedStr + " km/h speed");
 		
 		briefingIntro += " " + briefingRoute.join(" ");
 	}

@@ -8,9 +8,9 @@ const altitudeLevel = data.altitudeLevel;
 
 // Valid altitude ranges (in meters)
 const altitudeRange = {
-	[altitudeLevel.LOW]: [400, 1300],
-	[altitudeLevel.MEDIUM]: [1300, 2500],
-	[altitudeLevel.HIGH]: [2500, 4000]
+	[altitudeLevel.LOW]: [300, 1400],
+	[altitudeLevel.MEDIUM]: [1400, 2900],
+	[altitudeLevel.HIGH]: [2900, 5000]
 };
 
 // Make flight altitude profile
@@ -98,7 +98,8 @@ module.exports = function makeFlightAltitude(flight) {
 	// Try to avoid clouds (with over 20% cover)
 	if (clouds.cover > 20) {
 
-		const cloudsMin = clouds.altitude;
+		// NOTE: Using -100 and +200 meters as a buffer between cloud layer
+		const cloudsMin = clouds.altitude - 100;
 		const cloudsMax = clouds.altitude + clouds.thickness + 200;
 		
 		if (altitude.min < cloudsMax && altitude.max > cloudsMin) {
@@ -107,29 +108,17 @@ module.exports = function makeFlightAltitude(flight) {
 			
 			// Below the clouds
 			if (altitude.min < cloudsMin) {
-				
-				altitudeOptions.push({
-					clouds: -1,
-					range: [altitude.min, cloudsMin]
-				});
+				altitudeOptions.push([altitude.min, cloudsMin]);
 			}
 			
 			// Above the clouds
 			if (altitude.max > cloudsMax) {
-
-				altitudeOptions.push({
-					clouds: +1,
-					range: [cloudsMax, altitude.max]
-				});
+				altitudeOptions.push([cloudsMax, altitude.max]);
 			}
 			
 			// Pick a random altitude based on clouds (above or below)
 			if (altitudeOptions.length) {
-				
-				const altitudeOption = rand.pick(altitudeOptions);
-				
-				altitude.clouds = altitudeOption.clouds;
-				[altitude.min, altitude.max] = altitudeOption.range;
+				[altitude.min, altitude.max] = rand.pick(altitudeOptions);
 			}
 		}
 	}
