@@ -12,6 +12,7 @@ const makeFlightSpeed = require("./flight.speed");
 
 // Data constants
 const mapColor = data.mapColor;
+const briefingColor = data.briefingColor;
 
 // First (intro) plan description segments
 const introSegments = [
@@ -147,8 +148,11 @@ function makeTaskCoverBriefing(action, flight) {
 		// TODO: Use feets for other countries?
 		let altitudeStr = Math.round(action.altitude / 100) * 100;
 		altitudeStr = numeral(altitudeStr).format("0,0");
+		
+		let altitudeBriefing = 'Climb to <font color="' + briefingColor.LIGHT + '">';
+		altitudeBriefing += altitudeStr + " meters</font> altitude";
 
-		briefing.push("Climb to " + altitudeStr + " meters altitude");
+		briefing.push(altitudeBriefing);
 	}
 
 	briefing.push(rand.pick(outroSegments));

@@ -7,6 +7,7 @@ const makeBriefingText = require("./briefing.text");
 
 // Data constants
 const altitudeLevel = data.altitudeLevel;
+const briefingColor = data.briefingColor;
 
 // First (intro) plan description segments
 const introSegments = [
@@ -39,7 +40,7 @@ module.exports = function makeBriefingFly(action, flight) {
 	
 	briefingIntro = briefingIntro.join(" and ");
 	
-	// TODO: Add flight route altitude/speed data
+	// Add flight route altitude/speed data
 	if (!isPlayerFlightLeader) {
 		
 		const briefingRoute = [];
@@ -96,8 +97,11 @@ module.exports = function makeBriefingFly(action, flight) {
 			briefingRoute.push("a high");
 		}
 		
-		briefingRoute.push(altitudeStr + " meters altitude");
-		briefingRoute.push("and " + speedStr + " km/h speed");
+		const lightFontTag = '<font color="' + briefingColor.LIGHT + '">';
+		
+		briefingRoute.push(lightFontTag + altitudeStr + " meters</font>");
+		briefingRoute.push("altitude and");
+		briefingRoute.push(lightFontTag + speedStr + " km/h</font> speed");
 		
 		briefingIntro += " " + briefingRoute.join(" ");
 	}
