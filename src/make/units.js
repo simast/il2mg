@@ -356,7 +356,7 @@ module.exports = function makeUnits() {
 		};
 		
 		// Mark unit airfield transfer (rebase) targets
-		if (unitAirfields.length > 1 && data.tasks.rebase) {
+		if (unitAirfields.length > 1) {
 			
 			const fromAirfield = unitAirfields[0];
 			const fromPosition = battle.airfields[fromAirfield.id].position;

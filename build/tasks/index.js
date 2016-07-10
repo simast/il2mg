@@ -305,27 +305,24 @@ module.exports = function(grunt) {
 									availability = 1;
 								}
 								
-								if (data.tasks.rebase) {
-								
-									// Auto-assign rebase task
-									if (airfields.size) {
-										
-										const toPosition = battle.airfields[airfieldID].position;
-										const toVector = Vector.create([toPosition[0], toPosition[2]]);
-										const rebaseDistance = rebase.fromVector.distanceFrom(toVector);
-										
-										// Enforce required minimum distance between rebase airfields
-										if (rebaseDistance >= data.tasks.rebase.distanceMin) {
-											rebase.to.push(airfieldID);
-										}
+								// Auto-assign rebase task
+								if (airfields.size) {
+									
+									const toPosition = battle.airfields[airfieldID].position;
+									const toVector = Vector.create([toPosition[0], toPosition[2]]);
+									const rebaseDistance = rebase.fromVector.distanceFrom(toVector);
+									
+									// Enforce required minimum distance between rebase airfields
+									if (rebaseDistance >= data.tasks.rebase.distanceMin) {
+										rebase.to.push(airfieldID);
 									}
-									else {
-										
-										const fromPosition = battle.airfields[airfieldID].position;
-										
-										rebase.from = airfieldID;
-										rebase.fromVector = Vector.create([fromPosition[0], fromPosition[2]]);
-									}
+								}
+								else {
+									
+									const fromPosition = battle.airfields[airfieldID].position;
+									
+									rebase.from = airfieldID;
+									rebase.fromVector = Vector.create([fromPosition[0], fromPosition[2]]);
 								}
 								
 								// TODO: Also include offmap airfields as valid air start!
