@@ -301,17 +301,28 @@ function makeFlight(params) {
 	// Make flight plan
 	makeFlightPlan.call(this, flight);
 	
-	// Enable radio beacon source for player home airfield
-	if (isPlayer && airfield.beacon) {
+	// Enable radio navigation beacon source
+	if (isPlayer) {
 		
-		const beaconItem = airfield.beacon;
+		// Use player home airfield beacon by default
+		let beaconItem = airfield.beacon;
 		
-		beaconItem.BeaconChannel = 1;
-		beaconItem.entity.Enabled = 1;
+		// Override with flight provided target beacon
+		if (flight.beacon) {
+			beaconItem = flight.beacon;
+		}
 		
-		// Detach beacon item from airfield "bubble" zone
-		airfield.zone.onActivate.removeObject(beaconItem);
-		airfield.zone.onDeactivate.removeObject(beaconItem);
+		if (beaconItem) {
+		
+			const beaconItem = (flight.beacon || airfield.beacon);
+			
+			beaconItem.BeaconChannel = 1;
+			beaconItem.entity.Enabled = 1;
+			
+			// Detach beacon item from airfield "bubble" zone
+			airfield.zone.onActivate.removeObject(beaconItem);
+			airfield.zone.onDeactivate.removeObject(beaconItem);
+		}
 	}
 	
 	return flight;

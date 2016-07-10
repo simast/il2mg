@@ -24,8 +24,6 @@ module.exports = function makeTaskRebase(flight) {
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
 	
-	// TODO: Set beacon to target airfield
-	
 	// Make rebase flight altitude profile
 	const altitude = makeFlightAltitude.call(this, flight);
 	
@@ -76,9 +74,9 @@ module.exports = function makeTaskRebase(flight) {
 		}) - 1];
 	}
 	
-	// Mark target airfield area on the map
 	if (!airfieldTo.offmap && isPlayerFlight) {
 		
+		// Mark target airfield area on the map
 		markMapArea.call(
 			this,
 			flight,
@@ -86,11 +84,13 @@ module.exports = function makeTaskRebase(flight) {
 			airfieldTo.position[2],
 			true
 		);
+		
+		// Use target airfield radio navigation beacon
+		if (airfieldTo.beacon) {
+			flight.beacon = airfieldTo.beacon;
+		}
 	}
 	
-	console.log(airfieldFrom.id);
-	console.log(airfieldTo.id);
-	
-	// Register target airfield location as flight target
+	// TODO: Register target airfield location as flight target
 	// flight.target = patrolPoints.slice();
 };

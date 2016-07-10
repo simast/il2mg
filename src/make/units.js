@@ -356,23 +356,24 @@ module.exports = function makeUnits() {
 		};
 		
 		// Mark unit airfield transfer (rebase) targets
-		if (unitAirfields.length > 1) {
+		if (unitAirfields.length > 1 && data.tasks.rebase) {
 			
-			const fromAirfield = unitAirfields[0].id;
-			const fromPosition = battle.airfields[fromAirfield].position;
+			const fromAirfield = unitAirfields[0];
+			const fromPosition = battle.airfields[fromAirfield.id].position;
 			const fromVector = Vector.create([fromPosition[0], fromPosition[2]]);
 			
-			rebase.from = fromAirfield;
+			rebase.from = fromAirfield.id;
 			
 			// Collect valid rebase airfield targets
 			for (let i = 1; i < unitAirfields.length; i++) {
 				
-				const toAirfield = unitAirfields[i].id;
-				const toPosition = battle.airfields[toAirfield].position;
+				const toAirfield = unitAirfields[i];
+				const toPosition = battle.airfields[toAirfield.id].position;
 				const toVector = Vector.create([toPosition[0], toPosition[2]]);
 				
+				// Enforce required minimum distance between rebase airfields
 				if (fromVector.distanceFrom(toVector) >= data.tasks.rebase.distanceMin) {
-					rebase.to.push(toAirfield);
+					rebase.to.push(toAirfield.id);
 				}
 			}
 		}
