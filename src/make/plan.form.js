@@ -107,7 +107,7 @@ module.exports = function makePlanForm(action, element, flight, input) {
 				// the flight after take off (just before proceeding with the task).
 				const waitTimerLink = flight.group.createItem("MCU_Timer");
 	
-				waitTimerLink.Time = +(rand.real(25, 40).toFixed(3));
+				waitTimerLink.Time = +(rand.real(40, 60).toFixed(3));
 				waitTimerLink.setPositionNear(flight.takeoffCommand);
 				waitTimerLink.addTarget(input);
 				
