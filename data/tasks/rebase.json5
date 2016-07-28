@@ -6,7 +6,9 @@
 	name: "Transfer airfield",
 	title: "Transfer from {{airfield}} airfield",
 	story: [
-		"We are moving out! Orders have just been passed around with instructions for an immediate transfer of all materiel and personnel to {{target.ground}}. Our flight of {{{plane}}}s will be among the first to leave for the new destination!"
+		"The orders just came through, confirming the rumours that were floating around since yesterday now. Our ground staff was on full alert and in the process of making all the preparations for a transfer to our new destination - {{target.ground}}. All the serviceable {{{plane}}}s are being prepared now and are starting to set off for their new base.",
+		"There will be a series of planned transfer flights today, with our flight of {{{plane}}}s leaving straight away. Our destination is {{target.ground}}. {{{rank.leader}}} {{name.last}} was left in charge of coordinating all rebase operations today while our commander, {{{rank.commander}}} {{name.last}}, has been flown away hastily for a conference briefing.",
+		"We are moving out! Orders have just been passed around with instructions for an immediate transfer of all materiel and personnel to {{target.ground}}. Ground staff is busy organising rebase operations right now - spare ammunition and supplies are being loaded on lorries while all serviceable {{{plane}}}s are being refueled and prepared for their transfer flights."
 	],
 	altitude: {
 		low: 1, // 50%
