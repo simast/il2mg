@@ -37,5 +37,8 @@
 	},
 
 	// Yak-1 ser.96
-	"yak1s96": "yak1s69"
+	"yak1s96": "yak1s69",
+	
+	// Yak-1B
+	"yak1b": "yak1s69"
 }
