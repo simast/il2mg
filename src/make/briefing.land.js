@@ -1,11 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-
-// Data constants
-const briefingColor = data.briefingColor;
-
 // Make plan land action briefing
 module.exports = function makeBriefingLand(action, flight) {
 	
@@ -22,7 +17,7 @@ module.exports = function makeBriefingLand(action, flight) {
 	
 	// Show airfield name (when target airfield is different or with air start)
 	if (airfield.id !== flight.airfield || typeof playerElement.state === "number") {
-		briefing.push('<font color="' + briefingColor.LIGHT + '">' + airfield.name + "</font>");
+		briefing.push("[" + airfield.name + "]");
 	}
 	// Hide airfield name (should be already visibile in take off plan action briefing)
 	else {

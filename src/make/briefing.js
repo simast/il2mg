@@ -148,6 +148,21 @@ module.exports = function makeBriefing() {
 		briefing += briefingPlan.join('<br><font size="8"></font><br>');
 	}
 	
+	const briefingHighlights = new Set();
+	
+	// Highlight marked briefing text
+	briefing = briefing.replace(/\[(.*?)\]/g, (match, highlight) => {
+		
+		// Highlight the same segment/word only once!
+		if (briefingHighlights.has(highlight)) {
+			return highlight;
+		}
+		
+		briefingHighlights.add(highlight);
+		
+		return '<font color="' + briefingColor.LIGHT + '">' + highlight + "</font>";
+	});
+	
 	options.setDescription(this.getLC(briefing));
 	this.briefing = briefing;
 };
@@ -229,7 +244,7 @@ function makeBriefingFlight() {
 	}
 
 	// Unit name
-	output += ' of <font color="' + briefingColor.LIGHT + '">' + unit.name + "</font>";
+	output += " of [" + unit.name + "]";
 	
 	// Unit suffix
 	if (unit.suffix) {
@@ -265,7 +280,7 @@ function makeBriefingFlight() {
 
 			// Highlighted player pilot name
 			if (plane === flight.player) {
-				output += '<font color="' + briefingColor.LIGHT + '">' + pilot.name + "</font>";
+				output += "[" + pilot.name + "]";
 			}
 			else {
 				output += pilot.name;

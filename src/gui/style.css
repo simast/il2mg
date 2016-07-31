@@ -310,7 +310,7 @@ a.country.selected:before {
 	margin: 0;
 }
 #briefing i {
-	font-style: oblique;
+	font-style: italic;
 }
 
 /* Create mission screen */
@@ -340,7 +340,7 @@ a.country.selected:before {
 	margin: 0;
 	font-size: 24px;
 	font-weight: normal;
-	font-style: oblique;
+	font-style: italic;
 }
 
 /* Select misison date */
@@ -460,7 +460,7 @@ a.country.selected:before {
 	font-weight: normal;
 }
 #choices .choiceList em {
-	font-style: oblique;
+	font-style: italic;
 }
 
 /* Scrollbars */

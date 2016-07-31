@@ -1,12 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-
-// Data constants
-const flightState = data.flightState;
-const briefingColor = data.briefingColor;
-const itemFlag = data.itemFlag;
+const {flightState, itemFlag} = require("../data");
 
 // Make plan takeoff action briefing
 module.exports = function makeBriefingTakeoff(action, flight) {
@@ -108,9 +103,7 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 		briefing.push("and");
 	}
 	
-	briefing.push("take off from");
-	briefing.push('<font color="' + briefingColor.LIGHT + '">' + airfield.name + "</font>");
-	briefing.push("airfield");
+	briefing.push("take off from [" + airfield.name + "] airfield");
 	
 	// Airfield callsign
 	if (airfield.callsign) {

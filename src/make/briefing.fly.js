@@ -2,12 +2,8 @@
 "use strict";
 
 const numeral = require("numeral");
-const data = require("../data");
+const {altitudeLevel} = require("../data");
 const makeBriefingText = require("./briefing.text");
-
-// Data constants
-const altitudeLevel = data.altitudeLevel;
-const briefingColor = data.briefingColor;
 
 // First (intro) plan description segments
 const introSegments = [
@@ -97,11 +93,9 @@ module.exports = function makeBriefingFly(action, flight) {
 			briefingRoute.push("a high");
 		}
 		
-		const lightFontTag = '<font color="' + briefingColor.LIGHT + '">';
-		
-		briefingRoute.push(lightFontTag + altitudeStr + " meters</font>");
+		briefingRoute.push("[" + altitudeStr + " meters]");
 		briefingRoute.push("altitude and");
-		briefingRoute.push(lightFontTag + speedStr + " km/h</font> speed");
+		briefingRoute.push("[" + speedStr + " km/h] speed");
 		
 		briefingIntro += " " + briefingRoute.join(" ");
 	}

@@ -99,7 +99,13 @@ module.exports = function makeBriefingTarget(target) {
 	
 	targetPlaces.forEach((place, placeIndex) => {
 		
-		let placeName = "";
+		let fullPlaceName = "";
+		let placeName = place.name;
+		
+		// Highlight target place (with single target only)
+		if (isSingleTarget) {
+			placeName = "[" + placeName + "]";
+		}
 		
 		// Use location name
 		if (place instanceof Location) {
@@ -121,20 +127,20 @@ module.exports = function makeBriefingTarget(target) {
 					
 					// Custom output for non-combined airfield locations (without "of")
 					if (!isPlaceTypeCombined && place.type === location.AIRFIELD) {
-						placeName += place.name + " " + placeType;
+						fullPlaceName += placeName + " " + placeType;
 					}
 					else {
 					
 						if (!nextPlace) {
-							placeName += "the ";
+							fullPlaceName += "the ";
 						}
 						
-						placeName += placeType + " of " + place.name;
+						fullPlaceName += placeType + " of " + placeName;
 					}
 				}
 			}
 			else {
-				placeName += place.name;
+				fullPlaceName += placeName;
 			}
 		}
 		// Use map grid reference as a place name
@@ -150,13 +156,13 @@ module.exports = function makeBriefingTarget(target) {
 			const subgridZ = (gridZ % 1) * subgridSize;
 			const subgrid = Math.floor(subgridX) * subgridSize + 1 + Math.floor(subgridZ);
 			
-			placeName = "grid ";
-			placeName += ("00" + Math.floor(gridX)).substr(-2, 2);
-			placeName += ("00" + Math.floor(gridZ)).substr(-2, 2);
+			fullPlaceName = "grid ";
+			fullPlaceName += ("00" + Math.floor(gridX)).substr(-2, 2);
+			fullPlaceName += ("00" + Math.floor(gridZ)).substr(-2, 2);
 			
 			// NOTE: Subgrid number 5 is not visible on the map
 			if (subgrid !== 5) {
-				placeName += ":" + subgrid;
+				fullPlaceName += ":" + subgrid;
 			}
 		}
 		
@@ -169,10 +175,10 @@ module.exports = function makeBriefingTarget(target) {
 			const distance = place.vector.distanceFrom(startVector) / 1000;
 			const distanceStr = numeral(Math.round(distance / 10) * 10).format("0,0");
 			
-			placeName += ", " + distanceStr + " kilometers away";
+			fullPlaceName += ", " + distanceStr + " kilometers away";
 		}
 		
-		placeNames.push(placeName);
+		placeNames.push(fullPlaceName);
 	});
 	
 	briefing.push(placeNames.join(" and "));
