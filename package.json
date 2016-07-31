@@ -40,9 +40,9 @@
 		"browserify": "13.1.0",
 		"babelify": "7.3.0",
 		"envify": "3.4.1",
-		"react": "15.2.1",
-		"react-dom": "15.2.1",
-		"react-router": "2.6.0",
+		"react": "15.3.0",
+		"react-dom": "15.3.0",
+		"react-router": "2.6.1",
 		"clean-css": "3.4.19"
 	}
 }

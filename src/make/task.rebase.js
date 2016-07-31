@@ -91,6 +91,6 @@ module.exports = function makeTaskRebase(flight) {
 		}
 	}
 	
-	// TODO: Register target airfield location as flight target
-	// flight.target = patrolPoints.slice();
+	// Register target airfield location as flight target
+	flight.target = [[airfieldTo.position[0], airfieldTo.position[2]]];
 };

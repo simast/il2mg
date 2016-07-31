@@ -69,7 +69,8 @@ data.frontLine = Object.freeze({
 data.location = Object.freeze({
 	VILLAGE: 1, // Small village
 	TOWN: 2, // Medium town
-	CITY: 3 // Large city
+	CITY: 3, // Large city
+	AIRFIELD: 4 // Airfield
 });
 
 // Map season types

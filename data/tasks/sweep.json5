@@ -3,7 +3,7 @@
 	name: "Fighter sweep",
 	title: "Fighter sweep from {{airfield}}",
 	story: [
-		"New orders just came in! Our flight of {{{plane}}}s is to seek out and destroy any enemy aircraft or targets of opportunity in an area {{target.air}}. The ground staff has wished us the best of luck and a safe return, while {{{rank.commander}}} {{name.last}}, our commander, has reminded us to maintain strict discipline, stay calm and to keep our eyes open for any enemy contacts!"
+		"New orders just came in! Our flight of {{{plane}}}s is to seek out and destroy any enemy aircraft or targets of opportunity in an area {{target}}. The ground staff has wished us the best of luck and a safe return, while {{{rank.commander}}} {{name.last}}, our commander, has reminded us to maintain strict discipline, stay calm and to keep our eyes open for any enemy contacts!"
 	],
 	altitude: {
 		medium: 3, // 60%

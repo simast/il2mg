@@ -1,9 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
+const numeral = require("numeral");
 const Vector = require("sylvester").Vector;
-const data = require("../data");
 const Location = require("./locations").Location;
+const {location} = require("../data");
 
 // Briefing map grid size
 const GRID_SIZE = 10000; // 10 km
@@ -11,11 +12,16 @@ const GRID_SIZE = 10000; // 10 km
 // Place selection max radius
 const PLACE_RADIUS = 5000; // 5 Km
 
-// Data constants
-const location = data.location;
+// Names of location place types
+const placeTypeNames = {
+	[location.VILLAGE]: "village",
+	[location.TOWN]: "town",
+	[location.CITY]: "city",
+	[location.AIRFIELD]: "airfield"
+};
 
-// Make briefing location description
-module.exports = function makeBriefingLocation(target) {
+// Make briefing target/location description
+module.exports = function makeBriefingTarget(target) {
 	
 	if (!Array.isArray(target) || !target.length) {
 		return;
@@ -26,7 +32,8 @@ module.exports = function makeBriefingLocation(target) {
 		target = target.slice(0, 2);
 	}
 	
-	const places = this.locations.places;
+	const isSingleTarget = (target.length < 2);
+	const locations = this.locations;
 	const targetPlaces = [];
 	
 	// Process each location target point
@@ -34,13 +41,18 @@ module.exports = function makeBriefingLocation(target) {
 		
 		targetPlaces[index] = point;
 		
-		// Find all interesting places around the target point
-		let foundPlaces = places.findIn(new Location(
+		let foundPlaces = [];
+		const pointLocation = new Location(
 			point[0] - PLACE_RADIUS,
 			point[1] - PLACE_RADIUS,
 			point[0] + PLACE_RADIUS,
 			point[1] + PLACE_RADIUS
-		));
+		);
+		
+		// Find all interesting places and airfields around the target point
+		[locations.places, locations.airfields].forEach((locationIndex) => {
+			foundPlaces = foundPlaces.concat(locationIndex.findIn(pointLocation));
+		});
 		
 		if (!foundPlaces.length) {
 			return;
@@ -52,7 +64,7 @@ module.exports = function makeBriefingLocation(target) {
 		foundPlaces = foundPlaces.filter((place) => {
 			
 			// Place has to have a valid name (without digits and other punctuation)
-			if (!place.name || /[^A-Za-z\s\-]/.test(place.name)) {
+			if (!place.name || (!isSingleTarget && /[^A-Za-z\s\-]/.test(place.name))) {
 				return false;
 			}
 			
@@ -81,10 +93,6 @@ module.exports = function makeBriefingLocation(target) {
 	if (targetPlaces.length > 1) {
 		briefing.push("between");
 	}
-	// TODO: Target place as a single location
-	else {
-		briefing.push("over");
-	}
 	
 	const placeNames = [];
 	let isPlaceTypeCombined = false;
@@ -96,42 +104,38 @@ module.exports = function makeBriefingLocation(target) {
 		// Use location name
 		if (place instanceof Location) {
 			
-			// TODO: Add direction when location is a single target point
-			
 			if (!isPlaceTypeCombined) {
 				
 				const nextPlace = targetPlaces[placeIndex + 1];
-				let placeType;
-				
-				if (place.type === location.VILLAGE) {
-					placeType = "village";
-				}
-				else if (place.type === location.TOWN) {
-					placeType = "town";
-				}
-				else if (place.type === location.CITY) {
-					placeType = "city";
-				}
+				let placeType = placeTypeNames[place.type];
 				
 				if (placeType) {
 					
 					// Combine same village/town place types into a single type description
 					if (nextPlace instanceof Location && nextPlace.type === place.type &&
-							[location.VILLAGE, location.TOWN].indexOf(place.type) >= 0) {
+							[location.VILLAGE, location.TOWN, location.AIRFIELD].indexOf(place.type) >= 0) {
 						
 						placeType += "s";
 						isPlaceTypeCombined = true;
 					}
 					
-					if (!nextPlace) {
-						placeName += "the ";
+					// Custom output for non-combined airfield locations (without "of")
+					if (!isPlaceTypeCombined && place.type === location.AIRFIELD) {
+						placeName += place.name + " " + placeType;
 					}
+					else {
 					
-					placeName += placeType + " of ";
+						if (!nextPlace) {
+							placeName += "the ";
+						}
+						
+						placeName += placeType + " of " + place.name;
+					}
 				}
 			}
-			
-			placeName += place.name;
+			else {
+				placeName += place.name;
+			}
 		}
 		// Use map grid reference as a place name
 		else {
@@ -154,6 +158,18 @@ module.exports = function makeBriefingLocation(target) {
 			if (subgrid !== 5) {
 				placeName += ":" + subgrid;
 			}
+		}
+		
+		// Add range information for a single target location
+		// TODO: Add direction information for a nearby place!
+		if (isSingleTarget) {
+			
+			const startPosition = this.airfields[this.player.flight.airfield].position;
+			const startVector = Vector.create([startPosition[0], startPosition[2]]);
+			const distance = place.vector.distanceFrom(startVector) / 1000;
+			const distanceStr = numeral(Math.round(distance / 10) * 10).format("0,0");
+			
+			placeName += ", " + distanceStr + " kilometers away";
 		}
 		
 		placeNames.push(placeName);

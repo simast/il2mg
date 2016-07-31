@@ -4,11 +4,13 @@
 const data = require("../data");
 const log = require("../log");
 const Item = require("../item");
+const Location = require("./locations").Location;
 
 // Data constants
 const itemTag = data.itemTag;
 const planeSize = data.planeSize;
 const flightState = data.flightState;
+const location = data.location;
 
 // Airfield make parts
 const makeAirfieldLimits = require("./airfield.limits");
@@ -41,6 +43,9 @@ module.exports = function makeAirfields() {
 	
 	// Offmap "hot" spots by coalition (based on offmap airfield positions)
 	const offmapSpotsByCoalition = Object.create(null);
+	
+	// List of airfield locations data
+	const locationsData = [];
 
 	// Total airfield counts
 	let totalAirfields = 0;
@@ -72,6 +77,15 @@ module.exports = function makeAirfields() {
 		airfield.id = airfieldID;
 		airfield.name = airfieldData.name;
 		const position = airfield.position = airfieldData.position;
+		
+		// Register new airfield location
+		const airfieldLocation = new Location(position[0], position[2]);
+		
+		airfieldLocation.type = location.AIRFIELD;
+		airfieldLocation.name = airfieldData.name;
+		airfieldLocation.airfield = airfieldID;
+		
+		locationsData.push(airfieldLocation);
 		
 		// Identify offmap airfield
 		if (position[0] < 0 || position[0] > this.map.height ||
@@ -428,6 +442,10 @@ module.exports = function makeAirfields() {
 
 		return planeCount;
 	}
+	
+	// Build airfield locations index
+	mission.locations.airfields = new Location.Index();
+	mission.locations.airfields.load(locationsData);
 
 	// Static airfield data index objects
 	mission.airfields = Object.freeze(airfields);

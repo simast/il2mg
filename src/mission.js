@@ -77,9 +77,9 @@ class Mission {
 		require("./make/units").call(this);
 		require("./make/vehicles").call(this);
 		require("./make/weather").call(this);
+		require("./make/locations").call(this);
 		require("./make/airfields").call(this);
 		require("./make/tasks").call(this);
-		require("./make/locations").call(this);
 		require("./make/fronts").call(this);
 		require("./make/blocks").call(this);
 		require("./make/formations").call(this);
