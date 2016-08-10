@@ -21,7 +21,5 @@
 		dive_bomber: "bomber",
 		level_bomber: "bomber",
 		transport: "bomber"
-	},
-	// Minimum distance required between rebase airfields
-	distanceMin: 15000 // 15 km
+	}
 }

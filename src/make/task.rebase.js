@@ -2,12 +2,18 @@
 "use strict";
 
 const data = require("../data");
-const markMapArea = require("./task.cover").markMapArea;
+const math = require("mathjs");
+const {markMapArea} = require("./task.cover");
+const {isOffmapPoint} = require("./map");
 
 // Flight make parts
 const makeFlightAltitude = require("./flight.altitude");
 const makeFlightRoute = require("./flight.route");
 const makeAirfieldTaxi = require("./airfield.taxi");
+
+// Minimum distance required between rebase airfields and map border
+const MIN_DISTANCE_AIRFIELD = 20000; // 20 km
+const MIN_DISTANCE_BORDER = 40000; // 40 km
 
 // Data constants
 const planAction = data.planAction;
@@ -94,3 +100,122 @@ module.exports = function makeTaskRebase(flight) {
 	// Register target airfield location as flight target
 	flight.target = [[airfieldTo.position[0], airfieldTo.position[2]]];
 };
+
+// Check if rebase task is valid for target position/point
+function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
+	
+	let validationCache = isValidRebaseTask.validationCache;
+	
+	// Initialize rebase task validation cache
+	if (!validationCache) {
+		validationCache = isValidRebaseTask.validationCache = new Map();
+	}
+	
+	// Lookup cache data
+	let cacheFrom = validationCache.get(airfieldFrom);
+	
+	if (cacheFrom) {
+		
+		const isValid = cacheFrom.get(airfieldTo);
+		
+		if (isValid !== undefined) {
+			return isValid;
+		}
+	}
+	
+	const isValid = (() => {
+	
+		const pointFrom = [airfieldFrom.position[0], airfieldFrom.position[2]];
+		const pointTo = [airfieldTo.position[0], airfieldTo.position[2]];
+		const distance = math.distance(pointFrom, pointTo);
+		
+		// Enforce required minimum distance between rebase airfields
+		if (distance < MIN_DISTANCE_AIRFIELD) {
+			return false;
+		}
+		
+		const isOffmapFrom = isOffmapPoint(pointFrom[0], pointFrom[1], map.width, map.height);
+		const isOffmapTo = isOffmapPoint(pointTo[0], pointTo[1], map.width, map.height);
+			
+		// Offmap-to-offmap airfield rebase tasks are invalid
+		if (isOffmapFrom && isOffmapTo) {
+			return false;
+		}
+		
+		// Avoid rebase tasks near the edge of the map border
+		if (isOffmapFrom || isOffmapTo) {
+		
+			const mapBorderLines = [
+				[[0, 0], [map.height, 0]], // Left
+				[[map.height, 0], [map.height, map.width]], // Top
+				[[map.height, map.width], [0, map.width]], // Right
+				[[0, map.width], [0, 0]] // Bottom
+			];
+			
+			let distanceBorder = false;
+			
+			// Test each map border for intersections
+			for (const [borderPointFrom, borderPointTo] of mapBorderLines) {
+				
+				const pointIntersect = math.intersect(
+					pointFrom, pointTo,
+					borderPointFrom, borderPointTo
+				);
+				
+				if (!pointIntersect) {
+					continue;
+				}
+			
+				const isOffmapIntersect = isOffmapPoint(
+					Math.round(pointIntersect[0]),
+					Math.round(pointIntersect[1]),
+					map.width, map.height
+				);
+				
+				// Ignore offmap intersection points
+				if (isOffmapIntersect) {
+					continue;
+				}
+				
+				const distanceIntersectA = math.distance(pointFrom, pointIntersect);
+				const distanceIntersectB = math.distance(pointIntersect, pointTo);
+				
+				// Ignore invalid intersection points
+				if (!math.equal(distanceIntersectA + distanceIntersectB, distance)) {
+					continue;
+				}
+				
+				// Flying outside the map
+				if (isOffmapTo) {
+					distanceBorder = distanceIntersectA;
+				}
+				// Flying inside the map
+				else {
+					distanceBorder = distanceIntersectB;
+				}
+				
+				break;
+			}
+			
+			// Enforce required minimum distance between map border
+			if (distanceBorder === false || distanceBorder < MIN_DISTANCE_BORDER) {
+				return false;
+			}
+		}
+		
+		return true;
+	})();
+	
+	// Update validation cache
+	if (!cacheFrom) {
+		
+		cacheFrom = new Map();
+		validationCache.set(airfieldFrom, cacheFrom);
+	}
+	
+	cacheFrom.set(airfieldTo, isValid);
+	
+	return isValid;
+}
+
+module.exports.isValidRebaseTask = isValidRebaseTask;

@@ -29,3 +29,10 @@ module.exports = function makeMap() {
 	// Set active mission map data
 	this.map = map;
 };
+
+// Utility function used to check if a given position is an offmap point
+function isOffmapPoint(posX, posZ, mapWidth, mapHeight) {
+	return (posX < 0 || posZ < 0 || posX > mapHeight || posZ > mapWidth);
+}
+
+module.exports.isOffmapPoint = isOffmapPoint;

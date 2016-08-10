@@ -5,11 +5,12 @@ module.exports = function(grunt) {
 	
 	// Grunt task used to build battle index database
 	grunt.registerTask("build:index", "Build index database JSON files.", () => {
-
-		const Vector = require("sylvester").Vector;
+		
 		const numeral = require("numeral");
 		const moment = require("moment");
 		const data = require("../../src/data");
+		const {isValidRebaseTask} = require("../../src/make/task.rebase");
+		const {isOffmapPoint} = require("../../src/make/map");
 		
 		let totalBattles = 0;
 		let totalUnits = 0;
@@ -75,6 +76,7 @@ module.exports = function(grunt) {
 			const battle = data.battles[battleID];
 			const battleFrom = moment(battle.from);
 			const battleTo = moment(battle.to);
+			const map = battle.map;
 			const seasonIndex = Object.create(null);
 			const datesIndex = Object.create(null);
 			let lastRecordKey = 0;
@@ -89,9 +91,7 @@ module.exports = function(grunt) {
 				let startType = 0; // Onmap air start
 				
 				// Check for offmap airfields
-				if (position[0] < 0 || position[0] > battle.map.height ||
-					position[2] < 0 || position[2] > battle.map.width) {
-					
+				if (isOffmapPoint(position[0], position[2], map.width, map.height)) {
 					startType = -1; // Offmap air start
 				}
 				
@@ -308,21 +308,16 @@ module.exports = function(grunt) {
 								// Auto-assign rebase task
 								if (airfields.size) {
 									
-									const toPosition = battle.airfields[airfieldID].position;
-									const toVector = Vector.create([toPosition[0], toPosition[2]]);
-									const rebaseDistance = rebase.fromVector.distanceFrom(toVector);
+									const airfieldFrom = battle.airfields[rebase.from];
+									const airfieldTo = battle.airfields[airfieldID];
 									
-									// Enforce required minimum distance between rebase airfields
-									if (rebaseDistance >= data.tasks.rebase.distanceMin) {
+									// Check for valid rebase task
+									if (isValidRebaseTask(airfieldFrom, airfieldTo, map)) {
 										rebase.to.push(airfieldID);
 									}
 								}
 								else {
-									
-									const fromPosition = battle.airfields[airfieldID].position;
-									
 									rebase.from = airfieldID;
-									rebase.fromVector = Vector.create([fromPosition[0], fromPosition[2]]);
 								}
 								
 								// TODO: Also include offmap airfields as valid air start!
@@ -373,9 +368,9 @@ module.exports = function(grunt) {
 							let foundSeason = false;
 							
 							// Find matching map season
-							for (season in battle.map.season) {
+							for (season in map.season) {
 								
-								const seasonData = battle.map.season[season];
+								const seasonData = map.season[season];
 								const seasonFrom = moment(seasonData.from);
 								const seasonTo = moment(seasonData.to);
 								

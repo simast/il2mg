@@ -1,10 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const Vector = require("sylvester").Vector;
 const moment = require("moment");
 const data = require("../data");
 const log = require("../log");
+const {isValidRebaseTask} = require("./task.rebase");
 
 // Generate available mission units
 module.exports = function makeUnits() {
@@ -12,6 +12,7 @@ module.exports = function makeUnits() {
 	const rand = this.rand;
 	const battle = this.battle;
 	const choice = this.choice;
+	const map = this.map;
 	const planeStorages = new Set();
 	
 	// Utility function used to match to/from date ranges based on mission date
@@ -358,22 +359,20 @@ module.exports = function makeUnits() {
 		// Mark unit airfield transfer (rebase) targets
 		if (unitAirfields.length > 1) {
 			
-			const fromAirfield = unitAirfields[0];
-			const fromPosition = battle.airfields[fromAirfield.id].position;
-			const fromVector = Vector.create([fromPosition[0], fromPosition[2]]);
+			const airfieldFromID = unitAirfields[0].id;
+			const airfieldFrom = battle.airfields[airfieldFromID];
 			
-			rebase.from = fromAirfield.id;
+			rebase.from = airfieldFromID;
 			
 			// Collect valid rebase airfield targets
 			for (let i = 1; i < unitAirfields.length; i++) {
 				
-				const toAirfield = unitAirfields[i];
-				const toPosition = battle.airfields[toAirfield.id].position;
-				const toVector = Vector.create([toPosition[0], toPosition[2]]);
+				const airfieldToID = unitAirfields[i].id;
+				const airfieldTo = battle.airfields[airfieldToID];
 				
-				// Enforce required minimum distance between rebase airfields
-				if (fromVector.distanceFrom(toVector) >= data.tasks.rebase.distanceMin) {
-					rebase.to.push(toAirfield.id);
+				// Check for valid rebase task
+				if (isValidRebaseTask(airfieldFrom, airfieldTo, map)) {
+					rebase.to.push(airfieldToID);
 				}
 			}
 		}
