@@ -2,7 +2,7 @@
 "use strict";
 
 const data = require("../data");
-const math = require("mathjs");
+const {Vector, Line, Sylvester} = require("sylvester");
 const {markMapArea} = require("./task.cover");
 const {isOffmapPoint} = require("./map");
 
@@ -124,18 +124,18 @@ function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 	}
 	
 	const isValid = (() => {
-	
-		const pointFrom = [airfieldFrom.position[0], airfieldFrom.position[2]];
-		const pointTo = [airfieldTo.position[0], airfieldTo.position[2]];
-		const distance = math.distance(pointFrom, pointTo);
+		
+		const vectorFrom = Vector.create([airfieldFrom.position[0], airfieldFrom.position[2]]);
+		const vectorTo = Vector.create([airfieldTo.position[0], airfieldTo.position[2]]);
+		const distance = vectorFrom.distanceFrom(vectorTo);
 		
 		// Enforce required minimum distance between rebase airfields
 		if (distance < MIN_DISTANCE_AIRFIELD) {
 			return false;
 		}
 		
-		const isOffmapFrom = isOffmapPoint(pointFrom[0], pointFrom[1], map.width, map.height);
-		const isOffmapTo = isOffmapPoint(pointTo[0], pointTo[1], map.width, map.height);
+		const isOffmapFrom = isOffmapPoint(vectorFrom.e(1), vectorFrom.e(2), map.width, map.height);
+		const isOffmapTo = isOffmapPoint(vectorTo.e(1), vectorTo.e(2), map.width, map.height);
 			
 		// Offmap-to-offmap airfield rebase tasks are invalid
 		if (isOffmapFrom && isOffmapTo) {
@@ -144,31 +144,33 @@ function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 		
 		// Avoid rebase tasks near the edge of the map border
 		if (isOffmapFrom || isOffmapTo) {
-		
+			
 			const mapBorderLines = [
-				[[0, 0], [map.height, 0]], // Left
-				[[map.height, 0], [map.height, map.width]], // Top
-				[[map.height, map.width], [0, map.width]], // Right
-				[[0, map.width], [0, 0]] // Bottom
+				Line.create([0, 0], [1, 0]), // Left
+				Line.create([map.height, 0], [0, 1]), // Top
+				Line.create([map.height, map.width], [-1, 0]), // Right
+				Line.create([0, map.width], [0, -1]) // Bottom
 			];
+			
+			const routeLine = Line.create(vectorFrom, Vector.create([
+				vectorTo.e(1) - vectorFrom.e(1),
+				vectorTo.e(2) - vectorFrom.e(2)
+			]));
 			
 			let distanceBorder = false;
 			
 			// Test each map border for intersections
-			for (const [borderPointFrom, borderPointTo] of mapBorderLines) {
+			for (const borderLine of mapBorderLines) {
 				
-				const pointIntersect = math.intersect(
-					pointFrom, pointTo,
-					borderPointFrom, borderPointTo
-				);
+				let vectorIntersect = borderLine.intersectionWith(routeLine);
 				
-				if (!pointIntersect) {
+				if (!vectorIntersect) {
 					continue;
 				}
 			
 				const isOffmapIntersect = isOffmapPoint(
-					Math.round(pointIntersect[0]),
-					Math.round(pointIntersect[1]),
+					Math.round(vectorIntersect.e(1)),
+					Math.round(vectorIntersect.e(2)),
 					map.width, map.height
 				);
 				
@@ -177,11 +179,18 @@ function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 					continue;
 				}
 				
-				const distanceIntersectA = math.distance(pointFrom, pointIntersect);
-				const distanceIntersectB = math.distance(pointIntersect, pointTo);
+				// Convert back to 2D vector
+				vectorIntersect = Vector.create([
+					vectorIntersect.e(1),
+					vectorIntersect.e(2)
+				]);
+				
+				const distanceIntersectA = vectorFrom.distanceFrom(vectorIntersect);
+				const distanceIntersectB = vectorIntersect.distanceFrom(vectorTo);
+				const distanceDelta = Math.abs(distance - distanceIntersectA + distanceIntersectB);
 				
 				// Ignore invalid intersection points
-				if (!math.equal(distanceIntersectA + distanceIntersectB, distance)) {
+				if (distanceDelta > Sylvester.precision) {
 					continue;
 				}
 				
