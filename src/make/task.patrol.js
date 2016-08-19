@@ -223,10 +223,13 @@ module.exports = function makeTaskPatrol(flight) {
 	for (const point of patrolPoints) {
 		
 		const options = Object.create(null);
+		const to = {point, altitude};
 		
-		// Use solid ingress route line
+		// Use solid ingress route line (with split)
 		if (point === ingressPoint) {
+			
 			options.solid = true;
+			to.split = true;
 		}
 		// Set route waypoints to low priority (for patrol area only)
 		else {
@@ -238,7 +241,7 @@ module.exports = function makeTaskPatrol(flight) {
 			this,
 			flight,
 			fromPoint,
-			{point, altitude},
+			to,
 			options
 		);
 		
@@ -290,7 +293,8 @@ module.exports = function makeTaskPatrol(flight) {
 			ingressPoint,
 			{
 				altitude,
-				airfield: flight.airfield
+				airfield: flight.airfield,
+				split: true
 			},
 			{
 				// Don't show map egress route lines for patrol task

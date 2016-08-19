@@ -323,6 +323,13 @@
 		model: "graphics\\artillery\\ml20\\ml20.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\ml20.txt"
 	},
+	{
+		name: "M-30",
+		type: ["artillery", "artillery_howitzer"],
+		countries: [101],
+		model: "graphics\\artillery\\m30\\m30.mgm",
+		script: "luascripts\\worldobjects\\vehicles\\m30.txt"
+	},
 
 	// Anti-tank guns
 	{

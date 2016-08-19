@@ -117,7 +117,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 				spotIcon.setPosition(spot.point);
 				spotIcon.Coalitions = [flight.coalition];
 				
-				if (!spot.hidden && isNextSpotVisible) {
+				if (!spot.hidden && !spot.split && isNextSpotVisible) {
 					spotIcon.IconId = MCU_Icon.ICON_WAYPOINT;
 				}
 			}

@@ -9,9 +9,8 @@ const AIRFIELD_DISTANCE_EGRESS = 20000; // 20 km
 const AIRFIELD_DISTANCE_MIN = 7000; // 7 km
 const AIRFIELD_DISTANCE_MAX = 10000; // 10 km
 
-// Route split distance constants
+// Route minimum split segment distance
 const ROUTE_SPLIT_DISTANCE = 80000; // 80 km
-const ROUTE_SPLIT_RANDOM = ROUTE_SPLIT_DISTANCE * 0.05; // 5% (+- 4km)
 
 // Make mission flight route
 module.exports = function makeFlightRoute(flight, from, to, options) {
@@ -66,6 +65,8 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 		numSpots = Math.ceil(routeVector.modulus() / ROUTE_SPLIT_DISTANCE);
 	}
 	
+	const spotDivider = 1 / numSpots;
+	
 	for (let i = 1; i <= numSpots; i++) {
 		
 		const spot = {};
@@ -89,19 +90,50 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 		altitude = Math.min(Math.max(altitude, to.altitude.min), to.altitude.max);
 		
 		// Compute route spot vector position
+		let spotMultiplier = spotDivider * i;
+		
+		// Use some +-20% randomness for split spot positioning
+		if (!isLastSpot) {
+			
+			const randomMultiplier = spotDivider * 0.2;
+			spotMultiplier += rand.real(-randomMultiplier, randomMultiplier, true);
+		}
+		
 		let spotVector = routeStartVector.add(
-			routeVector.multiply(1 / numSpots * i)
+			routeVector.multiply(spotMultiplier)
 		);
 		
-		// Add some randomness for split points
-		// TODO: Avoid placing spots near the edge of map border
+		// Use some randomness to shift split points from a straight route line
+		// TODO: Avoid placing randomized spots near the edge of map border
 		if (!isLastSpot) {
+			
+			spot.split = true;
+			
+			const angle60 = Math.PI / 3;
+			let rotateMin;
+			let rotateMax;
+			
+			// Use right side rotation with 60 to 120 degrees angle
+			if (rand.bool()) {
+				
+				rotateMin = angle60;
+				rotateMax = angle60 * 2;
+			}
+			// Use left side rotation with 240 to 300 degrees angle
+			else {
+				
+				rotateMin = angle60 * 4;
+				rotateMax = angle60 * 5;
+			}
+			
+			const shiftMax = ROUTE_SPLIT_DISTANCE * 0.15;
+			const shiftMin = shiftMax / 3;
 			
 			spotVector = spotVector.add(
 				routeVector
 					.toUnitVector()
-					.multiply(rand.real(0, ROUTE_SPLIT_RANDOM, true))
-					.rotate(rand.real(0, Math.PI * 2, true), Vector.Zero(2))
+					.multiply(rand.real(shiftMin, shiftMax, true))
+					.rotate(rand.real(rotateMin, rotateMax, true), Vector.Zero(2))
 			);
 		}
 		
