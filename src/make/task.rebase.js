@@ -39,7 +39,8 @@ module.exports = function makeTaskRebase(flight) {
 		airfieldFrom.position,
 		{
 			altitude,
-			airfield: airfieldTo.id
+			airfield: airfieldTo.id,
+			split: true
 		},
 		{
 			hidden: (isPlayerFlightLeader && !debugFlights),

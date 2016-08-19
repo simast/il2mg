@@ -36,7 +36,7 @@
 		"babel-register": "6.11.6",
 		"babel-eslint": "6.1.2",
 		"babel-plugin-transform-react-jsx": "6.8.0",
-		"eslint-plugin-react": "6.1.1",
+		"eslint-plugin-react": "6.1.2",
 		"browserify": "13.1.0",
 		"babelify": "7.3.0",
 		"envify": "3.4.1",
