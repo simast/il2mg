@@ -188,7 +188,7 @@ function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 				
 				const distanceIntersectA = vectorFrom.distanceFrom(vectorIntersect);
 				const distanceIntersectB = vectorIntersect.distanceFrom(vectorTo);
-				const distanceDelta = Math.abs(distance - distanceIntersectA + distanceIntersectB);
+				const distanceDelta = Math.abs(distance - (distanceIntersectA + distanceIntersectB));
 				
 				// Ignore invalid intersection points
 				if (distanceDelta > Sylvester.precision) {
