@@ -1,17 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
 const log = require("../log");
 const Item = require("../item");
 const {Location} = require("./locations");
 const {isOffmapPoint} = require("./map");
-
-// Data constants
-const itemTag = data.itemTag;
-const planeSize = data.planeSize;
-const flightState = data.flightState;
-const location = data.location;
+const data = require("../data");
+const {itemTag, planeSize, flightState, location} = data;
 
 // Airfield make parts
 const makeAirfieldLimits = require("./airfield.limits");

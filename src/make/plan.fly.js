@@ -1,12 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-const MCU_Icon = require("../item").MCU_Icon;
-const MCU_Waypoint = require("../item").MCU_Waypoint;
-
-// Data constants
-const mapColor = data.mapColor;
+const {MCU_Icon, MCU_Waypoint} = require("../item");
+const {mapColor} = require("../data");
 
 // Make plan fly action
 module.exports = function makePlanFly(action, element, flight, input) {

@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const Vector = require("sylvester").Vector;
+const {Vector} = require("sylvester");
 const makeFlightSpeed = require("./flight.speed");
 
 // Airfield as a target route constants
@@ -69,25 +69,7 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 	
 	for (let i = 1; i <= numSpots; i++) {
 		
-		const spot = {};
 		const isLastSpot = (i === numSpots);
-		
-		if (options) {
-			Object.assign(spot, options);
-		}
-		
-		let altitude;
-		
-		// Use a lower altitude for egress (back to home airfield) route
-		if (isEgressRoute && isLastSpot) {
-			altitude = rand.integer(to.altitude.min, to.altitude.target);
-		}
-		// Use target altitude with some +-150 meters randomness
-		else {
-			altitude = to.altitude.target + rand.integer(-150, 150);
-		}
-		
-		altitude = Math.min(Math.max(altitude, to.altitude.min), to.altitude.max);
 		
 		// Compute route spot vector position
 		let spotMultiplier = spotDivider * i;
@@ -102,6 +84,12 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 		let spotVector = routeStartVector.add(
 			routeVector.multiply(spotMultiplier)
 		);
+		
+		const spot = {};
+		
+		if (options) {
+			Object.assign(spot, options);
+		}
 		
 		// Use some randomness to shift split points from a straight route line
 		// TODO: Avoid placing randomized spots near the edge of map border
@@ -136,6 +124,19 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 					.rotate(rand.real(rotateMin, rotateMax, true), Vector.Zero(2))
 			);
 		}
+		
+		let altitude;
+		
+		// Use a lower altitude for egress (back to home airfield) route
+		if (isEgressRoute && isLastSpot) {
+			altitude = rand.integer(to.altitude.min, to.altitude.target);
+		}
+		// Use target altitude with some +-150 meters randomness
+		else {
+			altitude = to.altitude.target + rand.integer(-150, 150);
+		}
+		
+		altitude = Math.min(Math.max(altitude, to.altitude.min), to.altitude.max);
 		
 		// Route target point with altitude
 		spot.point = [

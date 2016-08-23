@@ -1,12 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
+const {weatherState, precipitation} = require("../data");
 const makeBriefingText = require("./briefing.text");
-
-// Data constants
-const weatherState = data.weatherState;
-const precipitation = data.precipitation;
 
 // General weather description segments
 const generalSegments = [

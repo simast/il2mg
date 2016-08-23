@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const data = require("../data");
+const {planAction} = require("../data");
 const {Vector, Line, Sylvester} = require("sylvester");
 const {markMapArea} = require("./task.cover");
 const {isOffmapPoint} = require("./map");
@@ -14,9 +14,6 @@ const makeAirfieldTaxi = require("./airfield.taxi");
 // Minimum distance required between rebase airfields and map border
 const MIN_DISTANCE_AIRFIELD = 20000; // 20 km
 const MIN_DISTANCE_BORDER = 40000; // 40 km
-
-// Data constants
-const planAction = data.planAction;
 
 // Make mission rebase task
 module.exports = function makeTaskRebase(flight) {
@@ -58,7 +55,7 @@ module.exports = function makeTaskRebase(flight) {
 	
 	let taxiRouteID;
 	
-	plan.land = true;
+	plan.land = false;
 	
 	// Add rebase task land action
 	if (!airfieldTo.offmap) {

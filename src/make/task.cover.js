@@ -2,8 +2,8 @@
 "use strict";
 
 const numeral = require("numeral");
-const Vector = require("sylvester").Vector;
-const Item = require("../item");
+const {Vector} = require("sylvester");
+const {MCU_Waypoint, MCU_CMD_Cover, MCU_Icon} = require("../item");
 const {mapColor} = require("../data");
 
 // Flight make parts
@@ -70,7 +70,7 @@ function makeTaskCoverAction(action, element, flight, input) {
 
 		coverCommand.Area = rand.integer(75, 125);
 		coverCommand.Speed = makeFlightSpeed.call(this, flight);
-		coverCommand.Priority = Item.MCU_Waypoint.PRIORITY_LOW;
+		coverCommand.Priority = MCU_Waypoint.PRIORITY_LOW;
 
 		// Set waypoint position above the airfield
 		coverCommand.setPosition(
@@ -104,7 +104,7 @@ function makeTaskCoverAction(action, element, flight, input) {
 		coverCommand.addObject(leaderPlaneItem);
 		coverCommand.addTarget(beacon.entity);
 
-		coverCommand.Priority = Item.MCU_CMD_Cover.PRIORITY_LOW;
+		coverCommand.Priority = MCU_CMD_Cover.PRIORITY_LOW;
 		coverCommand.CoverGroup = 0;
 	}
 
@@ -177,7 +177,7 @@ function markMapArea(flight, posX, posZ, useIcon = false) {
 		zoneIcon.setPosition(vector.e(1), vector.e(2));
 		zoneIcon.setColor(mapColor.ROUTE);
 		zoneIcon.Coalitions = [flight.coalition];
-		zoneIcon.LineType = Item.MCU_Icon.LINE_SECTOR_2;
+		zoneIcon.LineType = MCU_Icon.LINE_SECTOR_2;
 		
 		if (!firstZoneIcon) {
 			firstZoneIcon = zoneIcon;
@@ -199,7 +199,7 @@ function markMapArea(flight, posX, posZ, useIcon = false) {
 		
 		targetIcon.setPosition(posX, posZ);
 		targetIcon.Coalitions = [flight.coalition];
-		targetIcon.IconId = Item.MCU_Icon.ICON_WAYPOINT;
+		targetIcon.IconId = MCU_Icon.ICON_WAYPOINT;
 	}
 }
 

@@ -1,11 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-
-// Data constants
-const itemTag = data.itemTag;
-const itemFlag = data.itemFlag;
+const {itemTag, itemFlag} = require("../data");
 
 // Make airfield limits
 module.exports = function makeAirfieldLimits(airfield) {

@@ -1,11 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
 const Item = require("../item");
-
-// Data constants
-const itemFlag = data.itemFlag;
+const data = require("../data");
+const {itemFlag} = data;
 
 // Make airfield taxi route
 module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {

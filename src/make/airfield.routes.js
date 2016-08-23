@@ -1,13 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-const Item = require("../item");
+const {itemTag, itemFlag} = require("../data");
+const {MCU_CMD_Formation, MCU_Waypoint} = require("../item");
 const makeAirfieldVehicle = require("./airfield.vehicle");
-
-// Data constants
-const itemTag = data.itemTag;
-const itemFlag = data.itemFlag;
 
 // Make airfield vehicle routes
 module.exports = function makeAirfieldRoutes(airfield, routes) {
@@ -134,7 +130,7 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			area = Math.min(Math.max(area, 10), 20);
 
 			waypoint.Area = Math.round(area);
-			waypoint.Priority = Item.MCU_Waypoint.PRIORITY_LOW;
+			waypoint.Priority = MCU_Waypoint.PRIORITY_LOW;
 
 			waypointLast = waypoint;
 
@@ -156,13 +152,13 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 			// Road vehicle formation
 			if (isRoad && !isRoadFormation) {
 
-				formation = Item.MCU_CMD_Formation.TYPE_VEHICLE_COLUMN_ROAD;
+				formation = MCU_CMD_Formation.TYPE_VEHICLE_COLUMN_ROAD;
 				isRoadFormation = true;
 			}
 			// Offroad vehicle formation
 			else if ((!isRoad && isRoadFormation) || (isRoad && !isRoadNext)) {
 
-				formation = Item.MCU_CMD_Formation.TYPE_VEHICLE_COLUMN;
+				formation = MCU_CMD_Formation.TYPE_VEHICLE_COLUMN;
 				isRoadFormation = false;
 			}
 

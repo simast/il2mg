@@ -2,10 +2,7 @@
 "use strict";
 
 const requireDir = require("require-directory");
-const data = require("../data");
-
-// Data constants
-const planAction = data.planAction;
+const {planAction} = require("../data");
 
 // Plan action and task make parts
 const makeParts = requireDir(module, {include: /(plan|task)\..+\.js$/});
@@ -34,7 +31,7 @@ module.exports = function makeFlightPlan(flight) {
 	}
 
 	// Land plan action
-	if (!plan.land) {
+	if (plan.land === undefined) {
 		plan.land = plan[plan.push({type: planAction.LAND}) - 1];
 	}
 	

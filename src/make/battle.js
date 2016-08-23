@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
 const log = require("../log");
 const Item = require("../item");
+const data = require("../data");
 
 // Generate mission battle info
 module.exports = function makeBattle() {

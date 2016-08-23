@@ -1,16 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const Line = require("sylvester").Line;
+const {Line} = require("sylvester");
 const data = require("../data");
-const MCU_Icon = require("../item").MCU_Icon;
-const Location = require("./locations").Location;
-
-// Data constants
-const frontLine = data.frontLine;
-const mapColor = data.mapColor;
-const territory = data.territory;
-const coalition = data.coalition;
+const {frontLine, mapColor, territory, coalition} = data;
+const {MCU_Icon} = require("../item");
+const {Location} = require("./locations");
 
 // Map grid size
 // NOTE: Territories will be more precise with smaller grid size

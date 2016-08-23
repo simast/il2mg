@@ -1,10 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-
-// Data constants
-const flightState = data.flightState;
+const {flightState} = require("../data");
 
 // Make plan takeoff action
 module.exports = function makePlanTakeoff(action, element, flight, input) {

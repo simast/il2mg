@@ -2,7 +2,7 @@
 "use strict";
 
 const data = require("../data");
-const Plane = require("../item").Plane;
+const {Plane} = require("../item");
 const people = require("./people");
 
 // Make mission flight pilots

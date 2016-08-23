@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
 const log = require("../log");
-const Item = require("../item");
+const {Bridge} = require("../item");
+const data = require("../data");
 
 // Generate mission static blocks
 module.exports = function makeBlocks() {
@@ -31,7 +31,7 @@ module.exports = function makeBlocks() {
 
 			totalBlocks++;
 
-			if (block instanceof Item.Bridge) {
+			if (block instanceof Bridge) {
 				totalBridges++;
 			}
 		}

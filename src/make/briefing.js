@@ -2,10 +2,7 @@
 "use strict";
 
 const requireDir = require("require-directory");
-const data = require("../data");
-
-// Data constants
-const briefingColor = data.briefingColor;
+const {briefingColor} = require("../data");
 
 // Briefing make parts
 const makeBriefingParts = requireDir(module, {include: /briefing\..+\.js$/});

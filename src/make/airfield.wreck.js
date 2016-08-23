@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
 const Item = require("../item");
+const data = require("../data");
 
 // Make airfield wreck item
 module.exports = function makeAirfieldWreck(airfield, item) {

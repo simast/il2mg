@@ -2,6 +2,7 @@
 "use strict";
 
 const data = require("../data");
+const {weatherState, precipitation, season} = data;
 const log = require("../log");
 
 // TODO: Move these constants to settings?
@@ -17,11 +18,6 @@ const MAX_CLOUD_COVER = 110;
 
 // Maximum wind speed allowed with mist weather effect
 const MIST_MAX_WIND_SPEED = 4;
-
-// Data constants
-const weatherState = data.weatherState;
-const precipitation = data.precipitation;
-const season = data.season;
 
 // Maximum weather state points distribution (%)
 const weatherPoints = {

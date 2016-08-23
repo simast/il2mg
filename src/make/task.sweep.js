@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const Vector = require("sylvester").Vector;
-const data = require("../data");
-const Location = require("./locations").Location;
-const Item = require("../item");
-const findBasePoints = require("./task.patrol").findBasePoints;
-const getTerritory = require("./fronts").getTerritory;
+const {Vector} = require("sylvester");
+const {planAction, territory} = require("../data");
+const {Location} = require("./locations");
+const {MCU_Waypoint} = require("../item");
+const {findBasePoints} = require("./task.patrol");
+const {getTerritory} = require("./fronts");
 
 // Flight make parts
 const makeFlightAltitude = require("./flight.altitude");
@@ -23,10 +23,6 @@ const MAX_ANGLE = 90;
 // Min/max distance between two base reference points (in meters)
 const MIN_DISTANCE = 15000;
 const MAX_DISTANCE = 120000;
-
-// Data constants
-const planAction = data.planAction;
-const territory = data.territory;
 
 // Make mission fighter sweep task
 module.exports = function makeTaskSweep(flight) {
@@ -336,7 +332,7 @@ module.exports = function makeTaskSweep(flight) {
 		}
 		// Set waypoints to low priority (for sweep route only)
 		else {
-			options.priority = Item.MCU_Waypoint.PRIORITY_LOW;
+			options.priority = MCU_Waypoint.PRIORITY_LOW;
 		}
 		
 		// Plan fighter sweep route for each point

@@ -1,10 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const data = require("../data");
-
-// Data constants
-const altitudeLevel = data.altitudeLevel;
+const {altitudeLevel} = require("../data");
 
 // Valid altitude ranges (in meters)
 const altitudeRange = {

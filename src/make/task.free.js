@@ -1,10 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const data = require("../data");
-
-// Data constants
-const planAction = data.planAction;
+const {planAction} = require("../data");
 
 // Make mission free flight task
 module.exports = function makeTaskFree(flight) {

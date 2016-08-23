@@ -2,8 +2,8 @@
 "use strict";
 
 const numeral = require("numeral");
-const Vector = require("sylvester").Vector;
-const Location = require("./locations").Location;
+const {Vector} = require("sylvester");
+const {Location} = require("./locations");
 const {location} = require("../data");
 
 // Briefing map grid size

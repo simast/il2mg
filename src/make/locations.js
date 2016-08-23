@@ -3,7 +3,7 @@
 
 const rbush = require("rbush");
 const knn = require("rbush-knn");
-const Vector = require("sylvester").Vector;
+const {Vector} = require("sylvester");
 const data = require("../data");
 const log = require("../log");
 

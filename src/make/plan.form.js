@@ -1,11 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-const MCU_CMD_Formation = require("../item").MCU_CMD_Formation;
-
-// Data constants
-const flightState = data.flightState;
+const {MCU_CMD_Formation} = require("../item");
+const {flightState} = require("../data");
 
 // Make plan form up action
 module.exports = function makePlanForm(action, element, flight, input) {

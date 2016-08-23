@@ -1,11 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const data = require("../data");
-const MCU_Icon = require("../item").MCU_Icon;
-
-// Data constants
-const flightState = data.flightState;
+const {MCU_Icon} = require("../item");
+const {flightState} = require("../data");
 
 // Make plan start action
 module.exports = function makePlanStart(action, element, flight) {

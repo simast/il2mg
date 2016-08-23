@@ -2,9 +2,7 @@
 "use strict";
 
 const data = require("../data");
-
-// Data constants
-const itemFlag = data.itemFlag;
+const {itemFlag} = data;
 
 // Make airfield static item
 module.exports = function makeAirfieldStatic(airfield, item) {
