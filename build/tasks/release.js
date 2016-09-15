@@ -150,13 +150,14 @@ module.exports = function(grunt) {
 				electronPackager({
 					arch: "x64",
 					platform: process.platform,
+					prune: false,
 					dir: appDir,
 					out: outDir,
 					asar: true,
 					icon: "src/gui/app.ico",
 					"app-copyright": data.copyright,
 					"app-version": "0." + data.version.match(/[0-9]+/)[0],
-					"version-string": {
+					win32metadata: {
 						CompanyName: "",
 						FileDescription: pkg.description,
 						OriginalFilename: pkg.name + ".exe",

@@ -62,7 +62,7 @@ a:focus, input:focus, textarea:focus, select:focus {
 
 /* Photos decoration */
 #photos {
-	-webkit-filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.75));
+	filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.75));
 }
 #photos .photo {
 	position: absolute;
@@ -77,10 +77,10 @@ a:focus, input:focus, textarea:focus, select:focus {
 	margin-left: 9px;
 	margin-top: 8px;
 	background-color: #fff;
-	-webkit-filter: grayscale(1) contrast(0.9) brightness(0.9) sepia(0.65) invert(0.1);
+	filter: grayscale(1) contrast(0.9) brightness(0.9) sepia(0.65) invert(0.1);
 }
 #photos .photo:active img {
-	-webkit-filter: none;
+	filter: none;
 }
 #photos .photo div {
 	position: absolute;
@@ -98,7 +98,7 @@ a:focus, input:focus, textarea:focus, select:focus {
 	left: -10px;
 	top: -30px;
 	transform: rotate(-9deg);
-	-webkit-filter: drop-shadow(3px 1px 1px rgba(0,0,0,0.25));
+	filter: drop-shadow(3px 1px 1px rgba(0,0,0,0.25));
 }
 #photos .create1 {
 	right: 150px;
@@ -167,7 +167,7 @@ a.country:before {
 	position: relative;
 	top: 2px;
 	opacity: 0.4;
-	-webkit-filter: grayscale(0.5);
+	filter: grayscale(0.5);
 }
 a.country.c101:before {
 	content: url("assets/country-101.png");
@@ -180,7 +180,7 @@ a.country.c202:before {
 }
 a.country.selected:before {
 	opacity: 1;
-	-webkit-filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+	filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
 }
 
 /* Missions screen */
