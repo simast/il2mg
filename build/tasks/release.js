@@ -145,6 +145,11 @@ module.exports = function(grunt) {
 		// Package Electron application
 		function packageElectron() {
 			
+			// HACK: electron-packager is using console.error for logging - and this
+			// is causing a "fatal error" for this Grunt task.
+			const origConsoleError = console.error;
+			console.error = console.log;
+			
 			return new Promise((resolve, reject) => {
 				
 				electronPackager({
@@ -187,6 +192,7 @@ module.exports = function(grunt) {
 						grunt.file.delete(sourcePath);
 					});
 					
+					console.error = origConsoleError;
 					resolve(appPath);
 				});
 			});
