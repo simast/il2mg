@@ -15,7 +15,7 @@ body {
 	margin: 0;
 	cursor: default;
 	color: var(--main-text-color);
-	font-family: "Segoe UI", "Helvetica Neue";
+	font: caption;
 	font-size: 14px;
 	background-image: url("assets/bg.png");
 	-webkit-user-select: none;
@@ -444,6 +444,7 @@ a.country.selected:before {
 }
 #choices .choiceList li {
 	display: block;
+	position: relative;
 	list-style-type: none;
 	white-space: nowrap;
 	text-overflow: ellipsis;
