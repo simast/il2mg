@@ -6,7 +6,7 @@ const execFileSync = global.require("child_process").execFileSync;
 const React = require("react");
 const Application = require("./Application");
 const Screen = require("./Screen");
-const SelectDate = require("./SelectDate");
+const SelectStart = require("./SelectStart");
 const ChoiceList = require("./ChoiceList");
 
 // Record key data parameter separator
@@ -32,6 +32,20 @@ const choiceLists = [
 	["airfield", "Airfields"]
 ];
 
+// Start position constants
+const startType = {
+	PARKING: 0,
+	RUNWAY: 1,
+	AIR: 2
+};
+
+// Start position types
+const startTypes = new Map([
+	[startType.PARKING, ["from", "Parking"]],
+	[startType.RUNWAY, ["on", "Runway"]],
+	[startType.AIR, ["in", "Air"]]
+]);
+
 // Data index for all supported battles
 const battles = {
 	stalingrad: require("../../../data/battles/stalingrad")
@@ -43,17 +57,26 @@ class CreateMission extends React.Component {
 	constructor() {
 		super(...arguments);
 		
+		const {config} = this.context;
+		let start = startType.PARKING; // Default
+		
+		// Use start type from config
+		if (startTypes.has(config.start)) {
+			start = config.start;
+		}
+		
 		// Initial state
 		this.state = {
 			battle: Object.keys(battles).pop(), // Set first battle as active
-			choice: {}
+			choice: {},
+			start
 		};
 	}
 	
 	// Render component
 	render() {
 		
-		const {battle, date} = this.state;
+		const {battle, start, date} = this.state;
 		const {router} = this.context;
 		const actions = {
 			right: new Map()
@@ -88,9 +111,12 @@ class CreateMission extends React.Component {
 		return (
 			<Screen id="create" actions={actions}>
 				<CreateMission.SelectBattle battle={battle} battles={battles} />
-				<SelectDate
+				<SelectStart
 					battle={battles[battle]}
+					start={start}
+					startTypes={startTypes}
 					date={date}
+					onStartChange={this.onStartChange.bind(this)}
 					onDateChange={(date) => {
 						this.setState({date});
 					}}
@@ -124,7 +150,7 @@ class CreateMission extends React.Component {
 	getChoices() {
 		
 		const choices = Object.create(null);
-		const {battle, date, choice} = this.state;
+		const {battle, start, date, choice} = this.state;
 		const battleData = battles[battle];
 		let scanRegExp = (Object.keys(choice).length > 0);
 		
@@ -154,8 +180,8 @@ class CreateMission extends React.Component {
 			
 			const recordID = battleData.records[record];
 			
-			// TODO: Filter records with air/ground start
-			if (recordID < 0) {
+			// Allow air starts based on selected start position type
+			if (recordID < 0 && start !== startType.AIR) {
 				continue;
 			}
 			
@@ -327,11 +353,20 @@ class CreateMission extends React.Component {
 		this.setState({choice: choiceState});
 	}
 	
+	// Handle start type change
+	onStartChange(start) {
+
+		const {config} = this.context;
+		
+		config.start = start;
+		this.setState({start});
+	}
+	
 	// Handle create mission button click
 	onCreateClick() {
 		
 		const {config, router} = this.context;
-		const {battle, date, choice} = this.state;
+		const {battle, start, date, choice} = this.state;
 		
 		let cliFile = path.join(process.resourcesPath, "il2mg-cli");
 		const cliParams = [];
@@ -350,6 +385,18 @@ class CreateMission extends React.Component {
 			"--format", "binary", // TODO: Set mission file format from options
 			"--batle", battle
 		);
+		
+		// Set start position type (--state parameter)
+		let stateValue = "start"; // Parking
+		
+		if (start === startType.RUNWAY) {
+			stateValue = "runway";
+		}
+		else if (start === startType.AIR) {
+			stateValue = 0;
+		}
+		
+		cliParams.push("--state", stateValue);
 		
 		// Set selected date
 		if (date) {

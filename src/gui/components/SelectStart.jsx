@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
+const {remote} = require("electron");
 const React = require("react");
 
 // Season color values
@@ -14,22 +15,42 @@ const seasonColor = {
 // Style object reference (for date range input track CSS rule)
 let trackCSSStyle = null;
 
-// Select mission date component
-class SelectDate extends React.Component {
+// Select mission start and date component
+class SelectStart extends React.Component {
 	
-	constructor(props) {
+	constructor({battle, start, startTypes, onStartChange}) {
 		super(...arguments);
 		
+		// Create context menu for start type choice
+		const {Menu, MenuItem} = remote;
+		const startMenu = this.startMenu = new Menu();
+		
+		startTypes.forEach((startText, startID) => {
+			
+			startMenu.append(new MenuItem({
+				label: startText[1],
+				type: "radio",
+				checked: (startID === start),
+				click: () => {
+					
+					if (this.props.start !== startID) {
+						onStartChange(startID);
+					}
+				}
+			}));
+		});
+		
 		this.state = {
-			dates: this.getDates(props.battle)
+			dates: this.getDates(battle)
 		};
 	}
 	
 	shouldComponentUpdate(nextProps) {
 		
-		// Update component only when date or battle has changed
+		// Update component only when date, battle or start type has changed
 		return (nextProps.date !== this.props.date ||
-						nextProps.battle !== this.props.battle);
+						nextProps.battle !== this.props.battle ||
+						nextProps.start !== this.props.start);
 	}
 	
 	componentWillReceiveProps(nextProps) {
@@ -43,9 +64,10 @@ class SelectDate extends React.Component {
 	// Render component
 	render() {
 		
-		const {date, onDateChange, onDateReset} = this.props;
+		const {start, startTypes, date, onDateChange, onDateReset} = this.props;
 		const {dates} = this.state;
 		const totalDays = dates.list.length;
+		const [startPrefix, startLabel] = startTypes.get(start);
 		let dateValue = 0;
 		let dateOutput;
 		let reset;
@@ -67,9 +89,22 @@ class SelectDate extends React.Component {
 			dateValue = dateData.value;
 		}
 		
+		const startProps = {
+			onClick: () => {
+				this.startMenu.popup(remote.getCurrentWindow());
+			}
+		};
+		
+		// Trigger start context menu with both, right and left, mouse buttons
+		startProps.onContextMenu = startProps.onClick;
+		
 		return (
-			<div id="selectDate">
-				<em>{dateOutput}</em>
+			<div id="selectStart">
+				<em>
+					{"start "}
+					{startPrefix + " "}
+					<a {...startProps}>{startLabel.toLowerCase()}</a>, {dateOutput}
+				</em>
 				<input
 					type="range"
 					value={dateValue}
@@ -135,7 +170,7 @@ class SelectDate extends React.Component {
 			const styleSheet = document.styleSheets[0];
 			
 			styleSheet.insertRule(
-				"#selectDate input::-webkit-slider-runnable-track {}",
+				"#selectStart input::-webkit-slider-runnable-track {}",
 				0 // At the beginning of stylesheet
 			);
 			
@@ -179,4 +214,4 @@ class SelectDate extends React.Component {
 	}
 }
 
-module.exports = SelectDate;
+module.exports = SelectStart;

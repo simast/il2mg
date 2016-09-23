@@ -15,7 +15,7 @@ body {
 	margin: 0;
 	cursor: default;
 	color: var(--main-text-color);
-	font: caption;
+	font: menu;
 	font-size: 14px;
 	background-image: url("assets/bg.png");
 	-webkit-user-select: none;
@@ -339,20 +339,24 @@ a.country.selected:before {
 	display: block;
 	margin: 0;
 	font-size: 24px;
+	line-height: 34px;
 	font-weight: normal;
 	font-style: italic;
 }
 
-/* Select misison date */
-#selectDate {
+/* Select mission start and date */
+#selectStart {
 	position: relative;
-	height: 90px;
+	height: 84px;
 }
-#selectDate em {
+#selectStart em {
 	display: block;
 	padding-left: 10px;
 }
-#selectDate input {
+#selectStart em a {
+	font-weight: bold;
+}
+#selectStart input {
 	display: block;
 	float: left;
 	width: calc(100vw - 425px);
@@ -360,13 +364,13 @@ a.country.selected:before {
 	cursor: pointer;
 	-webkit-appearance: none;
 }
-#selectDate input::-webkit-slider-runnable-track {
+#selectStart input::-webkit-slider-runnable-track {
 	height: 6px;
 	border-radius: 2.5px;
 	box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.2), 0 0 1px 0 rgba(0,0,0,0.4);
 	/* NOTE: Dynamic background gradient is set from JavaScript! */
 }
-#selectDate input::-webkit-slider-thumb {
+#selectStart input::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	width: 20px;
 	height: 20px;
@@ -376,11 +380,11 @@ a.country.selected:before {
 	background: linear-gradient(#595959, #262626);
 	box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.4), 0 1px 1px 0 rgba(0,0,0,0.2);
 }
-#selectDate input::-webkit-slider-thumb:active {
+#selectStart input::-webkit-slider-thumb:active {
 	border: 1px solid #595959;
 	background: linear-gradient(#262626, #595959);
 }
-#selectDate .reset {
+#selectStart .reset {
 	float: left;
 	margin: 19px 0 0 8px;
 }

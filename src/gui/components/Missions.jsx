@@ -3,8 +3,8 @@
 
 const fs = global.require("fs");
 const path = global.require("path");
-const spawn = global.require("child_process").spawn;
-const remote = require("electron").remote;
+const {spawn} = global.require("child_process");
+const {remote} = require("electron");
 const React = require("react");
 const Application = require("./Application");
 const Screen = require("./Screen");
