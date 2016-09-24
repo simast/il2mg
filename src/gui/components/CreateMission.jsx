@@ -83,7 +83,7 @@ class CreateMission extends React.Component {
 		};
 		
 		// Get mission choice data
-		const choices = this.getChoices();
+		const choices = this.getChoices(start);
 		
 		const createProps = {};
 		
@@ -147,10 +147,10 @@ class CreateMission extends React.Component {
 	}
 	
 	// Get mission choice data
-	getChoices() {
+	getChoices(start) {
 		
 		const choices = Object.create(null);
-		const {battle, start, date, choice} = this.state;
+		const {battle, date, choice} = this.state;
 		const battleData = battles[battle];
 		let scanRegExp = (Object.keys(choice).length > 0);
 		
@@ -354,12 +354,44 @@ class CreateMission extends React.Component {
 	}
 	
 	// Handle start type change
-	onStartChange(start) {
-
-		const {config} = this.context;
+	onStartChange(newStart) {
 		
-		config.start = start;
-		this.setState({start});
+		const {start: prevStart, choice} = this.state;
+		
+		if (newStart === prevStart) {
+			return;
+		}
+		
+		const {config} = this.context;
+		const newState = {start: newStart};
+		
+		config.start = newStart;
+		
+		// Validate current choice list for new start position type
+		if (Object.keys(choice).length) {
+			
+			const choices = this.getChoices(newStart);
+			
+			for (const choiceType in choice) {
+				
+				choice[choiceType] = choice[choiceType].filter((choiceID) => {
+					
+					const foundChoice = choices[choiceType].find((item) => {
+						return item.id.indexOf(choiceID) !== -1;
+					});
+					
+					return foundChoice !== undefined;
+				});
+				
+				if (!choice[choiceType].length) {
+					delete choice[choiceType];
+				}
+			}
+			
+			newState.choice = choice;
+		}
+		
+		this.setState(newState);
 	}
 	
 	// Handle create mission button click
