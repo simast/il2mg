@@ -4,7 +4,6 @@
 const log = require("../log");
 const Item = require("../item");
 const {Location} = require("./locations");
-const {isOffmapPoint} = require("./map");
 const data = require("../data");
 const {itemTag, planeSize, flightState, location} = data;
 
@@ -27,7 +26,6 @@ module.exports = function makeAirfields() {
 	const mission = this;
 	const battle = mission.battle;
 	const rand = mission.rand;
-	const map = mission.map;
 
 	// Min and max plane size IDs
 	const planeSizeMin = planeSize.SMALL;
@@ -85,7 +83,7 @@ module.exports = function makeAirfields() {
 		locationsData.push(airfieldLocation);
 		
 		// Identify offmap airfield
-		if (isOffmapPoint(position[0], position[2], map.width, map.height)) {
+		if (mission.isOffmapPoint(position[0], position[2])) {
 			
 			airfield.offmap = true;
 			totalOffmap++;

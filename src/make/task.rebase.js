@@ -50,6 +50,7 @@ module.exports = function makeTaskRebase(flight) {
 		type: planAction.FLY,
 		route,
 		altitude,
+		state: 1,
 		visible: isPlayerFlight
 	});
 	
@@ -71,11 +72,16 @@ module.exports = function makeTaskRebase(flight) {
 			makeAirfieldTaxi.call(this, airfieldTo, taxiRouteID);
 		}
 		
-		plan.land = plan[plan.push({
+		const landAction = {
 			type: planAction.LAND,
-			airfield: airfieldTo.id,
-			taxi: taxiRouteID
-		}) - 1];
+			airfield: airfieldTo.id
+		};
+		
+		if (taxiRouteID !== undefined) {
+			landAction.taxi = taxiRouteID;
+		}
+		
+		plan.land = plan[plan.push(landAction) - 1];
 	}
 	
 	if (!airfieldTo.offmap && isPlayerFlight) {

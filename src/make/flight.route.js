@@ -48,14 +48,14 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 			-1 * rand.real(AIRFIELD_DISTANCE_MIN, AIRFIELD_DISTANCE_MAX, true)
 		));
 		
-		to.point = [routeEndVector.e(1), routeEndVector.e(2)];
+		to.position = [routeEndVector.e(1), routeEndVector.e(2)];
 	}
 	
 	const route = [];
 	const routeStartVector = Vector.create([from[0], from[2]]);
 	const routeVector = Vector.create([
-		to.point[0] - from[0],
-		to.point[1] - from[2]
+		to.position[0] - from[0],
+		to.position[1] - from[2]
 	]);
 	
 	let numSpots = 1;
@@ -139,7 +139,7 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 		altitude = Math.min(Math.max(altitude, to.altitude.min), to.altitude.max);
 		
 		// Route target point with altitude
-		spot.point = [
+		spot.position = [
 			spotVector.e(1),
 			altitude,
 			spotVector.e(2)

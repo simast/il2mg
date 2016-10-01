@@ -3,6 +3,8 @@
 
 module.exports = function(grunt) {
 	
+	// FIXME: Refactor and simplify index building
+	
 	// Grunt task used to build battle index database
 	grunt.registerTask("build:index", "Build index database JSON files.", () => {
 		
@@ -295,7 +297,6 @@ module.exports = function(grunt) {
 							}
 							
 							const isGroundStart = (airfieldsIndex[airfieldID] > 0);
-							const isOffmap = (airfieldsIndex[airfieldID] < 0);
 
 							if (matchDateRange(dataAirfield[1], dataAirfield[2])) {
 
@@ -320,8 +321,7 @@ module.exports = function(grunt) {
 									rebase.from = airfieldID;
 								}
 								
-								// TODO: Also include offmap airfields as valid air start!
-								if (!isOffmap && availability > 0) {
+								if (availability > 0) {
 									airfields.set(airfieldID, isGroundStart);
 								}
 							}
@@ -438,6 +438,13 @@ module.exports = function(grunt) {
 							airfields.forEach((isGroundStart, airfieldID) => {
 								
 								if (taskID === "rebase" && airfieldID !== rebase.from) {
+									return;
+								}
+								
+								const isOffmap = (airfieldsIndex[airfieldID] < 0);
+								
+								// Ignore tasks without offmap support
+								if (isOffmap && !data.tasks[taskID].offmap) {
 									return;
 								}
 								

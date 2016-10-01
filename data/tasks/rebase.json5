@@ -10,6 +10,7 @@
 		"There will be a series of planned transfer flights today, with our flight of {{{plane}}}s leaving straight away. Our destination is {{target}}. {{{rank.leader}}} {{name.last}} was left in charge of coordinating all rebase operations today while our commander, {{{rank.commander}}} {{name.last}}, has been flown away hastily for a conference briefing.",
 		"We are moving out! Orders have just been passed around with instructions for an immediate transfer of all materiel and personnel to {{target}}. Ground staff is busy organising rebase operations right now - spare ammunition and supplies are being loaded on lorries while all serviceable {{{plane}}}s are being refueled and prepared for their transfer flights."
 	],
+	offmap: true, // Support for offmap airfields
 	altitude: {
 		low: 1, // 50%
 		medium: 1 // 50%

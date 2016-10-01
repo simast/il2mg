@@ -373,6 +373,7 @@ module.exports = function makeTaskSweep(flight) {
 		type: planAction.FLY,
 		route,
 		altitude,
+		state: 1,
 		visible: Boolean(flight.player)
 	});
 };

@@ -63,7 +63,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 			const waypoint = spot.waypoint = flight.group.createItem("MCU_Waypoint");
 			
 			waypoint.addObject(leaderPlaneItem);
-			waypoint.setPosition(spot.point);
+			waypoint.setPosition(spot.position);
 			
 			// TODO:
 			waypoint.Speed = spot.speed;
@@ -110,7 +110,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 				
 				spotIcon = flight.group.createItem("MCU_Icon");
 	
-				spotIcon.setPosition(spot.point);
+				spotIcon.setPosition(spot.position);
 				spotIcon.Coalitions = [flight.coalition];
 				
 				if (!spot.hidden && !spot.split && isNextSpotVisible) {

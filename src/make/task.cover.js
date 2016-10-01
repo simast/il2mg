@@ -32,7 +32,8 @@ module.exports = function makeTaskCover(flight) {
 	// Add custom cover airfield plan action
 	flight.plan.push({
 		makeAction: makeTaskCoverAction,
-		makeBriefing: makeTaskCoverBriefing
+		makeBriefing: makeTaskCoverBriefing,
+		state: 1
 	});
 };
 

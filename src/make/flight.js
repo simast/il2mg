@@ -317,8 +317,11 @@ function makeFlight(params) {
 			beaconItem.entity.Enabled = 1;
 			
 			// Detach beacon item from airfield "bubble" zone
-			airfield.zone.onActivate.removeObject(beaconItem);
-			airfield.zone.onDeactivate.removeObject(beaconItem);
+			if (airfield.zone) {
+				
+				airfield.zone.onActivate.removeObject(beaconItem);
+				airfield.zone.onDeactivate.removeObject(beaconItem);
+			}
 		}
 	}
 	

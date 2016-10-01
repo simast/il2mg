@@ -10,6 +10,7 @@ module.exports = function makeTaskFree(flight) {
 	
 	flight.plan.push({
 		type: planAction.WAIT,
-		time: rand.integer(15 * 60, 30 * 60) // 15-30 minutes
+		time: rand.integer(15 * 60, 30 * 60), // 15-30 minutes
+		state: 1
 	});
 };
