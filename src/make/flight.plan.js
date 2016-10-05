@@ -6,7 +6,7 @@ const {planAction} = require("../data");
 
 // Plan action and task make parts
 const makeParts = requireDir(module, {include: /(plan|task)\..+\.js$/});
-const makeFlightState = require("./flight.state");
+const makeFlightOffmap = require("./flight.offmap");
 
 // Make mission flight plan
 module.exports = function makeFlightPlan(flight) {
@@ -40,8 +40,10 @@ module.exports = function makeFlightPlan(flight) {
 		plan.land = plan[plan.push({type: planAction.LAND}) - 1];
 	}
 	
-	// Make flight state (adjust flight plan for current state and offmap activity)
-	makeFlightState.call(this, flight);
+	// Make offmap flight (adjust flight plan for current state and offmap activity)
+	if (flight.task.offmap) {
+		makeFlightOffmap.call(this, flight);
+	}
 	
 	// TODO: Fast-forward plan actions based on state
 

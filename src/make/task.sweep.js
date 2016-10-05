@@ -313,7 +313,7 @@ module.exports = function makeTaskSweep(flight) {
 	const altitude = makeFlightAltitude.call(this, flight);
 	
 	const route = [];
-	let fromPoint = airfield.position;
+	let fromPosition = airfield.position;
 	
 	// Build fighter sweep route points
 	for (const point of sweepPoints) {
@@ -339,20 +339,20 @@ module.exports = function makeTaskSweep(flight) {
 		const spots = makeFlightRoute.call(
 			this,
 			flight,
-			fromPoint,
+			fromPosition,
 			to,
 			options
 		);
 		
 		route.push.apply(route, spots);
-		fromPoint = spots.pop().point;
+		fromPosition = spots.pop().position;
 	}
 	
 	// Make final (back to the base) egress route
 	const spots =	makeFlightRoute.call(
 		this,
 		flight,
-		fromPoint,
+		fromPosition,
 		{
 			altitude,
 			airfield: flight.airfield,

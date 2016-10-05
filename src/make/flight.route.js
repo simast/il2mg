@@ -13,7 +13,7 @@ const AIRFIELD_DISTANCE_MAX = 10000; // 10 km
 const ROUTE_SPLIT_DISTANCE = 80000; // 80 km
 
 // Make mission flight route
-module.exports = function makeFlightRoute(flight, from, to, options) {
+module.exports = function makeFlightRoute(flight, fromPosition, to, options) {
 	
 	// TODO: Adjust to waypoint altitude based on plane climb rate
 	// TODO: Use path-finding to avoid enemy airfields
@@ -28,8 +28,8 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 		const airfield = this.airfields[to.airfield];
 		const airfieldPosition = airfield.position;
 		const routeVector = Vector.create([
-			airfieldPosition[0] - from[0],
-			airfieldPosition[2] - from[2]
+			airfieldPosition[0] - fromPosition[0],
+			airfieldPosition[2] - fromPosition[2]
 		]);
 		
 		// Egress (back to home airfield) route flag
@@ -48,14 +48,14 @@ module.exports = function makeFlightRoute(flight, from, to, options) {
 			-1 * rand.real(AIRFIELD_DISTANCE_MIN, AIRFIELD_DISTANCE_MAX, true)
 		));
 		
-		to.position = [routeEndVector.e(1), routeEndVector.e(2)];
+		to.point = [routeEndVector.e(1), routeEndVector.e(2)];
 	}
 	
 	const route = [];
-	const routeStartVector = Vector.create([from[0], from[2]]);
+	const routeStartVector = Vector.create([fromPosition[0], fromPosition[2]]);
 	const routeVector = Vector.create([
-		to.position[0] - from[0],
-		to.position[1] - from[2]
+		to.point[0] - fromPosition[0],
+		to.point[1] - fromPosition[2]
 	]);
 	
 	let numSpots = 1;

@@ -209,7 +209,7 @@ module.exports = function makeTaskPatrol(flight) {
 	
 	const route = [];
 	let loopSpotIndex = 0;
-	let fromPoint = airfield.position;
+	let fromPosition = airfield.position;
 	let totalX = 0;
 	let totalZ = 0;
 	let speed;
@@ -235,7 +235,7 @@ module.exports = function makeTaskPatrol(flight) {
 		const spots = makeFlightRoute.call(
 			this,
 			flight,
-			fromPoint,
+			fromPosition,
 			to,
 			options
 		);
@@ -244,13 +244,13 @@ module.exports = function makeTaskPatrol(flight) {
 		
 		const lastSpot = spots.pop();
 		
-		fromPoint = lastSpot.point;
+		fromPosition = lastSpot.position;
 		speed = lastSpot.speed;
 		
 		// Mark spot index for a repeating patrol loop pattern
 		if (point === ingressPoint) {
 			
-			ingressPoint = fromPoint;
+			ingressPoint = fromPosition;
 			loopSpotIndex = route.length - 1;
 		}
 		

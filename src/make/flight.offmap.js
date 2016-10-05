@@ -3,8 +3,8 @@
 
 const {planAction} = require("../data");
 
-// Make flight state (adjust flight plan for current state and offmap activity)
-module.exports = function makeFlightState(flight) {
+// Make offmap flight (adjust flight plan for current state and offmap activity)
+module.exports = function makeFlightOffmap(flight) {
 	
 	const plan = flight.plan;
 	const startAction = plan.start;
@@ -52,6 +52,8 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 	let i = isForward ? 0 : route.length - 1;
 	let prevPosition = isForward ? startPosition : route[i].position;
 	
+	console.log(route);
+	
 	while (route[i]) {
 		
 		const point = route[i];
@@ -74,10 +76,14 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 					i--;
 				}
 				
+				console.log("throw away point");
+				
 				prevPosition = isForward ? point.position : nextPoint.position;
 			}
 			// Adjust start/end route point to current map bounds
 			else {
+				
+				console.log("adjust point");
 				
 				isAdjusted = true;
 				
@@ -100,4 +106,6 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 		
 		isForward ? i++ : i--;
 	}
+	
+	console.log(route);
 }
