@@ -7,7 +7,10 @@ const {planAction} = require("../data");
 // Minimum and maximum distance from the border for offmap start/end position
 // NOTE: This is only used for player flight!
 const MIN_DISTANCE_BORDER = 3000; // 3 km
-const MAX_DISTANCE_BORDER = 5000; // 5 km
+const MAX_DISTANCE_BORDER = 4000; // 4 km
+
+// Minimum distance required between offmap star/end position and the next point
+const MIN_NEXT_POINT_DISTANCE = 25000; // 25 km
 
 // Make offmap flight (adjust flight plan for current state and offmap activity)
 module.exports = function makeFlightOffmap(flight) {
@@ -93,28 +96,22 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 				borderPlane
 			} = this.getMapIntersection(fromVector, toVector);
 			
-			let offmapPosition = intersectVector.elements;
+			let offmapVector = intersectVector;
 			
-			// Move offmap border start/end position slightly inside the map to
+			// Move offmap border start position slightly inside the map to
 			// prevent player from getting the "Warning: turn around!" message.
-			if (isPlayerFlight) {
+			if (isPlayerFlight && isForward) {
 				
-				let offmapVector = toVector
+				offmapVector = toVector
 					.subtract(intersectVector)
 					.toUnitVector()
 					.multiply(rand.real(MIN_DISTANCE_BORDER, MAX_DISTANCE_BORDER))
 					.add(intersectVector);
 				
-				// Also make sure the distance from border to start/end offmap position
+				// Also make sure the distance from border to start offmap position
 				// is at least minimum required (this might happen with routes crossing
 				// map border on a very sharp angle).
-				for (;;) {
-					
-					const distanceToBorder = borderPlane.distanceFrom(offmapVector);
-					
-					if (distanceToBorder >= MIN_DISTANCE_BORDER) {
-						break;
-					}
+				if (borderPlane.distanceFrom(offmapVector) < MIN_DISTANCE_BORDER) {
 					
 					const borderVector = borderPlane.pointClosestTo(offmapVector);
 					
@@ -124,9 +121,21 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 						.multiply(MIN_DISTANCE_BORDER)
 						.add(borderVector);
 				}
-				
-				offmapPosition = offmapVector.elements;
 			}
+			
+			// Throw away next point if its too close to offmap start/stop position
+			if (nextPoint) {
+				
+				const distanceToOffmap = offmapVector.distanceFrom(
+					Vector.create(nextPoint.position)
+				);
+				
+				if (distanceToOffmap < MIN_NEXT_POINT_DISTANCE) {
+					route.splice(route.indexOf(nextPoint), 1);
+				}
+			}
+			
+			const offmapPosition = offmapVector.round().elements;
 			
 			// Set offmap route start/end position and orientation
 			if (isForward) {
