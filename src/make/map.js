@@ -36,7 +36,7 @@ module.exports = function makeMap() {
 		return isOffmap(map, ...args);
 	};
 	
-	// Get map border bounds intersection vector for a current mission map
+	// Get map border bounds intersection data for a current mission map
 	this.getMapIntersection = (...args) => {
 		return getMapIntersection(map, ...args);
 	};
@@ -71,8 +71,8 @@ function isOffmap(map, ...args) {
 	return (posX < 0 || posZ < 0 || posX > map.height || posZ > map.width);
 }
 
-// Get map border bounds intersection vector
-function getMapIntersection(map, fromVector, toVector) {
+// Get map border bounds intersection data
+function getMapIntersection(map, fromVector, toVector, distance) {
 	
 	let borderPlanesCache = getMapIntersection.borderPlanesCache;
 	
@@ -96,10 +96,11 @@ function getMapIntersection(map, fromVector, toVector) {
 		borderPlanesCache.set(map, borderPlanes);
 	}
 	
-	const distance = fromVector.distanceFrom(toVector);
-	const intersectLine = Line.create(fromVector, toVector.subtract(fromVector));
+	if (!distance) {
+		distance = fromVector.distanceFrom(toVector);
+	}
 	
-	let validIntersectVector;
+	const intersectLine = Line.create(fromVector, toVector.subtract(fromVector));
 	
 	// Test each map border plane for intersections
 	for (const borderPlane of borderPlanes) {
@@ -115,21 +116,23 @@ function getMapIntersection(map, fromVector, toVector) {
 			continue;
 		}
 		
-		const distanceIntersectA = fromVector.distanceFrom(intersectVector);
-		const distanceIntersectB = intersectVector.distanceFrom(toVector);
-		const distanceDelta = Math.abs(distance - (distanceIntersectA + distanceIntersectB));
+		const distanceToIntersect = fromVector.distanceFrom(intersectVector);
+		const distanceFromIntersect = intersectVector.distanceFrom(toVector);
+		const distanceDelta = Math.abs(distance - (distanceToIntersect + distanceFromIntersect));
 		
 		// Ignore invalid intersection points
 		if (distanceDelta > Sylvester.precision) {
 			continue;
 		}
 		
-		validIntersectVector = intersectVector;
-		
-		break;
+		return {
+			intersectVector, // Vector of intersection
+			borderPlane, // Intersected border plane
+			distance, // Total distance between from/to vectors
+			distanceToIntersect, // Distance between "fromVector" and intersection vector
+			distanceFromIntersect // Distance between intersection vector and "toVector"
+		};
 	}
-	
-	return validIntersectVector;
 }
 
 module.exports.isOffmap = isOffmap;

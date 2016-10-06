@@ -40,7 +40,7 @@ module.exports = function makeTaskRebase(flight) {
 			split: true
 		},
 		{
-			hidden: (isPlayerFlightLeader && !debugFlights),
+			hidden: (isPlayerFlightLeader && !airfieldFrom.offmap && !debugFlights),
 			solid: true
 		}
 	);
@@ -101,8 +101,6 @@ module.exports = function makeTaskRebase(flight) {
 		}
 	}
 	
-	console.log(airfieldFrom.id + " -> " + airfieldTo.id);
-	
 	// Register target airfield location as flight target
 	flight.target = [[airfieldTo.position[0], airfieldTo.position[2]]];
 };
@@ -151,18 +149,18 @@ function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 		// Avoid rebase tasks near the edge of the map border
 		if (isOffmapFrom || isOffmapTo) {
 			
+			const {borderPlane} = getMapIntersection(map, fromVector, toVector, distance);
 			let distanceBorder = false;
-			const intersectVector = getMapIntersection(map, fromVector, toVector);
 			
-			if (intersectVector) {
+			if (borderPlane) {
 				
 				// Flying outside the map
 				if (isOffmapTo) {
-					distanceBorder = fromVector.distanceFrom(intersectVector);
+					distanceBorder = borderPlane.distanceFrom(fromVector);
 				}
 				// Flying inside the map
 				else {
-					distanceBorder = intersectVector.distanceFrom(toVector);
+					distanceBorder = borderPlane.distanceFrom(toVector);
 				}
 			}
 			
