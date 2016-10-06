@@ -56,7 +56,6 @@ module.exports = function makeFlightOffmap(flight) {
 function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 	
 	const rand = this.rand;
-	const plan = flight.plan;
 	const isPlayerFlight = Boolean(flight.player);
 	let i = isForward ? 0 : route.length - 1;
 	let prevPosition = isForward ? startPosition : route[i].position;
@@ -124,7 +123,7 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 			}
 			
 			// Throw away next point if its too close to offmap start/stop position
-			if (nextPoint) {
+			if (nextPoint && (!isForward || (isForward && route.length > 1))) {
 				
 				const distanceToOffmap = offmapVector.distanceFrom(
 					Vector.create(nextPoint.position)
@@ -139,7 +138,12 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 			
 			// Set offmap route start/end position and orientation
 			if (isForward) {
-				plan.start.position = offmapPosition;
+				
+				const startAction = flight.plan.start;
+				
+				startAction.position = offmapPosition;
+				
+				// TODO: Set orientation for start action
 			}
 			else {
 				point.position = offmapPosition;
