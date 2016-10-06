@@ -63,7 +63,7 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 	while (route[i]) {
 		
 		const point = route[i];
-		const nextPoint = route[isForward ? i + 1 : i - 1];
+		const nextPoint = route[isForward ? i : i - 1];
 		const isPointOffmap = this.isOffmap(point.position);
 		const isNextPointOffmap = nextPoint && this.isOffmap(nextPoint.position);
 		
@@ -76,18 +76,13 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 				i--;
 			}
 			
-			prevPosition = isForward ? point.position : nextPoint.position;
+			prevPosition = nextPoint.position;
 		}
 		// Adjust start/end route point to current map bounds
 		else {
 			
 			const fromPosition = prevPosition;
-			let toPosition = point.position;
-			
-			if (!isForward) {
-				toPosition = nextPoint ? nextPoint.position : startPosition;
-			}
-			
+			const toPosition = nextPoint ? nextPoint.position : startPosition;
 			const fromVector = Vector.create(fromPosition);
 			const toVector = Vector.create(toPosition);
 			const {
@@ -146,7 +141,9 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 				// TODO: Set orientation for start action
 			}
 			else {
+				
 				point.position = offmapPosition;
+				point.end = true;
 			}
 			
 			break;

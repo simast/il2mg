@@ -2,6 +2,8 @@
 "use strict";
 
 const {Sylvester, Vector, Line, Plane} = require("sylvester");
+const {mapColor} = require("../data");
+const {MCU_Icon} = require("../item");
 
 // Generate mission map data
 module.exports = function makeMap() {
@@ -135,5 +137,73 @@ function getMapIntersection(map, fromVector, toVector, distance) {
 	}
 }
 
+// Mark map area with a circle (with all GUI icons owned by a given flight)
+function markMapArea(flight, {
+		position, // Center positions of the circle
+		radius = 5000,
+		perfect, // Draw a perfect circle
+		centerIcon, // Draw center icon
+		lineType, // MCU_Icon line type
+		color // Circle color
+	}) {
+	
+	const rand = this.rand;
+	const centerVector = Vector.create(position);
+	const iconDegrees = perfect ? [0, 90, 180, 270] : [0, 120, 240];
+	let firstZoneIcon;
+	let lastZoneIcon;
+	
+	// NOTE: Using three or four points to define a circle area
+	iconDegrees.forEach((degrees) => {
+		
+		let radiusExtra = 0;
+		let degreesExtra = 0;
+		
+		// Draw a non-perfect circle ("mark with a human hand")
+		if (!perfect) {
+			
+			radiusExtra = radius * rand.real(-0.1, 0.1, true); // +- 10% radius
+			degreesExtra = rand.real(-15, 15, true); // +- 15 degrees
+		}
+		
+		const rotateAxisLine = Line.create(Vector.Zero(3), Vector.create([0, 1, 0]));
+		const rotateRad = (degrees + degreesExtra) * (Math.PI / 180);
+		let pointVector = Vector.create([radius + radiusExtra, centerVector.e(2), 0]);
+		
+		// Build zone point vector
+		pointVector = centerVector.add(pointVector.rotate(rotateRad, rotateAxisLine));
+		
+		const zoneIcon = flight.group.createItem("MCU_Icon");
+		
+		zoneIcon.setPosition(pointVector.elements);
+		zoneIcon.setColor(color ? color : mapColor.ROUTE);
+		zoneIcon.Coalitions = [flight.coalition];
+		zoneIcon.LineType = lineType ? lineType : MCU_Icon.LINE_SECTOR_2;
+		
+		if (!firstZoneIcon) {
+			firstZoneIcon = zoneIcon;
+		}
+		else {
+			lastZoneIcon.addTarget(zoneIcon);
+		}
+		
+		lastZoneIcon = zoneIcon;
+	});
+	
+	// Connect zone icons in a loop
+	lastZoneIcon.addTarget(firstZoneIcon);
+	
+	// Set icon on the center
+	if (centerIcon) {
+		
+		const iconItem = flight.group.createItem("MCU_Icon");
+		
+		iconItem.setPosition(position);
+		iconItem.Coalitions = [flight.coalition];
+		iconItem.IconId = MCU_Icon.ICON_WAYPOINT;
+	}
+}
+
 module.exports.isOffmap = isOffmap;
 module.exports.getMapIntersection = getMapIntersection;
+module.exports.markMapArea = markMapArea;

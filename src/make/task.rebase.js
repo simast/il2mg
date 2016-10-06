@@ -3,8 +3,7 @@
 
 const {Vector} = require("sylvester");
 const {planAction} = require("../data");
-const {markMapArea} = require("./task.cover");
-const {isOffmap, getMapIntersection} = require("./map");
+const {isOffmap, getMapIntersection, markMapArea} = require("./map");
 
 // Flight make parts
 const makeFlightAltitude = require("./flight.altitude");
@@ -40,7 +39,12 @@ module.exports = function makeTaskRebase(flight) {
 			split: true
 		},
 		{
-			hidden: (isPlayerFlightLeader && !airfieldFrom.offmap && !debugFlights),
+			hidden: (
+				isPlayerFlightLeader &&
+				!airfieldFrom.offmap &&
+				!airfieldTo.offmap &&
+				!debugFlights
+			),
 			solid: true
 		}
 	);
@@ -87,13 +91,10 @@ module.exports = function makeTaskRebase(flight) {
 	if (!airfieldTo.offmap && isPlayerFlight) {
 		
 		// Mark target airfield area on the map
-		markMapArea.call(
-			this,
-			flight,
-			airfieldTo.position[0],
-			airfieldTo.position[2],
-			true
-		);
+		markMapArea.call(this, flight, {
+			position: airfieldTo.position,
+			centerIcon: true
+		});
 		
 		// Use target airfield radio navigation beacon
 		if (airfieldTo.beacon) {

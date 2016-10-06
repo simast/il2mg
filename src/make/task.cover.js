@@ -2,9 +2,8 @@
 "use strict";
 
 const numeral = require("numeral");
-const {Vector} = require("sylvester");
-const {MCU_Waypoint, MCU_CMD_Cover, MCU_Icon} = require("../item");
-const {mapColor} = require("../data");
+const {MCU_Waypoint, MCU_CMD_Cover} = require("../item");
+const {markMapArea} = require("./map");
 
 // Flight make parts
 const {makeBriefingLeadSegment} = require("./briefing.fly");
@@ -128,7 +127,9 @@ function makeTaskCoverBriefing(action, flight) {
 	const briefing = [];
 	
 	// Draw cover area zone
-	markMapArea.call(this, flight, airfield.position[0], airfield.position[2]);
+	markMapArea.call(this, flight, {
+		position: airfield.position
+	});
 	
 	// Make intro segment
 	const briefingIntro = makeBriefingLeadSegment.call(this, flight);
@@ -155,53 +156,3 @@ function makeTaskCoverBriefing(action, flight) {
 		return value.charAt(0).toUpperCase() + value.slice(1);
 	}).join(". ") + ".";
 }
-
-// Mark map area with a dotted circle
-function markMapArea(flight, posX, posZ, useIcon = false) {
-
-	const rand = this.rand;
-	const startVector = Vector.create([posX, posZ]);
-	let firstZoneIcon;
-	let lastZoneIcon;
-	
-	// NOTE: Using three points to define encircled area around the airfield
-	[0, 120, 240].forEach((degrees) => {
-		
-		let vector = Vector.create([4500 + rand.integer(0, 1000), 0]);
-		const rotateRad = (degrees + rand.integer(-15, 15)) * (Math.PI / 180);
-		
-		// Build zone point vector
-		vector = startVector.add(vector.rotate(rotateRad, Vector.Zero(2)));
-		
-		const zoneIcon = flight.group.createItem("MCU_Icon");
-		
-		zoneIcon.setPosition(vector.e(1), vector.e(2));
-		zoneIcon.setColor(mapColor.ROUTE);
-		zoneIcon.Coalitions = [flight.coalition];
-		zoneIcon.LineType = MCU_Icon.LINE_SECTOR_2;
-		
-		if (!firstZoneIcon) {
-			firstZoneIcon = zoneIcon;
-		}
-		else {
-			lastZoneIcon.addTarget(zoneIcon);
-		}
-		
-		lastZoneIcon = zoneIcon;
-	});
-	
-	// Connect zone icons in a loop
-	lastZoneIcon.addTarget(firstZoneIcon);
-	
-	// Set icon on the center
-	if (useIcon) {
-		
-		const targetIcon = flight.group.createItem("MCU_Icon");
-		
-		targetIcon.setPosition(posX, posZ);
-		targetIcon.Coalitions = [flight.coalition];
-		targetIcon.IconId = MCU_Icon.ICON_WAYPOINT;
-	}
-}
-
-module.exports.markMapArea = markMapArea;

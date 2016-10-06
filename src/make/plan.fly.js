@@ -3,6 +3,7 @@
 
 const {MCU_Icon, MCU_Waypoint} = require("../item");
 const {mapColor} = require("../data");
+const {markMapArea} = require("./map");
 
 // Make plan fly action
 module.exports = function makePlanFly(action, element, flight, input) {
@@ -131,6 +132,18 @@ module.exports = function makePlanFly(action, element, flight, input) {
 				else {
 					lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_4;
 				}
+			}
+			
+			if (spot.end) {
+				
+				markMapArea.call(this, flight, {
+					position: spot.position,
+					perfect: true,
+					radius: 10000,
+					lineType: MCU_Icon.LINE_ZONE_2
+				});
+				
+				// TODO: Implement "end" waypoint logic
 			}
 			
 			flight.lastSpotIcon = spot.icon = spotIcon;
