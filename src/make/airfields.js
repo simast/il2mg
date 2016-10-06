@@ -83,7 +83,7 @@ module.exports = function makeAirfields() {
 		locationsData.push(airfieldLocation);
 		
 		// Identify offmap airfield
-		if (mission.isOffmapPoint(position[0], position[2])) {
+		if (mission.isOffmap(position)) {
 			
 			airfield.offmap = true;
 			totalOffmap++;

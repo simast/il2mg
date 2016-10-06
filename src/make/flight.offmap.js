@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const {Vector} = require("sylvester");
 const {planAction} = require("../data");
 
 // Make offmap flight (adjust flight plan for current state and offmap activity)
@@ -31,12 +32,12 @@ module.exports = function makeFlightOffmap(flight) {
 		endPosition = route[route.length - 1].position;
 		
 		// Adjust route start
-		if (this.isOffmapPoint(startPosition[0], startPosition[2])) {
+		if (this.isOffmap(startPosition)) {
 			adjustOffmapRouteBounds.call(this, flight, route, true, startPosition);
 		}
 		
 		// Adjust route end
-		if (this.isOffmapPoint(endPosition[0], endPosition[2])) {
+		if (this.isOffmap(endPosition)) {
 			adjustOffmapRouteBounds.call(this, flight, route, false, startPosition);
 		}
 		
@@ -61,11 +62,8 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 		
 		if (!isAdjusted) {
 		
-			const isPointOffmap = this.isOffmapPoint(point.position[0], point.position[2]);
-			const isNextPointOffmap = nextPoint && this.isOffmapPoint(
-				nextPoint.position[0],
-				nextPoint.position[2]
-			);
+			const isPointOffmap = this.isOffmap(point.position);
+			const isNextPointOffmap = nextPoint && this.isOffmap(nextPoint.position);
 			
 			// Throw away not needed offmap route points
 			if (isPointOffmap && (isForward || isNextPointOffmap)) {
@@ -94,12 +92,29 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 					toPosition = nextPoint ? nextPoint.position : startPosition;
 				}
 				
+				const fromVector = Vector.create(fromPosition);
+				const toVector = Vector.create(toPosition);
+				
 				console.log(fromPosition);
 				console.log(toPosition);
 				
+				const intersectVector = this.getMapIntersection(fromVector, toVector);
+				
+				console.log("intersection:", intersectVector);
+				
+				// FIXME:
+				const borderVector = toVector
+					.subtract(intersectVector)
+					.toUnitVector()
+					.multiply(1000)
+					.add(intersectVector);
+				
 				// FIXME:
 				if (isForward) {
-					plan.start.position = toPosition;
+					plan.start.position = borderVector.elements;
+				}
+				else {
+					point.position = borderVector.elements;
 				}
 			}
 		}

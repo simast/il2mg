@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const {Sylvester, Vector, Line, Plane} = require("sylvester");
+
 // Generate mission map data
 module.exports = function makeMap() {
 
@@ -29,15 +31,106 @@ module.exports = function makeMap() {
 	// Set active mission map data
 	this.map = map;
 	
-	// Helper function used to check if point is offmap for a current mission map
-	this.isOffmapPoint = function(posX, posZ) {
-		return isOffmapPoint(posX, posZ, map.width, map.height);
+	// Check if a point/position/vector is offmap for a current mission map
+	this.isOffmap = (...args) => {
+		return isOffmap(map, ...args);
+	};
+	
+	// Get map border bounds intersection vector for a current mission map
+	this.getMapIntersection = (...args) => {
+		return getMapIntersection(map, ...args);
 	};
 };
 
-// Utility function used to check if a given position is an offmap point
-function isOffmapPoint(posX, posZ, mapWidth, mapHeight) {
-	return (posX < 0 || posZ < 0 || posX > mapHeight || posZ > mapWidth);
+// Check if a given point/position/vector is offmap
+function isOffmap(map, ...args) {
+	
+	let posX, posZ;
+	
+	// Array argument
+	if (Array.isArray(args[0])) {
+		args = args[0];
+	}
+	// Vector argument
+	else if (args[0] instanceof Vector) {
+		args = args[0].elements;
+	}
+	
+	// Position as three X/Y/Z arguments or a single [X,Y,Z] array argument
+	if (args.length > 2) {
+		[posX, , posZ] = args;
+	}
+	// Point as two X/Z arguments or a single [X,Z] array argument
+	else if (args.length > 1) {
+		[posX, posZ] = args;
+	}
+	else {
+		throw new TypeError();
+	}
+	
+	return (posX < 0 || posZ < 0 || posX > map.height || posZ > map.width);
 }
 
-module.exports.isOffmapPoint = isOffmapPoint;
+// Get map border bounds intersection vector
+function getMapIntersection(map, fromVector, toVector) {
+	
+	let borderPlanesCache = getMapIntersection.borderPlanesCache;
+	
+	// Initialize map border planes cache
+	if (!borderPlanesCache) {
+		borderPlanesCache = getMapIntersection.borderPlanesCache = new Map();
+	}
+	
+	// Lookup cached border planes
+	let borderPlanes = borderPlanesCache.get(map);
+	
+	if (!borderPlanes) {
+		
+		borderPlanes = [
+			Plane.create(Vector.Zero(3), Vector.create([0, 0, 1])), // Left
+			Plane.create(Vector.create([map.height, 0, 0]), Vector.create([-1, 0, 0])), // Top
+			Plane.create(Vector.create([map.height, 0, map.width]), Vector.create([0, 0, -1])), // Right
+			Plane.create(Vector.create([0, 0, map.width]), Vector.create([1, 0, 0])) // Bottom
+		];
+		
+		borderPlanesCache.set(map, borderPlanes);
+	}
+	
+	const distance = fromVector.distanceFrom(toVector);
+	const intersectLine = Line.create(fromVector, toVector.subtract(fromVector));
+	
+	let validIntersectVector;
+	
+	// Test each map border plane for intersections
+	for (const borderPlane of borderPlanes) {
+		
+		const intersectVector = borderPlane.intersectionWith(intersectLine);
+		
+		if (!intersectVector) {
+			continue;
+		}
+		
+		// Ignore offmap intersection points
+		if (isOffmap(map, intersectVector.round())) {
+			continue;
+		}
+		
+		const distanceIntersectA = fromVector.distanceFrom(intersectVector);
+		const distanceIntersectB = intersectVector.distanceFrom(toVector);
+		const distanceDelta = Math.abs(distance - (distanceIntersectA + distanceIntersectB));
+		
+		// Ignore invalid intersection points
+		if (distanceDelta > Sylvester.precision) {
+			continue;
+		}
+		
+		validIntersectVector = intersectVector;
+		
+		break;
+	}
+	
+	return validIntersectVector;
+}
+
+module.exports.isOffmap = isOffmap;
+module.exports.getMapIntersection = getMapIntersection;

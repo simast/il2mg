@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 		const moment = require("moment");
 		const data = require("../../src/data");
 		const {isValidRebaseTask} = require("../../src/make/task.rebase");
-		const {isOffmapPoint} = require("../../src/make/map");
+		const {isOffmap} = require("../../src/make/map");
 		
 		let totalBattles = 0;
 		let totalUnits = 0;
@@ -89,11 +89,10 @@ module.exports = function(grunt) {
 			for (const airfieldID in battle.airfields) {
 				
 				const airfield = battle.airfields[airfieldID];
-				const position = airfield.position;
 				let startType = 0; // Onmap air start
 				
 				// Check for offmap airfields
-				if (isOffmapPoint(position[0], position[2], map.width, map.height)) {
+				if (isOffmap(map, airfield.position)) {
 					startType = -1; // Offmap air start
 				}
 				
