@@ -437,6 +437,7 @@ class Missions extends React.Component {
 		}
 		
 		const gameExePath = path.join(config.gamePath, PATH_EXE);
+		let maxAutoplayTime = MAX_AUTOPLAY_TIME;
 		
 		try {
 			
@@ -454,6 +455,17 @@ class Missions extends React.Component {
 			
 			// Minimize window
 			remote.getCurrentWindow().minimize();
+		}
+		catch (e) {
+			
+			maxAutoplayTime = 0;
+			
+			// Show an error suggesting to use elevated il2mg executable permissions
+			Application.showErrorMessage(
+				"Could not launch IL-2 Sturmovik!\n\n" +
+				"Please close this application and then run il2mg.exe again by right " +
+				'clicking and using the "Run as administrator" menu option.'
+			);
 		}
 		finally {
 			
@@ -473,7 +485,7 @@ class Missions extends React.Component {
 				this.restoreAutoPlay();
 				window.removeEventListener("unload", onWindowUnload);
 				
-			}, MAX_AUTOPLAY_TIME);
+			}, maxAutoplayTime);
 		}
 	}
 	
