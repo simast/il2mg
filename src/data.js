@@ -141,7 +141,8 @@ data.planAction = Object.freeze({
 	FORM: "form", // Form up (set formations and element cover)
 	WAIT: "wait", // Wait for something (do nothing)
 	FLY: "fly", // Fly to waypoint/location
-	LAND: "land" // Land on airfield (ending the flight)
+	LAND: "land", // Land on airfield (ending the flight)
+	END: "end" // End flight action
 });
 
 // Map colors as RGB array values

@@ -56,6 +56,7 @@ module.exports = function makeFlightOffmap(flight) {
 function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 	
 	const rand = this.rand;
+	const plan = flight.plan;
 	const isPlayerFlight = Boolean(flight.player);
 	let i = isForward ? 0 : route.length - 1;
 	let prevPosition = isForward ? startPosition : route[i].position;
@@ -134,16 +135,20 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 			// Set offmap route start/end position and orientation
 			if (isForward) {
 				
-				const startAction = flight.plan.start;
-				
-				startAction.position = offmapPosition;
+				const startAction = plan.start;
 				
 				// TODO: Set orientation for start action
+				startAction.position = offmapPosition;
 			}
 			else {
 				
 				point.position = offmapPosition;
-				point.end = true;
+				
+				// End flight action on map border/edge
+				plan.push({
+					type: planAction.END,
+					position: offmapPosition
+				});
 			}
 			
 			break;
