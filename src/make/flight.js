@@ -232,7 +232,7 @@ function makeFlight(params) {
 	
 	// Create flight group item
 	flight.group = this.createItem("Group");
-	flight.group.setName(unit.name);
+	flight.group.setName(task.id + " (" + unit.name + ")");
 	
 	// Set unique flight callsign
 	flight.callsign = this.getCallsign("plane");

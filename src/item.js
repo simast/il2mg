@@ -860,6 +860,7 @@ module.exports = Item;
 	require("./item/Ground"),
 	require("./item/Group"),
 	require("./item/MCU_Activate"),
+	require("./item/MCU_CheckZone"),
 	require("./item/MCU_CMD_AttackArea"),
 	require("./item/MCU_CMD_Cover"),
 	require("./item/MCU_CMD_Effect"),
