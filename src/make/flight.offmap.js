@@ -38,20 +38,20 @@ module.exports = function makeFlightOffmap(flight) {
 		
 		// Adjust route start
 		if (this.isOffmap(startPosition)) {
-			adjustOffmapRouteBounds.call(this, flight, route, true, startPosition);
+			adjustOffmapRouteBounds.call(this, flight, action, true, startPosition);
 		}
 		
 		// Adjust route end
 		if (this.isOffmap(endPosition)) {
-			adjustOffmapRouteBounds.call(this, flight, route, false, startPosition);
+			adjustOffmapRouteBounds.call(this, flight, action, false, startPosition);
 		}
 		
 		startPosition = endPosition;
 	}
 };
 
-// Adjust offmap flight route for current map bounds
-function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
+// Adjust offmap fly action route for current map bounds
+function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 	
 	// FIXME: The iteration code below is way too complicated as a result of
 	// trying to iterate in both forward and backwards directions. Also, the fact
@@ -60,6 +60,8 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 	
 	const rand = this.rand;
 	const plan = flight.plan;
+	const route = action.route;
+	const startAction = plan.start;
 	const isPlayerFlight = Boolean(flight.player);
 	let i = isForward ? 0 : route.length - 1;
 	let prevPosition = isForward ? startPosition : route[i].position;
@@ -151,9 +153,7 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 			// Set offmap route start/end position and orientation
 			if (isForward) {
 				
-				const startAction = plan.start;
-				
-				// TODO: Set orientation for start action
+				// TODO: Set orientation for start action?
 				startAction.position = offmapPosition;
 			}
 			else {
@@ -177,26 +177,33 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 		return;
 	}
 	
-	// Find remaining route distance
-	let routeDistance = 0;
-	prevPosition = plan.start.position;
-	
-	for (const point of route) {
-		
-		routeDistance += Vector.create(prevPosition).distanceFrom(
-			Vector.create(point.position)
-		);
-		
-		prevPosition = point.position;
-	}
-	
-	// Use flight fuel for virtual offmap travel distance
 	if (isForward) {
+		
+		// Use flight fuel for virtual offmap travel distance
 		useFlightFuel.call(this, flight, offmapDistance);
+		
+		// Transfer used offmap state
+		// TODO: Add "delay" for start action if necessary
+		if (action.state && !startAction.state) {
+			
+			// Find remaining route distance
+			let routeDistance = 0;
+			prevPosition = plan.start.position;
+			
+			for (const {position} of route) {
+				
+				routeDistance += Vector.create(prevPosition).distanceFrom(
+					Vector.create(position)
+				);
+				
+				prevPosition = position;
+			}
+			
+			const totalDistance = offmapDistance + routeDistance;
+			const transferState = action.state * (offmapDistance / totalDistance);
+			
+			startAction.state = transferState;
+			action.state -= transferState;
+		}
 	}
-	
-	// TODO: Add "delay" and "state" values for start action if necessary
-	const totalDistance = offmapDistance + routeDistance;
-	
-	console.log(totalDistance);
 }
