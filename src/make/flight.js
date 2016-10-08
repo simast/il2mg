@@ -378,7 +378,10 @@ function useFlightFuel(flight, distance, simulateTakeoff) {
 			
 			// Apply new fuel value
 			remainingFuel = Math.max(remainingFuel - usedFuel, MIN_PLANE_FUEL);
-			plane.item.Fuel = Number(remainingFuel.toFixed(3));
+			
+			// NOTE: Need to round fuel value to two decimal digits to prevent game
+			// UI bug (display of the "Restore from mission settings" button).
+			plane.item.Fuel = Number(remainingFuel.toFixed(2));
 		}
 	}
 }

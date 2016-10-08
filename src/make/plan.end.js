@@ -5,8 +5,8 @@ const Item = require("../item");
 const {markMapArea} = require("./map");
 
 // Min/max radius of the "mission end" circle (used with player flight only)
-const MIN_PLAYER_END_RADIUS = 9000; // 9 km
-const MAX_PLAYER_END_RADIUS = 11000; // 11 km
+const MIN_PLAYER_END_RADIUS = 9500; // 9.5 km
+const MAX_PLAYER_END_RADIUS = 10500; // 10.5 km
 
 // Make plan end action
 // NOTE: Most flights will end naturally with a "land" action - this special
