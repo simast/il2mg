@@ -3,6 +3,7 @@
 
 const {Vector} = require("sylvester");
 const {planAction} = require("../data");
+const {useFlightFuel} = require("./flight");
 
 // Minimum and maximum distance from the border for offmap start/end position
 // NOTE: This is only used for player flight!
@@ -19,9 +20,6 @@ module.exports = function makeFlightOffmap(flight) {
 	const startAction = plan.start;
 	let startPosition;
 	let endPosition;
-	
-	// TODO: Add "delay" and "state" values for start action if necessary.
-	// TODO: Build virtual route points (for AI flights only)
 	
 	for (const action of plan) {
 		
@@ -55,11 +53,17 @@ module.exports = function makeFlightOffmap(flight) {
 // Adjust offmap flight route for current map bounds
 function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 	
+	// FIXME: The iteration code below is way too complicated as a result of
+	// trying to iterate in both forward and backwards directions. Also, the fact
+	// startPosition is not part of the route array complicates things even more.
+	// Consider refactoring this to a more readable and understandable format.
+	
 	const rand = this.rand;
 	const plan = flight.plan;
 	const isPlayerFlight = Boolean(flight.player);
 	let i = isForward ? 0 : route.length - 1;
 	let prevPosition = isForward ? startPosition : route[i].position;
+	let offmapDistance = 0;
 	
 	while (route[i]) {
 		
@@ -77,6 +81,11 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 				i--;
 			}
 			
+			const adjustDistance = Vector.create(prevPosition).distanceFrom(
+				Vector.create(nextPoint.position)
+			);
+			
+			offmapDistance += adjustDistance;
 			prevPosition = nextPoint.position;
 		}
 		// Adjust start/end route point to current map bounds
@@ -130,7 +139,14 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 				}
 			}
 			
-			const offmapPosition = offmapVector.round().elements;
+			// NOTE: Rounding as the border intersection point may still result in
+			// an offmap vector (due to Sylvester precision).
+			offmapVector = offmapVector.round();
+			
+			const offmapPosition = prevPosition = offmapVector.elements;
+			const adjustDistance = fromVector.distanceFrom(offmapVector);
+			
+			offmapDistance += adjustDistance;
 			
 			// Set offmap route start/end position and orientation
 			if (isForward) {
@@ -156,4 +172,31 @@ function adjustOffmapRouteBounds(flight, route, isForward, startPosition) {
 		
 		isForward ? i++ : i--;
 	}
+	
+	if (!offmapDistance) {
+		return;
+	}
+	
+	// Find remaining route distance
+	let routeDistance = 0;
+	prevPosition = plan.start.position;
+	
+	for (const point of route) {
+		
+		routeDistance += Vector.create(prevPosition).distanceFrom(
+			Vector.create(point.position)
+		);
+		
+		prevPosition = point.position;
+	}
+	
+	// Use flight fuel for virtual offmap travel distance
+	if (isForward) {
+		useFlightFuel.call(this, flight, offmapDistance);
+	}
+	
+	// TODO: Add "delay" and "state" values for start action if necessary
+	const totalDistance = offmapDistance + routeDistance;
+	
+	console.log(totalDistance);
 }

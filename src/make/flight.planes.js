@@ -418,10 +418,10 @@ module.exports = function makeFlightPlanes(flight) {
 			// Create plane entity
 			planeItem.createEntity();
 		}
-
-		// Sort subordinate planes in an element formation based on the distance
-		// to the leader plane (will avoid air collisions and taxi issues).
-		if (element.length > 2) {
+		
+		// Sort subordinate planes in an element formation on the ground based on
+		// the distance to the leader plane (will avoid taxi issues).
+		if (element.length > 2 && typeof element.state !== "number") {
 
 			// Sort reference plane (either element leader or the last on the taxi way)
 			let sortPlane;
@@ -434,7 +434,7 @@ module.exports = function makeFlightPlanes(flight) {
 			element.forEach((plane, planeIndex) => {
 
 				plane.distance = (planeIndex - sortSkip);
-
+				
 				// Ignore leader plane and planes on the taxi way
 				if (plane.distance < 0) {
 					sortPlane = plane;

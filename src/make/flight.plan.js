@@ -46,6 +46,7 @@ module.exports = function makeFlightPlan(flight) {
 	}
 	
 	// TODO: Fast-forward plan actions based on state
+	// TODO: Build virtual route points (for AI flights only)
 
 	// List of output callback functions from previous plan action (for each
 	// element, used as input for the next plan action).
