@@ -1,6 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const {MCU_CMD_Formation} = require("../item");
+
 // Make mission flight formation
 module.exports = function makeFlightFormation(flight, isPlayer) {
 
@@ -179,7 +181,7 @@ module.exports = function makeFlightFormation(flight, isPlayer) {
 	flight.planes = 0; // Number of planes in all flight elements
 	
 	// Create requested number of flight elements
-	formation.elements.planes.forEach((planesInElement) => {
+	formation.elements.planes.forEach((planesInElement, elementIndex) => {
 		
 		const element = [];
 		
@@ -209,6 +211,27 @@ module.exports = function makeFlightFormation(flight, isPlayer) {
 		
 		// Inherit element state from parent flight
 		element.state = flight.state;
+		
+		// Set element formation
+		element.formation = MCU_CMD_Formation.TYPE_PLANE_V;
+		
+		// Use edge formation for two plane elements
+		if (element.length === 2) {
+			
+			const edgeFormations = [
+				MCU_CMD_Formation.TYPE_PLANE_EDGE_LEFT,
+				MCU_CMD_Formation.TYPE_PLANE_EDGE_RIGHT
+			];
+			
+			// Pick left/right edge formation direction based on element index
+			if (formation.elements.planes.length > 1) {
+				element.formation = edgeFormations[elementIndex % 2];
+			}
+			// Pick a random edge formation direction
+			else {
+				element.formation = rand.pick(edgeFormations);
+			}
+		}
 		
 		flight.elements.push(element);
 	});

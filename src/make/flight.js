@@ -1,10 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-// Fix for circular module export references
-makeFlight.useFlightFuel = useFlightFuel;
-module.exports = makeFlight;
-
 const {flightState} = require("../data");
 
 // Flight make parts
@@ -12,13 +8,11 @@ const makeFlightFormation = require("./flight.formation");
 const makeFlightPilots = require("./flight.pilots");
 const makeFlightPlanes = require("./flight.planes");
 const makeFlightPlan = require("./flight.plan");
+const makeFlightFuel = require("./flight.fuel");
 const makeAirfieldTaxi = require("./airfield.taxi");
 
-// Minimum percent of plane fuel
-const MIN_PLANE_FUEL = 0.1; // 10%
-
 // Make mission flight
-function makeFlight(params) {
+module.exports = function makeFlight(params) {
 
 	const rand = this.rand;
 	const flight = Object.create(null);
@@ -302,11 +296,11 @@ function makeFlight(params) {
 		}
 	}
 	
+	// Make initial flight fuel
+	makeFlightFuel.call(this, flight);
+	
 	// Make flight plan
 	makeFlightPlan.call(this, flight);
-	
-	// Use simulated takeoff and taxi fuel for non parking start
-	useFlightFuel.call(this, flight, 0, true);
 	
 	// Enable radio navigation beacon source
 	if (isPlayer) {
@@ -336,52 +330,4 @@ function makeFlight(params) {
 	}
 	
 	return flight;
-}
-
-// Use flight fuel based on virtual travel distance
-function useFlightFuel(flight, distance, simulateTakeoff) {
-	
-	// Apply fuel usage for each flight plane
-	for (const element of flight.elements) {
-		
-		let takeoffTime = 0;
-
-		// Extra time used for taxi/takeoff
-		if (simulateTakeoff) {
-			
-			// 6 minutes for air start
-			if (typeof element.state === "number") {
-				takeoffTime = 6;
-			}
-			// 3 minutes for runway start
-			else if (element.state === flightState.RUNWAY) {
-				takeoffTime = 3;
-			}
-			// 1 minute for taxi start
-			else if (element.state === flightState.TAXI) {
-				takeoffTime = 1;
-			}
-		}
-		
-		for (const plane of element) {
-			
-			const {range, speed} = this.planes[plane.plane];
-			let remainingFuel = plane.item.Fuel;
-			
-			// Use fuel based on virtual travel distance and max plane range
-			let usedFuel = (distance / 1000) / range;
-			
-			// Simulate extra fuel used for taxi/takeoff
-			if (takeoffTime) {
-				usedFuel += (speed / 60 * takeoffTime / range);
-			}
-			
-			// Apply new fuel value
-			remainingFuel = Math.max(remainingFuel - usedFuel, MIN_PLANE_FUEL);
-			
-			// NOTE: Need to round fuel value to two decimal digits to prevent game
-			// UI bug (display of the "Restore from mission settings" button).
-			plane.item.Fuel = Number(remainingFuel.toFixed(2));
-		}
-	}
-}
+};

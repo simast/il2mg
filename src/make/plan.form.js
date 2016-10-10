@@ -30,27 +30,8 @@ module.exports = function makePlanForm(action, element, flight, input) {
 	if (element.length > 1) {
 		
 		const formationCommand = flight.group.createItem("MCU_CMD_Formation");
-		let formationType = MCU_CMD_Formation.TYPE_PLANE_V;
 		
-		// Use edge formation for two plane elements
-		if (element.length === 2) {
-			
-			const edgeFormations = [
-				MCU_CMD_Formation.TYPE_PLANE_EDGE_LEFT,
-				MCU_CMD_Formation.TYPE_PLANE_EDGE_RIGHT
-			];
-			
-			// Pick left/right edge formation direction based on element index
-			if (flight.elements.length > 1) {
-				formationType = edgeFormations[flight.elements.indexOf(element) % 2];
-			}
-			// Pick a random edge formation direction
-			else {
-				formationType = rand.pick(edgeFormations);
-			}
-		}
-		
-		formationCommand.FormationType = formationType;
+		formationCommand.FormationType = element.formation;
 		formationCommand.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE;
 		formationCommand.addObject(leaderPlaneItem);
 		formationCommand.setPositionNear(leaderPlaneItem);

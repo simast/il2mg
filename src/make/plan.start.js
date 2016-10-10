@@ -10,34 +10,8 @@ module.exports = function makePlanStart(action, element, flight) {
 	const rand = this.rand;
 	const position = action.position;
 	const isAirStart = (typeof element.state === "number");
-
-	// Set element planes to an air start position
-	if (isAirStart) {
-
-		let orientation = action.orientation;
-		
-		if (!orientation) {
-			orientation = rand.integer(0, 360);
-		}
-
-		for (const plane of element) {
-
-			const planeItem = plane.item;
-
-			// TODO: Set orientation and tweak spawn distance
-			// TODO: Set plane position based on formation
-			const positionX = position[0] + rand.integer(150, 350);
-			const positionY = position[1] + rand.integer(250, 350);
-			const positionZ = position[2] + rand.integer(150, 350);
-
-			// Set plane item air start position and orientation
-			planeItem.setPosition(positionX, positionY, positionZ);
-			planeItem.setOrientation(orientation);
-		}
-	}
 	
 	// Create start location icon for player flight
-	// TODO: Don't create icon for flights in progress (state > 0)?
 	if (flight.player && !flight.startIcon) {
 		
 		const startIcon = flight.startIcon = flight.group.createItem("MCU_Icon");

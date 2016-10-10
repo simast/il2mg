@@ -4,14 +4,16 @@
 const requireDir = require("require-directory");
 const {planAction} = require("../data");
 
-// Plan action and task make parts
+// Flight plan make parts
 const makeParts = requireDir(module, {include: /(plan|task)\..+\.js$/});
 const makeFlightOffmap = require("./flight.offmap");
+const makeFlightPose = require("./flight.pose");
 
 // Make mission flight plan
 module.exports = function makeFlightPlan(flight) {
 	
 	const plan = flight.plan = [];
+	const task = flight.task;
 	const airfield = this.airfields[flight.airfield];
 
 	// Initial start plan action
@@ -29,7 +31,7 @@ module.exports = function makeFlightPlan(flight) {
 	plan.push({type: planAction.FORM});
 	
 	// Make task specific plan
-	const makeTask = makeParts["task." + flight.task.id];
+	const makeTask = makeParts["task." + task.id];
 	
 	if (makeTask) {
 		makeTask.call(this, flight);
@@ -40,10 +42,13 @@ module.exports = function makeFlightPlan(flight) {
 		plan.land = plan[plan.push({type: planAction.LAND}) - 1];
 	}
 	
-	// Make offmap flight (adjust flight plan for current state and offmap activity)
-	if (flight.task.offmap) {
+	// Make offmap flight bounds
+	if (task.offmap) {
 		makeFlightOffmap.call(this, flight);
 	}
+	
+	// Make initial flight air start pose
+	makeFlightPose.call(this, flight, plan.start.position);
 	
 	// TODO: Fast-forward plan actions based on state
 	// TODO: Build virtual route points (for AI flights only)

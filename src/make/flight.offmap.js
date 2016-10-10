@@ -3,7 +3,7 @@
 
 const {Vector} = require("sylvester");
 const {planAction} = require("../data");
-const {useFlightFuel} = require("./flight");
+const makeFlightFuel = require("./flight.fuel");
 
 // Minimum and maximum distance from the border for offmap start/end position
 // NOTE: This is only used for player flight!
@@ -13,11 +13,10 @@ const MAX_DISTANCE_BORDER = 4000; // 4 km
 // Minimum distance required between offmap star/end position and the next point
 const MIN_NEXT_POINT_DISTANCE = 25000; // 25 km
 
-// Make offmap flight (adjust flight plan for current state and offmap activity)
+// Make offmap flight bounds
 module.exports = function makeFlightOffmap(flight) {
 	
 	const plan = flight.plan;
-	const startAction = plan.start;
 	let startPosition;
 	let endPosition;
 	
@@ -31,7 +30,7 @@ module.exports = function makeFlightOffmap(flight) {
 		const route = action.route;
 		
 		if (!startPosition) {
-			startPosition = startAction.position;
+			startPosition = plan.start.position;
 		}
 		
 		endPosition = route[route.length - 1].position;
@@ -150,10 +149,8 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 			
 			offmapDistance += adjustDistance;
 			
-			// Set offmap route start/end position and orientation
+			// Set offmap route start/end position
 			if (isForward) {
-				
-				// TODO: Set orientation for start action?
 				startAction.position = offmapPosition;
 			}
 			else {
@@ -180,7 +177,7 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 	if (isForward) {
 		
 		// Use flight fuel for virtual offmap travel distance
-		useFlightFuel.call(this, flight, offmapDistance);
+		makeFlightFuel.call(this, flight, offmapDistance);
 		
 		// Transfer used offmap state
 		// TODO: Add "delay" for start action if necessary
