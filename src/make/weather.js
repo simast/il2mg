@@ -214,9 +214,19 @@ function makeClouds() {
 	}
 
 	const cloudsData = data.clouds[config];
-	const altitude = cloudsData.altitude;
-	const thickness = cloudsData.thickness;
 	const cover = cloudsData.cover;
+	let altitude = cloudsData.altitude;
+	let thickness = cloudsData.thickness;
+	
+	// Pick a random cloud altitude
+	if (Array.isArray(altitude)) {
+		altitude = rand.integer(...altitude);
+	}
+	
+	// Pick a random cloud thickness
+	if (Array.isArray(thickness)) {
+		thickness = rand.integer(...thickness);
+	}
 
 	// Register clouds data in mission Options block
 	options.CloudConfig = this.map.clouds + "\\" + config;
