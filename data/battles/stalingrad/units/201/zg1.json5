@@ -167,8 +167,8 @@
 		airfields: [
 			// ... supported assault on Rostov and into Caucasus
 			["armavir", "1942-12-08", "1942-12-08", 0],
-			["tatsinskaya", "1942-12-08", "1943-01-05"], // Only part of gruppe?
-			["shakhty", "1943-01-05", "1943-01-28", 0.5]
+			["tatsinskaya", "1942-12-08", "1942-12-20"], // Only part of gruppe?
+			["shakhty", "1942-12-20", "1943-01-28", 0.5]
 			// ... left for Dnepropetrovsk
 		],
 		planes: [
