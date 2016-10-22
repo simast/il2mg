@@ -360,8 +360,8 @@ function makeTemperature(weather) {
 	// Register temperature data in mission Options block
 	// NOTE: Real mission temperature is set +15 minutes from now to adjust for
 	// the fact temperatures will not change while the mission is running.
-	temperature.level = Math.round(tempNow);
-	options.Temperature = Math.round(tempSoon);
+	temperature.level = Number(tempNow.toFixed(1));
+	options.Temperature = Number(tempSoon.toFixed(1));
 }
 
 // Make mission atmospheric pressure
@@ -437,7 +437,7 @@ function makeTurbulence() {
 	turbulence = Math.max(turbulence, 0);
 	turbulence = Math.min(turbulence, MAX_TURBULENCE);
 
-	this.weather.turbulence = Math.round(turbulence);
+	this.weather.turbulence = Number(turbulence.toFixed(2));
 
 	// Register turbulence level in mission Options block
 	options.Turbulence = this.weather.turbulence;

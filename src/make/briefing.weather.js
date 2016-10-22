@@ -296,7 +296,7 @@ module.exports = function makeBriefingWeather() {
 	context.temp = {
 		
 		// TODO: Use Fahrenheit or Celcius based on player unit country
-		value: weather.temperature.level + "°C",
+		value: Math.round(weather.temperature.level) + "°C",
 		
 		// {{weather.temp}} value output
 		toString: function() {
