@@ -22,6 +22,7 @@ class Plane extends Item {
 		this.Vulnerable = 1;
 		this.Engageable = 1;
 		this.LimitAmmo = 1;
+		this.Spotter = -1;
 		this.PayloadId = 0;
 		this.WMMask = 0;
 		this.AiRTBDecision = 1;
@@ -39,7 +40,7 @@ class Plane extends Item {
 		
 		yield* super.toBinary(index, 3);
 
-		let size = 50;
+		let size = 54;
 		const scriptLength = Buffer.byteLength(this.Script);
 
 		size += scriptLength;
@@ -98,6 +99,9 @@ class Plane extends Item {
 
 		// LimitAmmo
 		this.writeUInt8(buffer, this.LimitAmmo);
+		
+		// Spotter
+		this.writeUInt32(buffer, this.Spotter >= 0 ? this.Spotter : 0xFFFFFFFF);
 
 		// PayloadId
 		this.writeUInt32(buffer, this.PayloadId);

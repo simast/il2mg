@@ -5,6 +5,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const Random = require("random-js");
+const SmartBuffer = require("smart-buffer");
 const data = require("./data");
 const log = require("./log");
 const Item = require("./item");
@@ -805,122 +806,183 @@ class BinaryStringTable {
 	}
 }
 
+// Max damage values limit in Mission Editor
+const MAX_DAMAGE_VALUES = 128;
+
 // Binary damage data index table (used in saving .msnbin file)
 class BinaryDamageTable {
 	
 	constructor() {
-
-		this.data = [];
-		this.dataIndex = Object.create(null);
-		this.maxDamageValues = 0;
+		
+		// Ordered list of buckets (for damage items grouped by max value count)
+		this.buckets = new Map([
+			[32, []], // Max 32 damage values
+			[64, []], // Max 64 damage values
+			[128, []], // Max 128 damage values
+			[256, []], // Max 256 damage values
+		]);
+		
+		// Damage item index table
+		this.indexTable = [];
 	}
 
 	/**
 	 * Get damage data index table value.
 	 *
-	 * @param {string} value "Damaged" item to set in the index table.
+	 * @param {Item} damageItem "Damaged" item to set in the index table.
 	 * @returns {number} Index table address/index (16 bit unsigned integer).
 	 */
-	value(value) {
+	value(damageItem) {
 
-		// Invalid value
-		if (!(value instanceof Item) || value.type !== "Damaged") {
+		// Invalid arguments
+		if (!(damageItem instanceof Item) || damageItem.type !== "Damaged") {
 			throw new TypeError("Invalid damage item value.");
 		}
-
-		// TODO: Sort damage index values before JSON stringify
-		const valueID = JSON.stringify(value);
-		let index = this.dataIndex[valueID];
-
-		// Register a new unique damage value
-		if (index === undefined) {
-
-			const damageKeys = Object.keys(value);
-
-			this.maxDamageValues = Math.max(this.maxDamageValues, damageKeys.length);
-			this.data.push(value);
-
-			index = this.dataIndex[valueID] = this.data.length - 1;
+		
+		const damageItemSize = Math.min(
+			Object.keys(damageItem).length,
+			MAX_DAMAGE_VALUES
+		);
+		
+		let bucketIndex = 0;
+		let bucketItemIndex;
+		
+		// Register damage item in a fitting data bucket
+		for (const [bucketMaxSize, bucketData] of this.buckets) {
+			
+			// NOTE: Needs at least 1 free damage item key/value slot
+			if (damageItemSize < bucketMaxSize) {
+				
+				bucketItemIndex = bucketData.push(damageItem) - 1;
+				break;
+			}
+			
+			bucketIndex++;
 		}
-
-		return index;
+		
+		// Register new damage index table item
+		this.indexTable.push([
+			bucketItemIndex,
+			damageItemSize,
+			bucketIndex
+		]);
+		
+		return this.indexTable.length - 1;
 	}
 
 	/**
 	 * Get a binary representation of damage data index table.
 	 *
-	 * @returns {Buffer} Binary representation of string data index table.
+	 * @returns {Buffer} Binary representation of damage data index table.
 	 */
 	toBinary() {
-
-		const itemsCount = this.data.length;
-		let offset = 0;
-		let size = 6;
-
-		if (itemsCount > 0) {
-
-			size += 4;
-			size += itemsCount * (1 + this.maxDamageValues * 2);
+		
+		const {buckets, indexTable} = this;
+		const buffer = new SmartBuffer();
+		
+		// Number of buckets (data memory blocks)
+		buffer.writeUInt32LE(buckets.size);
+		
+		// List of bucket sizes
+		for (const bucketSize of buckets.keys()) {
+			buffer.writeUInt32LE(bucketSize);
 		}
-
-		const buffer = new Buffer(size);
-
-		// Max number of damage values
-		buffer.writeUInt32LE(this.maxDamageValues, offset);
-		offset += 4;
-
-		// Number of items
-		buffer.writeUInt16LE(itemsCount, offset);
-		offset += 2;
-
-		if (itemsCount > 0) {
-
-			// Number of free/unused table items
-			buffer.writeUInt32LE(0, offset);
-			offset += 4;
-
-			// Write damage data items
-			this.data.forEach((damageItem) => {
-
-				const damageKeys = Object.keys(damageItem);
-
-				// Number of damage key items
-				buffer.writeUInt8(damageKeys.length, offset);
-				offset += 1;
-
-				// Write damage keys/values
-				for (let k = 0; k < this.maxDamageValues; k++) {
-
-					let damageKey = 0xFF;
-					let damageValue = 0;
-
-					// Use assigned damage key/value pair
-					if (damageKeys.length) {
-
-						damageKey = damageKeys.shift();
-						damageValue = damageItem[damageKey];
+		
+		// Number of damage index table items
+		buffer.writeUInt16LE(indexTable.length);
+		
+		if (!indexTable.length) {
+			return buffer.toBuffer();
+		}
+		
+		for (const [bucketItemIndex, damageItemSize, bucketIndex] of indexTable) {
+			
+			// Bucket data memory index (unique per bucket)
+			buffer.writeUInt16LE(bucketItemIndex);
+			
+			// Number of damage item values
+			buffer.writeUInt8(damageItemSize);
+			
+			// Bucket index
+			buffer.writeUInt8(bucketIndex);
+		}
+		
+		// Unknown (number of free/unused damage index table items?)
+		buffer.writeUInt32LE(0);
+		
+		// Write each memory bucket data
+		for (const [bucketMaxSize, bucketData] of buckets) {
+			
+			// Bucket memory block start mark?
+			buffer.writeUInt32LE(0xCFCFCFCF);
+			
+			let bucketMemoryItemsSize = Math.ceil(bucketData.length / MAX_DAMAGE_VALUES);
+			bucketMemoryItemsSize *= (bucketMaxSize * MAX_DAMAGE_VALUES);
+			
+			// Number of items in bucket memory block (not the size of a memory block!)
+			buffer.writeUInt32LE(bucketMemoryItemsSize);
+			
+			// Write bucket data
+			if (bucketMemoryItemsSize > 0) {
+				
+				// Zero-filled bucket memory buffer
+				const bucketBuffer = Buffer.alloc(bucketMemoryItemsSize * 2);
+				
+				for (const [damageItemIndex, damageItem] of bucketData.entries()) {
+					
+					let i = 0;
+					for (let damageKey in damageItem) {
+						
+						// Enforce max bucket key/value item size
+						if (i >= bucketMaxSize) {
+							break;
+						}
+						
+						let damageValue = damageItem[damageKey];
+						damageKey = +damageKey; // To number
+						
+						// Ignore invalid damage keys
+						if (damageKey < 0 || damageKey > MAX_DAMAGE_VALUES) {
+							continue;
+						}
+						
+						if (damageValue >= 0 && damageValue <= 1) {
+	
+							// NOTE: Damage value in binary file is represented as a 8 bit
+							// unsigned integer number with a range from 0 to 255.
+							damageValue = Math.round(255 * damageValue);
+						}
+						else {
+							damageValue = 1;
+						}
+						
+						const offset = damageItemIndex * 2 * bucketMaxSize + (i * 2);
+						
+						// Write damage key/value pair
+						bucketBuffer.writeUInt8(damageKey, offset);
+						bucketBuffer.writeUInt8(damageValue, offset + 1);
+						
+						i++;
 					}
-
-					if (damageValue >= 0 && damageValue <= 1) {
-
-						// NOTE: Damage value in binary file is represented as a 8 bit
-						// unsigned integer number with a range from 0 to 255.
-						damageValue = Math.round(255 * damageValue);
-					}
-					else {
-						damageValue = 0;
-					}
-
-					buffer.writeUInt8(damageKey, offset);
-					offset += 1;
-
-					buffer.writeUInt8(damageValue, offset);
-					offset += 1;
 				}
-			});
+				
+				buffer.writeBuffer(bucketBuffer);
+			}
+			
+			const bucketMemoryMaxItems = bucketMemoryItemsSize / bucketMaxSize;
+			let freeBucketMemoryItems = bucketMemoryMaxItems - bucketData.length;
+			
+			// Number of free/unused bucket memory buffer items
+			buffer.writeUInt32LE(freeBucketMemoryItems);
+			
+			while (freeBucketMemoryItems > 0) {
+				
+				buffer.writeUInt16LE(bucketMemoryMaxItems - freeBucketMemoryItems);
+				freeBucketMemoryItems--;
+			}
 		}
-
-		return buffer;
+		
+		return buffer.toBuffer();
 	}
 }
 

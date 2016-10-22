@@ -45,7 +45,7 @@ module.exports = class Options extends Item {
 		const buffer = new Buffer(size);
 
 		// File version
-		this.writeUInt32(buffer, 26);
+		this.writeUInt32(buffer, 28);
 
 		// MissionType
 		this.writeUInt32(buffer, this.MissionType);
