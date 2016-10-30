@@ -108,9 +108,12 @@ app.on("ready", () => {
 	// Use existing (saved) window position
 	if (config.window) {
 		
-		const {workArea} = electron.screen.getDisplayMatching(config.window);
-		const {width, height} = config.window;
-		let {x, y} = config.window;
+		let {x, y, width, height} = config.window;
+		
+		width = Math.max(Math.min(width, MAX_WINDOW_WIDTH), MIN_WINDOW_WIDTH);
+		height = Math.max(Math.min(height, MAX_WINDOW_HEIGHT), MIN_WINDOW_HEIGHT);
+		
+		const {workArea} = electron.screen.getDisplayMatching({x, y, width, height});
 		
 		// Make sure window is not outside display work area
 		x = Math.min(Math.max(x, workArea.x), workArea.x + workArea.width - width);
@@ -145,7 +148,10 @@ app.on("ready", () => {
 		const {x, y} = mainWindow.getBounds();
 		const [width, height] = mainWindow.getContentSize();
 		
-		config.window = {x, y, width, height};
+		// NOTE: Minimized window will have zero width and height!
+		if (width && height) {
+			config.window = {x, y, width, height};
+		}
 	});
 	
 	// Invalidate main window reference
