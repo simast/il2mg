@@ -24,6 +24,7 @@ const PATH_EXE = path.join("bin", "game", "Il-2.exe");
 const PATH_DATA = "data";
 const PATH_AUTOPLAY = path.join(PATH_DATA, FILE_AUTOPLAY);
 const PATH_MISSIONS = path.join(PATH_DATA, "Missions");
+const PATH_TRACKS = path.join(PATH_DATA, "Tracks");
 
 // NOTE: This is a max time (in milliseconds) to wait before removing
 // generated autoplay.cfg file after game executable is launched. This is
@@ -109,6 +110,10 @@ class Missions extends React.Component {
 	componentWillUnmount() {
 		
 		document.removeEventListener("keydown", this._onKeyDown, true);
+		
+		if (this.tracksWatcher) {
+			this.tracksWatcher.close();
+		}
 	}
 	
 	// Render component
@@ -376,6 +381,11 @@ class Missions extends React.Component {
 	launchMission(selectFolder) {
 		
 		const {config} = this.context;
+		const missionID = this.props.params.mission;
+		
+		if (!missionID) {
+			return;
+		}
 		
 		// Force selecting game path on first run or when existing path is invalid
 		if (!config.gamePath || !this.isValidGamePath(config.gamePath)) {
@@ -441,7 +451,7 @@ class Missions extends React.Component {
 		
 		try {
 			
-			this.createAutoPlay();
+			this.createAutoPlay(missionID);
 			
 			// Run game executable
 			const gameProcess = spawn(gameExePath, {
@@ -453,8 +463,11 @@ class Missions extends React.Component {
 			// Don't wait for the spawned game process to exit
 			gameProcess.unref();
 			
-			// Minimize window
+			// Minimize the window
 			remote.getCurrentWindow().minimize();
+			
+			// Activate the fix for flight recording
+			this.fixFlightRecords(missionID);
 		}
 		catch (e) {
 			
@@ -499,7 +512,7 @@ class Missions extends React.Component {
 	}
 	
 	// Create autoplay.cfg file
-	createAutoPlay() {
+	createAutoPlay(missionID) {
 		
 		if (this.autoplayRestoreTS) {
 			
@@ -509,7 +522,6 @@ class Missions extends React.Component {
 		
 		const {userDataPath, config} = this.context;
 		const {gamePath, missionsPath} = config;
-		const missionID = this.props.params.mission;
 		
 		if (!gamePath || !missionID) {
 			return;
@@ -596,6 +608,66 @@ class Missions extends React.Component {
 		
 		// Check for game executable
 		return fs.existsSync(path.join(gamePath, PATH_EXE));
+	}
+	
+	// HACK: There is a bug in IL-2 Sturmovik where flight records for a mission
+	// launched with autoplay.cfg are activated, but the mission file is not
+	// copied together with the track recording files. This seems to be a problem
+	// related to the fact our mission files are external and are not part of the
+	// "data/Missions" directory. As a workaround - watch the track recordings
+	// directory for changes and copy the mission files.
+	fixFlightRecords(missionID) {
+		
+		const {gamePath, missionsPath} = this.context.config;
+		const {missions} = this.state;
+		const tracksPath = path.join(gamePath, PATH_TRACKS);
+		
+		// Re-initialize directory watcher
+		if (this.tracksWatcher) {
+			this.tracksWatcher.close();
+		}
+		
+		// Watch for changes in the tracks directory
+		this.tracksWatcher = fs.watch(tracksPath, {
+			persistent: false,
+			recursive: false
+		}, (eventType, fileName) => {
+			
+			if (!fileName || eventType !== "rename") {
+				return;
+			}
+			
+			const trackDir = path.join(tracksPath, fileName);
+			
+			// Track records will have a separate directory for mission files
+			if (!fs.statSync(trackDir).isDirectory()) {
+				return;
+			}
+			
+			const trackMissionID = path.basename(trackDir, path.extname(trackDir));
+			
+			// Apply fix only for our mission launched via autoplay.cfg
+			if (trackMissionID !== missionID) {
+				return;
+			}
+			
+			const mission = missions.index[missionID];
+			
+			// Copy all mission files (except metadata file)
+			for (const missionFile of mission.files) {
+				
+				const extension = path.extname(missionFile);
+				
+				if (extension === ("." + FILE_EXT_META)) {
+					continue;
+				}
+				
+				fs.writeFileSync(
+					path.join(trackDir, missionFile),
+					fs.readFileSync(path.join(missionsPath, missionFile))
+				);
+			}
+		});
 	}
 }
 
