@@ -360,7 +360,11 @@ module.exports = function makeTaskSweep(flight) {
 		},
 		{
 			// Hide egress route when player is flight leader
-			hidden: (isPlayerFlightLeader && !debugFlights)
+			hidden: (
+				isPlayerFlightLeader &&
+				!airfield.offmap &&
+				!debugFlights
+			)
 		}
 	);
 	
@@ -376,4 +380,9 @@ module.exports = function makeTaskSweep(flight) {
 		state: 1,
 		visible: Boolean(flight.player)
 	});
+	
+	// Disable land action when operating from offmap airfield
+	if (airfield.offmap) {
+		flight.plan.land = false;
+	}
 };

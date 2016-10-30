@@ -27,28 +27,36 @@ module.exports = function makeFlightRoute(flight, fromPosition, to, options) {
 		
 		const airfield = this.airfields[to.airfield];
 		const airfieldPosition = airfield.position;
-		const routeVector = Vector.create([
-			airfieldPosition[0] - fromPosition[0],
-			airfieldPosition[2] - fromPosition[2]
-		]);
 		
 		// Egress (back to home airfield) route flag
 		isEgressRoute = (to.airfield === flight.airfield);
 		
-		// Use last spot as final egress point (with short final airfield route)
-		if (isEgressRoute && routeVector.modulus() < AIRFIELD_DISTANCE_EGRESS) {
-			return;
+		// Use offmap airfield position as final point
+		if (airfield.offmap) {
+			to.point = [airfieldPosition[0], airfieldPosition[2]];
 		}
-		
-		// Make the final route spot (some distance before the airfield)
-		const routeEndVector = Vector.create([
-			airfieldPosition[0],
-			airfieldPosition[2]
-		]).add(routeVector.toUnitVector().multiply(
-			-1 * rand.real(AIRFIELD_DISTANCE_MIN, AIRFIELD_DISTANCE_MAX, true)
-		));
-		
-		to.point = [routeEndVector.e(1), routeEndVector.e(2)];
+		else {
+			
+			const routeVector = Vector.create([
+				airfieldPosition[0] - fromPosition[0],
+				airfieldPosition[2] - fromPosition[2]
+			]);
+			
+			// Use last spot as final egress point (with short final airfield route)
+			if (isEgressRoute && routeVector.modulus() < AIRFIELD_DISTANCE_EGRESS) {
+				return;
+			}
+			
+			// Make the final route spot (some distance before the airfield)
+			const routeEndVector = Vector.create([
+				airfieldPosition[0],
+				airfieldPosition[2]
+			]).add(routeVector.toUnitVector().multiply(
+				-1 * rand.real(AIRFIELD_DISTANCE_MIN, AIRFIELD_DISTANCE_MAX, true)
+			));
+			
+			to.point = [routeEndVector.e(1), routeEndVector.e(2)];
+		}
 	}
 	
 	const route = [];
