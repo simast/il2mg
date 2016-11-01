@@ -48,8 +48,6 @@ module.exports = function makeTaskPatrol(flight) {
 		maxDistance: MAX_DISTANCE
 	});
 	
-	// TODO: Reject task when we can't find base two patrol reference points
-	
 	const patrolPoints = [];
 	
 	// Build base patrol area points
@@ -390,22 +388,14 @@ function findBasePoints(flight, params) {
 	const startX = start.x;
 	const startZ = start.z;
 	const startVector = start.vector;
-	const maxRange = params.maxRange;
 	const minDistance = params.minDistance;
 	const maxDistance = params.maxDistance;
 	const minAngle = params.minAngle;
 	const maxAngle = params.maxAngle;
+	let maxRange = params.maxRange;
 	
 	// Player flight restriction to not use areas around map border zone
 	const restrictedBorder = flight.player ? RESTRICTED_BORDER : 0;
-	
-	// Points area bounds as a rectangular location around the start location
-	const bounds = new Location(
-		Math.max(startX - maxRange, restrictedBorder),
-		Math.max(startZ - maxRange, restrictedBorder),
-		Math.min(startX + maxRange, map.height - restrictedBorder),
-		Math.min(startZ + maxRange, map.width - restrictedBorder)
-	);
 	
 	let pointA;
 	let pointAVector;
@@ -413,6 +403,17 @@ function findBasePoints(flight, params) {
 	let pointB;
 	let distanceAB;
 	let angleAB;
+	
+	// Get valid bounds area for base patrol points
+	const getBounds = (maxRange) => {
+		
+		return new Location(
+			Math.max(startX - maxRange, restrictedBorder),
+			Math.max(startZ - maxRange, restrictedBorder),
+			Math.min(startX + maxRange, map.height - restrictedBorder),
+			Math.min(startZ + maxRange, map.width - restrictedBorder)
+		);
+	};
 	
 	// Find base two (A and B) reference points
 	const findPoints = (locations, directions) => {
@@ -542,10 +543,7 @@ function findBasePoints(flight, params) {
 		let br = 0;
 		
 		// Mark availability (and popularity) of each corner
-		for (const point of points) {
-			
-			const pointX = point[0];
-			const pointZ = point[1];
+		for (const [pointX, pointZ] of points) {
 			
 			if (pointX > startX) {
 				tl++; tr++; bl--; br--;
@@ -560,6 +558,22 @@ function findBasePoints(flight, params) {
 			else if (pointZ < startZ) {
 				tl++; tr--; bl++; br--;
 			}
+		}
+		
+		// Disable invalid directions with offmap start point
+		
+		if (startX <= restrictedBorder) {
+			bl = br = -1;
+		}
+		else if (startX >= map.height - restrictedBorder) {
+			tl = tr = -1;
+		}
+		
+		if (startZ <= restrictedBorder) {
+			tl = bl = -1;
+		}
+		else if (startZ >= map.width - restrictedBorder) {
+			tr = br = -1;
 		}
 		
 		const directions = {tl, tr, bl, br};
@@ -609,6 +623,9 @@ function findBasePoints(flight, params) {
 		return directions;
 	};
 	
+	// Points area bounds as a rectangular location around the start position
+	let bounds = getBounds(maxRange);
+	
 	// Option 1: Find points from fronts within max allowed range
 	findPoints(territories[territory.FRONT].findIn(bounds));
 	
@@ -646,7 +663,52 @@ function findBasePoints(flight, params) {
 			}
 		}
 		
-		findPoints(territories[flight.coalition].findIn(bounds), directions);
+		const findTerritories = [];
+		
+		// Check friendly territories first
+		if (territories[flight.coalition]) {
+			findTerritories.push(flight.coalition);
+		}
+		
+		// Check front territories (may be available with the extended max range)
+		findTerritories.push(territory.FRONT);
+		
+		// Include enemy territories as a fallback
+		if (territories[enemyCoalition]) {
+			findTerritories.push(enemyCoalition);
+		}
+		
+		// Check unknown territories as a last resort
+		findTerritories.push(territory.UNKNOWN);
+		
+		// Find both points
+		for (;;) {
+			
+			let foundAllPoints = false;
+			
+			// Try each territory type based on priority
+			for (const territoryType of findTerritories) {
+				
+				findPoints(territories[territoryType].findIn(bounds), directions);
+				
+				// All points are found
+				if (pointA && pointB) {
+					
+					foundAllPoints = true;
+					break;
+				}
+			}
+			
+			if (foundAllPoints) {
+				break;
+			}
+			
+			// Option 3: Extend the max range until points are found. This is mostly
+			// done to support offmap airfield starting positions and to handle
+			// various edge cases.
+			maxRange *= 1.1; // +10%
+			bounds = getBounds(maxRange);
+		}
 	}
 	
 	// Return found points data

@@ -57,8 +57,6 @@ module.exports = function makeTaskSweep(flight) {
 		maxAngle: MAX_ANGLE
 	});
 	
-	// TODO: Reject task when we can't find base two reference points
-	
 	// Make a valid point (shifting to valid map area if necessary)
 	const makeValidPoint = (pointVector, originVector) => {
 		
@@ -98,8 +96,8 @@ module.exports = function makeTaskSweep(flight) {
 		
 		let shiftVector = false;
 		
-		// Use shift vector
-		if (getTerritory(location.x, location.z) === territory.FRONT) {
+		// Use shift vector (with a non-offmap starting position only)
+		if (!airfield.offmap && getTerritory(location.x, location.z) === territory.FRONT) {
 			
 			shiftVector = Vector.create([
 				location.x - startX,
