@@ -22,7 +22,7 @@ const MAX_DISTANCE = 60000;
 const ZONE_PADDING = 2500;
 
 // Restricted zone around map area border (for player flight only)
-const RESTRICTED_BORDER = 15000; // 15 Km
+const RESTRICTED_BORDER = 20000; // 20 Km
 
 // Make mission patrol area task
 module.exports = function makeTaskPatrol(flight) {

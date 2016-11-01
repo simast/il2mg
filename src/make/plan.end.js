@@ -44,6 +44,7 @@ module.exports = function makePlanEnd(action, element, flight, input) {
 	// Use a separate marked check zone area for ending player mission
 	if (element.player) {
 		
+		const airfield = this.airfields[flight.airfield];
 		const playerEndRadius = Number(rand.real(
 			MIN_PLAYER_END_RADIUS,
 			MAX_PLAYER_END_RADIUS,
@@ -61,9 +62,6 @@ module.exports = function makePlanEnd(action, element, flight, input) {
 		const endCheckZone = flight.group.createItem("MCU_CheckZone");
 		const endMissionItem = flight.group.createItem("MCU_TR_MissionEnd");
 		
-		// TODO: Activate check zone with a bubble
-		flight.onStart.addTarget(endCheckZone);
-		
 		endCheckZone.Zone = playerEndRadius;
 		endCheckZone.setPosition(action.position);
 		endCheckZone.addObject(flight.player.item);
@@ -71,5 +69,24 @@ module.exports = function makePlanEnd(action, element, flight, input) {
 		
 		endMissionItem.Succeeded = 0; // 0 = Succeeded
 		endMissionItem.setPositionNear(endCheckZone);
+		
+		let endTarget = endCheckZone;
+		
+		// Delay end check zone activation when flying from offmap airfields. This
+		// is a workaround for when both entry and exit offmap route points are
+		// inside the check zone area.
+		if (airfield.offmap) {
+			
+			const endTimer = flight.group.createItem("MCU_Timer");
+			
+			endTimer.Time = +(rand.real(240, 360).toFixed(3)); // 4-6 minutes
+			endTimer.addTarget(endTarget);
+			endTimer.setPositionNear(endTarget);
+			
+			endTarget = endTimer;
+		}
+		
+		// TODO: Activate check zone with a bubble
+		flight.onStart.addTarget(endTarget);
 	}
 };
