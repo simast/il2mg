@@ -25,9 +25,6 @@ module.exports = function makeTasks() {
 		tasks[taskID] = task;
 	}
 	
-	// Static cached unit tasks lists
-	const tasksByRole = Object.create(null);
-	
 	// Build unit tasks lists
 	for (const unitID in this.units) {
 		
@@ -39,62 +36,58 @@ module.exports = function makeTasks() {
 		}
 		
 		const countryID = unit.country;
+		const role = this.battle.roles[countryID][unit.role];
+		const unitTasks = [];
+		const airfield = this.airfields[unit.airfield];
 		
-		tasksByRole[countryID] = tasksByRole[countryID] || Object.create(null);
-		let unitTasks = tasksByRole[countryID][unit.role];
-		
-		// Create a new unit tasks list for this role
-		if (!unitTasks) {
+		for (const taskID in role) {
 			
-			unitTasks = tasksByRole[countryID][unit.role] = [];
-			const role = this.battle.roles[countryID][unit.role];
+			const task = tasks[taskID];
+			let roleTask = role[taskID];
 			
-			for (const taskID in role) {
+			// Ignore invalid roles
+			if (!task || !roleTask) {
+				continue;
+			}
+			
+			// Validate task offmap support
+			if (airfield.offmap && !task.offmap) {
+				continue;
+			}
+			
+			let weight;
+			
+			// Role task data set as a single weight number
+			if (Number.isInteger(roleTask)) {
 				
-				const task = tasks[taskID];
-				let roleTask = role[taskID];
+				weight = Math.max(roleTask, 1);
+				roleTask = Object.create(task);
+				roleTask.weight = weight;
+			}
+			// Role task data set as an object for customizing base task
+			else {
 				
-				// Ignore invalid roles
-				if (!task || !roleTask) {
-					continue;
-				}
-				
-				let weight;
-				
-				// Role task data set as a single weight number
-				if (Number.isInteger(roleTask)) {
-					
-					weight = Math.max(roleTask, 1);
-					roleTask = Object.create(task);
-					roleTask.weight = weight;
-				}
-				// Role task data set as an object for customizing base task
-				else {
-					
-					weight = roleTask.weight = roleTask.weight || 1;
-					Object.setPrototypeOf(roleTask, task);
-				}
-				
-				roleTask = Object.freeze(roleTask);
-				
-				// Add task to the weighted role tasks list
-				for (let i = 0; i < weight; i++) {
-					unitTasks.push(roleTask);
-				}
+				weight = roleTask.weight = roleTask.weight || 1;
+				Object.setPrototypeOf(roleTask, task);
+			}
+			
+			roleTask = Object.freeze(roleTask);
+			
+			// Add task to the weighted unit tasks list
+			for (let i = 0; i < weight; i++) {
+				unitTasks.push(roleTask);
 			}
 		}
 		
 		// Add rebase task (as a ~75% of total task weight)
 		if (unit.rebase) {
 			
-			unitTasks = unitTasks.slice();
-			
 			const rebaseTask = Object.create(tasks.rebase);
 			
 			rebaseTask.weight = 1;
 			
 			if (unitTasks.length) {
-				rebaseTask.weight = Math.round(unitTasks.length * 1.5);
+				rebaseTask.weight = Math.round(unitTasks.length * 3);
 			}
 			
 			for (let i = 0; i < rebaseTask.weight; i++) {
