@@ -1,4 +1,4 @@
-/** @copyright Simas Toleikis, 2015 */
+/** @copyright Simas Toleikis, 2016 */
 "use strict";
 
 const {Vector} = require("sylvester");
