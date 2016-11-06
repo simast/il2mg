@@ -27,6 +27,7 @@ const planeTypeNames = {
  *
  * 	{{airfield}} - Name of the player flight airfield.
  *  {{target}} - Player task target location description.
+ *  {{enemy.demonym}} - Name of main enemy country demonym.
  *
  * 	{{{plane}}} - Any player plane name representation.
  * 	{{plane.name}} - Player plane model name.
@@ -71,6 +72,36 @@ module.exports = function makeBriefingText(template, view) {
 		
 		// Flight target location description
 		context.target = makeBriefingTarget.bind(this, flight.target);
+		
+		// {{enemy}} template tag
+		const enemyTag = context.enemy = Object.create(null);
+		
+		// Name of main enemy country demonym
+		const enemyDemonym = enemyTag.demonym = Object.create(null);
+		enemyDemonym.toString = () => {
+				
+			const enemyCoalition = this.getEnemyCoalition(flight.coalition);
+			let enemyCountry;
+			
+			for (const countryID in data.countries) {
+				
+				const country = data.countries[countryID];
+				
+				if (country.coalition !== enemyCoalition) {
+					continue;
+				}
+				
+				// TODO: Improve main country identification (currently the first
+				// matching country present in the battle will be considered as main).
+				if (this.unitsByCountry[countryID]) {
+					
+					enemyCountry = country;
+					break;
+				}
+			}
+			
+			return enemyCountry.demonym || "";
+		};
 		
 		// {{{plane}}} template tag
 		const planeTag = context.plane = Object.create(null);

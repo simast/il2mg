@@ -3,8 +3,8 @@
 	name: "Cover airfield",
 	title: "Cover {{airfield}} airfield",
 	story: [
-		"Enemy reconnaissance planes have been flying regularly over our positions for a couple of days in a row now. Feeling nervous and expecting the worst, our commander {{{rank.commander}}} {{name.last}} is keeping the airfield under constant watch. At least one flight of {{{plane}}}s is arranged to be always in the air - to provide cover and intercept any approaching enemy aircraft.",
-		"One of our nearby airfields has been hit hard recently from an unexpected enemy air attack. The losses seems to have been too significant to ignore. {{{rank.aa}}} {{name.last}}, commander of the local anti-aircraft ground defense, is demanding immediate support from our units equipped with {{{plane}}}s. The orders are clear - provide cover for our airfield and intercept any approaching enemy aircraft.",
+		"{{enemy.demonym}} reconnaissance planes have been flying regularly over our positions for a couple of days in a row now. Feeling nervous and expecting the worst, our commander {{{rank.commander}}} {{name.last}} is keeping the airfield under constant watch. At least one flight of {{{plane}}}s is arranged to be always in the air - to provide cover and intercept any approaching enemy aircraft.",
+		"One of our nearby airfields has been hit hard recently from an unexpected {{enemy.demonym}} air attack. The losses seems to have been too significant to ignore. {{{rank.aa}}} {{name.last}}, commander of the local anti-aircraft ground defense, is demanding immediate support from our units equipped with {{{plane}}}s. The orders are clear - provide cover for our airfield and intercept any approaching enemy aircraft.",
 		"{{{rank.brass}}} {{name.last}} is visiting our local base for an inspection today. Flight after flight of {{{plane}}}s is being sent up in the air with orders to provide cover for the airfield. Our commander was very blunt he wants to demonstrate full readiness by ensuring strict and tight formations are kept all the time. Under no circumstances enemy aircraft can be allowed to get through to the airfield today!"
 	],
 	altitude: {

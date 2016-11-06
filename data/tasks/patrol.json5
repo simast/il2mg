@@ -3,9 +3,9 @@
 	name: "Patrol area",
 	title: "Patrol flight from {{airfield}}",
 	story: [
-		"An urgent request just came in over the radio from local army headquarters! Liaison officer {{{rank.liaison}}} {{name.last}} is reporting alarming enemy air activity {{target}}. We are to fly an air cover mission and provide fighter protection for the ground troops and any friendly aircraft encountered in the designated patrol area.",
-		"Army intelligence is reporting an increased focus of enemy reconnaissance efforts in the area {{target}}. As a direct response, our commander {{{rank.commander}}} {{name.last}} is sending out a patrol flight of {{{plane}}}s. The orders are to ward off any enemy reconnaissance aircraft and to prevent further surveillance of the area!",
-		"{{{rank.liaison}}} {{name.last}}, an air liaison officer from local army headquarters, is requesting immediate support from our unit equipped with {{{plane}}}s! The ground troops in the area {{target}} have been under constant harassment attacks recently from a concentrated enemy tactical bomber and close air support force."
+		"An urgent request just came in over the radio from local army headquarters! Liaison officer {{{rank.liaison}}} {{name.last}} is reporting alarming {{enemy.demonym}} air activity {{target}}. We are to fly an air cover mission and provide fighter protection for the ground troops and any friendly aircraft encountered in the designated patrol area.",
+		"Army intelligence is reporting an increased focus of {{enemy.demonym}} reconnaissance efforts in the area {{target}}. As a direct response, our commander {{{rank.commander}}} {{name.last}} is sending out a patrol flight of {{{plane}}}s. The orders are to ward off any enemy reconnaissance aircraft and to prevent further surveillance of the area!",
+		"{{{rank.liaison}}} {{name.last}}, an air liaison officer from local army headquarters, is requesting immediate support from our unit equipped with {{{plane}}}s! The ground troops in the area {{target}} have been under constant harassment attacks recently from a concentrated {{enemy.demonym}} tactical bomber and close air support force."
 	],
 	altitude: {
 		medium: 3, // 75%
