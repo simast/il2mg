@@ -3,6 +3,7 @@
 
 const {Vector} = require("sylvester");
 const {planAction} = require("../data");
+const {getRouteDistance} = require("./flight.route");
 const makeFlightFuel = require("./flight.fuel");
 
 // Minimum and maximum distance from the border for offmap start/end position
@@ -11,7 +12,7 @@ const MIN_DISTANCE_BORDER = 3000; // 3 km
 const MAX_DISTANCE_BORDER = 4000; // 4 km
 
 // Minimum distance required between offmap star/end position and the next point
-const MIN_NEXT_POINT_DISTANCE = 25000; // 25 km
+const MIN_NEXT_POINT_DISTANCE = 20000; // 20 km
 
 // Make offmap flight bounds
 module.exports = function makeFlightOffmap(flight) {
@@ -33,12 +34,19 @@ module.exports = function makeFlightOffmap(flight) {
 			startPosition = plan.start.position;
 		}
 		
-		endPosition = route[route.length - 1].position;
+		const endSpot = route[route.length - 1];
 		
 		// Adjust route start
 		if (this.isOffmap(startPosition)) {
 			adjustOffmapRouteBounds.call(this, flight, action, true, startPosition);
 		}
+		
+		// Do not attempt to adjust routes ending with the special loop marker
+		if (Array.isArray(endSpot)) {
+			break;
+		}
+		
+		endPosition = endSpot.position;
 		
 		// Adjust route end
 		if (this.isOffmap(endPosition)) {
@@ -69,7 +77,17 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 	while (route[i]) {
 		
 		const point = route[i];
-		const nextPoint = route[isForward ? i : i - 1];
+		let nextPointOffset = 0;
+		let nextPoint;
+		
+		// Find a valid next point (ignoring special loop marker)
+		do {
+			
+			nextPoint = route[isForward ? i + nextPointOffset : i - nextPointOffset - 1];
+			nextPointOffset++;
+		}
+		while (Array.isArray(nextPoint));
+		
 		const isPointOffmap = this.isOffmap(point.position);
 		const isNextPointOffmap = nextPoint && this.isOffmap(nextPoint.position);
 		
@@ -183,19 +201,7 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 		// TODO: Add "delay" for start action if necessary
 		if (action.state && !startAction.state) {
 			
-			// Find remaining route distance
-			let routeDistance = 0;
-			prevPosition = plan.start.position;
-			
-			for (const {position} of route) {
-				
-				routeDistance += Vector.create(prevPosition).distanceFrom(
-					Vector.create(position)
-				);
-				
-				prevPosition = position;
-			}
-			
+			const routeDistance = getRouteDistance(plan.start.position, route);
 			const totalDistance = offmapDistance + routeDistance;
 			const transferState = action.state * (offmapDistance / totalDistance);
 			

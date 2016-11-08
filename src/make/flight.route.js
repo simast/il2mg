@@ -163,3 +163,79 @@ module.exports = function makeFlightRoute(flight, fromPosition, to, options) {
 	
 	return route;
 };
+
+// Get flight route distance
+function getRouteDistance(startPosition, route) {
+	
+	// TODO: Refactor route iteration logic to a separate walkRoute() function
+	
+	let routeDistance = 0;
+	let prevSpotVector = Vector.create(startPosition);
+	let spotIndex = 0;
+	let loopSpotIndex;
+	let loopTime;
+	
+	// Iterate route spots
+	while (route[spotIndex]) {
+		
+		const spot = route[spotIndex];
+		
+		// Handle special loop pattern route marker
+		if (Array.isArray(spot)) {
+			
+			// Initialize loop marker data
+			if (loopSpotIndex === undefined) {
+				
+				loopSpotIndex = spotIndex;
+				loopTime = spot[1];
+			}
+			
+			// Apply loop marker offset
+			spotIndex = spotIndex + spot[0];
+			
+			continue;
+		}
+		
+		let spotVector = Vector.create(spot.position);
+		let segmentDistance = spotVector.distanceFrom(prevSpotVector);
+		
+		// Calculate distance based on loop time and flight speed
+		if (loopSpotIndex !== undefined) {
+			
+			const distancePerSecond = spot.speed * 1000 / 3600;
+			const remainingDistance = loopTime * distancePerSecond;
+			
+			// Use full segment distance as is
+			if (remainingDistance >= segmentDistance) {
+				loopTime -= (segmentDistance / distancePerSecond);
+			}
+			// Use part of segment distance based on remaining loop time
+			else {
+				
+				spotVector = spotVector
+					.subtract(prevSpotVector)
+					.toUnitVector()
+					.multiply(remainingDistance)
+					.add(prevSpotVector);
+				
+				loopTime = 0;
+				segmentDistance = remainingDistance;
+			}
+			
+			// Loop marker was completed
+			if (loopTime <= 0) {
+				
+				spotIndex = loopSpotIndex;
+				loopSpotIndex = loopTime = undefined;
+			}
+		}
+		
+		routeDistance += segmentDistance;
+		prevSpotVector = spotVector;
+		spotIndex++;
+	}
+	
+	return routeDistance;
+}
+
+module.exports.getRouteDistance = getRouteDistance;

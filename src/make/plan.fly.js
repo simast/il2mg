@@ -34,7 +34,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 		// Support for special flight route loop pattern marker
 		if (Array.isArray(spot)) {
 			
-			const loopSpotIndex = spot[0];
+			const loopSpotIndex = i + spot[0]; // Apply loop marker offset
 			const loopTime = spot[1];
 			
 			spot = route[loopSpotIndex];

@@ -275,7 +275,7 @@ module.exports = function makeTaskPatrol(flight) {
 	const patrolTime = rand.real(patrolTimeMin, patrolTimeMax);
 	
 	// Add loop pattern route marker (back to ingress point)
-	route.push([loopSpotIndex, Math.round(60 * patrolTime)]);
+	route.push([-(route.length - loopSpotIndex), Math.round(60 * patrolTime)]);
 	
 	// Make final (back to the base) egress route
 	route.push.apply(
@@ -304,6 +304,11 @@ module.exports = function makeTaskPatrol(flight) {
 		state: 1,
 		visible: Boolean(flight.player) && !isPlayerFlightLeader
 	});
+	
+	// Disable land action when operating from offmap airfield
+	if (airfield.offmap) {
+		flight.plan.land = false;
+	}
 	
 	// Draw patrol area zone only when player is a flight leader
 	if (!isPlayerFlightLeader) {
