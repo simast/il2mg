@@ -163,6 +163,7 @@ function markMapArea(flight, {
 	const rand = this.rand;
 	const centerVector = Vector.create(position);
 	const iconDegrees = perfect ? [0, 90, 180, 270] : [0, 120, 240];
+	const icons = [];
 	let firstZoneIcon;
 	let lastZoneIcon;
 	
@@ -201,6 +202,7 @@ function markMapArea(flight, {
 		}
 		
 		lastZoneIcon = zoneIcon;
+		icons.push(zoneIcon);
 	});
 	
 	// Connect zone icons in a loop
@@ -214,7 +216,11 @@ function markMapArea(flight, {
 		iconItem.setPosition(position);
 		iconItem.Coalitions = [flight.coalition];
 		iconItem.IconId = MCU_Icon.ICON_WAYPOINT;
+		
+		icons.push(iconItem);
 	}
+	
+	return icons;
 }
 
 module.exports.RESTRICTED_BORDER = RESTRICTED_BORDER;

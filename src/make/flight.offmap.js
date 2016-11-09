@@ -120,6 +120,18 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 			
 			let offmapVector = intersectVector;
 			
+			// Throw away next point if its too close to offmap start/stop position
+			if (nextPoint && (!isForward || (isForward && route.length > 1))) {
+				
+				const distanceToOffmap = offmapVector.distanceFrom(
+					Vector.create(nextPoint.position)
+				);
+				
+				if (distanceToOffmap < RESTRICTED_BORDER) {
+					route.splice(route.indexOf(nextPoint), 1);
+				}
+			}
+			
 			// Move offmap border start position slightly inside the map to
 			// prevent player from getting the "Warning: turn around!" message.
 			if (isPlayerFlight && isForward) {
@@ -142,18 +154,6 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 						.toUnitVector()
 						.multiply(MIN_DISTANCE_BORDER)
 						.add(borderVector);
-				}
-			}
-			
-			// Throw away next point if its too close to offmap start/stop position
-			if (nextPoint && (!isForward || (isForward && route.length > 1))) {
-				
-				const distanceToOffmap = offmapVector.distanceFrom(
-					Vector.create(nextPoint.position)
-				);
-				
-				if (distanceToOffmap < RESTRICTED_BORDER) {
-					route.splice(route.indexOf(nextPoint), 1);
 				}
 			}
 			

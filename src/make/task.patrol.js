@@ -14,7 +14,7 @@ const makeFlightRoute = require("./flight.route");
 const MAX_RANGE_PERCENT = 25;
 
 // Min/max patrol area distance (in meters, between two base points)
-const MIN_DISTANCE = 30000;
+const MIN_DISTANCE = 35000;
 const MAX_DISTANCE = 60000;
 
 // Extra patrol zone padding (in meters)

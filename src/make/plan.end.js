@@ -15,6 +15,7 @@ const MAX_PLAYER_END_RADIUS = 10500; // 10.5 km
 module.exports = function makePlanEnd(action, element, flight, input) {
 	
 	const rand = this.rand;
+	const flightGroup = flight.group;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	
 	// Delete all AI plane items
@@ -24,7 +25,7 @@ module.exports = function makePlanEnd(action, element, flight, input) {
 		
 		if (!onEnd && input) {
 			
-			onEnd = flight.onEnd = flight.group.createItem("MCU_Delete");
+			onEnd = flight.onEnd = flightGroup.createItem("MCU_Delete");
 			
 			onEnd.setPosition(action.position);
 			input(onEnd);
@@ -52,15 +53,15 @@ module.exports = function makePlanEnd(action, element, flight, input) {
 		).toFixed(Item.PRECISION_POSITION));
 
 		// Mark mission end area with a circle
-		markMapArea.call(this, flight, {
+		const markIcons = markMapArea.call(this, flight, {
 			position: action.position,
 			perfect: true,
 			radius: playerEndRadius,
 			lineType: Item.MCU_Icon.LINE_ZONE_2
 		});
 		
-		const endCheckZone = flight.group.createItem("MCU_CheckZone");
-		const endMissionItem = flight.group.createItem("MCU_TR_MissionEnd");
+		const endCheckZone = flightGroup.createItem("MCU_CheckZone");
+		const endMissionItem = flightGroup.createItem("MCU_TR_MissionEnd");
 		
 		endCheckZone.Zone = playerEndRadius;
 		endCheckZone.setPosition(action.position);
@@ -72,18 +73,46 @@ module.exports = function makePlanEnd(action, element, flight, input) {
 		
 		let endTarget = endCheckZone;
 		
-		// Delay end check zone activation when flying from offmap airfields. This
-		// is a workaround for when both entry and exit offmap route points are
-		// inside the check zone area.
+		// Activate end check zone with another "further" check zone when flying
+		// from offmap airfields. This is a workaround for when both entry and exit
+		// offmap route points might be inside the check zone area.
 		if (airfield.offmap) {
 			
-			const endTimer = flight.group.createItem("MCU_Timer");
+			const endGuardTimer = flightGroup.createItem("MCU_Timer");
+			const endGuardCheckZone = flightGroup.createItem("MCU_CheckZone");
+			const endGuardActivate = flightGroup.createItem("MCU_Activate");
+			const endGuardDeactivate = flightGroup.createItem("MCU_Deactivate");
 			
-			endTimer.Time = +(rand.real(240, 360).toFixed(3)); // 4-6 minutes
-			endTimer.addTarget(endTarget);
-			endTimer.setPositionNear(endTarget);
+			// Further (guard) activation check zone is +50% larger
+			let endGuardZone = Number(playerEndRadius * 1.5);
+			endGuardZone = endGuardZone.toFixed(Item.PRECISION_POSITION);
 			
-			endTarget = endTimer;
+			endGuardCheckZone.Zone = endGuardZone;
+			endGuardCheckZone.Closer = 0; // Further
+			endGuardCheckZone.setPosition(action.position);
+			endGuardCheckZone.addObject(flight.player.item);
+			endGuardCheckZone.addTarget(endTarget);
+			endGuardCheckZone.addTarget(endGuardActivate);
+			endGuardCheckZone.addTarget(endGuardDeactivate);
+			
+			endGuardActivate.setPositionNear(endGuardCheckZone);
+			endGuardDeactivate.setPositionNear(endGuardCheckZone);
+			endGuardDeactivate.addTarget(endGuardCheckZone);
+			
+			// Activate mission map end area circle together with the check zone
+			for (const markIcon of markIcons) {
+				
+				markIcon.Enabled = 0;
+				endGuardActivate.addTarget(markIcon);
+			}
+			
+			// NOTE: Need an extra timer as "further" check zone does not work
+			// correctly when activated directly by Mission Begin MCU.
+			endGuardTimer.Time = Number(rand.real(5, 8).toFixed(3));
+			endGuardTimer.addTarget(endGuardCheckZone);
+			endGuardTimer.setPositionNear(endGuardCheckZone);
+			
+			endTarget = endGuardTimer;
 		}
 		
 		// TODO: Activate check zone with a bubble
