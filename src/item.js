@@ -872,6 +872,7 @@ module.exports = Item;
 	require("./item/MCU_Deactivate"),
 	require("./item/MCU_Delete"),
 	require("./item/MCU_Icon"),
+	require("./item/MCU_Proximity"),
 	require("./item/MCU_Spawner"),
 	require("./item/MCU_Timer"),
 	require("./item/MCU_TR_ComplexTrigger"),
