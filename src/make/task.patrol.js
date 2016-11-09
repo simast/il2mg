@@ -607,19 +607,19 @@ function findBasePoints(flight, params) {
 		// Resize bounds area to only include available (positive) corners
 		
 		if (tl < 0 && tr < 0) {
-			bounds.x2 = startX;
+			bounds.x2 = Math.min(startX, map.height - RESTRICTED_BORDER);
 		}
 		
 		if (tr < 0 && br < 0) {
-			bounds.z2 = startZ;
+			bounds.z2 = Math.min(startZ, map.width - RESTRICTED_BORDER);
 		}
 		
 		if (br < 0 && bl < 0) {
-			bounds.x1 = startX;
+			bounds.x1 = Math.max(startX, RESTRICTED_BORDER);
 		}
 		
 		if (bl < 0 && tl < 0) {
-			bounds.z1 = startZ;
+			bounds.z1 = Math.max(startZ, RESTRICTED_BORDER);
 		}
 		
 		return directions;
