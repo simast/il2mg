@@ -4,6 +4,7 @@
 const log = require("../log");
 const Item = require("../item");
 const {Location} = require("./locations");
+const {isOffmap} = require("./map");
 const data = require("../data");
 const {itemTag, planeSize, flightState, location} = data;
 
@@ -83,7 +84,7 @@ module.exports = function makeAirfields() {
 		locationsData.push(airfieldLocation);
 		
 		// Identify offmap airfield
-		if (mission.isOffmap(position)) {
+		if (isOffmap(this.map, position)) {
 			
 			airfield.offmap = true;
 			totalOffmap++;

@@ -5,6 +5,10 @@ const {Sylvester, Vector, Line, Plane} = require("sylvester");
 const {mapColor} = require("../data");
 const {MCU_Icon} = require("../item");
 
+// Restricted zone around map area border
+// NOTE: Using 1 extra point to not overlap with map grid and location search
+const RESTRICTED_BORDER = 20000 + 1; // 20 Km
+
 // Generate mission map data
 module.exports = function makeMap() {
 
@@ -32,23 +36,13 @@ module.exports = function makeMap() {
 	
 	// Set active mission map data
 	this.map = map;
-	
-	// Check if a point/position/vector is offmap for a current mission map
-	this.isOffmap = (...args) => {
-		return isOffmap(map, ...args);
-	};
-	
-	// Get map border bounds intersection data for a current mission map
-	this.getMapIntersection = (...args) => {
-		return getMapIntersection(map, ...args);
-	};
 };
 
-// Check if a given point/position/vector is offmap
-function isOffmap(map, ...args) {
+// Get X/Z point from given point/position/vector arguments
+function getPointFromArgs(args) {
 	
 	let posX, posZ;
-	
+
 	// Array argument
 	if (Array.isArray(args[0])) {
 		args = args[0];
@@ -57,7 +51,7 @@ function isOffmap(map, ...args) {
 	else if (args[0] instanceof Vector) {
 		args = args[0].elements;
 	}
-	
+
 	// Position as three X/Y/Z arguments or a single [X,Y,Z] array argument
 	if (args.length > 2) {
 		[posX, , posZ] = args;
@@ -70,7 +64,26 @@ function isOffmap(map, ...args) {
 		throw new TypeError();
 	}
 	
+	return [posX, posZ];
+}
+
+// Check if a given point/position/vector is offmap
+function isOffmap(map, ...args) {
+	
+	const [posX, posZ] = getPointFromArgs(args);
+	
 	return (posX < 0 || posZ < 0 || posX > map.height || posZ > map.width);
+}
+
+// Check if a given point/position/vector is in the restricted map border zone
+function isRestricted(map, ...args) {
+	
+	const [posX, posZ] = getPointFromArgs(args);
+	
+	return (posX < RESTRICTED_BORDER ||
+		posX > (map.height - RESTRICTED_BORDER) ||
+		posZ < RESTRICTED_BORDER ||
+		posZ > (map.width - RESTRICTED_BORDER));
 }
 
 // Get map border bounds intersection data
@@ -204,6 +217,8 @@ function markMapArea(flight, {
 	}
 }
 
+module.exports.RESTRICTED_BORDER = RESTRICTED_BORDER;
 module.exports.isOffmap = isOffmap;
+module.exports.isRestricted = isRestricted;
 module.exports.getMapIntersection = getMapIntersection;
 module.exports.markMapArea = markMapArea;

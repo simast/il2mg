@@ -5,14 +5,12 @@ const {Vector} = require("sylvester");
 const {planAction} = require("../data");
 const {getRouteDistance} = require("./flight.route");
 const makeFlightFuel = require("./flight.fuel");
+const {RESTRICTED_BORDER, isOffmap, getMapIntersection} = require("./map");
 
 // Minimum and maximum distance from the border for offmap start/end position
 // NOTE: This is only used for player flight!
 const MIN_DISTANCE_BORDER = 3000; // 3 km
 const MAX_DISTANCE_BORDER = 4000; // 4 km
-
-// Minimum distance required between offmap star/end position and the next point
-const MIN_NEXT_POINT_DISTANCE = 20000; // 20 km
 
 // Make offmap flight bounds
 module.exports = function makeFlightOffmap(flight) {
@@ -37,7 +35,7 @@ module.exports = function makeFlightOffmap(flight) {
 		const endSpot = route[route.length - 1];
 		
 		// Adjust route start
-		if (this.isOffmap(startPosition)) {
+		if (isOffmap(this.map, startPosition)) {
 			adjustOffmapRouteBounds.call(this, flight, action, true, startPosition);
 		}
 		
@@ -49,7 +47,7 @@ module.exports = function makeFlightOffmap(flight) {
 		endPosition = endSpot.position;
 		
 		// Adjust route end
-		if (this.isOffmap(endPosition)) {
+		if (isOffmap(this.map, endPosition)) {
 			adjustOffmapRouteBounds.call(this, flight, action, false, startPosition);
 		}
 		
@@ -66,6 +64,7 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 	// Consider refactoring this to a more readable and understandable format.
 	
 	const rand = this.rand;
+	const map = this.map;
 	const plan = flight.plan;
 	const route = action.route;
 	const startAction = plan.start;
@@ -88,8 +87,8 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 		}
 		while (Array.isArray(nextPoint));
 		
-		const isPointOffmap = this.isOffmap(point.position);
-		const isNextPointOffmap = nextPoint && this.isOffmap(nextPoint.position);
+		const isPointOffmap = isOffmap(map, point.position);
+		const isNextPointOffmap = nextPoint && isOffmap(map, nextPoint.position);
 		
 		// Throw away not needed offmap route points
 		if (isPointOffmap && (isForward || isNextPointOffmap)) {
@@ -117,7 +116,7 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 			const {
 				intersectVector,
 				borderPlane
-			} = this.getMapIntersection(fromVector, toVector);
+			} = getMapIntersection(map, fromVector, toVector);
 			
 			let offmapVector = intersectVector;
 			
@@ -153,7 +152,7 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 					Vector.create(nextPoint.position)
 				);
 				
-				if (distanceToOffmap < MIN_NEXT_POINT_DISTANCE) {
+				if (distanceToOffmap < RESTRICTED_BORDER) {
 					route.splice(route.indexOf(nextPoint), 1);
 				}
 			}

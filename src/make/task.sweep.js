@@ -7,6 +7,7 @@ const {Location} = require("./locations");
 const {MCU_Waypoint} = require("../item");
 const {findBasePoints} = require("./task.patrol");
 const {getTerritory} = require("./fronts");
+const {isRestricted} = require("./map");
 
 // Flight make parts
 const makeFlightAltitude = require("./flight.altitude");
@@ -64,7 +65,7 @@ module.exports = function makeTaskSweep(flight) {
 		const originZ = originVector.e(2);
 		let point = [pointVector.e(1), pointVector.e(2)];
 		
-		while (!points.isValid(point)) {
+		while (isRestricted(this.map, point)) {
 			
 			// Cut distance by 10% for each iteration
 			pointVector = Vector.create([

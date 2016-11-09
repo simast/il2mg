@@ -21,8 +21,8 @@ const MAX_DISTANCE = 60000;
 // NOTE: Used to enclose patrol points when player is a flight leader
 const ZONE_PADDING = 2500;
 
-// Restricted zone around map area border (for player flight only)
-const RESTRICTED_BORDER = 20000; // 20 Km
+// Restricted map border zone
+const {RESTRICTED_BORDER, isRestricted} = require("./map");
 
 // Make mission patrol area task
 module.exports = function makeTaskPatrol(flight) {
@@ -134,7 +134,7 @@ module.exports = function makeTaskPatrol(flight) {
 		];
 		
 		// Validated point
-		if (!points.isValid(point)) {
+		if (isRestricted(this.map, point)) {
 			
 			// NOTE: One of the points (on either side) will be always valid!
 			numExtraPoints = 2;
@@ -399,9 +399,6 @@ function findBasePoints(flight, params) {
 	const maxAngle = params.maxAngle;
 	let maxRange = params.maxRange;
 	
-	// Player flight restriction to not use areas around map border zone
-	const restrictedBorder = flight.player ? RESTRICTED_BORDER : 0;
-	
 	let pointA;
 	let pointAVector;
 	let pointAOrigin; // Vector translated to 0,0 origin (from start location)
@@ -413,10 +410,10 @@ function findBasePoints(flight, params) {
 	const getBounds = (maxRange) => {
 		
 		return new Location(
-			Math.max(startX - maxRange, restrictedBorder),
-			Math.max(startZ - maxRange, restrictedBorder),
-			Math.min(startX + maxRange, map.height - restrictedBorder),
-			Math.min(startZ + maxRange, map.width - restrictedBorder)
+			Math.max(startX - maxRange, RESTRICTED_BORDER),
+			Math.max(startZ - maxRange, RESTRICTED_BORDER),
+			Math.min(startX + maxRange, map.height - RESTRICTED_BORDER),
+			Math.min(startZ + maxRange, map.width - RESTRICTED_BORDER)
 		);
 	};
 	
@@ -567,17 +564,17 @@ function findBasePoints(flight, params) {
 		
 		// Disable invalid directions with offmap start point
 		
-		if (startX <= restrictedBorder) {
+		if (startX <= RESTRICTED_BORDER) {
 			bl = br = -1;
 		}
-		else if (startX >= map.height - restrictedBorder) {
+		else if (startX >= map.height - RESTRICTED_BORDER) {
 			tl = tr = -1;
 		}
 		
-		if (startZ <= restrictedBorder) {
+		if (startZ <= RESTRICTED_BORDER) {
 			tl = bl = -1;
 		}
-		else if (startZ >= map.width - restrictedBorder) {
+		else if (startZ >= map.width - RESTRICTED_BORDER) {
 			tr = br = -1;
 		}
 		
@@ -657,7 +654,7 @@ function findBasePoints(flight, params) {
 				pointA = null;
 			}
 			// Validate patrolA location to not be from forbidden direction
-			else {
+			else if (directions) {
 				
 				const direction = getDirection(pointA);
 				
@@ -721,20 +718,7 @@ function findBasePoints(flight, params) {
 		a: pointA,
 		b: pointB,
 		distance: distanceAB,
-		angle: angleAB,
-		
-		// Check if a given point is valid (is not within restricted zone)
-		isValid(point) {
-			
-			if (!flight.player) {
-				return true;
-			}
-			
-			return point[0] >= restrictedBorder &&
-				point[0] <= (map.height - restrictedBorder) &&
-				point[1] >= restrictedBorder &&
-				point[1] <= (map.width - restrictedBorder);
-		}
+		angle: angleAB
 	};
 }
 
