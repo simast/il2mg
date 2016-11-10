@@ -180,23 +180,25 @@ class Item {
 	 *
 	 * @param {Item} item Nearby item object.
 	 */
-	setPositionNear(item) {
+	setPositionNear(targetItem) {
 
-		if (!(item instanceof Item)) {
+		if (!(targetItem instanceof Item)) {
 			throw new TypeError("Invalid nearby item value.");
 		}
 
 		// TODO: Improve nearby item positioning algorithm
 
-		const rand = item.mission.rand;
-		const orientation = rand.integer(0, 360) * (Math.PI / 180);
-		const magnitude = rand.integer(20, 40);
+		const rand = targetItem.mission.rand;
+		const orientation = rand.real(0, 360) * (Math.PI / 180);
+		const magnitude = rand.integer(30, 60);
+		const itemPosX = targetItem.XPos || 0;
+		const itemPosZ = targetItem.ZPos || 0;
 
-		const posX = item.XPos + magnitude * Math.cos(orientation);
-		const posZ = item.ZPos + magnitude * Math.sin(orientation);
+		const posX = itemPosX + magnitude * Math.cos(orientation);
+		const posZ = itemPosZ + magnitude * Math.sin(orientation);
 
 		// Set nearby position
-		this.setPosition(posX, item.YPos, posZ);
+		this.setPosition(posX, targetItem.YPos, posZ);
 	}
 
 	/**
