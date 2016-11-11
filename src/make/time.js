@@ -20,25 +20,25 @@ module.exports = function makeTime() {
 	const date = this.date.startOf("day");
 	const rand = this.rand;
 	const map = this.map;
-	
+
 	// Get sun times data
 	const sunTimes = suncalc.getTimes(date.toDate(), map.latitude, map.longitude);
-	
+
 	// NOTE: SunCalc will calculate sun times for local time. We have to modify
 	// that time to match defined UTC offset for selected battle map.
-	
+
 	// Sunrise time objects
 	const sunrise = this.sunrise = moment(date);
 	const sunriseTime = moment(sunTimes.sunrise).utcOffset(map.utcOffset);
-	
+
 	sunrise.set({
 		hour: sunriseTime.hour(),
 		minute: sunriseTime.minute()
 	});
-	
+
 	const sunriseStart = moment(sunrise).subtract(TIME_SUNRISE / 2, "s");
 	const sunriseEnd = moment(sunrise).add(TIME_SUNRISE / 2, "s");
-	
+
 	// Noon time objects
 	const noon = this.noon = moment(date);
 	const noonTime = moment(sunTimes.solarNoon).utcOffset(map.utcOffset);
@@ -47,22 +47,22 @@ module.exports = function makeTime() {
 		hour: noonTime.hour(),
 		minute: noonTime.minute()
 	});
-	
+
 	const noonStart = moment(noon).subtract(TIME_NOON / 2, "s");
 	const noonEnd = moment(noon).add(TIME_NOON / 2, "s");
 
 	// Sunset time objects
 	const sunset = this.sunset = moment(date);
 	const sunsetTime = moment(sunTimes.sunsetStart).utcOffset(map.utcOffset);
-	
+
 	// NOTE: In-game sunset start time is off by around 30 minutes from SunCalc results
 	sunsetTime.subtract(30, "minutes");
-	
+
 	sunset.set({
 		hour: sunsetTime.hour(),
 		minute: sunsetTime.minute()
 	});
-	
+
 	const sunsetStart = moment(sunset).subtract(TIME_SUNSET / 2, "s");
 	const sunsetEnd = moment(sunset).add(TIME_SUNSET / 2, "s");
 
@@ -190,7 +190,7 @@ module.exports = function makeTime() {
 
 			// Night (from dusk to dawn)
 			case "night": {
-				
+
 				time = moment(duskEnd);
 				time.add(randValue * moment(dawnStart).add(1, "d").diff(duskEnd), "ms");
 
@@ -215,7 +215,7 @@ module.exports = function makeTime() {
 	date.hour(time.hour());
 	date.minute(time.minute());
 	date.second(time.second());
-	
+
 	// Set mission time flags
 	const timeFlags = this.time = Object.create(null);
 
@@ -248,7 +248,7 @@ module.exports = function makeTime() {
 	if (date.isSameOrAfter(noonEnd) && date.isBefore(eveningStart)) {
 		timeFlags.afternoon = true;
 	}
-	
+
 	// Evening flag
 	if (date.isSameOrAfter(eveningStart) && date.isBefore(duskEnd)) {
 		timeFlags.evening = true;
@@ -268,7 +268,7 @@ module.exports = function makeTime() {
 	if (date.isSameOrAfter(duskEnd) || date.isBefore(dawnStart)) {
 		timeFlags.night = true;
 	}
-	
+
 	// Midnight flag
 	if (date.isSameOrAfter(midnightStart) && date.isBefore(midnightEnd)) {
 		timeFlags.midnight = true;

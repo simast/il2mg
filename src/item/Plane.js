@@ -5,7 +5,7 @@ const Item = require("../item");
 
 // Plane item
 class Plane extends Item {
-	
+
 	constructor() {
 		super();
 
@@ -29,7 +29,7 @@ class Plane extends Item {
 		this.DeleteAfterDeath = 1;
 		this.Fuel = 1;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -37,7 +37,7 @@ class Plane extends Item {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 3);
 
 		let size = 54;
@@ -99,7 +99,7 @@ class Plane extends Item {
 
 		// LimitAmmo
 		this.writeUInt8(buffer, this.LimitAmmo);
-		
+
 		// Spotter
 		this.writeUInt32(buffer, this.Spotter >= 0 ? this.Spotter : 0xFFFFFFFF);
 

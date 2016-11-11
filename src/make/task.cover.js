@@ -38,7 +38,7 @@ module.exports = function makeTaskCover(flight) {
 
 // Make mission cover airfield plan action
 function makeTaskCoverAction(action, element, flight, input) {
-	
+
 	if (!input) {
 		return;
 	}
@@ -125,19 +125,19 @@ function makeTaskCoverBriefing(action, flight) {
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];
 	const briefing = [];
-	
+
 	// Draw cover area zone
 	markMapArea.call(this, flight, {
 		position: airfield.position
 	});
-	
+
 	// Make intro segment
 	const briefingIntro = makeBriefingLeadSegment.call(this, flight);
-	
+
 	if (briefingIntro.length < 2) {
 		briefingIntro.push(rand.pick(introSegments));
 	}
-	
+
 	briefing.push(briefingIntro.join(" and "));
 
 	// Add climb altitude briefing segment
@@ -146,12 +146,12 @@ function makeTaskCoverBriefing(action, flight) {
 		// TODO: Use feets for other countries?
 		let altitudeStr = Math.round(action.altitude / 100) * 100;
 		altitudeStr = numeral(altitudeStr).format("0,0");
-		
+
 		briefing.push("Climb to [" + altitudeStr + " meters] altitude");
 	}
 
 	briefing.push(rand.pick(outroSegments));
-	
+
 	return briefing.map((value) => {
 		return value.charAt(0).toUpperCase() + value.slice(1);
 	}).join(". ") + ".";

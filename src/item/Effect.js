@@ -5,7 +5,7 @@ const Item = require("../item");
 
 // Effect item
 module.exports = class Effect extends Item {
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -13,7 +13,7 @@ module.exports = class Effect extends Item {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 10);
 
 		let size = 8;

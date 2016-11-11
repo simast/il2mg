@@ -5,14 +5,14 @@ const MCU = require("./MCU");
 
 // Mission End item
 module.exports = class MCU_TR_MissionEnd extends MCU {
-	
+
 	constructor() {
 		super();
 
 		this.Enabled = 1;
 		this.Succeeded = 1;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -20,7 +20,7 @@ module.exports = class MCU_TR_MissionEnd extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 29);
 
 		const buffer = new Buffer(1);

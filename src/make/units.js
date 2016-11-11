@@ -8,20 +8,20 @@ const {isValidRebaseTask} = require("./task.rebase");
 
 // Generate available mission units
 module.exports = function makeUnits() {
-	
+
 	const rand = this.rand;
 	const battle = this.battle;
 	const choice = this.choice;
 	const map = this.map;
 	const planeStorages = new Set();
-	
+
 	// Utility function used to match to/from date ranges based on mission date
 	const matchMissionDateRange = data.matchDateRange.bind(undefined, {
 		from: moment(battle.from).startOf("day"),
 		to: moment(battle.to).endOf("day"),
 		date: this.date
 	});
-	
+
 	// Make unit airfields
 	const makeAirfields = (unitData) => {
 
@@ -71,7 +71,7 @@ module.exports = function makeUnits() {
 
 		// Find matching pilots based on to/from date ranges
 		for (const pilot of dataPilots) {
-			
+
 			if (matchMissionDateRange(pilot[2], pilot[3])) {
 
 				// Add matching pilot entry
@@ -163,7 +163,7 @@ module.exports = function makeUnits() {
 
 	// Make unit role
 	const makeRole = (unitData) => {
-		
+
 		let role = unitData.role;
 
 		// Unit role as an array (for role changes based on date)
@@ -172,7 +172,7 @@ module.exports = function makeUnits() {
 			role = null;
 
 			for (const dataRole of unitData.role) {
-				
+
 				if (matchMissionDateRange(dataRole[1], dataRole[2])) {
 
 					role = dataRole[0];
@@ -180,7 +180,7 @@ module.exports = function makeUnits() {
 				}
 			}
 		}
-		
+
 		// Validate unit role
 		if (typeof role !== "string" || !battle.roles[unitData.country][role]) {
 			throw new Error("Invalid unit role.");
@@ -306,27 +306,27 @@ module.exports = function makeUnits() {
 		const unitParts = [
 			unit // Original unit
 		];
-		
+
 		// Split unit into separate parts (based on number of airfields)
 		// NOTE: Don't split units with planesMin/planesMax
 		if (unitAirfields.length > 1 && !unit.planesMin && !unit.planesMax) {
-			
+
 			let lastSplitUnitIndex = unitAirfields.length - 1;
 			let unitTotalPlanes = 0;
-			
+
 			unitPlaneStorages.forEach((planeStorage) => {
 				unitTotalPlanes += planeStorage[1];
 			});
-			
+
 			// Make sure not to split unit into more parts than planes available
 			lastSplitUnitIndex = Math.min(lastSplitUnitIndex, unitTotalPlanes - 1);
 
 			// Split unit into separate parts for each extra airfield
 			for (let i = 1; i <= lastSplitUnitIndex; i++) {
-				
+
 				// Create a new unit part based on the original
 				const unitPart = JSON.parse(JSON.stringify(unit));
-				
+
 				// Assign new unique unit ID
 				unitPart.id = unitPart.id + "_" + i + rand.hex(3);
 
@@ -344,32 +344,32 @@ module.exports = function makeUnits() {
 				}
 
 				unitParts.push(unitPart);
-				
+
 				// Update valid player unit choice list (for each new split unit)
 				if (choice.unit && choice.unit.has(unitID)) {
 					choice.unit.add(unitPart.id);
 				}
 			}
 		}
-		
+
 		const rebase = {
 			to: []
 		};
-		
+
 		// Mark unit airfield transfer (rebase) targets
 		if (unitAirfields.length > 1) {
-			
+
 			const airfieldFromID = unitAirfields[0].id;
 			const airfieldFrom = battle.airfields[airfieldFromID];
-			
+
 			rebase.from = airfieldFromID;
-			
+
 			// Collect valid rebase airfield targets
 			for (let i = 1; i < unitAirfields.length; i++) {
-				
+
 				const airfieldToID = unitAirfields[i].id;
 				const airfieldTo = battle.airfields[airfieldToID];
-				
+
 				// Check for valid rebase task
 				if (isValidRebaseTask(airfieldFrom, airfieldTo, map)) {
 					rebase.to.push(airfieldToID);
@@ -442,7 +442,7 @@ module.exports = function makeUnits() {
 
 				return;
 			}
-			
+
 			// Assign rebase task targets
 			if (unit.airfield === rebase.from && rebase.to.length) {
 				unit.rebase = rebase.to;
@@ -496,24 +496,24 @@ module.exports = function makeUnits() {
 
 		let planeCount = planeStorage[1];
 		let unitIndex = planeStorage.units.length - 1;
-		
+
 		while (planeCount > 0) {
 
 			let planeID = planeStorage[0];
 			let plane = this.planes[planeID];
-			
+
 			// Resolve plane groups
 			while (Array.isArray(plane)) {
-				
+
 				planeID = rand.pick(plane);
 				plane = this.planes[planeID];
 			}
-			
+
 			// Resolve to a mapped (aliased) plane ID (if any)
 			planeID = plane.id;
-			
+
 			let unitID;
-			
+
 			// Make sure unit will receive at least one plane!
 			if (unitIndex >= 0) {
 				unitID = planeStorage.units[unitIndex--];
@@ -522,34 +522,34 @@ module.exports = function makeUnits() {
 			else {
 				unitID = rand.pick(planeStorage.units);
 			}
-			
+
 			const targetUnits = {
 				[unitID]: false
 			};
-			
+
 			// HACK: Since battle index does not contain split units and can't detect
 			// a case where only a single plane is available in the inventory (to be
 			// distributed to multiple units) - we have to duplicate player choosen
 			// plane type for each unit (and have at least one such type in inventory).
 			if (choice.plane && choice.plane.has(planeID)) {
-				
+
 				for (const unitID of planeStorage.units) {
-					
+
 					// Force unit to have at least one plane of this type
 					if (units[unitID].planes.indexOf(planeID) === -1) {
 						targetUnits[unitID] = true;
 					}
 				}
 			}
-			
+
 			for (const unitID in targetUnits) {
-			
+
 				const unit = units[unitID];
 				const isForced = targetUnits[unitID];
-				
+
 				if (!isForced && unit.planes.max !== undefined &&
 					unit.planes.length >= unit.planes.max) {
-					
+
 					continue;
 				}
 
@@ -564,10 +564,10 @@ module.exports = function makeUnits() {
 					unit.pilots.max = unit.pilots.max || 0;
 					unit.pilots.max += rand.real(1.5, 2.5);
 				}
-				
+
 				totalPlanes++;
 			}
-			
+
 			planeCount--;
 		}
 	});
@@ -577,7 +577,7 @@ module.exports = function makeUnits() {
 	this.unitsByAirfield = Object.freeze(unitsByAirfield);
 	this.unitsByCoalition = Object.freeze(unitsByCoalition);
 	this.unitsByCountry = Object.freeze(unitsByCountry);
-	
+
 	// Static unit weight table (by plane count)
 	this.unitsWeighted = Object.freeze(unitsWeighted);
 

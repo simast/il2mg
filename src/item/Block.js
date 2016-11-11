@@ -5,7 +5,7 @@ const Item = require("../item");
 
 // Block item
 module.exports = class Block extends Item {
-	
+
 	constructor() {
 		super();
 
@@ -15,7 +15,7 @@ module.exports = class Block extends Item {
 		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT;
 		this.Durability = Item.DEFAULT_DURABILITY;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -24,7 +24,7 @@ module.exports = class Block extends Item {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index, typeID) {
-		
+
 		yield* super.toBinary(index, typeID ? typeID : 1);
 
 		const buffer = new Buffer(13);

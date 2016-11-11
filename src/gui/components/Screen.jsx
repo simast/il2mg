@@ -7,7 +7,7 @@ const Photos = require("./Photos");
 
 // Screen component
 module.exports = ({id, children, actions}) => {
-	
+
 	return (
 		<div id="screen">
 			<div id="container">

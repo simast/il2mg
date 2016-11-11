@@ -16,13 +16,13 @@ module.exports = function makeMap() {
 	const map = {};
 
 	Object.assign(map, this.battle.map);
-	
+
 	const seasonData = map.season[this.season];
 
 	if (!seasonData) {
 		throw new Error("Could not find a valid battle map!");
 	}
-	
+
 	delete map.season;
 	Object.assign(map, seasonData);
 
@@ -33,14 +33,14 @@ module.exports = function makeMap() {
 	options.Layers = ""; // TODO: ?
 	options.GuiMap = map.gui;
 	options.SeasonPrefix = map.prefix;
-	
+
 	// Set active mission map data
 	this.map = map;
 };
 
 // Get X/Z point from given point/position/vector arguments
 function getPointFromArgs(args) {
-	
+
 	let posX, posZ;
 
 	// Array argument
@@ -63,23 +63,23 @@ function getPointFromArgs(args) {
 	else {
 		throw new TypeError();
 	}
-	
+
 	return [posX, posZ];
 }
 
 // Check if a given point/position/vector is offmap
 function isOffmap(map, ...args) {
-	
+
 	const [posX, posZ] = getPointFromArgs(args);
-	
+
 	return (posX < 0 || posZ < 0 || posX > map.height || posZ > map.width);
 }
 
 // Check if a given point/position/vector is in the restricted map border zone
 function isRestricted(map, ...args) {
-	
+
 	const [posX, posZ] = getPointFromArgs(args);
-	
+
 	return (posX < RESTRICTED_BORDER ||
 		posX > (map.height - RESTRICTED_BORDER) ||
 		posZ < RESTRICTED_BORDER ||
@@ -88,58 +88,58 @@ function isRestricted(map, ...args) {
 
 // Get map border bounds intersection data
 function getMapIntersection(map, fromVector, toVector, distance) {
-	
+
 	let borderPlanesCache = getMapIntersection.borderPlanesCache;
-	
+
 	// Initialize map border planes cache
 	if (!borderPlanesCache) {
 		borderPlanesCache = getMapIntersection.borderPlanesCache = new Map();
 	}
-	
+
 	// Lookup cached border planes
 	let borderPlanes = borderPlanesCache.get(map);
-	
+
 	if (!borderPlanes) {
-		
+
 		borderPlanes = [
 			Plane.create(Vector.Zero(3), Vector.create([0, 0, 1])), // Left
 			Plane.create(Vector.create([map.height, 0, 0]), Vector.create([-1, 0, 0])), // Top
 			Plane.create(Vector.create([map.height, 0, map.width]), Vector.create([0, 0, -1])), // Right
 			Plane.create(Vector.create([0, 0, map.width]), Vector.create([1, 0, 0])) // Bottom
 		];
-		
+
 		borderPlanesCache.set(map, borderPlanes);
 	}
-	
+
 	if (!distance) {
 		distance = fromVector.distanceFrom(toVector);
 	}
-	
+
 	const intersectLine = Line.create(fromVector, toVector.subtract(fromVector));
-	
+
 	// Test each map border plane for intersections
 	for (const borderPlane of borderPlanes) {
-		
+
 		const intersectVector = borderPlane.intersectionWith(intersectLine);
-		
+
 		if (!intersectVector) {
 			continue;
 		}
-		
+
 		// Ignore offmap intersection points
 		if (isOffmap(map, intersectVector.round())) {
 			continue;
 		}
-		
+
 		const distanceToIntersect = fromVector.distanceFrom(intersectVector);
 		const distanceFromIntersect = intersectVector.distanceFrom(toVector);
 		const distanceDelta = Math.abs(distance - (distanceToIntersect + distanceFromIntersect));
-		
+
 		// Ignore invalid intersection points
 		if (distanceDelta > Sylvester.precision) {
 			continue;
 		}
-		
+
 		return {
 			intersectVector, // Vector of intersection
 			borderPlane, // Intersected border plane
@@ -159,67 +159,67 @@ function markMapArea(flight, {
 		lineType, // MCU_Icon line type
 		color // Circle color
 	}) {
-	
+
 	const rand = this.rand;
 	const centerVector = Vector.create(position);
 	const iconDegrees = perfect ? [0, 90, 180, 270] : [0, 120, 240];
 	const icons = [];
 	let firstZoneIcon;
 	let lastZoneIcon;
-	
+
 	// NOTE: Using three or four points to define a circle area
 	iconDegrees.forEach((degrees) => {
-		
+
 		let radiusExtra = 0;
 		let degreesExtra = 0;
-		
+
 		// Draw a non-perfect circle ("mark with a human hand")
 		if (!perfect) {
-			
+
 			radiusExtra = radius * rand.real(-0.1, 0.1, true); // +- 10% radius
 			degreesExtra = rand.real(-15, 15, true); // +- 15 degrees
 		}
-		
+
 		const rotateAxisLine = Line.create(Vector.Zero(3), Vector.create([0, 1, 0]));
 		const rotateRad = (degrees + degreesExtra) * (Math.PI / 180);
 		let pointVector = Vector.create([radius + radiusExtra, centerVector.e(2), 0]);
-		
+
 		// Build zone point vector
 		pointVector = centerVector.add(pointVector.rotate(rotateRad, rotateAxisLine));
-		
+
 		const zoneIcon = flight.group.createItem("MCU_Icon");
-		
+
 		zoneIcon.setPosition(pointVector.elements);
 		zoneIcon.setColor(color ? color : mapColor.ROUTE);
 		zoneIcon.Coalitions = [flight.coalition];
 		zoneIcon.LineType = lineType ? lineType : MCU_Icon.LINE_SECTOR_2;
-		
+
 		if (!firstZoneIcon) {
 			firstZoneIcon = zoneIcon;
 		}
 		else {
 			lastZoneIcon.addTarget(zoneIcon);
 		}
-		
+
 		lastZoneIcon = zoneIcon;
 		icons.push(zoneIcon);
 	});
-	
+
 	// Connect zone icons in a loop
 	lastZoneIcon.addTarget(firstZoneIcon);
-	
+
 	// Set icon on the center
 	if (centerIcon) {
-		
+
 		const iconItem = flight.group.createItem("MCU_Icon");
-		
+
 		iconItem.setPosition(position);
 		iconItem.Coalitions = [flight.coalition];
 		iconItem.IconId = MCU_Icon.ICON_WAYPOINT;
-		
+
 		icons.push(iconItem);
 	}
-	
+
 	return icons;
 }
 

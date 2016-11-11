@@ -5,7 +5,7 @@ const MCU = require("./MCU");
 
 // Activate item
 module.exports = class MCU_Activate extends MCU {
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *

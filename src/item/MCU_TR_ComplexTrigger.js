@@ -43,7 +43,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 			this[eventFilter] = 0;
 		});
 	}
-	
+
 	// Valid Complex Trigger event type name and ID constants
 	get EVENTS() {
 		return {
@@ -74,15 +74,15 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 40);
 
 		let size = 36;
-		
+
 		if (this.events) {
 			size += this.events.items.length * 8;
 		}
-		
+
 		const countries = [];
 		const scripts = [];
 		const names = [];
@@ -106,7 +106,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 				size += 4 + Buffer.byteLength(script);
 			}
 		}
-		
+
 		// Build names list
 		if (this.ObjectName instanceof Set) {
 
@@ -127,7 +127,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 
 		// Radius
 		this.writeDouble(buffer, this.Radius);
-		
+
 		// DamageReport
 		this.writeUInt32(buffer, this.DamageReport);
 
@@ -136,7 +136,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 
 		// CheckEntities
 		this.writeUInt8(buffer, this.CheckEntities);
-		
+
 		// CheckVehicles
 		this.writeUInt8(buffer, this.CheckVehicles);
 
@@ -153,7 +153,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		});
 
 		this.writeUInt32(buffer, eventsFilterValue);
-		
+
 		// Country filter list
 		this.writeUInt32Array(buffer, countries);
 
@@ -164,7 +164,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		scripts.forEach((script) => {
 			this.writeString(buffer, Buffer.byteLength(script), script);
 		});
-		
+
 		// ObjectName filter list size
 		this.writeUInt32(buffer, names.length);
 
@@ -172,7 +172,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		names.forEach((name) => {
 			this.writeString(buffer, Buffer.byteLength(name), name);
 		});
-		
+
 		yield buffer;
 	}
 };

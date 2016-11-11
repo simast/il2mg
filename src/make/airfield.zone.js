@@ -8,7 +8,7 @@ const ZONE_UNLOAD_TIME = 60 * 5; // 5 minutes
 module.exports = function makeAirfieldZone(airfield) {
 
 	const zone = Object.create(null);
-	
+
 	const zoneGroup = zone.group = airfield.group.createItem("Group");
 	zoneGroup.setName("ZONE");
 
@@ -70,7 +70,7 @@ module.exports = function makeAirfieldZone(airfield) {
 	zoneUnloadActivateTimer.Time = 0.001; // 1ms
 	zoneUnloadActivate.addTarget(zoneUnload);
 	zoneUnloadActivateTimer.addTarget(zoneUnload);
-	
+
 	// Delay time for unload action
 	zoneUnload.Time = ZONE_UNLOAD_TIME;
 
@@ -87,13 +87,13 @@ module.exports = function makeAirfieldZone(airfield) {
 	zoneUnloadDeactivate.setPositionNear(zoneTrigger);
 	zoneUnloadActivateTimer.setPositionNear(zoneTrigger);
 	zoneDeactivate.setPositionNear(zoneTrigger);
-	
+
 	// Expose public zone event items
 	zone.onInitialize = zoneInitialize;
 	zone.onLoad = zoneLoad;
 	zone.onActivate = zoneActivate;
 	zone.onUnload = zoneUnload;
 	zone.onDeactivate = zoneDeactivate;
-	
+
 	return zone;
 };

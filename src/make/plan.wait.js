@@ -3,7 +3,7 @@
 
 // Make plan wait action
 module.exports = function makePlanWait(action, element, flight, input) {
-	
+
 	if (!input) {
 		return;
 	}
@@ -14,9 +14,9 @@ module.exports = function makePlanWait(action, element, flight, input) {
 	if (element !== leaderElement) {
 		return;
 	}
-	
+
 	const leaderPlaneItem = element[0].item;
-	
+
 	// Wait using timer command
 	const waitTimer = flight.group.createItem("MCU_Timer");
 

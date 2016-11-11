@@ -20,80 +20,80 @@ module.exports = function makeBriefing() {
 
 	// Date and time
 	briefing.push(makeBriefingDateAndTime.call(this));
-	
+
 	let storyType;
-	
+
 	// Task intro story
 	if (task.story) {
-		
+
 		const paramsStory = this.params.story;
 		let story = task.story;
 		let paramsStoryID;
 		let paramsStoryType;
-		
+
 		// Set params story ID and type
 		if (paramsStory) {
-			
+
 			paramsStoryID = parseInt(paramsStory[0], 10);
-			
+
 			if (isNaN(paramsStoryID)) {
-				
+
 				paramsStoryType = paramsStory[0];
 				paramsStoryID = parseInt(paramsStory[1], 10);
 			}
 		}
-		
+
 		if (typeof story === "object" && !Array.isArray(story)) {
-			
+
 			if (paramsStoryType) {
 				storyType = paramsStoryType;
 			}
 			else {
 				storyType = rand.pick(Object.keys(story));
 			}
-			
+
 			story = story[storyType];
 		}
-		
+
 		if (!Array.isArray(story)) {
 			story = [story];
 		}
-		
+
 		let selectedStory;
-		
+
 		// Force using specific story from the story param
 		if (paramsStoryID) {
 			selectedStory = story[paramsStoryID - 1];
 		}
-		
+
 		// Pick random task story
 		if (selectedStory === undefined) {
 			selectedStory = rand.pick(story);
 		}
-		
+
 		briefing.push(makeBriefingText.call(this, selectedStory));
 	}
-	
+
 	// Mission title
 	let title = this.battle.name;
-	
+
 	// Use task title
 	if (task.title) {
-		
+
 		if (typeof task.title === "object" && storyType) {
 			title = task.title[storyType];
 		}
 		else {
 			title = task.title;
 		}
-		
+
 		if (!Array.isArray(title)) {
 			title = [title];
 		}
-		
+
 		title = makeBriefingText.call(this, rand.pick(title));
 	}
-	
+
 	options.setName(this.getLC(title));
 	this.title = title;
 
@@ -101,24 +101,24 @@ module.exports = function makeBriefing() {
 	briefing.push(makeBriefingFlight.call(this));
 
 	// TODO: Payload info
-	
+
 	// Weather report
 	briefing.push(makeBriefingWeather.call(this));
-	
+
 	briefing = briefing.join("<br><br>");
-	
+
 	const briefingPlan = [];
 
 	// Flight plan briefing output
 	for (const action of flight.plan) {
-		
+
 		let makePlanBriefing;
-		
+
 		// Use default/common plan action briefing
 		if (action.type) {
 			makePlanBriefing = makeBriefingParts["briefing." + action.type];
 		}
-		
+
 		// Use custom plan action briefing
 		if (typeof action.makeBriefing === "function") {
 			makePlanBriefing = action.makeBriefing;
@@ -127,39 +127,39 @@ module.exports = function makeBriefing() {
 		if (!makePlanBriefing) {
 			continue;
 		}
-		
+
 		// Make plan action briefing
 		const actionBriefing = makePlanBriefing.call(this, action, flight);
-		
+
 		if (actionBriefing && actionBriefing.length) {
 			briefingPlan.push(actionBriefing);
 		}
 	}
-	
+
 	// NOTE: Using smaller line breaks for separating plan actions
 	if (briefingPlan.length) {
-		
+
 		briefingPlan.unshift('<font color="' + briefingColor.DARK + '">···</font>');
 		briefingPlan.unshift("");
-		
+
 		briefing += briefingPlan.join('<br><font size="8"></font><br>');
 	}
-	
+
 	const briefingHighlights = new Set();
-	
+
 	// Highlight marked briefing text
 	briefing = briefing.replace(/\[(.*?)\]/g, (match, highlight) => {
-		
+
 		// Highlight the same segment/word only once!
 		if (briefingHighlights.has(highlight)) {
 			return highlight;
 		}
-		
+
 		briefingHighlights.add(highlight);
-		
+
 		return '<font color="' + briefingColor.LIGHT + '">' + highlight + "</font>";
 	});
-	
+
 	options.setDescription(this.getLC(briefing));
 	this.briefing = briefing;
 };
@@ -226,11 +226,11 @@ function makeBriefingDateAndTime() {
 
 // Make mission flight and pilot info output
 function makeBriefingFlight() {
-	
+
 	const flight = this.player.flight;
 	const unit = this.units[flight.unit];
 	let output = "";
-	
+
 	// Country specific formation name
 	if (flight.formation.name) {
 		output += "<i>" + flight.formation.name + "</i>";
@@ -242,30 +242,30 @@ function makeBriefingFlight() {
 
 	// Unit name
 	output += " of [" + unit.name + "]";
-	
+
 	// Unit suffix
 	if (unit.suffix) {
 		output += " " + unit.suffix;
 	}
-	
+
 	// Unit alias
 	if (unit.alias) {
 		output += " <i>“" + unit.alias + "”</i>";
 	}
 
 	output += ",<br><br>";
-	
+
 	flight.elements.forEach((element, elementIndex) => {
 		element.forEach((plane) => {
 
 			const pilot = plane.pilot;
 			let rank = pilot.rank.abbr;
-			
+
 			// Use full rank name when abbreviation is not available
 			if (!rank) {
 				rank = pilot.rank.name;
 			}
-			
+
 			output += "\t";
 
 			// Plane call number
@@ -291,7 +291,7 @@ function makeBriefingFlight() {
 
 		// Element separator
 		if ((elementIndex + 1) !== flight.elements.length) {
-			
+
 			// Don't use element separator for hidden formations
 			if (!flight.formation.hidden) {
 				output += '<font size="8"></font><br>';
@@ -301,8 +301,8 @@ function makeBriefingFlight() {
 		else if (flight.callsign) {
 			output += "<br>\tCallsign <i>“" + flight.callsign.name + "”</i>.";
 		}
-		
+
 	});
-	
+
 	return output;
 }

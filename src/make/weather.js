@@ -147,7 +147,7 @@ module.exports = function makeWeather() {
 	else if (this.weather.precipitation.type === precipitation.SNOW) {
 		logData.push("snow");
 	}
-	
+
 	// Log mist state
 	if (this.weather.mist) {
 		logData.push("mist");
@@ -166,13 +166,13 @@ module.exports = function makeWeather() {
 
 // Make mission mist state
 function makeMist() {
-	
+
 	const rand = this.rand;
 	const time = this.time;
 	const weather = this.weather;
-	
+
 	// TODO: Improve mist algorithm!
-	
+
 	// Don't use mist weather effect with strong winds
 	if (weather.wind[0].speed > MIST_MAX_WIND_SPEED) {
 		weather.mist = false;
@@ -193,7 +193,7 @@ function makeClouds() {
 	const requiredCover = maxCover * (points / weatherPoints.CLOUDS);
 	const clouds = Object.keys(data.clouds);
 	const hasMist = this.weather.mist;
-	
+
 	// Sort cloud configs based on cover
 	rand.shuffle(clouds).sort((a, b) => {
 		return data.clouds[b].cover - data.clouds[a].cover;
@@ -203,12 +203,12 @@ function makeClouds() {
 
 	// Use first config matching (closest to) required cloud cover (and mist state)
 	for (config of clouds) {
-		
+
 		const cloudConfig = data.clouds[config];
 
 		if (cloudConfig.cover <= requiredCover &&
 			(hasMist === undefined || cloudConfig.mist === hasMist)) {
-			
+
 			break;
 		}
 	}
@@ -217,12 +217,12 @@ function makeClouds() {
 	const cover = cloudsData.cover;
 	let altitude = cloudsData.altitude;
 	let thickness = cloudsData.thickness;
-	
+
 	// Pick a random cloud altitude
 	if (Array.isArray(altitude)) {
 		altitude = rand.integer(...altitude);
 	}
-	
+
 	// Pick a random cloud thickness
 	if (Array.isArray(thickness)) {
 		thickness = rand.integer(...thickness);

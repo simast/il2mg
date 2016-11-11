@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 		const numeral = require("numeral");
 		const data = require("../../src/data");
 		const Item = require("../../src/item");
-		
+
 		let totalBattles = 0;
 		let totalItems = 0;
 

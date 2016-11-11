@@ -18,13 +18,13 @@ module.exports = function makeBattle() {
 
 	this.battleID = battleID;
 	this.battlePath = "../../data/battles/" + battleID + "/";
-	
+
 	const battle = this.battle = data.battles[battleID];
 	const coalitions = this.coalitions = [];
 
 	// Load battle index database
 	const index = this.index = require(this.battlePath);
-	
+
 	// Create main mission Options item
 	const options = this.createItem("Options");
 
@@ -42,17 +42,17 @@ module.exports = function makeBattle() {
 		countries[Item.DEFAULT_COUNTRY] = Item.DEFAULT_COALITION;
 
 		battle.countries.forEach((countryID) => {
-			
+
 			// Support for "alias" (hidden) countries
 			countryID = data.countries[countryID].alias || countryID;
-			
+
 			const country = data.countries[countryID];
 			const coalitionID = country.coalition;
-			
+
 			if (coalitions.indexOf(coalitionID) === -1) {
 				coalitions.push(coalitionID);
 			}
-			
+
 			countries[countryID] = coalitionID;
 		});
 
@@ -60,7 +60,7 @@ module.exports = function makeBattle() {
 			return [countryID, countries[countryID]];
 		});
 	})();
-	
+
 	// Set PlayerConfig property to selected player plane item
 	this.make.push(() => {
 		options.PlayerConfig = this.player.item.Script;

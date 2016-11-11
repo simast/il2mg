@@ -5,14 +5,14 @@ const Item = require("../item");
 
 // Ground item
 module.exports = class Ground extends Item {
-	
+
 	constructor() {
 		super();
 
 		this.DamageThreshold = 1;
 		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -20,7 +20,7 @@ module.exports = class Ground extends Item {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 7);
 
 		const buffer = new Buffer(9);

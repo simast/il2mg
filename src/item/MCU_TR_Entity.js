@@ -5,13 +5,13 @@ const MCU = require("./MCU");
 
 // Entity item
 module.exports = class MCU_TR_Entity extends MCU {
-	
+
 	constructor() {
 		super();
 
 		this.Enabled = 1;
 	}
-	
+
 	// Valid Entity event type name and ID constants
 	get EVENTS() {
 		return {
@@ -55,7 +55,7 @@ module.exports = class MCU_TR_Entity extends MCU {
 			OnSpottingStarted: 74
 		};
 	}
-	
+
 	// Valid Entity report type name and ID constants
 	get REPORTS() {
 		return {
@@ -66,7 +66,7 @@ module.exports = class MCU_TR_Entity extends MCU {
 			OnLanded: 4
 		};
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -74,7 +74,7 @@ module.exports = class MCU_TR_Entity extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 30);
 
 		let size = 12;

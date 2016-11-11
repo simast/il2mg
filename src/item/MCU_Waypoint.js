@@ -5,15 +5,15 @@ const MCU = require("./MCU");
 
 // Waypoint item
 class MCU_Waypoint extends MCU {
-	
+
 	constructor() {
 		super();
-		
+
 		this.Area = 0;
 		this.Speed = 0;
 		this.Priority = MCU_Waypoint.PRIORITY_MEDIUM;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -21,7 +21,7 @@ class MCU_Waypoint extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 42);
 
 		const buffer = new Buffer(20);

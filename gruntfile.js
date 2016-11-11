@@ -3,7 +3,7 @@
 
 // Run application (invoked as package.json main script)
 if (require.main === module) {
-	
+
 	// Electron GUI application
 	if (process.versions.electron) {
 		require("./src/gui/app");
@@ -12,7 +12,7 @@ if (require.main === module) {
 	else {
 		require("./src/app");
 	}
-	
+
 	return;
 }
 
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 
 	// Load custom build Grunt tasks
 	grunt.loadTasks("build/tasks");
-	
+
 	// Default task used for building the project
 	grunt.registerTask("default", [
 		"clean:data",
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
 		"build:fronts",
 		"build:index"
 	]);
-	
+
 	// Task to build a release package for the project
 	grunt.registerTask("release", [
 		"clean:release",

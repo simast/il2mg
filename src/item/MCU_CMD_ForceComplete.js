@@ -5,13 +5,13 @@ const MCU = require("./MCU");
 
 // Force complete command item
 class MCU_CMD_ForceComplete extends MCU {
-	
+
 	constructor() {
 		super();
-		
+
 		this.Priority = MCU_CMD_ForceComplete.PRIORITY_HIGH;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -19,7 +19,7 @@ class MCU_CMD_ForceComplete extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 24);
 
 		const buffer = new Buffer(4);

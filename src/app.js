@@ -33,7 +33,7 @@ params.option("-Q, --quiet", "use quite output mode");
 
 // Create language files (--lang)
 params.option("-L, --lang [language]", "create language files", (value) => {
-	
+
 	return String(value).split(",")
 		.map((lang) => {
 			return lang.trim();
@@ -45,7 +45,7 @@ params.option("-L, --lang [language]", "create language files", (value) => {
 
 // NOTE: For development mode only when not compiled to binary!
 if (!process.versions.enclose) {
-	
+
 	// Set mission seed value (--seed)
 	params.option("-S, --seed <seed>", "set mission seed value");
 
@@ -114,25 +114,25 @@ params.option("-d, --date <YYYY-MM-DD>", (() => {
 
 		desc += util.format('\t%s (from "%s" to "%s")' + EOL, battle.name, battleFrom, battleTo);
 	}
-	
+
 	desc += EOL + "\tDate can also be specified using special season values:" + EOL;
 	desc += EOL + "\t";
-	
+
 	Object.keys(season).filter((type) => {
 		return season[type] !== season.DESERT; // A special "season" used for desert plane skins
 	}).forEach((type, index, seasons) => {
-		
+
 		if (index === seasons.length - 1) {
 			desc += " or ";
 		}
-		
+
 		desc += '"' + season[type] + '"';
-		
+
 		if (index < seasons.length - 2) {
 			desc += ", ";
 		}
 	});
-	
+
 	desc += "." + EOL;
 
 	return desc;
@@ -201,9 +201,9 @@ params.option("-T, --task <task>", (() => {
 	let desc = "select a task" + EOL + EOL;
 
 	for (const taskID in data.tasks) {
-		
+
 		const task =  data.tasks[taskID];
-		
+
 		if (task.name) {
 			desc += util.format('\t"%s" - %s.' + EOL, taskID, task.name);
 		}
@@ -300,14 +300,14 @@ appDomain.on("error", (error) => {
 	}
 	// Log exceptions/errors
 	else if (error instanceof Error) {
-		
+
 		let message = error.toString();
-		
+
 		// Use full error message (with stack trace) in debug mode
 		if (params.debug && error.stack) {
 			message = error.stack;
 		}
-		
+
 		log.E(message);
 	}
 
@@ -316,7 +316,7 @@ appDomain.on("error", (error) => {
 
 // Run app domain logic
 appDomain.run(() => {
-	
+
 	/**
 	 * TODO: Support other command-line params:
 	 *
@@ -328,15 +328,15 @@ appDomain.run(() => {
 		params.parse(process.argv);
 	}
 	finally {
-		
+
 		// Turn on verbose log level in debug mode
 		if (params.debug) {
 			log.transports.console.level = "I";
 		}
-		
+
 		// Set console output to quiet mode
 		if (params.quiet) {
-			
+
 			Object.assign(log.transports.console, {
 				level: "E",
 				showLevel: false,
@@ -346,12 +346,12 @@ appDomain.run(() => {
 	}
 
 	// Validate command line params
-	
+
 	// --lang
 	if (Array.isArray(params.lang)) {
-		
+
 		params.lang.forEach((lang) => {
-			
+
 			if (data.languages.indexOf(lang) === -1) {
 				throw ["Invalid language!", {language: lang}];
 			}
@@ -384,24 +384,24 @@ appDomain.run(() => {
 
 	// --date
 	if (params.date) {
-		
+
 		if (typeof params.date === "object") {
 			params.date = params.date.format("YYYY-MM-DD");
 		}
 		else {
-			
+
 			// Validate date as a special season value
 			let isDateSeason = false;
-			
+
 			for (const type in season) {
-				
+
 				if (params.date === season[type] && season[type] !== season.DESERT) {
-					
+
 					isDateSeason = true;
 					break;
 				}
 			}
-			
+
 			if (!isDateSeason) {
 				throw ["Invalid mission date!", {date: params.date}];
 			}
@@ -416,7 +416,7 @@ appDomain.run(() => {
 	// --coalition
 	if (params.coalition !== undefined &&
 		[data.coalition.ALLIES, data.coalition.AXIS].indexOf(params.coalition) === -1) {
-		
+
 		throw ["Unknown coalition!", {coalition: params.coalition}];
 	}
 
@@ -427,32 +427,32 @@ appDomain.run(() => {
 
 	// --task
 	if (params.task !== undefined) {
-		
+
 		// NOTE: The special ~ symbol can be used to specify task story!
 		const task = params.task.split(/~+?/);
-		
+
 		params.task = task[0];
-		
+
 		if (task.length > 1) {
 			params.story = task.slice(1);
 		}
 	}
-	
+
 	// --pilot
 	if (params.pilot !== undefined && !params.pilot.length) {
 		throw ["Invalid pilot name!", {pilot: params.pilot}];
 	}
-	
+
 	// --plane
 	if (params.plane !== undefined && !params.plane.length) {
 		throw ["Invalid plane name!", {plane: params.plane}];
 	}
-	
+
 	// --unit
 	if (params.unit !== undefined && !params.unit.length) {
 		throw ["Invalid unit name!", {unit: params.unit}];
 	}
-	
+
 	// --airfield
 	if (params.airfield !== undefined && !params.airfield.length) {
 		throw ["Invalid airfield name!", {airfield: params.airfield}];
@@ -485,7 +485,7 @@ appDomain.run(() => {
 	// Save mission files
 	mission.save(params.args[0]).then(
 		() => {
-			
+
 			if (!params.quiet) {
 				log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")");
 			}

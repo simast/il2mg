@@ -93,17 +93,17 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	let vehicle = rand.pick(vehicles[countryID][vehicleType]);
 
 	if (isStatic) {
-		
+
 		if (!vehicle.static) {
 			return;
 		}
-		
+
 		// Use vehicle data from static block item
 		vehicle = data.getItemType(vehicle.static);
 	}
-	
+
 	let itemType = "Vehicle";
-	
+
 	if (isStatic) {
 		itemType = vehicle;
 	}
@@ -131,50 +131,50 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 	vehicleItem.setCountry(countryID);
 	vehicleItem.setPosition(positionX, positionY, positionZ);
 	vehicleItem.setOrientation(orientation);
-	
+
 	if (!isStatic) {
 
 		vehicleItem.Model = vehicle.model;
 		vehicleItem.Script = vehicle.script;
 		vehicleItem.setName(vehicle.name);
 		vehicleItem.createEntity(true);
-		
+
 		const zone = airfield.zone;
 
 		// Attach vehicle to airfield "bubble" zone
 		zone.onActivate.addObject(vehicleItem);
 		zone.onDeactivate.addObject(vehicleItem);
-		
+
 		// Use attack area command (for AA vehicles)
 		if (useAttackArea) {
-			
+
 			// Set unlimited ammo
 			vehicleItem.LimitAmmo = 0;
-			
+
 			// TODO: Set vehicle AI level based on difficulty command-line param
 			vehicleItem.AILevel = rand.pick([
 				Vehicle.AI_LOW,
 				Vehicle.AI_NORMAL,
 				Vehicle.AI_HIGH
 			]);
-			
+
 			let onAttackArea = zone.onAttackArea;
-			
+
 			// Create a shared attack area command (activated when airfield is loaded)
 			if (!onAttackArea) {
-	
+
 				onAttackArea = zone.onAttackArea = zone.group.createItem("MCU_CMD_AttackArea");
-				
+
 				onAttackArea.setPositionNear(zone.onLoad);
 				onAttackArea.AttackAir = 1; // Attack air targets
 				onAttackArea.Time = 999 * 60; // Max 999 minutes
-				
+
 				// NOTE: When attack area command is with medium or low priority - the area
 				// zone radius does not seem to be matter at all and AA vehicles will
 				// automatically fire at their optimal range.
 				onAttackArea.AttackArea = 0;
 				onAttackArea.Priority = MCU_CMD_AttackArea.PRIORITY_MEDIUM;
-	
+
 				zone.onLoad.addTarget(onAttackArea);
 			}
 

@@ -14,7 +14,7 @@
 		"no-var": "error",
 		"no-lonely-if": "error",
 		"no-multiple-empty-lines": "error",
-		"no-trailing-spaces": ["error", {"skipBlankLines": true}],
+		"no-trailing-spaces": "error",
 		"no-whitespace-before-property": "error",
 		"no-nested-ternary": "error",
 		"no-new-object": "error",

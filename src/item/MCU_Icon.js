@@ -5,7 +5,7 @@ const MCU = require("./MCU");
 
 // Icon item
 class MCU_Icon extends MCU {
-	
+
 	constructor() {
 		super();
 
@@ -18,19 +18,19 @@ class MCU_Icon extends MCU {
 		this.BColor = 0;
 		this.LineType = MCU_Icon.LINE_NORMAL;
 	}
-	
+
 	/**
 	 * Set icon item color value.
 	 *
 	 * @param {number[]} color Color value as RGB array.
 	 */
 	setColor(color) {
-		
+
 		// Validate color value
 		if (!Array.isArray(color) || color.length !== 3) {
 			throw new Error("Invalid icon item color value.");
 		}
-		
+
 		this.RColor = color[0];
 		this.GColor = color[1];
 		this.BColor = color[2];
@@ -43,7 +43,7 @@ class MCU_Icon extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 35);
 
 		let size = 32;

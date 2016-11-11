@@ -200,12 +200,12 @@ class Mission {
 	 * @param {mixed} [parent] Add to the mission (true) or parent item (object).
 	 */
 	createItem(itemType, parent) {
-		
+
 		let itemData;
-		
+
 		// Item type as an object with meta data
 		if (typeof itemType === "object") {
-			
+
 			itemData = itemType;
 			itemType = itemData.type;
 		}
@@ -234,18 +234,18 @@ class Mission {
 		Object.defineProperty(item, "mission", {
 			value: this
 		});
-		
+
 		// Set common item data
 		if (itemData) {
-			
+
 			if (itemData.model) {
 				item.Model = itemData.model;
 			}
-			
+
 			if (itemData.script) {
 				item.Script = itemData.script;
 			}
-			
+
 			if (itemData.durability) {
 				item.Durability = itemData.durability;
 			}
@@ -345,7 +345,7 @@ class Mission {
 			name: callsign[1]
 		};
 	}
-	
+
 	/**
 	 * Get opposing (enemy) coalition.
 	 *
@@ -353,14 +353,14 @@ class Mission {
 	 * @returns {number} Enemy coalition ID.
 	 */
 	getEnemyCoalition(coalition) {
-		
+
 		if (coalition === data.coalition.ALLIES) {
 			return data.coalition.AXIS;
 		}
 		else if (coalition === data.coalition.AXIS) {
 			return data.coalition.ALLIES;
 		}
-		
+
 		return 0; // Unknown/neutral
 	}
 
@@ -377,39 +377,39 @@ class Mission {
 		const promises = [];
 
 		log.I("Saving mission...");
-		
+
 		let fileDir = "";
 		let fileBase;
 
 		// Use specified mission file path and/or name
 		if (fileName && fileName.length) {
-			
+
 			let isDirectory = false;
-			
+
 			if (fs.existsSync(fileName)) {
 				isDirectory = fs.statSync(fileName).isDirectory();
 			}
-			
+
 			if (isDirectory) {
 				fileDir = fileName;
 			}
 			else {
-				
+
 				fileDir = path.dirname(fileName);
 				fileBase = path.basename(fileName, path.extname(fileName));
 			}
 		}
-		
+
 		// Generate unique mission file name (based on seed value)
 		if (!fileBase) {
 			fileBase = data.name + "-" + this.seed;
 		}
-		
+
 		// Make specified directory path
 		if (fileDir && !fs.existsSync(fileDir)) {
 			fs.mkdirSync(fileDir);
 		}
-		
+
 		fileName = path.join(fileDir, fileBase);
 
 		// Save text format file
@@ -424,7 +424,7 @@ class Mission {
 
 		// Save language files
 		promises.push(this.saveLang(fileName));
-		
+
 		// Save metadata file
 		if (params.meta) {
 			promises.push(this.saveMeta(fileName));
@@ -614,12 +614,12 @@ class Mission {
 
 		const promises = [];
 		let languages = this.params.lang;
-		
+
 		// Generate default (first) language only
 		if (!languages || !languages.length) {
 			languages = data.languages.slice(0, 1);
 		}
-		
+
 		// Make language files
 		languages.forEach((lang) => {
 
@@ -660,7 +660,7 @@ class Mission {
 
 		return Promise.all(promises);
 	}
-	
+
 	/**
 	 * Save metadata .il2mg file.
 	 *
@@ -679,7 +679,7 @@ class Mission {
 
 			// Write .il2mg data
 			fileStream.once("open", () => {
-				
+
 				fileStream.write(JSON.stringify({
 					version: data.version,
 					title: this.title,
@@ -811,9 +811,9 @@ const MAX_DAMAGE_VALUES = 128;
 
 // Binary damage data index table (used in saving .msnbin file)
 class BinaryDamageTable {
-	
+
 	constructor() {
-		
+
 		// Ordered list of buckets (for damage items grouped by max value count)
 		this.buckets = new Map([
 			[32, []], // Max 32 damage values
@@ -821,7 +821,7 @@ class BinaryDamageTable {
 			[128, []], // Max 128 damage values
 			[256, []], // Max 256 damage values
 		]);
-		
+
 		// Damage item index table
 		this.indexTable = [];
 	}
@@ -838,35 +838,35 @@ class BinaryDamageTable {
 		if (!(damageItem instanceof Item) || damageItem.type !== "Damaged") {
 			throw new TypeError("Invalid damage item value.");
 		}
-		
+
 		const damageItemSize = Math.min(
 			Object.keys(damageItem).length,
 			MAX_DAMAGE_VALUES
 		);
-		
+
 		let bucketIndex = 0;
 		let bucketItemIndex;
-		
+
 		// Register damage item in a fitting data bucket
 		for (const [bucketMaxSize, bucketData] of this.buckets) {
-			
+
 			// NOTE: Needs at least 1 free damage item key/value slot
 			if (damageItemSize < bucketMaxSize) {
-				
+
 				bucketItemIndex = bucketData.push(damageItem) - 1;
 				break;
 			}
-			
+
 			bucketIndex++;
 		}
-		
+
 		// Register new damage index table item
 		this.indexTable.push([
 			bucketItemIndex,
 			damageItemSize,
 			bucketIndex
 		]);
-		
+
 		return this.indexTable.length - 1;
 	}
 
@@ -876,78 +876,78 @@ class BinaryDamageTable {
 	 * @returns {Buffer} Binary representation of damage data index table.
 	 */
 	toBinary() {
-		
+
 		const {buckets, indexTable} = this;
 		const buffer = new SmartBuffer();
-		
+
 		// Number of buckets (data memory blocks)
 		buffer.writeUInt32LE(buckets.size);
-		
+
 		// List of bucket sizes
 		for (const bucketSize of buckets.keys()) {
 			buffer.writeUInt32LE(bucketSize);
 		}
-		
+
 		// Number of damage index table items
 		buffer.writeUInt16LE(indexTable.length);
-		
+
 		if (!indexTable.length) {
 			return buffer.toBuffer();
 		}
-		
+
 		for (const [bucketItemIndex, damageItemSize, bucketIndex] of indexTable) {
-			
+
 			// Bucket data memory index (unique per bucket)
 			buffer.writeUInt16LE(bucketItemIndex);
-			
+
 			// Number of damage item values
 			buffer.writeUInt8(damageItemSize);
-			
+
 			// Bucket index
 			buffer.writeUInt8(bucketIndex);
 		}
-		
+
 		// Unknown (number of free/unused damage index table items?)
 		buffer.writeUInt32LE(0);
-		
+
 		// Write each memory bucket data
 		for (const [bucketMaxSize, bucketData] of buckets) {
-			
+
 			// Bucket memory block start mark?
 			buffer.writeUInt32LE(0xCFCFCFCF);
-			
+
 			let bucketMemoryItemsSize = Math.ceil(bucketData.length / MAX_DAMAGE_VALUES);
 			bucketMemoryItemsSize *= (bucketMaxSize * MAX_DAMAGE_VALUES);
-			
+
 			// Number of items in bucket memory block (not the size of a memory block!)
 			buffer.writeUInt32LE(bucketMemoryItemsSize);
-			
+
 			// Write bucket data
 			if (bucketMemoryItemsSize > 0) {
-				
+
 				// Zero-filled bucket memory buffer
 				const bucketBuffer = Buffer.alloc(bucketMemoryItemsSize * 2);
-				
+
 				for (const [damageItemIndex, damageItem] of bucketData.entries()) {
-					
+
 					let i = 0;
 					for (let damageKey in damageItem) {
-						
+
 						// Enforce max bucket key/value item size
 						if (i >= bucketMaxSize) {
 							break;
 						}
-						
+
 						let damageValue = damageItem[damageKey];
 						damageKey = +damageKey; // To number
-						
+
 						// Ignore invalid damage keys
 						if (damageKey < 0 || damageKey > MAX_DAMAGE_VALUES) {
 							continue;
 						}
-						
+
 						if (damageValue >= 0 && damageValue <= 1) {
-	
+
 							// NOTE: Damage value in binary file is represented as a 8 bit
 							// unsigned integer number with a range from 0 to 255.
 							damageValue = Math.round(255 * damageValue);
@@ -955,33 +955,33 @@ class BinaryDamageTable {
 						else {
 							damageValue = 1;
 						}
-						
+
 						const offset = damageItemIndex * 2 * bucketMaxSize + (i * 2);
-						
+
 						// Write damage key/value pair
 						bucketBuffer.writeUInt8(damageKey, offset);
 						bucketBuffer.writeUInt8(damageValue, offset + 1);
-						
+
 						i++;
 					}
 				}
-				
+
 				buffer.writeBuffer(bucketBuffer);
 			}
-			
+
 			const bucketMemoryMaxItems = bucketMemoryItemsSize / bucketMaxSize;
 			let freeBucketMemoryItems = bucketMemoryMaxItems - bucketData.length;
-			
+
 			// Number of free/unused bucket memory buffer items
 			buffer.writeUInt32LE(freeBucketMemoryItems);
-			
+
 			while (freeBucketMemoryItems > 0) {
-				
+
 				buffer.writeUInt16LE(bucketMemoryMaxItems - freeBucketMemoryItems);
 				freeBucketMemoryItems--;
 			}
 		}
-		
+
 		return buffer.toBuffer();
 	}
 }

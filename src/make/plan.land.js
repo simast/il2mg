@@ -3,23 +3,23 @@
 
 // Make plan land action
 module.exports = function makePlanLand(action, element, flight, input) {
-	
+
 	if (!input) {
 		return;
 	}
-	
+
 	const airfield = this.airfields[action.airfield || flight.airfield];
 	let taxiRoute;
-	
+
 	if (airfield.taxi) {
 		taxiRoute = airfield.taxi[action.taxi || Math.abs(flight.taxi)];
 	}
-	
+
 	// TODO: Delete flight planes at destination (when it's not possible to land)
 	if (!taxiRoute) {
 		return;
 	}
-	
+
 	const rand = this.rand;
 	const leaderElement = flight.elements[0];
 	const leaderPlaneItem = element[0].item;

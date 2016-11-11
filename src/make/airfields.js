@@ -36,10 +36,10 @@ module.exports = function makeAirfields() {
 	const airfields = Object.create(null);
 	const airfieldsByCoalition = Object.create(null);
 	const airfieldsTaxi = new Set();
-	
+
 	// Offmap "hot" spots by coalition (based on offmap airfield positions)
 	const offmapSpotsByCoalition = Object.create(null);
-	
+
 	// List of airfield locations data
 	const locationsData = [];
 
@@ -47,7 +47,7 @@ module.exports = function makeAirfields() {
 	let totalAirfields = 0;
 	let totalActive = 0;
 	let totalOffmap = 0;
-	
+
 	// FIXME: Remove from this scope!
 	let airfieldData;
 
@@ -55,51 +55,51 @@ module.exports = function makeAirfields() {
 	for (const airfieldID in battle.airfields) {
 
 		totalAirfields++;
-		
+
 		airfieldData = battle.airfields[airfieldID];
-		
+
 		// Load airfield JSON data file
 		try {
-			
+
 			Object.assign(
 				airfieldData,
 				require(this.battlePath + "airfields/" + airfieldID)
 			);
 		}
 		catch (e) {}
-		
+
 		const airfield = airfields[airfieldID] = Object.create(null);
 
 		airfield.id = airfieldID;
 		airfield.name = airfieldData.name;
 		const position = airfield.position = airfieldData.position;
-		
+
 		// Register new airfield location
 		const airfieldLocation = new Location(position[0], position[2]);
-		
+
 		airfieldLocation.type = location.AIRFIELD;
 		airfieldLocation.name = airfieldData.name;
 		airfieldLocation.airfield = airfieldID;
-		
+
 		locationsData.push(airfieldLocation);
-		
+
 		// Identify offmap airfield
 		if (isOffmap(this.map, position)) {
-			
+
 			airfield.offmap = true;
 			totalOffmap++;
 		}
-		
+
 		// Getter for airfield items group
 		Object.defineProperty(airfield, "group", {
 			get: function() {
-				
+
 				// Lazy (first time access) initialization of group item
 				delete this.group;
-				
+
 				this.group = mission.createItem("Group");
 				this.group.setName(this.name);
-				
+
 				return this.group;
 			},
 			configurable: true
@@ -151,7 +151,7 @@ module.exports = function makeAirfields() {
 
 						planeGroup.push([planeID, unit.country, unitID]);
 					}
-					
+
 					airfield.planes++;
 				});
 			}
@@ -176,14 +176,14 @@ module.exports = function makeAirfields() {
 			}
 
 			airfieldsByCoalition[airfield.coalition].push(airfield);
-			
+
 			// Index offmap spots by coalition
 			if (airfield.offmap) {
-				
+
 				if (!offmapSpotsByCoalition[airfield.coalition]) {
 					offmapSpotsByCoalition[airfield.coalition] = [];
 				}
-				
+
 				offmapSpotsByCoalition[airfield.coalition].push([
 					airfield.position[0],
 					airfield.position[2]
@@ -275,26 +275,26 @@ module.exports = function makeAirfields() {
 					});
 				}
 			})();
-			
+
 			// Show airfield icon with number of planes in debug mode
 			if (mission.debug && mission.debug.airfields && !airfield.offmap) {
-				
+
 				// NOTE: Icon text can only have a custom color if it is linked to another
 				// icon. As a workaround - we are creating two icons at the same location.
 				const airfieldIcon1 = airfield.group.createItem("MCU_Icon");
 				const airfieldIcon2 = airfield.group.createItem("MCU_Icon");
-				
+
 				// TODO: Show icon at the edge of the map for off-map airfields
 				airfieldIcon1.setPosition(position);
 				airfieldIcon2.setPosition(position);
-				
+
 				airfieldIcon1.LineType = Item.MCU_Icon.LINE_BOLD;
 				airfieldIcon1.setName(mission.getLC(airfield.planes + "\u2708"));
 				airfieldIcon1.setColor(data.countries[airfield.country].color);
-				
+
 				airfieldIcon1.Coalitions = mission.coalitions;
 				airfieldIcon2.Coalitions = mission.coalitions;
-				
+
 				airfieldIcon1.addTarget(airfieldIcon2);
 			}
 
@@ -302,7 +302,7 @@ module.exports = function makeAirfields() {
 			if (!airfield.offmap && airfield.value && airfield.taxi) {
 				airfieldsTaxi.add(airfield);
 			}
-			
+
 			totalActive++;
 		}
 
@@ -310,14 +310,14 @@ module.exports = function makeAirfields() {
 		if (airfield.offmap || !airfieldData.items || !airfieldData.items.length) {
 			continue;
 		}
-		
+
 		// Initialize airfield zone using a lazy getter
 		Object.defineProperty(airfield, "zone", {
 			get: function() {
-				
+
 				delete this.zone;
 				this.zone = makeAirfieldZone.call(mission, airfield);
-				
+
 				return this.zone;
 			},
 			configurable: true
@@ -437,7 +437,7 @@ module.exports = function makeAirfields() {
 
 		return planeCount;
 	}
-	
+
 	// Build airfield locations index
 	mission.locations.airfields = new Location.Index();
 	mission.locations.airfields.load(locationsData);
@@ -446,37 +446,37 @@ module.exports = function makeAirfields() {
 	mission.airfields = Object.freeze(airfields);
 	mission.airfieldsByCoalition = Object.freeze(airfieldsByCoalition);
 	mission.offmapSpotsByCoalition = Object.freeze(offmapSpotsByCoalition);
-	
+
 	// Enable not used taxi routes for all active airfields
 	// NOTE: When the flights are created they will enable taxi routes that match
 	// parking spots of the planes. The code below makes sure to enable the remaining
 	// taxi routes for all active airfields that were not activated by flights.
 	mission.make.push(() => {
-		
+
 		const playerFlight = this.player.flight;
-		
+
 		for (const airfield of airfieldsTaxi) {
-			
+
 			// Choose taxi routes randomly
 			const taxiRoutes = rand.shuffle(Object.keys(airfield.taxi));
-			
+
 			for (const taxiRouteID of taxiRoutes) {
-				
+
 				const taxiRunwayID = airfield.taxi[taxiRouteID][1];
-				
+
 				// Enable one random taxi route for each runway
 				if (!airfield.activeTaxiRoutes || !airfield.activeTaxiRoutes[taxiRunwayID]) {
-					
+
 					// FIXME: Nearest airfield item is used with takeoff command and this
 					// could result in wrong taxi route being activated when player flight
 					// is starting from runway and not from parking spot. An ideal fix
 					// would be to move player created airfield taxi route to the runway.
 					if (airfield.id === playerFlight.airfield &&
 							playerFlight.state === flightState.RUNWAY) {
-						
+
 						break;
 					}
-					
+
 					makeAirfieldTaxi.call(mission, airfield, +taxiRouteID);
 				}
 			}

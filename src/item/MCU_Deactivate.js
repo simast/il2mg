@@ -5,7 +5,7 @@ const MCU = require("./MCU");
 
 // Deactivate item
 module.exports = class MCU_Deactivate extends MCU {
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *

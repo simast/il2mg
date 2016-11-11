@@ -5,13 +5,13 @@ const MCU = require("./MCU");
 
 // Mission Begin item
 module.exports = class MCU_TR_MissionBegin extends MCU {
-	
+
 	constructor() {
 		super();
 
 		this.Enabled = 1;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *

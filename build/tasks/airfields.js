@@ -5,11 +5,11 @@ module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", () => {
-		
+
 		const numeral = require("numeral");
 		const data = require("../../src/data");
 		const Item = require("../../src/item");
-		
+
 		// Data constants
 		const itemTag = data.itemTag;
 		const itemFlag = data.itemFlag;
@@ -18,15 +18,15 @@ module.exports = function(grunt) {
 		let totalBattles = 0;
 		let totalAirfields = 0;
 		let totalItems = 0;
-		
+
 		// Utility function used to get absolute Point item position
 		function getPointPosition(item, point) {
-		
+
 			const pointOrientation = item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X);
 			const pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X);
 			const positionX = item.XPos + pointMagnitude * Math.cos(pointOrientation);
 			const positionZ = item.ZPos + pointMagnitude * Math.sin(pointOrientation);
-		
+
 			return [
 				Number(positionX.toFixed(Item.PRECISION_POSITION)),
 				Number(positionZ.toFixed(Item.PRECISION_POSITION))
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 
 					continue;
 				}
-				
+
 				const json = {
 					items: []
 				};
@@ -170,7 +170,7 @@ module.exports = function(grunt) {
 								else if (planeFlag !== undefined) {
 									grunt.fail.fatal("Invalid plane flag in: " + item.Name);
 								}
-								
+
 								if (!json.sectors) {
 									json.sectors = {};
 								}
@@ -373,7 +373,7 @@ module.exports = function(grunt) {
 								}
 
 								taxiRoute.push(taxiPointsData);
-								
+
 								if (!json.taxi) {
 									json.taxi = {};
 								}
@@ -465,14 +465,14 @@ module.exports = function(grunt) {
 						nextWaypoint = routeData[nextWaypoint].target;
 					}
 					while (nextWaypoint !== routeData.first);
-					
+
 					if (!json.routes) {
 						json.routes = [];
 					}
 
 					json.routes.push(jsonRoute);
 				}
-				
+
 				// Assign generated airfield data
 				Object.assign(battle.airfields[airfieldID], json);
 

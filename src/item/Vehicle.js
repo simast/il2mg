@@ -5,7 +5,7 @@ const Item = require("../item");
 
 // Vehicle item
 class Vehicle extends Item {
-	
+
 	constructor() {
 		super();
 
@@ -23,7 +23,7 @@ class Vehicle extends Item {
 		this.DeleteAfterDeath = 1;
 		this.CoopStart = 0;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *

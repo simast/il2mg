@@ -5,14 +5,14 @@ const MCU = require("./MCU");
 
 // Counter item
 module.exports = class MCU_Counter extends MCU {
-	
+
 	constructor() {
 		super();
-		
+
 		this.Counter = 1;
 		this.Dropcount = 0;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -20,7 +20,7 @@ module.exports = class MCU_Counter extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 43);
 
 		const buffer = new Buffer(5);

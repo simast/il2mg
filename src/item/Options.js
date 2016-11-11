@@ -8,7 +8,7 @@ const Item = require("../item");
 module.exports = class Options extends Item {
 
 	get hasIndex() { return false; }
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -97,7 +97,7 @@ module.exports = class Options extends Item {
 
 		// LCDesc
 		this.writeUInt32(buffer, this.LCDesc);
-		
+
 		// PlayerConfig
 		this.writeString(buffer, playerConfigLength, this.PlayerConfig);
 

@@ -103,7 +103,7 @@ a:focus, input:focus, textarea:focus, select:focus {
 #photos .create1 {
 	right: 150px;
 	top: -50px;
-	transform: rotate(-11deg);	
+	transform: rotate(-11deg);
 }
 #photos .create2 {
 	right: -10px;
@@ -232,7 +232,7 @@ a.country.selected:before {
 	--light-color: #fbfbfb;
 	--dark-color: #959595;
 	--title-height: 54px;
-	
+
 	flex: 1;
 	pointer-events: auto;
 	background-color: var(--background-color);
@@ -267,7 +267,7 @@ a.country.selected:before {
 	height: calc(100vh - 204px);
 	overflow-y: auto;
 	-webkit-user-select: text;
-	
+
 	/* Top and bottom briefing content scroll shadows */
 	background:
 		/* Shadow covers */

@@ -16,37 +16,37 @@ module.exports = function makeFlightPilots(flight) {
 	const unit = this.units[flight.unit];
 	const ranks = data.countries[unit.country].ranks;
 	const pilotIDs = Object.create(null);
-	
+
 	// Build an index list of weighted pilot ranks by type
 	if (!ranks.weighted) {
-		
+
 		ranks.weighted = Object.create(null);
-		
+
 		for (let rankID in ranks) {
-			
+
 			rankID = parseInt(rankID, 10);
-			
+
 			if (isNaN(rankID)) {
 				continue;
 			}
-			
+
 			const rank = ranks[rankID];
-			
+
 			if (typeof rank.type !== "object") {
 				continue;
 			}
-			
+
 			for (const rankType in rank.type) {
-				
+
 				let ranksWeighted = ranks.weighted[rankType];
-				
+
 				// Initialize weighted rank array
 				if (!ranksWeighted) {
-					
+
 					ranksWeighted = ranks.weighted[rankType] = [];
 					ranksWeighted.ranges = Object.create(null);
 				}
-				
+
 				const rankWeight = rank.type[rankType];
 
 				if (rankWeight > 0) {
@@ -69,9 +69,9 @@ module.exports = function makeFlightPilots(flight) {
 			}
 		}
 	}
-	
+
 	flight.elements.forEach((element) => {
-		
+
 		let leaderPlane = null;
 
 		// Create pilot for each plane
@@ -103,9 +103,9 @@ module.exports = function makeFlightPilots(flight) {
 			else {
 
 				const flRankRange = ranksWeighted.ranges[flight.leader.pilot.rank.id];
-				
+
 				if (flRankRange) {
-					
+
 					// Make sure that high ranking (60-85% and above) flight leaders in the same
 					// flight don't have higher (or the same) subordinate pilots.
 					if ((flRankRange[0] + flRankRange[1]) / 2 / rankRange.max > rand.real(0.6, 0.85)) {
@@ -117,46 +117,46 @@ module.exports = function makeFlightPilots(flight) {
 					}
 				}
 			}
-			
+
 			// Modify max rank range based on task rankMax configuration parameter
 			if (typeof task.rankMax === "number") {
 				rankRange.max = Math.min(Math.floor(ranksWeighted.length * task.rankMax), rankRange.max);
 			}
-			
+
 			// Modify min rank range based on task rankMin configuration parameter
 			if (typeof task.rankMin === "number") {
 				rankRange.min = Math.max(Math.floor(ranksWeighted.length * task.rankMin), rankRange.min);
 			}
-			
+
 			let pilot;
-			
+
 			// Set a custom player pilot and rank
 			if (params.pilot && plane === flight.player) {
 				pilot = getPilotPlayer(unit, rankRange);
 			}
 			// Generate a known or unknown pilot
 			else {
-			
+
 				// Chance to use a known pilot
 				let useKnownPilot = 0;
-	
+
 				// NOTE: A multi plane formation flight will have no upper rank limit
 				// for known pilots acting as flight leaders (unless strictly required
 				// by task configuration).
 				let useKnownPilotMaxRankRange = true;
-				
+
 				if (unit.pilots && unit.pilots.length) {
-	
+
 					// NOTE: The chance to use a known pilot is based on number of known
 					// pilots and max unit pilot count ratio.
 					useKnownPilot = Math.min(unit.pilots.length / unit.pilots.max, 1);
-	
+
 					// At least 50% chance to search known pilots for flight leaders with
 					// a multi-plane flight formation.
 					if (isFlightLeader && flight.planes > 1) {
-						
+
 						useKnownPilot = Math.max(useKnownPilot, 0.5);
-						
+
 						if (typeof task.rankMax !== "number") {
 							useKnownPilotMaxRankRange = false;
 						}
@@ -166,16 +166,16 @@ module.exports = function makeFlightPilots(flight) {
 						useKnownPilot = Math.max(useKnownPilot, 0.25);
 					}
 				}
-	
+
 				do {
-	
+
 					pilot = null;
-	
+
 					// Try selecting a known pilot
 					if (useKnownPilot && rand.bool(useKnownPilot)) {
 						pilot = getPilotKnown(unit, rankRange, useKnownPilotMaxRankRange);
 					}
-	
+
 					// Generate an unknown pilot
 					if (!pilot) {
 						pilot = getPilotUnknown(unit, rankRange);
@@ -241,25 +241,25 @@ module.exports = function makeFlightPilots(flight) {
 
 			// Set plane pilot
 			plane.pilot = pilot;
-			
+
 			// Mark the top ranking pilot as a leader of this element
 			if (!leaderPlane || leaderPlane.pilot.rank.id < pilot.rank.id) {
 				leaderPlane = plane;
 			}
 
 		});
-		
+
 		// Make sure the selected leading pilot is actually a leader of the element
 		if (element.length > 1 && leaderPlane !== element[0]) {
-			
+
 			const notLeaderPlane = element[0];
 			const leaderPlaneIndex = element.indexOf(leaderPlane);
-			
+
 			// Switch planes
 			element[0] = leaderPlane;
 			element[leaderPlaneIndex] = notLeaderPlane;
 		}
-		
+
 	});
 
 	// Get a known (real) pilot from the unit data
@@ -268,26 +268,26 @@ module.exports = function makeFlightPilots(flight) {
 		if (!unit.pilots || !unit.pilots.length) {
 			return;
 		}
-		
+
 		const ranksWeighted = data.countries[unit.country].ranks.weighted.pilot;
 		let pilotFound;
 		let pilotIndex;
 		let pilotRank;
-		
+
 		for (pilotIndex = 0; pilotIndex < unit.pilots.length; pilotIndex++) {
-			
+
 			const pilotData = unit.pilots[pilotIndex];
 			pilotRank = Math.abs(pilotData.rank);
-			
+
 			// Use first matching known pilot by rank requirements
 			if (pilotRank >= ranksWeighted[rankRange.min] &&
 					(!useMaxRankRange || pilotRank <= ranksWeighted[rankRange.max])) {
-				
+
 				pilotFound = pilotData;
 				break;
 			}
 		}
-		
+
 		// No matching known pilot
 		if (!pilotFound) {
 			return;
@@ -295,7 +295,7 @@ module.exports = function makeFlightPilots(flight) {
 
 		// Remove pilot from unit data (mark as used)
 		unit.pilots.splice(pilotIndex, 1);
-		
+
 		const pilot = Object.create(null);
 
 		// Set a known pilot rank
@@ -333,12 +333,12 @@ module.exports = function makeFlightPilots(flight) {
 
 			pilot.name = "";
 			pilot.id = "";
-			
+
 			name = people.getName(names);
 
 			// First name and last name parts are required and should not be the same
 			if (name.first && name.last && name.first[0] !== name.last[name.last.length - 1]) {
-				
+
 				// Set full pilot name
 				pilot.name = name.first.join(" ") + " " + name.last.join(" ");
 			}
@@ -350,16 +350,16 @@ module.exports = function makeFlightPilots(flight) {
 		if (name.last) {
 			pilot.id = name.last.join(" ");
 		}
-		
+
 		// Set an unknown pilot rank
 		pilot.rank = people.getRank(rankRange, unit.country);
-		
+
 		return pilot;
 	}
-	
+
 	// Get a custom player pilot
 	function getPilotPlayer(unit, rankRange) {
-		
+
 		const pilotParts = params.pilot.split(/\s*,\s*/);
 		let playerName;
 		let playerRank;
@@ -379,28 +379,28 @@ module.exports = function makeFlightPilots(flight) {
 				playerRank = pilotRank;
 			}
 		}
-		
+
 		let pilot = Object.create(null);
 		const ranks = data.countries[unit.country].ranks;
-		
+
 		// Only rank set by the player
 		if (!playerName || !playerName.length || !playerName[0].length) {
 			pilot = getPilotUnknown(unit, rankRange);
 		}
 		// Set custom player name and id
 		else {
-		
+
 			pilot.name = playerName.join(" ").replace(/\s+/g, " ");
 			pilot.id = playerName[playerName.length - 1];
-			
+
 			// Use last word from name as pilot id
 			if (playerName.length === 1) {
 				pilot.id = playerName[0].split(/\s+/).slice(-1)[0];
 			}
-			
+
 			pilot.id = pilot.id.replace(/\s+/g, " ");
 		}
-		
+
 		// Use a custom requested rank
 		if (playerRank && ranks[playerRank]) {
 			pilot.rank = people.getRank(playerRank, unit.country);
@@ -409,7 +409,7 @@ module.exports = function makeFlightPilots(flight) {
 		else {
 			pilot.rank = people.getRank(rankRange, unit.country);
 		}
-		
+
 		return pilot;
 	}
 };

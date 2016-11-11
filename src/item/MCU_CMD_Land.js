@@ -5,13 +5,13 @@ const MCU = require("./MCU");
 
 // Land command item
 class MCU_CMD_Land extends MCU {
-	
+
 	constructor() {
 		super();
-		
+
 		this.Priority = MCU_CMD_Land.PRIORITY_MEDIUM;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -19,7 +19,7 @@ class MCU_CMD_Land extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 16);
 
 		const buffer = new Buffer(4);

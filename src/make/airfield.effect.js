@@ -25,7 +25,7 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 	const isRaining = (this.weather.precipitation.type === precipitation.RAIN);
 	const isDark = (time.evening || time.night || time.dawn);
 	const items = [];
-	
+
 	let effectType;
 	let startOnLoad = true;
 
@@ -67,10 +67,10 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 			// Make the campfire effect look more like a small fire rather than a huge
 			// landing fire by slightly lowering the effect item to the ground.
 			item[2] = campfirePosY - 0.18; // -18 cm
-			
+
 			// Create a small burned/melted ground effect (crater) underneath the campfire
 			const campfireGround = this.createItem(data.getItemType("crater_16"), false);
-			
+
 			campfireGround.setPosition(item[1], campfirePosY - 0.28, item[3]);
 			campfireGround.setOrientation(rand.real(0, 360));
 
@@ -96,21 +96,21 @@ module.exports = function makeAirfieldEffect(airfield, item) {
 	effectItem.setPosition(item[1], item[2], item[3]);
 	effectItem.setOrientation(rand.real(0, 360));
 	effectItem.createEntity(true);
-	
+
 	// Attach effect to airfield "bubble" zone
 	zone.onActivate.addObject(effectItem);
 	zone.onDeactivate.addObject(effectItem);
 
 	// Start effect on airfield load event
 	if (startOnLoad) {
-		
+
 		let onEffectStart = zone.onEffectStart;
 
 		// Create a shared effect start command (activated when airfield is loaded)
 		if (!onEffectStart) {
 
 			onEffectStart = zone.onEffectStart = zone.group.createItem("MCU_CMD_Effect");
-			
+
 			onEffectStart.setPositionNear(zone.onLoad);
 			onEffectStart.ActionType = MCU_CMD_Effect.ACTION_START;
 

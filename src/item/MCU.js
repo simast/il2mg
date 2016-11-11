@@ -11,7 +11,7 @@ const ITEM_ON_REPORT = "OnReport";
 
 // Base MCU item
 module.exports = class MCU extends Item {
-	
+
 	constructor() {
 		super();
 
@@ -73,12 +73,12 @@ module.exports = class MCU extends Item {
 	 * @param {object} target Target command item.
 	 */
 	addReport(type, command, target) {
-		
+
 		// Validate report type
 		if (typeof this.REPORTS !== "object" || this.REPORTS[type] === undefined) {
 			throw new Error("Invalid item report type.");
 		}
-		
+
 		// Validate report source and target command items
 		if (!(command instanceof MCU) || !(target instanceof MCU)) {
 			throw new Error("Invalid item report source or target command item.");
@@ -93,7 +93,7 @@ module.exports = class MCU extends Item {
 
 		// Add a new report item
 		const reportItem = new Item(ITEM_ON_REPORT);
-		
+
 		// TODO: Ignore duplicate/existing reports
 
 		reportItem.Type = this.REPORTS[type];
@@ -168,7 +168,7 @@ module.exports = class MCU extends Item {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index, typeID) {
-		
+
 		yield* super.toBinary(index, typeID);
 
 		let size = 9;

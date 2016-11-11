@@ -5,16 +5,16 @@ const {flightState, itemFlag} = require("../data");
 
 // Make plan takeoff action briefing
 module.exports = function makeBriefingTakeoff(action, flight) {
-	
+
 	const playerElement = this.player.element;
-	
+
 	// Ignore take off briefing on air start
 	// NOTE: This may happen when the flight state was "start" - but the player element
 	// was pushed for air start (due to lack of plane spots or taxi routes for example).
 	if (typeof playerElement.state === "number") {
 		return;
 	}
-	
+
 	let briefing = [];
 	const airfield = this.airfields[flight.airfield];
 	const playerPlaneItem = flight.player.item;
@@ -23,17 +23,17 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 	// Add taxi info string only if relevant
 	if (taxiRoute && (playerElement.state === flightState.START ||
 			playerElement.state === flightState.TAXI)) {
-		
+
 		briefing.push("taxi");
-		
+
 		// Add taxi direction hint
 		if (taxiRoute) {
-			
+
 			const taxiPoints = taxiRoute[4];
 			let taxiReferencePoint;
 			let taxiDistanceReference;
 			let taxiDistanceFirst;
-			
+
 			// Find taxi hint reference point
 			for (let i = 0; i < taxiPoints.length; i++) {
 
@@ -63,7 +63,7 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 			}
 
 			if (taxiReferencePoint) {
-				
+
 				let taxiHintOrientation = Math.atan2(
 					taxiReferencePoint[1] - playerPlaneItem.ZPos,
 					taxiReferencePoint[0] - playerPlaneItem.XPos
@@ -99,12 +99,12 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 				}
 			}
 		}
-		
+
 		briefing.push("and");
 	}
-	
+
 	briefing.push("take off from [" + airfield.name + "] airfield");
-	
+
 	// Airfield callsign
 	if (airfield.callsign) {
 		briefing.push("(callsign <i>“" + airfield.callsign.name + "”</i>)");
@@ -112,18 +112,18 @@ module.exports = function makeBriefingTakeoff(action, flight) {
 
 	// Add take off heading/direction
 	if (taxiRoute) {
-		
+
 		let heading = Math.atan2(
 			taxiRoute.takeoffEnd[2] - taxiRoute.takeoffStart[2],
 			taxiRoute.takeoffEnd[0] - taxiRoute.takeoffStart[0]
 		) * (180 / Math.PI);
-		
+
 		heading = Math.round((heading + 360) % 360);
 		heading = ("000" + heading).substr(-3, 3);
-		
+
 		briefing.push("heading " + heading);
 	}
-	
+
 	briefing = briefing.join(" ") + ".";
 	briefing = briefing.charAt(0).toUpperCase() + briefing.slice(1);
 

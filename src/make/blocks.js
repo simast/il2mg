@@ -7,7 +7,7 @@ const data = require("../data");
 
 // Generate mission static blocks
 module.exports = function makeBlocks() {
-	
+
 	const blocksGroup = this.createItem("Group");
 
 	blocksGroup.setName("BLOCK");
@@ -25,7 +25,7 @@ module.exports = function makeBlocks() {
 
 			const blockItem = blocks[i];
 			const block = blocksGroup.createItem(data.getItemType(blockItem[0]));
-			
+
 			block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
 			block.setOrientation(blockItem[4]);
 

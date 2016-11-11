@@ -5,6 +5,6 @@ const Item = require("../item");
 
 // Group item
 module.exports = class Group extends Item {
-	
+
 	get hasIndex() { return false; }
 };

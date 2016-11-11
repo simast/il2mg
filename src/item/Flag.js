@@ -5,10 +5,10 @@ const Item = require("../item");
 
 // Flag item
 module.exports = class Flag extends Item {
-	
+
 	constructor() {
 		super();
-		
+
 		this.StartHeight = 0;
 		this.SpeedFactor = 1;
 		this.BlockThreshold = 1;
@@ -17,7 +17,7 @@ module.exports = class Flag extends Item {
 		this.CountPlanes = 0;
 		this.CountVehicles = 0;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -25,7 +25,7 @@ module.exports = class Flag extends Item {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 13);
 
 		let size = 38;

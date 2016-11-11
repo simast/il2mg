@@ -5,7 +5,7 @@ const {flightState} = require("../data");
 
 // Make plan takeoff action
 module.exports = function makePlanTakeoff(action, element, flight, input) {
-	
+
 	const rand = this.rand;
 	const leaderPlaneItem = element[0].item;
 	const isAirStart = (typeof element.state === "number");
@@ -13,11 +13,11 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	const airfield = this.airfields[flight.airfield];
 	let takeoffCommand = flight.takeoffCommand;
 	let taxiRoute;
-	
+
 	if (airfield.taxi) {
 		taxiRoute = airfield.taxi[flight.taxi];
 	}
-	
+
 	// Create take off command
 	// NOTE: Flight will use a single take off command for all elements
 	if (!takeoffCommand && taxiRoute && !isAirStart) {
@@ -27,7 +27,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		// Set takeoff command position and orientation
 		takeoffCommand.setPosition(taxiRoute.takeoffStart);
 		takeoffCommand.setOrientationTo(taxiRoute.takeoffEnd);
-		
+
 		flight.takeoffCommand = takeoffCommand;
 	}
 
@@ -60,19 +60,19 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 	if (takeoffCommand && !isAirStart) {
 		takeoffCommand.addObject(leaderPlaneItem);
 	}
-	
+
 	// Short timer used to delay next command after takeoff is reported
 	const waitTimerAfter = flight.group.createItem("MCU_Timer");
 
 	waitTimerAfter.Time = +(rand.real(12, 18).toFixed(3));
-	
+
 	if (takeoffCommand) {
 		waitTimerAfter.setPositionNear(takeoffCommand);
 	}
 	else {
 		waitTimerAfter.setPositionNear(leaderPlaneItem);
 	}
-	
+
 	// Use deactivate command to make sure the subsequent take off command actions
 	// are not repeated after the second take off (for player flight only)
 	if (element.player && !isAirStart) {
@@ -83,10 +83,10 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		deactivateAfter.addTarget(waitTimerAfter);
 		waitTimerAfter.addTarget(deactivateAfter);
 	}
-	
+
 	// Activate takeoff wait timer from ground start
 	if (!isAirStart) {
-		
+
 		// Set element leader take off report event action
 		if (takeoffCommand) {
 
@@ -98,7 +98,7 @@ module.exports = function makePlanTakeoff(action, element, flight, input) {
 		}
 		// Set take off event action for player-only spawn
 		else {
-			
+
 			leaderPlaneItem.entity.addEvent(
 				"OnPlaneTookOff",
 				waitTimerAfter

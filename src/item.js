@@ -11,7 +11,7 @@ Buffer.prototype._offset = 0;
 
 // Base (and generic) mission item
 class Item {
-	
+
 	/**
 	 * Create a new mission item.
 	 *
@@ -19,7 +19,7 @@ class Item {
 	 * @constructor
 	 */
 	constructor(type) {
-		
+
 		// The explicit type value is only required for generic items
 		if (Object.getPrototypeOf(this) !== Item.prototype) {
 			return;
@@ -31,7 +31,7 @@ class Item {
 
 		Object.defineProperty(this, "type", {value: type});
 	}
-	
+
 	// By default all items have "Index" field
 	get hasIndex() { return true; }
 
@@ -311,18 +311,18 @@ class Item {
 		// Set item Y orientation
 		this.setOrientation(orientationY);
 	}
-	
+
 	/**
 	 * Set item country.
 	 *
 	 * @param {number} countryID Country ID value.
 	 */
 	setCountry(countryID) {
-		
+
 		if (typeof countryID !== "number") {
 			throw new TypeError("Invalid item country value.");
 		}
-		
+
 		// Support for "alias" (hidden) countries
 		countryID = data.countries[countryID].alias || countryID;
 
@@ -514,9 +514,9 @@ class Item {
 				value += os.EOL + indent + "  {";
 
 				propValue.forEach((itemValue) => {
-					
+
 					value += os.EOL + indent + "    ";
-					
+
 					// Inner list of items joined by ":" symbol
 					if (Array.isArray(itemValue)) {
 						value += itemValue.join(":");
@@ -525,7 +525,7 @@ class Item {
 					else {
 						value += '"' + itemValue + '"';
 					}
-					
+
 					value += ";";
 				});
 

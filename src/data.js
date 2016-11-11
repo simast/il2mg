@@ -177,13 +177,13 @@ data.briefingColor = Object.freeze({
 		require.extensions[".json5"] = (module, file) => {
 			module.exports = JSON5.parse(fs.readFileSync(file, "utf8"));
 		};
-		
+
 		// JSON5 support for require-directory
 		requireDir.defaults.extensions.push("json5");
 	}
-	
+
 	data.items = [];
-	
+
 	try {
 		data.items = require("../data/items");
 	}
@@ -211,7 +211,7 @@ data.briefingColor = Object.freeze({
 
 	// Load planes
 	const planeData = requireDir(module, "../data/planes");
-	
+
 	for (const planeGroup in planeData) {
 		for (const planeID in planeData[planeGroup]) {
 			data.planes[planeID] = planeData[planeGroup][planeID];
@@ -276,7 +276,7 @@ data.briefingColor = Object.freeze({
  * @returns {number} Item type ID.
  */
 data.registerItemType = function(item) {
-	
+
 	if (typeof item !== "object" || !item.type || !item.script || !item.model) {
 		throw new TypeError("Invalid item data.");
 	}
@@ -286,26 +286,26 @@ data.registerItemType = function(item) {
 	// Lowercase and trim script/model paths
 	item.script = item.script.trim().toLowerCase();
 	item.model = item.model.trim().toLowerCase();
-	
+
 	// Item type ID as a string (lowercase file name without extension)
 	const stringTypeID = path.win32.basename(item.script, ".txt");
 
 	// Try to find existing item type ID by script index
 	let numberTypeID = items.indexOf(stringTypeID);
-	
+
 	// Add new item type
 	if (numberTypeID === -1) {
-		
+
 		numberTypeID = items.push(stringTypeID) - 1;
-		
+
 		const itemFile = "data/items/" + stringTypeID;
-		
+
 		try {
 			require.resolve("../" + itemFile);
 		}
 		// Write item JSON file
 		catch (e) {
-			
+
 			fs.writeFileSync(
 				itemFile + ".json",
 				JSON.stringify(item, null, "\t")
@@ -323,12 +323,12 @@ data.registerItemType = function(item) {
  * @returns {object} Item type data.
  */
 data.getItemType = function(itemTypeID) {
-	
+
 	// Look up string item type ID
 	if (typeof itemTypeID === "number") {
 		itemTypeID = this.items[itemTypeID];
 	}
-	
+
 	return require("../data/items/" + itemTypeID);
 };
 
@@ -341,31 +341,31 @@ data.getItemType = function(itemTypeID) {
  * @returns {object|boolean} Matched from/to range or boolean false on failure.
  */
 data.matchDateRange = function(match, dateFrom, dateTo) {
-	
+
 	// Always match if date range is undefined
 	if (!dateFrom && !dateTo) {
-		
+
 		return {
 			from: match.from,
 			to: match.to
 		};
 	}
-	
+
 	const range = {};
-	
+
 	if (dateFrom) {
 		range.from = dateFrom;
 	}
-	
+
 	if (dateTo) {
 		range.to = dateTo;
 	}
-	
+
 	// Parse each from/to date string
 	for (const type in range) {
-		
+
 		const date = range[type];
-		
+
 		// Special "start" value means the start (min) date of the match
 		if (date === "start") {
 			range[type] = match.from;

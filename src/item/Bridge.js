@@ -5,7 +5,7 @@ const Block = require("./Block");
 
 // Bridge item
 module.exports = class Bridge extends Block {
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *

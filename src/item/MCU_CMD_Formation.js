@@ -5,14 +5,14 @@ const MCU = require("./MCU");
 
 // Formation command item
 class MCU_CMD_Formation extends MCU {
-	
+
 	constructor() {
 		super();
-		
+
 		this.FormationType = MCU_CMD_Formation.TYPE_PLANE_NONE;
 		this.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -20,7 +20,7 @@ class MCU_CMD_Formation extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 19);
 
 		const buffer = new Buffer(8);

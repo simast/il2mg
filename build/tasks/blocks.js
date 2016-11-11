@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 		const numeral = require("numeral");
 		const data = require("../../src/data");
 		const Item = require("../../src/item");
-		
+
 		let totalBattles = 0;
 		let totalItems = 0;
 
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
 
 			totalBattles++;
 		}
-		
+
 		// Write items type JSON data file
 		grunt.file.write(
 			"data/items/index.json",

@@ -21,7 +21,7 @@ module.exports = class Airfield extends Block {
 		this.RefuelTime = 0;
 		this.MaintenanceRadius = 0;
 	}
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -29,7 +29,7 @@ module.exports = class Airfield extends Block {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		
+
 		yield* super.toBinary(index, 9);
 
 		let size = 31;
@@ -37,7 +37,7 @@ module.exports = class Airfield extends Block {
 
 		// Find Chart item
 		if (this.items && this.items.length) {
-			
+
 			let chartItem;
 			for (const item of this.items) {
 
@@ -47,43 +47,43 @@ module.exports = class Airfield extends Block {
 					break;
 				}
 			}
-			
+
 			if (chartItem && chartItem.items) {
-				
+
 				chartItem.items.forEach((item) => {
-					
+
 					if (item.type === "Point") {
 						pointItems.push(item);
 					}
 				});
 			}
 		}
-		
+
 		size += pointItems.length * 20;
 
 		const buffer = new Buffer(size);
-		
+
 		// ReturnPlanes
 		this.writeUInt8(buffer, this.ReturnPlanes);
-		
+
 		// Hydrodrome
 		this.writeUInt8(buffer, this.Hydrodrome);
 
 		// Callsign
 		this.writeUInt8(buffer, this.Callsign);
-		
+
 		// Callnum
 		this.writeUInt8(buffer, this.Callnum);
-		
+
 		// RepairFriendlies
 		this.writeUInt8(buffer, this.RepairFriendlies);
-		
+
 		// RearmFriendlies
 		this.writeUInt8(buffer, this.RearmFriendlies);
-		
+
 		// RefuelFriendlies
 		this.writeUInt8(buffer, this.RefuelFriendlies);
-		
+
 		// RepairTime
 		this.writeUInt32(buffer, this.RepairTime);
 
@@ -92,24 +92,24 @@ module.exports = class Airfield extends Block {
 
 		// RefuelTime
 		this.writeUInt32(buffer, this.RefuelTime);
-		
+
 		// MaintenanceRadius
 		this.writeUInt32(buffer, this.MaintenanceRadius);
-		
+
 		// Unknown data (number of OnReports table items?)
 		this.writeUInt32(buffer, 0);
-		
+
 		// Number of Chart->Point items
 		this.writeUInt32(buffer, pointItems.length);
-		
+
 		// List of Point items
 		pointItems.forEach((item) => {
-			
+
 			this.writeUInt32(buffer, item.Type); // Type
 			this.writeDouble(buffer, item.X); // X
 			this.writeDouble(buffer, item.Y); // Y
 		});
-		
+
 		yield buffer;
 	}
 };

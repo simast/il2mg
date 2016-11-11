@@ -5,7 +5,7 @@ const MCU = require("./MCU");
 
 // Take off command item
 module.exports = class MCU_CMD_TakeOff extends MCU {
-	
+
 	/**
 	 * Get binary representation of the item.
 	 *
