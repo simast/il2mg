@@ -178,68 +178,15 @@ function getRouteDistance(startPosition, route) {
 
 	let routeDistance = 0;
 	let prevSpotVector = Vector.create(startPosition);
-	let spotIndex = 0;
-	let loopSpotIndex;
-	let loopTime;
 
 	// Iterate route spots
-	while (route[spotIndex]) {
+	for (const spot of route) {
 
-		const spot = route[spotIndex];
-
-		// Handle special loop pattern route marker
-		if (Array.isArray(spot)) {
-
-			// Initialize loop marker data
-			if (loopSpotIndex === undefined) {
-
-				loopSpotIndex = spotIndex;
-				loopTime = spot[1];
-			}
-
-			// Apply loop marker offset
-			spotIndex = spotIndex + spot[0];
-
-			continue;
-		}
-
-		let spotVector = Vector.create(spot.position);
-		let segmentDistance = spotVector.distanceFrom(prevSpotVector);
-
-		// Calculate distance based on loop time and flight speed
-		if (loopSpotIndex !== undefined) {
-
-			const distancePerSecond = spot.speed * 1000 / 3600;
-			const remainingDistance = loopTime * distancePerSecond;
-
-			// Use full segment distance as is
-			if (remainingDistance >= segmentDistance) {
-				loopTime -= (segmentDistance / distancePerSecond);
-			}
-			// Use part of segment distance based on remaining loop time
-			else {
-
-				spotVector = spotVector
-					.subtract(prevSpotVector)
-					.toUnitVector()
-					.multiply(remainingDistance)
-					.add(prevSpotVector);
-
-				loopTime = 0;
-				segmentDistance = remainingDistance;
-			}
-
-			// Loop marker was completed
-			if (loopTime <= 0) {
-
-				spotIndex = loopSpotIndex;
-				loopSpotIndex = loopTime = undefined;
-			}
-		}
+		const spotVector = Vector.create(spot.position);
+		const segmentDistance = spotVector.distanceFrom(prevSpotVector);
 
 		routeDistance += segmentDistance;
 		prevSpotVector = spotVector;
-		spotIndex++;
 	}
 
 	return routeDistance;

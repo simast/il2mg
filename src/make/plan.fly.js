@@ -22,52 +22,26 @@ module.exports = function makePlanFly(action, element, flight, input) {
 		return;
 	}
 
+	const rand = this.rand;
 	const leaderPlaneItem = element[0].item;
 	let lastWaypoint = null;
 
 	// Process each route spot
 	for (let i = 0; i < route.length; i++) {
 
-		let spot = route[i];
+		const spot = route[i];
 		const nextSpot = route[i + 1];
 
-		// Support for special flight route loop pattern marker
-		if (Array.isArray(spot)) {
+		// Create waypoint for spot
+		if (input) {
 
-			const loopSpotIndex = i + spot[0]; // Apply loop marker offset
-			const loopTime = spot[1];
-
-			spot = route[loopSpotIndex];
-
-			if (input) {
-
-				// NOTE: Using a counter to make sure loop timer is activated only once!
-				const waitCounter = flight.group.createItem("MCU_Counter");
-				const waitTimer = flight.group.createItem("MCU_Timer");
-
-				waitTimer.Time = loopTime;
-				waitCounter.setPositionNear(spot.waypoint);
-				waitTimer.setPositionNear(waitCounter);
-
-				lastWaypoint.addTarget(spot.waypoint);
-				lastWaypoint.setOrientationTo(spot.waypoint);
-				spot.waypoint.addTarget(waitCounter);
-				waitCounter.addTarget(waitTimer);
-
-				lastWaypoint = waitTimer;
-			}
-		}
-		// Create waypoint for a non-looping spot
-		else if (input && !spot.waypoint) {
-
-			const waypoint = spot.waypoint = flight.group.createItem("MCU_Waypoint");
+			const waypoint = flight.group.createItem("MCU_Waypoint");
 
 			waypoint.addObject(leaderPlaneItem);
 			waypoint.setPosition(spot.position);
 
-			// TODO:
 			waypoint.Speed = spot.speed;
-			waypoint.Area = 1000;
+			waypoint.Area = rand.integer(750, 1250);
 
 			if (spot.priority !== undefined) {
 				waypoint.Priority = spot.priority;
@@ -99,23 +73,13 @@ module.exports = function makePlanFly(action, element, flight, input) {
 		if (drawIcons && (!spot.hidden || isNextSpotVisible)) {
 
 			const lastSpotIcon = flight.lastSpotIcon || flight.startIcon;
-			let spotIcon;
+			const spotIcon = flight.group.createItem("MCU_Icon");
 
-			// Reuse already existing icon (from a looping pattern)
-			if (spot.icon) {
-				spotIcon = spot.icon;
-			}
-			// Create a new spot icon
-			else {
+			spotIcon.setPosition(spot.position);
+			spotIcon.Coalitions = [flight.coalition];
 
-				spotIcon = flight.group.createItem("MCU_Icon");
-
-				spotIcon.setPosition(spot.position);
-				spotIcon.Coalitions = [flight.coalition];
-
-				if (!spot.hidden && !spot.split && isNextSpotVisible) {
-					spotIcon.IconId = MCU_Icon.ICON_WAYPOINT;
-				}
+			if (!spot.hidden && !spot.split && isNextSpotVisible) {
+				spotIcon.IconId = MCU_Icon.ICON_WAYPOINT;
 			}
 
 			if (!spot.hidden) {
@@ -124,7 +88,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 				lastSpotIcon.setColor(mapColor.ROUTE);
 
 				// Use solid line
-				if (spot.solid && !spot.icon) {
+				if (spot.solid) {
 					lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_3;
 				}
 				// Use dashed line
@@ -133,7 +97,7 @@ module.exports = function makePlanFly(action, element, flight, input) {
 				}
 			}
 
-			flight.lastSpotIcon = spot.icon = spotIcon;
+			flight.lastSpotIcon = spotIcon;
 		}
 	}
 

@@ -32,19 +32,12 @@ module.exports = function makeFlightOffmap(flight) {
 			startPosition = plan.start.position;
 		}
 
-		const endSpot = route[route.length - 1];
+		endPosition = route[route.length - 1].position;
 
 		// Adjust route start
 		if (isOffmap(this.map, startPosition)) {
 			adjustOffmapRouteBounds.call(this, flight, action, true, startPosition);
 		}
-
-		// Do not attempt to adjust routes ending with the special loop marker
-		if (Array.isArray(endSpot)) {
-			break;
-		}
-
-		endPosition = endSpot.position;
 
 		// Adjust route end
 		if (isOffmap(this.map, endPosition)) {
@@ -76,17 +69,7 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 	while (route[i]) {
 
 		const point = route[i];
-		let nextPointOffset = 0;
-		let nextPoint;
-
-		// Find a valid next point (ignoring special loop marker)
-		do {
-
-			nextPoint = route[isForward ? i + nextPointOffset : i - nextPointOffset - 1];
-			nextPointOffset++;
-		}
-		while (Array.isArray(nextPoint));
-
+		const nextPoint = route[isForward ? i : i - 1];
 		const isPointOffmap = isOffmap(map, point.position);
 		const isNextPointOffmap = nextPoint && isOffmap(map, nextPoint.position);
 

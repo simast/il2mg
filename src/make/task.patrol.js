@@ -152,9 +152,8 @@ module.exports = function makeTaskPatrol(flight) {
 	// NOTE: The first (ingress) patrol point will always be the closest one and
 	// the second point will be the one with "best" angle from the ingress point.
 	// The rest will be shuffled (may produce intersecting pattern with 4 points).
-	let ingressPoint = patrolPoints.shift();
+	const ingressPoint = patrolPoints.shift();
 	let ingressVector = Vector.create(ingressPoint);
-	const ingressDistance = ingressVector.distanceFrom(startVector);
 
 	// Sort the rest of patrol area points based on distance from ingress point
 	patrolPoints.sort((a, b) => {
@@ -202,24 +201,29 @@ module.exports = function makeTaskPatrol(flight) {
 	const altitude = makeFlightAltitude.call(this, flight);
 
 	const route = [];
-	let loopSpotIndex = 0;
 	let fromPosition = airfield.position;
 	let totalX = 0;
 	let totalZ = 0;
-	let speed;
+
+	// Collect X/Z coordinate totals (to get average patrol area center point)
+	for (const point of patrolPoints) {
+
+		totalX += point[0];
+		totalZ += point[1];
+	}
 
 	// Build patrol area route points
-	for (const point of patrolPoints) {
+	[...patrolPoints, ingressPoint].forEach((point, pointIndex) => {
 
 		const options = {altitude};
 
-		// Use solid ingress route line (with split)
-		if (point === ingressPoint) {
+		// Use a solid ingress route line (with split)
+		if (pointIndex === 0) {
 
 			options.solid = true;
 			options.split = true;
 		}
-		// Set route waypoints to low priority (for patrol area only)
+		// Set patrol area route waypoints to low priority
 		else {
 			options.priority = MCU_Waypoint.PRIORITY_LOW;
 		}
@@ -235,42 +239,8 @@ module.exports = function makeTaskPatrol(flight) {
 
 		route.push.apply(route, spots);
 
-		const lastSpot = spots.pop();
-
-		fromPosition = lastSpot.position;
-		speed = lastSpot.speed;
-
-		// Mark spot index for a repeating patrol loop pattern
-		if (point === ingressPoint) {
-
-			ingressPoint = fromPosition;
-			loopSpotIndex = route.length - 1;
-		}
-
-		// Collect X/Z coordinate totals (to get average patrol area center point)
-		totalX += point[0];
-		totalZ += point[1];
-	}
-
-	// Set patrol loop pattern fly time
-	let patrolTimeMin;
-	let patrolTimeMax;
-
-	patrolTimeMax = (maxPlaneRange - (ingressDistance * 2)) / 1000;
-	patrolTimeMax = patrolTimeMax / speed * 60 * 0.75;
-	patrolTimeMin = patrolTimeMax * 0.5;
-
-	// Use shorter patrol time with player flight
-	if (flight.player) {
-
-		patrolTimeMin = Math.min(patrolTimeMin, 15);
-		patrolTimeMax = Math.min(patrolTimeMin * 2, patrolTimeMax);
-	}
-
-	const patrolTime = rand.real(patrolTimeMin, patrolTimeMax);
-
-	// Add loop pattern route marker (back to ingress point)
-	route.push([-(route.length - loopSpotIndex), Math.round(60 * patrolTime)]);
+		fromPosition = spots.pop().position;
+	});
 
 	// Make final (back to the base) egress route
 	route.push.apply(
