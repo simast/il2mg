@@ -127,11 +127,7 @@ module.exports = function makeTaskPatrol(flight) {
 		vectorAB = vectorAB.multiply(scaleFactor);
 		
 		// Build final (result) point
-		const pointVector = Vector.create(pointA).add(vectorAB);
-		const point = [
-			Math.round(pointVector.e(1)),
-			Math.round(pointVector.e(2))
-		];
+		const point = Vector.create(pointA).add(vectorAB).round().elements;
 		
 		// Validated point
 		if (isRestricted(this.map, point)) {
@@ -215,14 +211,13 @@ module.exports = function makeTaskPatrol(flight) {
 	// Build patrol area route points
 	for (const point of patrolPoints) {
 		
-		const options = Object.create(null);
-		const to = {point, altitude};
+		const options = {altitude};
 		
 		// Use solid ingress route line (with split)
 		if (point === ingressPoint) {
 			
 			options.solid = true;
-			to.split = true;
+			options.split = true;
 		}
 		// Set route waypoints to low priority (for patrol area only)
 		else {
@@ -234,7 +229,7 @@ module.exports = function makeTaskPatrol(flight) {
 			this,
 			flight,
 			fromPosition,
-			to,
+			point,
 			options
 		);
 		
@@ -284,14 +279,11 @@ module.exports = function makeTaskPatrol(flight) {
 			this,
 			flight,
 			ingressPoint,
+			flight.airfield,
 			{
 				altitude,
-				airfield: flight.airfield,
-				split: true
-			},
-			{
-				// Don't show map egress route lines for patrol task
-				hidden: true
+				split: true,
+				hidden: true // Don't show map egress route lines for patrol task
 			}
 		)
 	);
@@ -711,6 +703,17 @@ function findBasePoints(flight, params) {
 			maxRange *= 1.1; // +10%
 			bounds = getBounds(maxRange);
 		}
+	}
+	
+	// Limit found locations to a valid non-restricted map area
+	// NOTE: This is neccessary as locations returned with findIn() method may
+	// intersect on a valid bounds area.
+	for (const location of [pointA, pointB]) {
+		
+		location.x1 = Math.max(location.x1, RESTRICTED_BORDER);
+		location.z1 = Math.max(location.z1, RESTRICTED_BORDER);
+		location.x2 = Math.min(location.x2, map.height - RESTRICTED_BORDER);
+		location.z2 = Math.min(location.z2, map.width - RESTRICTED_BORDER);
 	}
 	
 	// Return found points data

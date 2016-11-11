@@ -2,7 +2,10 @@
 "use strict";
 
 const {Vector} = require("sylvester");
+
+// Flight make parts
 const makeFlightSpeed = require("./flight.speed");
+const makeFlightAltitude = require("./flight.altitude");
 
 // Airfield as a target route constants
 const AIRFIELD_DISTANCE_EGRESS = 20000; // 20 km
@@ -13,7 +16,7 @@ const AIRFIELD_DISTANCE_MAX = 10000; // 10 km
 const ROUTE_SPLIT_DISTANCE = 80000; // 80 km
 
 // Make mission flight route
-module.exports = function makeFlightRoute(flight, fromPosition, to, options) {
+module.exports = function makeFlightRoute(flight, fromPosition, toPoint, options = {}) {
 	
 	// TODO: Adjust to waypoint altitude based on plane climb rate
 	// TODO: Use path-finding to avoid enemy airfields
@@ -21,19 +24,25 @@ module.exports = function makeFlightRoute(flight, fromPosition, to, options) {
 	
 	const rand = this.rand;
 	let isEgressRoute = false;
+	let altitudeProfile = options.altitude;
+	
+	// Make a new flight altitude profile
+	if (!altitudeProfile) {
+		altitudeProfile = makeFlightAltitude.call(this, flight);
+	}
 	
 	// Plan a route to an airfield (instead of a target point)
-	if (to.airfield) {
+	if (typeof toPoint === "string") {
 		
-		const airfield = this.airfields[to.airfield];
+		const airfield = this.airfields[toPoint];
 		const airfieldPosition = airfield.position;
 		
 		// Egress (back to home airfield) route flag
-		isEgressRoute = (to.airfield === flight.airfield);
+		isEgressRoute = (airfield.id === flight.airfield);
 		
 		// Use offmap airfield position as final point
 		if (airfield.offmap) {
-			to.point = [airfieldPosition[0], airfieldPosition[2]];
+			toPoint = [airfieldPosition[0], airfieldPosition[2]];
 		}
 		else {
 			
@@ -48,28 +57,26 @@ module.exports = function makeFlightRoute(flight, fromPosition, to, options) {
 			}
 			
 			// Make the final route spot (some distance before the airfield)
-			const routeEndVector = Vector.create([
+			toPoint = Vector.create([
 				airfieldPosition[0],
 				airfieldPosition[2]
 			]).add(routeVector.toUnitVector().multiply(
 				-1 * rand.real(AIRFIELD_DISTANCE_MIN, AIRFIELD_DISTANCE_MAX, true)
-			));
-			
-			to.point = [routeEndVector.e(1), routeEndVector.e(2)];
+			)).elements;
 		}
 	}
 	
 	const route = [];
 	const routeStartVector = Vector.create([fromPosition[0], fromPosition[2]]);
 	const routeVector = Vector.create([
-		to.point[0] - fromPosition[0],
-		to.point[1] - fromPosition[2]
+		toPoint[0] - fromPosition[0],
+		toPoint[1] - fromPosition[2]
 	]);
 	
 	let numSpots = 1;
 	
 	// Use more than one route spot when splitting is allowed
-	if (to.split) {
+	if (options.split) {
 		numSpots = Math.ceil(routeVector.modulus() / ROUTE_SPLIT_DISTANCE);
 	}
 	
@@ -95,15 +102,11 @@ module.exports = function makeFlightRoute(flight, fromPosition, to, options) {
 		
 		const spot = {};
 		
-		if (options) {
-			Object.assign(spot, options);
-		}
+		Object.assign(spot, options);
 		
 		// Use some randomness to shift split points from a straight route line
 		// TODO: Avoid placing randomized spots near the edge of map border
 		if (!isLastSpot) {
-			
-			spot.split = true;
 			
 			const angle60 = Math.PI / 3;
 			let rotateMin;
@@ -132,19 +135,23 @@ module.exports = function makeFlightRoute(flight, fromPosition, to, options) {
 					.rotate(rand.real(rotateMin, rotateMax, true), Vector.Zero(2))
 			);
 		}
+		else {
+			delete spot.split;
+		}
 		
 		let altitude;
 		
 		// Use a lower altitude for egress (back to home airfield) route
 		if (isEgressRoute && isLastSpot) {
-			altitude = rand.integer(to.altitude.min, to.altitude.target);
+			altitude = rand.integer(altitudeProfile.min, altitudeProfile.target);
 		}
 		// Use target altitude with some +-150 meters randomness
 		else {
-			altitude = to.altitude.target + rand.integer(-150, 150);
+			altitude = altitudeProfile.target + rand.integer(-150, 150);
 		}
 		
-		altitude = Math.min(Math.max(altitude, to.altitude.min), to.altitude.max);
+		altitude = Math.max(altitude, altitudeProfile.min);
+		altitude = Math.min(altitude, altitudeProfile.max);
 		
 		// Route target point with altitude
 		spot.position = [

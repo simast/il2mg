@@ -317,13 +317,12 @@ module.exports = function makeTaskSweep(flight) {
 	// Build fighter sweep route points
 	for (const point of sweepPoints) {
 		
-		const options = Object.create(null);
-		const to = {point, altitude};
+		const options = {altitude};
 		
 		// Use solid ingress route line (when player is not flight leader)
 		if (point === ingressPoint) {
 			
-			to.split = true;
+			options.split = true;
 			
 			if (!isPlayerFlightLeader || debugFlights) {
 				options.solid = true;
@@ -339,7 +338,7 @@ module.exports = function makeTaskSweep(flight) {
 			this,
 			flight,
 			fromPosition,
-			to,
+			point,
 			options
 		);
 		
@@ -352,12 +351,10 @@ module.exports = function makeTaskSweep(flight) {
 		this,
 		flight,
 		fromPosition,
+		flight.airfield,
 		{
 			altitude,
-			airfield: flight.airfield,
-			split: true
-		},
-		{
+			split: true,
 			// Hide egress route when player is flight leader
 			hidden: (
 				isPlayerFlightLeader &&
