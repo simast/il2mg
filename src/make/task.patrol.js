@@ -154,6 +154,7 @@ module.exports = function makeTaskPatrol(flight) {
 	// The rest will be shuffled (may produce intersecting pattern with 4 points).
 	const ingressPoint = patrolPoints.shift();
 	let ingressVector = Vector.create(ingressPoint);
+	const ingressDistance = ingressVector.distanceFrom(startVector);
 
 	// Sort the rest of patrol area points based on distance from ingress point
 	patrolPoints.sort((a, b) => {
@@ -202,18 +203,30 @@ module.exports = function makeTaskPatrol(flight) {
 
 	const route = [];
 	let fromPosition = airfield.position;
-	let totalX = 0;
-	let totalZ = 0;
+	let pointIndex = 0;
 
-	// Collect X/Z coordinate totals (to get average patrol area center point)
-	for (const point of patrolPoints) {
+	// Limit max patrol distance based on plane range
+	let patrolMaxDistance = (maxPlaneRange * 0.5) - ingressDistance;
 
-		totalX += point[0];
-		totalZ += point[1];
-	}
+	// Make at least a single pass on the entire route (back to ingress point)
+	let patrolMinPoints = patrolPoints.length + 1;
 
 	// Build patrol area route points
-	[...patrolPoints, ingressPoint].forEach((point, pointIndex) => {
+	for (;;) {
+
+		const isRequiredPoint = (patrolMinPoints > 0);
+		const point = patrolPoints.shift();
+		const pointDistance = Vector.create([
+			fromPosition[0],
+			fromPosition[2]
+		]).distanceFrom(Vector.create(point));
+
+		patrolPoints.push(point);
+
+		// Finish patrol route
+		if (!isRequiredPoint && patrolMaxDistance < pointDistance) {
+			break;
+		}
 
 		const options = {altitude};
 
@@ -228,6 +241,11 @@ module.exports = function makeTaskPatrol(flight) {
 			options.priority = MCU_Waypoint.PRIORITY_LOW;
 		}
 
+		// Hide repeating patrol route points
+		if (!isRequiredPoint) {
+			options.hidden = true;
+		}
+
 		// Plan patrol flight route for each point
 		const spots = makeFlightRoute.call(
 			this,
@@ -240,7 +258,11 @@ module.exports = function makeTaskPatrol(flight) {
 		route.push.apply(route, spots);
 
 		fromPosition = spots.pop().position;
-	});
+
+		patrolMaxDistance -= pointDistance;
+		patrolMinPoints--;
+		pointIndex++;
+	}
 
 	// Make final (back to the base) egress route
 	route.push.apply(
@@ -248,7 +270,7 @@ module.exports = function makeTaskPatrol(flight) {
 		makeFlightRoute.call(
 			this,
 			flight,
-			ingressPoint,
+			fromPosition,
 			flight.airfield,
 			{
 				altitude,
@@ -275,6 +297,16 @@ module.exports = function makeTaskPatrol(flight) {
 	// Draw patrol area zone only when player is a flight leader
 	if (!isPlayerFlightLeader) {
 		return;
+	}
+
+	let totalX = 0;
+	let totalZ = 0;
+
+	// Collect X/Z coordinate totals (to get average patrol area center point)
+	for (const point of patrolPoints) {
+
+		totalX += point[0];
+		totalZ += point[1];
 	}
 
 	const zoneVectors = [];
