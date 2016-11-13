@@ -2,7 +2,7 @@
 "use strict";
 
 // Make plan land action
-module.exports = function makePlanLand(action, element, flight, input) {
+module.exports = function makePlanLandAction(flight, element, action, input) {
 
 	if (!input) {
 		return;

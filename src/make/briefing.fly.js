@@ -16,7 +16,7 @@ const outroSegments = [
 ];
 
 // Make plan fly action briefing
-module.exports = function makeBriefingFly(action, flight) {
+module.exports = function makeBriefingFly(flight, action) {
 
 	const rand = this.rand;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
@@ -41,8 +41,7 @@ module.exports = function makeBriefingFly(action, flight) {
 
 		const briefingRoute = [];
 		const clouds = this.weather.clouds;
-		const altitude = action.altitude;
-		const speed = action.route[0].speed;
+		const {altitude, speed} = action.route[0];
 		const altitudeStr = numeral(Math.round(altitude.target / 100) * 100).format("0,0");
 		const speedStr = numeral(Math.round(speed / 10) * 10).format("0,0");
 

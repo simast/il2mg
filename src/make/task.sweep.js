@@ -372,7 +372,6 @@ module.exports = function makeTaskSweep(flight) {
 	flight.plan.push({
 		type: planAction.FLY,
 		route,
-		altitude,
 		state: 1,
 		visible: Boolean(flight.player)
 	});

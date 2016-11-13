@@ -4,8 +4,8 @@
 const {MCU_CMD_Formation} = require("../item");
 const {flightState} = require("../data");
 
-// Make plan form up action
-module.exports = function makePlanForm(action, element, flight, input) {
+// Make plan form action
+module.exports = function makePlanFormAction(flight, element, action, input) {
 
 	const rand = this.rand;
 	const leaderPlaneItem = element[0].item;

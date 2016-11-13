@@ -51,7 +51,6 @@ module.exports = function makeTaskRebase(flight) {
 	plan.push({
 		type: planAction.FLY,
 		route,
-		altitude,
 		state: 1,
 		visible: isPlayerFlight
 	});

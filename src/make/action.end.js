@@ -12,7 +12,7 @@ const MAX_PLAYER_END_RADIUS = 10500; // 10.5 km
 // NOTE: Most flights will end naturally with a "land" action - this special
 // end flight action is only used for rare situations - like ending the flight
 // prematurely on a route to an offmap airfield, for example.
-module.exports = function makePlanEnd(action, element, flight, input) {
+module.exports = function makePlanEndAction(flight, element, action, input) {
 
 	const rand = this.rand;
 	const flightGroup = flight.group;

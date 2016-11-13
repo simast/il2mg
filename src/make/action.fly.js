@@ -5,7 +5,7 @@ const {MCU_Icon, MCU_Waypoint} = require("../item");
 const {mapColor} = require("../data");
 
 // Make plan fly action
-module.exports = function makePlanFly(action, element, flight, input) {
+module.exports = function makePlanFlyAction(flight, element, action, input) {
 
 	const leaderElement = flight.elements[0];
 	const route = action.route;

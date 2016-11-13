@@ -284,7 +284,6 @@ module.exports = function makeTaskPatrol(flight) {
 	flight.plan.push({
 		type: planAction.FLY,
 		route,
-		altitude,
 		state: 1,
 		visible: Boolean(flight.player) && !isPlayerFlightLeader
 	});
@@ -623,7 +622,9 @@ function findBasePoints(flight, params) {
 	let bounds = getBounds(maxRange);
 
 	// Option 1: Find points from fronts within max allowed range
-	findPoints(territories[territory.FRONT].findIn(bounds));
+	if (territory.FRONT in territories) {
+		findPoints(territories[territory.FRONT].findIn(bounds));
+	}
 
 	// Option 2: Find points on friendly territory within max allowed range
 	if (!pointA || !pointB) {
@@ -685,7 +686,9 @@ function findBasePoints(flight, params) {
 			// Try each territory type based on priority
 			for (const territoryType of findTerritories) {
 
-				findPoints(territories[territoryType].findIn(bounds), directions);
+				if (territoryType in territories) {
+					findPoints(territories[territoryType].findIn(bounds), directions);
+				}
 
 				// All points are found
 				if (pointA && pointB) {

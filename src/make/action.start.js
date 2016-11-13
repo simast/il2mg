@@ -5,7 +5,7 @@ const {MCU_Icon} = require("../item");
 const {flightState} = require("../data");
 
 // Make plan start action
-module.exports = function makePlanStart(action, element, flight) {
+module.exports = function makePlanStartAction(flight, element, action) {
 
 	const rand = this.rand;
 	const position = action.position;

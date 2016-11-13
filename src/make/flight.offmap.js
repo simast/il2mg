@@ -15,6 +15,11 @@ const MAX_DISTANCE_BORDER = 4000; // 4 km
 // Make offmap flight bounds
 module.exports = function makeFlightOffmap(flight) {
 
+	// Process only flights with known offmap task support
+	if (!flight.task.offmap) {
+		return;
+	}
+
 	const plan = flight.plan;
 	let startPosition;
 	let endPosition;

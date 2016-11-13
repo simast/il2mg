@@ -248,7 +248,7 @@ params.option("-s, --state <state>", (() => {
 	// Try flight state as a number
 	const state = Number(value);
 
-	if (isNaN(state) || state < 0 || state > 1) {
+	if (isNaN(state) || state < 0 || state >= 1) {
 		return value;
 	}
 

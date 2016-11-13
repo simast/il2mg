@@ -5,8 +5,9 @@ const requireDir = require("require-directory");
 const {planAction} = require("../data");
 
 // Flight plan make parts
-const makeParts = requireDir(module, {include: /(plan|task)\..+\.js$/});
+const makeParts = requireDir(module, {include: /(action|task)\..+\.js$/});
 const makeFlightOffmap = require("./flight.offmap");
+const makeFlightState = require("./flight.state");
 const makeFlightPose = require("./flight.pose");
 
 // Make mission flight plan
@@ -43,14 +44,14 @@ module.exports = function makeFlightPlan(flight) {
 	}
 
 	// Make offmap flight bounds
-	if (task.offmap) {
-		makeFlightOffmap.call(this, flight);
-	}
+	makeFlightOffmap.call(this, flight);
+
+	// Fast-forward plan actions based on state
+	makeFlightState.call(this, flight);
 
 	// Make initial flight air start pose
 	makeFlightPose.call(this, flight, plan.start.position);
 
-	// TODO: Fast-forward plan actions based on state
 	// TODO: Build virtual route points (for AI flights only)
 
 	// List of output callback functions from previous plan action (for each
@@ -69,7 +70,7 @@ module.exports = function makeFlightPlan(flight) {
 		// Use default/common plan make action
 		// NOTE: Boolean flag can be used to skip making plan action
 		else if (action.makeAction !== false && action.type) {
-			makePlanAction = makeParts["plan." + action.type];
+			makePlanAction = makeParts["action." + action.type];
 		}
 
 		if (!makePlanAction) {
@@ -84,9 +85,9 @@ module.exports = function makeFlightPlan(flight) {
 
 			output.push(makePlanAction.call(
 				this,
-				action,
-				element,
 				flight,
+				element,
+				action,
 				outputPrev[elementIndex]
 			));
 		});

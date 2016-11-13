@@ -37,7 +37,7 @@ module.exports = function makeTaskCover(flight) {
 };
 
 // Make mission cover airfield plan action
-function makeTaskCoverAction(action, element, flight, input) {
+function makeTaskCoverAction(flight, element, action, input) {
 
 	if (!input) {
 		return;
@@ -120,7 +120,7 @@ function makeTaskCoverAction(action, element, flight, input) {
 }
 
 // Make mission cover airfield plan briefing
-function makeTaskCoverBriefing(action, flight) {
+function makeTaskCoverBriefing(flight, action) {
 
 	const rand = this.rand;
 	const airfield = this.airfields[flight.airfield];

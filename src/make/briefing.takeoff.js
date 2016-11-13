@@ -4,7 +4,7 @@
 const {flightState, itemFlag} = require("../data");
 
 // Make plan takeoff action briefing
-module.exports = function makeBriefingTakeoff(action, flight) {
+module.exports = function makeBriefingTakeoff(flight) {
 
 	const playerElement = this.player.element;
 

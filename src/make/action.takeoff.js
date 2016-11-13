@@ -4,7 +4,7 @@
 const {flightState} = require("../data");
 
 // Make plan takeoff action
-module.exports = function makePlanTakeoff(action, element, flight, input) {
+module.exports = function makePlanTakeoffAction(flight, element, action, input) {
 
 	const rand = this.rand;
 	const leaderPlaneItem = element[0].item;

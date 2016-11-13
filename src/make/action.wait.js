@@ -2,7 +2,7 @@
 "use strict";
 
 // Make plan wait action
-module.exports = function makePlanWait(action, element, flight, input) {
+module.exports = function makePlanWaitAction(flight, element, action, input) {
 
 	if (!input) {
 		return;

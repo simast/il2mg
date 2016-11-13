@@ -2,7 +2,7 @@
 "use strict";
 
 // Make plan land action briefing
-module.exports = function makeBriefingLand(action, flight) {
+module.exports = function makeBriefingLand(flight, action) {
 
 	const briefing = [];
 	const airfield = this.airfields[action.airfield || flight.airfield];

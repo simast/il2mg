@@ -214,7 +214,7 @@ module.exports = function makeFlight(params) {
 	// Option 3: Force (forward to) air start state if no valid taxi route is found
 	if (flight.taxi === undefined) {
 
-		flight.state = 0;
+		flight.state = (typeof flight.state === "number") ? flight.state : 0;
 
 		// Also reset each individual element state
 		for (const element of flight.elements) {

@@ -129,7 +129,7 @@ module.exports = function makeBriefing() {
 		}
 
 		// Make plan action briefing
-		const actionBriefing = makePlanBriefing.call(this, action, flight);
+		const actionBriefing = makePlanBriefing.call(this, flight, action);
 
 		if (actionBriefing && actionBriefing.length) {
 			briefingPlan.push(actionBriefing);
