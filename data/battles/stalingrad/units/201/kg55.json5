@@ -4,7 +4,7 @@
 		alias: "Greif",
 		role: "bomber"
 	},
-	
+
 	// Stab/KG 55
 	"kg55_stab": {
 		name: "Stab/KG 55",
@@ -51,7 +51,10 @@
 			// ... left for rest and refit to Saki/Crimea
 			// TODO: Part of the gruppe remained near Stalingrad?
 			["saki", "1942-09-14", "1942-11-05", 0],
-			["morozovskiy_south", "1942-11-05", "1943-01-02"],
+			["morozovskiy_south", "1942-11-05", "1942-12-24"],
+			// ... temporarily evacuated to Novocherkassk
+			["novocherkassk", "1942-12-24", "1942-12-26", 0.8],
+			["morozovskiy_south", "1942-12-26", "1943-01-02"],
 			["novocherkassk", "1943-01-02", "end", 0.5]
 		],
 		planes: [
@@ -98,7 +101,7 @@
 		name: "3./KG 55",
 		parent: "kg55_i"
 	},
-	
+
 	// II./KG 55
 	"kg55_ii": {
 		parent: "kg55",
@@ -106,7 +109,10 @@
 			["kramatorskaja", "start", "1942-08-03", 0.2],
 			// ... at Samorsk/Crimea
 			["kramatorskaja", "1942-08-20", "1942-08-23", 0.5],
-			["morozovskiy_south", "1942-08-23", "1942-12-29"]
+			["morozovskiy_south", "1942-08-23", "1942-12-24"],
+			// ... temporarily evacuated to Novocherkassk
+			["novocherkassk", "1942-12-24", "1942-12-26", 0.8],
+			["morozovskiy_south", "1942-12-26", "1942-12-29"]
 			// ... at Novocherkassk in 1943-01, but without any aircraft
 		],
 		planes: [
@@ -155,7 +161,7 @@
 		name: "6./KG 55",
 		parent: "kg55_ii"
 	},
-	
+
 	// III./KG 55
 	"kg55_iii": {
 		parent: "kg55",

@@ -18,7 +18,10 @@
 			// ... at Saki/Crimea, then Stalino, then at Armavir/Caucasus
 			// NOTE: No combat losses in 1942-10 (rest and refit?)
 			["armavir", "1942-11-24", "1942-11-24", 0],
-			["morozovskiy_south", "1942-11-24", "1943-01-02"],
+			["morozovskiy_south", "1942-11-24", "1942-12-24"],
+			// ... temporarily evacuated to Novocherkassk
+			["novocherkassk", "1942-12-24", "1942-12-26", 0.8],
+			["morozovskiy_south", "1942-12-26", "1943-01-02"],
 			["novocherkassk", "1943-01-02", "1943-01-27", 0.5]
 			// ... at Saki/Crimea
 		],

@@ -40,7 +40,10 @@
 			["stalino", "1942-09-29", "1942-10-12", 0], // Rest and refit
 			["karpovka", "1942-10-12", "1942-11-22"],
 			["oblivskaya", "1942-11-22", "1942-11-26"],
-			["morozovskiy_west", "1942-11-26", "1942-12-31"],
+			["morozovskiy_west", "1942-11-26", "1942-12-24"],
+			// ... temporarily evacuated to Novocherkassk
+			["novocherkassk", "1942-12-24", "1942-12-26", 0.8],
+			["morozovskiy_west", "1942-12-26", "1942-12-31"],
 			["makeyevka", "1942-12-31", "1942-12-31", 0] // Rest and refit
 		],
 		planes: [
