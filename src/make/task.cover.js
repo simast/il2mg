@@ -8,6 +8,7 @@ const {markMapArea} = require("./map");
 // Flight make parts
 const {makeBriefingLeadSegment} = require("./briefing.fly");
 const makeFlightSpeed = require("./flight.speed");
+const makeFlightFuel = require("./flight.fuel");
 
 // First (intro) plan description segments
 const introSegments = [
@@ -28,12 +29,20 @@ const outroSegments = [
 // Make mission cover airfield task
 module.exports = function makeTaskCover(flight) {
 
-	// Add custom cover airfield plan action
-	flight.plan.push({
+	// Custom cover airfield plan action
+	const action = {
 		makeAction: makeTaskCoverAction,
+		makeState: makeTaskCoverState,
 		makeBriefing: makeTaskCoverBriefing,
 		state: 1
-	});
+	};
+
+	// Only climb above airfield with low cloud cover
+	if (this.weather.clouds.cover < 50) {
+		action.altitude = this.rand.integer(1200, 2200);
+	}
+
+	flight.plan.push(action);
 };
 
 // Make mission cover airfield plan action
@@ -55,16 +64,10 @@ function makeTaskCoverAction(flight, element, action, input) {
 	const leaderPlaneItem = element[0].item;
 	const beacon = airfield.beacon;
 
-	let altitude = 0;
 	let coverCommand;
 
-	// Only climb above airfield with low cloud cover
-	if (this.weather.clouds.cover < 50) {
-		action.altitude = altitude = rand.integer(1200, 2200);
-	}
-
 	// Use climb waypoint above the airfield as a cover command
-	if (altitude) {
+	if (action.altitude) {
 
 		coverCommand = flight.group.createItem("MCU_Waypoint");
 
@@ -75,7 +78,7 @@ function makeTaskCoverAction(flight, element, action, input) {
 		// Set waypoint position above the airfield
 		coverCommand.setPosition(
 			airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
-			airfield.position[1] + altitude,
+			action.altitude,
 			airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
 		);
 
@@ -117,6 +120,31 @@ function makeTaskCoverAction(flight, element, action, input) {
 	// planes will stay in the air and will land when out of fuel or ammunition
 	// (as a direct result of "AI return to base decision" flag).
 	flight.plan.land.makeAction = false;
+}
+
+// Make mission cover airfield plan state
+function makeTaskCoverState(flight, action, state) {
+
+	const rand = this.rand;
+	const planeRange = this.planes[flight.leader.plane].range;
+	const airfield = this.airfields[flight.airfield];
+
+	// NOTE: Assuming that planes with cover action will stay in the air for 75%
+	// of their max fuel range.
+	const coverDistance = planeRange * 0.75 * state * 1000;
+
+	// Use flight fuel for fast-forward cover distance
+	makeFlightFuel.call(this, flight, coverDistance);
+
+	// Fast-forward to required altitude
+	if (action.altitude) {
+
+		flight.plan.start.position = [
+			airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
+			action.altitude,
+			airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
+		];
+	}
 }
 
 // Make mission cover airfield plan briefing

@@ -354,13 +354,7 @@ module.exports = function makeTaskSweep(flight) {
 		flight.airfield,
 		{
 			altitude,
-			split: true,
-			// Hide egress route when player is flight leader
-			hidden: (
-				isPlayerFlightLeader &&
-				!airfield.offmap &&
-				!debugFlights
-			)
+			split: true
 		}
 	);
 

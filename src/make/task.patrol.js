@@ -35,6 +35,7 @@ module.exports = function makeTaskPatrol(flight) {
 	const startVector = startLocation.vector;
 	const isPlayerFlightLeader = (flight.player === flight.leader);
 	const debugFlights = Boolean(this.debug && this.debug.flights);
+	const isForwardState = (typeof flight.state === "number" && flight.state > 0);
 
 	// Max patrol area range based on max aircraft fuel range
 	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
@@ -206,15 +207,15 @@ module.exports = function makeTaskPatrol(flight) {
 	let pointIndex = 0;
 
 	// Limit max patrol distance based on plane range
-	let patrolMaxDistance = (maxPlaneRange * 0.5) - ingressDistance;
+	let maxPatrolDistance = (maxPlaneRange * 0.5) - ingressDistance;
 
 	// Make at least a single pass on the entire route (back to ingress point)
-	let patrolMinPoints = patrolPoints.length + 1;
+	let leftRequiredSpots = patrolPoints.length + 1;
 
 	// Build patrol area route points
 	for (;;) {
 
-		const isRequiredPoint = (patrolMinPoints > 0);
+		const isRequiredPoint = (leftRequiredSpots > 0);
 		const point = patrolPoints.shift();
 		const pointDistance = Vector.create([
 			fromPosition[0],
@@ -224,7 +225,7 @@ module.exports = function makeTaskPatrol(flight) {
 		patrolPoints.push(point);
 
 		// Finish patrol route
-		if (!isRequiredPoint && patrolMaxDistance < pointDistance) {
+		if (!isRequiredPoint && maxPatrolDistance < pointDistance) {
 			break;
 		}
 
@@ -242,7 +243,7 @@ module.exports = function makeTaskPatrol(flight) {
 		}
 
 		// Hide repeating patrol route points
-		if (!isRequiredPoint) {
+		if (!isRequiredPoint && !isForwardState) {
 			options.hidden = true;
 		}
 
@@ -259,8 +260,8 @@ module.exports = function makeTaskPatrol(flight) {
 
 		fromPosition = spots.pop().position;
 
-		patrolMaxDistance -= pointDistance;
-		patrolMinPoints--;
+		maxPatrolDistance -= pointDistance;
+		leftRequiredSpots--;
 		pointIndex++;
 	}
 
@@ -275,7 +276,8 @@ module.exports = function makeTaskPatrol(flight) {
 			{
 				altitude,
 				split: true,
-				hidden: true // Don't show map egress route lines for patrol task
+				// Don't show map egress route lines for patrol task
+				hidden: !isForwardState
 			}
 		)
 	);

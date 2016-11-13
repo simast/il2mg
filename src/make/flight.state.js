@@ -53,6 +53,8 @@ module.exports = function makeFlightState(flight) {
 			makePlanState = makeState["state." + action.type];
 		}
 
+		action.state -= (action.state * state);
+
 		if (makePlanState) {
 			makePlanState.call(this, flight, action, state);
 		}

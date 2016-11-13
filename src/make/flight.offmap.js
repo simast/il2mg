@@ -186,12 +186,15 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 
 		// Transfer used offmap state
 		// TODO: Add "delay" for start action if necessary
-		if (action.state && !startAction.state) {
+		if (action.state && startAction.state === undefined) {
 
 			const routeDistance = getRouteDistance(plan.start.position, route);
 			const totalDistance = offmapDistance + routeDistance;
 			const transferState = action.state * (offmapDistance / totalDistance);
+			const planeSpeed = this.planes[flight.leader.plane].speed;
+			const delayTime = offmapDistance / (planeSpeed * 1000 / 3600);
 
+			startAction.delay = delayTime;
 			startAction.state = transferState;
 			action.state -= transferState;
 		}

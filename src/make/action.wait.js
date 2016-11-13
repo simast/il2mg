@@ -20,7 +20,7 @@ module.exports = function makePlanWaitAction(flight, element, action, input) {
 	// Wait using timer command
 	const waitTimer = flight.group.createItem("MCU_Timer");
 
-	waitTimer.Time = action.time;
+	waitTimer.Time = +(action.time.toFixed(3));
 	waitTimer.setPositionNear(leaderPlaneItem);
 
 	// Connect timer command to previous action
