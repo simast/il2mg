@@ -40,7 +40,7 @@ module.exports = function makeTaskSweep(flight) {
 	const debugFlights = Boolean(this.debug && this.debug.flights);
 
 	// Max fighter sweep route range based on max aircraft fuel range
-	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
+	const maxPlaneRange = flight.range;
 	let maxRouteRange = maxPlaneRange * (MAX_RANGE_FUEL / 100);
 
 	// Enforce max fighter sweep route distance

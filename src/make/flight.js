@@ -7,6 +7,7 @@ const {flightState} = require("../data");
 const makeFlightFormation = require("./flight.formation");
 const makeFlightPilots = require("./flight.pilots");
 const makeFlightPlanes = require("./flight.planes");
+const makeFlightRange = require("./flight.range");
 const makeFlightPlan = require("./flight.plan");
 const makeFlightFuel = require("./flight.fuel");
 const makeAirfieldTaxi = require("./airfield.taxi");
@@ -295,6 +296,9 @@ module.exports = function makeFlight(params) {
 			flight.taxi = -playerTaxiRouteID;
 		}
 	}
+
+	// Make max flight range
+	makeFlightRange.call(this, flight);
 
 	// Make initial flight fuel
 	makeFlightFuel.call(this, flight);

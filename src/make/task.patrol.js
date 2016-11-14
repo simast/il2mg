@@ -38,7 +38,7 @@ module.exports = function makeTaskPatrol(flight) {
 	const isForwardState = (typeof flight.state === "number" && flight.state > 0);
 
 	// Max patrol area range based on max aircraft fuel range
-	const maxPlaneRange = this.planes[flight.leader.plane].range * 1000;
+	const maxPlaneRange = flight.range;
 	const maxPatrolRange = maxPlaneRange * (MAX_RANGE_PERCENT / 100);
 
 	// Find base two patrol area reference points

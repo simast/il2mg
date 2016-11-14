@@ -126,12 +126,11 @@ function makeTaskCoverAction(flight, element, action, input) {
 function makeTaskCoverState(flight, action, state) {
 
 	const rand = this.rand;
-	const planeRange = this.planes[flight.leader.plane].range;
 	const airfield = this.airfields[flight.airfield];
 
 	// NOTE: Assuming that planes with cover action will stay in the air for 75%
 	// of their max fuel range.
-	const coverDistance = planeRange * 0.75 * state * 1000;
+	const coverDistance = flight.range * 0.75 * state;
 
 	// Use flight fuel for fast-forward cover distance
 	makeFlightFuel.call(this, flight, coverDistance);
