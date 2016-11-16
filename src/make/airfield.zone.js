@@ -95,5 +95,11 @@ module.exports = function makeAirfieldZone(airfield) {
 	zone.onUnload = zoneUnload;
 	zone.onDeactivate = zoneDeactivate;
 
+	// FIXME: Migrate old airfield activity zone to the new bubble system
+	this.registerActivityZone({
+		point: [airfield.position[0], airfield.position[2]],
+		radius: 6000
+	});
+
 	return zone;
 };

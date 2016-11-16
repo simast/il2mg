@@ -22,7 +22,8 @@
 		"rbush-knn": "2.0.0",
 		"suncalc": "1.7.0",
 		"sylvester": "0.0.21",
-		"smart-buffer": "1.0.11"
+		"smart-buffer": "1.0.11",
+		"quadtree-lib": "0.1.4"
 	},
 	"devDependencies": {
 		"grunt": "1.0.1",
@@ -44,6 +45,6 @@
 		"react": "15.3.2",
 		"react-dom": "15.3.2",
 		"react-router": "3.0.0",
-		"clean-css": "3.4.20"
+		"clean-css": "3.4.21"
 	}
 }
