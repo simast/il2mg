@@ -18,8 +18,10 @@ const makeAirfieldEffect = require("./airfield.effect");
 const makeAirfieldWreck = require("./airfield.wreck");
 const makeAirfieldVehicle = require("./airfield.vehicle");
 const makeAirfieldRoutes = require("./airfield.routes");
-const makeAirfieldZone = require("./airfield.zone");
 const makeAirfieldTaxi = require("./airfield.taxi");
+
+// Airfield activity zone radius
+const AIRFIELD_ZONE_RADIUS = 6000;
 
 // Generate mission airfields
 module.exports = function makeAirfields() {
@@ -316,7 +318,10 @@ module.exports = function makeAirfields() {
 			get: function() {
 
 				delete this.zone;
-				this.zone = makeAirfieldZone.call(mission, airfield);
+				this.zone = mission.createActivityZone({
+					point: [position[0], position[2]],
+					radius: AIRFIELD_ZONE_RADIUS
+				});
 
 				return this.zone;
 			},

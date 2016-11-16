@@ -169,8 +169,8 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 				onAttackArea.AttackAir = 1; // Attack air targets
 				onAttackArea.Time = 999 * 60; // Max 999 minutes
 
-				// NOTE: When attack area command is with medium or low priority - the area
-				// zone radius does not seem to be matter at all and AA vehicles will
+				// NOTE: When attack area command is with medium or low priority - the
+				// area zone radius does not seem to matter at all and AA vehicles will
 				// automatically fire at their optimal range.
 				onAttackArea.AttackArea = 0;
 				onAttackArea.Priority = MCU_CMD_AttackArea.PRIORITY_MEDIUM;
