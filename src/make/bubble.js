@@ -12,13 +12,14 @@ const {PRECISION_POSITION} = require("../item");
 // single check zone - which will only activate the other two when triggered!
 
 // Time constants used to re-check bubble zone for activitity (in seconds)
-const ZONE_TIME_CHECK = 30;
+const ZONE_TIME_CHECK_MIN = 40;
+const ZONE_TIME_CHECK_MAX = 50;
 const ZONE_TIME_UNLOAD = 10;
 
 // Generate mission activity bubble
 module.exports = function makeBubble() {
 
-	const {map} = this;
+	const {rand, map} = this;
 	const qt = new Quadtree({
 		width: map.width,
 		height: map.height,
@@ -91,7 +92,13 @@ module.exports = function makeBubble() {
 		checkZoneDeactivate.setPositionNear(checkZone);
 
 		// Timer used to re-check bubble zone for activity
-		checkZoneCheck.Time = ZONE_TIME_CHECK;
+		const checkTime = +(rand.real(
+			ZONE_TIME_CHECK_MIN,
+			ZONE_TIME_CHECK_MAX,
+			true
+		).toFixed(3));
+
+		checkZoneCheck.Time = checkTime;
 		checkZoneCheck.addTarget(checkZoneActivate);
 		checkZoneCheck.setPositionNear(checkZone);
 
@@ -106,7 +113,7 @@ module.exports = function makeBubble() {
 		checkZoneLoadActivate.setPositionNear(checkZoneLoad);
 
 		// Timer used to unload activity zone
-		checkZoneUnload.Time = ZONE_TIME_CHECK + ZONE_TIME_UNLOAD;
+		checkZoneUnload.Time = checkTime + ZONE_TIME_UNLOAD;
 		checkZoneUnload.addTarget(checkZoneLoadActivate);
 		checkZoneUnload.setPositionNear(checkZone);
 
@@ -176,6 +183,19 @@ module.exports = function makeBubble() {
 			return;
 		}
 
+		// Connect two child/parent activity zones
+		const connectZones = (childZone, parentZone) => {
+
+			parentZone.onLoad.addTarget(childZone.onCheck);
+
+			// Also deactivate child zone when parent covering zone is unloaded
+			if (parentZone.onUnload) {
+
+				parentZone.onDeactivate.addTarget(childZone.onCheck);
+				parentZone.onActivate.addTarget(childZone.onCheck);
+			}
+		};
+
 		// Process each quadtree node
 		const walkQuadtree = (node, zone) => {
 
@@ -225,13 +245,13 @@ module.exports = function makeBubble() {
 					radius
 				});
 
-				zone.onLoad.addTarget(coverZone.onCheck);
+				connectZones(coverZone, zone);
 				zone = coverZone;
 			}
 
-			// Connect each activity zone to covering zone
+			// Connect each activity zone to parent covering zone
 			for (const item of items) {
-				zone.onLoad.addTarget(item.zone.onCheck);
+				connectZones(item.zone, zone);
 			}
 
 			// There won't be any more items in child nodes
