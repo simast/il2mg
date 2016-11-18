@@ -35,7 +35,7 @@ module.exports = function makeBubble() {
 
 	// Function used to create a new bubble activity zone
 	// TODO: Support dynamic activity zones (with proximity trigger deactivation)
-	this.createActivityZone = (params) => {
+	this.createActivityZone = (params, isCoverZone = false) => {
 
 		const {point: [x, z], radius} = params;
 
@@ -44,23 +44,26 @@ module.exports = function makeBubble() {
 			throw TypeError("Invalid activity zone parameters.");
 		}
 
-		const x1 = Math.max(x - radius, 0);
-		const z1 = Math.max(z - radius, 0);
-		const x2 = Math.min(x + radius, map.height);
-		const z2 = Math.min(z + radius, map.width);
-
 		// Public activity zone interface
-		const zone = Object.create(null);
+		const zone = Object.create(params);
 
 		// Register new quadtree item
-		// NOTE: Using different X/Z coordinate system compared to Quadtree lib!
-		qt.push({
-			x: z1,
-			y: x1,
-			width: z2 - z1,
-			height: x2 - x1,
-			zone
-		});
+		if (!isCoverZone) {
+
+			const x1 = Math.max(x - radius, 0);
+			const z1 = Math.max(z - radius, 0);
+			const x2 = Math.min(x + radius, map.height);
+			const z2 = Math.min(z + radius, map.width);
+
+			// NOTE: Using different X/Z coordinate system compared to Quadtree lib!
+			qt.push({
+				x: z1,
+				y: x1,
+				width: z2 - z1,
+				height: x2 - x1,
+				zone
+			});
+		}
 
 		// Initialize base bubble group
 		if (!bubbleGroup) {
@@ -129,6 +132,7 @@ module.exports = function makeBubble() {
 		// Expose public zone event items
 		zone.onCheck = checkZone;
 		zone.onCheckActivate = checkZoneActivate;
+		zone.onCheckDeactivate = checkZoneDeactivate;
 		zone.onLoad = checkZoneLoad;
 		zone.onUnload = checkZoneUnload;
 
@@ -177,139 +181,88 @@ module.exports = function makeBubble() {
 			return;
 		}
 
-		// Connect two child/parent activity zones
-		const connectZones = (childZone, parentZone) => {
-
-			// Activate child zone when parent covering zone is loaded
-			parentZone.onLoad.addTarget(childZone.onCheck);
-
-			// Also deactivate child zone when parent covering zone is unloaded
-			if (parentZone.onUnload) {
-
-				parentZone.onDeactivate.addTarget(childZone.onCheck);
-				parentZone.onLoad.addTarget(childZone.onCheckActivate);
-			}
-		};
-
-		// Get enclosing circle from quadtree node params
-		const getEnclosingCircle = ({x, y, width, height}) => {
-
-			// NOTE: Radius needs to cover entire node rectangular sector!
-			let radius = Math.max(width, height) / 2;
-			radius = Math.sqrt(Math.pow(radius, 2) + Math.pow(radius, 2));
-
-			return {
-				x: x + width / 2,
-				y: y + height / 2,
-				r: radius
-			};
-		};
-
-		// Get circle used as cover zone (solves smallest-circle problem)
-		const getCoverZoneCircle = (node, items) => {
-
-			const circles = [];
-
-			// Include all immediate items
-			for (const item of items) {
-				circles.push(getEnclosingCircle(item));
-			}
-
-			// Also include all immediate child quadrants
-			for (const quadrantType in node.children) {
-
-				const childNode = node.children[quadrantType].tree;
-
-				if (childNode) {
-					circles.push(getEnclosingCircle(childNode));
-				}
-			}
-
-			return encloseCircles(circles);
-		};
-
 		// Process each quadtree node
-		const walkQuadtree = (node, zone) => {
+		const walkQuadtree = (node) => {
 
 			const items = node.oversized.concat(node.contents);
-			let needsCoverZone = false;
+			const zones = [];
 
-			// Cover zone is only required for non-root nodes
-			if (node !== qt) {
+			// Register immediate item zones
+			for (const item of items) {
+				zones.push(item.zone);
+			}
 
-				// Always cover if we have more than one immediate item
-				if (items.length > 1) {
-					needsCoverZone = true;
-				}
-				// Also cover if we have more than one child quadrant tree
-				else {
+			// Walk each child quadrant tree
+			if (items.length < node.size) {
 
-					let numChildNodes = 0;
+				for (const quadrantType in node.children) {
 
-					for (const quadrantType in node.children) {
+					const childNode = node.children[quadrantType].tree;
 
-						if (node.children[quadrantType].tree) {
-
-							numChildNodes++;
-
-							if (numChildNodes > 1) {
-
-								needsCoverZone = true;
-								break;
-							}
-						}
+					if (childNode) {
+						zones.push.apply(zones, walkQuadtree(childNode));
 					}
 				}
 			}
 
-			// Create node activity cover zone
-			if (needsCoverZone) {
+			// Cover multiple zones with a single parent activity zone
+			if (node !== qt && zones.length > 1) {
 
-				const coverCircle = getCoverZoneCircle(node, items);
-				const coverZone = this.createActivityZone({
-					point: [
-						coverCircle.y,
-						coverCircle.x
-					],
-					radius: coverCircle.r
-				});
+				const circles = [];
 
-				connectZones(coverZone, zone);
-				zone = coverZone;
-			}
+				// Build a list of zone circles
+				for (const zone of zones) {
 
-			// Connect each activity zone to parent covering zone
-			for (const item of items) {
-				connectZones(item.zone, zone);
-			}
-
-			// There won't be any more items in child nodes
-			if (items.length >= node.size) {
-				return;
-			}
-
-			// Walk each child quadrant tree
-			for (const quadrantType in node.children) {
-
-				const childNode = node.children[quadrantType].tree;
-
-				if (childNode) {
-					walkQuadtree(childNode, zone);
+					circles.push({
+						x: zone.point[0],
+						y: zone.point[1],
+						r: zone.radius
+					});
 				}
+
+				// Get circle used as cover zone (solves smallest-circle problem)
+				const coverCircle = encloseCircles(circles);
+
+				// Create a parent activity cover zone
+				const coverZone = this.createActivityZone({
+					point: [coverCircle.x, coverCircle.y],
+					radius: coverCircle.r
+				}, true);
+
+				// Connect each zone to parent activity cover zone
+				for (const zone of zones) {
+
+					// Activate child zone when parent cover zone is loaded
+					coverZone.onLoad.addTarget(zone.onCheck);
+
+					// Also deactivate child zone when parent cover zone is unloaded
+					coverZone.onUnload.addTarget(zone.onCheckDeactivate);
+					coverZone.onLoad.addTarget(zone.onCheckActivate);
+				}
+
+				// NOTE: All items are now covered with a single cover zone
+				return [coverZone];
 			}
+
+			return zones;
 		};
 
-		// Initialize base mission start trigger (used to activate bubble logic)
-		const missionBegin = bubbleGroup.createItem("MCU_TR_MissionBegin");
-		const missionBeginTimer = bubbleGroup.createItem("MCU_Timer");
+		const zones = walkQuadtree(qt);
 
-		missionBegin.setPosition(qt.height / 2, qt.width / 2);
-		missionBegin.addTarget(missionBeginTimer);
-		missionBeginTimer.setPositionNear(missionBegin);
-		missionBeginTimer.Time = 2; // NOTE: Required!
+		if (zones.length) {
 
-		walkQuadtree(qt, {
-			onLoad: missionBeginTimer
-		});
+			// Initialize base mission start trigger (used to activate bubble logic)
+			const missionBegin = bubbleGroup.createItem("MCU_TR_MissionBegin");
+			const missionBeginTimer = bubbleGroup.createItem("MCU_Timer");
+
+			missionBegin.setPosition(qt.height / 2, qt.width / 2);
+			missionBegin.addTarget(missionBeginTimer);
+			missionBeginTimer.setPositionNear(missionBegin);
+			missionBeginTimer.Time = 2; // NOTE: Required!
+
+			for (const zone of zones) {
+				missionBeginTimer.addTarget(zone.onCheck);
+			}
+		}
 	});
 };
