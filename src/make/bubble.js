@@ -2,6 +2,8 @@
 "use strict";
 
 const Quadtree = require("quadtree-lib");
+const addLazyProperty = require("lazy-property");
+const encloseCircles = require("circle-enclose");
 const {PRECISION_POSITION} = require("../item");
 
 // NOTE: The goal of a bubble system is to make sure that the least amount of
@@ -20,6 +22,8 @@ const ZONE_TIME_UNLOAD = 10;
 module.exports = function makeBubble() {
 
 	const {rand, map} = this;
+
+	// Initialize Quadtree structure for current map size
 	const qt = new Quadtree({
 		width: map.width,
 		height: map.height,
@@ -36,15 +40,17 @@ module.exports = function makeBubble() {
 		const {point: [x, z], radius} = params;
 
 		// Validate parameters
-		if (x < 0 || x > map.height || z < 0 || z > map.width) {
+		if (x < 0 || x > map.height || z < 0 || z > map.width || !radius) {
 			throw TypeError("Invalid activity zone parameters.");
 		}
 
-		const zone = Object.create(null);
 		const x1 = Math.max(x - radius, 0);
 		const z1 = Math.max(z - radius, 0);
 		const x2 = Math.min(x + radius, map.height);
 		const z2 = Math.min(z + radius, map.width);
+
+		// Public activity zone interface
+		const zone = Object.create(null);
 
 		// Register new quadtree item
 		// NOTE: Using different X/Z coordinate system compared to Quadtree lib!
@@ -92,6 +98,9 @@ module.exports = function makeBubble() {
 		checkZoneDeactivate.setPositionNear(checkZone);
 
 		// Timer used to re-check bubble zone for activity
+		// NOTE: The player might start in an area covered by multiple zones - and
+		// they will all get activated at the same time. As a result - we randomize
+		// bubble zone re-check time slightly to distribute the load.
 		const checkTime = +(rand.real(
 			ZONE_TIME_CHECK_MIN,
 			ZONE_TIME_CHECK_MAX,
@@ -119,59 +128,44 @@ module.exports = function makeBubble() {
 
 		// Expose public zone event items
 		zone.onCheck = checkZone;
+		zone.onCheckActivate = checkZoneActivate;
 		zone.onLoad = checkZoneLoad;
 		zone.onUnload = checkZoneUnload;
 
 		// Lazy onActivate event item (triggered when zone is loaded)
-		Object.defineProperty(zone, "onActivate", {
-			get: function() {
+		addLazyProperty(zone, "onActivate", () => {
 
-				const onActivate = zoneGroup.createItem("MCU_Activate");
+			const onActivate = zoneGroup.createItem("MCU_Activate");
 
-				checkZoneLoad.addTarget(onActivate);
-				onActivate.setPositionNear(checkZoneLoad);
+			checkZoneLoad.addTarget(onActivate);
+			onActivate.setPositionNear(checkZoneLoad);
 
-				delete this.onActivate;
-				this.onActivate = onActivate;
-
-				return onActivate;
-			},
-			configurable: true
+			return onActivate;
 		});
 
 		// Lazy onDeactivate event item (triggered when zone is unloaded)
-		Object.defineProperty(zone, "onDeactivate", {
-			get: function() {
+		addLazyProperty(zone, "onDeactivate", () => {
 
-				const onDeactivate = zoneGroup.createItem("MCU_Deactivate");
+			const onDeactivate = zoneGroup.createItem("MCU_Deactivate");
 
-				checkZoneUnload.addTarget(onDeactivate);
-				onDeactivate.setPositionNear(checkZoneUnload);
+			checkZoneUnload.addTarget(onDeactivate);
+			onDeactivate.setPositionNear(checkZoneUnload);
 
-				delete this.onDeactivate;
-				this.onDeactivate = onDeactivate;
-
-				return onDeactivate;
-			},
-			configurable: true
+			return onDeactivate;
 		});
 
 		// Lazy onInitialize event item (triggered when zone is intialized)
-		Object.defineProperty(zone, "onInitialize", {
-			get: function() {
+		addLazyProperty(zone, "onInitialize", () => {
 
-				const onInitialize = zoneGroup.createItem("MCU_Counter");
+			const onInitialize = zoneGroup.createItem("MCU_Counter");
 
-				checkZone.addTarget(onInitialize);
-				onInitialize.setPositionNear(checkZone);
+			checkZone.addTarget(onInitialize);
+			onInitialize.setPositionNear(checkZone);
 
-				delete this.onInitialize;
-				this.onInitialize = onInitialize;
-
-				return onInitialize;
-			},
-			configurable: true
+			return onInitialize;
 		});
+
+		// TODO: Add lazy onEffectStart/onAttackArea event items?
 
 		return zone;
 	};
@@ -186,14 +180,52 @@ module.exports = function makeBubble() {
 		// Connect two child/parent activity zones
 		const connectZones = (childZone, parentZone) => {
 
+			// Activate child zone when parent covering zone is loaded
 			parentZone.onLoad.addTarget(childZone.onCheck);
 
 			// Also deactivate child zone when parent covering zone is unloaded
 			if (parentZone.onUnload) {
 
 				parentZone.onDeactivate.addTarget(childZone.onCheck);
-				parentZone.onActivate.addTarget(childZone.onCheck);
+				parentZone.onLoad.addTarget(childZone.onCheckActivate);
 			}
+		};
+
+		// Get enclosing circle from quadtree node params
+		const getEnclosingCircle = ({x, y, width, height}) => {
+
+			// NOTE: Radius needs to cover entire node rectangular sector!
+			let radius = Math.max(width, height) / 2;
+			radius = Math.sqrt(Math.pow(radius, 2) + Math.pow(radius, 2));
+
+			return {
+				x: x + width / 2,
+				y: y + height / 2,
+				r: radius
+			};
+		};
+
+		// Get circle used as cover zone (solves smallest-circle problem)
+		const getCoverZoneCircle = (node, items) => {
+
+			const circles = [];
+
+			// Include all immediate items
+			for (const item of items) {
+				circles.push(getEnclosingCircle(item));
+			}
+
+			// Also include all immediate child quadrants
+			for (const quadrantType in node.children) {
+
+				const childNode = node.children[quadrantType].tree;
+
+				if (childNode) {
+					circles.push(getEnclosingCircle(childNode));
+				}
+			}
+
+			return encloseCircles(circles);
 		};
 
 		// Process each quadtree node
@@ -202,21 +234,21 @@ module.exports = function makeBubble() {
 			const items = node.oversized.concat(node.contents);
 			let needsCoverZone = false;
 
-			// Cover zone is only relevant to non-root nodes
+			// Cover zone is only required for non-root nodes
 			if (node !== qt) {
 
 				// Always cover if we have more than one immediate item
 				if (items.length > 1) {
 					needsCoverZone = true;
 				}
-				// Also cover if we have more than one child tree
+				// Also cover if we have more than one child quadrant tree
 				else {
 
 					let numChildNodes = 0;
 
-					for (const direction in node.children) {
+					for (const quadrantType in node.children) {
 
-						if (node.children[direction].tree) {
+						if (node.children[quadrantType].tree) {
 
 							numChildNodes++;
 
@@ -233,16 +265,13 @@ module.exports = function makeBubble() {
 			// Create node activity cover zone
 			if (needsCoverZone) {
 
-				// NOTE: Radius needs to cover entire node rectangular sector!
-				let radius = Math.max(node.width, node.height) / 2;
-				radius = Math.sqrt(Math.pow(radius, 2) + Math.pow(radius, 2));
-
+				const coverCircle = getCoverZoneCircle(node, items);
 				const coverZone = this.createActivityZone({
 					point: [
-						node.y + node.height / 2,
-						node.x + node.width / 2
+						coverCircle.y,
+						coverCircle.x
 					],
-					radius
+					radius: coverCircle.r
 				});
 
 				connectZones(coverZone, zone);
@@ -259,10 +288,10 @@ module.exports = function makeBubble() {
 				return;
 			}
 
-			// Walk each child node tree
-			for (const direction in node.children) {
+			// Walk each child quadrant tree
+			for (const quadrantType in node.children) {
 
-				const childNode = node.children[direction].tree;
+				const childNode = node.children[quadrantType].tree;
 
 				if (childNode) {
 					walkQuadtree(childNode, zone);

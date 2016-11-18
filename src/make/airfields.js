@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
+const addLazyProperty = require("lazy-property");
 const log = require("../log");
 const Item = require("../item");
 const {Location} = require("./locations");
@@ -92,19 +93,13 @@ module.exports = function makeAirfields() {
 			totalOffmap++;
 		}
 
-		// Getter for airfield items group
-		Object.defineProperty(airfield, "group", {
-			get: function() {
+		// Lazy getter for airfield items group
+		addLazyProperty(airfield, "group", () => {
 
-				// Lazy (first time access) initialization of group item
-				delete this.group;
+			const airfieldGroup = mission.createItem("Group");
+			airfieldGroup.setName(airfield.name);
 
-				this.group = mission.createItem("Group");
-				this.group.setName(this.name);
-
-				return this.group;
-			},
-			configurable: true
+			return airfieldGroup;
 		});
 
 		const airfieldUnits = mission.unitsByAirfield[airfieldID];
@@ -314,18 +309,12 @@ module.exports = function makeAirfields() {
 		}
 
 		// Initialize airfield zone using a lazy getter
-		Object.defineProperty(airfield, "zone", {
-			get: function() {
+		addLazyProperty(airfield, "zone", () => {
 
-				delete this.zone;
-				this.zone = mission.createActivityZone({
-					point: [position[0], position[2]],
-					radius: AIRFIELD_ZONE_RADIUS
-				});
-
-				return this.zone;
-			},
-			configurable: true
+			return mission.createActivityZone({
+				point: [position[0], position[2]],
+				radius: AIRFIELD_ZONE_RADIUS
+			});
 		});
 
 		// Make airfield item limits
