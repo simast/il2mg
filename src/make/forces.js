@@ -7,80 +7,13 @@ const makeFlight = require("./flight");
 // Generate mission task forces
 module.exports = function makeForces() {
 
-	const rand = this.rand;
-	const params = this.params;
-	const choice = this.choice;
+	const {rand, params, choice} = this;
 	const force = [];
 	let flight;
 
 	this.forces = [];
 
-	// Select a matching player unit (from a weighted list filtered by choices)
-	// FIXME: Filter only unique units (not a weighted list)
-	const unit = this.units[rand.pick(this.unitsWeighted.filter((unitID) => {
-
-		// Filter out not matching unit IDs
-		if (choice.unit && !choice.unit.has(unitID)) {
-			return false;
-		}
-
-		const unit = this.units[unitID];
-
-		// Filter out not matching countries
-		if (choice.country && !choice.country.has(unit.country)) {
-			return false;
-		}
-
-		// Filter out units without tasks
-		if (!unit.tasks.length) {
-			return false;
-		}
-
-		// Filter out not matching airfields
-		if (choice.airfield && !choice.airfield.has(unit.airfield)) {
-			return false;
-		}
-
-		// Allow only units with matching tasks
-		if (choice.task) {
-
-			let hasValidTask = false;
-
-			for (const task of unit.tasks) {
-
-				if (choice.task.has(task.id)) {
-
-					hasValidTask = true;
-					break;
-				}
-			}
-
-			if (!hasValidTask) {
-				return false;
-			}
-		}
-
-		// Allow only units with matching planes
-		if (choice.plane) {
-
-			let hasValidPlane = false;
-
-			for (const planeID of unit.planes) {
-
-				if (choice.plane.has(planeID)) {
-
-					hasValidPlane = true;
-					break;
-				}
-			}
-
-			if (!hasValidPlane) {
-				return false;
-			}
-		}
-
-		return true;
-	}))];
+	const unit = chooseFlightUnit.call(this, choice);
 
 	const flightParams = {
 		player: true,
@@ -93,12 +26,11 @@ module.exports = function makeForces() {
 		// Find matching unit task choice
 		for (const task of rand.shuffle(unit.tasks)) {
 
-			if (!choice.task.has(task.id)) {
-				continue;
-			}
+			if (choice.task.has(task.id)) {
 
-			flightParams.task = task.id;
-			break;
+				flightParams.task = task.id;
+				break;
+			}
 		}
 	}
 
@@ -147,7 +79,7 @@ module.exports = function makeForces() {
 		// Log player flight info
 		const logData = ["Flight:"];
 
-		// Flight unit name
+		// Log flight unit name
 		const unit = this.units[player.flight.unit];
 		let unitName = unit.name;
 
@@ -161,7 +93,7 @@ module.exports = function makeForces() {
 
 		logData.push(unitName);
 
-		// Flight formation and state (for player element)
+		// Log flight formation and state (for player element)
 		const formation = player.flight.formation;
 		let formationID = formation.id;
 
@@ -177,3 +109,93 @@ module.exports = function makeForces() {
 		log.I.apply(log, logData);
 	}
 };
+
+// Choose a valid flight unit based on choice data
+function chooseFlightUnit(choice) {
+
+	const {rand} = this;
+	const validUnits = new Set();
+
+	// Filter all valid units
+	for (const unitID in this.units) {
+
+		// Filter out not matching unit IDs
+		if (choice.unit && !choice.unit.has(unitID)) {
+			continue;
+		}
+
+		const unit = this.units[unitID];
+
+		// Filter out unit groups
+		if (Array.isArray(unit)) {
+			continue;
+		}
+
+		// Filter out units without tasks
+		if (!unit.tasks.length) {
+			continue;
+		}
+
+		// Filter out not matching countries
+		if (choice.country && !choice.country.has(unit.country)) {
+			continue;
+		}
+
+		// Filter out not matching airfields
+		if (choice.airfield && !choice.airfield.has(unit.airfield)) {
+			continue;
+		}
+
+		// Allow only units with matching tasks
+		if (choice.task) {
+
+			let hasValidTask = false;
+
+			for (const task of unit.tasks) {
+
+				if (choice.task.has(task.id)) {
+
+					hasValidTask = true;
+					break;
+				}
+			}
+
+			if (!hasValidTask) {
+				continue;
+			}
+		}
+
+		// Allow only units with matching planes
+		if (choice.plane) {
+
+			let hasValidPlane = false;
+
+			for (const planeID of unit.planes) {
+
+				if (choice.plane.has(planeID)) {
+
+					hasValidPlane = true;
+					break;
+				}
+			}
+
+			if (!hasValidPlane) {
+				continue;
+			}
+		}
+
+		validUnits.add(unitID);
+	}
+
+	if (!validUnits.size) {
+		return;
+	}
+
+	// FIXME: Support unit availability
+	// FIXME: Make a more efficient selection (not filtering weighted unit list)
+
+	// Select a matching unit (from a weighted list)
+	return this.units[rand.pick(this.unitsWeighted.filter((unitID) => {
+		return validUnits.has(unitID);
+	}))];
+}

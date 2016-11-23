@@ -35,7 +35,7 @@ module.exports = function makeBubble() {
 
 	// Function used to create a new bubble activity zone
 	// TODO: Support dynamic activity zones (with proximity trigger deactivation)
-	this.createActivityZone = (params, isCoverZone = false) => {
+	this.createActivityZone = (params, useBubble = true) => {
 
 		const {point: [x, z], radius} = params;
 
@@ -47,8 +47,8 @@ module.exports = function makeBubble() {
 		// Public activity zone interface
 		const zone = Object.create(params);
 
-		// Register new quadtree item
-		if (!isCoverZone) {
+		// Register new bubble quadtree item
+		if (useBubble) {
 
 			const x1 = Math.max(x - radius, 0);
 			const z1 = Math.max(z - radius, 0);
@@ -72,7 +72,12 @@ module.exports = function makeBubble() {
 			bubbleGroup.setName("BUBBLE");
 		}
 
-		const zoneGroup = zone.group = bubbleGroup.createItem("Group");
+		let zoneGroup = zone.group;
+
+		if (!zoneGroup) {
+			zoneGroup = zone.group = bubbleGroup.createItem("Group");
+		}
+
 		const checkZone = zoneGroup.createItem("MCU_CheckZone");
 		const checkZoneActivate = zoneGroup.createItem("MCU_Activate");
 		const checkZoneDeactivate = zoneGroup.createItem("MCU_Deactivate");
@@ -227,7 +232,7 @@ module.exports = function makeBubble() {
 				const coverZone = this.createActivityZone({
 					point: [coverCircle.x, coverCircle.y],
 					radius: coverCircle.r
-				}, true);
+				}, false);
 
 				// Connect each zone to parent activity cover zone
 				for (const zone of zones) {

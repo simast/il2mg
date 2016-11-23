@@ -312,6 +312,7 @@ module.exports = function makeAirfields() {
 		addLazyProperty(airfield, "zone", () => {
 
 			return mission.createActivityZone({
+				group: airfield.group,
 				point: [position[0], position[2]],
 				radius: AIRFIELD_ZONE_RADIUS
 			});
