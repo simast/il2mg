@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const {remote} = require("electron");
+const {remote} = global.require("electron");
 const React = require("react");
 
 // Season color values

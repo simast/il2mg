@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const remote = require("electron").remote;
+const remote = global.require("electron").remote;
 const React = require("react");
 const {Link} = require("react-router");
 

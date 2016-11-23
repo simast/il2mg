@@ -2,7 +2,7 @@
 "use strict";
 
 const React = require("react");
-const {remote, ipcRenderer} = require("electron");
+const {remote, ipcRenderer} = global.require("electron");
 
 // Application component
 class Application extends React.Component {
