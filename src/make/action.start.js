@@ -10,16 +10,19 @@ module.exports = function makePlanStartAction(flight, element, action) {
 	const rand = this.rand;
 	const position = action.position;
 	const isAirStart = (typeof element.state === "number");
+	const debugFlights = Boolean(this.debug && this.debug.flights);
 
-	// Create start location icon for player flight
-	if (flight.player && !flight.startIcon) {
+	// Create start location icon
+	if ((flight.player || debugFlights) && !flight.startIcon) {
 
 		const startIcon = flight.startIcon = flight.group.createItem("MCU_Icon");
 
 		startIcon.setPosition(position);
-		startIcon.Coalitions = [flight.coalition];
-		startIcon.IconId = MCU_Icon.ICON_ACTION_POINT;
-		startIcon.LineType = MCU_Icon.LINE_SECTOR_4;
+		startIcon.Coalitions = debugFlights ? this.coalitions : [flight.coalition];
+
+		if (flight.player) {
+			startIcon.IconId = MCU_Icon.ICON_ACTION_POINT;
+		}
 	}
 
 	// Player-only spawn without valid taxi route

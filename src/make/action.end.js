@@ -35,7 +35,7 @@ module.exports = function makePlanEndAction(flight, element, action, input) {
 
 			for (const {item: planeItem} of element) {
 
-				if (planeItem !== flight.player.item) {
+				if (!flight.player || planeItem !== flight.player.item) {
 					onEnd.addObject(planeItem);
 				}
 			}

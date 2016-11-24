@@ -66,6 +66,7 @@ module.exports = function makePlanFlyAction(flight, element, action, input) {
 		}
 
 		const isNextSpotVisible = (nextSpot && !nextSpot.hidden);
+		const drawAIRoute = Boolean(!flight.player && debugFlights);
 
 		// Draw flight route on the map
 		// NOTE: Only draw icons for visible spots or when the next spot is visible
@@ -74,21 +75,36 @@ module.exports = function makePlanFlyAction(flight, element, action, input) {
 
 			const lastSpotIcon = flight.lastSpotIcon || flight.startIcon;
 			const spotIcon = flight.group.createItem("MCU_Icon");
+			let routeColor = mapColor.ROUTE;
+
+			if (drawAIRoute) {
+
+				if (flight.coalition === this.player.flight.coalition) {
+					routeColor = mapColor.FRIEND;
+				}
+				else {
+					routeColor = mapColor.ENEMY;
+				}
+			}
 
 			spotIcon.setPosition(spot.position);
-			spotIcon.Coalitions = [flight.coalition];
+			spotIcon.Coalitions = debugFlights ? this.coalitions : [flight.coalition];
 
-			if (!spot.hidden && !spot.split && isNextSpotVisible) {
+			if (!spot.hidden && !spot.split && isNextSpotVisible && !drawAIRoute) {
 				spotIcon.IconId = MCU_Icon.ICON_WAYPOINT;
 			}
 
 			if (!spot.hidden) {
 
 				lastSpotIcon.addTarget(spotIcon);
-				lastSpotIcon.setColor(mapColor.ROUTE);
+				lastSpotIcon.setColor(routeColor);
 
+				// Use normal lines for AI flight routes in debug mode
+				if (drawAIRoute) {
+					lastSpotIcon.LineType = MCU_Icon.LINE_NORMAL;
+				}
 				// Use solid line
-				if (spot.solid) {
+				else if (spot.solid) {
 					lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_3;
 				}
 				// Use dashed line
