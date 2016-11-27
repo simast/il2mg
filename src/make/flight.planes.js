@@ -17,6 +17,12 @@ module.exports = function makeFlightPlanes(flight) {
 	const usedParkSpawns = [];
 	let planeNumber = flight.planes;
 
+	// NOTE: Randomize taxi spawns list as it's not fully randomized by this point
+	// (due to groups usage in airfield data files).
+	if (flight.spawns && flight.state === flightState.START) {
+		rand.shuffle(flight.spawns);
+	}
+
 	// Process each flight element (section) in reverse
 	for (let elementIndex = flight.elements.length - 1; elementIndex >= 0; elementIndex--) {
 

@@ -390,8 +390,8 @@ function findBasePoints(flight, params) {
 	const startVector = start.vector;
 	const minDistance = params.minDistance;
 	const maxDistance = params.maxDistance;
-	const minAngle = params.minAngle;
-	const maxAngle = params.maxAngle;
+	let minAngle = params.minAngle;
+	let maxAngle = params.maxAngle;
 	let maxRange = params.maxRange;
 
 	let pointA;
@@ -404,12 +404,17 @@ function findBasePoints(flight, params) {
 	// Get valid bounds area for base patrol points
 	const getBounds = (maxRange) => {
 
-		return new Location(
-			Math.max(startX - maxRange, RESTRICTED_BORDER),
-			Math.max(startZ - maxRange, RESTRICTED_BORDER),
-			Math.min(startX + maxRange, map.height - RESTRICTED_BORDER),
-			Math.min(startZ + maxRange, map.width - RESTRICTED_BORDER)
-		);
+		const maxX = map.height - RESTRICTED_BORDER;
+		const minX = RESTRICTED_BORDER;
+		const maxZ = map.width - RESTRICTED_BORDER;
+		const minZ = RESTRICTED_BORDER;
+
+		const x1 = Math.min(Math.max(startX - maxRange, minX), maxX);
+		const z1 = Math.min(Math.max(startZ - maxRange, minZ), maxZ);
+		const x2 = Math.max(Math.min(startX + maxRange, maxX), minX);
+		const z2 = Math.max(Math.min(startZ + maxRange, maxZ), minZ);
+
+		return new Location(x1, z1, x2, z2);
 	};
 
 	// Find base two (A and B) reference points
@@ -704,10 +709,12 @@ function findBasePoints(flight, params) {
 				break;
 			}
 
-			// Option 3: Extend the max range until points are found. This is mostly
-			// done to support offmap airfield starting positions and to handle
-			// various edge cases.
+			// Option 3: Extend the max range and adjust min/max angles until points
+			// are found. This is mostly done to support offmap airfield starting
+			// positions and to handle various edge cases.
 			maxRange *= 1.1; // +10%
+			minAngle *= 0.9; // -10%
+			maxAngle *= 1.1; // +10%
 			bounds = getBounds(maxRange);
 		}
 	}

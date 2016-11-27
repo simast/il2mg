@@ -83,7 +83,7 @@ module.exports = function makeFlight(params) {
 	// Make flight formation (elements/sections)
 	makeFlightFormation.call(this, flight, isPlayer);
 
-	// No planes are available for the flight
+	// FIXME: No planes are available for the flight
 	if (!flight.planes) {
 		return;
 	}
@@ -199,17 +199,23 @@ module.exports = function makeFlight(params) {
 		if (flight.taxi === undefined) {
 			findTaxiRoute(rand.shuffle(Object.keys(airfield.taxiSpawnsBySector)));
 		}
+
+		// Make sure selected taxi route is valid (only one per runway is allowed)
+		if (flight.taxi > 0 && airfield.activeTaxiRoutes) {
+
+			const taxiRunwayID = airfield.taxi[flight.taxi][1];
+
+			// Use already available taxi route for this runway
+			if (taxiRunwayID in airfield.activeTaxiRoutes) {
+				flight.taxi = airfield.activeTaxiRoutes[taxiRunwayID];
+			}
+		}
+
 	})();
 
 	// Make sure the taxi route on the airfield is valid and exists
 	if (flight.taxi && (!airfield.taxi || !airfield.taxi[flight.taxi])) {
 		delete flight.taxi;
-	}
-
-	// NOTE: Randomize taxi spawns list as it's not fully randomized by this point
-	// (due to groups usage in airfield data files).
-	if (flight.spawns) {
-		rand.shuffle(flight.spawns);
 	}
 
 	// Option 3: Force (forward to) air start state if no valid taxi route is found
