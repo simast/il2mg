@@ -296,7 +296,7 @@ module.exports = function makeTaskPatrol(flight) {
 	}
 
 	// Draw patrol area zone only when player is a flight leader
-	if (!isPlayerFlightLeader) {
+	if (!isPlayerFlightLeader || debugFlights) {
 		return;
 	}
 

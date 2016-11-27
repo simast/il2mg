@@ -177,7 +177,7 @@ module.exports = function makeTaskSweep(flight) {
 			ingressPoint[1] - startZ
 		]);
 
-		const pointDistance = pointVector.distanceFrom(startVector);
+		const pointDistance = pointVector.modulus();
 
 		let minDistance = Math.round(maxRouteRangeSegment * 1.0);
 		let maxDistance = Math.round(maxRouteRangeSegment * 1.5);

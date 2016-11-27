@@ -43,7 +43,7 @@
 		"eslint-plugin-react": "6.7.1",
 		"browserify": "13.1.1",
 		"babelify": "7.3.0",
-		"envify": "3.4.1",
+		"envify": "4.0.0",
 		"react": "15.4.1",
 		"react-dom": "15.4.1",
 		"react-router": "3.0.0",
