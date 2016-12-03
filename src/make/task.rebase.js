@@ -62,15 +62,22 @@ module.exports = function makeTaskRebase(flight) {
 	// Add rebase task land action
 	if (!airfieldTo.offmap) {
 
-		// Pick a random existing target airfield taxi route
-		if (airfieldTo.activeTaxiRoutes) {
-			taxiRouteID = +rand.pick(Object.keys(airfieldTo.activeTaxiRoutes));
-		}
-		// Make a new taxi route on target airfield
-		else if (airfieldTo.taxi) {
+		// Pick a taxi route for landing on target airfield
+		if (airfieldTo.taxi) {
 
 			taxiRouteID = +rand.pick(Object.keys(airfieldTo.taxi));
-			makeAirfieldTaxi.call(this, airfieldTo, taxiRouteID);
+
+			const activeTaxiRoutes = airfieldTo.activeTaxiRoutes;
+			const taxiRunwayID = airfieldTo.taxi[taxiRouteID][1];
+
+			// Use already active taxi route for this runway
+			if (activeTaxiRoutes && taxiRunwayID in activeTaxiRoutes) {
+				taxiRouteID = activeTaxiRoutes[taxiRunwayID];
+			}
+			// Make a new taxi route on target airfield
+			else {
+				makeAirfieldTaxi.call(this, airfieldTo, taxiRouteID);
+			}
 		}
 
 		const landAction = {

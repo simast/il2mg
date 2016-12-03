@@ -28,7 +28,7 @@ const MAX_DISTANCE = 120000;
 // Make mission fighter sweep task
 module.exports = function makeTaskSweep(flight) {
 
-	const rand = this.rand;
+	const {rand, map} = this;
 	const airfield = this.airfields[flight.airfield];
 	const startX = airfield.position[0];
 	const startZ = airfield.position[2];
@@ -61,20 +61,34 @@ module.exports = function makeTaskSweep(flight) {
 	// Make a valid point (shifting to valid map area if necessary)
 	const makeValidPoint = (pointVector, originVector) => {
 
-		const originX = originVector.e(1);
-		const originZ = originVector.e(2);
-		let point = [pointVector.e(1), pointVector.e(2)];
+		let point = pointVector.elements;
 
-		while (isRestricted(this.map, point)) {
+		if (!isRestricted(map, point)) {
+			return point;
+		}
 
-			// Cut distance by 10% for each iteration
-			pointVector = Vector.create([
-				point[0] - originX,
-				point[1] - originZ
-			]).multiply(0.9);
+		const unitVector = pointVector.subtract(originVector).toUnitVector();
+		const stepDistance = 10000; // 10 km
+		let stepIndex = 0;
 
-			pointVector = originVector.add(pointVector);
-			point = [pointVector.e(1), pointVector.e(2)];
+		// Find a valid map point by scanning forward and backwards
+		while (stepIndex >= 0) {
+
+			stepIndex++;
+
+			for (const direction of [-1, +1]) {
+
+				point = unitVector
+					.multiply(direction * stepDistance * stepIndex)
+					.add(pointVector)
+					.elements;
+
+				if (!isRestricted(map, point)) {
+
+					stepIndex = -1;
+					break;
+				}
+			}
 		}
 
 		return point;
@@ -185,8 +199,8 @@ module.exports = function makeTaskSweep(flight) {
 		// Adjusted middle point logic for extended routes (from offmap airfields)
 		if (maxRouteRangeSegment - pointDistance <= 0) {
 
-			minDistance = pointDistance;
-			maxDistance = Math.round(maxRouteRangeSegment * 0.5);
+			minDistance = Math.round(pointDistance);
+			maxDistance = Math.round(pointDistance + maxRouteRangeSegment * 0.5);
 		}
 
 		// Set random middle point distance (from the starting position)

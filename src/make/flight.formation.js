@@ -6,8 +6,7 @@ const {MCU_CMD_Formation} = require("../item");
 // Make mission flight formation
 module.exports = function makeFlightFormation(flight, isPlayer) {
 
-	const rand = this.rand;
-	const choice = this.choice;
+	const {rand, choice} = this;
 	const task = flight.task;
 	const unit = this.units[flight.unit];
 	const formations = this.formations[flight.country];
@@ -141,7 +140,8 @@ module.exports = function makeFlightFormation(flight, isPlayer) {
 				}
 
 				// Set found matching formation
-				if (validPlanes.length > 0 && (isSimpleFormation || validPlanes.length >= planesRequired)) {
+				if (validPlanes.length > 0 && (isSimpleFormation ||
+					validPlanes.length >= planesRequired)) {
 
 					// Basic formation type
 					if (isSimpleFormation) {
