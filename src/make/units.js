@@ -9,10 +9,7 @@ const {isValidRebaseTask} = require("./task.rebase");
 // Generate available mission units
 module.exports = function makeUnits() {
 
-	const rand = this.rand;
-	const battle = this.battle;
-	const choice = this.choice;
-	const map = this.map;
+	const {rand, battle, choice, map} = this;
 	const planeStorages = new Set();
 
 	// Utility function used to match to/from date ranges based on mission date
@@ -39,14 +36,14 @@ module.exports = function makeUnits() {
 
 			if (matchMissionDateRange(airfield[1], airfield[2])) {
 
-				let availability = 1;
-
 				// Forth parameter in the array can be used to specify unit availability (%)
-				if (typeof airfield[3] === "number") {
-					availability = airfield[3];
+				let availability = airfield[3];
+
+				if (typeof availability !== "number") {
+					availability = 1;
 				}
 
-				availability = Math.max(Math.min(availability, 1), 0);
+				availability = Math.max(availability, 0);
 
 				// Add found airfield entry (with availability)
 				airfields.push({
@@ -195,8 +192,8 @@ module.exports = function makeUnits() {
 	const unitsByCoalition = Object.create(null);
 	const unitsByCountry = Object.create(null);
 
-	// Unit weight table (by plane count)
-	const unitsWeighted = [];
+	// Available unit list (weighted by plane count)
+	const unitsAvailable = [];
 
 	// Total unit, plane and known pilot counts
 	let totalUnits = 0;
@@ -553,8 +550,40 @@ module.exports = function makeUnits() {
 					continue;
 				}
 
+				const availability = unit.availability;
+				let unitWeight = 0;
+
+				// Unit is available with all planes
+				if (availability >= 1) {
+
+					unitWeight = Math.floor(availability);
+
+					const remainingAvailability = (availability - unitWeight);
+
+					// Also apply remaining decimal availability as a random chance
+					if (remainingAvailability > 0 && rand.bool(remainingAvailability)) {
+						unitWeight++;
+					}
+				}
+				// NOTE: Special 0 availability valid for rebase tasks
+				else if (unit.rebase && availability === 0) {
+					unitWeight = 1;
+				}
+				// Make sure unit is registered as available at least once
+				else if (!unit.planes.length) {
+					unitWeight = 1;
+				}
+				// Pick unit plane availability based on a random chance
+				else if (rand.bool(availability)) {
+					unitWeight = 1;
+				}
+
+				// Built available units list
+				for (let i = 0; i < unitWeight; i++) {
+					unitsAvailable.push(unitID);
+				}
+
 				unit.planes.push(planeID);
-				unitsWeighted.push(unitID);
 
 				// Set unit max pilots count (used to figure out known and unknown pilot ratio)
 				if (unit.pilots) {
@@ -579,7 +608,7 @@ module.exports = function makeUnits() {
 	this.unitsByCountry = Object.freeze(unitsByCountry);
 
 	// Static unit weight table (by plane count)
-	this.unitsWeighted = Object.freeze(unitsWeighted);
+	this.unitsAvailable = Object.freeze(unitsAvailable);
 
 	// Log mission units info
 	log.I("Units:", totalUnits, {planes: totalPlanes, pilots: totalPilots});

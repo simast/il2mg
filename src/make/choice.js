@@ -21,9 +21,7 @@ const PARAM_SEP = ",";
 // Generate mission player choice data
 module.exports = function makeChoice() {
 
-	const rand = this.rand;
-	const params = this.params;
-	const index = this.index;
+	const {rand, params, index} = this;
 
 	// Index scan filter data
 	const filter = Object.create(null);

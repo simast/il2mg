@@ -40,46 +40,51 @@ module.exports = function makeTasks() {
 		const unitTasks = [];
 		const airfield = this.airfields[unit.airfield];
 
-		for (const taskID in role) {
+		// Build tasks list only when unit is available
+		// NOTE: Special 0 availability is valid for rebase tasks (see below)
+		if (unit.availability > 0) {
 
-			const task = tasks[taskID];
-			let roleTask = role[taskID];
+			for (const taskID in role) {
 
-			// Ignore invalid roles
-			if (!task || !roleTask) {
-				continue;
-			}
+				const task = tasks[taskID];
+				let roleTask = role[taskID];
 
-			// Validate task offmap support
-			if (airfield.offmap && !task.offmap) {
-				continue;
-			}
+				// Ignore invalid roles
+				if (!task || !roleTask) {
+					continue;
+				}
 
-			let weight;
+				// Validate task offmap support
+				if (airfield.offmap && !task.offmap) {
+					continue;
+				}
 
-			// Role task data set as a single weight number
-			if (Number.isInteger(roleTask)) {
+				let weight;
 
-				weight = Math.max(roleTask, 1);
-				roleTask = Object.create(task);
-				roleTask.weight = weight;
-			}
-			// Role task data set as an object for customizing base task
-			else {
+				// Role task data set as a single weight number
+				if (Number.isInteger(roleTask)) {
 
-				weight = roleTask.weight = roleTask.weight || 1;
-				Object.setPrototypeOf(roleTask, task);
-			}
+					weight = Math.max(roleTask, 1);
+					roleTask = Object.create(task);
+					roleTask.weight = weight;
+				}
+				// Role task data set as an object for customizing base task
+				else {
 
-			roleTask = Object.freeze(roleTask);
+					weight = roleTask.weight = roleTask.weight || 1;
+					Object.setPrototypeOf(roleTask, task);
+				}
 
-			// Add task to the weighted unit tasks list
-			for (let i = 0; i < weight; i++) {
-				unitTasks.push(roleTask);
+				roleTask = Object.freeze(roleTask);
+
+				// Add task to the weighted unit tasks list
+				for (let i = 0; i < weight; i++) {
+					unitTasks.push(roleTask);
+				}
 			}
 		}
 
-		// Add rebase task (as a ~75% of total task weight)
+		// Add rebase task (as a minimum ~75% of total task weight)
 		if (unit.rebase) {
 
 			const rebaseTask = Object.create(tasks.rebase);

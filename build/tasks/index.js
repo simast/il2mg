@@ -295,8 +295,6 @@ module.exports = function(grunt) {
 								continue;
 							}
 
-							const isGroundStart = (airfieldsIndex[airfieldID] > 0);
-
 							if (matchDateRange(dataAirfield[1], dataAirfield[2])) {
 
 								let availability = dataAirfield[3];
@@ -304,6 +302,8 @@ module.exports = function(grunt) {
 								if (typeof availability !== "number") {
 									availability = 1;
 								}
+
+								availability = Math.max(availability, 0);
 
 								// Auto-assign rebase task
 								if (airfields.size) {
@@ -320,9 +320,7 @@ module.exports = function(grunt) {
 									rebase.from = airfieldID;
 								}
 
-								if (availability > 0) {
-									airfields.set(airfieldID, isGroundStart);
-								}
+								airfields.set(airfieldID, availability);
 							}
 						}
 					}
@@ -434,12 +432,21 @@ module.exports = function(grunt) {
 								json.tasks[taskID] = data.tasks[taskID].name;
 							}
 
-							airfields.forEach((isGroundStart, airfieldID) => {
+							airfields.forEach((availability, airfieldID) => {
 
-								if (taskID === "rebase" && airfieldID !== rebase.from) {
+								const isRebaseTask = (taskID === "rebase");
+
+								// Apply availability constrain for non-rebase tasks
+								if (availability <= 0 && !isRebaseTask) {
 									return;
 								}
 
+								// Register rebase task as valid only from source airfield
+								if (isRebaseTask && airfieldID !== rebase.from) {
+									return;
+								}
+
+								const isGroundStart = (airfieldsIndex[airfieldID] > 0);
 								const isOffmap = (airfieldsIndex[airfieldID] < 0);
 
 								// Ignore tasks without offmap support
