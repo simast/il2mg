@@ -7,6 +7,9 @@ const makeFlight = require("./flight");
 // Generate mission task forces
 module.exports = function makeForces() {
 
+	this.activeFlights = [];
+	this.suspendedUnits = Object.create(null);
+
 	// Make player force
 	makePlayerForce.call(this);
 
@@ -19,10 +22,9 @@ module.exports = function makeForces() {
 // Make a new task force
 function makeForce({player = false, choice = {}, state = 0}) {
 
-	const {rand} = this;
+	const {rand, availableUnits, suspendedUnits, activeFlights} = this;
 	const force = [];
 	const flightParams = {};
-	const unit = chooseFlightUnit.call(this, choice);
 	let flight;
 
 	// Make player flight and task force
@@ -30,31 +32,55 @@ function makeForce({player = false, choice = {}, state = 0}) {
 		flightParams.player = true;
 	}
 
-	flightParams.unit = unit.id;
 	flightParams.state = state;
-
-	if (choice.task) {
-
-		// Find matching unit task choice
-		for (const task of rand.shuffle(unit.tasks)) {
-
-			if (choice.task.has(task.id)) {
-
-				flightParams.task = task.id;
-				break;
-			}
-		}
-	}
 
 	// FIXME: Make a number of active and shedulled flights
 	do {
+
+		const unit = chooseFlightUnit.call(this, choice);
+
+		flightParams.unit = unit.id;
+
+		if (choice.task) {
+
+			// Find matching unit task choice
+			for (const task of rand.shuffle(unit.tasks)) {
+
+				if (choice.task.has(task.id)) {
+
+					flightParams.task = task.id;
+					break;
+				}
+			}
+		}
 
 		try {
 			flight = makeFlight.call(this, flightParams);
 		}
 		catch (error) {
 
+			// NOTE: Since we can't make a valid flight with this unit right now (due
+			// to missing planes for a proper formation for example) - we have to
+			// suspend it temporary (until any other flight from this unit is
+			// finished and the planes are returned back to inventory).
 			if (Array.isArray(error)) {
+
+				const unitID = unit.id;
+				let unitIndex = 0;
+				suspendedUnits[unitID] = 0;
+
+				for (;;) {
+
+					unitIndex = availableUnits.indexOf(unitID, unitIndex);
+
+					if (unitIndex === -1) {
+						break;
+					}
+
+					suspendedUnits[unitID]++;
+					availableUnits.splice(unitIndex, 1);
+				}
+
 				log.W.apply(log, error);
 			}
 			else {
@@ -63,6 +89,27 @@ function makeForce({player = false, choice = {}, state = 0}) {
 		}
 	}
 	while (!flight);
+
+	// Adjust weighted available units list
+	let unitIndex = 0;
+	let removeItemsCount = flight.planes;
+
+	while (removeItemsCount > 0) {
+
+		unitIndex = availableUnits.indexOf(flight.unit, unitIndex);
+
+		if (unitIndex === -1) {
+			break;
+		}
+
+		availableUnits.splice(unitIndex, 1);
+		removeItemsCount--;
+	}
+
+	// Track all AI active flights
+	if (!player) {
+		activeFlights.push(flight);
+	}
 
 	// Add flight to task force
 	force.push(flight);
@@ -138,7 +185,12 @@ function makePlayerForce() {
 // Choose a valid flight unit based on choice data
 function chooseFlightUnit(choice) {
 
-	const {rand} = this;
+	const {rand, availableUnits} = this;
+
+	if (!availableUnits.length) {
+		return;
+	}
+
 	const validUnits = new Set();
 
 	// Filter all valid units
@@ -219,7 +271,7 @@ function chooseFlightUnit(choice) {
 	// FIXME: Make a more efficient selection (not filtering weighted unit list)
 
 	// Select a matching unit (from a weighted list)
-	return this.units[rand.pick(this.unitsAvailable.filter((unitID) => {
+	return this.units[rand.pick(availableUnits.filter((unitID) => {
 		return validUnits.has(unitID);
 	}))];
 }

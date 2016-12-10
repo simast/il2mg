@@ -193,7 +193,7 @@ module.exports = function makeUnits() {
 	const unitsByCountry = Object.create(null);
 
 	// Available unit list (weighted by plane count)
-	const unitsAvailable = [];
+	const availableUnits = [];
 
 	// Total unit, plane and known pilot counts
 	let totalUnits = 0;
@@ -580,7 +580,7 @@ module.exports = function makeUnits() {
 
 				// Built available units list
 				for (let i = 0; i < unitWeight; i++) {
-					unitsAvailable.push(unitID);
+					availableUnits.push(unitID);
 				}
 
 				unit.planes.push(planeID);
@@ -607,8 +607,8 @@ module.exports = function makeUnits() {
 	this.unitsByCoalition = Object.freeze(unitsByCoalition);
 	this.unitsByCountry = Object.freeze(unitsByCountry);
 
-	// Static unit weight table (by plane count)
-	this.unitsAvailable = Object.freeze(unitsAvailable);
+	// Available unit weighted list (by plane count)
+	this.availableUnits = availableUnits;
 
 	// Log mission units info
 	log.I("Units:", totalUnits, {planes: totalPlanes, pilots: totalPilots});
