@@ -1,6 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
+// Forward declare all exports (required due to cyclic dependencies)
+module.exports = makeTaskRebase;
+module.exports.isValidRebaseTask = isValidRebaseTask;
+
 const {Vector} = require("sylvester");
 const {activityType} = require("../data");
 const {makeActivity} = require("./flight.plan");
@@ -16,7 +20,7 @@ const MIN_DISTANCE_AIRFIELD = 20000; // 20 km
 const MIN_DISTANCE_BORDER = 40000; // 40 km
 
 // Make mission rebase task
-module.exports = function makeTaskRebase(flight) {
+function makeTaskRebase(flight) {
 
 	const rand = this.rand;
 	const unit = this.units[flight.unit];
@@ -109,7 +113,7 @@ module.exports = function makeTaskRebase(flight) {
 
 	// Register target airfield location as flight target
 	flight.target = [[airfieldTo.position[0], airfieldTo.position[2]]];
-};
+}
 
 // Check if rebase task is valid for target position/point
 function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
@@ -190,5 +194,3 @@ function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 
 	return isValid;
 }
-
-module.exports.isValidRebaseTask = isValidRebaseTask;

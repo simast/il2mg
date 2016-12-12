@@ -6,7 +6,7 @@ const {flightState, itemFlag} = require("../data");
 // Plan activity used to taxi (optionally) and take off from airfield
 module.exports = class ActivityTakeOff {
 
-	// Make takeoff activity action
+	// Make take off activity action
 	makeAction(element, input) {
 
 		const {mission, flight} = this;
@@ -121,7 +121,7 @@ module.exports = class ActivityTakeOff {
 		};
 	}
 
-	// Make takeoff activity briefing
+	// Make take off activity briefing
 	makeBriefing() {
 
 		const {mission, flight} = this;
@@ -254,5 +254,16 @@ module.exports = class ActivityTakeOff {
 		briefing = briefing.charAt(0).toUpperCase() + briefing.slice(1);
 
 		return briefing;
+	}
+
+	// Make take off activity time
+	makeTime() {
+
+		const {rand} = this.mission;
+
+		// TODO: Use flight plane count to better estimate take off activity time!
+
+		// Use random time for take off activity
+		return rand.real(5, 10) * 60; // 5 - 10 minutes
 	}
 };

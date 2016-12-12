@@ -18,13 +18,13 @@ module.exports = function makeFlightFuel(flight, travelDistance = 0) {
 		// Extra time used for taxi/takeoff
 		if (simulateTakeoff) {
 
-			// 6 minutes for air start
+			// 8 minutes for air start
 			if (typeof element.state === "number") {
-				takeoffTime = 6;
+				takeoffTime = 8;
 			}
-			// 3 minutes for runway start
+			// 5 minutes for runway start
 			else if (element.state === flightState.RUNWAY) {
-				takeoffTime = 3;
+				takeoffTime = 5;
 			}
 			// 1 minute for taxi start
 			else if (element.state === flightState.TAXI) {

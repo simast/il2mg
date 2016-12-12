@@ -60,4 +60,9 @@ module.exports = class ActivityWait {
 			plan.splice(plan.indexOf(this), 1);
 		}
 	}
+
+	// Make wait activity time
+	makeTime() {
+		return this.time;
+	}
 };

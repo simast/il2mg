@@ -12,41 +12,34 @@ const {RESTRICTED_BORDER, isOffmap, getMapIntersection} = require("./map");
 const MIN_DISTANCE_BORDER = 3000; // 3 km
 const MAX_DISTANCE_BORDER = 4000; // 4 km
 
-// Make offmap flight bounds
-module.exports = function makeFlightOffmap(flight) {
+// Make final flight path with adjusted offmap bounds
+module.exports = function makeFlightPath(flight) {
 
-	// Process only flights with known offmap task support
-	if (!flight.task.offmap) {
-		return;
-	}
-
-	const plan = flight.plan;
-	let startPosition;
+	const {plan} = flight;
+	let startPosition = plan.start.position;
 	let endPosition;
 
+	// Adjust final flight path by processing all fly routes
 	for (const activity of plan) {
 
-		// Apply further offmap bounds check only for "fly" plan activities
+		// Process only fly plan activities
 		if (activity.type !== activityType.FLY) {
 			continue;
 		}
 
-		const route = activity.route;
+		const {route} = activity;
 
-		if (!startPosition) {
-			startPosition = plan.start.position;
-		}
-
+		activity.position = startPosition;
 		endPosition = route[route.length - 1].position;
 
 		// Adjust route start
 		if (isOffmap(this.map, startPosition)) {
-			adjustOffmapRouteBounds.call(this, flight, activity, true, startPosition);
+			adjustOffmapRouteBounds.call(this, flight, activity, true);
 		}
 
 		// Adjust route end
 		if (isOffmap(this.map, endPosition)) {
-			adjustOffmapRouteBounds.call(this, flight, activity, false, startPosition);
+			adjustOffmapRouteBounds.call(this, flight, activity, false);
 		}
 
 		startPosition = endPosition;
@@ -54,21 +47,19 @@ module.exports = function makeFlightOffmap(flight) {
 };
 
 // Adjust offmap fly activity route for current map bounds
-function adjustOffmapRouteBounds(flight, activity, isForward, startPosition) {
+function adjustOffmapRouteBounds(flight, activity, isForward) {
 
 	// FIXME: The iteration code below is way too complicated as a result of
-	// trying to iterate in both forward and backwards directions. Also, the fact
-	// startPosition is not part of the route array complicates things even more.
-	// Consider refactoring this to a more readable and understandable format.
+	// trying to iterate in both forward and backwards directions. Consider
+	// refactoring this to a more readable and understandable format.
 
-	const rand = this.rand;
-	const map = this.map;
-	const plan = flight.plan;
-	const route = activity.route;
+	const {rand, map} = this;
+	const {plan} = flight;
+	const {route} = activity;
 	const startActivity = plan.start;
 	const isPlayerFlight = Boolean(flight.player);
 	let i = isForward ? 0 : route.length - 1;
-	let prevPosition = isForward ? startPosition : route[i].position;
+	let prevPosition = isForward ? activity.position : route[i].position;
 	let offmapDistance = 0;
 
 	while (route[i]) {
@@ -98,7 +89,7 @@ function adjustOffmapRouteBounds(flight, activity, isForward, startPosition) {
 		else {
 
 			const fromPosition = prevPosition;
-			const toPosition = nextPoint ? nextPoint.position : startPosition;
+			const toPosition = nextPoint ? nextPoint.position : activity.position;
 			const fromVector = Vector.create(fromPosition);
 			const toVector = Vector.create(toPosition);
 			const {
@@ -156,7 +147,7 @@ function adjustOffmapRouteBounds(flight, activity, isForward, startPosition) {
 
 			// Set offmap route start/end position
 			if (isForward) {
-				startActivity.position = offmapPosition;
+				startActivity.position = activity.position = offmapPosition;
 			}
 			else {
 
@@ -185,10 +176,9 @@ function adjustOffmapRouteBounds(flight, activity, isForward, startPosition) {
 		makeFlightFuel.call(this, flight, offmapDistance);
 
 		// Transfer used offmap state
-		// TODO: Add "delay" for start activity if necessary
 		if (activity.state && startActivity.state === undefined) {
 
-			const routeDistance = activity.getRouteDistance(plan.start.position);
+			const routeDistance = activity.getRouteDistance();
 			const totalDistance = offmapDistance + routeDistance;
 			const transferState = activity.state * (offmapDistance / totalDistance);
 			const planeSpeed = this.planes[flight.leader.plane].speed;

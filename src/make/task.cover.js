@@ -9,6 +9,10 @@ const makeBriefingLead = require("./briefing.lead");
 const makeFlightSpeed = require("./flight.speed");
 const makeFlightFuel = require("./flight.fuel");
 
+// Min/max percent of max flight fuel range used as cover activity distance
+const MIN_COVER_RANGE_RATIO = 0.5; // 50%
+const MAX_COVER_RANGE_RATIO = 0.7; // 70%
+
 // First (intro) plan description segments
 const introSegments = [
 	"stay within visual range of the airfield",
@@ -30,11 +34,24 @@ module.exports = function makeTaskCover(flight) {
 
 	const {rand, weather} = this;
 
+	// Cover activity flight distance is based on max flight range
+	const distance = flight.range * rand.real(
+		MIN_COVER_RANGE_RATIO,
+		MAX_COVER_RANGE_RATIO,
+		true
+	);
+
+	// Make cover activity flight speed
+	const speed = makeFlightSpeed.call(this, flight);
+
 	// Custom cover airfield plan activity
 	const activity = makeActivity.call(this, flight, {
 		makeAction: makeTaskCoverAction,
 		makeState: makeTaskCoverState,
 		makeBriefing: makeTaskCoverBriefing,
+		makeTime: makeTaskCoverTime,
+		distance,
+		speed,
 		state: 1
 	});
 
@@ -74,7 +91,7 @@ function makeTaskCoverAction(element, input) {
 		coverCommand = flight.group.createItem("MCU_Waypoint");
 
 		coverCommand.Area = rand.integer(75, 125);
-		coverCommand.Speed = makeFlightSpeed.call(mission, flight);
+		coverCommand.Speed = this.speed;
 		coverCommand.Priority = MCU_Waypoint.PRIORITY_LOW;
 
 		// Set waypoint position above the airfield
@@ -124,19 +141,16 @@ function makeTaskCoverAction(element, input) {
 	flight.plan.land.makeAction = false;
 }
 
-// Make mission cover airfield plan state
+// Make cover airfield activity state
 function makeTaskCoverState(state) {
 
-	const {mission, flight} = this;
+	const {mission, flight, distance} = this;
 	const {rand} = mission;
 	const airfield = mission.airfields[flight.airfield];
-
-	// NOTE: Assuming that planes with cover activity will stay in the air for
-	// 75% of their max fuel range.
-	const coverDistance = flight.range * 0.75 * state;
+	const usedDistance = (distance * state);
 
 	// Use flight fuel for fast-forward cover distance
-	makeFlightFuel.call(mission, flight, coverDistance);
+	makeFlightFuel.call(mission, flight, usedDistance);
 
 	// Fast-forward to required altitude
 	if (this.altitude) {
@@ -147,9 +161,12 @@ function makeTaskCoverState(state) {
 			airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
 		];
 	}
+
+	// Adjust remaining cover activity distance based on state
+	this.distance = distance - usedDistance;
 }
 
-// Make mission cover airfield plan briefing
+// Make cover airfield activity briefing
 function makeTaskCoverBriefing() {
 
 	const {mission, flight} = this;
@@ -186,4 +203,9 @@ function makeTaskCoverBriefing() {
 	return briefing.map((value) => {
 		return value.charAt(0).toUpperCase() + value.slice(1);
 	}).join(". ") + ".";
+}
+
+// Make cover airfield activity time
+function makeTaskCoverTime() {
+	return this.distance / (this.speed * 1000 / 3600);
 }

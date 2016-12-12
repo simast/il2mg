@@ -10,6 +10,7 @@ const makeFlightPlanes = require("./flight.planes");
 const makeFlightRange = require("./flight.range");
 const makeFlightPlan = require("./flight.plan");
 const makeFlightFuel = require("./flight.fuel");
+const makeFlightTime = require("./flight.time");
 const makeAirfieldTaxi = require("./airfield.taxi");
 
 // Make mission flight
@@ -311,6 +312,9 @@ module.exports = function makeFlight(params) {
 
 	// Make flight plan
 	makeFlightPlan.call(this, flight);
+
+	// Make flight time
+	makeFlightTime.call(this, flight);
 
 	// Enable radio navigation beacon source
 	if (isPlayer) {

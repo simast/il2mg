@@ -157,8 +157,8 @@ module.exports = class ActivityFly {
 
 		const {mission, flight, route} = this;
 		const {plan} = flight;
-		let startPosition = plan.start.position;
-		const routeDistance = this.getRouteDistance(startPosition);
+		let startPosition = this.position;
+		const routeDistance = this.getRouteDistance();
 		let removeActivity = false;
 
 		// Fast-forward full fly activity
@@ -217,7 +217,7 @@ module.exports = class ActivityFly {
 		makeFlightFuel.call(mission, flight, routeDistance * state);
 
 		// Set new flight start position
-		plan.start.position = startPosition;
+		plan.start.position = this.position = startPosition;
 
 		// Remove activity from plan
 		if (removeActivity) {
@@ -325,22 +325,46 @@ module.exports = class ActivityFly {
 		}).join(". ") + ".";
 	}
 
-	// Get fly activity route distance
-	getRouteDistance(startPosition) {
+	// Walk over route (reporting distance for each spot)
+	walkRoute(callback) {
 
-		let routeDistance = 0;
-		let prevSpotVector = Vector.create(startPosition);
+		let prevSpotVector = Vector.create(this.position);
 
-		// Calculate each route spot distance
+		// Walk each route spot
 		for (const spot of this.route) {
 
 			const spotVector = Vector.create(spot.position);
-			const segmentDistance = spotVector.distanceFrom(prevSpotVector);
 
-			routeDistance += segmentDistance;
+			// Trigger route spot and distance callback
+			callback(spot, spotVector.distanceFrom(prevSpotVector));
+
 			prevSpotVector = spotVector;
 		}
+	}
+
+	// Get fly activity route distance
+	getRouteDistance() {
+
+		let routeDistance = 0;
+
+		// Sum each spot distance
+		this.walkRoute((spot, distance) => {
+			routeDistance += distance;
+		});
 
 		return routeDistance;
+	}
+
+	// Make fly activity time
+	makeTime() {
+
+		let time = 0;
+
+		// Calculate route time
+		this.walkRoute((spot, distance) => {
+			time += distance / (spot.speed * 1000 / 3600);
+		});
+
+		return time;
 	}
 };

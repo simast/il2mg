@@ -7,11 +7,11 @@ module.exports.makeActivity = makeActivity;
 
 const requireDir = require("require-directory");
 const {activityType} = require("../data");
-const makeFlightOffmap = require("./flight.offmap");
-const makeFlightState = require("./flight.state");
-const makeFlightPose = require("./flight.pose");
 const activities = requireDir(module, {include: /activity\..+\.js$/});
 const tasks = requireDir(module, {include: /task\..+\.js$/});
+const makeFlightPath = require("./flight.path");
+const makeFlightState = require("./flight.state");
+const makeFlightPose = require("./flight.pose");
 
 // Make mission flight plan
 function makeFlightPlan(flight) {
@@ -49,8 +49,8 @@ function makeFlightPlan(flight) {
 		})) - 1];
 	}
 
-	// Make offmap flight bounds
-	makeFlightOffmap.call(this, flight);
+	// Make final flight path with adjusted offmap bounds
+	makeFlightPath.call(this, flight);
 
 	// Fast-forward plan actions based on state
 	makeFlightState.call(this, flight);
@@ -67,7 +67,7 @@ function makeFlightPlan(flight) {
 	// Process pending plan actions
 	for (const activity of plan) {
 
-		if (!activity.makeAction) {
+		if (typeof activity.makeAction !== "function") {
 			continue;
 		}
 
