@@ -134,15 +134,15 @@ data.flightState = Object.freeze({
 	RUNWAY: "runway" // On the runway, engine running, ready for takeoff
 });
 
-// Common flight plan actions
-data.planAction = Object.freeze({
-	START: "start", // Initial start action
+// Common flight plan activity types
+data.activityType = Object.freeze({
+	START: "start", // Initial start activity
 	TAKEOFF: "takeoff", // Taxi (optionally) and takeoff from airfield
 	FORM: "form", // Form up (set formations and element cover)
 	WAIT: "wait", // Wait for something (do nothing)
 	FLY: "fly", // Fly to waypoint/location
 	LAND: "land", // Land on airfield (ending the flight)
-	END: "end" // End flight action
+	END: "end" // End flight activity
 });
 
 // Map colors as RGB array values

@@ -2,8 +2,8 @@
 "use strict";
 
 const {Vector} = require("sylvester");
-const {planAction} = require("../data");
-const {getRouteDistance} = require("./flight.route");
+const {activityType} = require("../data");
+const {makeActivity} = require("./flight.plan");
 const makeFlightFuel = require("./flight.fuel");
 const {RESTRICTED_BORDER, isOffmap, getMapIntersection} = require("./map");
 
@@ -24,14 +24,14 @@ module.exports = function makeFlightOffmap(flight) {
 	let startPosition;
 	let endPosition;
 
-	for (const action of plan) {
+	for (const activity of plan) {
 
-		// Apply further offmap bounds check only for "fly" actions
-		if (action.type !== planAction.FLY) {
+		// Apply further offmap bounds check only for "fly" plan activities
+		if (activity.type !== activityType.FLY) {
 			continue;
 		}
 
-		const route = action.route;
+		const route = activity.route;
 
 		if (!startPosition) {
 			startPosition = plan.start.position;
@@ -41,20 +41,20 @@ module.exports = function makeFlightOffmap(flight) {
 
 		// Adjust route start
 		if (isOffmap(this.map, startPosition)) {
-			adjustOffmapRouteBounds.call(this, flight, action, true, startPosition);
+			adjustOffmapRouteBounds.call(this, flight, activity, true, startPosition);
 		}
 
 		// Adjust route end
 		if (isOffmap(this.map, endPosition)) {
-			adjustOffmapRouteBounds.call(this, flight, action, false, startPosition);
+			adjustOffmapRouteBounds.call(this, flight, activity, false, startPosition);
 		}
 
 		startPosition = endPosition;
 	}
 };
 
-// Adjust offmap fly action route for current map bounds
-function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
+// Adjust offmap fly activity route for current map bounds
+function adjustOffmapRouteBounds(flight, activity, isForward, startPosition) {
 
 	// FIXME: The iteration code below is way too complicated as a result of
 	// trying to iterate in both forward and backwards directions. Also, the fact
@@ -64,8 +64,8 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 	const rand = this.rand;
 	const map = this.map;
 	const plan = flight.plan;
-	const route = action.route;
-	const startAction = plan.start;
+	const route = activity.route;
+	const startActivity = plan.start;
 	const isPlayerFlight = Boolean(flight.player);
 	let i = isForward ? 0 : route.length - 1;
 	let prevPosition = isForward ? startPosition : route[i].position;
@@ -156,17 +156,17 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 
 			// Set offmap route start/end position
 			if (isForward) {
-				startAction.position = offmapPosition;
+				startActivity.position = offmapPosition;
 			}
 			else {
 
 				point.position = offmapPosition;
 
-				// End flight action on map border/edge
-				plan.push({
-					type: planAction.END,
+				// End flight activity on map border/edge
+				plan.push(makeActivity.call(this, flight, {
+					type: activityType.END,
 					position: offmapPosition
-				});
+				}));
 			}
 
 			break;
@@ -185,18 +185,18 @@ function adjustOffmapRouteBounds(flight, action, isForward, startPosition) {
 		makeFlightFuel.call(this, flight, offmapDistance);
 
 		// Transfer used offmap state
-		// TODO: Add "delay" for start action if necessary
-		if (action.state && startAction.state === undefined) {
+		// TODO: Add "delay" for start activity if necessary
+		if (activity.state && startActivity.state === undefined) {
 
-			const routeDistance = getRouteDistance(plan.start.position, route);
+			const routeDistance = activity.getRouteDistance(plan.start.position);
 			const totalDistance = offmapDistance + routeDistance;
-			const transferState = action.state * (offmapDistance / totalDistance);
+			const transferState = activity.state * (offmapDistance / totalDistance);
 			const planeSpeed = this.planes[flight.leader.plane].speed;
 			const delayTime = offmapDistance / (planeSpeed * 1000 / 3600);
 
-			startAction.delay = delayTime;
-			startAction.state = transferState;
-			action.state -= transferState;
+			startActivity.delay = delayTime;
+			startActivity.state = transferState;
+			activity.state -= transferState;
 		}
 	}
 }

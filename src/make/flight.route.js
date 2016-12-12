@@ -170,26 +170,3 @@ module.exports = function makeFlightRoute(flight, fromPosition, toPoint, options
 
 	return route;
 };
-
-// Get flight route distance
-function getRouteDistance(startPosition, route) {
-
-	// TODO: Refactor route iteration logic to a separate walkRoute() function
-
-	let routeDistance = 0;
-	let prevSpotVector = Vector.create(startPosition);
-
-	// Iterate route spots
-	for (const spot of route) {
-
-		const spotVector = Vector.create(spot.position);
-		const segmentDistance = spotVector.distanceFrom(prevSpotVector);
-
-		routeDistance += segmentDistance;
-		prevSpotVector = spotVector;
-	}
-
-	return routeDistance;
-}
-
-module.exports.getRouteDistance = getRouteDistance;

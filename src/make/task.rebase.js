@@ -2,7 +2,8 @@
 "use strict";
 
 const {Vector} = require("sylvester");
-const {planAction} = require("../data");
+const {activityType} = require("../data");
+const {makeActivity} = require("./flight.plan");
 const {isOffmap, getMapIntersection, markMapArea} = require("./map");
 
 // Flight make parts
@@ -47,19 +48,19 @@ module.exports = function makeTaskRebase(flight) {
 		}
 	);
 
-	// Add rebase task fly action
-	plan.push({
-		type: planAction.FLY,
+	// Add rebase task fly activity
+	plan.push(makeActivity.call(this, flight, {
+		type: activityType.FLY,
 		route,
 		state: 1,
 		visible: isPlayerFlight
-	});
+	}));
 
 	let taxiRouteID;
 
 	plan.land = false;
 
-	// Add rebase task land action
+	// Add rebase task land activity
 	if (!airfieldTo.offmap) {
 
 		// Pick a taxi route for landing on target airfield
@@ -80,16 +81,16 @@ module.exports = function makeTaskRebase(flight) {
 			}
 		}
 
-		const landAction = {
-			type: planAction.LAND,
+		const landActivity = makeActivity.call(this, flight, {
+			type: activityType.LAND,
 			airfield: airfieldTo.id
-		};
+		});
 
 		if (taxiRouteID !== undefined) {
-			landAction.taxi = taxiRouteID;
+			landActivity.taxi = taxiRouteID;
 		}
 
-		plan.land = plan[plan.push(landAction) - 1];
+		plan.land = plan[plan.push(landActivity) - 1];
 	}
 
 	if (!airfieldTo.offmap && isPlayerFlight) {

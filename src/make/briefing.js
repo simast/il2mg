@@ -1,18 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const requireDir = require("require-directory");
 const {briefingColor} = require("../data");
-
-// Briefing make parts
-const makeBriefingParts = requireDir(module, {include: /briefing\..+\.js$/});
-const makeBriefingText = makeBriefingParts["briefing.text"];
-const makeBriefingWeather = makeBriefingParts["briefing.weather"];
+const makeBriefingText = require("./briefing.text");
+const makeBriefingWeather = require("./briefing.weather");
 
 // Generate mission briefing
 module.exports = function makeBriefing() {
 
-	const rand = this.rand;
+	const {rand} = this;
 	const options = this.items.Options;
 	const flight = this.player.flight;
 	const task = flight.task;
@@ -110,33 +106,21 @@ module.exports = function makeBriefing() {
 	const briefingPlan = [];
 
 	// Flight plan briefing output
-	for (const action of flight.plan) {
+	for (const activity of flight.plan) {
 
-		let makePlanBriefing;
-
-		// Use default/common plan action briefing
-		if (action.type) {
-			makePlanBriefing = makeBriefingParts["briefing." + action.type];
-		}
-
-		// Use custom plan action briefing
-		if (typeof action.makeBriefing === "function") {
-			makePlanBriefing = action.makeBriefing;
-		}
-
-		if (!makePlanBriefing) {
+		if (!activity.makeBriefing) {
 			continue;
 		}
 
-		// Make plan action briefing
-		const actionBriefing = makePlanBriefing.call(this, flight, action);
+		// Make plan activity briefing
+		const activityBriefing = activity.makeBriefing();
 
-		if (actionBriefing && actionBriefing.length) {
-			briefingPlan.push(actionBriefing);
+		if (activityBriefing && activityBriefing.length) {
+			briefingPlan.push(activityBriefing);
 		}
 	}
 
-	// NOTE: Using smaller line breaks for separating plan actions
+	// NOTE: Using smaller line breaks for separating plan activities
 	if (briefingPlan.length) {
 
 		briefingPlan.unshift('<font color="' + briefingColor.DARK + '">···</font>');

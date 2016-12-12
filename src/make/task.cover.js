@@ -4,9 +4,8 @@
 const numeral = require("numeral");
 const {MCU_Waypoint, MCU_CMD_Cover} = require("../item");
 const {markMapArea} = require("./map");
-
-// Flight make parts
-const {makeBriefingLeadSegment} = require("./briefing.fly");
+const {makeActivity} = require("./flight.plan");
+const makeBriefingLead = require("./briefing.lead");
 const makeFlightSpeed = require("./flight.speed");
 const makeFlightFuel = require("./flight.fuel");
 
@@ -29,56 +28,59 @@ const outroSegments = [
 // Make mission cover airfield task
 module.exports = function makeTaskCover(flight) {
 
-	// Custom cover airfield plan action
-	const action = {
+	const {rand, weather} = this;
+
+	// Custom cover airfield plan activity
+	const activity = makeActivity.call(this, flight, {
 		makeAction: makeTaskCoverAction,
 		makeState: makeTaskCoverState,
 		makeBriefing: makeTaskCoverBriefing,
 		state: 1
-	};
+	});
 
 	// Only climb above airfield with low cloud cover
-	if (this.weather.clouds.cover < 50) {
-		action.altitude = this.rand.integer(1200, 2200);
+	if (weather.clouds.cover < 50) {
+		activity.altitude = rand.integer(1200, 2200);
 	}
 
-	flight.plan.push(action);
+	flight.plan.push(activity);
 };
 
 // Make mission cover airfield plan action
-function makeTaskCoverAction(flight, element, action, input) {
+function makeTaskCoverAction(element, input) {
 
 	if (!input) {
 		return;
 	}
 
+	const {mission, flight} = this;
 	const leaderElement = flight.elements[0];
 
-	// Proccess cover action only for leading element
+	// Process cover action only for leading element
 	if (element !== leaderElement) {
 		return;
 	}
 
-	const rand = this.rand;
-	const airfield = this.airfields[flight.airfield];
+	const {rand} = mission;
+	const airfield = mission.airfields[flight.airfield];
 	const leaderPlaneItem = element[0].item;
 	const beacon = airfield.beacon;
 
 	let coverCommand;
 
 	// Use climb waypoint above the airfield as a cover command
-	if (action.altitude) {
+	if (this.altitude) {
 
 		coverCommand = flight.group.createItem("MCU_Waypoint");
 
 		coverCommand.Area = rand.integer(75, 125);
-		coverCommand.Speed = makeFlightSpeed.call(this, flight);
+		coverCommand.Speed = makeFlightSpeed.call(mission, flight);
 		coverCommand.Priority = MCU_Waypoint.PRIORITY_LOW;
 
 		// Set waypoint position above the airfield
 		coverCommand.setPosition(
 			airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
-			action.altitude,
+			this.altitude,
 			airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
 		);
 
@@ -123,43 +125,45 @@ function makeTaskCoverAction(flight, element, action, input) {
 }
 
 // Make mission cover airfield plan state
-function makeTaskCoverState(flight, action, state) {
+function makeTaskCoverState(state) {
 
-	const rand = this.rand;
-	const airfield = this.airfields[flight.airfield];
+	const {mission, flight} = this;
+	const {rand} = mission;
+	const airfield = mission.airfields[flight.airfield];
 
-	// NOTE: Assuming that planes with cover action will stay in the air for 75%
-	// of their max fuel range.
+	// NOTE: Assuming that planes with cover activity will stay in the air for
+	// 75% of their max fuel range.
 	const coverDistance = flight.range * 0.75 * state;
 
 	// Use flight fuel for fast-forward cover distance
-	makeFlightFuel.call(this, flight, coverDistance);
+	makeFlightFuel.call(mission, flight, coverDistance);
 
 	// Fast-forward to required altitude
-	if (action.altitude) {
+	if (this.altitude) {
 
 		flight.plan.start.position = [
 			airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
-			action.altitude,
+			this.altitude,
 			airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
 		];
 	}
 }
 
 // Make mission cover airfield plan briefing
-function makeTaskCoverBriefing(flight, action) {
+function makeTaskCoverBriefing() {
 
-	const rand = this.rand;
-	const airfield = this.airfields[flight.airfield];
+	const {mission, flight} = this;
+	const {rand} = mission;
+	const airfield = mission.airfields[flight.airfield];
 	const briefing = [];
 
 	// Draw cover area zone
-	markMapArea.call(this, flight, {
+	markMapArea.call(mission, flight, {
 		position: airfield.position
 	});
 
 	// Make intro segment
-	const briefingIntro = makeBriefingLeadSegment.call(this, flight);
+	const briefingIntro = makeBriefingLead.call(mission, flight);
 
 	if (briefingIntro.length < 2) {
 		briefingIntro.push(rand.pick(introSegments));
@@ -168,10 +172,10 @@ function makeTaskCoverBriefing(flight, action) {
 	briefing.push(briefingIntro.join(" and "));
 
 	// Add climb altitude briefing segment
-	if (action.altitude) {
+	if (this.altitude) {
 
 		// TODO: Use feets for other countries?
-		let altitudeStr = Math.round(action.altitude / 100) * 100;
+		let altitudeStr = Math.round(this.altitude / 100) * 100;
 		altitudeStr = numeral(altitudeStr).format("0,0");
 
 		briefing.push("Climb to [" + altitudeStr + " meters] altitude");

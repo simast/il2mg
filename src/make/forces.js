@@ -15,7 +15,7 @@ module.exports = function makeForces() {
 
 	// FIXME: Make some random AI forces for testing
 	for (let i = 0; i < 10; i++) {
-		makeForce.call(this, {});
+		// makeForce.call(this, {});
 	}
 };
 

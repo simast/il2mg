@@ -2,7 +2,8 @@
 "use strict";
 
 const {Vector} = require("sylvester");
-const {planAction, territory, mapColor} = require("../data");
+const {activityType, territory, mapColor} = require("../data");
+const {makeActivity} = require("./flight.plan");
 const {Location} = require("./locations");
 const {MCU_Icon, MCU_Waypoint} = require("../item");
 
@@ -282,15 +283,15 @@ module.exports = function makeTaskPatrol(flight) {
 		)
 	);
 
-	// Add patrol task fly action
-	flight.plan.push({
-		type: planAction.FLY,
+	// Add patrol task fly activity
+	flight.plan.push(makeActivity.call(this, flight, {
+		type: activityType.FLY,
 		route,
 		state: 1,
 		visible: Boolean(flight.player) && !isPlayerFlightLeader
-	});
+	}));
 
-	// Disable land action when operating from offmap airfield
+	// Disable land activity when operating from offmap airfield
 	if (airfield.offmap) {
 		flight.plan.land = false;
 	}

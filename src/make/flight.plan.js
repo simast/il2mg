@@ -1,46 +1,52 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict";
 
-const requireDir = require("require-directory");
-const {planAction} = require("../data");
+// Forward declare all exports (required due to cyclic dependencies)
+module.exports = makeFlightPlan;
+module.exports.makeActivity = makeActivity;
 
-// Flight plan make parts
-const makeParts = requireDir(module, {include: /(action|task)\..+\.js$/});
+const requireDir = require("require-directory");
+const {activityType} = require("../data");
 const makeFlightOffmap = require("./flight.offmap");
 const makeFlightState = require("./flight.state");
 const makeFlightPose = require("./flight.pose");
+const activities = requireDir(module, {include: /activity\..+\.js$/});
+const tasks = requireDir(module, {include: /task\..+\.js$/});
 
 // Make mission flight plan
-module.exports = function makeFlightPlan(flight) {
+function makeFlightPlan(flight) {
 
 	const plan = flight.plan = [];
 	const task = flight.task;
 	const airfield = this.airfields[flight.airfield];
 
-	// Initial start plan action
-	plan.start = plan[plan.push({
-		type: planAction.START,
+	// Initial start plan activity
+	plan.start = plan[plan.push(makeActivity.call(this, flight, {
+		type: activityType.START,
 		position: airfield.position
-	}) - 1];
+	})) - 1];
 
-	// Take off plan action
+	// Take off plan activity
 	if (typeof flight.state !== "number") {
-		plan.push({type: planAction.TAKEOFF});
+		plan.push(makeActivity.call(this, flight, {type: activityType.TAKEOFF}));
 	}
 
-	// Form up plan action
-	plan.push({type: planAction.FORM});
+	// Form up plan activity
+	plan.push(makeActivity.call(this, flight, {type: activityType.FORM}));
 
 	// Make task specific plan
-	const makeTask = makeParts["task." + task.id];
+	const makeTask = tasks["task." + task.id];
 
-	if (makeTask) {
+	if (typeof makeTask === "function") {
 		makeTask.call(this, flight);
 	}
 
-	// Land plan action
+	// Land plan activity
 	if (plan.land === undefined) {
-		plan.land = plan[plan.push({type: planAction.LAND}) - 1];
+
+		plan.land = plan[plan.push(makeActivity.call(this, flight, {
+			type: activityType.LAND
+		})) - 1];
 	}
 
 	// Make offmap flight bounds
@@ -59,39 +65,44 @@ module.exports = function makeFlightPlan(flight) {
 	let outputPrev = [];
 
 	// Process pending plan actions
-	for (const action of plan) {
+	for (const activity of plan) {
 
-		let makePlanAction;
-
-		// Use custom plan make action
-		if (typeof action.makeAction === "function") {
-			makePlanAction = action.makeAction;
-		}
-		// Use default/common plan make action
-		// NOTE: Boolean flag can be used to skip making plan action
-		else if (action.makeAction !== false && action.type) {
-			makePlanAction = makeParts["action." + action.type];
-		}
-
-		if (!makePlanAction) {
+		if (!activity.makeAction) {
 			continue;
 		}
 
 		const output = [];
 
-		// Multiple flight elements will share a single plan, but can use a different
-		// command set (as with second element on cover duty for first leading element).
+		// NOTE: Multiple flight elements will share a single plan, but can use a
+		// different command set (as with second element on cover duty for first
+		// leading element for example).
 		flight.elements.forEach((element, elementIndex) => {
-
-			output.push(makePlanAction.call(
-				this,
-				flight,
-				element,
-				action,
-				outputPrev[elementIndex]
-			));
+			output.push(activity.makeAction(element, outputPrev[elementIndex]));
 		});
 
 		outputPrev = output;
 	}
-};
+}
+
+// Utility/factory function used to create flight plan activities
+function makeActivity(flight, params = {}) {
+
+	let activity = {};
+
+	// Create a common activity type/class
+	if (params.type) {
+
+		const activityClass = activities["activity." + params.type];
+
+		if (activityClass) {
+			activity = new activityClass();
+		}
+	}
+
+	// Set activity params
+	Object.assign(activity, params);
+	Object.defineProperty(activity, "mission", {value: this});
+	Object.defineProperty(activity, "flight", {value: flight});
+
+	return activity;
+}

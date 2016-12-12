@@ -2,7 +2,7 @@
 "use strict";
 
 const {Vector, Line} = require("sylvester");
-const {planAction} = require("../data");
+const {activityType} = require("../data");
 const {MCU_CMD_Formation} = require("../item");
 
 // Minimum and maximum pitch angle (for pose orientation)
@@ -65,11 +65,11 @@ module.exports = function makeFlightPose(flight, fromPosition, toPosition) {
 		// Try to use next route point position (for orientation)
 		if (!toPosition && typeof flight.state === "number") {
 
-			for (const action of flight.plan) {
+			for (const activity of flight.plan) {
 
-				if (action.type === planAction.FLY) {
+				if (activity.type === activityType.FLY) {
 
-					toPosition = action.route[0].position;
+					toPosition = activity.route[0].position;
 					break;
 				}
 			}

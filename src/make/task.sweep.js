@@ -2,11 +2,11 @@
 "use strict";
 
 const {Vector} = require("sylvester");
-const {planAction, territory} = require("../data");
+const {activityType, territory} = require("../data");
+const {makeActivity} = require("./flight.plan");
 const {Location} = require("./locations");
 const {MCU_Waypoint} = require("../item");
 const {findBasePoints} = require("./task.patrol");
-const {getTerritory} = require("./fronts");
 const {isRestricted} = require("./map");
 
 // Flight make parts
@@ -112,7 +112,8 @@ module.exports = function makeTaskSweep(flight) {
 		let shiftVector = false;
 
 		// Use shift vector (with a non-offmap starting position only)
-		if (!airfield.offmap && getTerritory(location.x, location.z) === territory.FRONT) {
+		if (!airfield.offmap &&
+			this.getTerritory(location.x, location.z) === territory.FRONT) {
 
 			shiftVector = Vector.create([
 				location.x - startX,
@@ -151,7 +152,7 @@ module.exports = function makeTaskSweep(flight) {
 
 			const posX = pointVector.e(1);
 			const posZ = pointVector.e(2);
-			const shiftTerritory = getTerritory(posX, posZ);
+			const shiftTerritory = this.getTerritory(posX, posZ);
 
 			// End shift when we reach front lines or max distance from start position
 			if (shiftTerritory === territory.UNKNOWN ||
@@ -288,7 +289,7 @@ module.exports = function makeTaskSweep(flight) {
 				const posX = scanVector.e(1);
 				const posZ = scanVector.e(2);
 
-				scanTerritory = getTerritory(posX, posZ);
+				scanTerritory = this.getTerritory(posX, posZ);
 
 				// Found enemy territory over the scan direction
 				if (scanTerritory === enemyCoalition) {
@@ -385,15 +386,15 @@ module.exports = function makeTaskSweep(flight) {
 		route.push.apply(route, spots);
 	}
 
-	// Add fighter sweep task fly action
-	flight.plan.push({
-		type: planAction.FLY,
+	// Add fighter sweep task fly activity
+	flight.plan.push(makeActivity.call(this, flight, {
+		type: activityType.FLY,
 		route,
 		state: 1,
 		visible: Boolean(flight.player)
-	});
+	}));
 
-	// Disable land action when operating from offmap airfield
+	// Disable land activity when operating from offmap airfield
 	if (airfield.offmap) {
 		flight.plan.land = false;
 	}

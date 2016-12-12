@@ -19,7 +19,7 @@ module.exports = function makeFronts() {
 	const territories = new Map();
 
 	// Exported public utility method to get territory type based on position
-	makeFronts.getTerritory = (posX, posZ) => {
+	this.getTerritory = (posX, posZ) => {
 
 		const territoriesZ = territories.get(Math.floor(posX / GRID_SIZE));
 
