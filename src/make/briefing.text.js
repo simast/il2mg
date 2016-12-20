@@ -17,7 +17,7 @@ const planeTypeNames = {
 	ground_attack: "ground attack " + PLANE,
 	dive_bomber: "dive bomber",
 	level_bomber: "bomber",
-	transport: "transport" + PLANE
+	transport: "transport " + PLANE
 };
 
 /**

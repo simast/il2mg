@@ -299,6 +299,10 @@
 		name: "Saki",
 		position: [-224060, 0, -549799]
 	},
+	salsk: {
+		name: "Salsk",
+		position: [-121962, 0, 36797]
+	},
 	samofalovka: {
 		name: "Samofalovka",
 		position: [159275.79, 101.85, 234557.84]

@@ -1,0 +1,38 @@
+{
+	// FIXME: Kampfgruppe z.b.V. 500
+	"kgzbv500": {
+		role: "transport",
+		airfields: [
+			["tatsinskaya", "1942-12-03", "1942-12-24"],
+			["salsk", "1942-12-24", "1943-01-16", 0.6]
+		],
+		planes: [
+			// 1942-12
+			["ju523mg4e", [67, 53], "1942-12"],
+			// 1943-01
+			["ju523mg4e", [53, 56], "1943-01"]
+		]
+	},
+	"kgzbv500_stab": {
+		name: "Stab/KGzbV 500",
+		parent: "kgzbv500",
+		planesMin: 3,
+		planesMax: 5
+	},
+	"kgzbv500_1": {
+		name: "1./KGzbV 500",
+		parent: "kgzbv500"
+	},
+	"kgzbv500_2": {
+		name: "2./KGzbV 500",
+		parent: "kgzbv500"
+	},
+	"kgzbv500_3": {
+		name: "3./KGzbV 500",
+		parent: "kgzbv500"
+	},
+	"kgzbv500_4": {
+		name: "4./KGzbV 500",
+		parent: "kgzbv500"
+	}
+}

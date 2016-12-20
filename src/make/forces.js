@@ -13,9 +13,15 @@ module.exports = function makeForces() {
 	// Make player force
 	makePlayerForce.call(this);
 
+	const {rand} = this;
+	const numFlights = rand.integer(3, 5);
+
 	// FIXME: Make some random AI forces for testing
-	for (let i = 0; i < 10; i++) {
-		makeForce.call(this, {});
+	for (let i = 0; i < numFlights; i++) {
+
+		makeForce.call(this, {
+			state: rand.real(0, 0.5)
+		});
 	}
 };
 
