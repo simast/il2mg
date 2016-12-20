@@ -22,7 +22,11 @@ const eventFilters = [
 	"EventsFilterKilled",
 	"EventsFilterDropedBombs",
 	"EventsFilterFiredFlare",
-	"EventsFilterFiredRockets"
+	"EventsFilterFiredRockets",
+	"EventsFilterDroppedCargoContainers",
+	"EventsFilterDeliveredCargo",
+	"EventsFilterParatrooperJumped",
+	"EventsFilterParatrooperLandedAlive"
 ];
 
 // Complex Trigger item
@@ -36,7 +40,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		this.Radius = 1000;
 		this.DamageThreshold = 1;
 		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT;
-		this.CheckEntities = 0;
+		this.CheckPlanes = 0;
 		this.CheckVehicles = 0;
 
 		eventFilters.forEach((eventFilter) => {
@@ -63,7 +67,11 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 			OnObjectKilled: 70,
 			OnObjectDroppedBombs: 71,
 			OnObjectFiredRockets: 72,
-			OnObjectFiredFlare: 73
+			OnObjectFiredFlare: 73,
+			OnObjectDroppedCargoContainers: 75,
+			OnObjectDeliveredCargo: 76,
+			OnObjectParatrooperJumped: 77,
+			OnObjectParatrooperLandedAlive: 78
 		};
 	}
 
@@ -134,8 +142,8 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		// DamageThreshold
 		this.writeUInt8(buffer, this.DamageThreshold);
 
-		// CheckEntities
-		this.writeUInt8(buffer, this.CheckEntities);
+		// CheckPlanes
+		this.writeUInt8(buffer, this.CheckPlanes);
 
 		// CheckVehicles
 		this.writeUInt8(buffer, this.CheckVehicles);

@@ -15,14 +15,13 @@
 		"lex": "1.7.9",
 		"random-js": "1.0.8",
 		"winston": "2.3.0",
-		"speakingurl": "10.0.0",
+		"speakingurl": "11.0.0",
 		"mustache": "2.3.0",
-		"numeral": "2.0.1",
+		"numeral": "2.0.3",
 		"rbush": "2.0.1",
 		"rbush-knn": "2.0.0",
 		"suncalc": "1.7.0",
 		"sylvester": "0.0.21",
-		"smart-buffer": "1.0.11",
 		"quadtree-lib": "0.1.4",
 		"lazy-property": "1.0.0",
 		"circle-enclose": "1.0.0"
@@ -47,6 +46,6 @@
 		"react": "15.4.1",
 		"react-dom": "15.4.1",
 		"react-router": "3.0.0",
-		"clean-css": "3.4.22"
+		"clean-css": "3.4.23"
 	}
 }
