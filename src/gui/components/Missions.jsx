@@ -531,7 +531,7 @@ class Missions extends React.Component {
 
 		// Make a backup copy of the original autoplay.cfg file
 		if (fs.existsSync(autoplayPath)) {
-			fs.renameSync(autoplayPath, path.join(userDataPath, FILE_AUTOPLAY));
+			this.moveFileSync(autoplayPath, path.join(userDataPath, FILE_AUTOPLAY));
 		}
 
 		// Make autoplay.cfg
@@ -569,7 +569,7 @@ class Missions extends React.Component {
 
 			// Restore backup copy of the original autoplay.cfg file
 			if (fs.existsSync(backupAutoplayPath)) {
-				fs.renameSync(backupAutoplayPath, autoplayPath);
+				this.moveFileSync(backupAutoplayPath, autoplayPath);
 			}
 			// Remove existing autoplay.cfg file
 			else if (fs.existsSync(autoplayPath)) {
@@ -668,6 +668,27 @@ class Missions extends React.Component {
 				);
 			}
 		});
+	}
+
+	// Utility function used to move a file synchronously.
+	// NOTE: Prefers native Node.js fs.renameSync function, but will also handle
+	// "EXDEV" errors for cross device/disk renaming.
+	moveFileSync(sourceFile, destFile) {
+
+		// Try to use fs.renameSync when possible
+		try {
+			fs.renameSync(sourceFile, destFile);
+		}
+		catch (e) {
+
+			if (e.code !== "EXDEV") {
+				throw e;
+			}
+
+			// Fallback to synchronous copy-and-delete logic
+			fs.writeFileSync(destFile, fs.readFileSync(sourceFile));
+			fs.unlinkSync(sourceFile);
+		}
 	}
 }
 
