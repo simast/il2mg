@@ -1,8 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict";
 
-const React = require("react");
+const fs = global.require("fs");
 const {remote, ipcRenderer} = global.require("electron");
+const React = require("react");
 
 // Application component
 class Application extends React.Component {
@@ -64,6 +65,27 @@ class Application extends React.Component {
 				noLink: true
 			}
 		);
+	}
+
+	// Utility function used to move a file synchronously.
+	// NOTE: Prefers native Node.js fs.renameSync function, but will also handle
+	// "EXDEV" errors for cross device/disk renaming.
+	static moveFileSync(sourceFile, destFile) {
+
+		// Try to use fs.renameSync when possible
+		try {
+			fs.renameSync(sourceFile, destFile);
+		}
+		catch (e) {
+
+			if (e.code !== "EXDEV") {
+				throw e;
+			}
+
+			// Fallback to synchronous copy-and-delete logic
+			fs.writeFileSync(destFile, fs.readFileSync(sourceFile));
+			fs.unlinkSync(sourceFile);
+		}
 	}
 }
 

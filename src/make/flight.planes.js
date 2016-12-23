@@ -422,7 +422,7 @@ module.exports = function makeFlightPlanes(flight) {
 			}
 
 			// Create plane entity
-			planeItem.createEntity();
+			planeItem.createEntity(flight.virtual ? true : false);
 		}
 
 		// Sort subordinate planes in an element formation on the ground based on

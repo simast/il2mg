@@ -13,20 +13,12 @@ module.exports = function makeForces() {
 	// Make player force
 	makePlayerForce.call(this);
 
-	const {rand} = this;
-	const numFlights = rand.integer(3, 5);
-
-	// FIXME: Make some random AI forces for testing
-	for (let i = 0; i < numFlights; i++) {
-
-		makeForce.call(this, {
-			state: rand.real(0, 0.5)
-		});
-	}
+	// Make AI forces
+	makeAIForces.call(this);
 };
 
 // Make a new task force
-function makeForce({player = false, choice = {}, state = 0}) {
+function makeForce({player = false, choice = {}, state = 0, virtual = false}) {
 
 	const {rand, availableUnits, suspendedUnits, activeFlights} = this;
 	const force = [];
@@ -36,6 +28,11 @@ function makeForce({player = false, choice = {}, state = 0}) {
 	// Make player flight and task force
 	if (player) {
 		flightParams.player = true;
+	}
+
+	// Make a virtual flight
+	if (virtual) {
+		flightParams.virtual = true;
 	}
 
 	flightParams.state = state;
@@ -186,6 +183,17 @@ function makePlayerForce() {
 	});
 
 	log.I.apply(log, logData);
+}
+
+// Make AI forces
+function makeAIForces() {
+
+	const {rand} = this;
+
+	makeForce.call(this, {
+		state: rand.real(0, 0.5),
+		virtual: true
+	});
 }
 
 // Choose a valid flight unit based on choice data

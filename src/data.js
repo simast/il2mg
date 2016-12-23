@@ -12,10 +12,10 @@ const data = module.exports = Object.create(null);
 data.name = "il2mg";
 
 // Application version
-data.version = "r10";
+data.version = "r11";
 
 // Application copyright
-data.copyright = "(C) Simas Toleikis, 2015-2016";
+data.copyright = "(C) Simas Toleikis, 2015-2017";
 
 // List of supported mission localization languages
 data.languages = Object.freeze([
