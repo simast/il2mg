@@ -43,7 +43,7 @@ function makeActivity(flight, params = {}) {
 
 	// Create a common activity type/class
 	if (params.type) {
-		activity = new (require("./activity." + params.type));
+		activity = new (require("./activity." + params.type))();
 	}
 
 	// Set activity params

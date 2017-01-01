@@ -458,5 +458,9 @@
 	zryaninsky: {
 		name: "Zryaninsky",
 		position: [125592.7, 55.18, 154201.8]
+	},
+	zverevo: {
+		name: "Zverevo",
+		position: [59930, 0, -65903]
 	}
 }
