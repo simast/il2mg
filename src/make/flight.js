@@ -9,8 +9,13 @@ const makeFlightPilots = require("./flight.pilots");
 const makeFlightPlanes = require("./flight.planes");
 const makeFlightRange = require("./flight.range");
 const makeFlightPlan = require("./flight.plan");
+const makeFlightActions = require("./flight.actions");
 const makeFlightFuel = require("./flight.fuel");
 const makeFlightTime = require("./flight.time");
+const makeFlightBeacon = require("./flight.beacon");
+const makeFlightPath = require("./flight.path");
+const makeFlightState = require("./flight.state");
+const makeFlightPose = require("./flight.pose");
 const makeAirfieldTaxi = require("./airfield.taxi");
 
 // Make mission flight
@@ -29,12 +34,7 @@ module.exports = function makeFlight(params) {
 		throw new TypeError("Invalid flight task value.");
 	}
 
-	let isPlayer = false;
-
-	// Player flight
-	if (params.player) {
-		isPlayer = true;
-	}
+	const isPlayer = Boolean(params.player);
 
 	let unitID = params.unit;
 
@@ -74,6 +74,7 @@ module.exports = function makeFlight(params) {
 	flight.airfield = unit.airfield;
 	flight.country = unit.country;
 	flight.coalition = unit.coalition;
+	flight.virtual = Boolean(params.virtual);
 	flight.state = params.state;
 
 	// Set default flight state (parking start without engine running)
@@ -313,35 +314,25 @@ module.exports = function makeFlight(params) {
 	// Make flight plan
 	makeFlightPlan.call(this, flight);
 
+	// Make final flight path with adjusted offmap bounds
+	makeFlightPath.call(this, flight);
+
+	// Fast-forward plan actions based on state
+	makeFlightState.call(this, flight);
+
+	// Make flight air start pose
+	makeFlightPose.call(this, flight);
+
+	// TODO: Build virtual route points (for AI flights only)
+
+	// Make flight plan actions
+	makeFlightActions.call(this, flight);
+
 	// Make flight time
 	makeFlightTime.call(this, flight);
 
-	// Enable radio navigation beacon source
-	if (isPlayer) {
-
-		// Use player home airfield beacon by default
-		let beaconItem = airfield.beacon;
-
-		// Override with flight provided target beacon
-		if (flight.beacon) {
-			beaconItem = flight.beacon;
-		}
-
-		if (beaconItem) {
-
-			const beaconItem = (flight.beacon || airfield.beacon);
-
-			beaconItem.BeaconChannel = 1;
-			beaconItem.entity.Enabled = 1;
-
-			// Detach beacon item from airfield "bubble" zone
-			if (airfield.zone) {
-
-				airfield.zone.onActivate.removeObject(beaconItem);
-				airfield.zone.onDeactivate.removeObject(beaconItem);
-			}
-		}
-	}
+	// Make flight beacon
+	makeFlightBeacon.call(this, flight);
 
 	return flight;
 };

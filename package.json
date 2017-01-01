@@ -20,7 +20,7 @@
 		"numeral": "2.0.4",
 		"rbush": "2.0.1",
 		"rbush-knn": "2.0.0",
-		"suncalc": "1.7.0",
+		"suncalc": "1.8.0",
 		"sylvester": "0.0.21",
 		"quadtree-lib": "0.1.4",
 		"lazy-property": "1.0.0",

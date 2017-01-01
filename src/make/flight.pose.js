@@ -19,9 +19,12 @@ const FORMATION_ANGLE = 30; // Degrees
 const FORMATION_SPACING = 100; // Meters
 
 // Make flight air start pose (position and orientation based on formation)
-module.exports = function makeFlightPose(flight, fromPosition, toPosition) {
+module.exports = function makeFlightPose(flight) {
 
+	const plan = flight.plan;
+	const fromPosition = plan.start.position;
 	const elements = flight.elements;
+	let toPosition;
 	let spawnPosition;
 	let spawnOrientation;
 	let spawnBackVector;
@@ -65,7 +68,7 @@ module.exports = function makeFlightPose(flight, fromPosition, toPosition) {
 		// Try to use next route point position (for orientation)
 		if (!toPosition && typeof flight.state === "number") {
 
-			for (const activity of flight.plan) {
+			for (const activity of plan) {
 
 				if (activity.type === activityType.FLY) {
 
