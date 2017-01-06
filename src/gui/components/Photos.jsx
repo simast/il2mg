@@ -4,7 +4,7 @@
 const React = require("react");
 
 // Number of available photos
-const AVAILABLE_PHOTOS = 10;
+const AVAILABLE_PHOTOS = 12;
 
 // Photos decoration component
 class Photos extends React.Component {
