@@ -18,7 +18,7 @@ module.exports = class ActivityStart {
 		const debugFlights = Boolean(mission.debug && mission.debug.flights);
 
 		// Create start location icon
-		if ((flight.player || debugFlights) && !flight.startIcon) {
+		if (!flight.startIcon && (flight.player || debugFlights)) {
 
 			const startIcon = flight.startIcon = flightGroup.createItem("MCU_Icon");
 
@@ -34,11 +34,12 @@ module.exports = class ActivityStart {
 			}
 		}
 
-		// Player-only spawn without valid taxi route
+		// Player-only spawn without a valid taxi route
 		if (flight.taxi <= 0 && !isAirStart) {
 			return;
 		}
 
+		// Create flight onStart event command
 		if (!flight.onStart) {
 
 			// TODO: Add support for shedulled flights
