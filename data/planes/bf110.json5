@@ -4,7 +4,11 @@
 		manufacturer: "Messerschmitt",
 		name: "Bf 110",
 		type: ["fighter", "fighter_heavy"],
-		size: "large"
+		size: "large",
+		static: [
+			"static_bf110e2",
+			"static_bf110e2_open"
+		]
 	},
 
 	// Bf 110 C-2
@@ -49,12 +53,8 @@
 		parent: "bf110e",
 		model: "graphics\\planes\\bf110e2\\bf110e2.mgm",
 		script: "luascripts\\worldobjects\\planes\\bf110e2.txt",
-		static: [
-			"static_bf110e2",
-			"static_bf110e2_open"
-		],
-		speed: 380,
-		range: 850,
+		speed: 390,
+		range: 990,
 		skins: {
 			"201": {
 				"": [-5, -5, -5, 1],
@@ -80,9 +80,33 @@
 	// Bf 110 F-4
 	"bf110f4": "bf110e2",
 
+	// Bf 110 G
+	"bf110g": {
+		name: "Bf 110 G",
+		parent: "bf110"
+	},
+
 	// Bf 110 G-2
-	"bf110g2": "bf110e2",
+	"bf110g2": {
+		name: "Bf 110 G-2",
+		parent: "bf110g",
+		model: "graphics\\planes\\bf110g2\\bf110g2.mgm",
+		script: "luascripts\\worldobjects\\planes\\bf110g2.txt",
+		speed: 400,
+		range: 1160,
+		skins: {
+			"201": {
+				"": [-7, -7, -7, 1],
+				"bf110g2\\bf110g2_skin_01.dds": [0, 0, 0, -17],
+				"bf110g2\\bf110g2_skin_02.dds": [1, 1, 1, 0],
+				"bf110g2\\bf110g2_skin_07.dds": [1, 1, 1, 0],
+				"bf110g2\\bf110g2_skin_08.dds": [1, 1, 1, 2],
+				"bf110g2\\bf110g2_skin_10.dds": [1, 1, 1, 0],
+				"bf110g2\\bf110g2_skin_14.dds": [3, 3, 3, 0]
+			}
+		}
+	},
 
 	// Bf 110 G-3
-	"bf110g3": "bf110e2"
+	"bf110g3": "bf110g2"
 }
