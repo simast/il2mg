@@ -15,10 +15,10 @@ body {
 	margin: 0;
 	cursor: default;
 	color: var(--main-text-color);
-	font: menu;
+	font-family: system-ui;
 	font-size: 14px;
 	background-image: url("assets/bg.png");
-	-webkit-user-select: none;
+	user-select: none;
 }
 
 /* Default link style */
@@ -266,7 +266,7 @@ a.country.selected:before {
 	margin-bottom: 15px;
 	height: calc(100vh - 204px);
 	overflow-y: auto;
-	-webkit-user-select: text;
+	user-select: text;
 
 	/* Top and bottom briefing content scroll shadows */
 	background:
@@ -327,7 +327,7 @@ a.country.selected:before {
 	width: 18px;
 }
 #create .reset:before {
-	content: "✖";
+	content: "\2716";
 }
 #create .reset:hover {
 	text-decoration: none;
