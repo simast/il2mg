@@ -376,7 +376,10 @@ module.exports = function makeUnits() {
 
 		// Randomize unit part and airfield lists
 		rand.shuffle(unitParts);
-		rand.shuffle(unitAirfields);
+
+		if (unitParts.length > 1) {
+			rand.shuffle(unitAirfields);
+		}
 
 		// Distribute pilots to all unit parts
 		if (unitPilots.length) {

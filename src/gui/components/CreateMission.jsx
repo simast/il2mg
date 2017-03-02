@@ -287,11 +287,11 @@ class CreateMission extends React.Component {
 				}
 			}
 
-			// Sort items by data ID
+			// Sort items by data name
 			if (choiceType !== "unit") {
 
 				items.sort((a, b) => {
-					return a.id[0].localeCompare(b.id[0]);
+					return a.data.name.localeCompare(b.data.name, "en", {numeric: true});
 				});
 			}
 

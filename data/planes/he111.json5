@@ -40,28 +40,47 @@
 			}
 		}
 	},
-	
+
 	// He 111 P-4
 	"he111p4": "he111h6",
 
 	// He 111 H-1
 	"he111h1": "he111h6",
-	
+
 	// He 111 H-2
 	"he111h2": "he111h6",
-	
+
 	// He 111 H-3
 	"he111h3": "he111h6",
-	
+
 	// He 111 H-5
 	"he111h5": "he111h6",
-	
+
 	// He 111 H-11
-	"he111h11": "he111h6",
-	
+	"he111h11": "he111h16",
+
 	// He 111 H-14
-	"he111h14": "he111h6",
+	"he111h14": "he111h16",
 
 	// He 111 H-16
-	"he111h16": "he111h6"
+	"he111h16": {
+		name: "He 111 H-16",
+		parent: "he111h",
+		model: "graphics\\planes\\he111h16\\he111h16.mgm",
+		script: "luascripts\\worldobjects\\planes\\he111h16.txt",
+		speed: 310,
+		range: 2450,
+		skins: {
+			"201": {
+				"": [-5, -5, -5, 1],
+				"he111h16\\he111h16_skin_01.dds": [0, 0, 0, -12],
+				"he111h16\\he111h16_skin_02.dds": [1, 1, 1, 0],
+				"he111h16\\he111h16_skin_03.dds": [1, 1, 1, 1],
+				"he111h16\\he111h16_skin_06.dds": [1, 1, 1, 1],
+				"he111h16\\he111h16_skin_07.dds": [1, 1, 1, 1],
+				"he111h16\\he111h16_skin_08.dds": [1, 1, 1, 1],
+				"he111h16\\he111h16_skin_09.dds": [0, 0, 0, 3]
+			}
+		}
+	}
 }
