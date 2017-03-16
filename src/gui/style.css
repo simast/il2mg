@@ -314,9 +314,6 @@ a.country.selected:before {
 }
 
 /* Create mission screen */
-#create {
-	pointer-events: auto;
-}
 
 #create .reset {
 	color: var(--separator-color);
@@ -389,9 +386,16 @@ a.country.selected:before {
 	margin: 19px 0 0 8px;
 }
 
+#create h1,
+#selectStart {
+	margin-right: 340px;
+	pointer-events: auto;
+}
+
 /* Create mission choices lists */
 #choices {
 	overflow: hidden;
+	pointer-events: auto;
 }
 #choices h2 {
 	display: block;

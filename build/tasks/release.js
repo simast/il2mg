@@ -160,8 +160,8 @@ module.exports = function(grunt) {
 					out: outDir,
 					asar: true,
 					icon: "src/gui/app.ico",
-					"app-copyright": data.copyright,
-					"app-version": "0." + data.version.match(/[0-9]+/)[0],
+					appCopyright: data.copyright,
+					appVersion: "0." + data.version.match(/[0-9]+/)[0],
 					win32metadata: {
 						CompanyName: "",
 						FileDescription: pkg.description,
