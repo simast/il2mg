@@ -84,19 +84,20 @@ class Missions extends React.Component {
 
 	componentWillMount() {
 
-		// Handle index route request (when component has no active mission param)
-		if (!this.props.params.mission) {
+		const {match, history} = this.props;
 
-			const {router} = this.context;
+		// Handle index route request (when component has no active mission param)
+		if (!match.params.mission) {
+
 			const {missions} = this.state;
 
 			// Show/select first mission
 			if (missions.list.length) {
-				router.replace("/missions/" + missions.list[0].id);
+				history.replace("/missions/" + missions.list[0].id);
 			}
 			// Show create mission screen
 			else {
-				router.replace("/create?first=1");
+				history.replace("/create?first=1");
 			}
 		}
 	}
@@ -119,9 +120,9 @@ class Missions extends React.Component {
 	// Render component
 	render() {
 
-		const state = this.state;
-		const missions = state.missions;
-		const missionID = this.props.params.mission;
+		const {match} = this.props;
+		const {missions, difficulty} = this.state;
+		const missionID = match.params.mission;
 		const actions = {
 			left: new Map()
 		};
@@ -148,7 +149,7 @@ class Missions extends React.Component {
 			// Launch selected mission
 			actions.right = new Map();
 			actions.right.set("Launch", {
-				className: "difficulty" + state.difficulty,
+				className: "difficulty" + difficulty,
 				onClick: (event) => {
 					this.launchMission(event.ctrlKey);
 				},
@@ -219,7 +220,7 @@ class Missions extends React.Component {
 
 				// Read mission metadata file
 				mission = JSON.parse(
-					fs.readFileSync(missionsPath + path.sep + fileName, "utf8")
+					fs.readFileSync(missionsPath + path.sep + fileName, "utf-8")
 				);
 			}
 			catch (e) {
@@ -242,7 +243,7 @@ class Missions extends React.Component {
 	}
 
 	// Remove mission
-	removeMission(confirm, missionID = this.props.params.mission) {
+	removeMission(confirm, missionID = this.props.match.params.mission) {
 
 		if (!missionID) {
 			return;
@@ -269,7 +270,7 @@ class Missions extends React.Component {
 		// Remove mission files
 		if (result === 0) {
 
-			const {router} = this.context;
+			const {match, history} = this.props;
 			const {missionsPath} = this.context.config;
 			let missions = this.state.missions;
 			const mission = missions.index[missionID];
@@ -286,11 +287,11 @@ class Missions extends React.Component {
 
 			// Show create mission screen
 			if (!missions.list.length) {
-				return router.replace("/create?first=1");
+				return history.replace("/create?first=1");
 			}
 
 			// Select next mission on the list when removing active mission
-			if (missionID === this.props.params.mission) {
+			if (missionID === match.params.mission) {
 
 				let nextMission = missions.list[removedIndex];
 
@@ -298,7 +299,7 @@ class Missions extends React.Component {
 					nextMission = missions.list[missions.list.length - 1];
 				}
 
-				router.replace("/missions/" + nextMission.id);
+				history.replace("/missions/" + nextMission.id);
 			}
 
 			this.setState({missions});
@@ -381,7 +382,7 @@ class Missions extends React.Component {
 	launchMission(selectFolder) {
 
 		const {config} = this.context;
-		const missionID = this.props.params.mission;
+		const missionID = this.props.match.params.mission;
 
 		if (!missionID) {
 			return;
@@ -574,7 +575,7 @@ class Missions extends React.Component {
 			// Remove existing autoplay.cfg file
 			else if (fs.existsSync(autoplayPath)) {
 
-				const autoplayContent = fs.readFileSync(autoplayPath, "utf8");
+				const autoplayContent = fs.readFileSync(autoplayPath, "utf-8");
 
 				// Remove only known/generated autoplay file
 				if (autoplayContent.indexOf("&il2mg=1") >= 0) {
@@ -672,7 +673,6 @@ class Missions extends React.Component {
 }
 
 Missions.contextTypes = {
-	router: React.PropTypes.object.isRequired,
 	config: React.PropTypes.object.isRequired,
 	userDataPath: React.PropTypes.string.isRequired
 };

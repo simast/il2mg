@@ -3,7 +3,7 @@
 
 const remote = global.require("electron").remote;
 const React = require("react");
-const {Link} = require("react-router");
+const {NavLink} = require("react-router-dom");
 
 // Missions list component
 class MissionsList extends React.Component {
@@ -88,10 +88,10 @@ MissionsList.Item = ({mission, onContextMenu}) => {
 
 	return (
 		<li>
-			<Link {...linkProps}>
+			<NavLink {...linkProps}>
 				<em>{mission.plane}</em>
 				{mission.title}
-			</Link>
+			</NavLink>
 		</li>
 	);
 };

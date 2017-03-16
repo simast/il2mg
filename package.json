@@ -34,9 +34,9 @@
 		"enclose": "2.2.0",
 		"sloc": "0.2.0",
 		"uglify-js": "mishoo/UglifyJS2#harmony-v2.7.5",
-		"electron": "1.6.2",
+		"electron": "1.6.3",
 		"electron-packager": "8.5.2",
-		"babel-register": "6.23.0",
+		"babel-register": "6.24.0",
 		"babel-eslint": "7.1.1",
 		"babel-plugin-transform-react-jsx": "6.23.0",
 		"eslint-plugin-react": "6.10.0",
@@ -45,7 +45,7 @@
 		"envify": "4.0.0",
 		"react": "15.4.2",
 		"react-dom": "15.4.2",
-		"react-router": "3.0.2",
-		"clean-css": "4.0.8"
+		"react-router-dom": "4.0.0",
+		"clean-css": "4.0.9"
 	}
 }

@@ -101,7 +101,7 @@ app.on("ready", () => {
 			webgl: false,
 			webaudio: false,
 			plugins: false,
-			defaultEncoding: "UTF-8"
+			defaultEncoding: "utf-8"
 		}
 	};
 

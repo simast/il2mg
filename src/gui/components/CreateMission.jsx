@@ -77,10 +77,12 @@ class CreateMission extends React.Component {
 	render() {
 
 		const {battle, start, date} = this.state;
-		const {router} = this.context;
+		const {history, location} = this.props;
 		const actions = {
 			right: new Map()
 		};
+
+		const isFirstCreate = new URLSearchParams(location.search).has("first");
 
 		// Get mission choice data
 		const choices = this.getChoices(start);
@@ -99,11 +101,11 @@ class CreateMission extends React.Component {
 		actions.right.set("Create", createProps);
 
 		// Cancel create mission
-		if (!this.props.location.query.first) {
+		if (!isFirstCreate) {
 
 			actions.right.set("Cancel", {
 				onClick() {
-					router.goBack();
+					history.goBack();
 				}
 			});
 		}
@@ -397,7 +399,8 @@ class CreateMission extends React.Component {
 	// Handle create mission button click
 	onCreateClick() {
 
-		const {config, router} = this.context;
+		const {config} = this.context;
+		const {history} = this.props;
 		const {battle, start, date, choice} = this.state;
 
 		let cliFile = path.join(process.resourcesPath, "il2mg-cli");
@@ -450,7 +453,7 @@ class CreateMission extends React.Component {
 				stdio: ["ignore", "ignore", "pipe"]
 			});
 
-			router.replace("/missions");
+			history.replace("/missions");
 		}
 		catch (e) {
 			Application.showErrorMessage(e.stderr.toString());
@@ -459,7 +462,6 @@ class CreateMission extends React.Component {
 }
 
 CreateMission.contextTypes = {
-	router: React.PropTypes.object.isRequired,
 	config: React.PropTypes.object.isRequired
 };
 

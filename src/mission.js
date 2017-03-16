@@ -120,7 +120,7 @@ class Mission {
 
 			// Try a complex seed value (with Base64 parameters)
 			try {
-				complexSeed = JSON.parse(new Buffer(params.seed, "base64").toString("utf8"));
+				complexSeed = JSON.parse(new Buffer(params.seed, "base64").toString("utf-8"));
 			}
 			catch (e) {}
 
@@ -180,7 +180,7 @@ class Mission {
 
 		// Save seed value as a localization string
 		if (complexSeed) {
-			seedParam = new Buffer(JSON.stringify(complexSeed), "utf8").toString("base64");
+			seedParam = new Buffer(JSON.stringify(complexSeed), "utf-8").toString("base64");
 		}
 		else {
 			seedParam = this.seed.toString();
