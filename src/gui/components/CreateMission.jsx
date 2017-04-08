@@ -4,6 +4,7 @@
 const path = global.require("path");
 const execFileSync = global.require("child_process").execFileSync;
 const React = require("react");
+const PropTypes = require("prop-types");
 const Application = require("./Application");
 const Screen = require("./Screen");
 const SelectStart = require("./SelectStart");
@@ -462,7 +463,7 @@ class CreateMission extends React.Component {
 }
 
 CreateMission.contextTypes = {
-	config: React.PropTypes.object.isRequired
+	config: PropTypes.object.isRequired
 };
 
 // Mission battle selection component

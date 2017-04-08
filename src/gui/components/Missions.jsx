@@ -6,6 +6,7 @@ const path = global.require("path");
 const {spawn} = global.require("child_process");
 const {remote} = global.require("electron");
 const React = require("react");
+const PropTypes = require("prop-types");
 const Application = require("./Application");
 const Screen = require("./Screen");
 const MissionsList = require("./MissionsList");
@@ -673,8 +674,8 @@ class Missions extends React.Component {
 }
 
 Missions.contextTypes = {
-	config: React.PropTypes.object.isRequired,
-	userDataPath: React.PropTypes.string.isRequired
+	config: PropTypes.object.isRequired,
+	userDataPath: PropTypes.string.isRequired
 };
 
 module.exports = Missions;

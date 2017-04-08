@@ -4,6 +4,7 @@
 const fs = global.require("fs");
 const {remote, ipcRenderer} = global.require("electron");
 const React = require("react");
+const PropTypes = require("prop-types");
 
 // Application component
 class Application extends React.Component {
@@ -90,8 +91,8 @@ class Application extends React.Component {
 }
 
 Application.childContextTypes = {
-	config: React.PropTypes.object,
-	userDataPath: React.PropTypes.string
+	config: PropTypes.object,
+	userDataPath: PropTypes.string
 };
 
 module.exports = Application;

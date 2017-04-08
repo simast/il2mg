@@ -2,6 +2,7 @@
 "use strict";
 
 const React = require("react");
+const PropTypes = require("prop-types");
 
 // Mission details pane component
 class MissionDetails extends React.Component {
@@ -38,7 +39,7 @@ class MissionDetails extends React.Component {
 }
 
 MissionDetails.propTypes = {
-	mission: React.PropTypes.object.isRequired
+	mission: PropTypes.object.isRequired
 };
 
 module.exports = MissionDetails;
