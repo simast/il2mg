@@ -24,5 +24,5 @@ module.exports = function makeFlightTime(flight) {
 		}
 	}
 
-	flight.time = Math.round(time);
+	flight.time = time;
 };

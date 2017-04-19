@@ -16,6 +16,7 @@ const makeFlightBeacon = require("./flight.beacon");
 const makeFlightPath = require("./flight.path");
 const makeFlightState = require("./flight.state");
 const makeFlightPose = require("./flight.pose");
+const makeFlightVirtual = require("./flight.virtual");
 const makeAirfieldTaxi = require("./airfield.taxi");
 
 // Make mission flight
@@ -323,13 +324,14 @@ module.exports = function makeFlight(params) {
 	// Make flight air start pose
 	makeFlightPose.call(this, flight);
 
-	// TODO: Build virtual route points (for AI flights only)
-
 	// Make flight plan actions
 	makeFlightActions.call(this, flight);
 
 	// Make flight time
 	makeFlightTime.call(this, flight);
+
+	// Make virtual flight
+	makeFlightVirtual.call(this, flight);
 
 	// Make flight beacon
 	makeFlightBeacon.call(this, flight);

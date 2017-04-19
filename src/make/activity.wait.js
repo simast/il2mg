@@ -65,4 +65,11 @@ module.exports = class ActivityWait {
 	makeTime() {
 		return this.time;
 	}
+
+	// Make virtual wait points count
+	makeVirtualPoints() {
+
+		// Create 1 virtual wait point for every ~15 minutes of waiting
+		return Math.round(this.time / (15 * 60));
+	}
 };

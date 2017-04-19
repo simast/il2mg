@@ -124,12 +124,6 @@ module.exports = class ActivityLand {
 
 	// Make land activity time
 	makeTime() {
-
-		const {rand} = this.mission;
-
-		// TODO: Use flight plane count to better estimate land activity time!
-
-		// Use random time for land activity
-		return rand.real(5, 10) * 60; // 5 - 10 minutes
+		return (3 + (this.flight.planes * 2)) * 60; // 5+ minutes
 	}
 };

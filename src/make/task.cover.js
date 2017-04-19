@@ -50,6 +50,7 @@ module.exports = function makeTaskCover(flight) {
 		makeState: makeTaskCoverState,
 		makeBriefing: makeTaskCoverBriefing,
 		makeTime: makeTaskCoverTime,
+		makeVirtualPoints: makeTaskCoverVirtualPoints,
 		distance,
 		speed,
 		state: 1
@@ -208,4 +209,11 @@ function makeTaskCoverBriefing() {
 // Make cover airfield activity time
 function makeTaskCoverTime() {
 	return this.distance / (this.speed * 1000 / 3600);
+}
+
+// Make cover airfield activity virtual points count
+function makeTaskCoverVirtualPoints() {
+
+	// Create 1 virtual cover point for every ~15 minutes in the air
+	return Math.round(this.makeTime() / (15 * 60));
 }

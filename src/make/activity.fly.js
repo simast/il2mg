@@ -6,6 +6,7 @@ const {Vector} = require("sylvester");
 const {MCU_Icon, MCU_Waypoint} = require("../item");
 const {mapColor, altitudeLevel} = require("../data");
 const makeFlightFuel = require("./flight.fuel");
+const {VIRTUAL_ZONE_INNER} = require("./flight.virtual");
 const makeBriefingLead = require("./briefing.lead");
 
 // Minimum distance required between start position and the next spot
@@ -366,5 +367,12 @@ module.exports = class ActivityFly {
 		});
 
 		return time;
+	}
+
+	// Make virtual route points count
+	makeVirtualPoints() {
+
+		// Make sure to cover entire route distance with virtual points
+		return Math.floor(this.getRouteDistance() / VIRTUAL_ZONE_INNER);
 	}
 };

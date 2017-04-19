@@ -259,11 +259,17 @@ module.exports = class ActivityTakeOff {
 	// Make take off activity time
 	makeTime() {
 
-		const {rand} = this.mission;
+		const {flight} = this;
 
-		// TODO: Use flight plane count to better estimate take off activity time!
+		let takeoffTime = 0;
 
-		// Use random time for take off activity
-		return rand.real(5, 10) * 60; // 5 - 10 minutes
+		if (flight.state === flightState.RUNWAY) {
+			takeoffTime = 3 + (flight.planes * 0.5);
+		}
+		else {
+			takeoffTime = 6 + (flight.planes * 1);
+		}
+
+		return takeoffTime;
 	}
 };
