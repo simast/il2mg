@@ -287,7 +287,6 @@ module.exports = function makeTaskPatrol(flight) {
 	flight.plan.push(makeActivity.call(this, flight, {
 		type: activityType.FLY,
 		route,
-		state: 1,
 		visible: Boolean(flight.player) && !isPlayerFlightLeader
 	}));
 

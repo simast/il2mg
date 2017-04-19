@@ -175,18 +175,15 @@ function adjustOffmapRouteBounds(flight, activity, isForward) {
 		// Use flight fuel for virtual offmap travel distance
 		makeFlightFuel.call(this, flight, offmapDistance);
 
-		// Transfer used offmap state
-		if (activity.state && startActivity.state === undefined) {
+		// Transfer used offmap state/time
+		if (activity.time > 0) {
 
 			const routeDistance = activity.getRouteDistance();
 			const totalDistance = offmapDistance + routeDistance;
-			const transferState = activity.state * (offmapDistance / totalDistance);
-			const planeSpeed = this.planes[flight.leader.plane].speed;
-			const delayTime = offmapDistance / (planeSpeed * 1000 / 3600);
+			const transferTime = activity.time * (offmapDistance / totalDistance);
 
-			startActivity.delay = delayTime;
-			startActivity.state = transferState;
-			activity.state -= transferState;
+			startActivity.time = transferTime;
+			activity.time -= transferTime;
 		}
 	}
 }

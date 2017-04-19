@@ -318,6 +318,9 @@ module.exports = function makeFlight(params) {
 	// Make final flight path with adjusted offmap bounds
 	makeFlightPath.call(this, flight);
 
+	// Make flight time
+	makeFlightTime.call(this, flight);
+
 	// Fast-forward plan actions based on state
 	makeFlightState.call(this, flight);
 
@@ -327,14 +330,11 @@ module.exports = function makeFlight(params) {
 	// Make flight plan actions
 	makeFlightActions.call(this, flight);
 
-	// Make flight time
-	makeFlightTime.call(this, flight);
+	// Make flight beacon
+	makeFlightBeacon.call(this, flight);
 
 	// Make virtual flight
 	makeFlightVirtual.call(this, flight);
-
-	// Make flight beacon
-	makeFlightBeacon.call(this, flight);
 
 	return flight;
 };

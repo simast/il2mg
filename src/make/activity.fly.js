@@ -154,12 +154,13 @@ module.exports = class ActivityFly {
 	}
 
 	// Make fly activity state
-	makeState(state) {
+	makeState(time) {
 
 		const {mission, flight, route} = this;
 		const {plan} = flight;
-		let startPosition = this.position;
+		const state = time / this.time;
 		const routeDistance = this.getRouteDistance();
+		let startPosition = this.position;
 		let removeActivity = false;
 
 		// Fast-forward full fly activity

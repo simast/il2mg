@@ -255,21 +255,4 @@ module.exports = class ActivityTakeOff {
 
 		return briefing;
 	}
-
-	// Make take off activity time
-	makeTime() {
-
-		const {flight} = this;
-
-		let takeoffTime = 0;
-
-		if (flight.state === flightState.RUNWAY) {
-			takeoffTime = 3 + (flight.planes * 0.5);
-		}
-		else {
-			takeoffTime = 6 + (flight.planes * 1);
-		}
-
-		return takeoffTime;
-	}
 };

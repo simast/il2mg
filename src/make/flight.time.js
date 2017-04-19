@@ -9,11 +9,15 @@ module.exports = function makeFlightTime(flight) {
 	// Sum total flight time from all activities
 	for (const activity of flight.plan) {
 
-		if (typeof activity.makeTime !== "function") {
+		if (activity.makeTime) {
+			activity.time = activity.makeTime();
+		}
+
+		if (activity.time === undefined) {
 			continue;
 		}
 
-		time += activity.makeTime();
+		time += activity.time;
 	}
 
 	// Set AI "Time" property value for each plane

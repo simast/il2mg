@@ -121,9 +121,4 @@ module.exports = class ActivityLand {
 
 		return briefing.join(" ") + ".";
 	}
-
-	// Make land activity time
-	makeTime() {
-		return (3 + (this.flight.planes * 2)) * 60; // 5+ minutes
-	}
 };

@@ -14,7 +14,7 @@ module.exports = function makeForces() {
 	makePlayerForce.call(this);
 
 	// Make AI forces
-	// makeAIForces.call(this);
+	makeAIForces.call(this);
 };
 
 // Make a new task force

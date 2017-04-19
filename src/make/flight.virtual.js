@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict";
 
-const makeFlightState = require("./flight.state");
+const {makeActivityState} = require("./flight.state");
 const makeFlightTime = require("./flight.time");
 
 // Virtual activity zone size as inner and outer circle (km)
@@ -15,71 +15,56 @@ const VIRTUAL_ZONE_OUTER = 20000;
 // Make virtual flight
 module.exports = function makeFlightVirtual(flight) {
 
-	if (!flight.virtual) {
+	if (!flight.virtual || flight.time <= 0) {
 		return;
 	}
 
-	/*
-		1. Get virtual points for each activity (use makeVirtualPoints)
-		2. Use makeFlightState to create virtual flights (needs state step)
-		3. Use flight.time to delay virtual flight point activation
-		4. Use makeFlightActions to re-attach virtual flight to plan actions
-		5. Use makeFlightTime to update flight time
-		6. Use makeFlightPose to position virtual flight
-	*/
+	let delayTime = 0;
 
-	const stateActivities = [];
-	let totalState = 0;
-
-	// Find valid state activities
+	// Process state activities
 	for (const activity of flight.plan) {
 
-		if (activity.state === undefined) {
+		const activityTime = activity.time;
+
+		if (activityTime === undefined) {
 			continue;
 		}
 
-		totalState += activity.state;
-		stateActivities.push(activity);
-	}
-
-	if (!totalState) {
-		return;
-	}
-
-	// Process state activities
-	for (const activity of stateActivities) {
-
 		if (!activity.makeVirtualPoints) {
+
+			delayTime += activityTime;
 			continue;
 		}
 
 		const virtualPoints = activity.makeVirtualPoints();
 
 		if (virtualPoints <= 0) {
+
+			delayTime += activityTime;
 			continue;
 		}
 
-		const stateFrom = flight.state;
-		const stateTo = stateFrom + activity.state / (totalState / (1 - stateFrom));
-		const stateStep = (stateTo - stateFrom) / (virtualPoints + 1);
+		const stepTime = activityTime / (virtualPoints + 1);
 
 		// Create flight virtual points
 		for (let i = 1; i <= virtualPoints; i++) {
 
 			const oldTime = flight.time;
 
-			flight.state = stateFrom + (stateStep * i);
+			// Fast-forward activity state
+			makeActivityState.call(this, activity, stepTime);
 
 			// Clone virtual flight
 			cloneVirtualFlight.call(this, flight);
 
-			// Fast-forward plan actions based on new state
-			makeFlightState.call(this, flight);
-
 			// Update flight time
 			makeFlightTime.call(this, flight);
 
-			const elapsedTime = oldTime - flight.time;
+			const elapsedTime = delayTime + (oldTime - flight.time);
+
+			if (delayTime) {
+				delayTime = 0;
+			}
 
 			console.log(elapsedTime);
 		}

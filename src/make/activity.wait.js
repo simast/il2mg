@@ -40,30 +40,22 @@ module.exports = class ActivityWait {
 	}
 
 	// Make wait activity state
-	makeState(state) {
+	makeState(time) {
 
 		const {mission, flight} = this;
 		const {plan} = flight;
 
 		// Fast-forward wait activity state based on elapsed time
-		const elapsedTime = this.time * state;
 		const planeSpeed = mission.planes[flight.leader.plane].speed;
-		const waitDistance = elapsedTime * (planeSpeed * 1000 / 3600);
-
-		this.time -= elapsedTime;
+		const waitDistance = time * (planeSpeed * 1000 / 3600);
 
 		// Use flight fuel for fast-forward wait distance
 		makeFlightFuel.call(mission, flight, waitDistance);
 
 		// Remove activity from plan
-		if (state >= 1) {
+		if (time >= this.time) {
 			plan.splice(plan.indexOf(this), 1);
 		}
-	}
-
-	// Make wait activity time
-	makeTime() {
-		return this.time;
 	}
 
 	// Make virtual wait points count

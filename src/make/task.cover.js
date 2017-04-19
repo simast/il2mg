@@ -52,8 +52,7 @@ module.exports = function makeTaskCover(flight) {
 		makeTime: makeTaskCoverTime,
 		makeVirtualPoints: makeTaskCoverVirtualPoints,
 		distance,
-		speed,
-		state: 1
+		speed
 	});
 
 	// Only climb above airfield with low cloud cover
@@ -143,10 +142,12 @@ function makeTaskCoverAction(element, input) {
 }
 
 // Make cover airfield activity state
-function makeTaskCoverState(state) {
+function makeTaskCoverState(time) {
 
 	const {mission, flight, distance} = this;
+	const {plan} = flight;
 	const {rand} = mission;
+	const state = time / this.time;
 	const airfield = mission.airfields[flight.airfield];
 	const usedDistance = (distance * state);
 
@@ -165,6 +166,11 @@ function makeTaskCoverState(state) {
 
 	// Adjust remaining cover activity distance based on state
 	this.distance = distance - usedDistance;
+
+	// Remove activity from plan
+	if (state >= 1) {
+		plan.splice(plan.indexOf(this), 1);
+	}
 }
 
 // Make cover airfield activity briefing
@@ -215,5 +221,5 @@ function makeTaskCoverTime() {
 function makeTaskCoverVirtualPoints() {
 
 	// Create 1 virtual cover point for every ~15 minutes in the air
-	return Math.round(this.makeTime() / (15 * 60));
+	return Math.round(this.time / (15 * 60));
 }

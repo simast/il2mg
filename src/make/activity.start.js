@@ -69,18 +69,4 @@ module.exports = class ActivityStart {
 			flight.onStart.addTarget(input);
 		};
 	}
-
-	// Make start activity state
-	makeState(state) {
-
-		// NOTE: Start action will only have state when the flight is arriving from
-		// an offmap point. The fuel for offmap route has already been adjusted and
-		// all that is left is to fast-forward start delay.
-
-		this.delay -= (this.delay * state);
-
-		if (this.delay <= 0) {
-			delete this.delay;
-		}
-	}
 };

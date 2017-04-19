@@ -52,7 +52,6 @@ module.exports = function makeTaskRebase(flight) {
 	plan.push(makeActivity.call(this, flight, {
 		type: activityType.FLY,
 		route,
-		state: 1,
 		visible: isPlayerFlight
 	}));
 

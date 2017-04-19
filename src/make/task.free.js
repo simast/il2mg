@@ -11,7 +11,6 @@ module.exports = function makeTaskFree(flight) {
 
 	flight.plan.push(makeActivity.call(this, flight, {
 		type: activityType.WAIT,
-		time: Math.round(rand.real(15, 30) * 60), // 15-30 minutes
-		state: 1
+		time: Math.round(rand.real(15, 30) * 60) // 15-30 minutes
 	}));
 };

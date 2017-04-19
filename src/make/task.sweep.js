@@ -390,7 +390,6 @@ module.exports = function makeTaskSweep(flight) {
 	flight.plan.push(makeActivity.call(this, flight, {
 		type: activityType.FLY,
 		route,
-		state: 1,
 		visible: Boolean(flight.player)
 	}));
 
