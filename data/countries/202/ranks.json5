@@ -9,7 +9,7 @@
 	"3": {
 		name: "Elev sergent av."
 	},
-	
+
 	// Non-commissioned officers
 	"4": {
 		name: "Adjutant stagiar av.",
@@ -51,7 +51,7 @@
 		name: "Ofiţer de echipaj clasa I-a av.",
 		abbr: "Of. ec. cls. I"
 	},
-	
+
 	// Officers
 	"11": {
 		name: "Sublocotenent av.",
@@ -103,7 +103,7 @@
 			brass: 1
 		}
 	},
-	
+
 	// Generals
 	"17": {
 		name: "General de escadră av.",

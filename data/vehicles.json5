@@ -406,7 +406,7 @@
 		model: "graphics\\artillery\\searchlights\\searchlightsu.mgm",
 		script: "luascripts\\worldobjects\\vehicles\\searchlightsu.txt"
 	},
-	
+
 	// Trains
 	{
 		name: "61-K (Platform)",

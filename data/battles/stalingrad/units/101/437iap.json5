@@ -2,7 +2,7 @@
 	"437iap": {
 		role: "fighter"
 	},
-	
+
 	// 437 IAP
 	"437iap_1": {
 		name: "437 IAP",
@@ -25,7 +25,7 @@
 			// ... transferred remaining aircraft to 13 IAP?
 		]
 	},
-	
+
 	// Attached all-woman flight from 586 IAP PVO
 	"437iap_2": {
 		name: "437 IAP",

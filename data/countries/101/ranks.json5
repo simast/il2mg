@@ -6,7 +6,7 @@
 	"2": {
 		name: "Yefreytor"
 	},
-	
+
 	// Non-commissioned officers
 	"3": {
 		name: "Mladshiy Serzhant",
@@ -36,7 +36,7 @@
 			pilot: 1
 		}
 	},
-	
+
 	// Officers
 	"7": {
 		name: "Mladshiy Leytenant",
@@ -91,7 +91,7 @@
 			brass: 1
 		}
 	},
-	
+
 	// Generals
 	"14": {
 		name: "General-Mayor",

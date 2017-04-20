@@ -40,7 +40,7 @@
 			["Paul-Friedrich Darjes", 15, "1942-12-09", "end"]
 		]
 	},
-	
+
 	// I./ZG 1
 	"zg1_i": {
 		parent: "zg1",
@@ -160,7 +160,7 @@
 			["Heinz Hogeweg", 12]
 		]
 	},
-	
+
 	// II./ZG 1
 	"zg1_ii": {
 		parent: "zg1",
@@ -234,6 +234,6 @@
 			["Hans Peterburs", -9]
 		]
 	}
-	
+
 	// TODO: 10.(NJ)/ZG 1
 }

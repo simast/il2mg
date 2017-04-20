@@ -35,7 +35,7 @@
 		name: "3./JG 52",
 		parent: "jg52_i"
 	},
-	
+
 	// II./JG 52
 	"jg52_ii": {
 		parent: "jg52",
@@ -73,7 +73,7 @@
 		name: "6./JG 52",
 		parent: "jg52_ii"
 	},
-	
+
 	// Mixed III./JG 52 detachment sent to Stalingrad area
 	"jg52_iii": {
 		name: "III./JG 52",

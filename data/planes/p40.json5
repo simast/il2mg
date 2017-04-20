@@ -6,7 +6,7 @@
 		alias: "Kittyhawk",
 		type: ["fighter", "fighter_light"],
 		size: "small",
-		// NOTE: Static P-40 models are not available, using Yak-1 as a workaround 
+		// NOTE: Static P-40 models are not available, using Yak-1 as a workaround
 		static: [
 			"static_yak1",
 			"static_yak1_open",
@@ -19,7 +19,7 @@
 		name: "P-40E",
 		parent: "p40"
 	},
-	
+
 	// P-40 E-1
 	"p40e1": {
 		name: "P-40E-1",

@@ -27,6 +27,7 @@
 		"circle-enclose": "1.0.0"
 	},
 	"devDependencies": {
+		"eslint": "3.19.0",
 		"grunt": "1.0.1",
 		"grunt-contrib-clean": "1.1.0",
 		"grunt-eslint": "19.0.0",

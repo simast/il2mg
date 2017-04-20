@@ -1,15 +1,15 @@
-{
-	"root": true,
-	"parserOptions": {
-		"ecmaVersion": 6
+module.exports = {
+	root: true,
+	parserOptions: {
+		ecmaVersion: 2017
 	},
-	"env": {
-		"node": true,
-		"es6": true
+	env: {
+		node: true,
+		es6: true
 	},
-	"extends": "eslint:recommended",
-	"rules": {
-		"no-empty": ["error", {"allowEmptyCatch": true}],
+	extends: "eslint:recommended",
+	rules: {
+		"no-empty": ["error", {allowEmptyCatch: true}],
 		"no-console": "off",
 		"no-var": "error",
 		"no-lonely-if": "error",
@@ -19,29 +19,29 @@
 		"no-nested-ternary": "error",
 		"no-new-object": "error",
 		"no-unneeded-ternary": "error",
-		"brace-style": ["error", "stroustrup", {"allowSingleLine": true}],
+		"brace-style": ["error", "stroustrup", {allowSingleLine: true}],
 		"curly": "error",
 		"eqeqeq": "error",
-		"indent": ["error", "tab", {"SwitchCase": 1}],
+		"indent": ["error", "tab", {SwitchCase: 1}],
 		"key-spacing": "error",
 		"object-curly-spacing": ["error", "never"],
 		"operator-linebreak": ["error", "after"],
 		"semi": ["error", "always"],
-		"semi-spacing": ["error", {"before": false, "after": true}],
+		"semi-spacing": ["error", {before: false, after: true}],
 		"quote-props": ["error", "as-needed"],
-		"quotes": ["error", "double", {"avoidEscape": true, "allowTemplateLiterals": true}],
+		"quotes": ["error", "double", {avoidEscape: true, allowTemplateLiterals: true}],
 		"radix": "error",
 		"keyword-spacing": "error",
 		"space-before-blocks": ["error", "always"],
 		"space-before-function-paren": ["error", "never"],
 		"space-in-parens": ["error", "never"],
 		"space-infix-ops": "error",
-		"space-unary-ops": ["error", {"words": true, "nonwords": false}],
+		"space-unary-ops": ["error", {words: true, nonwords: false}],
 		"spaced-comment": ["error", "always"],
 		"strict": ["error", "global"],
 		"wrap-iife": ["error", "inside"],
 		"array-bracket-spacing": ["error", "never"],
-		"comma-spacing": ["error", {"before": false, "after": true}],
+		"comma-spacing": ["error", {before: false, after: true}],
 		"comma-style": ["error", "last"],
 		"computed-property-spacing": ["error", "never"],
 		"new-parens": "error",

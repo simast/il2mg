@@ -25,7 +25,7 @@
 			pilot: 1
 		}
 	},
-	
+
 	// Non-commissioned officers
 	"5": {
 		name: "Unteroffizier",
@@ -62,7 +62,7 @@
 			pilot: 14
 		}
 	},
-	
+
 	// Warrant officers
 	"10": {
 		name: "Oberfähnrich",
@@ -78,7 +78,7 @@
 			pilot: 1
 		}
 	},
-	
+
 	// Officers
 	"12": {
 		name: "Leutnant",
@@ -128,7 +128,7 @@
 			aa: 1
 		}
 	},
-	
+
 	// Generals
 	"18": {
 		name: "Generalmajor",

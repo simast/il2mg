@@ -4,7 +4,7 @@
 		alias: "Hindenburg",
 		role: "bomber"
 	},
-	
+
 	// Stab/KG 1
 	"kg1_stab": {
 		name: "Stab/KG 1",
@@ -19,7 +19,7 @@
 			["Heinrich Lau", 15]
 		]
 	},
-	
+
 	// I./KG 1
 	"kg1_i": {
 		parent: "kg1",
@@ -40,7 +40,7 @@
 		name: "3./KG 1",
 		parent: "kg1_i"
 	},
-	
+
 	// II./KG 1
 	"kg1_ii": {
 		parent: "kg1",
@@ -73,7 +73,7 @@
 		name: "6./KG 1",
 		parent: "kg1_ii"
 	},
-	
+
 	// III./KG 1
 	"kg1_iii": {
 		parent: "kg1",

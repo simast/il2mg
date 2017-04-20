@@ -3,7 +3,7 @@
 	"stg77": {
 		role: "dive_bomber"
 	},
-	
+
 	// Stab/StG 77
 	"stg77_stab": {
 		name: "Stab/StG 77",
@@ -27,7 +27,7 @@
 			["bf110d3", [3, 1], "1942-12-01", "1942-12-26"]
 		]
 	},
-	
+
 	// I./StG 77
 	"stg77_i": {
 		parent: "stg77",
@@ -81,7 +81,7 @@
 		name: "3./StG 77",
 		parent: "stg77_i"
 	},
-	
+
 	// II./StG 77
 	"stg77_ii": {
 		parent: "stg77",

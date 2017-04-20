@@ -10,7 +10,7 @@
 		hidden: true,
 		elements: [1, 1]
 	},
-	
+
 	// Fighter (2 planes)
 	fighter_2: {
 		parent: "fighter",
@@ -18,19 +18,19 @@
 		from: "1942-08-15",
 		elements: [2]
 	},
-	
+
 	// Fighter (3 planes)
 	fighter_3: {
 		parent: "fighter",
 		to: "1942-09-30",
 		elements: [3]
 	},
-	
+
 	// Fighter (4 planes)
 	fighter_4: {
 		parent: "fighter"
 	},
-	
+
 	// Fighter (4 planes with 1 element)
 	// NOTE: We model the adoption period of a true finger-four formation by Red
 	// Air Force using this special formation scheme. While the units did fly in a
@@ -42,7 +42,7 @@
 		to: "1942-11-15",
 		elements: [4]
 	},
-	
+
 	// Fighter (4 planes with 2 elements)
 	fighter_2x2: {
 		parent: "fighter_4",
@@ -52,7 +52,7 @@
 
 	// Bomber
 	bomber: {},
-	
+
 	// Bomber (3 planes)
 	bomber_3: {
 		parent: "bomber",
