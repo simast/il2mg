@@ -42,7 +42,8 @@ module.exports = class ActivityStart {
 		// Create flight onStart event command
 		if (!flight.onStart) {
 
-			// TODO: Add support for shedulled flights
+			// TODO: Add support for shedulled flights (delay value)
+
 			let onStart = flightGroup.createItem("MCU_TR_MissionBegin");
 
 			onStart.setPositionNear(flight.leader.item);

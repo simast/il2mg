@@ -3,6 +3,8 @@
 
 const {makeActivityState} = require("./flight.state");
 const makeFlightTime = require("./flight.time");
+const makeFlightPose = require("./flight.pose");
+const makeFlightActions = require("./flight.actions");
 
 // Virtual activity zone size as inner and outer circle (km)
 // NOTE: Two activity zones/circles are used to make sure virtual flights do not
@@ -19,54 +21,85 @@ module.exports = function makeFlightVirtual(flight) {
 		return;
 	}
 
-	let delayTime = 0;
+	const {plan} = flight;
+	let waitTime = 0;
 
-	// Process state activities
-	for (const activity of flight.plan) {
+	// Process plan activities
+	for (const activity of plan) {
 
 		const activityTime = activity.time;
 
+		// Skip non-state activities
 		if (activityTime === undefined) {
 			continue;
 		}
 
-		if (!activity.makeVirtualPoints) {
+		let virtualPoints = 0;
 
-			delayTime += activityTime;
-			continue;
+		if (activity.makeVirtualPoints) {
+			virtualPoints = activity.makeVirtualPoints();
 		}
 
-		const virtualPoints = activity.makeVirtualPoints();
+		// Skip activities without virtual points
+		if (!virtualPoints) {
 
-		if (virtualPoints <= 0) {
+			waitTime += activityTime;
+			makeActivityState.call(this, activity, activityTime);
 
-			delayTime += activityTime;
 			continue;
 		}
 
 		const stepTime = activityTime / (virtualPoints + 1);
+		let isActivityRemoved = false;
 
-		// Create flight virtual points
+		// Create virtual points
 		for (let i = 1; i <= virtualPoints; i++) {
 
 			const oldTime = flight.time;
 
-			// Fast-forward activity state
+			// Fast-forward virtual flight activity state
 			makeActivityState.call(this, activity, stepTime);
 
 			// Clone virtual flight
 			cloneVirtualFlight.call(this, flight);
 
-			// Update flight time
+			// Make virtual flight air start pose
+			makeFlightPose.call(this, flight);
+
+			// Make virtual flight time
 			makeFlightTime.call(this, flight);
 
-			const elapsedTime = delayTime + (oldTime - flight.time);
+			// Make virtual flight plan actions
+			makeFlightActions.call(this, flight);
 
-			if (delayTime) {
-				delayTime = 0;
+			const elapsedTime = waitTime + (oldTime - flight.time);
+
+			// Reset accumulated wait time
+			if (waitTime) {
+				waitTime = 0;
 			}
 
 			console.log(elapsedTime);
+
+			// NOTE: Activities may remove themselves from the plan while
+			// fast-forwarding their state!
+			isActivityRemoved = (plan.indexOf(activity) === -1);
+
+			if (isActivityRemoved) {
+				break;
+			}
+		}
+
+		const remainingTime = activity.time;
+
+		// Finish activity by advancing the remaining time
+		if (remainingTime) {
+
+			waitTime += remainingTime;
+
+			if (!isActivityRemoved) {
+				makeActivityState.call(this, activity, remainingTime);
+			}
 		}
 	}
 };
@@ -84,6 +117,7 @@ function cloneVirtualFlight(flight) {
 			// Copy over old properties/data
 			for (const prop in oldItem) {
 
+				// Keep unique item index
 				if (prop === "Index") {
 					continue;
 				}

@@ -13,7 +13,8 @@ module.exports = function makeFlightPlan(flight) {
 	// Initial start plan activity
 	plan.start = plan[plan.push(makeActivity.call(this, flight, {
 		type: activityType.START,
-		position: airfield.position
+		position: airfield.position,
+		delay: 0
 	})) - 1];
 
 	// Take off plan activity

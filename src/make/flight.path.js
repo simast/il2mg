@@ -32,6 +32,11 @@ module.exports = function makeFlightPath(flight) {
 		activity.position = startPosition;
 		endPosition = route[route.length - 1].position;
 
+		// Update fly activity time
+		if (activity.makeTime) {
+			activity.time = activity.makeTime();
+		}
+
 		// Adjust route start
 		if (isOffmap(this.map, startPosition)) {
 			adjustOffmapRouteBounds.call(this, flight, activity, true);
@@ -175,15 +180,15 @@ function adjustOffmapRouteBounds(flight, activity, isForward) {
 		// Use flight fuel for virtual offmap travel distance
 		makeFlightFuel.call(this, flight, offmapDistance);
 
-		// Transfer used offmap state/time
+		// Transfer used offmap state/time as delay time
 		if (activity.time > 0) {
 
 			const routeDistance = activity.getRouteDistance();
 			const totalDistance = offmapDistance + routeDistance;
-			const transferTime = activity.time * (offmapDistance / totalDistance);
+			const delayTime = activity.time * (offmapDistance / totalDistance);
 
-			startActivity.time = transferTime;
-			activity.time -= transferTime;
+			startActivity.delay += delayTime;
+			activity.time -= delayTime;
 		}
 	}
 }

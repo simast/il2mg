@@ -159,7 +159,7 @@ module.exports = class ActivityFly {
 		const {mission, flight, route} = this;
 		const {plan} = flight;
 		const state = time / this.time;
-		const routeDistance = this.getRouteDistance();
+		const stateDistance = this.getRouteDistance() * state;
 		let startPosition = this.position;
 		let removeActivity = false;
 
@@ -172,7 +172,7 @@ module.exports = class ActivityFly {
 		// Fast-forward partial fly activity
 		else {
 
-			let pendingDistance = routeDistance * state;
+			let pendingDistance = stateDistance;
 
 			// Process route spots
 			for (;;) {
@@ -216,7 +216,7 @@ module.exports = class ActivityFly {
 		}
 
 		// Use flight fuel for fast-forward travel distance
-		makeFlightFuel.call(mission, flight, routeDistance * state);
+		makeFlightFuel.call(mission, flight, stateDistance);
 
 		// Set new flight start position
 		plan.start.position = this.position = startPosition;
