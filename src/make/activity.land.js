@@ -7,6 +7,8 @@ module.exports = class ActivityLand {
 	// Make land activity action
 	makeAction(element, input) {
 
+		// FIXME: This prevents other elements from landing when the player is
+		// a flight leader.
 		if (!input) {
 			return;
 		}
@@ -28,19 +30,24 @@ module.exports = class ActivityLand {
 		const flightGroup = flight.group;
 		const leaderElement = flight.elements[0];
 		const leaderPlaneItem = element[0].item;
-		const landCommand = flightGroup.createItem("MCU_CMD_Land");
+		let landCommand = element.landCommand;
 
-		// Set land command position and orientation
-		// NOTE: Landing point is the same as takeoff
-		landCommand.setPosition(taxiRoute.takeoffStart);
-		landCommand.setOrientationTo(taxiRoute.takeoffEnd);
+		if (!landCommand) {
+
+			landCommand = flightGroup.createItem("MCU_CMD_Land");
+
+			// Set land command position and orientation
+			// NOTE: Landing point is the same as takeoff
+			landCommand.setPosition(taxiRoute.takeoffStart);
+			landCommand.setOrientationTo(taxiRoute.takeoffEnd);
+
+			element.landCommand = landCommand;
+		}
 
 		landCommand.addObject(leaderPlaneItem);
 
 		// Leading element land action
 		if (element === leaderElement) {
-
-			element.landCommand = landCommand;
 
 			// Connect land command to previous action
 			input(landCommand);
@@ -50,17 +57,24 @@ module.exports = class ActivityLand {
 
 			// TODO: Other elements should wait for previous element landed reports
 
-			// Short timer used to delay land command
-			const waitTimer = flightGroup.createItem("MCU_Timer");
+			let landWaitTimer = element.landWaitTimer;
 
-			waitTimer.Time = +(rand.real(10, 15).toFixed(3));
-			waitTimer.setPositionNear(leaderPlaneItem);
-			waitTimer.addTarget(landCommand);
+			if (!landWaitTimer) {
+
+				// Short timer used to delay land command
+				landWaitTimer = flightGroup.createItem("MCU_Timer");
+
+				landWaitTimer.Time = +(rand.real(10, 15).toFixed(3));
+				landWaitTimer.setPositionNear(leaderPlaneItem);
+				landWaitTimer.addTarget(landCommand);
+
+				element.landWaitTimer = landWaitTimer;
+			}
 
 			flight.leader.item.entity.addReport(
 				"OnLanded",
 				leaderElement.landCommand,
-				waitTimer
+				landWaitTimer
 			);
 		}
 	}

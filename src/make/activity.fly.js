@@ -57,32 +57,39 @@ module.exports = class ActivityFly {
 			// Create waypoint for spot
 			if (input) {
 
-				const waypoint = flightGroup.createItem("MCU_Waypoint");
+				let waypoint = spot.waypoint;
 
-				waypoint.addObject(leaderPlaneItem);
-				waypoint.setPosition(spot.position);
+				if (!waypoint) {
 
-				waypoint.Speed = spot.speed;
-				waypoint.Area = rand.integer(750, 1250);
+					waypoint = flightGroup.createItem("MCU_Waypoint");
 
-				if (spot.priority !== undefined) {
-					waypoint.Priority = spot.priority;
-				}
+					if (spot.priority !== undefined) {
+						waypoint.Priority = spot.priority;
+					}
 
-				// Connect initial (first) waypoint with previous action
-				// TODO: Leading element should wait for other elements
-				if (!lastWaypoint) {
-					input(waypoint);
-				}
-				// Connect this waypoint to last waypoint
-				else {
+					waypoint.Speed = spot.speed;
+					waypoint.Area = rand.integer(750, 1250);
+					waypoint.setPosition(spot.position);
 
-					lastWaypoint.addTarget(waypoint);
+					spot.waypoint = waypoint;
 
-					if (lastWaypoint instanceof MCU_Waypoint) {
-						lastWaypoint.setOrientationTo(waypoint);
+					// Connect initial (first) waypoint with previous action
+					// TODO: Leading element should wait for other elements
+					if (!lastWaypoint) {
+						input(waypoint);
+					}
+					// Connect this waypoint to last waypoint
+					else {
+
+						lastWaypoint.addTarget(waypoint);
+
+						if (lastWaypoint instanceof MCU_Waypoint) {
+							lastWaypoint.setOrientationTo(waypoint);
+						}
 					}
 				}
+
+				waypoint.addObject(leaderPlaneItem);
 
 				lastWaypoint = waypoint;
 			}

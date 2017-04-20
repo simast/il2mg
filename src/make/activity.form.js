@@ -22,11 +22,19 @@ module.exports = class ActivityForm {
 		// Set cover command for non-leading elements
 		if (!isLeadingElement) {
 
-			const coverCommand = flightGroup.createItem("MCU_CMD_Cover");
+			let coverCommand = element.coverCommand;
 
-			coverCommand.setPositionNear(leaderPlaneItem);
+			if (!coverCommand) {
+
+				coverCommand = flightGroup.createItem("MCU_CMD_Cover");
+
+				coverCommand.setPositionNear(leaderPlaneItem);
+				coverCommand.addTarget(flight.elements[0][0].item.entity);
+
+				element.coverCommand = coverCommand;
+			}
+
 			coverCommand.addObject(leaderPlaneItem);
-			coverCommand.addTarget(flight.elements[0][0].item.entity);
 
 			input(coverCommand);
 		}
@@ -34,12 +42,20 @@ module.exports = class ActivityForm {
 		// Set element plane formation command
 		if (element.length > 1) {
 
-			const formationCommand = flightGroup.createItem("MCU_CMD_Formation");
+			let formationCommand = element.formationCommand;
 
-			formationCommand.FormationType = element.formation;
-			formationCommand.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE;
+			if (!formationCommand) {
+
+				formationCommand = flightGroup.createItem("MCU_CMD_Formation");
+
+				formationCommand.FormationType = element.formation;
+				formationCommand.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE;
+				formationCommand.setPositionNear(leaderPlaneItem);
+
+				element.formationCommand = formationCommand;
+			}
+
 			formationCommand.addObject(leaderPlaneItem);
-			formationCommand.setPositionNear(leaderPlaneItem);
 
 			input(formationCommand);
 		}
