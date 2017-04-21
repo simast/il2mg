@@ -7,13 +7,15 @@ module.exports = class ActivityLand {
 	// Make land activity action
 	makeAction(element, input) {
 
-		// FIXME: This prevents other elements from landing when the player is
-		// a flight leader.
-		if (!input) {
+		const {flight} = this;
+		const leadingElement = flight.elements[0];
+
+		// Land action is initiated by leading element
+		if (element !== leadingElement) {
 			return;
 		}
 
-		const {mission, flight} = this;
+		const {mission} = this;
 		const airfield = mission.airfields[this.airfield || flight.airfield];
 		let taxiRoute;
 
@@ -21,61 +23,74 @@ module.exports = class ActivityLand {
 			taxiRoute = airfield.taxi[this.taxi || Math.abs(flight.taxi)];
 		}
 
-		// TODO: Delete flight planes at destination when it's not possible to land?
 		if (!taxiRoute) {
+			return;
+		}
+
+		const debugFlights = Boolean(mission.debug && mission.debug.flights);
+		const isPlayerFlightLeader = (flight.player === flight.leader);
+
+		// Skip land action for player-only flight
+		if (isPlayerFlightLeader && flight.planes === 1 && !debugFlights) {
 			return;
 		}
 
 		const {rand} = mission;
 		const flightGroup = flight.group;
-		const leaderElement = flight.elements[0];
-		const leaderPlaneItem = element[0].item;
-		let landCommand = element.landCommand;
 
-		if (!landCommand) {
+		// Process each element
+		for (const element of flight.elements) {
 
-			landCommand = flightGroup.createItem("MCU_CMD_Land");
+			const leaderPlaneItem = element[0].item;
+			let landCommand = element.landCommand;
 
-			// Set land command position and orientation
-			// NOTE: Landing point is the same as takeoff
-			landCommand.setPosition(taxiRoute.takeoffStart);
-			landCommand.setOrientationTo(taxiRoute.takeoffEnd);
+			if (!landCommand) {
 
-			element.landCommand = landCommand;
-		}
+				landCommand = flightGroup.createItem("MCU_CMD_Land");
 
-		landCommand.addObject(leaderPlaneItem);
+				// Landing point position and orientation is the same as takeoff
+				landCommand.setPosition(taxiRoute.takeoffStart);
+				landCommand.setOrientationTo(taxiRoute.takeoffEnd);
 
-		// Leading element land action
-		if (element === leaderElement) {
-
-			// Connect land command to previous action
-			input(landCommand);
-		}
-		// Other element land action
-		else {
-
-			// TODO: Other elements should wait for previous element landed reports
-
-			let landWaitTimer = element.landWaitTimer;
-
-			if (!landWaitTimer) {
-
-				// Short timer used to delay land command
-				landWaitTimer = flightGroup.createItem("MCU_Timer");
-
-				landWaitTimer.Time = +(rand.real(10, 15).toFixed(3));
-				landWaitTimer.setPositionNear(leaderPlaneItem);
-				landWaitTimer.addTarget(landCommand);
-
-				element.landWaitTimer = landWaitTimer;
+				element.landCommand = landCommand;
 			}
 
-			flight.leader.item.entity.addReport(
-				"OnLanded",
-				leaderElement.landCommand,
-				landWaitTimer
-			);
+			landCommand.addObject(leaderPlaneItem);
+
+			// Leading element land action
+			if (element === leadingElement) {
+
+				// Connect leading element land command to previous action
+				// FIXME: Handle all cases when input is not available!
+				if (input) {
+					input(landCommand);
+				}
+			}
+			// Other element land action
+			else {
+
+				// TODO: Other elements should wait for previous element landed reports
+
+				let landWaitTimer = element.landWaitTimer;
+
+				if (!landWaitTimer) {
+
+					// Short timer used to delay land command
+					landWaitTimer = flightGroup.createItem("MCU_Timer");
+
+					landWaitTimer.Time = +(rand.real(10, 15).toFixed(3));
+					landWaitTimer.setPositionNear(leaderPlaneItem);
+					landWaitTimer.addTarget(landCommand);
+
+					element.landWaitTimer = landWaitTimer;
+				}
+
+				flight.leader.item.entity.addReport(
+					"OnLanded",
+					leadingElement.landCommand,
+					landWaitTimer
+				);
+			}
 		}
 	}
 

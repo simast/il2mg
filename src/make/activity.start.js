@@ -13,7 +13,6 @@ module.exports = class ActivityStart {
 		const {mission, flight} = this;
 		const {rand} = mission;
 		const flightGroup = flight.group;
-		const position = this.position;
 		const isAirStart = (typeof element.state === "number");
 		const debugFlights = Boolean(mission.debug && mission.debug.flights);
 
@@ -22,15 +21,15 @@ module.exports = class ActivityStart {
 
 			const startIcon = flight.startIcon = flightGroup.createItem("MCU_Icon");
 
-			startIcon.setPosition(position);
-			startIcon.Coalitions = [flight.coalition];
-
-			if (debugFlights) {
-				startIcon.Coalitions = mission.coalitions;
-			}
+			startIcon.setPosition(this.position);
 
 			if (flight.player) {
+
+				startIcon.Coalitions = [flight.coalition];
 				startIcon.IconId = MCU_Icon.ICON_ACTION_POINT;
+			}
+			else {
+				startIcon.Coalitions = mission.coalitions;
 			}
 		}
 

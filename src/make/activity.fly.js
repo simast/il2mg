@@ -37,7 +37,7 @@ module.exports = class ActivityFly {
 		}
 
 		const debugFlights = Boolean(mission.debug && mission.debug.flights);
-		const drawIcons = Boolean(this.visible) || debugFlights;
+		const drawIcons = (Boolean(this.visible) || debugFlights) && !flight.lastSpotIcon;
 
 		if (!input && !drawIcons) {
 			return;

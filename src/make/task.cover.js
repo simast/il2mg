@@ -83,54 +83,58 @@ function makeTaskCoverAction(element, input) {
 	const leaderPlaneItem = element[0].item;
 	const beacon = airfield.beacon;
 
-	let coverCommand;
+	let coverCommand = this.coverCommand;
 
-	// Use climb waypoint above the airfield as a cover command
-	if (this.altitude) {
+	if (!coverCommand) {
 
-		coverCommand = flight.group.createItem("MCU_Waypoint");
+		// Use climb waypoint above the airfield as a cover command
+		if (this.altitude) {
 
-		coverCommand.Area = rand.integer(75, 125);
-		coverCommand.Speed = this.speed;
-		coverCommand.Priority = MCU_Waypoint.PRIORITY_LOW;
+			coverCommand = flight.group.createItem("MCU_Waypoint");
 
-		// Set waypoint position above the airfield
-		coverCommand.setPosition(
-			airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
-			this.altitude,
-			airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
-		);
+			coverCommand.Area = rand.integer(75, 125);
+			coverCommand.Speed = this.speed;
+			coverCommand.Priority = MCU_Waypoint.PRIORITY_LOW;
 
-		coverCommand.addObject(leaderPlaneItem);
+			// Set waypoint position above the airfield
+			coverCommand.setPosition(
+				airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
+				this.altitude,
+				airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
+			);
 
-		// NOTE: The waypoint command is a cylinder and not a sphere. To make flights
-		// actually reach required waypoint altitude and not to abort on first pass
-		// below the waypoint - we use a trick with a timer that keeps activating
-		// the same low priority waypoint over and over again.
-		const altitudeTimer = flight.group.createItem("MCU_Timer");
+			// NOTE: The waypoint command is a cylinder and not a sphere. To make flights
+			// actually reach required waypoint altitude and not to abort on first pass
+			// below the waypoint - we use a trick with a timer that keeps activating
+			// the same low priority waypoint over and over again.
+			const altitudeTimer = flight.group.createItem("MCU_Timer");
 
-		// TODO: Disable this altitude timer at some point?
+			// TODO: Disable this altitude timer at some point?
 
-		altitudeTimer.Time = rand.integer(30, 40);
-		altitudeTimer.setPositionNear(coverCommand);
+			altitudeTimer.Time = rand.integer(30, 40);
+			altitudeTimer.setPositionNear(coverCommand);
 
-		coverCommand.addTarget(altitudeTimer);
-		altitudeTimer.addTarget(coverCommand);
-	}
-	// Use cover command with airfield beacon
-	else if (beacon) {
+			coverCommand.addTarget(altitudeTimer);
+			altitudeTimer.addTarget(coverCommand);
+		}
+		// Use cover command with airfield beacon
+		else if (beacon) {
 
-		coverCommand = flight.group.createItem("MCU_CMD_Cover");
+			coverCommand = flight.group.createItem("MCU_CMD_Cover");
 
-		coverCommand.setPositionNear(beacon);
-		coverCommand.addObject(leaderPlaneItem);
-		coverCommand.addTarget(beacon.entity);
+			coverCommand.setPositionNear(beacon);
+			coverCommand.addTarget(beacon.entity);
 
-		coverCommand.Priority = MCU_CMD_Cover.PRIORITY_LOW;
-		coverCommand.CoverGroup = 0;
+			coverCommand.Priority = MCU_CMD_Cover.PRIORITY_LOW;
+			coverCommand.CoverGroup = 0;
+		}
+
+		this.coverCommand = coverCommand;
 	}
 
 	if (coverCommand) {
+
+		coverCommand.addObject(leaderPlaneItem);
 		input(coverCommand);
 	}
 

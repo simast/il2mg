@@ -27,13 +27,12 @@ module.exports = class ActivityForm {
 			if (!coverCommand) {
 
 				coverCommand = flightGroup.createItem("MCU_CMD_Cover");
-
 				coverCommand.setPositionNear(leaderPlaneItem);
-				coverCommand.addTarget(flight.elements[0][0].item.entity);
 
 				element.coverCommand = coverCommand;
 			}
 
+			coverCommand.addTarget(flight.leader.item.entity);
 			coverCommand.addObject(leaderPlaneItem);
 
 			input(coverCommand);
@@ -72,21 +71,18 @@ module.exports = class ActivityForm {
 			const groundStartElements = [];
 
 			// Collect all ground start elements in a priority list
-			flight.elements.forEach((element) => {
+			for (const element of flight.elements) {
 
-				const startData = {
-					priority: {
-						[flightState.START]: 1,
-						[flightState.TAXI]: 2,
-						[flightState.RUNWAY]: 3
-					}[element.state],
-					element: element
-				};
+				const priority = {
+					[flightState.START]: 1,
+					[flightState.TAXI]: 2,
+					[flightState.RUNWAY]: 3
+				}[element.state];
 
-				if (startData.priority) {
-					groundStartElements.push(startData);
+				if (priority) {
+					groundStartElements.push({priority, element});
 				}
-			});
+			}
 
 			let lastStartingElement;
 
