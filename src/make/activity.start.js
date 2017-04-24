@@ -41,20 +41,24 @@ module.exports = class ActivityStart {
 		// Create flight onStart event command
 		if (!flight.onStart) {
 
-			// TODO: Add support for shedulled flights (delay value)
-
 			let onStart = flightGroup.createItem("MCU_TR_MissionBegin");
 
 			onStart.setPositionNear(flight.leader.item);
 
-			// NOTE: Using a separate timer to delay flights starting from a parking
-			// spot. This is necessary as some aircraft have issues starting engines
+			let startDelay = this.delay;
+
+			// NOTE: Using a short delay for flights starting from a parking spot.
+			// This is workaround as some aircraft have issues starting engines
 			// without an initial timer delay (MiG-3 for example).
 			if (flight.state === flightState.START) {
+				startDelay = rand.real(2, 3);
+			}
+
+			if (startDelay) {
 
 				const onStartTimer = flightGroup.createItem("MCU_Timer");
 
-				onStartTimer.Time = Number(rand.real(2, 3).toFixed(3));
+				onStartTimer.Time = Number(startDelay.toFixed(3));
 				onStartTimer.setPositionNear(onStart);
 				onStart.addTarget(onStartTimer);
 

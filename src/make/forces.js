@@ -188,10 +188,8 @@ function makePlayerForce() {
 // Make AI forces
 function makeAIForces() {
 
-	const {rand} = this;
-
 	makeForce.call(this, {
-		state: rand.real(0, 0.5),
+		state: 0,
 		virtual: true
 	});
 }
