@@ -28,7 +28,7 @@ module.exports = class ActivityFly {
 	makeAction(element, input) {
 
 		const {mission, flight, route} = this;
-		const leaderElement = flight.elements[0];
+		const [leaderElement] = flight.elements;
 
 		// Process fly action only for leading element
 		if (element !== leaderElement) {
@@ -183,7 +183,7 @@ module.exports = class ActivityFly {
 			// Process route spots
 			for (;;) {
 
-				const spot = route[0];
+				const [spot] = route;
 				const spotVector = Vector.create(spot.position);
 				const startVector = Vector.create(startPosition);
 				const spotDistance = startVector.distanceFrom(spotVector);

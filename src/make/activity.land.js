@@ -8,7 +8,7 @@ module.exports = class ActivityLand {
 	makeAction(element, input) {
 
 		const {flight} = this;
-		const leadingElement = flight.elements[0];
+		const [leadingElement] = flight.elements;
 
 		// Land action is initiated by leading element
 		if (element !== leadingElement) {

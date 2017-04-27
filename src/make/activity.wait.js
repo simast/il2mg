@@ -15,7 +15,7 @@ module.exports = class ActivityWait {
 			return;
 		}
 
-		const leaderElement = flight.elements[0];
+		const [leaderElement] = flight.elements;
 
 		// Process wait action only for leading element
 		if (element !== leaderElement) {
@@ -27,7 +27,7 @@ module.exports = class ActivityWait {
 		// Wait using timer command
 		const waitTimer = flight.group.createItem("MCU_Timer");
 
-		waitTimer.Time = +(this.time.toFixed(3));
+		waitTimer.Time = Number(this.time.toFixed(3));
 		waitTimer.setPositionNear(leaderPlaneItem);
 
 		// Connect timer command to previous action

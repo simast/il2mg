@@ -22,9 +22,7 @@ const makeAirfieldRoutes = require("./airfield.routes");
 const makeAirfieldTaxi = require("./airfield.taxi");
 
 // Airfield activity zone radius
-// NOTE: Airfield zone is also used to cover local flights - and current
-// in-game aircraft max render distance is 10km!
-const AIRFIELD_ZONE_RADIUS = 10000;
+const AIRFIELD_ZONE_RADIUS = 6000;
 
 // Generate mission airfields
 module.exports = function makeAirfields() {
@@ -305,8 +303,8 @@ module.exports = function makeAirfields() {
 			totalActive++;
 		}
 
-		// Skip/continue with offmap airfields
-		if (airfield.offmap) {
+		// Skip/continue if airfield has no items available
+		if (airfield.offmap || !airfieldData.items || !airfieldData.items.length) {
 			continue;
 		}
 
@@ -319,11 +317,6 @@ module.exports = function makeAirfields() {
 				radius: AIRFIELD_ZONE_RADIUS
 			});
 		});
-
-		// Skip/continue if airfield has no items available
-		if (!airfieldData.items || !airfieldData.items.length) {
-			continue;
-		}
 
 		// Make airfield item limits
 		makeAirfieldLimits.call(mission, airfield);
