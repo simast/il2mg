@@ -28,8 +28,8 @@ params.version(data.name + " " + data.version + " " + data.copyright);
 // Create mission metadata file (--meta)
 params.option("-M, --meta", "create metadata file");
 
-// Use quite output mode (--quiet)
-params.option("-Q, --quiet", "use quite output mode");
+// Use quiet output mode (--quiet)
+params.option("-Q, --quiet", "use quiet output mode");
 
 // Create language files (--lang)
 params.option("-L, --lang [language]", "create language files", (value) => {
@@ -44,7 +44,7 @@ params.option("-L, --lang [language]", "create language files", (value) => {
 });
 
 // NOTE: For development mode only when not compiled to binary!
-if (!process.versions.enclose) {
+if (!process.pkg) {
 
 	// Set mission seed value (--seed)
 	params.option("-S, --seed <seed>", "set mission seed value");

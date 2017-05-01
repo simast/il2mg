@@ -13,11 +13,11 @@ module.exports = function(grunt) {
 		const browserify = require("browserify");
 		const envify = require("envify/custom");
 		const electronPackager = require("electron-packager");
-		const enclose = require("enclose");
+		const pkg = require("pkg");
 		const data = require("../../src/data");
 
 		const done = this.async();
-		const pkg = grunt.config("pkg");
+		const packageData = grunt.config("pkg");
 		const outDir = "build/";
 		const buildDir = outDir + "temp/";
 		const appDir = buildDir + "app/";
@@ -80,10 +80,10 @@ module.exports = function(grunt) {
 
 				// Build application package.json file
 				grunt.file.write(appDir + "package.json", JSON.stringify({
-					name: pkg.name,
+					name: packageData.name,
 					private: true,
 					main: appFileMain,
-					author: pkg.author
+					author: packageData.author
 				}, null, "\t"));
 
 				// Build main process JavaScript file (app.js)
@@ -164,10 +164,10 @@ module.exports = function(grunt) {
 					appVersion: "0." + data.version.match(/[0-9]+/)[0],
 					win32metadata: {
 						CompanyName: "",
-						FileDescription: pkg.description,
-						OriginalFilename: pkg.name + ".exe",
-						ProductName: pkg.name,
-						InternalName: pkg.name
+						FileDescription: packageData.description,
+						OriginalFilename: packageData.name + ".exe",
+						ProductName: packageData.name,
+						InternalName: packageData.name
 					}
 				}, (error, appPath) => {
 
@@ -201,37 +201,27 @@ module.exports = function(grunt) {
 		// Compile CLI application to binary file
 		function compileCLIApp(appPath) {
 
-			return new Promise((resolve, reject) => {
+			const options = [];
+			const extension = (process.platform === "win32") ? ".exe" : "";
+			const binaryFilePath = path.join(
+				"../..",
+				appPath,
+				"resources",
+				packageData.name + "-cli" + extension
+			);
 
-				const options = [];
-				const extension = (process.platform === "win32") ? ".exe" : "";
-				const binaryFilePath = path.join(
-					"../..",
-					appPath,
-					"resources",
-					pkg.name + "-cli" + extension
-				);
+			grunt.file.setBase(buildDir);
 
-				grunt.file.setBase(buildDir);
+			options.push("--target", "node7-win-x64");
+			options.push("--config", "../pkg.js");
+			options.push("--output", binaryFilePath);
+			options.push("./src/app.js");
 
-				options.push("--version", "6");
-				options.push("--arch", "x64"); // Build 64-bit binary
-				options.push("--config", "../enclose.js");
-				options.push("--loglevel", "error");
-				options.push("--output", binaryFilePath);
-				options.push("./src/app.js");
-
-				enclose.exec(options, (error) => {
-
+			return pkg
+				.exec(options)
+				.then(() => {
 					grunt.file.setBase("../../");
-
-					if (error) {
-						return reject(error);
-					}
-
-					resolve();
 				});
-			});
 		}
 
 		// Build final release distribution package

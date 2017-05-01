@@ -22,7 +22,7 @@
 		"rbush-knn": "2.0.0",
 		"suncalc": "1.8.0",
 		"sylvester": "0.0.21",
-		"quadtree-lib": "1.0.5",
+		"quadtree-lib": "1.0.6",
 		"lazy-property": "1.0.0",
 		"circle-enclose": "1.0.0"
 	},
@@ -32,7 +32,7 @@
 		"grunt-contrib-clean": "1.1.0",
 		"grunt-eslint": "19.0.0",
 		"json5": "0.5.1",
-		"enclose": "2.2.0",
+		"pkg": "3.0.0",
 		"sloc": "0.2.0",
 		"uglify-js": "mishoo/UglifyJS2#harmony-v2.8.22",
 		"electron": "1.6.7",

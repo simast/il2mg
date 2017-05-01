@@ -3,7 +3,9 @@
 
 module.exports = {
 	scripts: [
-		"temp/src/**/*.js",
+		"temp/src/**/*.js"
+	],
+	assets: [
 		"temp/data/**/*.json"
 	]
 };

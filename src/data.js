@@ -165,12 +165,12 @@ data.briefingColor = Object.freeze({
 
 	// NOTE: For performance reasons JSON files in the binary/compiled mode will
 	// be loaded using native JSON object.
-	const useJSON5 = !process.versions.enclose;
+	const useJSON5 = !process.pkg;
 
 	if (useJSON5) {
 
 		// NOTE: Having JSON5 module name as two separate string literals will trick
-		// enclose to not included it in the binary file when compiling.
+		// pkg to not included it in the binary file when compiling.
 		const JSON5 = require("json" + "5");
 
 		// Add new require() loader to handle JSON5 data files
