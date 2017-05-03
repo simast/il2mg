@@ -4,7 +4,7 @@
 module.exports = function(grunt) {
 
 	// Grunt task used to build a release package
-	grunt.registerTask("build:release", "Build a release package.", function() {
+	grunt.registerTask("build:release", "Build a release package.", async function() {
 
 		const path = require("path");
 		const JSON5 = require("json5");
@@ -145,11 +145,6 @@ module.exports = function(grunt) {
 		// Package Electron application
 		function packageElectron() {
 
-			// HACK: electron-packager is using console.error for logging - and this
-			// is causing a "fatal error" for this Grunt task.
-			const origConsoleError = console.error;
-			console.error = console.log;
-
 			return new Promise((resolve, reject) => {
 
 				electronPackager({
@@ -177,7 +172,7 @@ module.exports = function(grunt) {
 
 					appPath = appPath.pop();
 
-					// Clean some default files from packaged distribution
+					// Remove not needed files from packaged distribution
 					["version"].forEach((file) => {
 						grunt.file.delete(path.join(appPath, file));
 					});
@@ -192,7 +187,6 @@ module.exports = function(grunt) {
 						grunt.file.delete(sourcePath);
 					});
 
-					console.error = origConsoleError;
 					resolve(appPath);
 				});
 			});
@@ -225,18 +219,23 @@ module.exports = function(grunt) {
 		}
 
 		// Build final release distribution package
-		buildCLIApp()
-			.then(buildGUIApp)
-			.then(packageElectron)
-			.then(compileCLIApp)
-			.then(() => {
+		try {
 
-				// Clean up temporary build directory
-				grunt.file.delete(buildDir);
+			await buildCLIApp();
+			await buildGUIApp();
+			const appPath = await packageElectron();
+			await compileCLIApp(appPath);
 
-				grunt.log.ok();
-				done();
-			})
-			.catch(done);
+			grunt.log.ok();
+			done();
+		}
+		catch (error) {
+			done(error);
+		}
+		finally {
+
+			// Clean up temporary build directory
+			grunt.file.delete(buildDir);
+		}
 	});
 };
