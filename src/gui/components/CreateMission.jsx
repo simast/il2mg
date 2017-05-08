@@ -130,7 +130,6 @@ class CreateMission extends React.Component {
 					{choiceLists.map(([type, title]) => {
 
 						const props = {
-							key: type,
 							type,
 							title,
 							choices: choices[type],
@@ -142,7 +141,7 @@ class CreateMission extends React.Component {
 							}
 						};
 
-						return <ChoiceList {...props} />;
+						return <ChoiceList key={type} {...props} />;
 					})}
 				</div>
 			</Screen>

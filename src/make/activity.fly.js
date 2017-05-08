@@ -3,7 +3,7 @@
 
 const numeral = require("numeral");
 const {Vector} = require("sylvester");
-const {MCU_Icon, MCU_Waypoint} = require("../item");
+const {MCU_Icon} = require("../item");
 const {mapColor, altitudeLevel} = require("../data");
 const makeFlightFuel = require("./flight.fuel");
 const makeBriefingLead = require("./briefing.lead");
@@ -70,22 +70,20 @@ module.exports = class ActivityFly {
 					waypoint.Area = rand.integer(750, 1250);
 					waypoint.setPosition(spot.position);
 
-					spot.waypoint = waypoint;
-
-					// Connect initial (first) waypoint with previous action
-					// TODO: Leading element should wait for other elements
-					if (!lastWaypoint) {
-						input(waypoint);
-					}
 					// Connect this waypoint to last waypoint
-					else {
+					if (lastWaypoint) {
 
 						lastWaypoint.addTarget(waypoint);
-
-						if (lastWaypoint instanceof MCU_Waypoint) {
-							lastWaypoint.setOrientationTo(waypoint);
-						}
+						lastWaypoint.setOrientationTo(waypoint);
 					}
+
+					spot.waypoint = waypoint;
+				}
+
+				// Connect initial (first) waypoint with previous action
+				// TODO: Leading element should wait for other elements
+				if (!lastWaypoint) {
+					input(waypoint);
 				}
 
 				waypoint.addObject(leaderPlaneItem);

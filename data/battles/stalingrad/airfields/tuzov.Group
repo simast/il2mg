@@ -7153,32 +7153,13 @@ Group
       Index = 401;
       Name = "ROUTE:3:STOP";
       Desc = "";
-      Targets = [403];
-      Objects = [];
-      XPos = 119494.284;
-      YPos = 55.385;
-      ZPos = 157905.167;
-      XOri = 0.00;
-      YOri = 233.99;
-      ZOri = 0.00;
-      Area = 10;
-      Speed = 100;
-      Priority = 1;
-    }
-    
-
-    MCU_Waypoint
-    {
-      Index = 403;
-      Name = "ROUTE:3";
-      Desc = "";
       Targets = [405];
       Objects = [];
-      XPos = 119466.847;
+      XPos = 119459.301;
       YPos = 55.385;
-      ZPos = 157867.283;
+      ZPos = 157965.179;
       XOri = 0.00;
-      YOri = 197.78;
+      YOri = 176.93;
       ZOri = 0.00;
       Area = 10;
       Speed = 100;
@@ -7193,11 +7174,11 @@ Group
       Desc = "";
       Targets = [407];
       Objects = [];
-      XPos = 119378.710;
+      XPos = 119409.031;
       YPos = 55.385;
-      ZPos = 157839.086;
+      ZPos = 157967.640;
       XOri = 0.00;
-      YOri = 101.39;
+      YOri = 159.03;
       ZOri = 0.00;
       Area = 10;
       Speed = 100;

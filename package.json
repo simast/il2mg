@@ -32,7 +32,7 @@
 		"grunt-contrib-clean": "1.1.0",
 		"grunt-eslint": "19.0.0",
 		"json5": "0.5.1",
-		"pkg": "3.0.1",
+		"pkg": "3.0.3",
 		"sloc": "0.2.0",
 		"uglify-js": "mishoo/UglifyJS2#harmony-v2.8.22",
 		"electron": "1.6.8",
@@ -40,7 +40,7 @@
 		"babel-register": "6.24.1",
 		"babel-eslint": "7.2.3",
 		"babel-plugin-transform-react-jsx": "6.24.1",
-		"eslint-plugin-react": "6.10.3",
+		"eslint-plugin-react": "7.0.0",
 		"browserify": "14.3.0",
 		"babelify": "7.3.0",
 		"envify": "4.0.0",
@@ -48,6 +48,6 @@
 		"react-dom": "15.5.4",
 		"prop-types": "15.5.8",
 		"react-router-dom": "4.1.1",
-		"clean-css": "4.0.12"
+		"clean-css": "4.1.1"
 	}
 }

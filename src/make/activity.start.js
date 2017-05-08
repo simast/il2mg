@@ -38,31 +38,50 @@ module.exports = class ActivityStart {
 			return;
 		}
 
-		// Create flight onStart event command
-		if (!flight.onStart) {
+		// Create flight onBegin event command
+		if (!flight.onBegin) {
 
-			let onStart = flightGroup.createItem("MCU_TR_MissionBegin");
+			let onBegin = flightGroup.createItem("MCU_TR_MissionBegin");
 
-			onStart.setPositionNear(flight.leader.item);
+			onBegin.setPositionNear(flight.leader.item);
 
-			let startDelay = this.delay;
+			let beginDelay = this.delay;
 
 			// NOTE: Using a short delay for flights starting from a parking spot.
 			// This is workaround as some aircraft have issues starting engines
 			// without an initial timer delay (MiG-3 for example).
-			if (flight.state === flightState.START) {
-				startDelay = rand.real(2, 3);
+			if (!beginDelay && flight.state === flightState.START) {
+				beginDelay = rand.real(2, 3);
 			}
 
-			if (startDelay) {
+			if (beginDelay) {
 
-				const onStartTimer = flightGroup.createItem("MCU_Timer");
+				const onBeginTimer = flightGroup.createItem("MCU_Timer");
 
-				onStartTimer.Time = Number(startDelay.toFixed(3));
-				onStartTimer.setPositionNear(onStart);
-				onStart.addTarget(onStartTimer);
+				onBeginTimer.Time = Number(beginDelay.toFixed(3));
+				onBeginTimer.setPositionNear(onBegin);
+				onBegin.addTarget(onBeginTimer);
 
-				onStart = onStartTimer;
+				onBegin = onBeginTimer;
+			}
+
+			flight.onBegin = onBegin;
+		}
+
+		// Create flight onStart event command
+		if (!flight.onStart) {
+
+			let onStart = flight.onBegin;
+
+			// NOTE: Virtual flights are deactivated and start with a separate timer
+			// after being activated.
+			if (flight.virtual) {
+
+				onStart = flightGroup.createItem("MCU_Timer");
+
+				// Short delay used to wait for virtual flight plane activation
+				onStart.Time = 1;
+				onStart.setPositionNear(flight.leader.item);
 			}
 
 			flight.onStart = onStart;

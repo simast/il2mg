@@ -13,7 +13,7 @@ const {PRECISION_POSITION} = require("../item");
 // when other flights are farther than the inner zone and inside the outer zone.
 // NOTE: Current max in-game draw distance for aircraft is 10 km!
 const ZONE_RADIUS_INNER = 10000;
-const ZONE_RADIUS_OUTER = 20000;
+const ZONE_RADIUS_OUTER = 15000;
 
 // Make virtual flight
 module.exports = function makeFlightVirtual(flight) {
@@ -69,14 +69,13 @@ module.exports = function makeFlightVirtual(flight) {
 
 			const elapsedTime = waitTime + (oldTime - flight.time);
 
-			// Make virtual flight activity zone
-			// Make final virtual flight activity zone
-			makeVirtualFlightZone.call(this, flight, pointIndex, elapsedTime);
-
 			// Reset accumulated wait time
 			if (waitTime) {
 				waitTime = 0;
 			}
+
+			// Make virtual flight activity zone
+			makeVirtualFlightZone.call(this, flight, pointIndex, elapsedTime);
 
 			// Make virtual flight plane items
 			makeVirtualFlightPlanes.call(this, flight);
@@ -122,6 +121,8 @@ function makeVirtualFlightPlanes(flight) {
 	for (const element of flight.elements) {
 		for (const plane of element) {
 
+			const leaderPlane = element[0];
+			const isElementLeader = (leaderPlane === plane);
 			const oldItem = plane.item;
 			const newItem = this.createItem(oldItem.type, oldItem.parent);
 
@@ -139,6 +140,11 @@ function makeVirtualFlightPlanes(flight) {
 			// Create a new entity
 			newItem.createEntity(true);
 
+			// Group subordinate planes with element leader
+			if (element.length > 1 && !isElementLeader) {
+				newItem.entity.addTarget(leaderPlane.item.entity);
+			}
+
 			plane.item = newItem;
 		}
 	}
@@ -150,6 +156,7 @@ function makeVirtualFlightZone(flight, pointIndex, waitTime) {
 	console.log(pointIndex, waitTime);
 
 	const isFirstPoint = (pointIndex === 0);
+	const {task} = flight;
 	const flightGroup = flight.group;
 	const flightDelay = flight.plan.start.delay;
 
@@ -169,10 +176,12 @@ function makeVirtualFlightZone(flight, pointIndex, waitTime) {
 	}
 
 	let onCheck = checkZone;
+	let onCheckBegin = checkZone;
+	let onCheckActivate = checkZone;
 
 	// Use advanced activation trigger setup with an outer check zone to ensure
-	// virtual flights do not activate on top of other flights.
-	if (flightDelay || !isFirstPoint) {
+	// virtual flights that move around do not activate on top of other flights.
+	if (flightDelay || (!isFirstPoint && !task.local)) {
 
 		const checkZoneOuter = zoneGroup.createItem("MCU_CheckZone");
 		const checkZoneOuterCheck = zoneGroup.createItem("MCU_Timer");
@@ -238,12 +247,46 @@ function makeVirtualFlightZone(flight, pointIndex, waitTime) {
 		// will reset and will re-check again in 5 seconds.
 		recheckTimer.Time = 5;
 
-		onCheck = checkZoneOuterCheck;
+		onCheck = checkZoneOuter;
+		onCheckBegin = checkZoneOuterCheck;
+		onCheckActivate = activateTimer;
 	}
 	else {
 		checkZone.addTarget(onActivate);
 	}
 
-	// FIXME:
-	flight.onStart.addTarget(onCheck);
+	const onBegin = flight.onBegin;
+	const onNextBegin = zoneGroup.createItem("MCU_Timer");
+	const deletePrevious = zoneGroup.createItem("MCU_Delete");
+	const beginDeactivate = zoneGroup.createItem("MCU_Deactivate");
+
+	onNextBegin.Time = Number(waitTime.toFixed(3));
+	onNextBegin.setPositionNear(onCheck);
+	onNextBegin.addTarget(deletePrevious);
+	onNextBegin.addTarget(beginDeactivate);
+
+	deletePrevious.setPositionNear(onNextBegin);
+
+	// Delete previous virtual point plane entities
+	for (const element of flight.elements) {
+		for (const plane of element) {
+			deletePrevious.addObject(plane.item);
+		}
+	}
+
+	beginDeactivate.setPositionNear(onNextBegin);
+	beginDeactivate.addTarget(onNextBegin);
+	beginDeactivate.addTarget(onCheck);
+	beginDeactivate.addTarget(onCheckBegin);
+
+	onCheckActivate.addTarget(beginDeactivate);
+	onCheckActivate.addTarget(flight.onStart);
+
+	onBegin.addTarget(onNextBegin);
+	onBegin.addTarget(onCheckBegin);
+
+	flight.onBegin = onNextBegin;
+
+	// NOTE: Next start activity action will create a new onStart event!
+	delete flight.onStart;
 }
