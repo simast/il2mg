@@ -1,15 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Entity item
 module.exports = class MCU_TR_Entity extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.Enabled = 1;
+		this.Enabled = 1
 	}
 
 	// Valid Entity event type name and ID constants
@@ -53,7 +53,7 @@ module.exports = class MCU_TR_Entity extends MCU {
 			OnFlagCapturedBy15: 40,
 			OnFlagCapturedBy16: 41,
 			OnSpottingStarted: 74
-		};
+		}
 	}
 
 	// Valid Entity report type name and ID constants
@@ -64,7 +64,7 @@ module.exports = class MCU_TR_Entity extends MCU {
 			OnAreaAttacked: 2,
 			OnTookOff: 3,
 			OnLanded: 4
-		};
+		}
 	}
 
 	/**
@@ -75,29 +75,29 @@ module.exports = class MCU_TR_Entity extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 30);
+		yield* super.toBinary(index, 30)
 
-		let size = 12;
+		let size = 12
 
 		if (this.events) {
-			size += this.events.items.length * 8;
+			size += this.events.items.length * 8
 		}
 
 		if (this.reports) {
-			size += this.reports.items.length * 12;
+			size += this.reports.items.length * 12
 		}
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// Events list
-		this.writeEvents(buffer);
+		this.writeEvents(buffer)
 
 		// MisObjID
-		this.writeUInt32(buffer, this.MisObjID || 0);
+		this.writeUInt32(buffer, this.MisObjID || 0)
 
 		// Reports list
-		this.writeReports(buffer);
+		this.writeReports(buffer)
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

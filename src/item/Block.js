@@ -1,19 +1,19 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const Item = require("../item");
+const Item = require("../item")
 
 // Block item
 module.exports = class Block extends Item {
 
 	constructor() {
-		super();
+		super()
 
-		this.DeleteAfterDeath = 0;
-		this.DamageThreshold = 1;
-		this.Country = Item.DEFAULT_COUNTRY;
-		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT;
-		this.Durability = Item.DEFAULT_DURABILITY;
+		this.DeleteAfterDeath = 0
+		this.DamageThreshold = 1
+		this.Country = Item.DEFAULT_COUNTRY
+		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT
+		this.Durability = Item.DEFAULT_DURABILITY
 	}
 
 	/**
@@ -25,10 +25,10 @@ module.exports = class Block extends Item {
 	 */
 	*toBinary(index, typeID) {
 
-		yield* super.toBinary(index, typeID ? typeID : 1);
+		yield* super.toBinary(index, typeID ? typeID : 1)
 
-		const buffer = new Buffer(13);
-		let damageItem;
+		const buffer = new Buffer(13)
+		let damageItem
 
 		// Find Damaged item
 		if (this.items && this.items.length) {
@@ -37,51 +37,51 @@ module.exports = class Block extends Item {
 
 				if (item.type === "Damaged") {
 
-					damageItem = item;
-					break;
+					damageItem = item
+					break
 				}
 			}
 		}
 
 		// LinkTrId
-		this.writeUInt32(buffer, this.LinkTrId || 0);
+		this.writeUInt32(buffer, this.LinkTrId || 0)
 
 		// Flags
-		let flags = 0;
+		let flags = 0
 
 		// First bit is DeleteAfterDeath state
 		if (this.DeleteAfterDeath) {
-			flags |= 1 << 0;
+			flags |= 1 << 0
 		}
 
 		// Second bit is DamageThreshold state
 		if (this.DamageThreshold) {
-			flags |= 1 << 1;
+			flags |= 1 << 1
 		}
 
 		// Third bit is used to mark if "Damaged" table is available
 		if (damageItem) {
-			flags |= 1 << 2;
+			flags |= 1 << 2
 		}
 
-		this.writeUInt8(buffer, flags);
+		this.writeUInt8(buffer, flags)
 
 		// Country
-		this.writeUInt16(buffer, this.Country);
+		this.writeUInt16(buffer, this.Country)
 
 		// DamageReport
-		this.writeUInt8(buffer, this.DamageReport);
+		this.writeUInt8(buffer, this.DamageReport)
 
 		// NOTE: Durability in binary file is represented as a 8 bit unsigned integer
 		// number where the value is 1 point for every 500 normal durability points.
-		this.writeUInt8(buffer, Math.round(this.Durability / 500));
+		this.writeUInt8(buffer, Math.round(this.Durability / 500))
 
 		// Script string table index
-		this.writeUInt16(buffer, index.script.value(this.Script));
+		this.writeUInt16(buffer, index.script.value(this.Script))
 
 		// Damage data table index
-		this.writeUInt16(buffer, damageItem ? index.damage.value(damageItem) : 0xFFFF);
+		this.writeUInt16(buffer, damageItem ? index.damage.value(damageItem) : 0xFFFF)
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

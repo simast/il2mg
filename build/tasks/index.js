@@ -1,5 +1,5 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
 module.exports = function(grunt) {
 
@@ -8,28 +8,28 @@ module.exports = function(grunt) {
 	// Grunt task used to build battle index database
 	grunt.registerTask("build:index", "Build index database JSON files.", () => {
 
-		const numeral = require("numeral");
-		const moment = require("moment");
-		const data = require("../../src/data");
-		const {isValidRebaseTask} = require("../../src/make/task.rebase");
-		const {isOffmap} = require("../../src/make/map");
+		const numeral = require("numeral")
+		const moment = require("moment")
+		const data = require("../../src/data")
+		const {isValidRebaseTask} = require("../../src/make/task.rebase")
+		const {isOffmap} = require("../../src/make/map")
 
-		let totalBattles = 0;
-		let totalUnits = 0;
+		let totalBattles = 0
+		let totalUnits = 0
 
 		// Build plane data indexes
-		const planeGroupIndex = Object.create(null);
-		const planeTaskIndex = Object.create(null);
+		const planeGroupIndex = Object.create(null)
+		const planeTaskIndex = Object.create(null)
 
 		for (const planeID in data.planes) {
 
-			let planeData = data.planes[planeID];
+			let planeData = data.planes[planeID]
 
 			// Ignore dummy plane definitions (and groups used to catalog planes)
 			if (!planeData || typeof planeData !== "object" || !planeData.name ||
 				!planeData.model || !planeData.script) {
 
-				continue;
+				continue
 			}
 
 			// Register plane parent/group index hierarchy
@@ -38,36 +38,36 @@ module.exports = function(grunt) {
 				// Build an index of valid plane tasks (based on type)
 				if (planeData.type && !planeTaskIndex[planeID]) {
 
-					const validTasks = [];
+					const validTasks = []
 
 					for (const taskID in data.tasks) {
 						for (const planeType in data.tasks[taskID].planes) {
 
 							if (planeData.type.indexOf(planeType) >= 0) {
 
-								validTasks.push(taskID);
-								break;
+								validTasks.push(taskID)
+								break
 							}
 						}
 					}
 
-					planeTaskIndex[planeID] = validTasks;
+					planeTaskIndex[planeID] = validTasks
 				}
 
-				const planeParentID = planeData.parent;
+				const planeParentID = planeData.parent
 
 				if (!planeParentID) {
-					break;
+					break
 				}
 
-				planeData = data.planes[planeParentID];
+				planeData = data.planes[planeParentID]
 
 				if (!planeData.model && !planeData.script) {
 
-					const planeGroup = planeGroupIndex[planeParentID] || [];
+					const planeGroup = planeGroupIndex[planeParentID] || []
 
-					planeGroup.push(planeID);
-					planeGroupIndex[planeParentID] = planeGroup;
+					planeGroup.push(planeID)
+					planeGroupIndex[planeParentID] = planeGroup
 				}
 			}
 		}
@@ -75,41 +75,41 @@ module.exports = function(grunt) {
 		// Process units for each battle
 		for (const battleID in data.battles) {
 
-			const battle = data.battles[battleID];
-			const battleFrom = moment(battle.from);
-			const battleTo = moment(battle.to);
-			const map = battle.map;
-			const seasonIndex = Object.create(null);
-			const datesIndex = Object.create(null);
-			let lastRecordKey = 0;
+			const battle = data.battles[battleID]
+			const battleFrom = moment(battle.from)
+			const battleTo = moment(battle.to)
+			const map = battle.map
+			const seasonIndex = Object.create(null)
+			const datesIndex = Object.create(null)
+			let lastRecordKey = 0
 
 			// Build an indexed list of airfields for ground/air start
-			const airfieldsIndex = Object.create(null);
+			const airfieldsIndex = Object.create(null)
 
 			for (const airfieldID in battle.airfields) {
 
-				const airfield = battle.airfields[airfieldID];
-				let startType = 0; // Onmap air start
+				const airfield = battle.airfields[airfieldID]
+				let startType = 0 // Onmap air start
 
 				// Check for offmap airfields
 				if (isOffmap(map, airfield.position)) {
-					startType = -1; // Offmap air start
+					startType = -1 // Offmap air start
 				}
 
 				// Mark airfields with taxi routes (for ground starts)
 				if (airfield.taxi && Object.keys(airfield.taxi).length) {
-					startType = 1; // Onmap ground start
+					startType = 1 // Onmap ground start
 				}
 
-				airfieldsIndex[airfieldID] = startType;
+				airfieldsIndex[airfieldID] = startType
 			}
 
 			const json = {
 				name: battle.name
-			};
+			}
 
 			// Initialize battle index JSON structure
-			[
+			;[
 				"countries",
 				"units",
 				"airfields",
@@ -119,37 +119,37 @@ module.exports = function(grunt) {
 				"seasons",
 				"dates"
 			].forEach(dataType => {
-				json[dataType] = Object.create(null);
-			});
+				json[dataType] = Object.create(null)
+			})
 
 			// Process all battle units and build index data
 			for (const unitID in battle.units) {
 
-				let unitData = battle.units[unitID];
+				let unitData = battle.units[unitID]
 
 				// Ignore dummy unit definitions (and groups used to catalog units)
 				if (!unitData || !unitData.name) {
-					continue;
+					continue
 				}
 
-				const unitCountry = unitData.country;
-				const unitName = unitData.name;
-				let unitFrom = battleFrom;
-				let unitTo = battleTo;
-				let unitSuffix;
-				let unitAlias;
+				const unitCountry = unitData.country
+				const unitName = unitData.name
+				let unitFrom = battleFrom
+				let unitTo = battleTo
+				let unitSuffix
+				let unitAlias
 
 				if (unitData.from) {
-					unitFrom = moment(unitData.from);
+					unitFrom = moment(unitData.from)
 				}
 
 				if (unitData.to) {
-					unitTo = moment(unitData.to);
+					unitTo = moment(unitData.to)
 				}
 
-				const unitRoles = [];
-				const unitAirfields = [];
-				const unitPlanes = [];
+				const unitRoles = []
+				const unitAirfields = []
+				const unitPlanes = []
 
 				// Collect unit data
 				while (unitData) {
@@ -157,192 +157,192 @@ module.exports = function(grunt) {
 					// Unit roles
 					if (unitData.role) {
 
-						let roles = unitData.role;
+						let roles = unitData.role
 
 						if (!Array.isArray(roles)) {
-							roles = [[roles]];
+							roles = [[roles]]
 						}
 
-						unitRoles.push(roles);
+						unitRoles.push(roles)
 					}
 
 					// Unit airfields
 					if (unitData.airfields) {
-						unitAirfields.push(unitData.airfields);
+						unitAirfields.push(unitData.airfields)
 					}
 
 					// Unit planes
 					if (unitData.planes) {
-						unitPlanes.push(unitData.planes);
+						unitPlanes.push(unitData.planes)
 					}
 
 					// Unit alias
 					if (!unitSuffix && unitData.suffix) {
-						unitSuffix = unitData.suffix;
+						unitSuffix = unitData.suffix
 					}
 
 					// Unit alias
 					if (!unitAlias && unitData.alias) {
-						unitAlias = unitData.alias;
+						unitAlias = unitData.alias
 					}
 
-					unitData = battle.units[unitData.parent];
+					unitData = battle.units[unitData.parent]
 				}
 
 				if (!unitRoles.length || !unitAirfields.length || !unitPlanes.length) {
-					continue;
+					continue
 				}
 
 				// Index unit for each day of the battle
-				const date = moment(unitFrom);
+				const date = moment(unitFrom)
 				for (; date.isSameOrBefore(unitTo, "day"); date.add(1, "day")) {
 
-					const dateKey = date.format("YYYY-MM-DD");
+					const dateKey = date.format("YYYY-MM-DD")
 
 					// Utility function used to match to/from date ranges
 					const matchDateRange = data.matchDateRange.bind(undefined, {
 						from: battleFrom,
 						to: battleTo,
 						date
-					});
+					})
 
-					const tasks = new Set();
+					const tasks = new Set()
 
 					// Find matching tasks
 					for (const dataRoles of unitRoles) {
 
 						if (tasks.size) {
-							break;
+							break
 						}
 
 						for (const dataRole of dataRoles) {
 
 							if (matchDateRange(dataRole[1], dataRole[2])) {
 
-								const roleData = battle.roles[unitCountry][dataRole[0]];
+								const roleData = battle.roles[unitCountry][dataRole[0]]
 
 								for (const taskID in roleData) {
-									tasks.add(taskID);
+									tasks.add(taskID)
 								}
 
-								break;
+								break
 							}
 						}
 					}
 
-					const planes = new Set();
+					const planes = new Set()
 
 					// Find matching planes
 					for (const dataPlanes of unitPlanes) {
 
 						if (planes.size) {
-							break;
+							break
 						}
 
 						for (const dataPlane of dataPlanes) {
 
 							if (matchDateRange(dataPlane[2], dataPlane[3])) {
 
-								let planeID = dataPlane[0];
-								let planeData = data.planes[planeID];
+								let planeID = dataPlane[0]
+								let planeData = data.planes[planeID]
 
 								// Resolve plane alias
 								while (typeof planeData === "string") {
 
-									planeID = planeData;
-									planeData = data.planes[planeID];
+									planeID = planeData
+									planeData = data.planes[planeID]
 								}
 
 								if (planeID && planeData) {
 
-									let validPlaneTypes = [planeID];
+									let validPlaneTypes = [planeID]
 
 									// Add all plane types belonging to a group
 									if (planeGroupIndex[planeID]) {
-										validPlaneTypes = planeGroupIndex[planeID];
+										validPlaneTypes = planeGroupIndex[planeID]
 									}
 
 									validPlaneTypes.forEach(planeID => {
-										planes.add(planeID);
-									});
+										planes.add(planeID)
+									})
 								}
 							}
 						}
 					}
 
 					if (!planes.size) {
-						continue;
+						continue
 					}
 
-					const airfields = new Map();
+					const airfields = new Map()
 					const rebase = {
 						to: []
-					};
+					}
 
 					// Find matching airfields
 					for (const dataAirfields of unitAirfields) {
 
 						if (airfields.size) {
-							break;
+							break
 						}
 
 						for (const dataAirfield of dataAirfields) {
 
-							const airfieldID = dataAirfield[0];
+							const airfieldID = dataAirfield[0]
 
 							// Invalid airfield ID
 							if (airfieldsIndex[airfieldID] === undefined) {
-								continue;
+								continue
 							}
 
 							if (matchDateRange(dataAirfield[1], dataAirfield[2])) {
 
-								let availability = dataAirfield[3];
+								let availability = dataAirfield[3]
 
 								if (typeof availability !== "number") {
-									availability = 1;
+									availability = 1
 								}
 
-								availability = Math.max(availability, 0);
+								availability = Math.max(availability, 0)
 
 								// Auto-assign rebase task
 								if (airfields.size) {
 
-									const airfieldFrom = battle.airfields[rebase.from];
-									const airfieldTo = battle.airfields[airfieldID];
+									const airfieldFrom = battle.airfields[rebase.from]
+									const airfieldTo = battle.airfields[airfieldID]
 
 									// Check for valid rebase task
 									if (isValidRebaseTask(airfieldFrom, airfieldTo, map)) {
-										rebase.to.push(airfieldID);
+										rebase.to.push(airfieldID)
 									}
 								}
 								else {
-									rebase.from = airfieldID;
+									rebase.from = airfieldID
 								}
 
-								airfields.set(airfieldID, availability);
+								airfields.set(airfieldID, availability)
 							}
 						}
 					}
 
 					if (!airfields.size) {
-						continue;
+						continue
 					}
 
 					if (rebase.to.length) {
-						tasks.add("rebase");
+						tasks.add("rebase")
 					}
 					else {
-						delete rebase.from;
+						delete rebase.from
 					}
 
 					if (!tasks.size) {
-						continue;
+						continue
 					}
 
 					planes.forEach(planeID => {
 
-						const validTasks = [];
+						const validTasks = []
 
 						// Filter out tasks not valid for this plane type
 						for (const taskID of tasks) {
@@ -350,55 +350,55 @@ module.exports = function(grunt) {
 							if (planeTaskIndex[planeID].length &&
 									planeTaskIndex[planeID].indexOf(taskID) >= 0) {
 
-								validTasks.push(taskID);
+								validTasks.push(taskID)
 							}
 						}
 
 						if (!validTasks.length) {
-							return;
+							return
 						}
 
-						let season = seasonIndex[dateKey];
+						let season = seasonIndex[dateKey]
 
 						if (season === undefined) {
 
-							let foundSeason = false;
+							let foundSeason = false
 
 							// Find matching map season
 							for (season in map.season) {
 
-								const seasonData = map.season[season];
-								const seasonFrom = moment(seasonData.from);
-								const seasonTo = moment(seasonData.to);
+								const seasonData = map.season[season]
+								const seasonFrom = moment(seasonData.from)
+								const seasonTo = moment(seasonData.to)
 
 								if (!date.isBefore(seasonFrom, "day") &&
 										!date.isAfter(seasonTo, "day")) {
 
-									foundSeason = season;
-									break;
+									foundSeason = season
+									break
 								}
 							}
 
-							seasonIndex[dateKey] = season = foundSeason;
+							seasonIndex[dateKey] = season = foundSeason
 						}
 
 						// Register new season index
 						if (season) {
 
-							let jsonSeason = json.seasons[season];
+							let jsonSeason = json.seasons[season]
 
 							if (!jsonSeason) {
-								jsonSeason = json.seasons[season] = [];
+								jsonSeason = json.seasons[season] = []
 							}
 
 							if (jsonSeason.indexOf(dateKey) === -1) {
-								jsonSeason.push(dateKey);
+								jsonSeason.push(dateKey)
 							}
 						}
 
 						// Register new country
 						if (!json.countries[unitCountry]) {
-							json.countries[unitCountry] = data.countries[unitCountry].name;
+							json.countries[unitCountry] = data.countries[unitCountry].name
 						}
 
 						// Register new unit
@@ -407,51 +407,51 @@ module.exports = function(grunt) {
 							const unitIndexData = {
 								name: unitName,
 								country: unitCountry
-							};
+							}
 
 							if (unitSuffix) {
-								unitIndexData.suffix = unitSuffix;
+								unitIndexData.suffix = unitSuffix
 							}
 
 							if (unitAlias) {
-								unitIndexData.alias = unitAlias;
+								unitIndexData.alias = unitAlias
 							}
 
-							json.units[unitID] = unitIndexData;
+							json.units[unitID] = unitIndexData
 						}
 
 						// Register new plane
 						if (!json.planes[planeID]) {
-							json.planes[planeID] = data.planes[planeID].name;
+							json.planes[planeID] = data.planes[planeID].name
 						}
 
 						validTasks.forEach(taskID => {
 
 							// Register new task
 							if (!json.tasks[taskID]) {
-								json.tasks[taskID] = data.tasks[taskID].name;
+								json.tasks[taskID] = data.tasks[taskID].name
 							}
 
 							airfields.forEach((availability, airfieldID) => {
 
-								const isRebaseTask = (taskID === "rebase");
+								const isRebaseTask = (taskID === "rebase")
 
 								// Apply availability constrain for non-rebase tasks
 								if (availability <= 0 && !isRebaseTask) {
-									return;
+									return
 								}
 
 								// Register rebase task as valid only from source airfield
 								if (isRebaseTask && airfieldID !== rebase.from) {
-									return;
+									return
 								}
 
-								const isGroundStart = (airfieldsIndex[airfieldID] > 0);
-								const isOffmap = (airfieldsIndex[airfieldID] < 0);
+								const isGroundStart = (airfieldsIndex[airfieldID] > 0)
+								const isOffmap = (airfieldsIndex[airfieldID] < 0)
 
 								// Ignore tasks without offmap support
 								if (isOffmap && !data.tasks[taskID].offmap) {
-									return;
+									return
 								}
 
 								const recordKey = [
@@ -460,71 +460,71 @@ module.exports = function(grunt) {
 									planeID,
 									airfieldID,
 									taskID
-								].join("~");
+								].join("~")
 
-								let recordID = json.records[recordKey];
+								let recordID = json.records[recordKey]
 
 								// Register new record ID
 								if (!recordID) {
 
-									recordID = ++lastRecordKey;
-									recordID = isGroundStart ? recordID : -recordID;
+									recordID = ++lastRecordKey
+									recordID = isGroundStart ? recordID : -recordID
 
-									json.records[recordKey] = recordID;
+									json.records[recordKey] = recordID
 								}
 
 								// Register new airfield
 								if (!json.airfields[airfieldID]) {
-									json.airfields[airfieldID] = battle.airfields[airfieldID].name;
+									json.airfields[airfieldID] = battle.airfields[airfieldID].name
 								}
 
 								// Register new date index
-								const dateIndex = datesIndex[dateKey] || Object.create(null);
+								const dateIndex = datesIndex[dateKey] || Object.create(null)
 
 								if (!dateIndex[recordID]) {
-									dateIndex[recordID] = true;
+									dateIndex[recordID] = true
 								}
 
-								datesIndex[dateKey] = dateIndex;
-							});
-						});
-					});
+								datesIndex[dateKey] = dateIndex
+							})
+						})
+					})
 				}
 
-				totalUnits++;
+				totalUnits++
 			}
 
 			// Sort season data
 			for (const season in json.seasons) {
-				json.seasons[season].sort();
+				json.seasons[season].sort()
 			}
 
 			// Sort and build dates index
 			Object.keys(datesIndex).sort().forEach(date => {
 
-				json.dates[date] = [];
+				json.dates[date] = []
 
 				for (const recordID in datesIndex[date]) {
-					json.dates[date].push(+recordID);
+					json.dates[date].push(+recordID)
 				}
-			});
+			})
 
 			// Write battle JSON index file
 			grunt.file.write(
 				"data/battles/" + battleID + "/index.json",
 				JSON.stringify(json, null, "\t")
-			);
+			)
 
-			totalBattles++;
+			totalBattles++
 		}
 
-		let message = "";
+		let message = ""
 
-		message += numeral(totalUnits).format("0,0") + " ";
-		message += grunt.util.pluralize(totalUnits, "unit/units");
-		message += " indexed from " + numeral(totalBattles).format("0,0") + " ";
-		message += grunt.util.pluralize(totalBattles, "battle/battles") + ".";
+		message += numeral(totalUnits).format("0,0") + " "
+		message += grunt.util.pluralize(totalUnits, "unit/units")
+		message += " indexed from " + numeral(totalBattles).format("0,0") + " "
+		message += grunt.util.pluralize(totalBattles, "battle/battles") + "."
 
-		grunt.log.ok(message);
-	});
-};
+		grunt.log.ok(message)
+	})
+}

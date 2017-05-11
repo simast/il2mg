@@ -1,59 +1,59 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const makeFlightTime = require("./flight.time");
+const makeFlightTime = require("./flight.time")
 
 // Make flight state
 module.exports = function makeFlightState(flight) {
 
 	// Process only flights with a valid state
 	if (typeof flight.state !== "number") {
-		return;
+		return
 	}
 
-	let pendingTime = flight.time * flight.state;
+	let pendingTime = flight.time * flight.state
 
 	if (pendingTime <= 0) {
-		return;
+		return
 	}
 
 	// Process state activities
 	for (const activity of flight.plan) {
 
 		if (activity.time === undefined) {
-			continue;
+			continue
 		}
 
-		const stateTime = Math.min(pendingTime, activity.time);
+		const stateTime = Math.min(pendingTime, activity.time)
 
-		makeActivityState.call(this, activity, stateTime);
+		makeActivityState.call(this, activity, stateTime)
 
-		pendingTime -= stateTime;
+		pendingTime -= stateTime
 
 		if (pendingTime <= 0) {
-			break;
+			break
 		}
 	}
 
 	// Update flight time
-	makeFlightTime.call(this, flight);
-};
+	makeFlightTime.call(this, flight)
+}
 
 // Make flight plan activity state
 function makeActivityState(activity, time) {
 
-	const activityTime = activity.time - time;
+	const activityTime = activity.time - time
 
 	if (activity.makeState) {
-		activity.makeState(time);
+		activity.makeState(time)
 	}
 
 	if (activityTime <= 0) {
-		delete activity.time;
+		delete activity.time
 	}
 	else {
-		activity.time = activityTime;
+		activity.time = activityTime
 	}
 }
 
-module.exports.makeActivityState = makeActivityState;
+module.exports.makeActivityState = makeActivityState

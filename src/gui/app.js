@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const electron = require("electron");
+const electron = require("electron")
 
 // Electron built-in modules
-const {app, BrowserWindow, ipcMain} = electron;
+const {app, BrowserWindow, ipcMain} = electron
 
-let mainWindow = null;
+let mainWindow = null
 
 // Make sure only a single app instance is allowed to run at the same time
 const isOtherInstance = app.makeSingleInstance(() => {
@@ -15,70 +15,70 @@ const isOtherInstance = app.makeSingleInstance(() => {
 
 		// Restore minimized main window
 		if (mainWindow.isMinimized()) {
-			mainWindow.restore();
+			mainWindow.restore()
 		}
 
 		// Focus main window
-		mainWindow.focus();
+		mainWindow.focus()
 	}
-});
+})
 
 if (isOtherInstance) {
-	app.exit(0); // Success
+	app.exit(0) // Success
 }
 
-const fs = require("fs");
-const path = require("path");
+const fs = require("fs")
+const path = require("path")
 
 // Min and max window size
-const MIN_WINDOW_WIDTH = 800;
-const MAX_WINDOW_WIDTH = 1000;
-const MIN_WINDOW_HEIGHT = 600;
-const MAX_WINDOW_HEIGHT = 750;
+const MIN_WINDOW_WIDTH = 800
+const MAX_WINDOW_WIDTH = 1000
+const MIN_WINDOW_HEIGHT = 600
+const MAX_WINDOW_HEIGHT = 750
 
 // Config file name
-const CONFIG_FILE = "Config.json";
+const CONFIG_FILE = "Config.json"
 
 // Default missions storage directory name
-const MISSIONS_DIR = "Missions";
+const MISSIONS_DIR = "Missions"
 
 // Global JSON configuration data object
-const config = global.config = {};
-let configPath;
+const config = global.config = {}
+let configPath
 
 // Set config data from renderer process
 ipcMain.on("config", (event, data) => {
 
-	Object.assign(config, data);
-	event.returnValue = true;
-});
+	Object.assign(config, data)
+	event.returnValue = true
+})
 
 // Quit when all windows are closed
 app.on("window-all-closed", () => {
-	app.quit();
-});
+	app.quit()
+})
 
 // Create main application window
 app.on("ready", () => {
 
-	const userDataPath = app.getPath("userData");
+	const userDataPath = app.getPath("userData")
 
 	// Load JSON configuration data
-	configPath = path.join(userDataPath, CONFIG_FILE);
+	configPath = path.join(userDataPath, CONFIG_FILE)
 
 	try {
-		Object.assign(config, JSON.parse(fs.readFileSync(configPath, "utf-8")));
+		Object.assign(config, JSON.parse(fs.readFileSync(configPath, "utf-8")))
 	}
 	catch (e) {}
 
 	// Initialize default missions storage path
 	if (!config.missionsPath) {
-		config.missionsPath = path.join(userDataPath, MISSIONS_DIR);
+		config.missionsPath = path.join(userDataPath, MISSIONS_DIR)
 	}
 
 	// Make sure missions storage directory exists
 	if (!fs.existsSync(config.missionsPath)) {
-		fs.mkdirSync(config.missionsPath);
+		fs.mkdirSync(config.missionsPath)
 	}
 
 	const windowConfig = {
@@ -103,67 +103,67 @@ app.on("ready", () => {
 			plugins: false,
 			defaultEncoding: "utf-8"
 		}
-	};
+	}
 
 	// Use existing (saved) window position
 	if (config.window) {
 
-		let {x, y, width, height} = config.window;
+		let {x, y, width, height} = config.window
 
-		width = Math.max(Math.min(width, MAX_WINDOW_WIDTH), MIN_WINDOW_WIDTH);
-		height = Math.max(Math.min(height, MAX_WINDOW_HEIGHT), MIN_WINDOW_HEIGHT);
+		width = Math.max(Math.min(width, MAX_WINDOW_WIDTH), MIN_WINDOW_WIDTH)
+		height = Math.max(Math.min(height, MAX_WINDOW_HEIGHT), MIN_WINDOW_HEIGHT)
 
-		const {workArea} = electron.screen.getDisplayMatching({x, y, width, height});
+		const {workArea} = electron.screen.getDisplayMatching({x, y, width, height})
 
 		// Make sure window is not outside display work area
-		x = Math.min(Math.max(x, workArea.x), workArea.x + workArea.width - width);
-		y = Math.min(Math.max(y, workArea.y), workArea.y + workArea.height - height);
+		x = Math.min(Math.max(x, workArea.x), workArea.x + workArea.width - width)
+		y = Math.min(Math.max(y, workArea.y), workArea.y + workArea.height - height)
 
-		Object.assign(windowConfig, {center: false, x, y, width, height});
+		Object.assign(windowConfig, {center: false, x, y, width, height})
 	}
 
-	mainWindow = new BrowserWindow(windowConfig);
+	mainWindow = new BrowserWindow(windowConfig)
 
-	mainWindow.setMenu(null);
-	mainWindow.loadURL("file://" + __dirname + "/main.html");
+	mainWindow.setMenu(null)
+	mainWindow.loadURL("file://" + __dirname + "/main.html")
 
 	// Prevent document from changing window title
 	mainWindow.on("page-title-updated", event => {
-		event.preventDefault();
-	});
+		event.preventDefault()
+	})
 
 	// Show main window (without a visual flash)
 	mainWindow.once("ready-to-show", () => {
-		mainWindow.show();
-	});
+		mainWindow.show()
+	})
 
 	// Disable opening new windows (also fixes shift+click on link issue)
 	mainWindow.webContents.on("new-window", event => {
-		event.preventDefault();
-	});
+		event.preventDefault()
+	})
 
 	// Save main window position and size
 	mainWindow.on("close", () => {
 
-		const {x, y} = mainWindow.getBounds();
-		const [width, height] = mainWindow.getContentSize();
+		const {x, y} = mainWindow.getBounds()
+		const [width, height] = mainWindow.getContentSize()
 
 		// NOTE: Minimized window will have zero width and height!
 		if (width && height) {
-			config.window = {x, y, width, height};
+			config.window = {x, y, width, height}
 		}
-	});
+	})
 
 	// Invalidate main window reference
 	mainWindow.on("closed", () => {
-		mainWindow = null;
-	});
-});
+		mainWindow = null
+	})
+})
 
 // Write application configuration data
 app.on("before-quit", () => {
 
 	if (configPath) {
-		fs.writeFileSync(configPath, JSON.stringify(config, null, "\t"));
+		fs.writeFileSync(configPath, JSON.stringify(config, null, "\t"))
 	}
-});
+})

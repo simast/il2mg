@@ -1,37 +1,37 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw blocks .Group to .json files
 	grunt.registerTask("build:blocks", "Build blocks JSON files.", () => {
 
-		const numeral = require("numeral");
-		const data = require("../../src/data");
-		const Item = require("../../src/item");
+		const numeral = require("numeral")
+		const data = require("../../src/data")
+		const Item = require("../../src/item")
 
-		let totalBattles = 0;
-		let totalItems = 0;
+		let totalBattles = 0
+		let totalItems = 0
 
 		// Process blocks for each battle
 		for (const battleID in data.battles) {
 
-			const battle = data.battles[battleID];
-			const blocksPath = "data/battles/" + battleID + "/blocks/";
+			const battle = data.battles[battleID]
+			const blocksPath = "data/battles/" + battleID + "/blocks/"
 
 			// Process all blocks files
 			battle.blocks.forEach(blockFile => {
 
-				const fileSource = blocksPath + blockFile + ".Group";
-				const fileDestination = blocksPath + blockFile + ".json";
+				const fileSource = blocksPath + blockFile + ".Group"
+				const fileDestination = blocksPath + blockFile + ".json"
 
 				// Read raw blocks
-				const blocks = Item.readTextFile(fileSource);
+				const blocks = Item.readTextFile(fileSource)
 
-				const json = [];
+				const json = []
 
 				// Build output JSON object with recursion
-				(function buildJSON(json, blocks) {
+				;(function buildJSON(json, blocks) {
 
 					blocks.forEach(block => {
 
@@ -43,55 +43,55 @@ module.exports = function(grunt) {
 								type: block.type,
 								script: block.Script,
 								model: block.Model
-							});
+							})
 
-							const jsonItem = [];
+							const jsonItem = []
 
 							// Item type ID
-							jsonItem.push(itemTypeID);
+							jsonItem.push(itemTypeID)
 
 							// Item position
-							jsonItem.push(Number(block.XPos.toFixed(Item.PRECISION_POSITION)));
-							jsonItem.push(Number(block.YPos.toFixed(Item.PRECISION_POSITION)));
-							jsonItem.push(Number(block.ZPos.toFixed(Item.PRECISION_POSITION)));
+							jsonItem.push(Number(block.XPos.toFixed(Item.PRECISION_POSITION)))
+							jsonItem.push(Number(block.YPos.toFixed(Item.PRECISION_POSITION)))
+							jsonItem.push(Number(block.ZPos.toFixed(Item.PRECISION_POSITION)))
 
 							// Item orientation
-							jsonItem.push(Number(block.YOri.toFixed(Item.PRECISION_ORIENTATION)));
+							jsonItem.push(Number(block.YOri.toFixed(Item.PRECISION_ORIENTATION)))
 
-							json.push(jsonItem);
+							json.push(jsonItem)
 
-							totalItems++;
+							totalItems++
 						}
 						// Process any child blocks
 						else if (block instanceof Item.Group && block.items.length) {
-							buildJSON(json, block.items);
+							buildJSON(json, block.items)
 						}
-					});
-				})(json, blocks);
+					})
+				})(json, blocks)
 
 				// Write output JSON blocks file
 				grunt.file.write(
 					fileDestination,
 					JSON.stringify(json, null, "\t")
-				);
-			});
+				)
+			})
 
-			totalBattles++;
+			totalBattles++
 		}
 
 		// Write items type JSON data file
 		grunt.file.write(
 			"data/items/index.json",
 			JSON.stringify(data.items, null, "\t")
-		);
+		)
 
-		let message = "";
+		let message = ""
 
-		message += numeral(totalItems).format("0,0") + " ";
-		message += grunt.util.pluralize(totalItems, "item/items");
-		message += " processed from " + numeral(totalBattles).format("0,0") + " ";
-		message += grunt.util.pluralize(totalBattles, "battle/battles") + ".";
+		message += numeral(totalItems).format("0,0") + " "
+		message += grunt.util.pluralize(totalItems, "item/items")
+		message += " processed from " + numeral(totalBattles).format("0,0") + " "
+		message += grunt.util.pluralize(totalBattles, "battle/battles") + "."
 
-		grunt.log.ok(message);
-	});
-};
+		grunt.log.ok(message)
+	})
+}

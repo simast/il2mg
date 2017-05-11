@@ -1,16 +1,16 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const Item = require("../item");
+const Item = require("../item")
 
 // Ground item
 module.exports = class Ground extends Item {
 
 	constructor() {
-		super();
+		super()
 
-		this.DamageThreshold = 1;
-		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT;
+		this.DamageThreshold = 1
+		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT
 	}
 
 	/**
@@ -21,24 +21,24 @@ module.exports = class Ground extends Item {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 7);
+		yield* super.toBinary(index, 7)
 
-		const buffer = new Buffer(9);
+		const buffer = new Buffer(9)
 
 		// LinkTrId
-		this.writeUInt32(buffer, this.LinkTrId || 0);
+		this.writeUInt32(buffer, this.LinkTrId || 0)
 
 		// DamageThreshold
-		this.writeUInt8(buffer, this.DamageThreshold);
+		this.writeUInt8(buffer, this.DamageThreshold)
 
 		// DamageReport
-		this.writeUInt8(buffer, this.DamageReport);
+		this.writeUInt8(buffer, this.DamageReport)
 
 		// Unknown data
-		this.writeUInt8(buffer, 0);
-		this.writeUInt8(buffer, 0);
-		this.writeUInt8(buffer, 0);
+		this.writeUInt8(buffer, 0)
+		this.writeUInt8(buffer, 0)
+		this.writeUInt8(buffer, 0)
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

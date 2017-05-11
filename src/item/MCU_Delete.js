@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Delete item
 module.exports = class MCU_Delete extends MCU {
@@ -13,6 +13,6 @@ module.exports = class MCU_Delete extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		yield* super.toBinary(index, 50);
+		yield* super.toBinary(index, 50)
 	}
-};
+}

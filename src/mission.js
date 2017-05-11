@@ -1,18 +1,18 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const fs = require("fs");
-const os = require("os");
-const path = require("path");
-const Random = require("random-js");
-const data = require("./data");
-const log = require("./log");
-const Item = require("./item");
+const fs = require("fs")
+const os = require("os")
+const path = require("path")
+const Random = require("random-js")
+const data = require("./data")
+const log = require("./log")
+const Item = require("./item")
 
 // Mission file extensions
-const FILE_EXT_TEXT = "Mission";
-const FILE_EXT_BINARY = "msnbin";
-const FILE_EXT_META = "il2mg";
+const FILE_EXT_TEXT = "Mission"
+const FILE_EXT_BINARY = "msnbin"
+const FILE_EXT_META = "il2mg"
 
 // List of mission parameters that make up the complex seed value
 // NOTE: The order is important and is used to define parameter sequence
@@ -31,7 +31,7 @@ const COMPLEX_SEED_PARAMS = [
 	"airfield",
 	"weather",
 	"unit"
-];
+]
 
 class Mission {
 
@@ -43,56 +43,56 @@ class Mission {
 	 */
 	constructor(params) {
 
-		this.items = []; // Items list
-		this.lang = []; // Language data
-		this.make = []; // Delayed make callbacks list
-		this.params = params; // Desired mission parameters
+		this.items = [] // Items list
+		this.lang = [] // Language data
+		this.make = [] // Delayed make callbacks list
+		this.params = params // Desired mission parameters
 
 		// Last item index value
-		this.lastIndex = 0;
+		this.lastIndex = 0
 
-		log.I("Making mission...");
+		log.I("Making mission...")
 
 		// Reserve an empty localization string (used in binary mission generation
 		// for items without LCName or LCDesc properties).
-		this.getLC("");
+		this.getLC("")
 
 		// Initialize random number generator
-		this.initRand(params);
+		this.initRand(params)
 
 		// Debug mode
-		this.debug = (this.params.debug ? this.params.debug : false);
+		this.debug = (this.params.debug ? this.params.debug : false)
 
-		log.profile("Making");
+		log.profile("Making")
 
 		// Make mission parts
 		// NOTE: Order is very important!
-		require("./make/battle").call(this);
-		require("./make/choice").call(this);
-		require("./make/date").call(this);
-		require("./make/map").call(this);
-		require("./make/bubble").call(this);
-		require("./make/time").call(this);
-		require("./make/people").call(this);
-		require("./make/planes").call(this);
-		require("./make/units").call(this);
-		require("./make/vehicles").call(this);
-		require("./make/weather").call(this);
-		require("./make/locations").call(this);
-		require("./make/airfields").call(this);
-		require("./make/tasks").call(this);
-		require("./make/fronts").call(this);
-		require("./make/blocks").call(this);
-		require("./make/formations").call(this);
-		require("./make/forces").call(this);
-		require("./make/briefing").call(this);
+		require("./make/battle").call(this)
+		require("./make/choice").call(this)
+		require("./make/date").call(this)
+		require("./make/map").call(this)
+		require("./make/bubble").call(this)
+		require("./make/time").call(this)
+		require("./make/people").call(this)
+		require("./make/planes").call(this)
+		require("./make/units").call(this)
+		require("./make/vehicles").call(this)
+		require("./make/weather").call(this)
+		require("./make/locations").call(this)
+		require("./make/airfields").call(this)
+		require("./make/tasks").call(this)
+		require("./make/fronts").call(this)
+		require("./make/blocks").call(this)
+		require("./make/formations").call(this)
+		require("./make/forces").call(this)
+		require("./make/briefing").call(this)
 
 		// Execute all delayed (last) mission make callbacks
 		for (const makeCallback of this.make) {
-			makeCallback();
+			makeCallback()
 		}
 
-		log.profile("Making");
+		log.profile("Making")
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Mission {
 	 */
 	initRand(params) {
 
-		let complexSeed;
+		let complexSeed
 
 		// Initialize from existing seed
 		if (params.seed) {
@@ -111,16 +111,16 @@ class Mission {
 			// other complex seed parameters.
 			for (let i = 1; i < COMPLEX_SEED_PARAMS.length; i++) {
 
-				const param = COMPLEX_SEED_PARAMS[i];
+				const param = COMPLEX_SEED_PARAMS[i]
 
 				if (param in params) {
-					throw ['Cannot use "%s" parameter together with seed.', param];
+					throw ['Cannot use "%s" parameter together with seed.', param]
 				}
 			}
 
 			// Try a complex seed value (with Base64 parameters)
 			try {
-				complexSeed = JSON.parse(new Buffer(params.seed, "base64").toString("utf-8"));
+				complexSeed = JSON.parse(new Buffer(params.seed, "base64").toString("utf-8"))
 			}
 			catch (e) {}
 
@@ -130,67 +130,67 @@ class Mission {
 				COMPLEX_SEED_PARAMS.forEach((param, paramIndex) => {
 
 					if (paramIndex in complexSeed) {
-						params[param] = complexSeed[paramIndex];
+						params[param] = complexSeed[paramIndex]
 					}
-				});
+				})
 			}
 
 			// Handle simple seed value (numeric)
 			if (/^[0-9]+$/.test(params.seed)) {
 
-				const seedNumber = parseInt(params.seed, 10);
+				const seedNumber = parseInt(params.seed, 10)
 
 				if (!isNaN(seedNumber) && seedNumber > 0) {
-					this.seed = seedNumber;
+					this.seed = seedNumber
 				}
 			}
 
 			// Validate seed value
 			if (!this.seed) {
-				throw ["Invalid mission seed!", {seed: params.seed}];
+				throw ["Invalid mission seed!", {seed: params.seed}]
 			}
 		}
 		// Create a new seed
 		else {
 
 			// NOTE: Ignoring the first number from Date.now() to shorten the seed
-			this.seed = Date.now() % 1000000000000;
+			this.seed = Date.now() % 1000000000000
 
 			// Check seed affecting parameters and create a complex seed if necessary
 			COMPLEX_SEED_PARAMS.forEach((param, paramIndex) => {
 
 				if (param in params) {
 
-					complexSeed = complexSeed || Object.create(null);
-					complexSeed[paramIndex] = params[param];
+					complexSeed = complexSeed || Object.create(null)
+					complexSeed[paramIndex] = params[param]
 				}
-			});
+			})
 
 			if (complexSeed) {
-				complexSeed[0] = this.seed;
+				complexSeed[0] = this.seed
 			}
 		}
 
 		// Initialize random number generator
-		const mtRand = Random.engines.mt19937();
-		mtRand.seed(this.seed);
-		this.rand = new Random(mtRand);
+		const mtRand = Random.engines.mt19937()
+		mtRand.seed(this.seed)
+		this.rand = new Random(mtRand)
 
-		let seedParam;
+		let seedParam
 
 		// Save seed value as a localization string
 		if (complexSeed) {
-			seedParam = new Buffer(JSON.stringify(complexSeed), "utf-8").toString("base64");
+			seedParam = new Buffer(JSON.stringify(complexSeed), "utf-8").toString("base64")
 		}
 		else {
-			seedParam = this.seed.toString();
+			seedParam = this.seed.toString()
 		}
 
 		// Save seed param value as a localization string
-		this.getLC(seedParam);
+		this.getLC(seedParam)
 
 		// Log seed param value
-		log.I("Seed:", seedParam);
+		log.I("Seed:", seedParam)
 	}
 
 	/**
@@ -201,25 +201,25 @@ class Mission {
 	 */
 	createItem(itemType, parent) {
 
-		let itemData;
+		let itemData
 
 		// Item type as an object with meta data
 		if (typeof itemType === "object") {
 
-			itemData = itemType;
-			itemType = itemData.type;
+			itemData = itemType
+			itemType = itemData.type
 		}
 
 		if (!Item[itemType]) {
-			throw new TypeError("Invalid item type value.");
+			throw new TypeError("Invalid item type value.")
 		}
 
 		// Add item to mission if parent is not specified
 		if (parent !== false && !(parent instanceof Item)) {
-			parent = this;
+			parent = this
 		}
 
-		const item = new Item[itemType]();
+		const item = new Item[itemType]()
 
 		if (item.hasIndex) {
 
@@ -227,36 +227,36 @@ class Mission {
 			Object.defineProperty(item, "Index", {
 				enumerable: true,
 				value: ++this.lastIndex
-			});
+			})
 		}
 
 		// Set item mission reference
 		Object.defineProperty(item, "mission", {
 			value: this
-		});
+		})
 
 		// Set common item data
 		if (itemData) {
 
 			if (itemData.model) {
-				item.Model = itemData.model;
+				item.Model = itemData.model
 			}
 
 			if (itemData.script) {
-				item.Script = itemData.script;
+				item.Script = itemData.script
 			}
 
 			if (itemData.durability) {
-				item.Durability = itemData.durability;
+				item.Durability = itemData.durability
 			}
 		}
 
 		// Add item to parent item object
 		if (parent) {
-			parent.addItem(item);
+			parent.addItem(item)
 		}
 
-		return item;
+		return item
 	}
 
 	/**
@@ -267,17 +267,17 @@ class Mission {
 	addItem(item) {
 
 		if (!(item instanceof Item)) {
-			throw new TypeError("Invalid item value.");
+			throw new TypeError("Invalid item value.")
 		}
 
 		// Add child item
-		this.items.push(item);
+		this.items.push(item)
 
 		// Set child item parent reference
 		Object.defineProperty(item, "parent", {
 			value: this,
 			configurable: true
-		});
+		})
 	}
 
 	/**
@@ -289,18 +289,18 @@ class Mission {
 	getLC(text) {
 
 		if (typeof text !== "string") {
-			throw new TypeError("Invalid mission language string.");
+			throw new TypeError("Invalid mission language string.")
 		}
 
-		text = text.trim();
+		text = text.trim()
 
-		let languageCode = this.lang.indexOf(text);
+		let languageCode = this.lang.indexOf(text)
 
 		if (languageCode < 0) {
-			languageCode = this.lang.push(text) - 1;
+			languageCode = this.lang.push(text) - 1
 		}
 
-		return languageCode;
+		return languageCode
 	}
 
 	/**
@@ -312,38 +312,38 @@ class Mission {
 	getCallsign(type) {
 
 		if (!data.callsigns[type]) {
-			throw new TypeError("Invalid callsign type value.");
+			throw new TypeError("Invalid callsign type value.")
 		}
 
 		// Track last used callsign index
 		if (!this.lastCallsign) {
-			this.lastCallsign = Object.create(null);
+			this.lastCallsign = Object.create(null)
 		}
 
 		// Initialize/shuffle callsign list data
 		if (this.lastCallsign[type] === undefined) {
 
-			this.rand.shuffle(data.callsigns[type]);
-			this.lastCallsign[type] = 0;
+			this.rand.shuffle(data.callsigns[type])
+			this.lastCallsign[type] = 0
 		}
 		// Use next available callsign
 		else {
 
-			this.lastCallsign[type]++;
+			this.lastCallsign[type]++
 
 			// Cycle callsign list
 			if (this.lastCallsign[type] >= data.callsigns[type].length) {
-				this.lastCallsign[type] = 0;
+				this.lastCallsign[type] = 0
 			}
 		}
 
-		const callsign = data.callsigns[type][this.lastCallsign[type]];
+		const callsign = data.callsigns[type][this.lastCallsign[type]]
 
 		// Return selected callsign info
 		return {
 			id: callsign[0],
 			name: callsign[1]
-		};
+		}
 	}
 
 	/**
@@ -355,13 +355,13 @@ class Mission {
 	getEnemyCoalition(coalition) {
 
 		if (coalition === data.coalition.ALLIES) {
-			return data.coalition.AXIS;
+			return data.coalition.AXIS
 		}
 		else if (coalition === data.coalition.AXIS) {
-			return data.coalition.ALLIES;
+			return data.coalition.ALLIES
 		}
 
-		return 0; // Unknown/neutral
+		return 0 // Unknown/neutral
 	}
 
 	/**
@@ -372,65 +372,65 @@ class Mission {
 	 */
 	async save(fileName) {
 
-		const {params, debug} = this;
-		const format = params.format || Mission.FORMAT_BINARY;
-		const promises = [];
+		const {params, debug} = this
+		const format = params.format || Mission.FORMAT_BINARY
+		const promises = []
 
-		log.I("Saving mission...");
+		log.I("Saving mission...")
 
-		let fileDir = "";
-		let fileBase;
+		let fileDir = ""
+		let fileBase
 
 		// Use specified mission file path and/or name
 		if (fileName && fileName.length) {
 
-			let isDirectory = false;
+			let isDirectory = false
 
 			if (fs.existsSync(fileName)) {
-				isDirectory = fs.statSync(fileName).isDirectory();
+				isDirectory = fs.statSync(fileName).isDirectory()
 			}
 
 			if (isDirectory) {
-				fileDir = fileName;
+				fileDir = fileName
 			}
 			else {
 
-				fileDir = path.dirname(fileName);
-				fileBase = path.basename(fileName, path.extname(fileName));
+				fileDir = path.dirname(fileName)
+				fileBase = path.basename(fileName, path.extname(fileName))
 			}
 		}
 
 		// Generate unique mission file name (based on seed value)
 		if (!fileBase) {
-			fileBase = data.name + "-" + this.seed;
+			fileBase = data.name + "-" + this.seed
 		}
 
 		// Make specified directory path
 		if (fileDir && !fs.existsSync(fileDir)) {
-			fs.mkdirSync(fileDir);
+			fs.mkdirSync(fileDir)
 		}
 
-		fileName = path.join(fileDir, fileBase);
+		fileName = path.join(fileDir, fileBase)
 
 		// Save text format file
 		if (format === Mission.FORMAT_TEXT || (debug && !params.format)) {
-			promises.push(this.saveText(fileName));
+			promises.push(this.saveText(fileName))
 		}
 
 		// Save binary format file
 		if (format === Mission.FORMAT_BINARY || (debug && !params.format)) {
-			promises.push(this.saveBinary(fileName));
+			promises.push(this.saveBinary(fileName))
 		}
 
 		// Save language files
-		promises.push(this.saveLang(fileName));
+		promises.push(this.saveLang(fileName))
 
 		// Save metadata file
 		if (params.meta) {
-			promises.push(this.saveMeta(fileName));
+			promises.push(this.saveMeta(fileName))
 		}
 
-		return Promise.all(promises);
+		return Promise.all(promises)
 	}
 
 	/**
@@ -441,40 +441,40 @@ class Mission {
 	 */
 	async saveText(fileName) {
 
-		const profileName = "Saving ." + FILE_EXT_TEXT;
+		const profileName = "Saving ." + FILE_EXT_TEXT
 
-		log.profile(profileName);
+		log.profile(profileName)
 
 		const promise = new Promise((resolve, reject) => {
 
-			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT);
+			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT)
 
 			// Write .Mission data
 			fileStream.once("open", () => {
 
 				// Required mission file header
-				fileStream.write("# Mission File Version = 1.0;" + os.EOL);
+				fileStream.write("# Mission File Version = 1.0" + os.EOL)
 
 				// Write mission items
 				this.items.forEach(item => {
-					fileStream.write(os.EOL + item.toString() + os.EOL);
-				});
+					fileStream.write(os.EOL + item.toString() + os.EOL)
+				})
 
 				// Required mission file footer
-				fileStream.write(os.EOL + "# end of file");
+				fileStream.write(os.EOL + "# end of file")
 
-				fileStream.end();
-			});
+				fileStream.end()
+			})
 
-			fileStream.once("finish", resolve);
-			fileStream.once("error", reject);
-		});
+			fileStream.once("finish", resolve)
+			fileStream.once("error", reject)
+		})
 
 		promise.then(() => {
-			log.profile(profileName);
-		});
+			log.profile(profileName)
+		})
 
-		return promise;
+		return promise
 	}
 
 	/**
@@ -485,15 +485,15 @@ class Mission {
 	 */
 	async saveBinary(fileName) {
 
-		const profileName = "Saving ." + FILE_EXT_BINARY;
+		const profileName = "Saving ." + FILE_EXT_BINARY
 
-		log.profile(profileName);
+		log.profile(profileName)
 
 		const promise = new Promise((resolve, reject) => {
 
-			const optionsBuffers = [];
-			const itemBuffers = [];
-			let numItems = 0;
+			const optionsBuffers = []
+			const itemBuffers = []
+			let numItems = 0
 
 			// Create index tables
 			const indexTables = {
@@ -503,10 +503,10 @@ class Mission {
 				skin: new BinaryStringTable(128, 100),
 				script: new BinaryStringTable(128, 100),
 				damage: new BinaryDamageTable()
-			};
+			}
 
 			// Collect binary representation of all mission items
-			(function walkItems(items) {
+			;(function walkItems(items) {
 
 				items.forEach(item => {
 
@@ -514,7 +514,7 @@ class Mission {
 					if (item instanceof Item.Group) {
 
 						if (item.items && item.items.length) {
-							walkItems(item.items);
+							walkItems(item.items)
 						}
 					}
 					// Get item binary representation (data buffers)
@@ -524,11 +524,11 @@ class Mission {
 
 							// Collect Options item buffers
 							if (item instanceof Item.Options) {
-								optionsBuffers.push(buffer);
+								optionsBuffers.push(buffer)
 							}
 							// Process normal item buffers
 							else if (buffer.length) {
-								itemBuffers.push(buffer);
+								itemBuffers.push(buffer)
 							}
 						}
 
@@ -536,66 +536,66 @@ class Mission {
 						if (item.entity) {
 
 							for (const buffer of item.entity.toBinary(indexTables)) {
-								itemBuffers.push(buffer);
+								itemBuffers.push(buffer)
 							}
 
-							numItems++;
+							numItems++
 						}
 
-						numItems++;
+						numItems++
 					}
-				});
+				})
 
-			})(this.items);
+			})(this.items)
 
 			if (!optionsBuffers.length) {
-				throw new Error();
+				throw new Error()
 			}
 
-			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY);
+			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY)
 
 			fileStream.once("open", () => {
 
 				// Write Options item buffers (has to be the first one in the file)
 				while (optionsBuffers.length) {
-					fileStream.write(optionsBuffers.shift());
+					fileStream.write(optionsBuffers.shift())
 				}
 
-				const indexTableNames = Object.keys(indexTables);
-				const itlhBuffer = new Buffer(7); // Index table list header buffer
-				const bsBuffer = new Buffer(4); // Item size buffer
+				const indexTableNames = Object.keys(indexTables)
+				const itlhBuffer = new Buffer(7) // Index table list header buffer
+				const bsBuffer = new Buffer(4) // Item size buffer
 
 				// Write index table list header (number of index tables + 3 unknown bytes)
-				itlhBuffer.writeUInt32LE(indexTableNames.length, 0);
-				itlhBuffer.fill(0, 4);
-				fileStream.write(itlhBuffer);
+				itlhBuffer.writeUInt32LE(indexTableNames.length, 0)
+				itlhBuffer.fill(0, 4)
+				fileStream.write(itlhBuffer)
 
 				// Write index tables
 				indexTableNames.forEach(tableName => {
-					fileStream.write(indexTables[tableName].toBinary());
-				});
+					fileStream.write(indexTables[tableName].toBinary())
+				})
 
 				// Write items size buffer
-				bsBuffer.writeUInt32LE(numItems, 0);
-				fileStream.write(bsBuffer);
+				bsBuffer.writeUInt32LE(numItems, 0)
+				fileStream.write(bsBuffer)
 
 				// Write item buffers
 				while (itemBuffers.length) {
-					fileStream.write(itemBuffers.shift());
+					fileStream.write(itemBuffers.shift())
 				}
 
-				fileStream.end();
-			});
+				fileStream.end()
+			})
 
-			fileStream.once("finish", resolve);
-			fileStream.once("error", reject);
-		});
+			fileStream.once("finish", resolve)
+			fileStream.once("error", reject)
+		})
 
 		promise.then(() => {
-			log.profile(profileName);
-		});
+			log.profile(profileName)
+		})
 
-		return promise;
+		return promise
 	}
 
 	/**
@@ -606,50 +606,50 @@ class Mission {
 	 */
 	async saveLang(fileName) {
 
-		const promises = [];
-		let languages = this.params.lang;
+		const promises = []
+		let languages = this.params.lang
 
 		// Generate default (first) language only
 		if (!languages || !languages.length) {
-			languages = data.languages.slice(0, 1);
+			languages = data.languages.slice(0, 1)
 		}
 
 		// Make language files
 		languages.forEach(lang => {
 
-			const profileName = "Saving ." + lang;
+			const profileName = "Saving ." + lang
 
-			log.profile(profileName);
+			log.profile(profileName)
 
 			const promise = new Promise((resolve, reject) => {
 
-				const fileStream = fs.createWriteStream(fileName + "." + lang);
+				const fileStream = fs.createWriteStream(fileName + "." + lang)
 
 				fileStream.once("open", () => {
 
 					// Write UCS2 little-endian BOM
-					fileStream.write("FFFE", "hex");
+					fileStream.write("FFFE", "hex")
 
 					// Write language data
 					this.lang.forEach((value, index) => {
-						fileStream.write(index + ":" + value + os.EOL, "ucs2");
-					});
+						fileStream.write(index + ":" + value + os.EOL, "ucs2")
+					})
 
-					fileStream.end();
-				});
+					fileStream.end()
+				})
 
-				fileStream.once("finish", resolve);
-				fileStream.once("error", reject);
-			});
+				fileStream.once("finish", resolve)
+				fileStream.once("error", reject)
+			})
 
 			promise.then(() => {
-				log.profile(profileName);
-			});
+				log.profile(profileName)
+			})
 
-			promises.push(promise);
-		});
+			promises.push(promise)
+		})
 
-		return Promise.all(promises);
+		return Promise.all(promises)
 	}
 
 	/**
@@ -660,13 +660,13 @@ class Mission {
 	 */
 	async saveMeta(fileName) {
 
-		const profileName = "Saving ." + FILE_EXT_META;
+		const profileName = "Saving ." + FILE_EXT_META
 
-		log.profile(profileName);
+		log.profile(profileName)
 
 		const promise = new Promise((resolve, reject) => {
 
-			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_META);
+			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_META)
 
 			// Write .il2mg data
 			fileStream.once("open", () => {
@@ -677,26 +677,26 @@ class Mission {
 					plane: this.planes[this.player.plane].name,
 					country: this.player.flight.country,
 					briefing: this.briefing
-				}, null, "\t"));
+				}, null, "\t"))
 
-				fileStream.end();
-			});
+				fileStream.end()
+			})
 
-			fileStream.once("finish", resolve);
-			fileStream.once("error", reject);
-		});
+			fileStream.once("finish", resolve)
+			fileStream.once("error", reject)
+		})
 
 		promise.then(() => {
-			log.profile(profileName);
-		});
+			log.profile(profileName)
+		})
 
-		return promise;
+		return promise
 	}
 }
 
 // Mission file formats
-Mission.FORMAT_TEXT = "text";
-Mission.FORMAT_BINARY = "binary";
+Mission.FORMAT_TEXT = "text"
+Mission.FORMAT_BINARY = "binary"
 
 // Binary string data index table (used in saving .msnbin file)
 class BinaryStringTable {
@@ -710,10 +710,10 @@ class BinaryStringTable {
 	 */
 	constructor(maxDataLength, minItemsCount) {
 
-		this.header = [];
-		this.data = [];
-		this.maxDataLength = maxDataLength;
-		this.minItemsCount = minItemsCount;
+		this.header = []
+		this.data = []
+		this.maxDataLength = maxDataLength
+		this.minItemsCount = minItemsCount
 	}
 
 	/**
@@ -726,24 +726,24 @@ class BinaryStringTable {
 
 		// No index
 		if (typeof value !== "string") {
-			return 0xFFFF;
+			return 0xFFFF
 		}
 
-		let index = this.data.indexOf(value);
+		let index = this.data.indexOf(value)
 
 		// Add a new string item
 		if (index < 0) {
 
-			this.data.push(value);
-			this.header.push(0);
+			this.data.push(value)
+			this.header.push(0)
 
-			index = this.data.length - 1;
+			index = this.data.length - 1
 		}
 
 		// Update string usage (in the header of index table)
-		this.header[index]++;
+		this.header[index]++
 
-		return index;
+		return index
 	}
 
 	/**
@@ -753,44 +753,44 @@ class BinaryStringTable {
 	 */
 	toBinary() {
 
-		const dataLength = this.maxDataLength;
-		const itemsCount = Math.max(this.minItemsCount, this.data.length);
-		let offset = 0;
-		let size = 6;
+		const dataLength = this.maxDataLength
+		const itemsCount = Math.max(this.minItemsCount, this.data.length)
+		let offset = 0
+		let size = 6
 
-		size += itemsCount * 2;
-		size += itemsCount * dataLength;
+		size += itemsCount * 2
+		size += itemsCount * dataLength
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// Max size of item
-		buffer.writeUInt32LE(dataLength, offset);
-		offset += 4;
+		buffer.writeUInt32LE(dataLength, offset)
+		offset += 4
 
 		// Number of items
-		buffer.writeUInt16LE(itemsCount, offset);
-		offset += 2;
+		buffer.writeUInt16LE(itemsCount, offset)
+		offset += 2
 
 		// Header items
 		for (let h = 0; h < itemsCount; h++) {
 
-			const headerItem = this.header[h] || 0;
+			const headerItem = this.header[h] || 0
 
-			buffer.writeUInt16LE(headerItem, offset);
-			offset += 2;
+			buffer.writeUInt16LE(headerItem, offset)
+			offset += 2
 		}
 
 		// Data items
 		for (let d = 0; d < itemsCount; d++) {
 
-			const dataItem = this.data[d] || "";
+			const dataItem = this.data[d] || ""
 
-			buffer.fill(0, offset, offset + dataLength);
-			buffer.write(dataItem, offset);
-			offset += dataLength;
+			buffer.fill(0, offset, offset + dataLength)
+			buffer.write(dataItem, offset)
+			offset += dataLength
 		}
 
-		return buffer;
+		return buffer
 	}
 }
 
@@ -799,9 +799,9 @@ class BinaryDamageTable {
 
 	constructor() {
 
-		this.data = [];
-		this.dataIndex = Object.create(null);
-		this.maxDamageValues = 0;
+		this.data = []
+		this.dataIndex = Object.create(null)
+		this.maxDamageValues = 0
 	}
 
 	/**
@@ -814,25 +814,25 @@ class BinaryDamageTable {
 
 		// Invalid arguments
 		if (!(damageItem instanceof Item) || damageItem.type !== "Damaged") {
-			throw new TypeError("Invalid damage item value.");
+			throw new TypeError("Invalid damage item value.")
 		}
 
 		// TODO: Sort damage index values before JSON stringify
-		const valueID = JSON.stringify(damageItem);
-		let index = this.dataIndex[valueID];
+		const valueID = JSON.stringify(damageItem)
+		let index = this.dataIndex[valueID]
 
 		// Register a new unique damage value
 		if (index === undefined) {
 
-			const damageKeys = Object.keys(damageItem);
+			const damageKeys = Object.keys(damageItem)
 
-			this.maxDamageValues = Math.max(this.maxDamageValues, damageKeys.length);
-			this.data.push(damageItem);
+			this.maxDamageValues = Math.max(this.maxDamageValues, damageKeys.length)
+			this.data.push(damageItem)
 
-			index = this.dataIndex[valueID] = this.data.length - 1;
+			index = this.dataIndex[valueID] = this.data.length - 1
 		}
 
-		return index;
+		return index
 	}
 
 	/**
@@ -842,75 +842,75 @@ class BinaryDamageTable {
 	 */
 	toBinary() {
 
-		const itemsCount = this.data.length;
-		let offset = 0;
-		let size = 6;
+		const itemsCount = this.data.length
+		let offset = 0
+		let size = 6
 
 		if (itemsCount > 0) {
 
-			size += 4;
-			size += itemsCount * (1 + this.maxDamageValues * 2);
+			size += 4
+			size += itemsCount * (1 + this.maxDamageValues * 2)
 		}
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// Max number of damage values
-		buffer.writeUInt32LE(this.maxDamageValues, offset);
-		offset += 4;
+		buffer.writeUInt32LE(this.maxDamageValues, offset)
+		offset += 4
 
 		// Number of items
-		buffer.writeUInt16LE(itemsCount, offset);
-		offset += 2;
+		buffer.writeUInt16LE(itemsCount, offset)
+		offset += 2
 
 		if (itemsCount > 0) {
 
 			// Number of free/unused table items
-			buffer.writeUInt32LE(0, offset);
-			offset += 4;
+			buffer.writeUInt32LE(0, offset)
+			offset += 4
 
 			// Write damage data items
 			this.data.forEach(damageItem => {
 
-				const damageKeys = Object.keys(damageItem);
+				const damageKeys = Object.keys(damageItem)
 
 				// Number of damage key items
-				buffer.writeUInt8(damageKeys.length, offset);
-				offset += 1;
+				buffer.writeUInt8(damageKeys.length, offset)
+				offset += 1
 
 				// Write damage keys/values
 				for (let k = 0; k < this.maxDamageValues; k++) {
 
-					let damageKey = 0xFF;
-					let damageValue = 0;
+					let damageKey = 0xFF
+					let damageValue = 0
 
 					// Use assigned damage key/value pair
 					if (damageKeys.length) {
 
-						damageKey = damageKeys.shift();
-						damageValue = damageItem[damageKey];
+						damageKey = damageKeys.shift()
+						damageValue = damageItem[damageKey]
 					}
 
 					if (damageValue >= 0 && damageValue <= 1) {
 
 						// NOTE: Damage value in binary file is represented as a 8 bit
 						// unsigned integer number with a range from 0 to 255.
-						damageValue = Math.round(255 * damageValue);
+						damageValue = Math.round(255 * damageValue)
 					}
 					else {
-						damageValue = 0;
+						damageValue = 0
 					}
 
-					buffer.writeUInt8(damageKey, offset);
-					offset += 1;
+					buffer.writeUInt8(damageKey, offset)
+					offset += 1
 
-					buffer.writeUInt8(damageValue, offset);
-					offset += 1;
+					buffer.writeUInt8(damageValue, offset)
+					offset += 1
 				}
-			});
+			})
 		}
 
-		return buffer;
+		return buffer
 	}
 }
 
-module.exports = Mission;
+module.exports = Mission

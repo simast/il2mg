@@ -1,22 +1,22 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const data = require("../data");
+const data = require("../data")
 
 // Generate mission people
 module.exports = function makePeople() {
 
-	const rand = this.rand;
+	const rand = this.rand
 
 	// Get a random weighted name
 	function getName(names) {
 
-		const nameParts = Object.create(null);
+		const nameParts = Object.create(null)
 
 		// Make all name parts
 		for (const namePart in names) {
 
-			const parts = [];
+			const parts = []
 
 			// Make each sub-part of name part
 			names[namePart].forEach(nameList => {
@@ -24,91 +24,91 @@ module.exports = function makePeople() {
 				// Build range/interval name list index
 				if (!nameList.ranges) {
 
-					nameList.ranges = [];
+					nameList.ranges = []
 
 					Object.keys(nameList).forEach(value => {
 
-						value = parseInt(value, 10);
+						value = parseInt(value, 10)
 
 						if (!isNaN(value)) {
-							nameList.ranges.push(value);
+							nameList.ranges.push(value)
 						}
-					});
+					})
 
-					nameList.ranges.sort((a, b) => b - a);
+					nameList.ranges.sort((a, b) => b - a)
 				}
 
-				let name;
-				let weight;
-				let weightCurrent = 0;
-				const weightTarget = rand.integer(1, nameList.total);
+				let name
+				let weight
+				let weightCurrent = 0
+				const weightTarget = rand.integer(1, nameList.total)
 
 				for (weight of nameList.ranges) {
 
-					weightCurrent += weight;
+					weightCurrent += weight
 
 					if (weightTarget <= weightCurrent) {
 
 						// Name part matches weight
-						name = rand.pick(nameList[weight]);
-						break;
+						name = rand.pick(nameList[weight])
+						break
 					}
 				}
 
 				// Use one of the least popular name parts
 				if (!name) {
-					name = rand.pick(nameList[weight]);
+					name = rand.pick(nameList[weight])
 				}
 
 				if (name.length) {
-					parts.push(name);
+					parts.push(name)
 				}
-			});
+			})
 
-			nameParts[namePart] = parts;
+			nameParts[namePart] = parts
 		}
 
-		return nameParts;
+		return nameParts
 	}
 
 	// Get a rank
 	function getRank(rankID, countryID) {
 
-		const ranks = data.countries[countryID].ranks;
+		const ranks = data.countries[countryID].ranks
 
 		// Generate a random weighted rank based on type and/or range bounds
 		if (typeof rankID === "object") {
 
-			const ranksWeighted = ranks.weighted[rankID.type];
+			const ranksWeighted = ranks.weighted[rankID.type]
 
 			// Random weighted rank for a given type
 			if (rankID.min === undefined || rankID.max === undefined) {
-				rankID = rand.pick(ranksWeighted);
+				rankID = rand.pick(ranksWeighted)
 			}
 			// Use weighted rank range bounds
 			else {
-				rankID = ranksWeighted[rand.integer(rankID.min, rankID.max)];
+				rankID = ranksWeighted[rand.integer(rankID.min, rankID.max)]
 			}
 		}
 
-		const rankData = ranks[rankID];
-		const rank = Object.create(null);
+		const rankData = ranks[rankID]
+		const rank = Object.create(null)
 
 		// Rank ID
-		rank.id = rankID;
+		rank.id = rankID
 
 		// Full rank name
-		rank.name = rankData.name;
+		rank.name = rankData.name
 
 		// Short rank abbreviation
 		if (rankData.abbr) {
-			rank.abbr = rankData.abbr;
+			rank.abbr = rankData.abbr
 		}
 
-		return rank;
+		return rank
 	}
 
 	// Export functions used for making random names and ranks
-	makePeople.getName = getName;
-	makePeople.getRank = getRank;
-};
+	makePeople.getName = getName
+	makePeople.getRank = getRank
+}

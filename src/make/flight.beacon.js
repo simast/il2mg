@@ -1,35 +1,35 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict";
+"use strict"
 
 // Make flight beacon
 module.exports = function makeFlightBeacon(flight) {
 
 	// Enable radio navigation beacon source for player flight only
 	if (!flight.player) {
-		return;
+		return
 	}
 
-	const airfield = this.airfields[flight.airfield];
+	const airfield = this.airfields[flight.airfield]
 
 	// Use flight home airfield beacon by default
-	let beaconItem = airfield.beacon;
+	let beaconItem = airfield.beacon
 
 	// Override with custom flight provided target beacon
 	if (flight.beacon) {
-		beaconItem = flight.beacon;
+		beaconItem = flight.beacon
 	}
 
 	if (!beaconItem) {
-		return;
+		return
 	}
 
-	beaconItem.BeaconChannel = 1;
-	beaconItem.entity.Enabled = 1;
+	beaconItem.BeaconChannel = 1
+	beaconItem.entity.Enabled = 1
 
 	// Detach beacon item from airfield "bubble" zone
 	if (airfield.zone) {
 
-		airfield.zone.onActivate.removeObject(beaconItem);
-		airfield.zone.onDeactivate.removeObject(beaconItem);
+		airfield.zone.onActivate.removeObject(beaconItem)
+		airfield.zone.onDeactivate.removeObject(beaconItem)
 	}
-};
+}

@@ -1,48 +1,48 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const log = require("../log");
-const makeFlight = require("./flight");
+const log = require("../log")
+const makeFlight = require("./flight")
 
 // Generate mission task forces
 module.exports = function makeForces() {
 
-	this.activeFlights = [];
-	this.suspendedUnits = Object.create(null);
+	this.activeFlights = []
+	this.suspendedUnits = Object.create(null)
 
 	// Make player force
-	makePlayerForce.call(this);
+	makePlayerForce.call(this)
 
 	// Make AI forces
-	makeAIForces.call(this);
-};
+	makeAIForces.call(this)
+}
 
 // Make a new task force
 function makeForce({player = false, choice = {}, state = 0, virtual = false}) {
 
-	const {rand, availableUnits, suspendedUnits, activeFlights} = this;
-	const force = [];
-	const flightParams = {};
-	let flight;
+	const {rand, availableUnits, suspendedUnits, activeFlights} = this
+	const force = []
+	const flightParams = {}
+	let flight
 
 	// Make player flight and task force
 	if (player) {
-		flightParams.player = true;
+		flightParams.player = true
 	}
 
 	// Make a virtual flight
 	if (virtual) {
-		flightParams.virtual = true;
+		flightParams.virtual = true
 	}
 
-	flightParams.state = state;
+	flightParams.state = state
 
 	// FIXME: Make a number of active and shedulled flights
 	do {
 
-		const unit = chooseFlightUnit.call(this, choice);
+		const unit = chooseFlightUnit.call(this, choice)
 
-		flightParams.unit = unit.id;
+		flightParams.unit = unit.id
 
 		if (choice.task) {
 
@@ -51,14 +51,14 @@ function makeForce({player = false, choice = {}, state = 0, virtual = false}) {
 
 				if (choice.task.has(task.id)) {
 
-					flightParams.task = task.id;
-					break;
+					flightParams.task = task.id
+					break
 				}
 			}
 		}
 
 		try {
-			flight = makeFlight.call(this, flightParams);
+			flight = makeFlight.call(this, flightParams)
 		}
 		catch (error) {
 
@@ -68,121 +68,121 @@ function makeForce({player = false, choice = {}, state = 0, virtual = false}) {
 			// finished and the planes are returned back to inventory).
 			if (Array.isArray(error)) {
 
-				const unitID = unit.id;
-				let unitIndex = 0;
-				suspendedUnits[unitID] = 0;
+				const unitID = unit.id
+				let unitIndex = 0
+				suspendedUnits[unitID] = 0
 
 				for (;;) {
 
-					unitIndex = availableUnits.indexOf(unitID, unitIndex);
+					unitIndex = availableUnits.indexOf(unitID, unitIndex)
 
 					if (unitIndex === -1) {
-						break;
+						break
 					}
 
-					suspendedUnits[unitID]++;
-					availableUnits.splice(unitIndex, 1);
+					suspendedUnits[unitID]++
+					availableUnits.splice(unitIndex, 1)
 				}
 
-				log.W.apply(log, error);
+				log.W.apply(log, error)
 			}
 			else {
-				throw error;
+				throw error
 			}
 		}
 	}
-	while (!flight);
+	while (!flight)
 
 	// Adjust weighted available units list
-	let unitIndex = 0;
-	let removeItemsCount = flight.planes;
+	let unitIndex = 0
+	let removeItemsCount = flight.planes
 
 	while (removeItemsCount > 0) {
 
-		unitIndex = availableUnits.indexOf(flight.unit, unitIndex);
+		unitIndex = availableUnits.indexOf(flight.unit, unitIndex)
 
 		if (unitIndex === -1) {
-			break;
+			break
 		}
 
-		availableUnits.splice(unitIndex, 1);
-		removeItemsCount--;
+		availableUnits.splice(unitIndex, 1)
+		removeItemsCount--
 	}
 
 	// Track all AI active flights
 	if (!player) {
-		activeFlights.push(flight);
+		activeFlights.push(flight)
 	}
 
 	// Add flight to task force
-	force.push(flight);
+	force.push(flight)
 
-	return force;
+	return force
 }
 
 // Make player task force
 function makePlayerForce() {
 
-	const {choice, params} = this;
+	const {choice, params} = this
 
 	// Create player task force
 	const force = makeForce.call(this, {
 		player: true,
 		choice,
 		state: params.state
-	});
+	})
 
-	const [flight] = force;
+	const [flight] = force
 
 	// Set player flight info references
-	const player = this.player = Object.create(null);
+	const player = this.player = Object.create(null)
 
-	player.force = force;
-	player.flight = flight;
-	player.plane = flight.player.plane;
-	player.item = flight.player.item;
+	player.force = force
+	player.flight = flight
+	player.plane = flight.player.plane
+	player.item = flight.player.item
 
 	// Find player element
 	for (const element of flight.elements) {
 
 		if (element.player) {
 
-			player.element = element;
-			break;
+			player.element = element
+			break
 		}
 	}
 
 	// Log player flight info
-	const logData = ["Flight:"];
+	const logData = ["Flight:"]
 
 	// Log flight unit name
-	const unit = this.units[player.flight.unit];
-	let unitName = unit.name;
+	const unit = this.units[player.flight.unit]
+	let unitName = unit.name
 
 	if (unit.suffix) {
-		unitName += " " + unit.suffix;
+		unitName += " " + unit.suffix
 	}
 
 	if (unit.alias) {
-		unitName += " “" + unit.alias + "”";
+		unitName += " “" + unit.alias + "”"
 	}
 
-	logData.push(unitName);
+	logData.push(unitName)
 
 	// Log flight formation and state (for player element)
-	const formation = player.flight.formation;
-	let formationID = formation.id;
+	const formation = player.flight.formation
+	let formationID = formation.id
 
 	if (!formationID) {
-		formationID = formation.elements.join(":");
+		formationID = formation.elements.join(":")
 	}
 
 	logData.push({
 		formation: formationID,
 		state: player.element.state
-	});
+	})
 
-	log.I.apply(log, logData);
+	log.I.apply(log, logData)
 }
 
 // Make AI forces
@@ -191,93 +191,93 @@ function makeAIForces() {
 	makeForce.call(this, {
 		state: 0,
 		virtual: true
-	});
+	})
 }
 
 // Choose a valid flight unit based on choice data
 function chooseFlightUnit(choice) {
 
-	const {rand, availableUnits} = this;
+	const {rand, availableUnits} = this
 
 	if (!availableUnits.length) {
-		return;
+		return
 	}
 
-	const validUnits = new Set();
+	const validUnits = new Set()
 
 	// Filter all valid units
 	for (const unitID in this.units) {
 
 		// Filter out not matching unit IDs
 		if (choice.unit && !choice.unit.has(unitID)) {
-			continue;
+			continue
 		}
 
-		const unit = this.units[unitID];
+		const unit = this.units[unitID]
 
 		// Filter out unit groups
 		if (Array.isArray(unit)) {
-			continue;
+			continue
 		}
 
 		// Filter out units without tasks
 		if (!unit.tasks.length) {
-			continue;
+			continue
 		}
 
 		// Filter out not matching countries
 		if (choice.country && !choice.country.has(unit.country)) {
-			continue;
+			continue
 		}
 
 		// Filter out not matching airfields
 		if (choice.airfield && !choice.airfield.has(unit.airfield)) {
-			continue;
+			continue
 		}
 
 		// Allow only units with matching tasks
 		if (choice.task) {
 
-			let hasValidTask = false;
+			let hasValidTask = false
 
 			for (const task of unit.tasks) {
 
 				if (choice.task.has(task.id)) {
 
-					hasValidTask = true;
-					break;
+					hasValidTask = true
+					break
 				}
 			}
 
 			if (!hasValidTask) {
-				continue;
+				continue
 			}
 		}
 
 		// Allow only units with matching planes
 		if (choice.plane) {
 
-			let hasValidPlane = false;
+			let hasValidPlane = false
 
 			for (const planeID of unit.planes) {
 
 				if (choice.plane.has(planeID)) {
 
-					hasValidPlane = true;
-					break;
+					hasValidPlane = true
+					break
 				}
 			}
 
 			if (!hasValidPlane) {
-				continue;
+				continue
 			}
 		}
 
-		validUnits.add(unitID);
+		validUnits.add(unitID)
 	}
 
 	if (!validUnits.size) {
-		return;
+		return
 	}
 
 	// FIXME: Make a more efficient selection (not filtering weighted unit list)
@@ -285,5 +285,5 @@ function chooseFlightUnit(choice) {
 	// Select a matching unit (from a weighted list)
 	return this.units[rand.pick(
 		availableUnits.filter(unitID => validUnits.has(unitID))
-	)];
+	)]
 }

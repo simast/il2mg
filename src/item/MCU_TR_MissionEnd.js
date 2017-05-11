@@ -1,16 +1,16 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Mission End item
 module.exports = class MCU_TR_MissionEnd extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.Enabled = 1;
-		this.Succeeded = 1;
+		this.Enabled = 1
+		this.Succeeded = 1
 	}
 
 	/**
@@ -21,13 +21,13 @@ module.exports = class MCU_TR_MissionEnd extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 29);
+		yield* super.toBinary(index, 29)
 
-		const buffer = new Buffer(1);
+		const buffer = new Buffer(1)
 
 		// Succeeded
-		this.writeUInt8(buffer, this.Succeeded);
+		this.writeUInt8(buffer, this.Succeeded)
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

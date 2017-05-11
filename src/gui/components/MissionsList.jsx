@@ -1,37 +1,37 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const remote = global.require("electron").remote;
-const React = require("react");
-const {NavLink} = require("react-router-dom");
+const remote = global.require("electron").remote
+const React = require("react")
+const {NavLink} = require("react-router-dom")
 
 // Missions list component
 class MissionsList extends React.Component {
 
 	constructor({missions, removeMission, saveMission}) {
-		super(...arguments);
+		super(...arguments)
 
 		// Create context menu
 		if (missions.length) {
 
-			const {Menu, MenuItem} = remote;
-			const menu = this.menu = new Menu();
+			const {Menu, MenuItem} = remote
+			const menu = this.menu = new Menu()
 
 			// Remove menu
 			menu.append(new MenuItem({
 				label: "Remove",
 				click: () => {
-					removeMission(true, this.contextMission.id);
+					removeMission(true, this.contextMission.id)
 				}
-			}));
+			}))
 
 			// Save menu
 			menu.append(new MenuItem({
 				label: "Save As...",
 				click: () => {
-					saveMission(this.contextMission.id);
+					saveMission(this.contextMission.id)
 				}
-			}));
+			}))
 		}
 	}
 
@@ -40,10 +40,10 @@ class MissionsList extends React.Component {
 		// Scroll active/selected mission item into view (if needed)
 		if (this.listElement) {
 
-			const activeElement = this.listElement.querySelector(".selected");
+			const activeElement = this.listElement.querySelector(".selected")
 
 			if (activeElement) {
-				activeElement.scrollIntoViewIfNeeded();
+				activeElement.scrollIntoViewIfNeeded()
 			}
 		}
 	}
@@ -52,25 +52,25 @@ class MissionsList extends React.Component {
 	render() {
 
 		return (
-			<ul id="missionsList" ref={ref => {this.listElement = ref;}}>
+			<ul id="missionsList" ref={ref => {this.listElement = ref}}>
 				{this.props.missions.map(mission => {
 
 					const props = {
 						mission,
 						onContextMenu: this.onContextMenu.bind(this)
-					};
+					}
 
-					return <MissionsList.Item key={mission.id} {...props} />;
+					return <MissionsList.Item key={mission.id} {...props} />
 				})}
 			</ul>
-		);
+		)
 	}
 
 	// Handle mission list context/popup menu
 	onContextMenu(mission) {
 
-		this.contextMission = mission;
-		this.menu.popup(remote.getCurrentWindow());
+		this.contextMission = mission
+		this.menu.popup(remote.getCurrentWindow())
 	}
 }
 
@@ -81,10 +81,10 @@ MissionsList.Item = ({mission, onContextMenu}) => {
 		to: "/missions/" + mission.id,
 		activeClassName: "selected",
 		onContextMenu() {
-			onContextMenu(mission);
+			onContextMenu(mission)
 		},
 		className: "country c" + mission.country
-	};
+	}
 
 	return (
 		<li>
@@ -93,7 +93,7 @@ MissionsList.Item = ({mission, onContextMenu}) => {
 				{mission.title}
 			</NavLink>
 		</li>
-	);
-};
+	)
+}
 
-module.exports = MissionsList;
+module.exports = MissionsList

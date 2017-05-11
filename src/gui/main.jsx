@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const React = require("react");
-const ReactDOM = require("react-dom");
-const {HashRouter, Route, Switch, Redirect} = require("react-router-dom");
-const Application = require("./components/Application");
-const Missions = require("./components/Missions");
-const CreateMission = require("./components/CreateMission");
+const React = require("react")
+const ReactDOM = require("react-dom")
+const {HashRouter, Route, Switch, Redirect} = require("react-router-dom")
+const Application = require("./components/Application")
+const Missions = require("./components/Missions")
+const CreateMission = require("./components/CreateMission")
 
 // Render application
 ReactDOM.render((
@@ -14,7 +14,7 @@ ReactDOM.render((
 		<Route path="/" render={({match}) => {
 
 			if (match.isExact) {
-				return <Redirect to="/missions" />;
+				return <Redirect to="/missions" />
 			}
 
 			return (
@@ -24,8 +24,8 @@ ReactDOM.render((
 						<Route path="/create" component={CreateMission} />
 					</Switch>
 				</Application>
-			);
+			)
 		}}
 		/>
 	</HashRouter>
-), document.getElementById("main"));
+), document.getElementById("main"))

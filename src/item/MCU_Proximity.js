@@ -1,16 +1,16 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Proximity item
 module.exports = class MCU_Proximity extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.Distance = 1000;
-		this.Closer = 1;
+		this.Distance = 1000
+		this.Closer = 1
 	}
 
 	/**
@@ -21,32 +21,32 @@ module.exports = class MCU_Proximity extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 49);
+		yield* super.toBinary(index, 49)
 
-		let size = 13;
+		let size = 13
 
 		if (Array.isArray(this.PlaneCoalitions)) {
-			size += this.PlaneCoalitions.length * 4;
+			size += this.PlaneCoalitions.length * 4
 		}
 
 		if (Array.isArray(this.VehicleCoalitions)) {
-			size += this.VehicleCoalitions.length * 4;
+			size += this.VehicleCoalitions.length * 4
 		}
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// Distance
-		this.writeUInt32(buffer, this.Distance);
+		this.writeUInt32(buffer, this.Distance)
 
 		// Closer
-		this.writeUInt8(buffer, this.Closer);
+		this.writeUInt8(buffer, this.Closer)
 
 		// PlaneCoalitions
-		this.writeUInt32Array(buffer, this.PlaneCoalitions || []);
+		this.writeUInt32Array(buffer, this.PlaneCoalitions || [])
 
 		// VehicleCoalitions
-		this.writeUInt32Array(buffer, this.VehicleCoalitions || []);
+		this.writeUInt32Array(buffer, this.VehicleCoalitions || [])
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

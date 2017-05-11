@@ -1,17 +1,17 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Check zone item
 module.exports = class MCU_CheckZone extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.Zone = 1000;
-		this.Cylinder = 1;
-		this.Closer = 1;
+		this.Zone = 1000
+		this.Cylinder = 1
+		this.Closer = 1
 	}
 
 	/**
@@ -22,35 +22,35 @@ module.exports = class MCU_CheckZone extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 46);
+		yield* super.toBinary(index, 46)
 
-		let size = 18;
+		let size = 18
 
 		if (Array.isArray(this.PlaneCoalitions)) {
-			size += this.PlaneCoalitions.length * 4;
+			size += this.PlaneCoalitions.length * 4
 		}
 
 		if (Array.isArray(this.VehicleCoalitions)) {
-			size += this.VehicleCoalitions.length * 4;
+			size += this.VehicleCoalitions.length * 4
 		}
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// Zone
-		this.writeDouble(buffer, this.Zone);
+		this.writeDouble(buffer, this.Zone)
 
 		// Cylinder
-		this.writeUInt8(buffer, this.Cylinder);
+		this.writeUInt8(buffer, this.Cylinder)
 
 		// Closer
-		this.writeUInt8(buffer, this.Closer);
+		this.writeUInt8(buffer, this.Closer)
 
 		// PlaneCoalitions
-		this.writeUInt32Array(buffer, this.PlaneCoalitions || []);
+		this.writeUInt32Array(buffer, this.PlaneCoalitions || [])
 
 		// VehicleCoalitions
-		this.writeUInt32Array(buffer, this.VehicleCoalitions || []);
+		this.writeUInt32Array(buffer, this.VehicleCoalitions || [])
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

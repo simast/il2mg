@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const React = require("react");
+const React = require("react")
 
 // Data choice list component
 class ChoiceList extends React.Component {
@@ -9,21 +9,21 @@ class ChoiceList extends React.Component {
 	// Render component
 	render() {
 
-		const {type, title, choices, onChoiceClick, onChoiceReset} = this.props;
-		let validCount = 0;
-		let selectedCount = 0;
-		let valid;
-		let reset;
+		const {type, title, choices, onChoiceClick, onChoiceReset} = this.props
+		let validCount = 0
+		let selectedCount = 0
+		let valid
+		let reset
 
 		// Build a list of choice item elements to render
 		const items = choices.map(choice => {
 
 			if (choice.valid || choice.selected) {
-				validCount++;
+				validCount++
 			}
 
 			if (choice.selected) {
-				selectedCount++;
+				selectedCount++
 			}
 
 			return (
@@ -31,23 +31,23 @@ class ChoiceList extends React.Component {
 					key={choice.id.join("")}
 					choice={choice}
 					onChoiceClick={onChoiceClick} />
-			);
-		});
+			)
+		})
 
 		if (validCount > 0) {
 
-			let validNum = validCount;
+			let validNum = validCount
 
 			// Use bold font weight to show selected count number
 			if (validNum === selectedCount) {
-				validNum = <b>{validNum}</b>;
+				validNum = <b>{validNum}</b>
 			}
 
-			valid = <span>{validNum}</span>;
+			valid = <span>{validNum}</span>
 		}
 
 		if (selectedCount > 0) {
-			reset = <a className="reset" onClick={onChoiceReset}></a>;
+			reset = <a className="reset" onClick={onChoiceReset}></a>
 		}
 
 		return (
@@ -55,7 +55,7 @@ class ChoiceList extends React.Component {
 				<h2>{title}{valid}{reset}</h2>
 				<ul>{items}</ul>
 			</div>
-		);
+		)
 	}
 }
 
@@ -64,59 +64,59 @@ ChoiceList.Item = class extends React.Component {
 
 	shouldComponentUpdate(nextProps) {
 
-		const nextChoice = nextProps.choice;
-		const prevChoice = this.props.choice;
+		const nextChoice = nextProps.choice
+		const prevChoice = this.props.choice
 
 		// Update choice list item only on valid/selected state change
 		return (nextChoice.valid !== prevChoice.valid ||
-						nextChoice.selected !== prevChoice.selected);
+						nextChoice.selected !== prevChoice.selected)
 	}
 
 	// Render component
 	render() {
 
-		const {choice, onChoiceClick} = this.props;
-		const data = choice.data;
-		let suffix, alias;
+		const {choice, onChoiceClick} = this.props
+		const data = choice.data
+		let suffix, alias
 
 		if (data.suffix) {
-			suffix = <span>{" " + data.suffix}</span>;
+			suffix = <span>{" " + data.suffix}</span>
 		}
 
 		if (data.alias) {
-			alias = <em>{" “" + data.alias + "”"}</em>;
+			alias = <em>{" “" + data.alias + "”"}</em>
 		}
 
-		const propsItem = {};
+		const propsItem = {}
 		const propsLink = {
 			onClick: () => {
-				onChoiceClick(choice.id);
+				onChoiceClick(choice.id)
 			}
-		};
+		}
 
-		const className = [];
+		const className = []
 
 		if (data.country) {
-			className.push("country", "c" + data.country);
+			className.push("country", "c" + data.country)
 		}
 
 		if (choice.selected) {
-			className.push("selected");
+			className.push("selected")
 		}
 		else if (!choice.valid) {
-			propsItem.className = "invalid";
+			propsItem.className = "invalid"
 		}
 
 		if (className.length) {
-			propsLink.className = className.join(" ");
+			propsLink.className = className.join(" ")
 		}
 
 		return (
 			<li {...propsItem}>
 				<a {...propsLink}>{data.name}{suffix}{alias}</a>
 			</li>
-		);
+		)
 	}
-};
+}
 
-module.exports = ChoiceList;
+module.exports = ChoiceList

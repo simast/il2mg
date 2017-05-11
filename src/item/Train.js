@@ -1,17 +1,17 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const Vehicle = require("./Vehicle");
+const Vehicle = require("./Vehicle")
 
 // Train item
 module.exports = class Train extends Vehicle {
 
 	constructor() {
-		super();
+		super()
 
 		// NOTE: Used in binary mission file but is missing from text file!
-		delete this.NumberInFormation;
-		delete this.CoopStart;
+		delete this.NumberInFormation
+		delete this.CoopStart
 	}
 
 	/**
@@ -22,33 +22,33 @@ module.exports = class Train extends Vehicle {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 8);
+		yield* super.toBinary(index, 8)
 
-		let size = 4;
-		const carriages = [];
+		let size = 4
+		const carriages = []
 
 		// Build Carriages list
 		if (Array.isArray(this.Carriages)) {
 
 			for (let carriage of this.Carriages) {
 
-				carriage = carriage.toString();
+				carriage = carriage.toString()
 
-				carriages.push(carriage);
-				size += 4 + Buffer.byteLength(carriage);
+				carriages.push(carriage)
+				size += 4 + Buffer.byteLength(carriage)
 			}
 		}
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// Number of Carriages items
-		this.writeUInt32(buffer, carriages.length);
+		this.writeUInt32(buffer, carriages.length)
 
 		// Carriages list items
 		carriages.forEach(carriage => {
-			this.writeString(buffer, Buffer.byteLength(carriage), carriage);
-		});
+			this.writeString(buffer, Buffer.byteLength(carriage), carriage)
+		})
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

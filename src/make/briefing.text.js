@@ -1,14 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const mustache = require("mustache");
-const data = require("../data");
-const people = require("./people");
-const makeBriefingTarget = require("./briefing.target");
+const mustache = require("mustache")
+const data = require("../data")
+const people = require("./people")
+const makeBriefingTarget = require("./briefing.target")
 
 // Default string constants
-const PLANE = "plane";
-const FLIGHT = "flight";
+const PLANE = "plane"
+const FLIGHT = "flight"
 
 // Plane type names
 const planeTypeNames = {
@@ -18,7 +18,7 @@ const planeTypeNames = {
 	dive_bomber: "dive bomber",
 	level_bomber: "bomber",
 	transport: "transport " + PLANE
-};
+}
 
 /**
  * Make mission briefing text from a templated string.
@@ -53,68 +53,68 @@ const planeTypeNames = {
  */
 module.exports = function makeBriefingText(template, view) {
 
-	const rand = this.rand;
-	const flight = this.player.flight;
-	let context = flight.context;
+	const rand = this.rand
+	const flight = this.player.flight
+	let context = flight.context
 
 	// Make a context for briefing templates
 	if (!context) {
 
-		context = flight.context = Object.create(null);
+		context = flight.context = Object.create(null)
 
-		const playerPlane = this.planes[flight.player.plane];
-		const playerElement = this.player.element;
-		const names = data.countries[flight.country].names;
-		const ranks = data.countries[flight.country].ranks;
+		const playerPlane = this.planes[flight.player.plane]
+		const playerElement = this.player.element
+		const names = data.countries[flight.country].names
+		const ranks = data.countries[flight.country].ranks
 
 		// Flight home airfield name
-		context.airfield = this.airfields[flight.airfield].name;
+		context.airfield = this.airfields[flight.airfield].name
 
 		// Flight target location description
-		context.target = makeBriefingTarget.bind(this, flight.target);
+		context.target = makeBriefingTarget.bind(this, flight.target)
 
 		// {{enemy}} template tag
-		const enemyTag = context.enemy = Object.create(null);
+		const enemyTag = context.enemy = Object.create(null)
 
 		// Name of main enemy country demonym
-		const enemyDemonym = enemyTag.demonym = Object.create(null);
+		const enemyDemonym = enemyTag.demonym = Object.create(null)
 		enemyDemonym.toString = () => {
 
-			const enemyCoalition = this.getEnemyCoalition(flight.coalition);
-			let enemyCountry;
+			const enemyCoalition = this.getEnemyCoalition(flight.coalition)
+			let enemyCountry
 
 			for (const countryID in data.countries) {
 
-				const country = data.countries[countryID];
+				const country = data.countries[countryID]
 
 				if (country.coalition !== enemyCoalition) {
-					continue;
+					continue
 				}
 
 				// TODO: Improve main country identification (currently the first
 				// matching country present in the battle will be considered as main).
 				if (this.unitsByCountry[countryID]) {
 
-					enemyCountry = country;
-					break;
+					enemyCountry = country
+					break
 				}
 			}
 
-			return enemyCountry.demonym || "";
-		};
+			return enemyCountry.demonym || ""
+		}
 
 		// {{{plane}}} template tag
-		const planeTag = context.plane = Object.create(null);
+		const planeTag = context.plane = Object.create(null)
 
-		planeTag.name = playerPlane.name;
-		planeTag.group = this.planes[playerPlane.group].name;
+		planeTag.name = playerPlane.name
+		planeTag.group = this.planes[playerPlane.group].name
 
 		if (playerPlane.manufacturer) {
-			planeTag.manufacturer = playerPlane.manufacturer;
+			planeTag.manufacturer = playerPlane.manufacturer
 		}
 
 		if (playerPlane.alias) {
-			planeTag.alias = "<i>“" + playerPlane.alias + "”</i>";
+			planeTag.alias = "<i>“" + playerPlane.alias + "”</i>"
 		}
 
 		if (playerPlane.type) {
@@ -124,12 +124,12 @@ module.exports = function makeBriefingText(template, view) {
 			// considered to be more important and has a higher value than the first one.
 			for (let i = playerPlane.type.length - 1; i >= 0; i--) {
 
-				const planeType = playerPlane.type[i];
+				const planeType = playerPlane.type[i]
 
 				if (planeType in planeTypeNames) {
 
-					planeTag.type = planeTypeNames[planeType];
-					break;
+					planeTag.type = planeTypeNames[planeType]
+					break
 				}
 			}
 		}
@@ -137,21 +137,21 @@ module.exports = function makeBriefingText(template, view) {
 		// Any player plane name representation
 		planeTag.toString = () => {
 
-			const sample = [];
+			const sample = []
 
 			if (planeTag.manufacturer) {
-				sample.push(planeTag.manufacturer);
+				sample.push(planeTag.manufacturer)
 			}
 
 			if (planeTag.group) {
-				sample.push(planeTag.group);
+				sample.push(planeTag.group)
 			}
 
 			if (planeTag.alias) {
-				sample.push(planeTag.alias);
+				sample.push(planeTag.alias)
 			}
 
-			const result = [];
+			const result = []
 
 			// Select up to two data sample elements (keeping sort order)
 			if (sample.length) {
@@ -163,189 +163,189 @@ module.exports = function makeBriefingText(template, view) {
 					)
 					.sort()
 					.forEach(sampleIndex => {
-						result.push(sample[sampleIndex]);
-					});
+						result.push(sample[sampleIndex])
+					})
 			}
 
 			// Append plane type
 			if (planeTag.type) {
-				result.push(planeTag.type);
+				result.push(planeTag.type)
 			}
 			// Append a generic "plane" type
 			else {
-				result.push(PLANE);
+				result.push(PLANE)
 			}
 
-			return result.join(" ");
-		};
+			return result.join(" ")
+		}
 
 		// {{name}} template tag
-		const nameTag = context.name = Object.create(null);
+		const nameTag = context.name = Object.create(null)
 
 		// Build a list of used names (to avoid repeating/confusing names)
 		// NOTE: All name parts are in lower-case!
-		let usedNames = this.usedNames;
+		let usedNames = this.usedNames
 
 		if (!usedNames) {
 
 			usedNames = this.usedNames = {
 				first: new Set(),
 				last: new Set()
-			};
+			}
 
 			// Mark all player flight pilot names as used
 			for (let pilotName of this.pilots) {
 
-				pilotName = pilotName.split(" ");
+				pilotName = pilotName.split(" ")
 
-				usedNames.first.add(pilotName[0]);
-				usedNames.last.add(pilotName[pilotName.length - 1]);
+				usedNames.first.add(pilotName[0])
+				usedNames.last.add(pilotName[pilotName.length - 1])
 			}
 		}
 
 		// Any full name
 		nameTag.toString = () => {
 
-			let name;
-			let nameKey;
+			let name
+			let nameKey
 
 			do {
-				name = people.getName(names);
-				nameKey = name.last[name.last.length - 1].toLowerCase();
+				name = people.getName(names)
+				nameKey = name.last[name.last.length - 1].toLowerCase()
 			}
-			while (usedNames.last.has(nameKey));
+			while (usedNames.last.has(nameKey))
 
-			usedNames.last.add(nameKey);
+			usedNames.last.add(nameKey)
 
-			let nameParts = [];
+			let nameParts = []
 
 			for (const namePart in name) {
-				nameParts = nameParts.concat(name[namePart]);
+				nameParts = nameParts.concat(name[namePart])
 			}
 
-			return nameParts.join(" ");
-		};
+			return nameParts.join(" ")
+		}
 
 		// Any first name
 		nameTag.first = () => {
 
-			let first;
-			let firstKey;
+			let first
+			let firstKey
 
 			do {
-				first = people.getName(names).first;
-				firstKey = first[0].toLowerCase();
+				first = people.getName(names).first
+				firstKey = first[0].toLowerCase()
 			}
-			while (usedNames.first.has(firstKey));
+			while (usedNames.first.has(firstKey))
 
-			usedNames.first.add(firstKey);
+			usedNames.first.add(firstKey)
 
 			first.toString = function() {
-				return this[0];
-			};
+				return this[0]
+			}
 
-			return first;
-		};
+			return first
+		}
 
 		// Any last name
 		nameTag.last = () => {
 
-			let last;
-			let lastKey;
+			let last
+			let lastKey
 
 			do {
-				last = people.getName(names).last;
-				lastKey = last[last.length - 1].toLowerCase();
+				last = people.getName(names).last
+				lastKey = last[last.length - 1].toLowerCase()
 			}
-			while (usedNames.last.has(lastKey));
+			while (usedNames.last.has(lastKey))
 
-			usedNames.last.add(lastKey);
+			usedNames.last.add(lastKey)
 
 			last.toString = function() {
-				return this.join(" ");
-			};
+				return this.join(" ")
+			}
 
-			return last;
-		};
+			return last
+		}
 
 		// {{rank}} template tag
-		const rankTag = context.rank = Object.create(null);
+		const rankTag = context.rank = Object.create(null)
 
 		// Create tag for each valid rank type
 		for (const rankType in ranks.weighted) {
 
-			const rankTypeTag = rankTag[rankType] = Object.create(null);
+			const rankTypeTag = rankTag[rankType] = Object.create(null)
 
 			// Full rank name
 			rankTypeTag.toString = function() {
 
-				const rank = people.getRank({type: this}, flight.country);
+				const rank = people.getRank({type: this}, flight.country)
 
 				if (rank.name) {
-					return "<i>" + rank.name + "</i>";
+					return "<i>" + rank.name + "</i>"
 				}
 
-			}.bind(rankType);
+			}.bind(rankType)
 
 			// Abbreviated rank name
 			rankTypeTag.abbr = function() {
 
-				const rank = people.getRank({type: this}, flight.country);
+				const rank = people.getRank({type: this}, flight.country)
 
 				if (rank.abbr) {
-					return "<i>" + rank.abbr + "</i>";
+					return "<i>" + rank.abbr + "</i>"
 				}
 
-			}.bind(rankType);
+			}.bind(rankType)
 		}
 
 		// {{{formation}}} template tag
-		const formationTag = context.formation = Object.create(null);
+		const formationTag = context.formation = Object.create(null)
 
 		// Flight formation name
 		formationTag.toString = () => {
 
-			let formation = FLIGHT;
+			let formation = FLIGHT
 
 			// Country specific formation name
 			if (flight.formation.name) {
-				formation = "<i>" + flight.formation.name.toLowerCase() + "</i>";
+				formation = "<i>" + flight.formation.name.toLowerCase() + "</i>"
 			}
 
-			return formation;
-		};
+			return formation
+		}
 
 		// Player element formation name
 		formationTag.element = () => {
 
-			let formation = FLIGHT;
+			let formation = FLIGHT
 
-			const playerFormationIndex = flight.elements.indexOf(playerElement);
-			const playerFormation = flight.formation.elements[playerFormationIndex];
+			const playerFormationIndex = flight.elements.indexOf(playerElement)
+			const playerFormation = flight.formation.elements[playerFormationIndex]
 
 			// Use element sub-formation
 			if (typeof playerFormation !== "number") {
 
-				const subFormation = this.formations[flight.country][playerFormation];
+				const subFormation = this.formations[flight.country][playerFormation]
 
 				if (subFormation && subFormation.name) {
-					formation = "<i>" + subFormation.name.toLowerCase() + "</i>";
+					formation = "<i>" + subFormation.name.toLowerCase() + "</i>"
 				}
 			}
 
-			return formation;
-		};
+			return formation
+		}
 	}
 
 	// With no custom view data
 	if (!view) {
-		view = context;
+		view = context
 	}
 	// With custom view data
 	else {
-		Object.setPrototypeOf(view, context);
+		Object.setPrototypeOf(view, context)
 	}
 
 	// Render template using Mustache
-	return mustache.render(template, view).replace(/\s{2,}/g, " ");
-};
+	return mustache.render(template, view).replace(/\s{2,}/g, " ")
+}

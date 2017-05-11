@@ -1,29 +1,29 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const fs = global.require("fs");
-const {remote, ipcRenderer} = global.require("electron");
-const React = require("react");
-const PropTypes = require("prop-types");
+const fs = global.require("fs")
+const {remote, ipcRenderer} = global.require("electron")
+const React = require("react")
+const PropTypes = require("prop-types")
 
 // Application component
 class Application extends React.Component {
 
 	constructor() {
-		super(...arguments);
+		super(...arguments)
 
 		// Handle drag and drop events on application window
-		document.addEventListener("dragover", Application.onDragAndDrop, true);
-		document.addEventListener("drop", Application.onDragAndDrop, true);
+		document.addEventListener("dragover", Application.onDragAndDrop, true)
+		document.addEventListener("drop", Application.onDragAndDrop, true)
 
 		// FIXME: It's not clear why this is needed and why config object is not
 		// automatically updated in the main process when new properties are added.
 		window.addEventListener("unload", () => {
-			ipcRenderer.sendSync("config", this.config);
-		});
+			ipcRenderer.sendSync("config", this.config)
+		})
 
-		this.config = remote.getGlobal("config");
-		this.userDataPath = remote.app.getPath("userData");
+		this.config = remote.getGlobal("config")
+		this.userDataPath = remote.app.getPath("userData")
 	}
 
 	getChildContext() {
@@ -31,7 +31,7 @@ class Application extends React.Component {
 		return {
 			config: this.config,
 			userDataPath: this.userDataPath
-		};
+		}
 	}
 
 	// Render component
@@ -42,14 +42,14 @@ class Application extends React.Component {
 			<div id="application">
 				{this.props.children}
 			</div>
-		);
+		)
 	}
 
 	static onDragAndDrop(event) {
 
 		// Disable file drag and drop for application window
-		event.preventDefault();
-		event.stopPropagation();
+		event.preventDefault()
+		event.stopPropagation()
 	}
 
 	// Show error message dialog
@@ -65,7 +65,7 @@ class Application extends React.Component {
 				buttons: ["OK"],
 				noLink: true
 			}
-		);
+		)
 	}
 
 	// Utility function used to move a file synchronously.
@@ -75,17 +75,17 @@ class Application extends React.Component {
 
 		// Try to use fs.renameSync when possible
 		try {
-			fs.renameSync(sourceFile, destFile);
+			fs.renameSync(sourceFile, destFile)
 		}
 		catch (e) {
 
 			if (e.code !== "EXDEV") {
-				throw e;
+				throw e
 			}
 
 			// Fallback to synchronous copy-and-delete logic
-			fs.writeFileSync(destFile, fs.readFileSync(sourceFile));
-			fs.unlinkSync(sourceFile);
+			fs.writeFileSync(destFile, fs.readFileSync(sourceFile))
+			fs.unlinkSync(sourceFile)
 		}
 	}
 }
@@ -93,6 +93,6 @@ class Application extends React.Component {
 Application.childContextTypes = {
 	config: PropTypes.object,
 	userDataPath: PropTypes.string
-};
+}
 
-module.exports = Application;
+module.exports = Application

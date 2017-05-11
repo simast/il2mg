@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const winston = require("winston");
+const winston = require("winston")
 
 // Colors used for each log level
 const logColors = {
@@ -9,13 +9,13 @@ const logColors = {
 	E: "red", // Error
 	W: "yellow", // Warning
 	I: "gray" // Info
-};
+}
 
 // Set active log levels
-const logLevels = {};
+const logLevels = {}
 Object.keys(logColors).forEach((value, index) => {
-	logLevels[value] = index;
-});
+	logLevels[value] = index
+})
 
 // Setup winston logger
 const log = module.exports = new (winston.Logger)({
@@ -28,26 +28,26 @@ const log = module.exports = new (winston.Logger)({
 			colorize: true
 		})
 	]
-});
+})
 
 // HACK: Workaround for log.profile() using hardcoded "info" level
-log.info = log.I;
+log.info = log.I
 
 // HACK: Intercept all console.error calls (from commander error messages) and
 // log them as winston "error" level messages.
 console.error = function() {
 
 	if (!arguments.length) {
-		return;
+		return
 	}
 
-	let message = String(arguments[0]).trim();
+	let message = String(arguments[0]).trim()
 
 	if (message.length) {
 
-		message = message.replace(/^error:\s*/i, "").trim();
+		message = message.replace(/^error:\s*/i, "").trim()
 
-		arguments[0] = message;
-		throw Array.prototype.slice.call(arguments);
+		arguments[0] = message
+		throw Array.prototype.slice.call(arguments)
 	}
-};
+}

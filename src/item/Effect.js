@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const Item = require("../item");
+const Item = require("../item")
 
 // Effect item
 module.exports = class Effect extends Item {
@@ -14,21 +14,21 @@ module.exports = class Effect extends Item {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 10);
+		yield* super.toBinary(index, 10)
 
-		let size = 8;
-		const scriptLength = Buffer.byteLength(this.Script);
+		let size = 8
+		const scriptLength = Buffer.byteLength(this.Script)
 
-		size += scriptLength;
+		size += scriptLength
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// LinkTrId
-		this.writeUInt32(buffer, this.LinkTrId || 0);
+		this.writeUInt32(buffer, this.LinkTrId || 0)
 
 		// Script
-		this.writeString(buffer, scriptLength, this.Script);
+		this.writeString(buffer, scriptLength, this.Script)
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const Item = require("../item");
-const MCU = require("./MCU");
+const Item = require("../item")
+const MCU = require("./MCU")
 
 // Complex Trigger event filters (with order representing bit number in binary file)
 const eventFilters = [
@@ -27,25 +27,25 @@ const eventFilters = [
 	"EventsFilterDeliveredCargo",
 	"EventsFilterParatrooperJumped",
 	"EventsFilterParatrooperLandedAlive"
-];
+]
 
 // Complex Trigger item
 module.exports = class MCU_TR_ComplexTrigger extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.Enabled = 1;
-		this.Cylinder = 1;
-		this.Radius = 1000;
-		this.DamageThreshold = 1;
-		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT;
-		this.CheckPlanes = 0;
-		this.CheckVehicles = 0;
+		this.Enabled = 1
+		this.Cylinder = 1
+		this.Radius = 1000
+		this.DamageThreshold = 1
+		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT
+		this.CheckPlanes = 0
+		this.CheckVehicles = 0
 
 		eventFilters.forEach(eventFilter => {
-			this[eventFilter] = 0;
-		});
+			this[eventFilter] = 0
+		})
 	}
 
 	// Valid Complex Trigger event type name and ID constants
@@ -72,7 +72,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 			OnObjectDeliveredCargo: 76,
 			OnObjectParatrooperJumped: 77,
 			OnObjectParatrooperLandedAlive: 78
-		};
+		}
 	}
 
 	/**
@@ -83,25 +83,25 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 40);
+		yield* super.toBinary(index, 40)
 
-		let size = 36;
+		let size = 36
 
 		if (this.events) {
-			size += this.events.items.length * 8;
+			size += this.events.items.length * 8
 		}
 
-		const countries = [];
-		const scripts = [];
-		const names = [];
+		const countries = []
+		const scripts = []
+		const names = []
 
 		// Build countries list
 		if (this.Country instanceof Set) {
 
 			for (const countryID of this.Country) {
 
-				countries.push(countryID);
-				size += 4;
+				countries.push(countryID)
+				size += 4
 			}
 		}
 
@@ -110,8 +110,8 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 
 			for (const script of this.ObjectScript) {
 
-				scripts.push(script);
-				size += 4 + Buffer.byteLength(script);
+				scripts.push(script)
+				size += 4 + Buffer.byteLength(script)
 			}
 		}
 
@@ -120,67 +120,67 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 
 			for (const name of this.ObjectName) {
 
-				names.push(name);
-				size += 4 + Buffer.byteLength(name);
+				names.push(name)
+				size += 4 + Buffer.byteLength(name)
 			}
 		}
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// Events list
-		this.writeEvents(buffer);
+		this.writeEvents(buffer)
 
 		// Cylinder
-		this.writeUInt8(buffer, this.Cylinder);
+		this.writeUInt8(buffer, this.Cylinder)
 
 		// Radius
-		this.writeDouble(buffer, this.Radius);
+		this.writeDouble(buffer, this.Radius)
 
 		// DamageReport
-		this.writeUInt32(buffer, this.DamageReport);
+		this.writeUInt32(buffer, this.DamageReport)
 
 		// DamageThreshold
-		this.writeUInt8(buffer, this.DamageThreshold);
+		this.writeUInt8(buffer, this.DamageThreshold)
 
 		// CheckPlanes
-		this.writeUInt8(buffer, this.CheckPlanes);
+		this.writeUInt8(buffer, this.CheckPlanes)
 
 		// CheckVehicles
-		this.writeUInt8(buffer, this.CheckVehicles);
+		this.writeUInt8(buffer, this.CheckVehicles)
 
 		// EventsFilter* properties
-		let eventsFilterValue = 0;
+		let eventsFilterValue = 0
 
 		eventFilters.forEach((eventFilterProp, eventFilterIndex) => {
 
 			// NOTE: In binary file event filter properties are stored as individual
 			// bits (flags) in a 32-bit unsigned integer value.
 			if (this[eventFilterProp]) {
-				eventsFilterValue |= 1 << eventFilterIndex;
+				eventsFilterValue |= 1 << eventFilterIndex
 			}
-		});
+		})
 
-		this.writeUInt32(buffer, eventsFilterValue);
+		this.writeUInt32(buffer, eventsFilterValue)
 
 		// Country filter list
-		this.writeUInt32Array(buffer, countries);
+		this.writeUInt32Array(buffer, countries)
 
 		// ObjectScript filter list size
-		this.writeUInt32(buffer, scripts.length);
+		this.writeUInt32(buffer, scripts.length)
 
 		// ObjectScript filter list items
 		scripts.forEach(script => {
-			this.writeString(buffer, Buffer.byteLength(script), script);
-		});
+			this.writeString(buffer, Buffer.byteLength(script), script)
+		})
 
 		// ObjectName filter list size
-		this.writeUInt32(buffer, names.length);
+		this.writeUInt32(buffer, names.length)
 
 		// ObjectName filter list items
 		names.forEach(name => {
-			this.writeString(buffer, Buffer.byteLength(name), name);
-		});
+			this.writeString(buffer, Buffer.byteLength(name), name)
+		})
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

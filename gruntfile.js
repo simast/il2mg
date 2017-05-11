@@ -1,19 +1,19 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
 // Run application (invoked as package.json main script)
 if (require.main === module) {
 
 	// Electron GUI application
 	if (process.versions.electron) {
-		require("./src/gui/app");
+		require("./src/gui/app")
 	}
 	// CLI application
 	else {
-		require("./src/app");
+		require("./src/app")
 	}
 
-	return;
+	return
 }
 
 module.exports = function(grunt) {
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 		"gruntfile.js",
 		"src/**/*.js*",
 		"build/**/*.js"
-	];
+	]
 
 	grunt.initConfig({
 
@@ -55,14 +55,14 @@ module.exports = function(grunt) {
 				"data/**/*.fra"
 			]
 		}
-	});
+	})
 
 	// Load all required NPM Grunt tasks
-	grunt.loadNpmTasks("grunt-eslint");
-	grunt.loadNpmTasks("grunt-contrib-clean");
+	grunt.loadNpmTasks("grunt-eslint")
+	grunt.loadNpmTasks("grunt-contrib-clean")
 
 	// Load custom build Grunt tasks
-	grunt.loadTasks("build/tasks");
+	grunt.loadTasks("build/tasks")
 
 	// Default task used for building the project
 	grunt.registerTask("default", [
@@ -74,12 +74,12 @@ module.exports = function(grunt) {
 		"build:airfields",
 		"build:fronts",
 		"build:index"
-	]);
+	])
 
 	// Task to build a release package for the project
 	grunt.registerTask("release", [
 		"clean:release",
 		"default",
 		"build:release"
-	]);
-};
+	])
+}

@@ -1,16 +1,16 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Timer item
 module.exports = class MCU_Timer extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.Time = 0;
-		this.Random = 100;
+		this.Time = 0
+		this.Random = 100
 	}
 
 	/**
@@ -21,16 +21,16 @@ module.exports = class MCU_Timer extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 41);
+		yield* super.toBinary(index, 41)
 
-		const buffer = new Buffer(9);
+		const buffer = new Buffer(9)
 
 		// Time
-		this.writeDouble(buffer, this.Time);
+		this.writeDouble(buffer, this.Time)
 
 		// Random
-		this.writeUInt8(buffer, this.Random);
+		this.writeUInt8(buffer, this.Random)
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

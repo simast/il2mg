@@ -1,15 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Mission Begin item
 module.exports = class MCU_TR_MissionBegin extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.Enabled = 1;
+		this.Enabled = 1
 	}
 
 	/**
@@ -19,6 +19,6 @@ module.exports = class MCU_TR_MissionBegin extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		yield* super.toBinary(index, 28);
+		yield* super.toBinary(index, 28)
 	}
-};
+}

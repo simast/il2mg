@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const React = require("react");
-const ActionBar = require("./ActionBar");
-const Photos = require("./Photos");
+const React = require("react")
+const ActionBar = require("./ActionBar")
+const Photos = require("./Photos")
 
 // Screen component
 module.exports = ({id, children, actions}) => (
@@ -19,4 +19,4 @@ module.exports = ({id, children, actions}) => (
 			<ActionBar actions={actions} />
 		</div>
 	</div>
-);
+)

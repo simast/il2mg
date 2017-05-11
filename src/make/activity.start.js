@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const {MCU_Icon} = require("../item");
-const {flightState} = require("../data");
+const {MCU_Icon} = require("../item")
+const {flightState} = require("../data")
 
 // Initial plan activity used to start/initialize flights
 module.exports = class ActivityStart {
@@ -10,86 +10,86 @@ module.exports = class ActivityStart {
 	// Make start activity action
 	makeAction(element) {
 
-		const {mission, flight} = this;
-		const {rand} = mission;
-		const flightGroup = flight.group;
-		const isAirStart = (typeof element.state === "number");
-		const debugFlights = Boolean(mission.debug && mission.debug.flights);
+		const {mission, flight} = this
+		const {rand} = mission
+		const flightGroup = flight.group
+		const isAirStart = (typeof element.state === "number")
+		const debugFlights = Boolean(mission.debug && mission.debug.flights)
 
 		// Create start location icon
 		if (!flight.startIcon && (flight.player || debugFlights)) {
 
-			const startIcon = flight.startIcon = flightGroup.createItem("MCU_Icon");
+			const startIcon = flight.startIcon = flightGroup.createItem("MCU_Icon")
 
-			startIcon.setPosition(this.position);
+			startIcon.setPosition(this.position)
 
 			if (flight.player) {
 
-				startIcon.Coalitions = [flight.coalition];
-				startIcon.IconId = MCU_Icon.ICON_ACTION_POINT;
+				startIcon.Coalitions = [flight.coalition]
+				startIcon.IconId = MCU_Icon.ICON_ACTION_POINT
 			}
 			else {
-				startIcon.Coalitions = mission.coalitions;
+				startIcon.Coalitions = mission.coalitions
 			}
 		}
 
 		// Player-only spawn without a valid taxi route
 		if (flight.taxi <= 0 && !isAirStart) {
-			return;
+			return
 		}
 
 		// Create flight onBegin event command
 		if (!flight.onBegin) {
 
-			let onBegin = flightGroup.createItem("MCU_TR_MissionBegin");
+			let onBegin = flightGroup.createItem("MCU_TR_MissionBegin")
 
-			onBegin.setPositionNear(flight.leader.item);
+			onBegin.setPositionNear(flight.leader.item)
 
-			let beginDelay = this.delay;
+			let beginDelay = this.delay
 
 			// NOTE: Using a short delay for flights starting from a parking spot.
 			// This is workaround as some aircraft have issues starting engines
 			// without an initial timer delay (MiG-3 for example).
 			if (!beginDelay && flight.state === flightState.START) {
-				beginDelay = rand.real(2, 3);
+				beginDelay = rand.real(2, 3)
 			}
 
 			if (beginDelay) {
 
-				const onBeginTimer = flightGroup.createItem("MCU_Timer");
+				const onBeginTimer = flightGroup.createItem("MCU_Timer")
 
-				onBeginTimer.Time = Number(beginDelay.toFixed(3));
-				onBeginTimer.setPositionNear(onBegin);
-				onBegin.addTarget(onBeginTimer);
+				onBeginTimer.Time = Number(beginDelay.toFixed(3))
+				onBeginTimer.setPositionNear(onBegin)
+				onBegin.addTarget(onBeginTimer)
 
-				onBegin = onBeginTimer;
+				onBegin = onBeginTimer
 			}
 
-			flight.onBegin = onBegin;
+			flight.onBegin = onBegin
 		}
 
 		// Create flight onStart event command
 		if (!flight.onStart) {
 
-			let onStart = flight.onBegin;
+			let onStart = flight.onBegin
 
 			// NOTE: Virtual flights are deactivated and start with a separate timer
 			// after being activated.
 			if (flight.virtual) {
 
-				onStart = flightGroup.createItem("MCU_Timer");
+				onStart = flightGroup.createItem("MCU_Timer")
 
 				// Short delay used to wait for virtual flight plane activation
-				onStart.Time = 1;
-				onStart.setPositionNear(flight.leader.item);
+				onStart.Time = 1
+				onStart.setPositionNear(flight.leader.item)
 			}
 
-			flight.onStart = onStart;
+			flight.onStart = onStart
 		}
 
 		// Connect next plan action with onStart event command
 		return input => {
-			flight.onStart.addTarget(input);
-		};
+			flight.onStart.addTarget(input)
+		}
 	}
-};
+}

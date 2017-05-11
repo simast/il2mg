@@ -1,45 +1,45 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const data = require("../data");
+const data = require("../data")
 
 // Generate available mission formations
 module.exports = function makeFormations() {
 
 	// Formations index table
-	const formations = Object.create(null);
+	const formations = Object.create(null)
 
 	// Process all active countries in the battle
 	for (const countryID of this.battle.countries) {
 
-		formations[countryID] = Object.create(null);
+		formations[countryID] = Object.create(null)
 
 		// Process all formations and build index list
 		for (const formationID in data.countries[countryID].formations) {
 
-			let formationData = data.countries[countryID].formations[formationID];
+			let formationData = data.countries[countryID].formations[formationID]
 
 			// Ignore dummy formation definitions (and groups used to catalog formations)
 			if (!formationData || !formationData.elements) {
-				continue;
+				continue
 			}
 
-			const formationFrom = formationData.from;
-			const formationTo = formationData.to;
+			const formationFrom = formationData.from
+			const formationTo = formationData.to
 
 			// Filter out formations with from/to dates
 			if ((formationFrom && this.date.isBefore(formationFrom, "day")) ||
 					(formationTo && this.date.isAfter(formationTo, "day"))) {
 
-				continue;
+				continue
 			}
 
-			delete formationData.from;
-			delete formationData.to;
+			delete formationData.from
+			delete formationData.to
 
-			const formation = Object.create(null);
+			const formation = Object.create(null)
 
-			formation.id = formationID;
+			formation.id = formationID
 
 			// Build formation data and register formation parent/group hierarchy
 			while (formationData) {
@@ -48,76 +48,76 @@ module.exports = function makeFormations() {
 				for (const prop in formationData) {
 
 					if (formation[prop] === undefined) {
-						formation[prop] = formationData[prop];
+						formation[prop] = formationData[prop]
 					}
 				}
 
-				const formationParentID = formationData.parent;
+				const formationParentID = formationData.parent
 
 				if (!formationParentID) {
-					break;
+					break
 				}
 				// Set formation group as a top-most parent
 				else {
-					formation.group = formationParentID;
+					formation.group = formationParentID
 				}
 
-				formationData = data.countries[countryID].formations[formationParentID];
+				formationData = data.countries[countryID].formations[formationParentID]
 
 				// Register formation in the parent group hierarchy
-				const formationGroup = formations[countryID][formationParentID] || [];
+				const formationGroup = formations[countryID][formationParentID] || []
 
 				// Register a new child formation in the formation group
 				if (Array.isArray(formationGroup)) {
 
-					formationGroup.push(formationID);
+					formationGroup.push(formationID)
 
 					if (formationData.parent !== undefined) {
-						formationGroup.parent = formationData.parent;
+						formationGroup.parent = formationData.parent
 					}
 
-					formations[countryID][formationParentID] = formationGroup;
+					formations[countryID][formationParentID] = formationGroup
 				}
 			}
 
 			// Register formation to ID index
-			formations[countryID][formationID] = formation;
+			formations[countryID][formationID] = formation
 		}
 
 		// Resolve required plane counts for formation elements
 		for (const formationID in formations[countryID]) {
 
-			const formationElements = formations[countryID][formationID].elements;
+			const formationElements = formations[countryID][formationID].elements
 
 			// Ignore formation groups
 			if (!formationElements) {
-				continue;
+				continue
 			}
 
-			const planes = formationElements.planes = [];
+			const planes = formationElements.planes = []
 
-			(function buildPlanes(elements) {
+			;(function buildPlanes(elements) {
 
 				for (const element of elements) {
 
 					// Add required plane count for simple element
 					if (typeof element === "number") {
-						planes.push(element);
+						planes.push(element)
 					}
 					// Resolve required plane count for sub-formation elements
 					else {
 
-						const subFormation = formations[countryID][element];
+						const subFormation = formations[countryID][element]
 
 						if (subFormation.elements) {
-							buildPlanes(subFormation.elements);
+							buildPlanes(subFormation.elements)
 						}
 					}
 				}
-			})(formationElements);
+			})(formationElements)
 		}
 	}
 
 	// Static formations index object
-	this.formations = Object.freeze(formations);
-};
+	this.formations = Object.freeze(formations)
+}

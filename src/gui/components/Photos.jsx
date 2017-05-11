@@ -1,38 +1,38 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const React = require("react");
+const React = require("react")
 
 // Number of available photos
-const AVAILABLE_PHOTOS = 12;
+const AVAILABLE_PHOTOS = 12
 
 // Photos decoration component
 class Photos extends React.Component {
 
 	constructor() {
-		super(...arguments);
+		super(...arguments)
 
 		this.state = {
 			photos: []
-		};
+		}
 	}
 
 	componentWillMount() {
-		this.choosePhotos();
+		this.choosePhotos()
 	}
 
 	componentWillReceiveProps(nextProps) {
 
 		// Update photo selection on screen change
 		if (this.props.screen !== nextProps.screen) {
-			this.choosePhotos();
+			this.choosePhotos()
 		}
 	}
 
 	shouldComponentUpdate(nextProps) {
 
 		// Update component only on screen change
-		return (this.props.screen !== nextProps.screen);
+		return (this.props.screen !== nextProps.screen)
 	}
 
 	// Render component
@@ -47,26 +47,26 @@ class Photos extends React.Component {
 					</div>
 				))}
 			</div>
-		);
+		)
 	}
 
 	// Choose a set of active photos to display
 	choosePhotos() {
 
-		const photos = [];
+		const photos = []
 
 		// Choose two random photos
 		while (photos.length < 2) {
 
-			const photoID = 1 + Math.floor(Math.random() * AVAILABLE_PHOTOS);
+			const photoID = 1 + Math.floor(Math.random() * AVAILABLE_PHOTOS)
 
 			if (photos.indexOf(photoID) === -1) {
-				photos.push(photoID);
+				photos.push(photoID)
 			}
 		}
 
-		this.setState({photos});
+		this.setState({photos})
 	}
 }
 
-module.exports = Photos;
+module.exports = Photos

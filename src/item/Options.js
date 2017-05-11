@@ -1,13 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const moment = require("moment");
-const Item = require("../item");
+const moment = require("moment")
+const Item = require("../item")
 
 // Options item
 module.exports = class Options extends Item {
 
-	get hasIndex() { return false; }
+	get hasIndex() { return false }
 
 	/**
 	 * Get binary representation of the item.
@@ -16,154 +16,154 @@ module.exports = class Options extends Item {
 	 */
 	*toBinary() {
 
-		const date = moment(this.Date, "D.M.YYYY", true);
-		const time = moment(this.Time, "H:m:s", true);
+		const date = moment(this.Date, "D.M.YYYY", true)
+		const time = moment(this.Time, "H:m:s", true)
 
-		const hmapLength = Buffer.byteLength(this.HMap);
-		const texturesLength = Buffer.byteLength(this.Textures);
-		const forestsLength = Buffer.byteLength(this.Forests);
-		const guiMapLength = Buffer.byteLength(this.GuiMap);
-		const layersLength = Buffer.byteLength(this.Layers);
-		const seasonPrefixLength = Buffer.byteLength(this.SeasonPrefix);
-		const playerConfigLength = Buffer.byteLength(this.PlayerConfig);
-		const cloudConfigLength = Buffer.byteLength(this.CloudConfig);
+		const hmapLength = Buffer.byteLength(this.HMap)
+		const texturesLength = Buffer.byteLength(this.Textures)
+		const forestsLength = Buffer.byteLength(this.Forests)
+		const guiMapLength = Buffer.byteLength(this.GuiMap)
+		const layersLength = Buffer.byteLength(this.Layers)
+		const seasonPrefixLength = Buffer.byteLength(this.SeasonPrefix)
+		const playerConfigLength = Buffer.byteLength(this.PlayerConfig)
+		const cloudConfigLength = Buffer.byteLength(this.CloudConfig)
 
-		let size = 144;
+		let size = 144
 
-		size += hmapLength;
-		size += texturesLength;
-		size += forestsLength;
-		size += guiMapLength;
-		size += layersLength;
-		size += seasonPrefixLength;
-		size += playerConfigLength;
-		size += cloudConfigLength;
+		size += hmapLength
+		size += texturesLength
+		size += forestsLength
+		size += guiMapLength
+		size += layersLength
+		size += seasonPrefixLength
+		size += playerConfigLength
+		size += cloudConfigLength
 
-		size += this.WindLayers.length * 8 * 3;
-		size += this.Countries.length * 4 * 2;
+		size += this.WindLayers.length * 8 * 3
+		size += this.Countries.length * 4 * 2
 
-		const buffer = new Buffer(size);
+		const buffer = new Buffer(size)
 
 		// File version
-		this.writeUInt32(buffer, 28);
+		this.writeUInt32(buffer, 28)
 
 		// MissionType
-		this.writeUInt32(buffer, this.MissionType);
+		this.writeUInt32(buffer, this.MissionType)
 
 		// AqmId
-		this.writeUInt32(buffer, this.AqmId);
+		this.writeUInt32(buffer, this.AqmId)
 
 		// Day
-		this.writeUInt32(buffer, date.date());
+		this.writeUInt32(buffer, date.date())
 
 		// Month
-		this.writeUInt32(buffer, date.month() + 1);
+		this.writeUInt32(buffer, date.month() + 1)
 
 		// Year
-		this.writeUInt32(buffer, date.year());
+		this.writeUInt32(buffer, date.year())
 
 		// Seconds
-		this.writeUInt32(buffer, time.seconds());
+		this.writeUInt32(buffer, time.seconds())
 
 		// Minutes
-		this.writeUInt32(buffer, time.minutes());
+		this.writeUInt32(buffer, time.minutes())
 
 		// Hours
-		this.writeUInt32(buffer, time.hours());
+		this.writeUInt32(buffer, time.hours())
 
 		// HMap
-		this.writeString(buffer, hmapLength, this.HMap);
+		this.writeString(buffer, hmapLength, this.HMap)
 
 		// Textures
-		this.writeString(buffer, texturesLength, this.Textures);
+		this.writeString(buffer, texturesLength, this.Textures)
 
 		// Forests
-		this.writeString(buffer, forestsLength, this.Forests);
+		this.writeString(buffer, forestsLength, this.Forests)
 
 		// Layers
-		this.writeString(buffer, layersLength, this.Layers);
+		this.writeString(buffer, layersLength, this.Layers)
 
 		// GuiMap
-		this.writeString(buffer, guiMapLength, this.GuiMap);
+		this.writeString(buffer, guiMapLength, this.GuiMap)
 
 		// SeasonPrefix
-		this.writeString(buffer, seasonPrefixLength, this.SeasonPrefix);
+		this.writeString(buffer, seasonPrefixLength, this.SeasonPrefix)
 
 		// LCName
-		this.writeUInt32(buffer, this.LCName);
+		this.writeUInt32(buffer, this.LCName)
 
 		// LCAuthor
-		this.writeUInt32(buffer, this.LCAuthor);
+		this.writeUInt32(buffer, this.LCAuthor)
 
 		// LCDesc
-		this.writeUInt32(buffer, this.LCDesc);
+		this.writeUInt32(buffer, this.LCDesc)
 
 		// PlayerConfig
-		this.writeString(buffer, playerConfigLength, this.PlayerConfig);
+		this.writeString(buffer, playerConfigLength, this.PlayerConfig)
 
 		// Unknown 4 bytes (always zero)
 		// TODO: Investigate, could this be a non-localized indexed Name and Desc properties?
-		this.writeUInt32(buffer, 0);
+		this.writeUInt32(buffer, 0)
 
 		// CloudLevel
-		this.writeUInt32(buffer, this.CloudLevel);
+		this.writeUInt32(buffer, this.CloudLevel)
 
 		// CloudHeight
-		this.writeUInt32(buffer, this.CloudHeight);
+		this.writeUInt32(buffer, this.CloudHeight)
 
 		// PrecLevel
-		this.writeUInt32(buffer, this.PrecLevel);
+		this.writeUInt32(buffer, this.PrecLevel)
 
 		// PrecType
-		this.writeUInt32(buffer, this.PrecType);
+		this.writeUInt32(buffer, this.PrecType)
 
 		// Turbulence
-		this.writeDouble(buffer, this.Turbulence);
+		this.writeDouble(buffer, this.Turbulence)
 
 		// TempPressLevel
-		this.writeDouble(buffer, this.TempPressLevel);
+		this.writeDouble(buffer, this.TempPressLevel)
 
 		// Temperature
-		this.writeDouble(buffer, this.Temperature);
+		this.writeDouble(buffer, this.Temperature)
 
 		// Pressure
-		this.writeDouble(buffer, this.Pressure);
+		this.writeDouble(buffer, this.Pressure)
 
 		// CloudConfig
-		this.writeString(buffer, cloudConfigLength, this.CloudConfig);
+		this.writeString(buffer, cloudConfigLength, this.CloudConfig)
 
 		// SeaState
-		this.writeUInt32(buffer, this.SeaState);
+		this.writeUInt32(buffer, this.SeaState)
 
 		// WindLayers length
-		this.writeUInt32(buffer, this.WindLayers.length);
+		this.writeUInt32(buffer, this.WindLayers.length)
 
 		// WindLayers
 		this.WindLayers.forEach(windLayer => {
 
 			// WindLayer ground height
-			this.writeDouble(buffer, windLayer[0]);
+			this.writeDouble(buffer, windLayer[0])
 
 			// WindLayer direction
-			this.writeDouble(buffer, windLayer[1]);
+			this.writeDouble(buffer, windLayer[1])
 
 			// WindLayer speed
-			this.writeDouble(buffer, windLayer[2]);
-		});
+			this.writeDouble(buffer, windLayer[2])
+		})
 
 		// Countries length
-		this.writeUInt32(buffer, this.Countries.length);
+		this.writeUInt32(buffer, this.Countries.length)
 
 		// Countries
 		this.Countries.forEach(country => {
 
 			// Country ID
-			this.writeUInt32(buffer, country[0]);
+			this.writeUInt32(buffer, country[0])
 
 			// Coalition ID
-			this.writeUInt32(buffer, country[1]);
-		});
+			this.writeUInt32(buffer, country[1])
+		})
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

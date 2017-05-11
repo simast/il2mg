@@ -26,7 +26,7 @@ module.exports = {
 		"key-spacing": "error",
 		"object-curly-spacing": ["error", "never"],
 		"operator-linebreak": ["error", "after"],
-		"semi": ["error", "always"],
+		"semi": ["error", "never"],
 		"semi-spacing": ["error", {before: false, after: true}],
 		"quote-props": ["error", "as-needed"],
 		"quotes": ["error", "double", {avoidEscape: true, allowTemplateLiterals: true}],

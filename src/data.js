@@ -1,21 +1,21 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const fs = require("fs");
-const path = require("path");
-const requireDir = require("require-directory");
-const moment = require("moment");
+const fs = require("fs")
+const path = require("path")
+const requireDir = require("require-directory")
+const moment = require("moment")
 
-const data = module.exports = Object.create(null);
+const data = module.exports = Object.create(null)
 
 // Application name
-data.name = "il2mg";
+data.name = "il2mg"
 
 // Application version
-data.version = "r11";
+data.version = "r11"
 
 // Application copyright
-data.copyright = "(C) Simas Toleikis, 2015-2017";
+data.copyright = "(C) Simas Toleikis, 2015-2017"
 
 // List of supported mission localization languages
 data.languages = Object.freeze([
@@ -25,7 +25,7 @@ data.languages = Object.freeze([
 	"rus", // Russian
 	"spa", // Spanish
 	"fra" // French
-]);
+])
 
 // Data tags for special airfield items
 data.itemTag = Object.freeze({
@@ -42,7 +42,7 @@ data.itemTag = Object.freeze({
 	WINDSOCK: -11, // Windsock
 	EFFECT: -12, // Effect
 	WRECK: -13 // Wreckage
-});
+})
 
 // Data flags for airfield items
 data.itemFlag = Object.freeze({
@@ -57,13 +57,13 @@ data.itemFlag = Object.freeze({
 	TAXI_RUNWAY: 1, // Taxi runway point
 	ROUTE_STOP: 1, // Route stop point
 	ROUTE_ROAD: 2 // Route road formation
-});
+})
 
 // Front line item types
 data.frontLine = Object.freeze({
 	BORDER: 1, // Border line
 	ATTACK: 2 // Attack arrow
-});
+})
 
 // Location item types
 data.location = Object.freeze({
@@ -71,7 +71,7 @@ data.location = Object.freeze({
 	TOWN: 2, // Medium town
 	CITY: 3, // Large city
 	AIRFIELD: 4 // Airfield
-});
+})
 
 // Map season types
 // NOTE: Order is important (used when defining plane skins for each season)!
@@ -81,27 +81,27 @@ data.season = Object.freeze({
 	AUTUMN: "autumn",
 	WINTER: "winter",
 	DESERT: "desert"
-});
+})
 
 // Altitude level types
 data.altitudeLevel = Object.freeze({
 	LOW: "low",
 	MEDIUM: "medium",
 	HIGH: "high"
-});
+})
 
 // Coalitions
 data.coalition = Object.freeze({
 	ALLIES: 1,
 	AXIS: 2
-});
+})
 
 // Territory types
 data.territory = Object.freeze({
 	FRONT: -1,
 	UNKNOWN: 0
 	// NOTE: Any positive territory type ID is a coalition ID
-});
+})
 
 // Plane size constants (types/IDs)
 data.planeSize = Object.freeze({
@@ -109,7 +109,7 @@ data.planeSize = Object.freeze({
 	MEDIUM: 2,
 	LARGE: 3,
 	HUGE: 4
-});
+})
 
 // Weather state/condition constants
 data.weatherState = Object.freeze({
@@ -117,14 +117,14 @@ data.weatherState = Object.freeze({
 	GOOD: 2,
 	BAD: 3,
 	EXTREME: 4
-});
+})
 
 // Precipitation type constants
 data.precipitation = Object.freeze({
 	NONE: 0,
 	RAIN: 1,
 	SNOW: 2
-});
+})
 
 // Flight states
 // NOTE: Numeric [0..1) value state represent aircraft in the air.
@@ -132,7 +132,7 @@ data.flightState = Object.freeze({
 	START: "start", // Parking, engine not running
 	TAXI: "taxi", // On the taxiway, engine running, taxiing to runway
 	RUNWAY: "runway" // On the runway, engine running, ready for takeoff
-});
+})
 
 // Common flight plan activity types
 data.activityType = Object.freeze({
@@ -143,7 +143,7 @@ data.activityType = Object.freeze({
 	FLY: "fly", // Fly to waypoint/location
 	LAND: "land", // Land on airfield (ending the flight)
 	END: "end" // End flight activity
-});
+})
 
 // Map colors as RGB array values
 data.mapColor = Object.freeze({
@@ -152,122 +152,122 @@ data.mapColor = Object.freeze({
 	// NOTE: Special color values that will change in-game based on user settings
 	ENEMY: [10, 0, 0],
 	FRIEND: [0, 0, 10]
-});
+})
 
 // Briefing colors as HTML hex color values
 data.briefingColor = Object.freeze({
 	LIGHT: "#fbfbfb",
 	DARK: "#959595"
-});
+})
 
 // Load all static data
-(() => {
+;(() => {
 
 	// NOTE: For performance reasons JSON files in the binary/compiled mode will
 	// be loaded using native JSON object.
-	const useJSON5 = !process.pkg;
+	const useJSON5 = !process.pkg
 
 	if (useJSON5) {
 
 		// NOTE: Having JSON5 module name as two separate string literals will trick
 		// pkg to not included it in the binary file when compiling.
-		const JSON5 = require("json" + "5");
+		const JSON5 = require("json" + "5")
 
 		// Add new require() loader to handle JSON5 data files
 		require.extensions[".json5"] = (module, file) => {
-			module.exports = JSON5.parse(fs.readFileSync(file, "utf-8"));
-		};
+			module.exports = JSON5.parse(fs.readFileSync(file, "utf-8"))
+		}
 
 		// JSON5 support for require-directory
-		requireDir.defaults.extensions.push("json5");
+		requireDir.defaults.extensions.push("json5")
 	}
 
-	data.items = [];
+	data.items = []
 
 	try {
-		data.items = require("../data/items");
+		data.items = require("../data/items")
 	}
 	catch (e) {}
 
-	data.vehicles = Object.freeze(require("../data/vehicles"));
-	data.clouds = Object.freeze(require("../data/clouds"));
-	data.time = Object.freeze(require("../data/time"));
-	data.callsigns = Object.freeze(require("../data/callsigns"));
-	data.countries = Object.freeze(require("../data/countries"));
-	data.battles = Object.freeze(require("../data/battles"));
-	data.tasks = Object.freeze(requireDir(module, "../data/tasks"));
-	data.planes = Object.create(null);
+	data.vehicles = Object.freeze(require("../data/vehicles"))
+	data.clouds = Object.freeze(require("../data/clouds"))
+	data.time = Object.freeze(require("../data/time"))
+	data.callsigns = Object.freeze(require("../data/callsigns"))
+	data.countries = Object.freeze(require("../data/countries"))
+	data.battles = Object.freeze(require("../data/battles"))
+	data.tasks = Object.freeze(requireDir(module, "../data/tasks"))
+	data.planes = Object.create(null)
 
 	// Load countries
 	for (const countryID in data.countries) {
 
-		const country = data.countries[countryID];
-		const countryPath = "../data/countries/" + countryID + "/";
+		const country = data.countries[countryID]
+		const countryPath = "../data/countries/" + countryID + "/"
 
-		country.formations = require(countryPath + "formations");
-		country.names = require(countryPath + "names");
-		country.ranks = require(countryPath + "ranks");
+		country.formations = require(countryPath + "formations")
+		country.names = require(countryPath + "names")
+		country.ranks = require(countryPath + "ranks")
 	}
 
 	// Load planes
-	const planeData = requireDir(module, "../data/planes");
+	const planeData = requireDir(module, "../data/planes")
 
 	for (const planeGroup in planeData) {
 		for (const planeID in planeData[planeGroup]) {
-			data.planes[planeID] = planeData[planeGroup][planeID];
+			data.planes[planeID] = planeData[planeGroup][planeID]
 		}
 	}
 
-	Object.freeze(data.planes);
+	Object.freeze(data.planes)
 
 	// Load battles
 	// TODO: Load only required mission battle data
 	for (const battleID in data.battles) {
 
-		const battle = data.battles[battleID];
-		const battlePath = "../data/battles/" + battleID + "/";
+		const battle = data.battles[battleID]
+		const battlePath = "../data/battles/" + battleID + "/"
 
-		battle.countries = [];
-		battle.blocks = Object.freeze(require(battlePath + "blocks"));
-		battle.locations = Object.freeze(require(battlePath + "locations"));
-		battle.fronts = Object.freeze(require(battlePath + "fronts"));
-		battle.map = Object.freeze(require(battlePath + "map"));
-		battle.weather = Object.freeze(require(battlePath + "weather"));
-		battle.airfields = Object.freeze(require(battlePath + "airfields"));
-		battle.roles = Object.freeze(requireDir(module, battlePath + "roles/"));
-		battle.units = Object.create(null);
+		battle.countries = []
+		battle.blocks = Object.freeze(require(battlePath + "blocks"))
+		battle.locations = Object.freeze(require(battlePath + "locations"))
+		battle.fronts = Object.freeze(require(battlePath + "fronts"))
+		battle.map = Object.freeze(require(battlePath + "map"))
+		battle.weather = Object.freeze(require(battlePath + "weather"))
+		battle.airfields = Object.freeze(require(battlePath + "airfields"))
+		battle.roles = Object.freeze(requireDir(module, battlePath + "roles/"))
+		battle.units = Object.create(null)
 
 		// Load battle unit data
-		const unitsData = requireDir(module, battlePath + "units/");
+		const unitsData = requireDir(module, battlePath + "units/")
 
 		for (let unitCountryID in unitsData) {
 
-			unitCountryID = parseInt(unitCountryID, 10);
+			unitCountryID = parseInt(unitCountryID, 10)
 
 			// Ignore invalid country IDs
 			if (isNaN(unitCountryID) || !data.countries[unitCountryID]) {
-				continue;
+				continue
 			}
 
-			const unitsDataCountry = unitsData[unitCountryID];
+			const unitsDataCountry = unitsData[unitCountryID]
 
 			// Build units list
 			for (const unitGroup in unitsDataCountry) {
 				for (const unitID in unitsDataCountry[unitGroup]) {
 
-					battle.units[unitID] = unitsDataCountry[unitGroup][unitID];
-					battle.units[unitID].country = unitCountryID;
+					battle.units[unitID] = unitsDataCountry[unitGroup][unitID]
+					battle.units[unitID].country = unitCountryID
 				}
 			}
 
 			// Register country as part of the battle
-			battle.countries.push(unitCountryID);
+			battle.countries.push(unitCountryID)
 		}
 
-		Object.freeze(battle.countries);
-		Object.freeze(battle.units);
+		Object.freeze(battle.countries)
+		Object.freeze(battle.units)
 	}
-})();
+})()
 
 /**
  * Register a new item (world object) type.
@@ -278,30 +278,30 @@ data.briefingColor = Object.freeze({
 data.registerItemType = function(item) {
 
 	if (typeof item !== "object" || !item.type || !item.script || !item.model) {
-		throw new TypeError("Invalid item data.");
+		throw new TypeError("Invalid item data.")
 	}
 
-	const items = this.items;
+	const items = this.items
 
 	// Lowercase and trim script/model paths
-	item.script = item.script.trim().toLowerCase();
-	item.model = item.model.trim().toLowerCase();
+	item.script = item.script.trim().toLowerCase()
+	item.model = item.model.trim().toLowerCase()
 
 	// Item type ID as a string (lowercase file name without extension)
-	const stringTypeID = path.win32.basename(item.script, ".txt");
+	const stringTypeID = path.win32.basename(item.script, ".txt")
 
 	// Try to find existing item type ID by script index
-	let numberTypeID = items.indexOf(stringTypeID);
+	let numberTypeID = items.indexOf(stringTypeID)
 
 	// Add new item type
 	if (numberTypeID === -1) {
 
-		numberTypeID = items.push(stringTypeID) - 1;
+		numberTypeID = items.push(stringTypeID) - 1
 
-		const itemFile = "data/items/" + stringTypeID;
+		const itemFile = "data/items/" + stringTypeID
 
 		try {
-			require.resolve("../" + itemFile);
+			require.resolve("../" + itemFile)
 		}
 		// Write item JSON file
 		catch (e) {
@@ -309,12 +309,12 @@ data.registerItemType = function(item) {
 			fs.writeFileSync(
 				itemFile + ".json",
 				JSON.stringify(item, null, "\t")
-			);
+			)
 		}
 	}
 
-	return numberTypeID;
-};
+	return numberTypeID
+}
 
 /**
  * Get item (world object) type data.
@@ -326,11 +326,11 @@ data.getItemType = function(itemTypeID) {
 
 	// Look up string item type ID
 	if (typeof itemTypeID === "number") {
-		itemTypeID = this.items[itemTypeID];
+		itemTypeID = this.items[itemTypeID]
 	}
 
-	return require("../data/items/" + itemTypeID);
-};
+	return require("../data/items/" + itemTypeID)
+}
 
 /**
  * Match a valid date range (from data files with special date from/to values).
@@ -348,69 +348,69 @@ data.matchDateRange = function(match, dateFrom, dateTo) {
 		return {
 			from: match.from,
 			to: match.to
-		};
+		}
 	}
 
-	const range = {};
+	const range = {}
 
 	if (dateFrom) {
-		range.from = dateFrom;
+		range.from = dateFrom
 	}
 
 	if (dateTo) {
-		range.to = dateTo;
+		range.to = dateTo
 	}
 
 	// Parse each from/to date string
 	for (const type in range) {
 
-		const date = range[type];
+		const date = range[type]
 
 		// Special "start" value means the start (min) date of the match
 		if (date === "start") {
-			range[type] = match.from;
+			range[type] = match.from
 		}
 		// Special "end" value means the end (max) date of the match
 		else if (date === "end") {
-			range[type] = match.to;
+			range[type] = match.to
 		}
 		// Other date format
 		else {
 
-			const dateParts = date.split("-");
-			const momentDate = moment();
+			const dateParts = date.split("-")
+			const momentDate = moment()
 
-			momentDate.year(dateParts[0]);
-			momentDate.month(Number(dateParts[1]) - 1);
+			momentDate.year(dateParts[0])
+			momentDate.month(Number(dateParts[1]) - 1)
 
 			// Only month format (YYYY-MM) or start of the month format (YYYY-MM-start)
 			if (dateParts[2] === undefined || dateParts[2] === "start") {
-				momentDate.startOf("month");
+				momentDate.startOf("month")
 			}
 			// End of the month format (YYYY-MM-end)
 			else if (dateParts[2] === "end") {
-				momentDate.endOf("month");
+				momentDate.endOf("month")
 			}
 			// Full date format (YYYY-MM-DD)
 			else {
-				momentDate.date(Number(dateParts[2]));
+				momentDate.date(Number(dateParts[2]))
 			}
 
-			range[type] = momentDate;
+			range[type] = momentDate
 		}
 	}
 
 	// Match to the end of the month when dateTo is not provided
 	if (!dateTo) {
-		range.to = moment(range.from).endOf("month");
+		range.to = moment(range.from).endOf("month")
 	}
 
 	if (!match.date.isBefore(range.from, "day") &&
 		!match.date.isAfter(range.to, "day")) {
 
 		// Return from/to matching range as moment date objects
-		return range;
+		return range
 	}
 
-	return false;
-};
+	return false
+}

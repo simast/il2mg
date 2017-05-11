@@ -1,15 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Spawner item
 module.exports = class MCU_Spawner extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.SpawnAtMe = 0;
+		this.SpawnAtMe = 0
 	}
 
 	/**
@@ -20,13 +20,13 @@ module.exports = class MCU_Spawner extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 48);
+		yield* super.toBinary(index, 48)
 
-		const buffer = new Buffer(1);
+		const buffer = new Buffer(1)
 
 		// SpawnAtMe
-		this.writeUInt8(buffer, this.SpawnAtMe);
+		this.writeUInt8(buffer, this.SpawnAtMe)
 
-		yield buffer;
+		yield buffer
 	}
-};
+}

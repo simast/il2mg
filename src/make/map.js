@@ -1,103 +1,103 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const {Sylvester, Vector, Line, Plane} = require("sylvester");
-const {mapColor} = require("../data");
-const {MCU_Icon} = require("../item");
+const {Sylvester, Vector, Line, Plane} = require("sylvester")
+const {mapColor} = require("../data")
+const {MCU_Icon} = require("../item")
 
 // Restricted zone around map area border
 // NOTE: Using 1 extra point to not overlap with map grid and location search
-const RESTRICTED_BORDER = 20000 + 1; // 20 Km
+const RESTRICTED_BORDER = 20000 + 1 // 20 Km
 
 // Generate mission map data
 module.exports = function makeMap() {
 
-	const options = this.items.Options;
-	const map = {};
+	const options = this.items.Options
+	const map = {}
 
-	Object.assign(map, this.battle.map);
+	Object.assign(map, this.battle.map)
 
-	const seasonData = map.season[this.season];
+	const seasonData = map.season[this.season]
 
 	if (!seasonData) {
-		throw new Error("Could not find a valid battle map!");
+		throw new Error("Could not find a valid battle map!")
 	}
 
-	delete map.season;
-	Object.assign(map, seasonData);
+	delete map.season
+	Object.assign(map, seasonData)
 
 	// Set map data
-	options.HMap = map.heightmap;
-	options.Textures = map.textures;
-	options.Forests = map.forests;
-	options.Layers = ""; // TODO: ?
-	options.GuiMap = map.gui;
-	options.SeasonPrefix = map.prefix;
+	options.HMap = map.heightmap
+	options.Textures = map.textures
+	options.Forests = map.forests
+	options.Layers = "" // TODO: ?
+	options.GuiMap = map.gui
+	options.SeasonPrefix = map.prefix
 
 	// Set active mission map data
-	this.map = map;
-};
+	this.map = map
+}
 
 // Get X/Z point from given point/position/vector arguments
 function getPointFromArgs(args) {
 
-	let posX, posZ;
+	let posX, posZ
 
 	// Array argument
 	if (Array.isArray(args[0])) {
-		args = args[0];
+		args = args[0]
 	}
 	// Vector argument
 	else if (args[0] instanceof Vector) {
-		args = args[0].elements;
+		args = args[0].elements
 	}
 
 	// Position as three X/Y/Z arguments or a single [X,Y,Z] array argument
 	if (args.length > 2) {
-		[posX, , posZ] = args;
+		[posX, , posZ] = args
 	}
 	// Point as two X/Z arguments or a single [X,Z] array argument
 	else if (args.length > 1) {
-		[posX, posZ] = args;
+		[posX, posZ] = args
 	}
 	else {
-		throw new TypeError();
+		throw new TypeError()
 	}
 
-	return [posX, posZ];
+	return [posX, posZ]
 }
 
 // Check if a given point/position/vector is offmap
 function isOffmap(map, ...args) {
 
-	const [posX, posZ] = getPointFromArgs(args);
+	const [posX, posZ] = getPointFromArgs(args)
 
-	return (posX < 0 || posZ < 0 || posX > map.height || posZ > map.width);
+	return (posX < 0 || posZ < 0 || posX > map.height || posZ > map.width)
 }
 
 // Check if a given point/position/vector is in the restricted map border zone
 function isRestricted(map, ...args) {
 
-	const [posX, posZ] = getPointFromArgs(args);
+	const [posX, posZ] = getPointFromArgs(args)
 
 	return (posX < RESTRICTED_BORDER ||
 		posX > (map.height - RESTRICTED_BORDER) ||
 		posZ < RESTRICTED_BORDER ||
-		posZ > (map.width - RESTRICTED_BORDER));
+		posZ > (map.width - RESTRICTED_BORDER))
 }
 
 // Get map border bounds intersection data
 function getMapIntersection(map, fromVector, toVector, distance) {
 
-	let borderPlanesCache = getMapIntersection.borderPlanesCache;
+	let borderPlanesCache = getMapIntersection.borderPlanesCache
 
 	// Initialize map border planes cache
 	if (!borderPlanesCache) {
-		borderPlanesCache = getMapIntersection.borderPlanesCache = new Map();
+		borderPlanesCache = getMapIntersection.borderPlanesCache = new Map()
 	}
 
 	// Lookup cached border planes
-	let borderPlanes = borderPlanesCache.get(map);
+	let borderPlanes = borderPlanesCache.get(map)
 
 	if (!borderPlanes) {
 
@@ -106,38 +106,38 @@ function getMapIntersection(map, fromVector, toVector, distance) {
 			Plane.create(Vector.create([map.height, 0, 0]), Vector.create([-1, 0, 0])), // Top
 			Plane.create(Vector.create([map.height, 0, map.width]), Vector.create([0, 0, -1])), // Right
 			Plane.create(Vector.create([0, 0, map.width]), Vector.create([1, 0, 0])) // Bottom
-		];
+		]
 
-		borderPlanesCache.set(map, borderPlanes);
+		borderPlanesCache.set(map, borderPlanes)
 	}
 
 	if (!distance) {
-		distance = fromVector.distanceFrom(toVector);
+		distance = fromVector.distanceFrom(toVector)
 	}
 
-	const intersectLine = Line.create(fromVector, toVector.subtract(fromVector));
+	const intersectLine = Line.create(fromVector, toVector.subtract(fromVector))
 
 	// Test each map border plane for intersections
 	for (const borderPlane of borderPlanes) {
 
-		const intersectVector = borderPlane.intersectionWith(intersectLine);
+		const intersectVector = borderPlane.intersectionWith(intersectLine)
 
 		if (!intersectVector) {
-			continue;
+			continue
 		}
 
 		// Ignore offmap intersection points
 		if (isOffmap(map, intersectVector.round())) {
-			continue;
+			continue
 		}
 
-		const distanceToIntersect = fromVector.distanceFrom(intersectVector);
-		const distanceFromIntersect = intersectVector.distanceFrom(toVector);
-		const distanceDelta = Math.abs(distance - (distanceToIntersect + distanceFromIntersect));
+		const distanceToIntersect = fromVector.distanceFrom(intersectVector)
+		const distanceFromIntersect = intersectVector.distanceFrom(toVector)
+		const distanceDelta = Math.abs(distance - (distanceToIntersect + distanceFromIntersect))
 
 		// Ignore invalid intersection points
 		if (distanceDelta > Sylvester.precision) {
-			continue;
+			continue
 		}
 
 		return {
@@ -146,7 +146,7 @@ function getMapIntersection(map, fromVector, toVector, distance) {
 			distance, // Total distance between from/to vectors
 			distanceToIntersect, // Distance between "fromVector" and intersection vector
 			distanceFromIntersect // Distance between intersection vector and "toVector"
-		};
+		}
 	}
 }
 
@@ -160,71 +160,71 @@ function markMapArea(flight, {
 		color // Circle color
 	}) {
 
-	const rand = this.rand;
-	const centerVector = Vector.create(position);
-	const iconDegrees = perfect ? [0, 90, 180, 270] : [0, 120, 240];
-	const icons = [];
-	let firstZoneIcon;
-	let lastZoneIcon;
+	const rand = this.rand
+	const centerVector = Vector.create(position)
+	const iconDegrees = perfect ? [0, 90, 180, 270] : [0, 120, 240]
+	const icons = []
+	let firstZoneIcon
+	let lastZoneIcon
 
 	// NOTE: Using three or four points to define a circle area
 	iconDegrees.forEach(degrees => {
 
-		let radiusExtra = 0;
-		let degreesExtra = 0;
+		let radiusExtra = 0
+		let degreesExtra = 0
 
 		// Draw a non-perfect circle ("mark with a human hand")
 		if (!perfect) {
 
-			radiusExtra = radius * rand.real(-0.1, 0.1, true); // +- 10% radius
-			degreesExtra = rand.real(-15, 15, true); // +- 15 degrees
+			radiusExtra = radius * rand.real(-0.1, 0.1, true) // +- 10% radius
+			degreesExtra = rand.real(-15, 15, true) // +- 15 degrees
 		}
 
-		const rotateAxisLine = Line.create(Vector.Zero(3), Vector.create([0, 1, 0]));
-		const rotateRad = (degrees + degreesExtra) * (Math.PI / 180);
-		let pointVector = Vector.create([radius + radiusExtra, centerVector.e(2), 0]);
+		const rotateAxisLine = Line.create(Vector.Zero(3), Vector.create([0, 1, 0]))
+		const rotateRad = (degrees + degreesExtra) * (Math.PI / 180)
+		let pointVector = Vector.create([radius + radiusExtra, centerVector.e(2), 0])
 
 		// Build zone point vector
-		pointVector = centerVector.add(pointVector.rotate(rotateRad, rotateAxisLine));
+		pointVector = centerVector.add(pointVector.rotate(rotateRad, rotateAxisLine))
 
-		const zoneIcon = flight.group.createItem("MCU_Icon");
+		const zoneIcon = flight.group.createItem("MCU_Icon")
 
-		zoneIcon.setPosition(pointVector.elements);
-		zoneIcon.setColor(color ? color : mapColor.ROUTE);
-		zoneIcon.Coalitions = [flight.coalition];
-		zoneIcon.LineType = lineType ? lineType : MCU_Icon.LINE_SECTOR_2;
+		zoneIcon.setPosition(pointVector.elements)
+		zoneIcon.setColor(color ? color : mapColor.ROUTE)
+		zoneIcon.Coalitions = [flight.coalition]
+		zoneIcon.LineType = lineType ? lineType : MCU_Icon.LINE_SECTOR_2
 
 		if (!firstZoneIcon) {
-			firstZoneIcon = zoneIcon;
+			firstZoneIcon = zoneIcon
 		}
 		else {
-			lastZoneIcon.addTarget(zoneIcon);
+			lastZoneIcon.addTarget(zoneIcon)
 		}
 
-		lastZoneIcon = zoneIcon;
-		icons.push(zoneIcon);
-	});
+		lastZoneIcon = zoneIcon
+		icons.push(zoneIcon)
+	})
 
 	// Connect zone icons in a loop
-	lastZoneIcon.addTarget(firstZoneIcon);
+	lastZoneIcon.addTarget(firstZoneIcon)
 
 	// Set icon on the center
 	if (centerIcon) {
 
-		const iconItem = flight.group.createItem("MCU_Icon");
+		const iconItem = flight.group.createItem("MCU_Icon")
 
-		iconItem.setPosition(position);
-		iconItem.Coalitions = [flight.coalition];
-		iconItem.IconId = MCU_Icon.ICON_WAYPOINT;
+		iconItem.setPosition(position)
+		iconItem.Coalitions = [flight.coalition]
+		iconItem.IconId = MCU_Icon.ICON_WAYPOINT
 
-		icons.push(iconItem);
+		icons.push(iconItem)
 	}
 
-	return icons;
+	return icons
 }
 
-module.exports.RESTRICTED_BORDER = RESTRICTED_BORDER;
-module.exports.isOffmap = isOffmap;
-module.exports.isRestricted = isRestricted;
-module.exports.getMapIntersection = getMapIntersection;
-module.exports.markMapArea = markMapArea;
+module.exports.RESTRICTED_BORDER = RESTRICTED_BORDER
+module.exports.isOffmap = isOffmap
+module.exports.isRestricted = isRestricted
+module.exports.getMapIntersection = getMapIntersection
+module.exports.markMapArea = markMapArea

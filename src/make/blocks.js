@@ -1,42 +1,42 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const log = require("../log");
-const {Bridge} = require("../item");
-const data = require("../data");
+const log = require("../log")
+const {Bridge} = require("../item")
+const data = require("../data")
 
 // Generate mission static blocks
 module.exports = function makeBlocks() {
 
-	const blocksGroup = this.createItem("Group");
+	const blocksGroup = this.createItem("Group")
 
-	blocksGroup.setName("BLOCK");
+	blocksGroup.setName("BLOCK")
 
 	// Total block count
-	let totalBlocks = 0;
-	let totalBridges = 0;
+	let totalBlocks = 0
+	let totalBridges = 0
 
 	this.battle.blocks.forEach(blocksFile => {
 
-		const blocks = require(this.battlePath + "blocks/" + blocksFile);
+		const blocks = require(this.battlePath + "blocks/" + blocksFile)
 
 		// Add all blocks to a group
 		for (let i = 0; i < blocks.length; i++) {
 
-			const blockItem = blocks[i];
-			const block = blocksGroup.createItem(data.getItemType(blockItem[0]));
+			const blockItem = blocks[i]
+			const block = blocksGroup.createItem(data.getItemType(blockItem[0]))
 
-			block.setPosition(blockItem[1], blockItem[2], blockItem[3]);
-			block.setOrientation(blockItem[4]);
+			block.setPosition(blockItem[1], blockItem[2], blockItem[3])
+			block.setOrientation(blockItem[4])
 
-			totalBlocks++;
+			totalBlocks++
 
 			if (block instanceof Bridge) {
-				totalBridges++;
+				totalBridges++
 			}
 		}
-	});
+	})
 
 	// Log mission blocks info
-	log.I("Blocks:", totalBlocks, {bridges: totalBridges});
-};
+	log.I("Blocks:", totalBlocks, {bridges: totalBridges})
+}

@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Deactivate item
 module.exports = class MCU_Deactivate extends MCU {
@@ -13,6 +13,6 @@ module.exports = class MCU_Deactivate extends MCU {
 	 * @returns {Buffer} Binary representation of the item.
 	 */
 	*toBinary(index) {
-		yield* super.toBinary(index, 45);
+		yield* super.toBinary(index, 45)
 	}
-};
+}

@@ -1,5 +1,5 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
 module.exports = {
 	scripts: [
@@ -8,4 +8,4 @@ module.exports = {
 	assets: [
 		"temp/data/**/*.json"
 	]
-};
+}

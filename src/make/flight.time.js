@@ -1,32 +1,32 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
 // Make flight time
 module.exports = function makeFlightTime(flight) {
 
-	let time = 0;
+	let time = 0
 
 	// Sum total flight time from all activities
 	for (const activity of flight.plan) {
 
 		if (activity.makeTime) {
-			activity.time = activity.makeTime();
+			activity.time = activity.makeTime()
 		}
 
 		if (activity.time === undefined) {
-			continue;
+			continue
 		}
 
-		time += activity.time;
+		time += activity.time
 	}
 
 	// Set AI "Time" property value for each plane
 	for (const element of flight.elements) {
 		for (const {item: planeItem} of element) {
 
-			planeItem.Time = Math.round(time / 60);
+			planeItem.Time = Math.round(time / 60)
 		}
 	}
 
-	flight.time = time;
-};
+	flight.time = time
+}

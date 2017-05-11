@@ -1,34 +1,34 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const {Vector} = require("sylvester");
-const {activityType} = require("../data");
-const {makeActivity} = require("./flight.plan");
-const {isOffmap, getMapIntersection, markMapArea} = require("./map");
+const {Vector} = require("sylvester")
+const {activityType} = require("../data")
+const {makeActivity} = require("./flight.plan")
+const {isOffmap, getMapIntersection, markMapArea} = require("./map")
 
 // Flight make parts
-const makeFlightAltitude = require("./flight.altitude");
-const makeFlightRoute = require("./flight.route");
-const makeAirfieldTaxi = require("./airfield.taxi");
+const makeFlightAltitude = require("./flight.altitude")
+const makeFlightRoute = require("./flight.route")
+const makeAirfieldTaxi = require("./airfield.taxi")
 
 // Minimum distance required between rebase airfields and map border
-const MIN_DISTANCE_AIRFIELD = 20000; // 20 km
-const MIN_DISTANCE_BORDER = 40000; // 40 km
+const MIN_DISTANCE_AIRFIELD = 20000 // 20 km
+const MIN_DISTANCE_BORDER = 40000 // 40 km
 
 // Make mission rebase task
 module.exports = function makeTaskRebase(flight) {
 
-	const rand = this.rand;
-	const unit = this.units[flight.unit];
-	const plan = flight.plan;
-	const airfieldFrom = this.airfields[flight.airfield];
-	const airfieldTo = this.airfields[rand.pick(unit.rebase)];
-	const isPlayerFlight = Boolean(flight.player);
-	const isPlayerFlightLeader = (flight.player === flight.leader);
-	const debugFlights = Boolean(this.debug && this.debug.flights);
+	const rand = this.rand
+	const unit = this.units[flight.unit]
+	const plan = flight.plan
+	const airfieldFrom = this.airfields[flight.airfield]
+	const airfieldTo = this.airfields[rand.pick(unit.rebase)]
+	const isPlayerFlight = Boolean(flight.player)
+	const isPlayerFlightLeader = (flight.player === flight.leader)
+	const debugFlights = Boolean(this.debug && this.debug.flights)
 
 	// Make rebase flight altitude profile
-	const altitude = makeFlightAltitude.call(this, flight);
+	const altitude = makeFlightAltitude.call(this, flight)
 
 	const route =	makeFlightRoute.call(
 		this,
@@ -46,18 +46,18 @@ module.exports = function makeTaskRebase(flight) {
 			),
 			solid: true
 		}
-	);
+	)
 
 	// Add rebase task fly activity
 	plan.push(makeActivity.call(this, flight, {
 		type: activityType.FLY,
 		route,
 		visible: isPlayerFlight
-	}));
+	}))
 
-	let taxiRouteID;
+	let taxiRouteID
 
-	plan.land = false;
+	plan.land = false
 
 	// Add rebase task land activity
 	if (!airfieldTo.offmap) {
@@ -65,31 +65,31 @@ module.exports = function makeTaskRebase(flight) {
 		// Pick a taxi route for landing on target airfield
 		if (airfieldTo.taxi) {
 
-			taxiRouteID = +rand.pick(Object.keys(airfieldTo.taxi));
+			taxiRouteID = +rand.pick(Object.keys(airfieldTo.taxi))
 
-			const activeTaxiRoutes = airfieldTo.activeTaxiRoutes;
-			const taxiRunwayID = airfieldTo.taxi[taxiRouteID][1];
+			const activeTaxiRoutes = airfieldTo.activeTaxiRoutes
+			const taxiRunwayID = airfieldTo.taxi[taxiRouteID][1]
 
 			// Use already active taxi route for this runway
 			if (activeTaxiRoutes && taxiRunwayID in activeTaxiRoutes) {
-				taxiRouteID = activeTaxiRoutes[taxiRunwayID];
+				taxiRouteID = activeTaxiRoutes[taxiRunwayID]
 			}
 			// Make a new taxi route on target airfield
 			else {
-				makeAirfieldTaxi.call(this, airfieldTo, taxiRouteID);
+				makeAirfieldTaxi.call(this, airfieldTo, taxiRouteID)
 			}
 		}
 
 		const landActivity = makeActivity.call(this, flight, {
 			type: activityType.LAND,
 			airfield: airfieldTo.id
-		});
+		})
 
 		if (taxiRouteID !== undefined) {
-			landActivity.taxi = taxiRouteID;
+			landActivity.taxi = taxiRouteID
 		}
 
-		plan.land = plan[plan.push(landActivity) - 1];
+		plan.land = plan[plan.push(landActivity) - 1]
 	}
 
 	if (!airfieldTo.offmap && isPlayerFlight) {
@@ -98,96 +98,96 @@ module.exports = function makeTaskRebase(flight) {
 		markMapArea.call(this, flight, {
 			position: airfieldTo.position,
 			centerIcon: true
-		});
+		})
 
 		// Use target airfield radio navigation beacon
 		if (airfieldTo.beacon) {
-			flight.beacon = airfieldTo.beacon;
+			flight.beacon = airfieldTo.beacon
 		}
 	}
 
 	// Register target airfield location as flight target
-	flight.target = [[airfieldTo.position[0], airfieldTo.position[2]]];
-};
+	flight.target = [[airfieldTo.position[0], airfieldTo.position[2]]]
+}
 
 // Check if rebase task is valid for target position/point
 function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 
-	let validationCache = isValidRebaseTask.validationCache;
+	let validationCache = isValidRebaseTask.validationCache
 
 	// Initialize rebase task validation cache
 	if (!validationCache) {
-		validationCache = isValidRebaseTask.validationCache = new Map();
+		validationCache = isValidRebaseTask.validationCache = new Map()
 	}
 
 	// Lookup cache data
-	let cacheFrom = validationCache.get(airfieldFrom);
+	let cacheFrom = validationCache.get(airfieldFrom)
 
 	if (cacheFrom) {
 
-		const isValid = cacheFrom.get(airfieldTo);
+		const isValid = cacheFrom.get(airfieldTo)
 
 		if (isValid !== undefined) {
-			return isValid;
+			return isValid
 		}
 	}
 
 	const isValid = (() => {
 
-		const fromVector = Vector.create(airfieldFrom.position);
-		const toVector = Vector.create(airfieldTo.position);
-		const distance = fromVector.distanceFrom(toVector);
+		const fromVector = Vector.create(airfieldFrom.position)
+		const toVector = Vector.create(airfieldTo.position)
+		const distance = fromVector.distanceFrom(toVector)
 
 		// Enforce required minimum distance between rebase airfields
 		if (distance < MIN_DISTANCE_AIRFIELD) {
-			return false;
+			return false
 		}
 
-		const isOffmapFrom = isOffmap(map, fromVector);
-		const isOffmapTo = isOffmap(map, toVector);
+		const isOffmapFrom = isOffmap(map, fromVector)
+		const isOffmapTo = isOffmap(map, toVector)
 
 		// Offmap-to-offmap airfield rebase tasks are invalid
 		if (isOffmapFrom && isOffmapTo) {
-			return false;
+			return false
 		}
 
 		// Avoid rebase tasks near the edge of the map border
 		if (isOffmapFrom || isOffmapTo) {
 
-			const {borderPlane} = getMapIntersection(map, fromVector, toVector, distance);
-			let distanceBorder = false;
+			const {borderPlane} = getMapIntersection(map, fromVector, toVector, distance)
+			let distanceBorder = false
 
 			if (borderPlane) {
 
 				// Flying outside the map
 				if (isOffmapTo) {
-					distanceBorder = borderPlane.distanceFrom(fromVector);
+					distanceBorder = borderPlane.distanceFrom(fromVector)
 				}
 				// Flying inside the map
 				else {
-					distanceBorder = borderPlane.distanceFrom(toVector);
+					distanceBorder = borderPlane.distanceFrom(toVector)
 				}
 			}
 
 			// Enforce required minimum distance between map border
 			if (distanceBorder === false || distanceBorder < MIN_DISTANCE_BORDER) {
-				return false;
+				return false
 			}
 		}
 
-		return true;
-	})();
+		return true
+	})()
 
 	// Update validation cache
 	if (!cacheFrom) {
 
-		cacheFrom = new Map();
-		validationCache.set(airfieldFrom, cacheFrom);
+		cacheFrom = new Map()
+		validationCache.set(airfieldFrom, cacheFrom)
 	}
 
-	cacheFrom.set(airfieldTo, isValid);
+	cacheFrom.set(airfieldTo, isValid)
 
-	return isValid;
+	return isValid
 }
 
-module.exports.isValidRebaseTask = isValidRebaseTask;
+module.exports.isValidRebaseTask = isValidRebaseTask

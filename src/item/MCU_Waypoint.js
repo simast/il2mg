@@ -1,17 +1,17 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Waypoint item
 class MCU_Waypoint extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.Area = 0;
-		this.Speed = 0;
-		this.Priority = MCU_Waypoint.PRIORITY_MEDIUM;
+		this.Area = 0
+		this.Speed = 0
+		this.Priority = MCU_Waypoint.PRIORITY_MEDIUM
 	}
 
 	/**
@@ -22,26 +22,26 @@ class MCU_Waypoint extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 42);
+		yield* super.toBinary(index, 42)
 
-		const buffer = new Buffer(20);
+		const buffer = new Buffer(20)
 
 		// Area (m)
-		this.writeDouble(buffer, this.Area);
+		this.writeDouble(buffer, this.Area)
 
 		// Speed (km/h)
-		this.writeDouble(buffer, this.Speed);
+		this.writeDouble(buffer, this.Speed)
 
 		// Priority
-		this.writeUInt32(buffer, this.Priority);
+		this.writeUInt32(buffer, this.Priority)
 
-		yield buffer;
+		yield buffer
 	}
 }
 
 // Waypoint priority constants
-MCU_Waypoint.PRIORITY_LOW = 0;
-MCU_Waypoint.PRIORITY_MEDIUM = 1;
-MCU_Waypoint.PRIORITY_HIGH = 2;
+MCU_Waypoint.PRIORITY_LOW = 0
+MCU_Waypoint.PRIORITY_MEDIUM = 1
+MCU_Waypoint.PRIORITY_HIGH = 2
 
-module.exports = MCU_Waypoint;
+module.exports = MCU_Waypoint

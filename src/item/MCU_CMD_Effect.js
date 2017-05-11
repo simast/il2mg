@@ -1,15 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict";
+"use strict"
 
-const MCU = require("./MCU");
+const MCU = require("./MCU")
 
 // Effect command item
 class MCU_CMD_Effect extends MCU {
 
 	constructor() {
-		super();
+		super()
 
-		this.ActionType = MCU_CMD_Effect.ACTION_START;
+		this.ActionType = MCU_CMD_Effect.ACTION_START
 	}
 
 	/**
@@ -20,19 +20,19 @@ class MCU_CMD_Effect extends MCU {
 	 */
 	*toBinary(index) {
 
-		yield* super.toBinary(index, 26);
+		yield* super.toBinary(index, 26)
 
-		const buffer = new Buffer(4);
+		const buffer = new Buffer(4)
 
 		// ActionType
-		this.writeUInt32(buffer, this.ActionType);
+		this.writeUInt32(buffer, this.ActionType)
 
-		yield buffer;
+		yield buffer
 	}
 }
 
 // Effect command action type constants
-MCU_CMD_Effect.ACTION_START = 0;
-MCU_CMD_Effect.ACTION_STOP = 1;
+MCU_CMD_Effect.ACTION_START = 0
+MCU_CMD_Effect.ACTION_STOP = 1
 
-module.exports = MCU_CMD_Effect;
+module.exports = MCU_CMD_Effect

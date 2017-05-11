@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict";
+"use strict"
 
-const React = require("react");
-const PropTypes = require("prop-types");
+const React = require("react")
+const PropTypes = require("prop-types")
 
 // Mission details pane component
 class MissionDetails extends React.Component {
@@ -11,35 +11,35 @@ class MissionDetails extends React.Component {
 
 		// Scroll briefing text to the top
 		if (this.briefingElement) {
-			this.briefingElement.scrollTop = 0;
+			this.briefingElement.scrollTop = 0
 		}
 	}
 
 	// Render component
 	render() {
 
-		const mission = this.props.mission;
+		const mission = this.props.mission
 
 		const briefingProps = {
 			dangerouslySetInnerHTML: {
 				__html: mission.briefing
 			},
 			ref(ref) {
-				this.briefingElement = ref;
+				this.briefingElement = ref
 			}
-		};
+		}
 
 		return (
 			<section id="missionDetails">
 				<h1>{mission.title}</h1>
 				<div id="briefing" {...briefingProps}></div>
 			</section>
-		);
+		)
 	}
 }
 
 MissionDetails.propTypes = {
 	mission: PropTypes.object.isRequired
-};
+}
 
-module.exports = MissionDetails;
+module.exports = MissionDetails
