@@ -142,7 +142,7 @@ class Missions extends React.Component {
 
 			// Remove selected mission
 			actions.left.set("Remove", {
-				onClick: (event) => {
+				onClick(event) {
 					this.removeMission(!event.ctrlKey);
 				}
 			});
@@ -151,10 +151,10 @@ class Missions extends React.Component {
 			actions.right = new Map();
 			actions.right.set("Launch", {
 				className: "difficulty" + difficulty,
-				onClick: (event) => {
+				onClick(event) {
 					this.launchMission(event.ctrlKey);
 				},
-				onContextMenu: () => {
+				onContextMenu() {
 					this.launchMenu.popup(remote.getCurrentWindow());
 				}
 			});
@@ -199,7 +199,7 @@ class Missions extends React.Component {
 		};
 
 		// Scan each file in the target path/directory
-		fs.readdirSync(missionsPath).forEach((fileName) => {
+		fs.readdirSync(missionsPath).forEach(fileName => {
 
 			const missionID = path.basename(fileName, path.extname(fileName));
 
@@ -236,9 +236,7 @@ class Missions extends React.Component {
 		});
 
 		// Sort missions list based on id (new missions first)
-		missions.list.sort((a, b) => {
-			return b.id.localeCompare(a.id);
-		});
+		missions.list.sort((a, b) => b.id.localeCompare(a.id));
 
 		return missions;
 	}

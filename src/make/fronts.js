@@ -79,7 +79,7 @@ module.exports = function makeFronts() {
 	const locationsData = Object.create(null);
 
 	// Make front point icon item
-	const makeFrontPoint = (pointID) => {
+	const makeFrontPoint = pointID => {
 
 		// Point item is already created
 		if (pointItems.has(pointID)) {
@@ -164,7 +164,7 @@ module.exports = function makeFronts() {
 					};
 
 					// Index line for each grid dimension
-					["x", "z"].forEach((dimension) => {
+					["x", "z"].forEach(dimension => {
 
 						for (let c = gridFrom[dimension]; c <= gridTo[dimension]; c++) {
 
@@ -207,7 +207,7 @@ module.exports = function makeFronts() {
 	(() => {
 
 		// Run ray tracing over each map dimension (for precision)
-		["x", "z"].forEach((dimension) => {
+		["x", "z"].forEach(dimension => {
 
 			if (!rayLines[dimension].size) {
 				return;
@@ -261,9 +261,9 @@ module.exports = function makeFronts() {
 				}
 
 				// Sort intersection point list based on ascending ray axis position
-				intersections.sort((a, b) => {
-					return a.point.e(axisIndexRay + 1) - b.point.e(axisIndexRay + 1);
-				});
+				intersections.sort((a, b) => (
+					a.point.e(axisIndexRay + 1) - b.point.e(axisIndexRay + 1)
+				));
 
 				const territoriesRanges = [];
 				let gridFrom = 0;
@@ -308,7 +308,7 @@ module.exports = function makeFronts() {
 				}
 
 				// Set identified territories to the grid
-				territoriesRanges.forEach((range) => {
+				territoriesRanges.forEach(range => {
 
 					const rangeFrom = Math.max(range.from, 0);
 					const rangeTo = Math.min(range.to, maxRayGrid);

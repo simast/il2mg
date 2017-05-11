@@ -128,7 +128,7 @@ app.on("ready", () => {
 	mainWindow.loadURL("file://" + __dirname + "/main.html");
 
 	// Prevent document from changing window title
-	mainWindow.on("page-title-updated", (event) => {
+	mainWindow.on("page-title-updated", event => {
 		event.preventDefault();
 	});
 
@@ -138,7 +138,7 @@ app.on("ready", () => {
 	});
 
 	// Disable opening new windows (also fixes shift+click on link issue)
-	mainWindow.webContents.on("new-window", (event) => {
+	mainWindow.webContents.on("new-window", event => {
 		event.preventDefault();
 	});
 

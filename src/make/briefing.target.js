@@ -50,7 +50,7 @@ module.exports = function makeBriefingTarget(target) {
 		);
 
 		// Find all interesting places and airfields around the target point
-		[locations.places, locations.airfields].forEach((locationIndex) => {
+		[locations.places, locations.airfields].forEach(locationIndex => {
 			foundPlaces = foundPlaces.concat(locationIndex.findIn(pointLocation));
 		});
 
@@ -61,7 +61,7 @@ module.exports = function makeBriefingTarget(target) {
 		const targetVector = Vector.create(point);
 
 		// Filter out places outside max place radius and/or with bad names
-		foundPlaces = foundPlaces.filter((place) => {
+		foundPlaces = foundPlaces.filter(place => {
 
 			// Place has to have a valid name (without digits and other punctuation)
 			if (!place.name || (!isSingleTarget && /[^A-Za-z\s\-]/.test(place.name))) {

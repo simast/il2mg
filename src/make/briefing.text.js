@@ -162,7 +162,7 @@ module.exports = function makeBriefingText(template, view) {
 						rand.integer(1, Math.min(sample.length, 2))
 					)
 					.sort()
-					.forEach((sampleIndex) => {
+					.forEach(sampleIndex => {
 						result.push(sample[sampleIndex]);
 					});
 			}

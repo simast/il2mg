@@ -6,19 +6,17 @@ const ActionBar = require("./ActionBar");
 const Photos = require("./Photos");
 
 // Screen component
-module.exports = ({id, children, actions}) => {
+module.exports = ({id, children, actions}) => (
 
-	return (
-		<div id="screen">
-			<Photos screen={id}/>
-			<div id="container">
-				<div id="content">
-					<div id={id}>
-						{children}
-					</div>
+	<div id="screen">
+		<Photos screen={id}/>
+		<div id="container">
+			<div id="content">
+				<div id={id}>
+					{children}
 				</div>
-				<ActionBar actions={actions} />
 			</div>
+			<ActionBar actions={actions} />
 		</div>
-	);
-};
+	</div>
+);

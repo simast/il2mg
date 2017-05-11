@@ -24,7 +24,7 @@ module.exports = function makeLocations() {
 	};
 
 	// Load static map locations (places, rivers) from data files
-	this.battle.locations.forEach((locationsFile) => {
+	this.battle.locations.forEach(locationsFile => {
 
 		const locationsData = require(this.battlePath + "locations/" + locationsFile);
 		const locationsList = [];

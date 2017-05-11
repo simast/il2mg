@@ -34,7 +34,7 @@ module.exports = class ActivityWait {
 		input(waitTimer);
 
 		// Connect timer command to next action
-		return (input) => {
+		return input => {
 			waitTimer.addTarget(input);
 		};
 	}

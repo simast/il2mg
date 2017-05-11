@@ -16,7 +16,7 @@ class ChoiceList extends React.Component {
 		let reset;
 
 		// Build a list of choice item elements to render
-		const items = choices.map((choice) => {
+		const items = choices.map(choice => {
 
 			if (choice.valid || choice.selected) {
 				validCount++;

@@ -41,7 +41,7 @@ module.exports = function makeBattle() {
 		coalitions.push(Item.DEFAULT_COALITION);
 		countries[Item.DEFAULT_COUNTRY] = Item.DEFAULT_COALITION;
 
-		battle.countries.forEach((countryID) => {
+		battle.countries.forEach(countryID => {
 
 			// Support for "alias" (hidden) countries
 			countryID = data.countries[countryID].alias || countryID;
@@ -56,9 +56,9 @@ module.exports = function makeBattle() {
 			countries[countryID] = coalitionID;
 		});
 
-		return Object.keys(countries).map((countryID) => {
-			return [countryID, countries[countryID]];
-		});
+		return Object.keys(countries).map(countryID => (
+			[countryID, countries[countryID]]
+		));
 	})();
 
 	// Set PlayerConfig property to selected player plane item

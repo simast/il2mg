@@ -127,7 +127,7 @@ module.exports = function makeAirfields() {
 				const unit = airfieldUnits[unitID];
 				const groupID = unit.group;
 
-				unit.planes.forEach((planeID) => {
+				unit.planes.forEach(planeID => {
 
 					const plane = mission.planes[planeID];
 					const planeSizeID = planeSize[String(plane.size).toUpperCase()];
@@ -157,9 +157,7 @@ module.exports = function makeAirfields() {
 			airfield.countries = Object.keys(countries).map(Number);
 
 			// Sort countries list by number of units present on the airfield
-			airfield.countries.sort((a, b) => {
-				return countries[b] - countries[a];
-			});
+			airfield.countries.sort((a, b) => countries[b] - countries[a]);
 
 			// Airfield main country
 			airfield.country = airfield.countries[0];
@@ -216,7 +214,7 @@ module.exports = function makeAirfields() {
 					}
 
 					// TODO: Sort unit list by plane group size
-					rand.shuffle(Object.keys(planesBySize)).forEach((unitID) => {
+					rand.shuffle(Object.keys(planesBySize)).forEach(unitID => {
 
 						const unitPlanes = planesBySize[unitID];
 						const planeSizeSectors = sectorsIndex[planeSizeID];
@@ -309,14 +307,11 @@ module.exports = function makeAirfields() {
 		}
 
 		// Initialize airfield zone using a lazy getter
-		addLazyProperty(airfield, "zone", () => {
-
-			return mission.createActivityZone({
-				group: airfield.group,
-				point: [position[0], position[2]],
-				radius: AIRFIELD_ZONE_RADIUS
-			});
-		});
+		addLazyProperty(airfield, "zone", () => mission.createActivityZone({
+			group: airfield.group,
+			point: [position[0], position[2]],
+			radius: AIRFIELD_ZONE_RADIUS
+		}));
 
 		// Make airfield item limits
 		makeAirfieldLimits.call(mission, airfield);
@@ -336,7 +331,7 @@ module.exports = function makeAirfields() {
 			const extraItems = [];
 			let useExtraItems = false;
 
-			items.forEach((item) => {
+			items.forEach(item => {
 
 				const itemTypeID = item[0];
 
@@ -404,7 +399,7 @@ module.exports = function makeAirfields() {
 				// Add generated item objects to airfield group
 				if (Array.isArray(itemObjects) && itemObjects.length) {
 
-					itemObjects.forEach((itemObject) => {
+					itemObjects.forEach(itemObject => {
 
 						if (itemObject instanceof Item) {
 							airfield.group.addItem(itemObject);

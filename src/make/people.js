@@ -19,14 +19,14 @@ module.exports = function makePeople() {
 			const parts = [];
 
 			// Make each sub-part of name part
-			names[namePart].forEach((nameList) => {
+			names[namePart].forEach(nameList => {
 
 				// Build range/interval name list index
 				if (!nameList.ranges) {
 
 					nameList.ranges = [];
 
-					Object.keys(nameList).forEach((value) => {
+					Object.keys(nameList).forEach(value => {
 
 						value = parseInt(value, 10);
 
@@ -35,9 +35,7 @@ module.exports = function makePeople() {
 						}
 					});
 
-					nameList.ranges.sort((a, b) => {
-						return b - a;
-					});
+					nameList.ranges.sort((a, b) => b - a);
 				}
 
 				let name;

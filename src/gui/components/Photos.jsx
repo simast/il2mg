@@ -38,20 +38,14 @@ class Photos extends React.Component {
 	// Render component
 	render() {
 
-		let i = 1;
-
-		// TODO: Preload other photos as hidden images
-
 		return (
 			<div id="photos">
-				{this.state.photos.map((photoID) => {
-					return (
-						<div key={photoID} className={"photo " + this.props.screen + (i++)}>
-							<img src={"assets/photo-" + photoID + ".jpg"} />
-							<div></div>
-						</div>
-					);
-				})}
+				{this.state.photos.map((photoID, index) => (
+					<div key={photoID} className={"photo " + this.props.screen + (index + 1)}>
+						<img src={"assets/photo-" + photoID + ".jpg"} />
+						<div></div>
+					</div>
+				))}
 			</div>
 		);
 	}

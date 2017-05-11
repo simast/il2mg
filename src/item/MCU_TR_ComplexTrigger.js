@@ -43,7 +43,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		this.CheckPlanes = 0;
 		this.CheckVehicles = 0;
 
-		eventFilters.forEach((eventFilter) => {
+		eventFilters.forEach(eventFilter => {
 			this[eventFilter] = 0;
 		});
 	}
@@ -169,7 +169,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		this.writeUInt32(buffer, scripts.length);
 
 		// ObjectScript filter list items
-		scripts.forEach((script) => {
+		scripts.forEach(script => {
 			this.writeString(buffer, Buffer.byteLength(script), script);
 		});
 
@@ -177,7 +177,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		this.writeUInt32(buffer, names.length);
 
 		// ObjectName filter list items
-		names.forEach((name) => {
+		names.forEach(name => {
 			this.writeString(buffer, Buffer.byteLength(name), name);
 		});
 

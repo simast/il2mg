@@ -118,7 +118,7 @@ module.exports = function(grunt) {
 				"records",
 				"seasons",
 				"dates"
-			].forEach((dataType) => {
+			].forEach(dataType => {
 				json[dataType] = Object.create(null);
 			});
 
@@ -262,7 +262,7 @@ module.exports = function(grunt) {
 										validPlaneTypes = planeGroupIndex[planeID];
 									}
 
-									validPlaneTypes.forEach((planeID) => {
+									validPlaneTypes.forEach(planeID => {
 										planes.add(planeID);
 									});
 								}
@@ -340,7 +340,7 @@ module.exports = function(grunt) {
 						continue;
 					}
 
-					planes.forEach((planeID) => {
+					planes.forEach(planeID => {
 
 						const validTasks = [];
 
@@ -425,7 +425,7 @@ module.exports = function(grunt) {
 							json.planes[planeID] = data.planes[planeID].name;
 						}
 
-						validTasks.forEach((taskID) => {
+						validTasks.forEach(taskID => {
 
 							// Register new task
 							if (!json.tasks[taskID]) {
@@ -500,7 +500,7 @@ module.exports = function(grunt) {
 			}
 
 			// Sort and build dates index
-			Object.keys(datesIndex).sort().forEach((date) => {
+			Object.keys(datesIndex).sort().forEach(date => {
 
 				json.dates[date] = [];
 

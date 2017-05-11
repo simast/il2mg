@@ -102,7 +102,7 @@ module.exports = function makeAirfieldWreck(airfield, item) {
 	// Set plane/vehicle damaged state (for destroyed effect)
 	const damageItem = new Item("Damaged");
 
-	wreckType.damage.forEach((damageIndex) => {
+	wreckType.damage.forEach(damageIndex => {
 		damageItem[damageIndex] = 1;
 	});
 

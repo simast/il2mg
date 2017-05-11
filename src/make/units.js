@@ -20,7 +20,7 @@ module.exports = function makeUnits() {
 	});
 
 	// Make unit airfields
-	const makeAirfields = (unitData) => {
+	const makeAirfields = unitData => {
 
 		const airfields = [];
 		const dataAirfields = unitData.airfields;
@@ -57,7 +57,7 @@ module.exports = function makeUnits() {
 	};
 
 	// Make unit pilots
-	const makePilots = (unitData) => {
+	const makePilots = unitData => {
 
 		const pilots = [];
 		const dataPilots = unitData.pilots;
@@ -85,7 +85,7 @@ module.exports = function makeUnits() {
 	};
 
 	// Make unit plane storages
-	const makePlaneStorages = (unitData) => {
+	const makePlaneStorages = unitData => {
 
 		const planeStorages = [];
 		const dataPlanes = unitData.planes;
@@ -95,7 +95,7 @@ module.exports = function makeUnits() {
 		}
 
 		// Find matching plane storages based on to/from date ranges
-		dataPlanes.forEach((planeStorage) => {
+		dataPlanes.forEach(planeStorage => {
 
 			const dateRange = matchMissionDateRange(planeStorage[2], planeStorage[3]);
 
@@ -146,7 +146,7 @@ module.exports = function makeUnits() {
 	};
 
 	// Make unit name
-	const makeName = (unitData) => {
+	const makeName = unitData => {
 
 		const name = unitData.name;
 
@@ -159,7 +159,7 @@ module.exports = function makeUnits() {
 	};
 
 	// Make unit role
-	const makeRole = (unitData) => {
+	const makeRole = unitData => {
 
 		let role = unitData.role;
 
@@ -311,7 +311,7 @@ module.exports = function makeUnits() {
 			let lastSplitUnitIndex = unitAirfields.length - 1;
 			let unitTotalPlanes = 0;
 
-			unitPlaneStorages.forEach((planeStorage) => {
+			unitPlaneStorages.forEach(planeStorage => {
 				unitTotalPlanes += planeStorage[1];
 			});
 
@@ -400,7 +400,7 @@ module.exports = function makeUnits() {
 		}
 
 		// Process each unit part
-		unitParts.forEach((unit) => {
+		unitParts.forEach(unit => {
 
 			const unitID = unit.id;
 
@@ -449,7 +449,7 @@ module.exports = function makeUnits() {
 			}
 
 			// Register unit plane storages
-			unitPlaneStorages.forEach((planeStorage) => {
+			unitPlaneStorages.forEach(planeStorage => {
 
 				planeStorage.units = planeStorage.units || [];
 				planeStorage.units.push(unitID);
@@ -488,7 +488,7 @@ module.exports = function makeUnits() {
 	}
 
 	// Distribute available planes from plane storages
-	planeStorages.forEach((planeStorage) => {
+	planeStorages.forEach(planeStorage => {
 
 		// TODO: Improve plane distribution algorithm
 		// TODO: Honor min/max plane counts

@@ -16,7 +16,7 @@ module.exports = function makeBlocks() {
 	let totalBlocks = 0;
 	let totalBridges = 0;
 
-	this.battle.blocks.forEach((blocksFile) => {
+	this.battle.blocks.forEach(blocksFile => {
 
 		const blocks = require(this.battlePath + "blocks/" + blocksFile);
 

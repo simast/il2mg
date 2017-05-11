@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 		let totalComments = 0;
 		let totalFiles = 0;
 
-		sourceFiles.forEach((sourceFile) => {
+		sourceFiles.forEach(sourceFile => {
 
 			const sourceType = path.extname(sourceFile).split(".")[1];
 			const sourceReport = sloc(grunt.file.read(sourceFile), sourceType);

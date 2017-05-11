@@ -13,7 +13,7 @@ module.exports = function makeVehicles() {
 	const staticVehicles = Object.create(null);
 
 	// Vehicle list is indexed by country ID
-	battle.countries.forEach((countryID) => {
+	battle.countries.forEach(countryID => {
 
 		vehicles[countryID] = Object.create(null);
 		staticVehicles[countryID] = Object.create(null);
@@ -40,7 +40,7 @@ module.exports = function makeVehicles() {
 				continue;
 			}
 
-			vehicle.type.forEach((vehicleType) => {
+			vehicle.type.forEach(vehicleType => {
 
 				if (!vehicles[countryID][vehicleType]) {
 					vehicles[countryID][vehicleType] = [];

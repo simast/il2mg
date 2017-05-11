@@ -95,7 +95,7 @@ module.exports = function makeFlight(params) {
 	const invalidTaxiSectors = new Set();
 
 	// Find flight taxi route (from a list of valid sectors)
-	const findTaxiRoute = (sectors) => {
+	const findTaxiRoute = sectors => {
 
 		for (const sector of sectors) {
 
@@ -117,9 +117,7 @@ module.exports = function makeFlight(params) {
 			}
 
 			// Pick any taxi route where the flight fits the best
-			const taxiRoutes = Object.keys(taxiSpawns).filter((value) => {
-				return value > 0;
-			});
+			const taxiRoutes = Object.keys(taxiSpawns).filter(value => value > 0);
 
 			// Continue to another sector where unit planes are present
 			if (!taxiRoutes.length && !validSpawns.length) {
@@ -162,9 +160,9 @@ module.exports = function makeFlight(params) {
 			if (flight.planes > 1) {
 
 				// Sort sectors list by number of planes present
-				sectors.sort((a, b) => {
-					return unitPlaneItems[b].length - unitPlaneItems[a].length;
-				});
+				sectors.sort((a, b) => (
+					unitPlaneItems[b].length - unitPlaneItems[a].length
+				));
 			}
 			else {
 				rand.shuffle(sectors);
@@ -186,9 +184,9 @@ module.exports = function makeFlight(params) {
 				if (flight.planes > 1) {
 
 					// Sort plane group sector list by number of planes present
-					sectors.sort((a, b) => {
-						return planeGroupSectors[b] - planeGroupSectors[a];
-					});
+					sectors.sort((a, b) => (
+						planeGroupSectors[b] - planeGroupSectors[a]
+					));
 				}
 				else {
 					rand.shuffle(sectors);
@@ -292,9 +290,7 @@ module.exports = function makeFlight(params) {
 		if (taxiRoutes.length) {
 
 			// Sort taxi routes based on shortest distance to player plane item
-			taxiRoutes.sort((a, b) => {
-				return (a.distance - b.distance);
-			});
+			taxiRoutes.sort((a, b) => (a.distance - b.distance));
 
 			const playerTaxiRouteID = taxiRoutes[0].id;
 

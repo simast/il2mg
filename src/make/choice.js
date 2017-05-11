@@ -76,7 +76,7 @@ module.exports = function makeChoice() {
 			continue;
 		}
 
-		params[param].split(PARAM_SEP).forEach((value) => {
+		params[param].split(PARAM_SEP).forEach(value => {
 
 			value = value.trim();
 
@@ -112,7 +112,7 @@ module.exports = function makeChoice() {
 		// Build regular expression object used to scan battle index records
 		scanRegExp = [];
 
-		RECORD_PARAMS.forEach((param) => {
+		RECORD_PARAMS.forEach(param => {
 
 			let filterData = filter[param];
 
@@ -194,7 +194,7 @@ module.exports = function makeChoice() {
 	}
 
 	// Filter initial dates based on player choices
-	validDates = validDates.filter((date) => {
+	validDates = validDates.filter(date => {
 
 		for (const recordID of index.dates[date]) {
 

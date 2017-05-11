@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 				// Build output JSON object with recursion
 				(function buildJSON(jsonItems, items) {
 
-					items.forEach((item) => {
+					items.forEach(item => {
 
 						// Process group child items
 						if (item instanceof Item.Group) {
@@ -260,7 +260,7 @@ module.exports = function(grunt) {
 							jsonItem.push(orientation);
 
 							// Item data
-							itemData.forEach((data) => {
+							itemData.forEach(data => {
 								jsonItem.push(data);
 							});
 

@@ -168,7 +168,7 @@ function markMapArea(flight, {
 	let lastZoneIcon;
 
 	// NOTE: Using three or four points to define a circle area
-	iconDegrees.forEach((degrees) => {
+	iconDegrees.forEach(degrees => {
 
 		let radiusExtra = 0;
 		let degreesExtra = 0;

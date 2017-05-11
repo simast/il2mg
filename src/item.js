@@ -513,7 +513,7 @@ class Item {
 
 				value += os.EOL + indent + "  {";
 
-				propValue.forEach((itemValue) => {
+				propValue.forEach(itemValue => {
 
 					value += os.EOL + indent + "    ";
 
@@ -546,14 +546,14 @@ class Item {
 		}
 
 		// Build item properties list
-		Object.keys(this).forEach((propName) => {
+		Object.keys(this).forEach(propName => {
 			propertyToString(propName, this[propName]);
 		});
 
 		// Serialize any child items
 		if (this.items && this.items.length) {
 
-			this.items.forEach((item) => {
+			this.items.forEach(item => {
 
 				value += os.EOL;
 
@@ -887,7 +887,7 @@ module.exports = Item;
 	require("./item/Train"),
 	require("./item/Vehicle")
 ]
-.forEach((item) => {
+.forEach(item => {
 
 	Object.defineProperty(item.prototype, "type", {value: item.name});
 	Item[item.name] = item;

@@ -187,7 +187,7 @@ module.exports = function makeBubble() {
 		}
 
 		// Process each quadtree node
-		const walkQuadtree = (node) => {
+		const walkQuadtree = node => {
 
 			const items = node.oversized.concat(node.contents);
 			const zones = [];

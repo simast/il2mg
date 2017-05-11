@@ -344,9 +344,7 @@ module.exports = function makeTaskPatrol(flight) {
 	}
 
 	// Sort zone vectors based on angle from origin X coordinate
-	zoneVectors.sort((a, b) => {
-		return a._angleX - b._angleX;
-	});
+	zoneVectors.sort((a, b) => a._angleX - b._angleX);
 
 	let firstZoneIcon;
 	let lastZoneIcon;
@@ -402,7 +400,7 @@ function findBasePoints(flight, params) {
 	let angleAB;
 
 	// Get valid bounds area for base patrol points
-	const getBounds = (maxRange) => {
+	const getBounds = maxRange => {
 
 		const maxX = map.height - RESTRICTED_BORDER;
 		const minX = RESTRICTED_BORDER;
@@ -516,7 +514,7 @@ function findBasePoints(flight, params) {
 	};
 
 	// Get direction value for location (in relation to origin position)
-	const getDirection = (location) => {
+	const getDirection = location => {
 
 		const locationX = location.x;
 		const locationZ = location.z;

@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 			const locationsPath = "data/battles/" + battleID + "/locations/";
 
 			// Process all location files
-			battle.locations.forEach((locationFile) => {
+			battle.locations.forEach(locationFile => {
 
 				const fileSource = locationsPath + locationFile + ".Group";
 				const fileDestination = locationsPath + locationFile + ".json";
@@ -43,7 +43,7 @@ module.exports = function(grunt) {
 				// Build output JSON object with recursion
 				(function buildJSON(json, items) {
 
-					items.forEach((item) => {
+					items.forEach(item => {
 
 						// Process locations from reference point items
 						if (item.type === "MCU_H_ReferencePoint") {
@@ -52,9 +52,9 @@ module.exports = function(grunt) {
 							const itemData = item.Name.split(":");
 
 							// Find matching location type ID
-							const itemType = location[Object.keys(location).find((type) => {
-								return itemData[0].startsWith(type);
-							})];
+							const itemType = location[Object.keys(location).find(type => (
+								itemData[0].startsWith(type)
+							))];
 
 							// Validate location type
 							if (!itemType) {

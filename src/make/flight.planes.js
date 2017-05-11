@@ -105,18 +105,12 @@ module.exports = function makeFlightPlanes(flight) {
 						// the same ramp as they will be grouped together and the flight formation
 						// will not be mixed up.
 						if (flight.elements.length > 1 && lastPlane) {
-
-							validParkSpawns.sort((a, b) => {
-								return (a.distance - b.distance);
-							});
+							validParkSpawns.sort((a, b) => a.distance - b.distance);
 						}
 						// When placing a first plane on the ramp - sort valid spawn points by
 						// size (the first plane will use best fit spawn point).
 						else if (!lastPlane) {
-
-							validParkSpawns.sort((a, b) => {
-								return (a.point.size - b.point.size);
-							});
+							validParkSpawns.sort((a, b) => a.point.size - b.point.size);
 						}
 					}
 				}
@@ -455,9 +449,7 @@ module.exports = function makeFlightPlanes(flight) {
 				}
 			});
 
-			element.sort((a, b) => {
-				return (a.distance - b.distance);
-			});
+			element.sort((a, b) => a.distance - b.distance);
 		}
 
 		for (let planeIndex = element.length - 1; planeIndex >= 0; planeIndex--) {

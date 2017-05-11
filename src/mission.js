@@ -370,9 +370,9 @@ class Mission {
 	 * @param {string} fileName Mission file name.
 	 * @returns {Promise} Promise object.
 	 */
-	save(fileName) {
+	async save(fileName) {
 
-		const params = this.params;
+		const {params, debug} = this;
 		const format = params.format || Mission.FORMAT_BINARY;
 		const promises = [];
 
@@ -413,12 +413,12 @@ class Mission {
 		fileName = path.join(fileDir, fileBase);
 
 		// Save text format file
-		if (format === Mission.FORMAT_TEXT || (this.debug && !params.format)) {
+		if (format === Mission.FORMAT_TEXT || (debug && !params.format)) {
 			promises.push(this.saveText(fileName));
 		}
 
 		// Save binary format file
-		if (format === Mission.FORMAT_BINARY || (this.debug && !params.format)) {
+		if (format === Mission.FORMAT_BINARY || (debug && !params.format)) {
 			promises.push(this.saveBinary(fileName));
 		}
 
@@ -439,7 +439,7 @@ class Mission {
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
 	 */
-	saveText(fileName) {
+	async saveText(fileName) {
 
 		const profileName = "Saving ." + FILE_EXT_TEXT;
 
@@ -456,7 +456,7 @@ class Mission {
 				fileStream.write("# Mission File Version = 1.0;" + os.EOL);
 
 				// Write mission items
-				this.items.forEach((item) => {
+				this.items.forEach(item => {
 					fileStream.write(os.EOL + item.toString() + os.EOL);
 				});
 
@@ -466,10 +466,7 @@ class Mission {
 				fileStream.end();
 			});
 
-			// Resolve promise
 			fileStream.once("finish", resolve);
-
-			// Reject promise
 			fileStream.once("error", reject);
 		});
 
@@ -486,7 +483,7 @@ class Mission {
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
 	 */
-	saveBinary(fileName) {
+	async saveBinary(fileName) {
 
 		const profileName = "Saving ." + FILE_EXT_BINARY;
 
@@ -511,7 +508,7 @@ class Mission {
 			// Collect binary representation of all mission items
 			(function walkItems(items) {
 
-				items.forEach((item) => {
+				items.forEach(item => {
 
 					// Process Group item child items
 					if (item instanceof Item.Group) {
@@ -574,7 +571,7 @@ class Mission {
 				fileStream.write(itlhBuffer);
 
 				// Write index tables
-				indexTableNames.forEach((tableName) => {
+				indexTableNames.forEach(tableName => {
 					fileStream.write(indexTables[tableName].toBinary());
 				});
 
@@ -590,10 +587,7 @@ class Mission {
 				fileStream.end();
 			});
 
-			// Resolve promise
 			fileStream.once("finish", resolve);
-
-			// Reject promise
 			fileStream.once("error", reject);
 		});
 
@@ -610,7 +604,7 @@ class Mission {
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
 	 */
-	saveLang(fileName) {
+	async saveLang(fileName) {
 
 		const promises = [];
 		let languages = this.params.lang;
@@ -621,7 +615,7 @@ class Mission {
 		}
 
 		// Make language files
-		languages.forEach((lang) => {
+		languages.forEach(lang => {
 
 			const profileName = "Saving ." + lang;
 
@@ -644,10 +638,7 @@ class Mission {
 					fileStream.end();
 				});
 
-				// Resolve promise
 				fileStream.once("finish", resolve);
-
-				// Reject promise
 				fileStream.once("error", reject);
 			});
 
@@ -667,7 +658,7 @@ class Mission {
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
 	 */
-	saveMeta(fileName) {
+	async saveMeta(fileName) {
 
 		const profileName = "Saving ." + FILE_EXT_META;
 
@@ -691,10 +682,7 @@ class Mission {
 				fileStream.end();
 			});
 
-			// Resolve promise
 			fileStream.once("finish", resolve);
-
-			// Reject promise
 			fileStream.once("error", reject);
 		});
 
@@ -881,7 +869,7 @@ class BinaryDamageTable {
 			offset += 4;
 
 			// Write damage data items
-			this.data.forEach((damageItem) => {
+			this.data.forEach(damageItem => {
 
 				const damageKeys = Object.keys(damageItem);
 

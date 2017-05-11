@@ -52,8 +52,8 @@ class MissionsList extends React.Component {
 	render() {
 
 		return (
-			<ul id="missionsList" ref={(ref) => {this.listElement = ref;}}>
-				{this.props.missions.map((mission) => {
+			<ul id="missionsList" ref={ref => {this.listElement = ref;}}>
+				{this.props.missions.map(mission => {
 
 					const props = {
 						mission,

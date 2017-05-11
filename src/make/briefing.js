@@ -240,7 +240,7 @@ function makeBriefingFlight() {
 	output += ",<br><br>";
 
 	flight.elements.forEach((element, elementIndex) => {
-		element.forEach((plane) => {
+		element.forEach(plane => {
 
 			const pilot = plane.pilot;
 			let rank = pilot.rank.abbr;

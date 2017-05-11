@@ -90,7 +90,7 @@ class SelectStart extends React.Component {
 		}
 
 		const startProps = {
-			onClick: () => {
+			onClick() {
 				this.startMenu.popup(remote.getCurrentWindow());
 			}
 		};
@@ -109,7 +109,7 @@ class SelectStart extends React.Component {
 					type="range"
 					value={dateValue}
 					max={totalDays}
-					onChange={(event) => {
+					onChange={event => {
 
 						// Get date from input value
 						const dateData = dates.list[event.target.value - 1];
@@ -136,9 +136,7 @@ class SelectStart extends React.Component {
 		}
 
 		// Sort dates in natural order
-		dates.list.sort((a, b) => {
-			return a.date.localeCompare(b.date);
-		});
+		dates.list.sort((a, b) => a.date.localeCompare(b.date));
 
 		const seasonRanges = [];
 		let range;

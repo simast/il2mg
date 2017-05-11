@@ -283,7 +283,7 @@ function chooseFlightUnit(choice) {
 	// FIXME: Make a more efficient selection (not filtering weighted unit list)
 
 	// Select a matching unit (from a weighted list)
-	return this.units[rand.pick(availableUnits.filter((unitID) => {
-		return validUnits.has(unitID);
-	}))];
+	return this.units[rand.pick(
+		availableUnits.filter(unitID => validUnits.has(unitID))
+	)];
 }

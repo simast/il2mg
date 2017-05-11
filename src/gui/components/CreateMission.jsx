@@ -120,7 +120,7 @@ class CreateMission extends React.Component {
 					startTypes={startTypes}
 					date={date}
 					onStartChange={this.onStartChange.bind(this)}
-					onDateChange={(date) => {
+					onDateChange={date => {
 						this.setState({date});
 					}}
 					onDateReset={() => {
@@ -133,10 +133,10 @@ class CreateMission extends React.Component {
 							type,
 							title,
 							choices: choices[type],
-							onChoiceClick: (choices) => {
+							onChoiceClick(choices) {
 								this.onChoiceClick(type, choices);
 							},
-							onChoiceReset: () => {
+							onChoiceReset() {
 								this.onChoiceReset(type);
 							}
 						};
@@ -292,9 +292,9 @@ class CreateMission extends React.Component {
 			// Sort items by data name
 			if (choiceType !== "unit") {
 
-				items.sort((a, b) => {
-					return a.data.name.localeCompare(b.data.name, "en", {numeric: true});
-				});
+				items.sort((a, b) => (
+					a.data.name.localeCompare(b.data.name, "en", {numeric: true})
+				));
 			}
 
 			// Invalid data choice selection
@@ -376,11 +376,11 @@ class CreateMission extends React.Component {
 
 			for (const choiceType in choice) {
 
-				choice[choiceType] = choice[choiceType].filter((choiceID) => {
+				choice[choiceType] = choice[choiceType].filter(choiceID => {
 
-					const foundChoice = choices[choiceType].find((item) => {
-						return item.id.indexOf(choiceID) !== -1;
-					});
+					const foundChoice = choices[choiceType].find(item => (
+						item.id.indexOf(choiceID) !== -1
+					));
 
 					return foundChoice !== undefined;
 				});
@@ -466,10 +466,10 @@ CreateMission.contextTypes = {
 };
 
 // Mission battle selection component
-CreateMission.SelectBattle = ({battle, battles}) => {
+CreateMission.SelectBattle = ({battle, battles}) => (
 
 	// TODO: Allow selecting other battles
-	return <h1>{battles[battle].name}</h1>;
-};
+	<h1>{battles[battle].name}</h1>
+);
 
 module.exports = CreateMission;

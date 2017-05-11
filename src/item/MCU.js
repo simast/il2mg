@@ -124,7 +124,7 @@ module.exports = class MCU extends Item {
 		}
 
 		// List of OnEvent items
-		this.events.items.forEach((event) => {
+		this.events.items.forEach(event => {
 
 			this.writeUInt32(buffer, event.Type); // Event type
 			this.writeUInt32(buffer, event.TarId); // Target command item ID
@@ -152,7 +152,7 @@ module.exports = class MCU extends Item {
 		}
 
 		// List of OnReport items
-		this.reports.items.forEach((report) => {
+		this.reports.items.forEach(report => {
 
 			this.writeUInt32(buffer, report.Type); // Report type
 			this.writeUInt32(buffer, report.TarId); // Target command item ID

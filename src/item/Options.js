@@ -139,7 +139,7 @@ module.exports = class Options extends Item {
 		this.writeUInt32(buffer, this.WindLayers.length);
 
 		// WindLayers
-		this.WindLayers.forEach((windLayer) => {
+		this.WindLayers.forEach(windLayer => {
 
 			// WindLayer ground height
 			this.writeDouble(buffer, windLayer[0]);
@@ -155,7 +155,7 @@ module.exports = class Options extends Item {
 		this.writeUInt32(buffer, this.Countries.length);
 
 		// Countries
-		this.Countries.forEach((country) => {
+		this.Countries.forEach(country => {
 
 			// Country ID
 			this.writeUInt32(buffer, country[0]);

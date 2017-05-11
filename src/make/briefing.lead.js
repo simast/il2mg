@@ -47,9 +47,7 @@ module.exports = function makeBriefingLead(flight) {
 			briefingLead.push("follow your {{{formation}}} leader " + flightLeaderID);
 		}
 
-		briefingLead = briefingLead.map((value) => {
-			return makeBriefingText.call(this, value);
-		});
+		briefingLead = briefingLead.map(value => makeBriefingText.call(this, value));
 	}
 
 	return briefingLead;

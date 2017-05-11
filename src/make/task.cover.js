@@ -211,9 +211,9 @@ function makeTaskCoverBriefing() {
 
 	briefing.push(rand.pick(outroSegments));
 
-	return briefing.map((value) => {
-		return value.charAt(0).toUpperCase() + value.slice(1);
-	}).join(". ") + ".";
+	return briefing.map(value => (
+		value.charAt(0).toUpperCase() + value.slice(1)
+	)).join(". ") + ".";
 }
 
 // Make cover airfield activity time

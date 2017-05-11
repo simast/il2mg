@@ -7,7 +7,7 @@
 const {remote} = require("electron");
 
 // Add some local development mode keyboard shortcuts
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", event => {
 
 	// Show Developer Tools (with F12)
 	// TODO: Also show Developer Tools when any JavaScript errors are detected?

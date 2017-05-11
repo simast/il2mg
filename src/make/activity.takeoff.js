@@ -116,7 +116,7 @@ module.exports = class ActivityTakeOff {
 		}
 
 		// Connect takeoff command to next action
-		return (input) => {
+		return input => {
 			waitTimerAfter.addTarget(input);
 		};
 	}

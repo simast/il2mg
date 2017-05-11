@@ -89,14 +89,14 @@ module.exports = class ActivityForm {
 			if (groundStartElements.length) {
 
 				// Pick last starting ground element based on starting priority
-				lastStartingElement = groundStartElements.sort((a, b) => {
-					return a.priority - b.priority;
-				})[0].element;
+				lastStartingElement = groundStartElements.sort((a, b) => (
+					a.priority - b.priority
+				))[0].element;
 			}
 
 			if (lastStartingElement && lastStartingElement !== element) {
 
-				return (input) => {
+				return input => {
 
 					// Add a small timer so that other elements can link up with the rest
 					// of the flight after take off (just before proceeding with the task).

@@ -152,7 +152,7 @@ module.exports = class ActivityFly {
 		}
 
 		// Connect next plan action with last waypoint
-		return (input) => {
+		return input => {
 			lastWaypoint.addTarget(input);
 		};
 	}
@@ -326,9 +326,9 @@ module.exports = class ActivityFly {
 			briefing.push(briefingIntro, briefingOutro);
 		}
 
-		return briefing.map((value) => {
-			return value.charAt(0).toUpperCase() + value.slice(1);
-		}).join(". ") + ".";
+		return briefing.map(value => (
+			value.charAt(0).toUpperCase() + value.slice(1)
+		)).join(". ") + ".";
 	}
 
 	// Walk over route (reporting distance for each spot)

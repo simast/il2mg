@@ -88,7 +88,7 @@ module.exports = class ActivityStart {
 		}
 
 		// Connect next plan action with onStart event command
-		return (input) => {
+		return input => {
 			flight.onStart.addTarget(input);
 		};
 	}

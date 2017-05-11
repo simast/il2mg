@@ -195,9 +195,9 @@ function makeClouds() {
 	const hasMist = this.weather.mist;
 
 	// Sort cloud configs based on cover
-	rand.shuffle(clouds).sort((a, b) => {
-		return data.clouds[b].cover - data.clouds[a].cover;
-	});
+	rand.shuffle(clouds).sort((a, b) => (
+		data.clouds[b].cover - data.clouds[a].cover
+	));
 
 	let config;
 

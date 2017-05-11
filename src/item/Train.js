@@ -45,7 +45,7 @@ module.exports = class Train extends Vehicle {
 		this.writeUInt32(buffer, carriages.length);
 
 		// Carriages list items
-		carriages.forEach((carriage) => {
+		carriages.forEach(carriage => {
 			this.writeString(buffer, Buffer.byteLength(carriage), carriage);
 		});
 

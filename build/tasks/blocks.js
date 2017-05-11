@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 			const blocksPath = "data/battles/" + battleID + "/blocks/";
 
 			// Process all blocks files
-			battle.blocks.forEach((blockFile) => {
+			battle.blocks.forEach(blockFile => {
 
 				const fileSource = blocksPath + blockFile + ".Group";
 				const fileDestination = blocksPath + blockFile + ".json";
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 				// Build output JSON object with recursion
 				(function buildJSON(json, blocks) {
 
-					blocks.forEach((block) => {
+					blocks.forEach(block => {
 
 						// Only import Block and Bridge type items
 						// TODO: Also import block damage (from Damaged child items)

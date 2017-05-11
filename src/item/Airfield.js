@@ -50,7 +50,7 @@ module.exports = class Airfield extends Block {
 
 			if (chartItem && chartItem.items) {
 
-				chartItem.items.forEach((item) => {
+				chartItem.items.forEach(item => {
 
 					if (item.type === "Point") {
 						pointItems.push(item);
@@ -103,7 +103,7 @@ module.exports = class Airfield extends Block {
 		this.writeUInt32(buffer, pointItems.length);
 
 		// List of Point items
-		pointItems.forEach((item) => {
+		pointItems.forEach(item => {
 
 			this.writeUInt32(buffer, item.Type); // Type
 			this.writeDouble(buffer, item.X); // X
