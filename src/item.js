@@ -112,7 +112,7 @@ class Item {
 			this.LCName = name
 		}
 		else if (typeof name === "string") {
-			this.Name = name
+			this.Name = convertUnicodeToASCII(name)
 		}
 		else {
 			throw new TypeError("Invalid item name value.")
@@ -130,7 +130,7 @@ class Item {
 			this.LCDesc = desc
 		}
 		else if (typeof desc === "string") {
-			this.Desc = desc
+			this.Desc = convertUnicodeToASCII(desc)
 		}
 		else {
 			throw new TypeError("Invalid item description value.")
@@ -491,21 +491,6 @@ class Item {
 
 			// Quoted string output
 			if (propType === "string" && !(propValue instanceof String)) {
-
-				// HACK: The .Mission file parser does not seem to support UTF-8/unicode
-				// characters and will fail to load the mission when there are any. As a
-				// workaround we transliterate "Name" string to a safe ASCII character set.
-				// FIXME: Drop this speakingurl module dependency!
-				if (propName === "Name") {
-
-					propValue = getSlug(propValue, {
-						maintainCase: true,
-						uric: true,
-						mark: true,
-						separator: " "
-					})
-				}
-
 				value += '"' + propValue + '"'
 			}
 			// Complex array output
@@ -838,6 +823,25 @@ class Item {
 
 		return items
 	}
+}
+
+// Utility function used to convert Unicode text to ASCII charset
+function convertUnicodeToASCII(value) {
+
+	// HACK: The .Mission file parser does not seem to support UTF-8/unicode
+	// characters and will fail to load the mission when there are any. Also,
+	// in-game labels for planes/vehicles will not display UTF-8 characters as
+	// well. As a workaround we transliterate all non-localized strings to a safe
+	// ASCII character set.
+	return getSlug(value, {
+		lang: "en",
+		separator: " ",
+		symbols: false,
+		maintainCase: true,
+		titleCase: false,
+		uric: true,
+		mark: true
+	})
 }
 
 // Default item data values
