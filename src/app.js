@@ -506,15 +506,16 @@ appDomain.run(async () => {
 	// Create a new mission
 	const mission = new Mission(params)
 
-	// Save mission files
 	try {
+
+		// Save mission files
 		await mission.save(params.args[0])
+
+		if (!params.quiet) {
+			log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")")
+		}
 	}
 	catch (error) {
 		appDomain.emit("error", error)
-	}
-
-	if (!params.quiet) {
-		log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")")
 	}
 })
