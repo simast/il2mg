@@ -35,7 +35,7 @@
 		"pkg": "3.0.3",
 		"sloc": "0.2.0",
 		"uglify-js": "mishoo/UglifyJS2#harmony-v2.8.22",
-		"electron": "1.6.8",
+		"electron": "1.7.0",
 		"electron-packager": "8.7.0",
 		"babel-register": "6.24.1",
 		"babel-eslint": "7.2.3",
@@ -46,8 +46,8 @@
 		"envify": "4.0.0",
 		"react": "15.5.4",
 		"react-dom": "15.5.4",
-		"prop-types": "15.5.8",
+		"prop-types": "15.5.9",
 		"react-router-dom": "4.1.1",
-		"clean-css": "4.1.1"
+		"clean-css": "4.1.2"
 	}
 }

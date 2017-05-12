@@ -142,7 +142,7 @@ class Missions extends React.Component {
 
 			// Remove selected mission
 			actions.left.set("Remove", {
-				onClick(event) {
+				onClick: event => {
 					this.removeMission(!event.ctrlKey)
 				}
 			})
@@ -151,10 +151,10 @@ class Missions extends React.Component {
 			actions.right = new Map()
 			actions.right.set("Launch", {
 				className: "difficulty" + difficulty,
-				onClick(event) {
+				onClick: event => {
 					this.launchMission(event.ctrlKey)
 				},
-				onContextMenu() {
+				onContextMenu: () => {
 					this.launchMenu.popup(remote.getCurrentWindow())
 				}
 			})

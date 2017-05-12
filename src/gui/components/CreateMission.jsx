@@ -105,7 +105,7 @@ class CreateMission extends React.Component {
 		if (!isFirstCreate) {
 
 			actions.right.set("Cancel", {
-				onClick() {
+				onClick: () => {
 					history.goBack()
 				}
 			})
@@ -133,10 +133,10 @@ class CreateMission extends React.Component {
 							type,
 							title,
 							choices: choices[type],
-							onChoiceClick(choices) {
+							onChoiceClick: choices => {
 								this.onChoiceClick(type, choices)
 							},
-							onChoiceReset() {
+							onChoiceReset: () => {
 								this.onChoiceReset(type)
 							}
 						}

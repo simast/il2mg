@@ -90,7 +90,7 @@ class SelectStart extends React.Component {
 		}
 
 		const startProps = {
-			onClick() {
+			onClick: () => {
 				this.startMenu.popup(remote.getCurrentWindow())
 			}
 		}

@@ -24,7 +24,7 @@ class MissionDetails extends React.Component {
 			dangerouslySetInnerHTML: {
 				__html: mission.briefing
 			},
-			ref(ref) {
+			ref: ref => {
 				this.briefingElement = ref
 			}
 		}

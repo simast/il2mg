@@ -599,7 +599,7 @@ class Mission {
 	}
 
 	/**
-	 * Save .eng and other localisation files.
+	 * Save .eng and other localization files.
 	 *
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
