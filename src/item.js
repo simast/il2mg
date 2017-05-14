@@ -526,7 +526,7 @@ class Item {
 			}
 
 			if (!isArrayComplex) {
-				value += ""
+				value += ";"
 			}
 		}
 

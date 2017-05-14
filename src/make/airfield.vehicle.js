@@ -136,7 +136,6 @@ module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
 
 		vehicleItem.Model = vehicle.model
 		vehicleItem.Script = vehicle.script
-		vehicleItem.setName(vehicle.name)
 		vehicleItem.createEntity(true)
 
 		const zone = airfield.zone

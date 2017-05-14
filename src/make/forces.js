@@ -188,10 +188,13 @@ function makePlayerForce() {
 // Make AI forces
 function makeAIForces() {
 
-	makeForce.call(this, {
-		state: 0,
-		virtual: true
-	})
+	for (let i = 1; i <= 20; i++) {
+
+		makeForce.call(this, {
+			state: 0,
+			virtual: true
+		})
+	}
 }
 
 // Choose a valid flight unit based on choice data

@@ -503,10 +503,10 @@ appDomain.run(async () => {
 		}
 	}
 
-	// Create a new mission
-	const mission = new Mission(params)
-
 	try {
+
+		// Create a new mission
+		const mission = new Mission(params)
 
 		// Save mission files
 		await mission.save(params.args[0])

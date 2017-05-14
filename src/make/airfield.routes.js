@@ -33,10 +33,8 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 
 			vehicle = makeAirfieldVehicle.call(this, airfield, [
 				vehiclePool.shift(),
-				airfield.position[0],
-				airfield.position[1],
-				airfield.position[2],
-				0
+				...airfield.position,
+				0 // Orientation
 			], true)
 
 			if (Array.isArray(vehicle)) {
@@ -56,7 +54,6 @@ module.exports = function makeAirfieldRoutes(airfield, routes) {
 		let waypointLast = null
 		let isRoadFormation = false // Default is offroad formation
 
-		routeGroup.setName(vehicle.Name)
 		routeGroup.addItem(vehicle)
 
 		// 50% chance to reverse/invert the route

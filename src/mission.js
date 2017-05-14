@@ -453,7 +453,7 @@ class Mission {
 			fileStream.once("open", () => {
 
 				// Required mission file header
-				fileStream.write("# Mission File Version = 1.0" + os.EOL)
+				fileStream.write("# Mission File Version = 1.0;" + os.EOL)
 
 				// Write mission items
 				this.items.forEach(item => {

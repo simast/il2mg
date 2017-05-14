@@ -57,11 +57,4 @@ module.exports = class ActivityWait {
 			plan.splice(plan.indexOf(this), 1)
 		}
 	}
-
-	// Make virtual wait points count
-	makeVirtualPoints() {
-
-		// Create 1 virtual wait point for every ~15 minutes of waiting
-		return Math.round(this.time / (15 * 60))
-	}
 }

@@ -1,19 +1,23 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
+const addLazyProperty = require("lazy-property")
 const {makeActivityState} = require("./flight.state")
 const makeFlightTime = require("./flight.time")
 const makeFlightPose = require("./flight.pose")
 const makeFlightActions = require("./flight.actions")
-const {PRECISION_POSITION} = require("../item")
 
 // Virtual activity zone size as inner and outer circle radius (km)
 // NOTE: Two activity zones/circles are used to make sure virtual flights do
 // not activate while on top of another flight position. They will only activate
 // when other flights are farther than the inner zone and inside the outer zone.
 // NOTE: Current max in-game draw distance for aircraft is 10 km!
-const ZONE_RADIUS_INNER = 10000
-const ZONE_RADIUS_OUTER = 15000
+const ZONE_RADIUS_INNER = 9500
+const ZONE_RADIUS_OUTER = 10500
+
+// Required distance from player or other enemy planes when virtual flights
+// trigger their unload and deactivation logic.
+const UNLOAD_PROXIMITY_DISTANCE = 11000
 
 // Make virtual flight
 module.exports = function makeFlightVirtual(flight) {
@@ -22,11 +26,11 @@ module.exports = function makeFlightVirtual(flight) {
 		return
 	}
 
-	console.dir(flight.time, {colors: true, depth: null})
-
 	const {plan} = flight
 	let waitTime = 0
-	let pointIndex = 0
+
+	// Initialize virtual point zone storage
+	const virtualZones = []
 
 	// Process plan activities
 	for (const activity of plan) {
@@ -75,7 +79,7 @@ module.exports = function makeFlightVirtual(flight) {
 			}
 
 			// Make virtual flight activity zone
-			makeVirtualFlightZone.call(this, flight, pointIndex, elapsedTime)
+			makeVirtualFlightZone.call(this, flight, elapsedTime, virtualZones)
 
 			// Make virtual flight plane items
 			makeVirtualFlightPlanes.call(this, flight)
@@ -85,8 +89,6 @@ module.exports = function makeFlightVirtual(flight) {
 
 			// Make virtual flight plan actions
 			makeFlightActions.call(this, flight)
-
-			pointIndex++
 
 			// NOTE: Activities may remove themselves from the plan while
 			// fast-forwarding their state!
@@ -111,7 +113,7 @@ module.exports = function makeFlightVirtual(flight) {
 	}
 
 	// Make final virtual flight activity zone
-	makeVirtualFlightZone.call(this, flight, pointIndex, waitTime)
+	makeVirtualFlightZone.call(this, flight, waitTime, virtualZones)
 }
 
 // Make virtual flight plane items
@@ -151,11 +153,10 @@ function makeVirtualFlightPlanes(flight) {
 }
 
 // Make virtual flight activity zone
-function makeVirtualFlightZone(flight, pointIndex, waitTime) {
+function makeVirtualFlightZone(flight, waitTime, virtualZones) {
 
-	console.log(pointIndex, waitTime)
-
-	const isFirstPoint = (pointIndex === 0)
+	const zone = {}
+	const isFirstPoint = !virtualZones.length
 	const {task} = flight
 	const flightGroup = flight.group
 	const flightDelay = flight.plan.start.delay
@@ -163,8 +164,18 @@ function makeVirtualFlightZone(flight, pointIndex, waitTime) {
 	const zoneGroup = flightGroup.createItem("Group")
 	const checkZone = zoneGroup.createItem("MCU_CheckZone")
 	const onActivate = zoneGroup.createItem("MCU_Activate")
+	const onBegin = flight.onBegin
+	const onNextBegin = zoneGroup.createItem("MCU_Timer")
+	const onDelete = zoneGroup.createItem("MCU_Delete")
+	const beginDeactivate = zoneGroup.createItem("MCU_Deactivate")
+	const onUnload = zoneGroup.createItem("MCU_Timer")
+	const onProximityPlayer = zoneGroup.createItem("MCU_Proximity")
+	const onProximityEnemy = zoneGroup.createItem("MCU_Proximity")
+	const proximityCheck = zoneGroup.createItem("MCU_Timer")
+	const proximityActivate = zoneGroup.createItem("MCU_Activate")
+	const proximityDeactivate = zoneGroup.createItem("MCU_Deactivate")
 
-	checkZone.Zone = Number(ZONE_RADIUS_INNER.toFixed(PRECISION_POSITION))
+	checkZone.Zone = ZONE_RADIUS_INNER
 	checkZone.PlaneCoalitions = this.coalitions
 	checkZone.setPositionNear(flight.leader.item)
 
@@ -198,7 +209,7 @@ function makeVirtualFlightZone(flight, pointIndex, waitTime) {
 		checkZone.addTarget(activateTimerDelay)
 		checkZone.addTarget(recheckTimer)
 
-		checkZoneOuter.Zone = Number(ZONE_RADIUS_OUTER.toFixed(PRECISION_POSITION))
+		checkZoneOuter.Zone = ZONE_RADIUS_OUTER
 		checkZoneOuter.PlaneCoalitions = this.coalitions
 		checkZoneOuter.setPositionNear(checkZone)
 		checkZoneOuter.addTarget(checkZoneOuterDeactivate)
@@ -255,24 +266,77 @@ function makeVirtualFlightZone(flight, pointIndex, waitTime) {
 		checkZone.addTarget(onActivate)
 	}
 
-	const onBegin = flight.onBegin
-	const onNextBegin = zoneGroup.createItem("MCU_Timer")
-	const deletePrevious = zoneGroup.createItem("MCU_Delete")
-	const beginDeactivate = zoneGroup.createItem("MCU_Deactivate")
+	onUnload.setPositionNear(checkZone)
+	onUnload.addTarget(proximityDeactivate)
+	onUnload.addTarget(onDelete)
+	onUnload.Time = 15
+
+	proximityCheck.setPositionNear(onUnload)
+	proximityCheck.addTarget(proximityActivate)
+	proximityCheck.Time = 10
+
+	onProximityPlayer.Distance = UNLOAD_PROXIMITY_DISTANCE
+	onProximityPlayer.setPositionNear(onUnload)
+	onProximityPlayer.addObject(this.player.item)
+	onProximityPlayer.addTarget(proximityDeactivate)
+	onProximityPlayer.addTarget(proximityCheck)
+	onProximityPlayer.addTarget(onUnload)
+
+	onProximityEnemy.Distance = UNLOAD_PROXIMITY_DISTANCE
+	onProximityEnemy.setPositionNear(onUnload)
+	onProximityEnemy.addTarget(proximityDeactivate)
+	onProximityEnemy.addTarget(proximityCheck)
+	onProximityEnemy.addTarget(onUnload)
+
+	// Enable all enemy plane coalitions
+	onProximityEnemy.PlaneCoalitions = this.coalitions.filter(
+		coalition => coalition !== flight.coalition
+	)
+
+	proximityActivate.setPositionNear(onUnload)
+	proximityActivate.addTarget(onProximityPlayer)
+	proximityActivate.addTarget(onProximityEnemy)
+
+	proximityDeactivate.setPositionNear(onUnload)
+	proximityDeactivate.addTarget(onProximityPlayer)
+	proximityDeactivate.addTarget(onProximityEnemy)
 
 	onNextBegin.Time = Number(waitTime.toFixed(3))
 	onNextBegin.setPositionNear(onCheck)
-	onNextBegin.addTarget(deletePrevious)
+	onNextBegin.addTarget(onDelete)
 	onNextBegin.addTarget(beginDeactivate)
 
-	deletePrevious.setPositionNear(onNextBegin)
+	onDelete.setPositionNear(onNextBegin)
 
-	// Delete previous virtual point plane entities
+	// Lazy getter/event used to delete all further zone plane items
+	addLazyProperty(zone, "onDeleteNext", () => {
+
+		const onDeleteNext = zoneGroup.createItem("MCU_Delete")
+
+		onDeleteNext.setPositionNear(onCheckActivate)
+		onCheckActivate.addTarget(onDeleteNext)
+
+		return onDeleteNext
+	})
+
 	for (const element of flight.elements) {
 		for (const plane of element) {
-			deletePrevious.addObject(plane.item)
+
+			// Delete virtual point plane entities
+			onDelete.addObject(plane.item)
+
+			// Delete virtual point plane entities when previous points are activated
+			for (const prevZone of virtualZones) {
+				prevZone.onDeleteNext.addObject(plane.item)
+			}
+
+			// Connect plane items to enemy proximity trigger
+			onProximityEnemy.addObject(plane.item)
 		}
 	}
+
+	// Connect leader plane item to player proximity trigger
+	onProximityPlayer.addObject(flight.leader.item)
 
 	beginDeactivate.setPositionNear(onNextBegin)
 	beginDeactivate.addTarget(onNextBegin)
@@ -281,6 +345,9 @@ function makeVirtualFlightZone(flight, pointIndex, waitTime) {
 
 	onCheckActivate.addTarget(beginDeactivate)
 	onCheckActivate.addTarget(flight.onStart)
+	onCheckActivate.addTarget(onUnload)
+	onCheckActivate.addTarget(onProximityEnemy)
+	onCheckActivate.addTarget(onProximityPlayer)
 
 	onBegin.addTarget(onNextBegin)
 	onBegin.addTarget(onCheckBegin)
@@ -289,4 +356,7 @@ function makeVirtualFlightZone(flight, pointIndex, waitTime) {
 
 	// NOTE: Next start activity action will create a new onStart event!
 	delete flight.onStart
+
+	// Save virtual point zone data
+	virtualZones.push(zone)
 }
