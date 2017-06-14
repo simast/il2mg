@@ -116,8 +116,7 @@ module.exports = function(grunt) {
 					[envify({_: "purge", NODE_ENV: "production"}), {global: true}]
 				],
 				extensions: [".jsx"]
-			})
-			.bundle((error, buffer) => {
+			}).bundle((error, buffer) => {
 
 				if (error) {
 					return reject(error)

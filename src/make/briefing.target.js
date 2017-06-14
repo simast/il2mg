@@ -64,7 +64,7 @@ module.exports = function makeBriefingTarget(target) {
 		foundPlaces = foundPlaces.filter(place => {
 
 			// Place has to have a valid name (without digits and other punctuation)
-			if (!place.name || (!isSingleTarget && /[^A-Za-z\s\-]/.test(place.name))) {
+			if (!place.name || (!isSingleTarget && /[^A-Za-z\s-]/.test(place.name))) {
 				return false
 			}
 

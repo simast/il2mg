@@ -115,7 +115,7 @@ class SelectStart extends React.Component {
 						const dateData = dates.list[event.target.value - 1]
 						onDateChange(dateData ? dateData.date : undefined)
 					}} />
-					{reset}
+				{reset}
 			</div>
 		)
 	}

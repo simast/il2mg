@@ -129,7 +129,7 @@ module.exports = function(grunt) {
 								itemData.push(planeSector)
 
 								// Plane taxi route number
-								const planeTaxiData = planeData[planeDataIndex++].match(/(\-?\d+)(.*)/)
+								const planeTaxiData = planeData[planeDataIndex++].match(/(-?\d+)(.*)/)
 								let planeTaxiRoute
 								let planeTaxiOffset
 

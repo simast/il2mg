@@ -152,13 +152,13 @@ function getMapIntersection(map, fromVector, toVector, distance) {
 
 // Mark map area with a circle (with all GUI icons owned by a given flight)
 function markMapArea(flight, {
-		position, // Center positions of the circle
-		radius = 5000,
-		perfect, // Draw a perfect circle
-		centerIcon, // Draw center icon
-		lineType, // MCU_Icon line type
-		color // Circle color
-	}) {
+	position, // Center positions of the circle
+	radius = 5000,
+	perfect, // Draw a perfect circle
+	centerIcon, // Draw center icon
+	lineType, // MCU_Icon line type
+	color // Circle color
+}) {
 
 	const rand = this.rand
 	const centerVector = Vector.create(position)

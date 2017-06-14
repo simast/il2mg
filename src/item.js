@@ -890,8 +890,7 @@ module.exports = Item
 	require("./item/Plane"),
 	require("./item/Train"),
 	require("./item/Vehicle")
-]
-.forEach(item => {
+].forEach(item => {
 
 	Object.defineProperty(item.prototype, "type", {value: item.name})
 	Item[item.name] = item
