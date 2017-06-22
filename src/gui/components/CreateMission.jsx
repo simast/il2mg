@@ -2,7 +2,7 @@
 "use strict"
 
 const path = global.require("path")
-const execFileSync = global.require("child_process").execFileSync
+const {execFileSync} = global.require("child_process")
 const React = require("react")
 const PropTypes = require("prop-types")
 const Application = require("./Application")
@@ -59,18 +59,39 @@ class CreateMission extends React.Component {
 		super(...arguments)
 
 		const {config} = this.context
-		let start = startType.PARKING // Default
+
+		// Default values
+		let start = startType.PARKING
+		let battle = Object.keys(battles).pop() // First battle
+		let date
+		let choice = {}
 
 		// Use start type from config
 		if (startTypes.has(config.start)) {
 			start = config.start
 		}
 
+		// Use battle from config
+		if (config.battle && config.battle in battles) {
+			battle = config.battle
+		}
+
+		// Use date from config
+		if (config.date && config.date in battles[battle].dates) {
+			date = config.date
+		}
+
+		// Use choices from config
+		if (config.choice && typeof config.choice === "object") {
+			choice = config.choice
+		}
+
 		// Initial state
 		this.state = {
-			battle: Object.keys(battles).pop(), // Set first battle as active
-			choice: {},
-			start
+			battle,
+			start,
+			date,
+			choice
 		}
 	}
 
@@ -79,16 +100,15 @@ class CreateMission extends React.Component {
 
 		const {battle, start, date} = this.state
 		const {history, location} = this.props
-		const actions = {
+		const screenActions = {
 			right: new Map()
 		}
 
+		const createProps = {}
 		const isFirstCreate = new URLSearchParams(location.search).has("first")
 
 		// Get mission choice data
 		const choices = this.getChoices(start)
-
-		const createProps = {}
 
 		if (choices.valid) {
 			createProps.onClick = this.onCreateClick.bind(this)
@@ -98,13 +118,13 @@ class CreateMission extends React.Component {
 			createProps.disabled = true
 		}
 
-		// Create mission
-		actions.right.set("Create", createProps)
+		// Create mission action
+		screenActions.right.set("Create", createProps)
 
-		// Cancel create mission
+		// Cancel create mission action
 		if (!isFirstCreate) {
 
-			actions.right.set("Cancel", {
+			screenActions.right.set("Cancel", {
 				onClick: () => {
 					history.goBack()
 				}
@@ -112,7 +132,7 @@ class CreateMission extends React.Component {
 		}
 
 		return (
-			<Screen id="create" actions={actions}>
+			<Screen id="create" actions={screenActions}>
 				<CreateMission.SelectBattle battle={battle} battles={battles} />
 				<SelectStart
 					battle={battles[battle]}
@@ -148,6 +168,19 @@ class CreateMission extends React.Component {
 		)
 	}
 
+	// Handle component update event
+	componentDidUpdate() {
+
+		const {config} = this.context
+		const {battle, start, date, choice} = this.state
+
+		// Remember/save some state data to config
+		config.battle = battle
+		config.start = start
+		config.date = date
+		config.choice = choice
+	}
+
 	// Get mission choice data
 	getChoices(start) {
 
@@ -161,18 +194,18 @@ class CreateMission extends React.Component {
 
 			scanRegExp = []
 
-			recordParams.forEach(([param]) => {
+			for (const [param] of recordParams) {
 
 				const choiceData = choice[param]
+				let paramRegExp = ".+?"
 
-				// No specific choice on this data param
-				if (choiceData === undefined) {
-					scanRegExp.push(".+?")
+				// Match only specified choice values
+				if (Array.isArray(choiceData) && choiceData.length) {
+					paramRegExp = "(?:" + choiceData.join("|") + ")"
 				}
-				else {
-					scanRegExp.push("(?:" + choiceData.join("|") + ")")
-				}
-			})
+
+				scanRegExp.push(paramRegExp)
+			}
 
 			scanRegExp = new RegExp("^" + scanRegExp.join(RECORD_SEP) + "$")
 		}
@@ -364,10 +397,7 @@ class CreateMission extends React.Component {
 			return
 		}
 
-		const {config} = this.context
 		const newState = {start: newStart}
-
-		config.start = newStart
 
 		// Validate current choice list for new start position type
 		if (Object.keys(choice).length) {

@@ -44,8 +44,8 @@
 		"browserify": "14.4.0",
 		"babelify": "7.3.0",
 		"envify": "4.0.0",
-		"react": "15.6.0",
-		"react-dom": "15.6.0",
+		"react": "15.6.1",
+		"react-dom": "15.6.1",
 		"prop-types": "15.5.10",
 		"react-router-dom": "4.1.1",
 		"clean-css": "4.1.4"
