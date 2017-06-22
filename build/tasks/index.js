@@ -507,6 +507,9 @@ module.exports = function(grunt) {
 				for (const recordID in datesIndex[date]) {
 					json.dates[date].push(+recordID)
 				}
+
+				// NOTE: Sort date record ids to be used for binary search
+				json.dates[date].sort((a, b) => (a - b))
 			})
 
 			// Write battle JSON index file

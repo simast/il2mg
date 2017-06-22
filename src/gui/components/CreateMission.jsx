@@ -3,6 +3,7 @@
 
 const path = global.require("path")
 const {execFileSync} = global.require("child_process")
+const binarySearch = require("binary-search")
 const React = require("react")
 const PropTypes = require("prop-types")
 const Application = require("./Application")
@@ -224,7 +225,11 @@ class CreateMission extends React.Component {
 
 			// Validate date
 			if (date) {
-				isValid = (battleData.dates[date].indexOf(recordID) > -1)
+
+				const dateIndex = battleData.dates[date]
+
+				// NOTE: Using binary search to find record ID in date index
+				isValid = (binarySearch(dateIndex, recordID, (a, b) => (a - b)) > -1)
 			}
 
 			// Validate choices
