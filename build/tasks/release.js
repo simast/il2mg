@@ -168,16 +168,6 @@ module.exports = function(grunt) {
 					grunt.file.delete(path.join(appPath, file))
 				})
 
-				// Move license files to "licenses" directory
-				;["LICENSE", "LICENSES.chromium.html"].forEach(file => {
-
-					const sourcePath = path.join(appPath, file)
-					const destinationPath = path.join(appPath, "licenses", file)
-
-					grunt.file.copy(sourcePath, destinationPath)
-					grunt.file.delete(sourcePath)
-				})
-
 				resolve(appPath)
 			})
 		})
@@ -194,7 +184,7 @@ module.exports = function(grunt) {
 				packageData.name + "-cli" + extension
 			)
 
-			options.push("--target", "node7-win-x64")
+			options.push("--target", "node8-win-x64")
 			options.push("--config", "../pkg.js")
 			options.push("--output", binaryFilePath)
 			options.push("./src/app.js")

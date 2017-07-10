@@ -23,7 +23,7 @@ class MissionsStore {
 	@observable.shallow list = []
 
 	// Mission objects indexed by ID
-	@observable.shallow index = Object.create(null)
+	index = Object.create(null)
 
 	// Load missions from missions directory
 	@action load() {
