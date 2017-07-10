@@ -2,20 +2,16 @@
 "use strict"
 
 const React = require("react")
+const {observable, action} = require("mobx")
+const {observer} = require("mobx-react")
 
 // Number of available photos
 const AVAILABLE_PHOTOS = 12
 
 // Photos decoration component
-class Photos extends React.Component {
+@observer class Photos extends React.Component {
 
-	constructor() {
-		super(...arguments)
-
-		this.state = {
-			photos: []
-		}
-	}
+	@observable.ref photos = []
 
 	componentWillMount() {
 		this.choosePhotos()
@@ -29,18 +25,12 @@ class Photos extends React.Component {
 		}
 	}
 
-	shouldComponentUpdate(nextProps) {
-
-		// Update component only on screen change
-		return (this.props.screen !== nextProps.screen)
-	}
-
 	// Render component
 	render() {
 
 		return (
 			<div id="photos">
-				{this.state.photos.map((photoID, index) => (
+				{this.photos.map((photoID, index) => (
 					<div key={photoID} className={"photo " + this.props.screen + (index + 1)}>
 						<img src={"assets/photo-" + photoID + ".jpg"} />
 						<div></div>
@@ -51,7 +41,7 @@ class Photos extends React.Component {
 	}
 
 	// Choose a set of active photos to display
-	choosePhotos() {
+	@action choosePhotos() {
 
 		const photos = []
 
@@ -65,7 +55,7 @@ class Photos extends React.Component {
 			}
 		}
 
-		this.setState({photos})
+		this.photos = photos
 	}
 }
 

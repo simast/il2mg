@@ -6,21 +6,22 @@ const path = global.require("path")
 const {spawn} = global.require("child_process")
 const {remote} = global.require("electron")
 const React = require("react")
-const PropTypes = require("prop-types")
+const {observer} = require("mobx-react")
+const app = require("../stores/app")
+const missions = require("../stores/missions")
 const Application = require("./Application")
 const Screen = require("./Screen")
 const MissionsList = require("./MissionsList")
 const MissionDetails = require("./MissionDetails")
 
-// Mission file extensions
-const FILE_EXT_TEXT = "Mission"
-const FILE_EXT_BINARY = "msnbin"
-const FILE_EXT_META = "il2mg"
+const {Difficulty} = app
+const {FileExtension} = missions
 
 // Autoplay file name
 const FILE_AUTOPLAY = "autoplay.cfg"
 
-// Game file and directory paths (relative to base game directory)
+// File and directory paths
+const PATH_USER_DATA = remote.app.getPath("userData")
 const PATH_EXE = path.join("bin", "game", "Il-2.exe")
 const PATH_DATA = "data"
 const PATH_AUTOPLAY = path.join(PATH_DATA, FILE_AUTOPLAY)
@@ -32,34 +33,25 @@ const PATH_TRACKS = path.join(PATH_DATA, "Tracks")
 // required to make sure users are not left in a permanent "autoplay" state.
 const MAX_AUTOPLAY_TIME = 10000 // 10 seconds
 
-// Default difficulty mode
-const DEFAULT_DIFFICULTY = 1
-
 // Difficulty settings/preset modes
 const difficultyModes = new Map([
-	[1, "Normal"],
-	[2, "Expert"],
-	[0, "Custom"]
+	[Difficulty.Normal, "Normal"],
+	[Difficulty.Expert, "Expert"],
+	[Difficulty.Custom, "Custom"]
 ])
 
 // Missions screen component
-class Missions extends React.Component {
+@observer class Missions extends React.Component {
 
 	constructor() {
 		super(...arguments)
 
-		const missions = this.loadMissions()
-		const {config} = this.context
-		let difficulty = DEFAULT_DIFFICULTY
-
-		// Use difficulty from config
-		if (difficultyModes.has(config.difficulty)) {
-			difficulty = config.difficulty
-		}
-
 		// Restore any existing autoplay.cfg file
 		// NOTE: A workaround to fix leftover file in case of a program crash
 		this.restoreAutoPlay()
+
+		// Load missions from missions directory
+		missions.load()
 
 		// Create context menu for launch button difficulty choice
 		if (missions.list.length) {
@@ -72,15 +64,13 @@ class Missions extends React.Component {
 				launchMenu.append(new MenuItem({
 					label: difficultyLabel,
 					type: "radio",
-					checked: (difficultyID === difficulty),
+					checked: (difficultyID === app.difficulty),
 					click: () => {
-						this.setDifficulty(difficultyID)
+						app.setDifficulty(difficultyID)
 					}
 				}))
 			})
 		}
-
-		this.state = {missions, difficulty}
 	}
 
 	componentWillMount() {
@@ -89,8 +79,6 @@ class Missions extends React.Component {
 
 		// Handle index route request (when component has no active mission param)
 		if (!match.params.mission) {
-
-			const {missions} = this.state
 
 			// Show/select first mission
 			if (missions.list.length) {
@@ -122,7 +110,6 @@ class Missions extends React.Component {
 	render() {
 
 		const {match} = this.props
-		const {missions, difficulty} = this.state
 		const missionID = match.params.mission
 		const actions = {
 			left: new Map()
@@ -150,7 +137,7 @@ class Missions extends React.Component {
 			// Launch selected mission
 			actions.right = new Map()
 			actions.right.set("Launch", {
-				className: "difficulty" + difficulty,
+				className: "difficulty" + app.difficulty,
 				onClick: event => {
 					this.launchMission(event.ctrlKey)
 				},
@@ -188,59 +175,6 @@ class Missions extends React.Component {
 		event.stopPropagation()
 	}
 
-	// Load missions from missions directory
-	loadMissions() {
-
-		const {missionsPath} = this.context.config
-		const files = Object.create(null)
-		const missions = {
-			list: [], // Sorted list of mission objects
-			index: Object.create(null) // Mission objects indexed by ID
-		}
-
-		// Scan each file in the target path/directory
-		fs.readdirSync(missionsPath).forEach(fileName => {
-
-			const missionID = path.basename(fileName, path.extname(fileName))
-
-			// Collect all files grouped by mission ID
-			if (!files[missionID]) {
-				files[missionID] = []
-			}
-
-			files[missionID].push(fileName)
-
-			// Process only mission metadata files
-			if (path.extname(fileName) !== ("." + FILE_EXT_META)) {
-				return
-			}
-
-			let mission
-
-			try {
-
-				// Read mission metadata file
-				mission = JSON.parse(
-					fs.readFileSync(missionsPath + path.sep + fileName, "utf-8")
-				)
-			}
-			catch (e) {
-				return
-			}
-
-			mission.id = missionID
-			mission.files = files[missionID]
-
-			missions.list.push(mission)
-			missions.index[missionID] = mission
-		})
-
-		// Sort missions list based on id (new missions first)
-		missions.list.sort((a, b) => b.id.localeCompare(a.id))
-
-		return missions
-	}
-
 	// Remove mission
 	removeMission(confirm, missionID = this.props.match.params.mission) {
 
@@ -270,19 +204,16 @@ class Missions extends React.Component {
 		if (result === 0) {
 
 			const {match, history} = this.props
-			const {missionsPath} = this.context.config
-			let missions = this.state.missions
 			const mission = missions.index[missionID]
-			const files = mission.files
-
-			for (const fileName of files) {
-				fs.unlinkSync(path.join(missionsPath, fileName))
-			}
-
+			const {files} = mission
 			const removedIndex = missions.list.indexOf(mission)
 
+			for (const fileName of files) {
+				fs.unlinkSync(path.join(missions.path, fileName))
+			}
+
 			// Reload missions
-			missions = this.loadMissions()
+			missions.load()
 
 			// Show create mission screen
 			if (!missions.list.length) {
@@ -292,16 +223,17 @@ class Missions extends React.Component {
 			// Select next mission on the list when removing active mission
 			if (missionID === match.params.mission) {
 
-				let nextMission = missions.list[removedIndex]
+				let nextMission
 
-				if (!nextMission) {
+				if (removedIndex < missions.list.length) {
+					nextMission = missions.list[removedIndex]
+				}
+				else {
 					nextMission = missions.list[missions.list.length - 1]
 				}
 
 				history.replace("/missions/" + nextMission.id)
 			}
-
-			this.setState({missions})
 		}
 	}
 
@@ -312,8 +244,8 @@ class Missions extends React.Component {
 			return
 		}
 
-		const {gamePath, missionsPath} = this.context.config
-		const mission = this.state.missions.index[missionID]
+		const {gamePath} = app
+		const mission = missions.index[missionID]
 		let savePath
 
 		// Use missions folder as default save path destination
@@ -329,13 +261,13 @@ class Missions extends React.Component {
 		savePath = path.join(savePath, missionID)
 
 		// Find main mission file extension (either binary or text)
-		let mainExtension = FILE_EXT_TEXT
+		let mainExtension = FileExtension.Text
 
 		for (const missionFile of mission.files) {
 
-			if (path.extname(missionFile) === ("." + FILE_EXT_BINARY)) {
+			if (path.extname(missionFile) === ("." + FileExtension.Binary)) {
 
-				mainExtension = FILE_EXT_BINARY
+				mainExtension = FileExtension.Binary
 				break
 			}
 		}
@@ -365,13 +297,13 @@ class Missions extends React.Component {
 
 				const extension = path.extname(missionFile)
 
-				if (extension === ("." + FILE_EXT_META)) {
+				if (extension === ("." + FileExtension.Meta)) {
 					continue
 				}
 
 				fs.writeFileSync(
 					path.join(saveDir, saveFile + extension),
-					fs.readFileSync(path.join(missionsPath, missionFile))
+					fs.readFileSync(path.join(missions.path, missionFile))
 				)
 			}
 		}
@@ -380,7 +312,6 @@ class Missions extends React.Component {
 	// Launch mission
 	launchMission(selectFolder) {
 
-		const {config} = this.context
 		const missionID = this.props.match.params.mission
 
 		if (!missionID) {
@@ -388,7 +319,7 @@ class Missions extends React.Component {
 		}
 
 		// Force selecting game path on first run or when existing path is invalid
-		if (!config.gamePath || !this.isValidGamePath(config.gamePath)) {
+		if (!app.gamePath || !this.isValidGamePath(app.gamePath)) {
 			selectFolder = true
 		}
 
@@ -400,7 +331,7 @@ class Missions extends React.Component {
 				{
 					title: "Select IL-2 Sturmovik folder...",
 					properties: ["openDirectory"],
-					defaultPath: config.gamePath
+					defaultPath: app.gamePath
 				}
 			)
 
@@ -433,7 +364,7 @@ class Missions extends React.Component {
 			}
 
 			if (isValidPath) {
-				config.gamePath = gamePath
+				app.setGamePath(gamePath)
 			}
 			// Show error message and abort if game path is invalid
 			else {
@@ -446,7 +377,7 @@ class Missions extends React.Component {
 			}
 		}
 
-		const gameExePath = path.join(config.gamePath, PATH_EXE)
+		const gameExePath = path.join(app.gamePath, PATH_EXE)
 		let maxAutoplayTime = MAX_AUTOPLAY_TIME
 
 		try {
@@ -502,15 +433,6 @@ class Missions extends React.Component {
 		}
 	}
 
-	// Set launch difficulty mode
-	setDifficulty(difficulty) {
-
-		const {config} = this.context
-
-		config.difficulty = difficulty
-		this.setState({difficulty})
-	}
-
 	// Create autoplay.cfg file
 	createAutoPlay(missionID) {
 
@@ -520,8 +442,7 @@ class Missions extends React.Component {
 			delete this.autoplayRestoreTS
 		}
 
-		const {userDataPath, config} = this.context
-		const {gamePath, missionsPath} = config
+		const {gamePath, difficulty} = app
 
 		if (!gamePath || !missionID) {
 			return
@@ -531,7 +452,7 @@ class Missions extends React.Component {
 
 		// Make a backup copy of the original autoplay.cfg file
 		if (fs.existsSync(autoplayPath)) {
-			Application.moveFileSync(autoplayPath, path.join(userDataPath, FILE_AUTOPLAY))
+			Application.moveFileSync(autoplayPath, path.join(PATH_USER_DATA, FILE_AUTOPLAY))
 		}
 
 		// Make autoplay.cfg
@@ -540,8 +461,8 @@ class Missions extends React.Component {
 			[
 				"&il2mg=1", // Flag used to identify generated autoplay file
 				"&enabled=1",
-				"&missionSettingsPreset=" + this.state.difficulty,
-				'&missionPath="' + path.join(missionsPath, missionID) + '"'
+				"&missionSettingsPreset=" + difficulty,
+				'&missionPath="' + path.join(missions.path, missionID) + '"'
 			].join("\r\n")
 		)
 	}
@@ -555,15 +476,14 @@ class Missions extends React.Component {
 			delete this.autoplayRestoreTS
 		}
 
-		const {userDataPath, config} = this.context
-		const {gamePath} = config
+		const {gamePath} = app
 
 		if (!gamePath) {
 			return
 		}
 
 		const autoplayPath = path.join(gamePath, PATH_AUTOPLAY)
-		const backupAutoplayPath = path.join(userDataPath, FILE_AUTOPLAY)
+		const backupAutoplayPath = path.join(PATH_USER_DATA, FILE_AUTOPLAY)
 
 		try {
 
@@ -618,8 +538,7 @@ class Missions extends React.Component {
 	// directory for changes and copy the mission files.
 	fixFlightRecords(missionID) {
 
-		const {gamePath, missionsPath} = this.context.config
-		const {missions} = this.state
+		const {gamePath} = app
 		const tracksPath = path.join(gamePath, PATH_TRACKS)
 
 		// Re-initialize directory watcher
@@ -658,22 +577,17 @@ class Missions extends React.Component {
 
 				const extension = path.extname(missionFile)
 
-				if (extension === ("." + FILE_EXT_META)) {
+				if (extension === ("." + FileExtension.Meta)) {
 					continue
 				}
 
 				fs.writeFileSync(
 					path.join(trackDir, missionFile),
-					fs.readFileSync(path.join(missionsPath, missionFile))
+					fs.readFileSync(path.join(missions.path, missionFile))
 				)
 			}
 		})
 	}
-}
-
-Missions.contextTypes = {
-	config: PropTypes.object.isRequired,
-	userDataPath: PropTypes.string.isRequired
 }
 
 module.exports = Missions

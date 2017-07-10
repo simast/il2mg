@@ -3,7 +3,7 @@
 
 const remote = global.require("electron").remote
 const React = require("react")
-const {NavLink} = require("react-router-dom")
+const MissionsListItem = require("./MissionsListItem")
 
 // Missions list component
 class MissionsList extends React.Component {
@@ -60,7 +60,7 @@ class MissionsList extends React.Component {
 						onContextMenu: this.onContextMenu.bind(this)
 					}
 
-					return <MissionsList.Item key={mission.id} {...props} />
+					return <MissionsListItem key={mission.id} {...props} />
 				})}
 			</ul>
 		)
@@ -72,28 +72,6 @@ class MissionsList extends React.Component {
 		this.contextMission = mission
 		this.menu.popup(remote.getCurrentWindow())
 	}
-}
-
-// Mission list item component
-MissionsList.Item = ({mission, onContextMenu}) => {
-
-	const linkProps = {
-		to: "/missions/" + mission.id,
-		activeClassName: "selected",
-		onContextMenu: () => {
-			onContextMenu(mission)
-		},
-		className: "country c" + mission.country
-	}
-
-	return (
-		<li>
-			<NavLink {...linkProps}>
-				<em>{mission.plane}</em>
-				{mission.title}
-			</NavLink>
-		</li>
-	)
 }
 
 module.exports = MissionsList

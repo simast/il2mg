@@ -5,11 +5,17 @@ const path = global.require("path")
 const {execFileSync} = global.require("child_process")
 const binarySearch = require("binary-search")
 const React = require("react")
-const PropTypes = require("prop-types")
+const {computed} = require("mobx")
+const {observer} = require("mobx-react")
+const createMission = require("../stores/createMission")
+const missions = require("../stores/missions")
 const Application = require("./Application")
 const Screen = require("./Screen")
 const SelectStart = require("./SelectStart")
+const SelectBattle = require("./SelectBattle")
 const ChoiceList = require("./ChoiceList")
+
+const {Start} = createMission
 
 // Record key data parameter separator
 const RECORD_SEP = "~"
@@ -34,72 +40,17 @@ const choiceLists = [
 	["airfield", "Airfields"]
 ]
 
-// Start position constants
-const startType = {
-	PARKING: 0,
-	RUNWAY: 1,
-	AIR: 2
-}
-
-// Start position types
-const startTypes = new Map([
-	[startType.PARKING, ["from", "Parking"]],
-	[startType.RUNWAY, ["on", "Runway"]],
-	[startType.AIR, ["in", "Air"]]
-])
-
-// Data index for all supported battles
-const battles = {
-	stalingrad: require("../../../data/battles/stalingrad")
-}
-
 // Create mission screen component
-class CreateMission extends React.Component {
+@observer class CreateMission extends React.Component {
 
-	constructor() {
-		super(...arguments)
-
-		const {config} = this.context
-
-		// Default values
-		let start = startType.PARKING
-		let battle = Object.keys(battles).pop() // First battle
-		let date
-		let choice = {}
-
-		// Use start type from config
-		if (startTypes.has(config.start)) {
-			start = config.start
-		}
-
-		// Use battle from config
-		if (config.battle && config.battle in battles) {
-			battle = config.battle
-		}
-
-		// Use date from config
-		if (config.date && config.date in battles[battle].dates) {
-			date = config.date
-		}
-
-		// Use choices from config
-		if (config.choice && typeof config.choice === "object") {
-			choice = config.choice
-		}
-
-		// Initial state
-		this.state = {
-			battle,
-			start,
-			date,
-			choice
-		}
+	@computed get choices() {
+		return this.getChoices(createMission.start)
 	}
 
 	// Render component
 	render() {
 
-		const {battle, start, date} = this.state
+		const {choices} = this
 		const {history, location} = this.props
 		const screenActions = {
 			right: new Map()
@@ -107,9 +58,6 @@ class CreateMission extends React.Component {
 
 		const createProps = {}
 		const isFirstCreate = new URLSearchParams(location.search).has("first")
-
-		// Get mission choice data
-		const choices = this.getChoices(start)
 
 		if (choices.valid) {
 			createProps.onClick = this.onCreateClick.bind(this)
@@ -134,59 +82,27 @@ class CreateMission extends React.Component {
 
 		return (
 			<Screen id="create" actions={screenActions}>
-				<CreateMission.SelectBattle battle={battle} battles={battles} />
-				<SelectStart
-					battle={battles[battle]}
-					start={start}
-					startTypes={startTypes}
-					date={date}
-					onStartChange={this.onStartChange.bind(this)}
-					onDateChange={date => {
-						this.setState({date})
-					}}
-					onDateReset={() => {
-						this.setState({date: undefined})
-					}} />
+				<SelectBattle />
+				<SelectStart onStartChange={this.onStartChange.bind(this)} />
 				<div id="choices">
-					{choiceLists.map(([type, title]) => {
-
-						const props = {
-							type,
-							title,
-							choices: choices[type],
-							onChoiceClick: choices => {
-								this.onChoiceClick(type, choices)
-							},
-							onChoiceReset: () => {
-								this.onChoiceReset(type)
-							}
-						}
-
-						return <ChoiceList key={type} {...props} />
-					})}
+					{choiceLists.map(([type, title]) => (
+						<ChoiceList
+							key={type}
+							type={type}
+							title={title}
+							choices={choices[type]}
+						/>
+					))}
 				</div>
 			</Screen>
 		)
 	}
 
-	// Handle component update event
-	componentDidUpdate() {
-
-		const {config} = this.context
-		const {battle, start, date, choice} = this.state
-
-		// Remember/save some state data to config
-		config.battle = battle
-		config.start = start
-		config.date = date
-		config.choice = choice
-	}
-
 	// Get mission choice data
 	getChoices(start) {
 
+		const {battle, battles, date, choice} = createMission
 		const choices = Object.create(null)
-		const {battle, date, choice} = this.state
 		const battleData = battles[battle]
 		let scanRegExp = (Object.keys(choice).length > 0)
 
@@ -217,7 +133,7 @@ class CreateMission extends React.Component {
 			const recordID = battleData.records[record]
 
 			// Allow air starts based on selected start position type
-			if (recordID < 0 && start !== startType.AIR) {
+			if (recordID < 0 && start !== Start.Air) {
 				continue
 			}
 
@@ -344,99 +260,48 @@ class CreateMission extends React.Component {
 		return data
 	}
 
-	// Handle item click in data choice list
-	onChoiceClick(choiceType, choices) {
-
-		const choiceState = Object.assign({}, this.state.choice)
-
-		// NOTE: Multiple choices can be passed in (from merged data items)
-		for (const choice of choices) {
-
-			let foundChoice = -1
-
-			// Try to remove existing choice
-			if (choiceState[choiceType]) {
-
-				foundChoice = choiceState[choiceType].indexOf(choice)
-
-				if (foundChoice > -1) {
-
-					choiceState[choiceType].splice(foundChoice, 1)
-
-					// Remove empty choice list
-					if (!choiceState[choiceType].length) {
-						delete choiceState[choiceType]
-					}
-				}
-			}
-
-			// Add new choice
-			if (foundChoice === -1) {
-
-				if (!choiceState[choiceType]) {
-					choiceState[choiceType] = []
-				}
-
-				choiceState[choiceType].push(choice)
-			}
-		}
-
-		this.setState({choice: choiceState})
-	}
-
-	// Handle choice reset button click in data choice list
-	onChoiceReset(type) {
-
-		const choiceState = Object.assign({}, this.state.choice)
-
-		delete choiceState[type]
-		this.setState({choice: choiceState})
-	}
-
 	// Handle start type change
 	onStartChange(newStart) {
 
-		const {start: prevStart, choice} = this.state
+		const {start: prevStart, choice} = createMission
 
 		if (newStart === prevStart) {
 			return
 		}
 
-		const newState = {start: newStart}
-
 		// Validate current choice list for new start position type
 		if (Object.keys(choice).length) {
 
 			const choices = this.getChoices(newStart)
+			const choiceState = Object.assign({}, choice)
 
-			for (const choiceType in choice) {
+			for (const type in choiceState) {
 
-				choice[choiceType] = choice[choiceType].filter(choiceID => {
+				choiceState[type] = choiceState[type].filter(choiceID => {
 
-					const foundChoice = choices[choiceType].find(item => (
+					const foundChoice = choices[type].find(item => (
 						item.id.indexOf(choiceID) !== -1
 					))
 
 					return foundChoice !== undefined
 				})
 
-				if (!choice[choiceType].length) {
-					delete choice[choiceType]
+				if (!choiceState[type].length) {
+					delete choiceState[type]
 				}
 			}
 
-			newState.choice = choice
+			createMission.setChoice(choiceState)
 		}
 
-		this.setState(newState)
+		createMission.setStart(newStart)
 	}
 
 	// Handle create mission button click
 	onCreateClick() {
 
-		const {config} = this.context
 		const {history} = this.props
-		const {battle, start, date, choice} = this.state
+		const {battle, start, date, choice} = createMission
 
 		let cliFile = path.join(process.resourcesPath, "il2mg-cli")
 		const cliParams = []
@@ -459,10 +324,10 @@ class CreateMission extends React.Component {
 		// Set start position type (--state parameter)
 		let stateValue = "start" // Parking
 
-		if (start === startType.RUNWAY) {
+		if (start === Start.Runway) {
 			stateValue = "runway"
 		}
-		else if (start === startType.AIR) {
+		else if (start === Start.Air) {
 			stateValue = 0
 		}
 
@@ -479,7 +344,7 @@ class CreateMission extends React.Component {
 		}
 
 		// Mission files path
-		cliParams.push(config.missionsPath)
+		cliParams.push(missions.path)
 
 		// Create mission using CLI application
 		try {
@@ -495,16 +360,5 @@ class CreateMission extends React.Component {
 		}
 	}
 }
-
-CreateMission.contextTypes = {
-	config: PropTypes.object.isRequired
-}
-
-// Mission battle selection component
-CreateMission.SelectBattle = ({battle, battles}) => (
-
-	// TODO: Allow selecting other battles
-	<h1>{battles[battle].name}</h1>
-)
 
 module.exports = CreateMission

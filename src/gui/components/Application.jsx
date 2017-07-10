@@ -2,36 +2,17 @@
 "use strict"
 
 const fs = global.require("fs")
-const {remote, ipcRenderer} = global.require("electron")
+const {remote} = global.require("electron")
 const React = require("react")
-const PropTypes = require("prop-types")
 
 // Application component
 class Application extends React.Component {
 
-	constructor() {
-		super(...arguments)
+	componentDidMount() {
 
 		// Handle drag and drop events on application window
 		document.addEventListener("dragover", Application.onDragAndDrop, true)
 		document.addEventListener("drop", Application.onDragAndDrop, true)
-
-		// FIXME: It's not clear why this is needed and why config object is not
-		// automatically updated in the main process when new properties are added.
-		window.addEventListener("unload", () => {
-			ipcRenderer.sendSync("config", this.config)
-		})
-
-		this.config = remote.getGlobal("config")
-		this.userDataPath = remote.app.getPath("userData")
-	}
-
-	getChildContext() {
-
-		return {
-			config: this.config,
-			userDataPath: this.userDataPath
-		}
 	}
 
 	// Render component
@@ -88,11 +69,6 @@ class Application extends React.Component {
 			fs.unlinkSync(sourceFile)
 		}
 	}
-}
-
-Application.childContextTypes = {
-	config: PropTypes.object,
-	userDataPath: PropTypes.string
 }
 
 module.exports = Application

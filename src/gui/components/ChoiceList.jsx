@@ -2,6 +2,8 @@
 "use strict"
 
 const React = require("react")
+const createMission = require("../stores/createMission")
+const ChoiceListItem = require("./ChoiceListItem")
 
 // Data choice list component
 class ChoiceList extends React.Component {
@@ -9,7 +11,7 @@ class ChoiceList extends React.Component {
 	// Render component
 	render() {
 
-		const {type, title, choices, onChoiceClick, onChoiceReset} = this.props
+		const {type, title, choices} = this.props
 		let validCount = 0
 		let selectedCount = 0
 		let valid
@@ -27,10 +29,13 @@ class ChoiceList extends React.Component {
 			}
 
 			return (
-				<ChoiceList.Item
+				<ChoiceListItem
 					key={choice.id.join("")}
 					choice={choice}
-					onChoiceClick={onChoiceClick} />
+					onChoiceClick={choices => {
+						this.onChoiceClick(type, choices)
+					}}
+				/>
 			)
 		})
 
@@ -47,7 +52,7 @@ class ChoiceList extends React.Component {
 		}
 
 		if (selectedCount > 0) {
-			reset = <a className="reset" onClick={onChoiceReset}></a>
+			reset = <a className="reset" onClick={() => this.onChoiceReset(type)}></a>
 		}
 
 		return (
@@ -57,65 +62,54 @@ class ChoiceList extends React.Component {
 			</div>
 		)
 	}
-}
 
-// Data choice list item component
-ChoiceList.Item = class extends React.Component {
+	// Handle choice item click
+	onChoiceClick(type, choices) {
 
-	shouldComponentUpdate(nextProps) {
+		const choiceState = Object.assign({}, createMission.choice)
 
-		const nextChoice = nextProps.choice
-		const prevChoice = this.props.choice
+		// NOTE: Multiple choices can be passed in (from merged data items)
+		for (const choice of choices) {
 
-		// Update choice list item only on valid/selected state change
-		return (nextChoice.valid !== prevChoice.valid ||
-						nextChoice.selected !== prevChoice.selected)
-	}
+			let foundChoice = -1
 
-	// Render component
-	render() {
+			// Try to remove existing choice
+			if (choiceState[type]) {
 
-		const {choice, onChoiceClick} = this.props
-		const data = choice.data
-		let suffix, alias
+				foundChoice = choiceState[type].indexOf(choice)
 
-		if (data.suffix) {
-			suffix = <span>{" " + data.suffix}</span>
-		}
+				if (foundChoice > -1) {
 
-		if (data.alias) {
-			alias = <em>{" “" + data.alias + "”"}</em>
-		}
+					choiceState[type].splice(foundChoice, 1)
 
-		const propsItem = {}
-		const propsLink = {
-			onClick: () => {
-				onChoiceClick(choice.id)
+					// Remove empty choice list
+					if (!choiceState[type].length) {
+						delete choiceState[type]
+					}
+				}
+			}
+
+			// Add new choice
+			if (foundChoice === -1) {
+
+				if (!choiceState[type]) {
+					choiceState[type] = []
+				}
+
+				choiceState[type].push(choice)
 			}
 		}
 
-		const className = []
+		createMission.setChoice(choiceState)
+	}
 
-		if (data.country) {
-			className.push("country", "c" + data.country)
-		}
+	// Handle choice reset button click
+	onChoiceReset(type) {
 
-		if (choice.selected) {
-			className.push("selected")
-		}
-		else if (!choice.valid) {
-			propsItem.className = "invalid"
-		}
+		const choiceState = Object.assign({}, createMission.choice)
 
-		if (className.length) {
-			propsLink.className = className.join(" ")
-		}
-
-		return (
-			<li {...propsItem}>
-				<a {...propsLink}>{data.name}{suffix}{alias}</a>
-			</li>
-		)
+		delete choiceState[type]
+		createMission.setChoice(choiceState)
 	}
 }
 

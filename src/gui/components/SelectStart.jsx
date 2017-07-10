@@ -3,6 +3,11 @@
 
 const {remote} = global.require("electron")
 const React = require("react")
+const {computed} = require("mobx")
+const {observer} = require("mobx-react")
+const createMission = require("../stores/createMission")
+
+const {Start} = createMission
 
 // Season color values
 const seasonColor = {
@@ -12,125 +17,32 @@ const seasonColor = {
 	winter: "#9a9997"
 }
 
+// Start position types
+const startTypes = new Map([
+	[Start.Parking, ["from", "Parking"]],
+	[Start.Runway, ["on", "Runway"]],
+	[Start.Air, ["in", "Air"]]
+])
+
 // Style object reference (for date range input track CSS rule)
 let trackCSSStyle = null
 
 // Select mission start and date component
-class SelectStart extends React.Component {
-
-	constructor({battle, start, startTypes, onStartChange}) {
-		super(...arguments)
-
-		// Create context menu for start type choice
-		const {Menu, MenuItem} = remote
-		const startMenu = this.startMenu = new Menu()
-
-		startTypes.forEach((startText, startID) => {
-
-			startMenu.append(new MenuItem({
-				label: startText[1],
-				type: "radio",
-				checked: (startID === start),
-				click: () => {
-
-					if (this.props.start !== startID) {
-						onStartChange(startID)
-					}
-				}
-			}))
-		})
-
-		this.state = {
-			dates: this.getDates(battle)
-		}
-	}
-
-	shouldComponentUpdate(nextProps) {
-
-		// Update component only when date, battle or start type has changed
-		return (nextProps.date !== this.props.date ||
-						nextProps.battle !== this.props.battle ||
-						nextProps.start !== this.props.start)
-	}
-
-	componentWillReceiveProps(nextProps) {
-
-		// Rebuild dates index state when battle has changed
-		if (nextProps.battle !== this.props.battle) {
-			this.setState({dates: this.getDates(nextProps.battle)})
-		}
-	}
-
-	// Render component
-	render() {
-
-		const {start, startTypes, date, onDateChange, onDateReset} = this.props
-		const {dates} = this.state
-		const totalDays = dates.list.length
-		const [startPrefix, startLabel] = startTypes.get(start)
-		let dateValue = 0
-		let dateOutput
-		let reset
-
-		// Show a number of days in the battle when date is not selected
-		if (!date) {
-			dateOutput = totalDays + " days"
-		}
-		// Show selected date (and a reset button)
-		else {
-
-			dateOutput = date + ", " + dates.index[date].season
-			reset = <a className="reset" onClick={onDateReset}></a>
-		}
-
-		const dateData = dates.index[date]
-
-		if (dateData) {
-			dateValue = dateData.value
-		}
-
-		const startProps = {
-			onClick: () => {
-				this.startMenu.popup(remote.getCurrentWindow())
-			}
-		}
-
-		// Trigger start context menu with both, right and left, mouse buttons
-		startProps.onContextMenu = startProps.onClick
-
-		return (
-			<div id="selectStart">
-				<em>
-					{"start "}
-					{startPrefix + " "}
-					<a {...startProps}>{startLabel.toLowerCase()}</a>, {dateOutput}
-				</em>
-				<input
-					type="range"
-					value={dateValue}
-					max={totalDays}
-					onChange={event => {
-
-						// Get date from input value
-						const dateData = dates.list[event.target.value - 1]
-						onDateChange(dateData ? dateData.date : undefined)
-					}} />
-				{reset}
-			</div>
-		)
-	}
+@observer class SelectStart extends React.Component {
 
 	// Get an index of battle dates
-	getDates(battle) {
+	@computed get dates() {
 
+		const {battle, battles} = createMission
+		const {seasons} = battles[battle]
 		const dates = {
 			list: [],
 			index: {}
 		}
 
 		// Build a list of dates from season data
-		for (const season in battle.seasons) {
-			for (const date of battle.seasons[season]) {
+		for (const season in seasons) {
+			for (const date of seasons[season]) {
 				dates.list.push({date, season})
 			}
 		}
@@ -209,6 +121,85 @@ class SelectStart extends React.Component {
 		trackCSSStyle.backgroundImage = "linear-gradient(to right, " + colorStops.join(",") + ")"
 
 		return dates
+	}
+
+	constructor({onStartChange}) {
+		super(...arguments)
+
+		// Create context menu for start type choice
+		const {Menu, MenuItem} = remote
+		const startMenu = this.startMenu = new Menu()
+
+		startTypes.forEach((startText, startID) => {
+
+			startMenu.append(new MenuItem({
+				label: startText[1],
+				type: "radio",
+				checked: (startID === createMission.start),
+				click: () => {
+					onStartChange(startID)
+				}
+			}))
+		})
+	}
+
+	// Render component
+	render() {
+
+		const {start, date} = createMission
+		const dates = this.dates
+		const totalDays = dates.list.length
+		const [startPrefix, startLabel] = startTypes.get(start)
+		let dateValue = 0
+		let dateOutput
+		let reset
+
+		// Show a number of days in the battle when date is not selected
+		if (!date) {
+			dateOutput = totalDays + " days"
+		}
+		// Show selected date (and a reset button)
+		else {
+
+			dateOutput = date + ", " + dates.index[date].season
+			reset = <a className="reset" onClick={() => createMission.setDate("")}></a>
+		}
+
+		const dateData = dates.index[date]
+
+		if (dateData) {
+			dateValue = dateData.value
+		}
+
+		const startProps = {
+			onClick: () => {
+				this.startMenu.popup(remote.getCurrentWindow())
+			}
+		}
+
+		// Trigger start context menu with both, right and left, mouse buttons
+		startProps.onContextMenu = startProps.onClick
+
+		return (
+			<div id="selectStart">
+				<em>
+					{"start "}
+					{startPrefix + " "}
+					<a {...startProps}>{startLabel.toLowerCase()}</a>, {dateOutput}
+				</em>
+				<input
+					type="range"
+					value={dateValue}
+					max={totalDays}
+					onChange={event => {
+
+						// Get date from input value
+						const dateData = dates.list[event.target.value - 1]
+						createMission.setDate(dateData ? dateData.date : "")
+					}} />
+				{reset}
+			</div>
+		)
 	}
 }
 
