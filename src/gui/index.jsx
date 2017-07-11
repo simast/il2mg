@@ -5,9 +5,9 @@ const React = require("react")
 const ReactDOM = require("react-dom")
 const {HashRouter, Route, Switch, Redirect} = require("react-router-dom")
 const {useStrict} = require("mobx")
-const Application = require("./components/Application")
-const Missions = require("./components/Missions")
-const CreateMission = require("./components/CreateMission")
+const Application = require("./app/Application")
+const MissionsScreen = require("./missions/Screen")
+const CreateMissionScreen = require("./createMission/Screen")
 
 // NOTE: Strict mode makes MobX require actions to modify state!
 useStrict(true)
@@ -24,8 +24,8 @@ ReactDOM.render((
 			return (
 				<Application>
 					<Switch>
-						<Route path="/missions/:mission?" component={Missions} />
-						<Route path="/create" component={CreateMission} />
+						<Route path="/missions/:mission?" component={MissionsScreen} />
+						<Route path="/create" component={CreateMissionScreen} />
 					</Switch>
 				</Application>
 			)

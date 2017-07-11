@@ -3,7 +3,7 @@
 
 const React = require("react")
 const {observer} = require("mobx-react")
-const createMission = require("../stores/createMission")
+const createMission = require("./store")
 
 // Select mission battle component
 module.exports = observer(() => {

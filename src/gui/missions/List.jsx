@@ -3,7 +3,7 @@
 
 const remote = global.require("electron").remote
 const React = require("react")
-const MissionsListItem = require("./MissionsListItem")
+const MissionsListItem = require("./ListItem")
 
 // Missions list component
 class MissionsList extends React.Component {

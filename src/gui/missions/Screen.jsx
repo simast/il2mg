@@ -7,15 +7,14 @@ const {spawn} = global.require("child_process")
 const {remote} = global.require("electron")
 const React = require("react")
 const {observer} = require("mobx-react")
-const app = require("../stores/app")
-const missions = require("../stores/missions")
-const Application = require("./Application")
-const Screen = require("./Screen")
-const MissionsList = require("./MissionsList")
-const MissionDetails = require("./MissionDetails")
-
-const {Difficulty} = app
-const {FileExtension} = missions
+const app = require("../app/store")
+const missions = require("./store")
+const {Difficulty} = require("../app/constants")
+const {FileExtension} = require("./constants")
+const {showErrorMessage, moveFileSync} = require("../app/utils")
+const Screen = require("../app/Screen")
+const MissionsList = require("./List")
+const MissionDetails = require("./Details")
 
 // Autoplay file name
 const FILE_AUTOPLAY = "autoplay.cfg"
@@ -41,7 +40,7 @@ const difficultyModes = new Map([
 ])
 
 // Missions screen component
-@observer class Missions extends React.Component {
+@observer class MissionsScreen extends React.Component {
 
 	constructor() {
 		super(...arguments)
@@ -369,8 +368,9 @@ const difficultyModes = new Map([
 			// Show error message and abort if game path is invalid
 			else {
 
-				Application.showErrorMessage(
-					"Selected folder is not a valid IL-2 Sturmovik directory:\n\n" + folder
+				showErrorMessage(
+					"Selected folder is not a valid IL-2 Sturmovik directory:\n\n" +
+					folder
 				)
 
 				return
@@ -405,7 +405,7 @@ const difficultyModes = new Map([
 			maxAutoplayTime = 0
 
 			// Show an error suggesting to use elevated il2mg executable permissions
-			Application.showErrorMessage(
+			showErrorMessage(
 				"Could not launch IL-2 Sturmovik!\n\n" +
 				"Please close this application and then run il2mg.exe again by right " +
 				'clicking and using the "Run as administrator" menu option.'
@@ -452,7 +452,7 @@ const difficultyModes = new Map([
 
 		// Make a backup copy of the original autoplay.cfg file
 		if (fs.existsSync(autoplayPath)) {
-			Application.moveFileSync(autoplayPath, path.join(PATH_USER_DATA, FILE_AUTOPLAY))
+			moveFileSync(autoplayPath, path.join(PATH_USER_DATA, FILE_AUTOPLAY))
 		}
 
 		// Make autoplay.cfg
@@ -489,7 +489,7 @@ const difficultyModes = new Map([
 
 			// Restore backup copy of the original autoplay.cfg file
 			if (fs.existsSync(backupAutoplayPath)) {
-				Application.moveFileSync(backupAutoplayPath, autoplayPath)
+				moveFileSync(backupAutoplayPath, autoplayPath)
 			}
 			// Remove existing autoplay.cfg file
 			else if (fs.existsSync(autoplayPath)) {
@@ -590,4 +590,4 @@ const difficultyModes = new Map([
 	}
 }
 
-module.exports = Missions
+module.exports = MissionsScreen

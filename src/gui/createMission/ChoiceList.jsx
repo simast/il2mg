@@ -2,7 +2,7 @@
 "use strict"
 
 const React = require("react")
-const createMission = require("../stores/createMission")
+const createMission = require("./store")
 const ChoiceListItem = require("./ChoiceListItem")
 
 // Data choice list component

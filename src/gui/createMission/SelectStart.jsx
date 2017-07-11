@@ -5,9 +5,8 @@ const {remote} = global.require("electron")
 const React = require("react")
 const {computed} = require("mobx")
 const {observer} = require("mobx-react")
-const createMission = require("../stores/createMission")
-
-const {Start} = createMission
+const createMission = require("./store")
+const {Start} = require("./constants")
 
 // Season color values
 const seasonColor = {

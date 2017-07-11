@@ -3,18 +3,7 @@
 
 const {remote, ipcRenderer} = global.require("electron")
 const {observable, computed, action, reaction} = require("mobx")
-
-// Starting mode
-const Start = Object.freeze({
-	Parking: 0,
-	Runway: 1,
-	Air: 2
-})
-
-// Supported battles
-const Battle = Object.freeze({
-	Stalingrad: "stalingrad"
-})
+const {Start, Battle} = require("./constants")
 
 // Create mission state store
 class CreateMissionStore {
@@ -85,7 +74,3 @@ class CreateMissionStore {
 }
 
 module.exports = new CreateMissionStore()
-
-// Constants
-module.exports.Start = Start
-module.exports.Battle = Battle

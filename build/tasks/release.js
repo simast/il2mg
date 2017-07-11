@@ -68,10 +68,10 @@ module.exports = function(grunt) {
 		// Build GUI application package
 		const buildGUIApp = async () => new Promise((resolve, reject) => {
 
-			const appFileMain = "app.js"
-			const appFileHTML = "main.html"
+			const appFileMain = "main.js"
+			const appFileHTML = "index.html"
 			const appFileCSS = "style.css"
-			const appFileJS = "main.js"
+			const appFileJS = "index.js"
 
 			// Build application package.json file
 			grunt.file.write(appDir + "package.json", JSON.stringify({
@@ -81,7 +81,7 @@ module.exports = function(grunt) {
 				author: packageData.author
 			}, null, "\t"))
 
-			// Build main process JavaScript file (app.js)
+			// Build main process JavaScript file
 			grunt.file.copy("src/gui/" + appFileMain, appDir + appFileMain, {
 				process(content) {
 
@@ -94,17 +94,17 @@ module.exports = function(grunt) {
 				}
 			})
 
-			// Build renderer process HTML file (main.html)
+			// Build renderer process HTML file
 			grunt.file.copy("src/gui/" + appFileHTML, appDir + appFileHTML)
 
-			// Build renderer process CSS file (style.css)
+			// Build renderer process CSS file
 			grunt.file.copy("src/gui/" + appFileCSS, appDir + appFileCSS, {
 				process(content) {
 					return new CleanCSS().minify(content).styles
 				}
 			})
 
-			// Build renderer process JavaScript file (main.js)
+			// Build renderer process JavaScript file
 			browserify({
 				entries: ["src/gui/" + appFileJS + "x"],
 				debug: false,

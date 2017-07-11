@@ -3,13 +3,7 @@
 
 const {remote, ipcRenderer} = global.require("electron")
 const {observable, computed, action, reaction} = require("mobx")
-
-// Difficulty preset
-const Difficulty = Object.freeze({
-	Custom: 0,
-	Normal: 1,
-	Expert: 2
-})
+const {Difficulty} = require("./constants")
 
 // Application state store
 class AppStore {
@@ -54,6 +48,3 @@ class AppStore {
 }
 
 module.exports = new AppStore()
-
-// Constants
-module.exports.Difficulty = Difficulty

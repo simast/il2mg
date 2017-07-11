@@ -6,7 +6,7 @@ if (require.main === module) {
 
 	// Electron GUI application
 	if (process.versions.electron) {
-		require("./src/gui/app")
+		require("./src/gui/main")
 	}
 	// CLI application
 	else {

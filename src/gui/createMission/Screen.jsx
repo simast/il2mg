@@ -7,15 +7,14 @@ const binarySearch = require("binary-search")
 const React = require("react")
 const {computed} = require("mobx")
 const {observer} = require("mobx-react")
-const createMission = require("../stores/createMission")
-const missions = require("../stores/missions")
-const Application = require("./Application")
-const Screen = require("./Screen")
+const createMission = require("./store")
+const missions = require("../missions/store")
+const {Start} = require("./constants")
+const {showErrorMessage} = require("../app/utils")
+const Screen = require("../app/Screen")
 const SelectStart = require("./SelectStart")
 const SelectBattle = require("./SelectBattle")
 const ChoiceList = require("./ChoiceList")
-
-const {Start} = createMission
 
 // Record key data parameter separator
 const RECORD_SEP = "~"
@@ -41,7 +40,7 @@ const choiceLists = [
 ]
 
 // Create mission screen component
-@observer class CreateMission extends React.Component {
+@observer class CreateMissionScreen extends React.Component {
 
 	@computed get choices() {
 		return this.getChoices(createMission.start)
@@ -356,9 +355,9 @@ const choiceLists = [
 			history.replace("/missions")
 		}
 		catch (e) {
-			Application.showErrorMessage(e.stderr.toString())
+			showErrorMessage(e.stderr.toString())
 		}
 	}
 }
 
-module.exports = CreateMission
+module.exports = CreateMissionScreen

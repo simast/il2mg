@@ -5,13 +5,7 @@ const fs = global.require("fs")
 const path = global.require("path")
 const {remote} = global.require("electron")
 const {observable, action} = require("mobx")
-
-// Mission file extensions
-const FileExtension = Object.freeze({
-	Text: "Mission",
-	Binary: "msnbin",
-	Meta: "il2mg"
-})
+const {FileExtension} = require("./constants")
 
 // Missions state store
 class MissionsStore {
@@ -81,6 +75,3 @@ class MissionsStore {
 }
 
 module.exports = new MissionsStore()
-
-// Constants
-module.exports.FileExtension = FileExtension
