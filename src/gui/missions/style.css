@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+/* Custom difficulty */
+#actionBar a.difficulty0 {
+	text-shadow: 0 0 30px rgba(77,77,77,1);
+}
+/* Normal difficulty */
+#actionBar a.difficulty1 {
+	text-shadow: 0 0 30px rgba(0,129,0,1);
+}
+/* Expert difficulty */
+#actionBar a.difficulty2 {
+	text-shadow: 0 0 30px rgba(176,76,0,1);
+}
+
+/* Missions screen */
+#missions {
+	display: flex;
+}
+
+/* Missions list */
+#missionsList {
+	list-style-type: none;
+	pointer-events: auto;
+	margin: 140px var(--content-spacing) 0 0;
+	width: 32%;
+	padding: 4px 15px 4px 0;
+	max-height: calc(100vh - 273px);
+	overflow-y: auto;
+}
+#missionsList a {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 25px;
+	font-size: 14px;
+}
+#missionsList em {
+	font-size: 13px;
+	font-style: normal;
+	float: right;
+	margin-left: 8px;
+}
+#missionsList em:before {
+	content: "[";
+	opacity: 0.5;
+}
+#missionsList em:after {
+	content: "]";
+	opacity: 0.5;
+}
+#missionsList a.selected em {
+	font-weight: normal;
+}
+
+/* Mission details pane */
+#missionDetails {
+	--background-color: rgb(43,45,34);
+	--background-color-transparent: rgba(43,45,34,0);
+	--text-color: #d6cfcf;
+	--light-color: #fbfbfb;
+	--dark-color: #959595;
+	--title-height: 54px;
+
+	flex: 1;
+	pointer-events: auto;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	border-radius: 10px;
+	box-shadow: 0 10px 6px -6px rgba(0,0,0,0.35);
+}
+
+/* Mission title */
+#missionDetails h1 {
+	display: block;
+	font-weight: normal;
+	font-size: 17px;
+	line-height: var(--title-height);
+	color: var(--light-color);
+	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 var(--content-spacing);
+}
+
+/* Mission briefing */
+#briefing {
+	position: relative;
+	cursor: auto;
+	white-space: pre-wrap;
+	padding: 5px var(--content-spacing);
+	padding-right: 15px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	height: calc(100vh - 204px);
+	overflow-y: auto;
+	user-select: text;
+
+	/* Top and bottom briefing content scroll shadows */
+	background:
+		/* Shadow covers */
+		linear-gradient(var(--background-color) 30%, var(--background-color-transparent)),
+		linear-gradient(var(--background-color-transparent), var(--background-color) 70%) 0 100%,
+		/* Shadows */
+		radial-gradient(farthest-side at 50% 0, rgba(0,0,0,0.4), rgba(0,0,0,0)),
+		radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,0.4), rgba(0,0,0,0)) 0 100%;
+	background-repeat: no-repeat;
+	background-color: var(--background-color);
+	background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+	background-attachment: local, local, scroll, scroll;
+}
+
+/* Override generated briefing text styles */
+#briefing font[size="8"] {
+	/* NOTE: This small font size is used as a separator */
+	display: block;
+	font-size: 0;
+	height: 0;
+	margin: 10px 0;
+}
+#briefing font[size="8"] + br {
+	display: none;
+}
+#briefing font[size="14"] {
+	font-size: 12px;
+}
+#briefing font[size="16"] {
+	font-size: 13px;
+}
+#briefing font[color="#fbfbfb"] {
+	color: var(--light-color);
+}
+#briefing font[color="#959595"] {
+	color: var(--dark-color);
+}
+#briefing p {
+	padding: 0;
+	margin: 0;
+}
+#briefing i {
+	font-style: italic;
+}
+
+/* Custom briefing scrollbars */
+#briefing::-webkit-scrollbar-thumb {
+	border-color: rgba(43,45,34,0.75);
+	background-color: rgba(87,91,69,0.5);
+}

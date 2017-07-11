@@ -18,9 +18,10 @@ module.exports = function(grunt) {
 
 		const done = this.async()
 		const packageData = grunt.config("pkg")
-		const outDir = "build/"
-		const buildDir = outDir + "temp/"
-		const appDir = buildDir + "app/"
+		const outDir = "build"
+		const buildDir = path.join(outDir, "temp")
+		const appDir = path.join(buildDir, "app")
+		const guiDir = path.join("src", "gui")
 
 		// Build CLI application
 		const buildCLIApp = async () => new Promise(resolve => {
@@ -39,7 +40,7 @@ module.exports = function(grunt) {
 				// Copy over app JavaScript source code files
 				// TODO: Use UglifyJS to uglify the code?
 				if (fileExt === ".js") {
-					grunt.file.copy(file, buildDir + file)
+					grunt.file.copy(file, path.join(buildDir, file))
 				}
 				// Convert JSON5 data files to JSON format
 				else {
@@ -56,7 +57,7 @@ module.exports = function(grunt) {
 						path.basename(file, path.extname(file)) + ".json"
 					)
 
-					grunt.file.write(buildDir + fileJSON, JSON.stringify(
+					grunt.file.write(path.join(buildDir, fileJSON), JSON.stringify(
 						jsonParse(grunt.file.read(file))
 					))
 				}
@@ -75,18 +76,18 @@ module.exports = function(grunt) {
 
 			const uglifyOptions = {
 				toplevel: true,
+				mangle: true,
+				compress: true,
 				parse: {
 					ecma: 8
 				},
-				mangle: true,
-				compress: true,
 				output: {
 					ecma: 7
 				}
 			}
 
 			// Build application package.json file
-			grunt.file.write(appDir + "package.json", JSON.stringify({
+			grunt.file.write(path.join(appDir, "package.json"), JSON.stringify({
 				name: packageData.name,
 				private: true,
 				main: appFileMain,
@@ -94,25 +95,41 @@ module.exports = function(grunt) {
 			}, null, "\t"))
 
 			// Build main process JavaScript file
-			grunt.file.copy("src/gui/" + appFileMain, appDir + appFileMain, {
-				process(content) {
-					return UglifyJS.minify(content, uglifyOptions).code
+			grunt.file.copy(
+				path.join(guiDir, appFileMain),
+				path.join(appDir, appFileMain),
+				{
+					process(content) {
+						return UglifyJS.minify(content, uglifyOptions).code
+					}
 				}
-			})
+			)
 
 			// Build renderer process HTML file
-			grunt.file.copy("src/gui/" + appFileHTML, appDir + appFileHTML)
+			grunt.file.copy(
+				path.join(guiDir, appFileHTML),
+				path.join(appDir, appFileHTML)
+			)
 
 			// Build renderer process CSS file
-			grunt.file.copy("src/gui/" + appFileCSS, appDir + appFileCSS, {
-				process(content) {
-					return new CleanCSS().minify(content).styles
+			grunt.file.copy(
+				path.join(guiDir, appFileCSS),
+				path.join(appDir, appFileCSS),
+				{
+					process(content) {
+
+						grunt.file.setBase(guiDir)
+						const {styles} = new CleanCSS().minify(content)
+						grunt.file.setBase("../../")
+
+						return styles
+					}
 				}
-			})
+			)
 
 			// Build renderer process JavaScript file
 			browserify({
-				entries: ["src/gui/" + appFileJS + "x"],
+				entries: [path.join(guiDir, appFileJS) + "x"],
 				debug: false,
 				node: true,
 				ignoreMissing: true,
@@ -131,13 +148,16 @@ module.exports = function(grunt) {
 				const content = buffer.toString("utf-8")
 				const contentMinified = UglifyJS.minify(content, uglifyOptions).code
 
-				grunt.file.write(appDir + appFileJS, contentMinified)
+				grunt.file.write(path.join(appDir, appFileJS), contentMinified)
 
 				resolve()
 			})
 
 			// Include assets
-			grunt.file.copy("src/gui/assets", appDir + "assets")
+			grunt.file.copy(
+				path.join(guiDir, "assets"),
+				path.join(appDir, "assets")
+			)
 		})
 
 		// Package Electron application
@@ -150,7 +170,7 @@ module.exports = function(grunt) {
 				dir: appDir,
 				out: outDir,
 				asar: true,
-				icon: "src/gui/app.ico",
+				icon: path.join(guiDir, "app.ico"),
 				appCopyright: data.copyright,
 				appVersion: "0." + data.version.match(/[0-9]+/)[0],
 				win32metadata: {

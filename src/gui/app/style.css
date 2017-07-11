@@ -1,0 +1,198 @@
+@charset "UTF-8";
+
+:root {
+	--content-spacing: 25px;
+	--main-text-color: #262626;
+	--separator-color: rgba(51,51,51,0.35);
+}
+
+html, body, #main, #application, #screen, #container {
+	height: 100vh;
+	width: 100vw;
+	max-height: 100vh;
+	max-width: 100vw;
+	overflow: hidden;
+}
+
+body {
+	margin: 0;
+	cursor: default;
+	color: var(--main-text-color);
+	font-family: system-ui;
+	font-size: 14px;
+	background-image: url("../assets/bg.png");
+	user-select: none;
+}
+
+/* Default anchor link style */
+a {
+	text-decoration: none;
+	cursor: pointer;
+	color: var(--main-text-color);
+	-webkit-user-drag: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {
+	position: relative;
+	top: 1px;
+	text-decoration: none;
+	opacity: 0.8;
+}
+a.selected {
+	font-weight: bold;
+}
+
+/* Disable yellow outline with keyboard navigation */
+a:focus, input:focus, textarea:focus, select:focus {
+	outline: none;
+}
+
+/* Application screen container and main flex layout */
+#container {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	box-shadow: inset 0 0 20px 0 rgba(0,0,0,0.35);
+	pointer-events: none;
+}
+#content {
+	flex: 1;
+	padding: var(--content-spacing);
+	overflow: hidden;
+}
+
+/* Photos decoration */
+#photos {
+	filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.75));
+}
+#photos .photo {
+	position: absolute;
+	width: 200px;
+	height: 142px;
+	cursor: help;
+	-webkit-user-drag: none;
+}
+#photos .photo img {
+	width: 182px;
+	height: 125px;
+	margin-left: 9px;
+	margin-top: 8px;
+	background-color: #fff;
+	filter: grayscale(1) contrast(0.9) brightness(0.9) sepia(0.65) invert(0.1);
+}
+#photos .photo:active img {
+	filter: none;
+}
+#photos .photo div {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: transparent url("../assets/photo-frame.png") 0 0 no-repeat;
+}
+#photos .missions1 {
+	left: 95px;
+	top: -43px;
+	transform: rotate(-73deg);
+}
+#photos .missions2 {
+	left: -10px;
+	top: -30px;
+	transform: rotate(-9deg);
+	filter: drop-shadow(3px 1px 1px rgba(0,0,0,0.25));
+}
+#photos .create1 {
+	right: 150px;
+	top: -50px;
+	transform: rotate(-11deg);
+}
+#photos .create2 {
+	right: -10px;
+	top: -25px;
+	transform: rotate(9deg);
+}
+
+/* Bottom action bar */
+#actionBar {
+	box-sizing: border-box;
+	pointer-events: auto;
+	flex: 0 0 auto;
+	height: 75px;
+	margin: 0 var(--content-spacing);
+	padding: 0 calc(var(--content-spacing) - 6px); /* 4px from action link padding */
+	border-top: 2px dotted var(--separator-color);
+}
+#actionBar nav {
+	margin-top: 21px;
+	font-size: 15px;
+	line-height: 28px;
+}
+#actionBar nav.left {
+	float: left;
+}
+#actionBar nav.right {
+	float: right;
+}
+#actionBar a,
+#actionBar span {
+	display: inline-block;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 0 6px;
+}
+#actionBar a {
+	cursor: pointer;
+}
+#actionBar span {
+	color: var(--separator-color);
+}
+
+/* Links with country icons */
+a.country:before {
+	display: inline-block;
+	width: 14px;
+	padding-right: 5px;
+	position: relative;
+	top: 2px;
+	opacity: 0.4;
+	filter: grayscale(0.5);
+}
+a.country.c101:before {
+	content: url("../assets/country-101.png");
+}
+a.country.c201:before {
+	content: url("../assets/country-201.png");
+}
+a.country.c202:before {
+	content: url("../assets/country-202.png");
+}
+a.country.selected:before {
+	opacity: 1;
+	filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+	width: 9px;
+}
+::-webkit-scrollbar-button {
+	display: none;
+}
+::-webkit-scrollbar-thumb {
+	background-color: rgba(87,91,69,0.25);
+	border: 2px solid rgba(251,233,188,0.75);
+	border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(87,91,69,1) !important;
+	border: none;
+}
+::-webkit-scrollbar-thumb:active {
+	opacity: 0.75;
+}
+::-webkit-scrollbar-track {
+	background-color: rgba(0,0,0,0.1);
+	border-radius: 4px;
+}

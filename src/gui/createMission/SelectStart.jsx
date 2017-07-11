@@ -77,13 +77,14 @@ let trackCSSStyle = null
 		if (!trackCSSStyle) {
 
 			const styleSheet = document.styleSheets[0]
+			const {cssRules} = styleSheet
 
-			styleSheet.insertRule(
+			const cssRuleIndex = styleSheet.insertRule(
 				"#selectStart input::-webkit-slider-runnable-track {}",
-				0 // At the beginning of stylesheet
+				cssRules.length // At the end of stylesheet
 			)
 
-			trackCSSStyle = styleSheet.cssRules[0].style
+			trackCSSStyle = cssRules[cssRuleIndex].style
 		}
 
 		const colorStops = []

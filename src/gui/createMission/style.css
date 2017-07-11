@@ -1,0 +1,160 @@
+@charset "UTF-8";
+
+/* Create mission screen */
+
+#create .reset {
+	color: var(--separator-color);
+	font-size: 14px;
+	text-align: center;
+	line-height: 18px;
+	height: 18px;
+	width: 18px;
+}
+#create .reset:before {
+	content: "\2716";
+}
+#create .reset:hover {
+	text-decoration: none;
+	color: var(--main-text-color);
+}
+
+/* Battle title/select */
+#create h1 {
+	display: block;
+	margin: 0;
+	font-size: 24px;
+	line-height: 34px;
+	font-weight: normal;
+	font-style: italic;
+}
+
+/* Select mission start and date */
+#selectStart {
+	position: relative;
+	height: 84px;
+}
+#selectStart em {
+	display: block;
+	padding-left: 10px;
+}
+#selectStart em a {
+	font-weight: bold;
+}
+#selectStart input {
+	display: block;
+	float: left;
+	width: calc(100vw - 425px);
+	margin: 25px 0 0 0;
+	cursor: pointer;
+	-webkit-appearance: none;
+}
+#selectStart input::-webkit-slider-runnable-track {
+	height: 6px;
+	border-radius: 2.5px;
+	box-shadow: inset 0px 0px 2px 0px rgba(0,0,0,0.2), 0 0 1px 0 rgba(0,0,0,0.4);
+	/* NOTE: Dynamic background gradient is set from JavaScript! */
+}
+#selectStart input::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 20px;
+	height: 20px;
+	border-radius: 10px;
+	margin-top: -7px;
+	border: 1px solid #262626;
+	background: linear-gradient(#595959, #262626);
+	box-shadow: inset 0 0 5px 0 rgba(0,0,0,0.4), 0 1px 1px 0 rgba(0,0,0,0.2);
+}
+#selectStart input::-webkit-slider-thumb:active {
+	border: 1px solid #595959;
+	background: linear-gradient(#262626, #595959);
+}
+#selectStart .reset {
+	float: left;
+	margin: 19px 0 0 8px;
+}
+
+#create h1,
+#selectStart {
+	margin-right: 340px;
+	pointer-events: auto;
+}
+
+/* Create mission choices lists */
+#choices {
+	overflow: hidden;
+	pointer-events: auto;
+}
+#choices h2 {
+	display: block;
+	margin: 0 0 10px 0;
+	font-weight: normal;
+	font-size: 16px;
+	height: 28px;
+	line-height: 28px;
+	border-bottom: 2px dotted var(--separator-color);
+}
+#choices h2 span {
+	display: inline-block;
+	margin-left: 5px;
+}
+#choices h2 span:before {
+	content: "[";
+	opacity: 0.5;
+}
+#choices h2 span:after {
+	content: "]";
+	opacity: 0.5;
+}
+#choices h2 .reset {
+	float: right;
+	margin-top: 6px;
+}
+#choices .choiceList {
+	float: left;
+}
+#choices .choiceList.unit {
+	width: 31%;
+}
+#choices .choiceList.plane {
+	width: 23.6%;
+}
+#choices .choiceList.task {
+	width: 23.6%;
+}
+#choices .choiceList.airfield {
+	width: 21.8%;
+}
+#choices .choiceList ul {
+	max-height: calc(100vh - 296px);
+	overflow-y: auto;
+	padding: 5px 10px 5px 0;
+}
+#choices .choiceList h2,
+#choices .choiceList ul {
+	margin-right: 35px;
+}
+#choices .choiceList:last-child h2,
+#choices .choiceList:last-child ul {
+	margin-right: 0;
+}
+#choices .choiceList li {
+	display: block;
+	position: relative;
+	list-style-type: none;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+#choices .choiceList li a {
+	line-height: 19px;
+}
+#choices .choiceList .invalid {
+	opacity: 0.5;
+}
+#choices .choiceList .selected span,
+#choices .choiceList .selected em {
+	font-weight: normal;
+}
+#choices .choiceList em {
+	font-style: italic;
+}
