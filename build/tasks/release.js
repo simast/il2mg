@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
 		const path = require("path")
 		const JSON5 = require("json5")
-		const UglifyJS = require("uglify-js")
+		const UglifyJS = require("uglify-es")
 		const CleanCSS = require("clean-css")
 		const browserify = require("browserify")
 		const envify = require("envify/custom")
@@ -73,6 +73,18 @@ module.exports = function(grunt) {
 			const appFileCSS = "style.css"
 			const appFileJS = "index.js"
 
+			const uglifyOptions = {
+				toplevel: true,
+				parse: {
+					ecma: 8
+				},
+				mangle: true,
+				compress: true,
+				output: {
+					ecma: 7
+				}
+			}
+
 			// Build application package.json file
 			grunt.file.write(appDir + "package.json", JSON.stringify({
 				name: packageData.name,
@@ -84,13 +96,7 @@ module.exports = function(grunt) {
 			// Build main process JavaScript file
 			grunt.file.copy("src/gui/" + appFileMain, appDir + appFileMain, {
 				process(content) {
-
-					return UglifyJS.minify(content, {
-						fromString: true,
-						mangle: {
-							toplevel: true
-						}
-					}).code
+					return UglifyJS.minify(content, uglifyOptions).code
 				}
 			})
 
@@ -123,10 +129,9 @@ module.exports = function(grunt) {
 				}
 
 				const content = buffer.toString("utf-8")
+				const contentMinified = UglifyJS.minify(content, uglifyOptions).code
 
-				grunt.file.write(appDir + appFileJS, UglifyJS.minify(content, {
-					fromString: true
-				}).code)
+				grunt.file.write(appDir + appFileJS, contentMinified)
 
 				resolve()
 			})

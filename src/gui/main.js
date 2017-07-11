@@ -61,17 +61,6 @@ app.on("window-all-closed", () => {
 // Create main application window
 app.on("ready", () => {
 
-	// Enable React DevTools extension in development mode
-	if (process.env.NODE_ENV !== "production") {
-
-		const {
-			default: installExtension,
-			REACT_DEVELOPER_TOOLS
-		} = require("electron-devtools-installer")
-
-		installExtension(REACT_DEVELOPER_TOOLS)
-	}
-
 	const userDataPath = app.getPath("userData")
 
 	// Load JSON configuration data
