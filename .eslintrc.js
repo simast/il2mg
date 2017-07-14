@@ -55,6 +55,7 @@ module.exports = {
 		"yield-star-spacing": ["error", "after"],
 		"prefer-arrow-callback": "error",
 		"prefer-const": "error",
-		"require-yield": "error"
+		"require-yield": "error",
+		"eol-last": ["error", "never"]
 	}
 }

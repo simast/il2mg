@@ -1,16 +1,13 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const path = global.require("path")
-const {execFileSync} = global.require("child_process")
+const {ipcRenderer} = global.require("electron")
 const binarySearch = require("binary-search")
 const React = require("react")
-const {computed} = require("mobx")
+const {computed, observable, action} = require("mobx")
 const {observer} = require("mobx-react")
 const createMission = require("./store")
-const missions = require("../missions/store")
 const {Start} = require("./constants")
-const {showErrorMessage} = require("../app/utils")
 const Screen = require("../app/Screen")
 const SelectStart = require("./SelectStart")
 const SelectBattle = require("./SelectBattle")
@@ -41,6 +38,12 @@ const choiceLists = [
 
 // Create mission screen component
 @observer class CreateMissionScreen extends React.Component {
+
+	@observable isBusy = false
+
+	@action setBusyMode() {
+		this.isBusy = true
+	}
 
 	@computed get choices() {
 		return this.getChoices(createMission.start)
@@ -80,7 +83,7 @@ const choiceLists = [
 		}
 
 		return (
-			<Screen id="create" actions={screenActions}>
+			<Screen id="create" actions={screenActions} isBusy={this.isBusy}>
 				<SelectBattle />
 				<SelectStart onStartChange={this.onStartChange.bind(this)} />
 				<div id="choices">
@@ -302,25 +305,14 @@ const choiceLists = [
 		const {history} = this.props
 		const {battle, start, date, choice} = createMission
 
-		let cliFile = path.join(process.resourcesPath, "il2mg-cli")
-		const cliParams = []
-
-		// Use node process and debug mode while in development environment
-		if (process.env.NODE_ENV !== "production") {
-
-			cliFile = "node"
-			cliParams.push(".", "--debug")
+		const params = {
+			battle,
+			format: "binary",
+			meta: true, // Generate metadata .il2mg file
+			lang: true // Create all language files
 		}
 
-		cliParams.push(
-			"--quiet", // Use quiet mode (with error output only and no colors)
-			"--meta", // Generate metadata .il2mg file
-			"--lang", // Create all language files
-			"--format", "binary", // TODO: Set mission file format from options
-			"--batle", battle
-		)
-
-		// Set start position type (--state parameter)
+		// Set start position type
 		let stateValue = "start" // Parking
 
 		if (start === Start.Runway) {
@@ -330,33 +322,30 @@ const choiceLists = [
 			stateValue = 0
 		}
 
-		cliParams.push("--state", stateValue)
+		params.state = stateValue
 
 		// Set selected date
 		if (date) {
-			cliParams.push("--date", date)
+			params.date = date
 		}
 
 		// Set data choices
 		for (const param in choice) {
-			cliParams.push("--" + param, choice[param].join(PARAM_SEP))
+			params[param] = choice[param].join(PARAM_SEP)
 		}
 
-		// Mission files path
-		cliParams.push(missions.path)
-
-		// Create mission using CLI application
-		try {
-
-			execFileSync(cliFile, cliParams, {
-				stdio: ["ignore", "ignore", "pipe"]
-			})
-
+		// Handle create mission request response
+		ipcRenderer.once("createMission", () => {
 			history.replace("/missions")
-		}
-		catch (e) {
-			showErrorMessage(e.stderr.toString())
-		}
+		})
+
+		// Set screen to busy mode (show wait cursor and ignore user input)
+		this.setBusyMode()
+
+		// Send create mission request to main process
+		setTimeout(() => {
+			ipcRenderer.send("createMission", params)
+		}, 100)
 	}
 }
 

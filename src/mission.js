@@ -609,8 +609,12 @@ class Mission {
 		const promises = []
 		let languages = this.params.lang
 
+		// Make all languages
+		if (languages === true) {
+			languages = data.languages
+		}
 		// Generate default (first) language only
-		if (!languages || !languages.length) {
+		else if (!languages || !languages.length) {
 			languages = data.languages.slice(0, 1)
 		}
 

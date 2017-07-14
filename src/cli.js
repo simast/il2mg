@@ -24,9 +24,6 @@ params.version(data.name + " " + data.version + " " + data.copyright)
 // Create mission metadata file (--meta)
 params.option("-M, --meta", "create metadata file")
 
-// Use quiet output mode (--quiet)
-params.option("-Q, --quiet", "use quiet output mode")
-
 // Create language files (--lang)
 params.option(
 	"-L, --lang [language]",
@@ -37,8 +34,8 @@ params.option(
 		.filter(lang => lang.length > 0)
 )
 
-// NOTE: For development mode only when not compiled to binary!
-if (!process.pkg) {
+// NOTE: Some options are enabled only in development mode!
+if (process.env.NODE_ENV !== "production") {
 
 	// Set mission seed value (--seed)
 	params.option("-S, --seed <seed>", "set mission seed value")
@@ -357,16 +354,6 @@ appDomain.run(async () => {
 		if (params.debug) {
 			log.transports.console.level = "I"
 		}
-
-		// Set console output to quiet mode
-		if (params.quiet) {
-
-			Object.assign(log.transports.console, {
-				level: "E",
-				showLevel: false,
-				colorize: false
-			})
-		}
 	}
 
 	// Validate command line params
@@ -380,10 +367,6 @@ appDomain.run(async () => {
 				throw ["Invalid language!", {language: lang}]
 			}
 		})
-	}
-	// Make all languages when "lang" param is used without a value (as a flag)
-	else if (params.lang === true) {
-		params.lang = data.languages
 	}
 
 	// --debug
@@ -511,9 +494,7 @@ appDomain.run(async () => {
 		// Save mission files
 		await mission.save(params.args[0])
 
-		if (!params.quiet) {
-			log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")")
-		}
+		log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")")
 	}
 	catch (error) {
 		appDomain.emit("error", error)

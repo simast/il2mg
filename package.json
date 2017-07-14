@@ -3,7 +3,7 @@
 	"description": "il2mg - Mission Generator",
 	"version": "0.0.0",
 	"private": true,
-	"main": "./gruntfile.js",
+	"main": "./src/run.js",
 	"author": "Simas Toleikis <simast@gmail.com>",
 	"scripts": {
 		"start": "electron ."
@@ -41,7 +41,7 @@
 		"babel-register": "6.24.1",
 		"babelify": "7.3.0",
 		"browserify": "14.4.0",
-		"clean-css": "4.1.6",
+		"clean-css": "4.1.7",
 		"electron-packager": "8.7.2",
 		"envify": "4.1.0",
 		"eslint": "4.2.0",

@@ -1,9 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const electron = require("electron")
+const Mission = require("../mission")
 
 // Electron built-in modules
+const electron = require("electron")
 const {app, BrowserWindow, ipcMain} = electron
 
 let mainWindow = null
@@ -46,11 +47,23 @@ const MISSIONS_DIR = "Missions"
 const config = global.config = {}
 let configPath
 
-// Set config data from renderer process
-ipcMain.on("config", (event, data) => {
+// Handle set config data requests from renderer process
+ipcMain.on("setConfig", (event, configData) => {
 
-	Object.assign(config, data)
+	Object.assign(config, configData)
 	event.returnValue = true
+})
+
+// Handle create mission requests from renderer process
+ipcMain.on("createMission", async (event, params) => {
+
+	// Create a new mission
+	const mission = new Mission(params)
+
+	// Save mission files
+	await mission.save(config.missionsPath)
+
+	event.sender.send("createMission")
 })
 
 // Quit when all windows are closed

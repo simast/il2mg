@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const remote = global.require("electron").remote
+const {remote} = global.require("electron")
 const React = require("react")
 const MissionsListItem = require("./ListItem")
 

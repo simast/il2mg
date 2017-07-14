@@ -14,7 +14,7 @@ class MissionsStore {
 	path = remote.getGlobal("config").missionsPath
 
 	// Sorted list of mission objects
-	@observable.shallow list = []
+	@observable.ref list = []
 
 	// Mission objects indexed by ID
 	index = Object.create(null)
@@ -22,10 +22,9 @@ class MissionsStore {
 	// Load missions from missions directory
 	@action load() {
 
-		const files = Object.create(null)
-
 		const list = []
 		const index = Object.create(null)
+		const files = Object.create(null)
 
 		// Scan each file in the target path/directory
 		fs.readdirSync(this.path).forEach(fileName => {

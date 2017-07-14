@@ -6,7 +6,7 @@ const ActionBar = require("./ActionBar")
 const Photos = require("./Photos")
 
 // Screen component
-module.exports = ({id, children, actions}) => (
+module.exports = ({id, children, actions, isBusy = false}) => (
 	<div id="screen">
 		<Photos screen={id}/>
 		<div id="container">
@@ -17,5 +17,6 @@ module.exports = ({id, children, actions}) => (
 			</div>
 			<ActionBar actions={actions} />
 		</div>
+		{isBusy && <div id="screenBusy"></div>}
 	</div>
 )

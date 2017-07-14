@@ -10,7 +10,7 @@ class CreateMissionStore {
 
 	// Data index for all supported battles
 	battles = {
-		[Battle.Stalingrad]: Object.freeze(require("../../../data/battles/stalingrad"))
+		[Battle.Stalingrad]: require("../../../data/battles/stalingrad")
 	}
 
 	// Observables
@@ -56,7 +56,7 @@ class CreateMissionStore {
 		reaction(
 			() => this.config,
 			config => {
-				ipcRenderer.sendSync("config", config)
+				ipcRenderer.sendSync("setConfig", config)
 			}
 		)
 	}

@@ -32,7 +32,7 @@ class AppStore {
 		reaction(
 			() => this.config,
 			config => {
-				ipcRenderer.sendSync("config", config)
+				ipcRenderer.sendSync("setConfig", config)
 			}
 		)
 	}
