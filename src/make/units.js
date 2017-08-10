@@ -95,50 +95,61 @@ module.exports = function makeUnits() {
 		}
 
 		// Find matching plane storages based on to/from date ranges
-		dataPlanes.forEach(planeStorage => {
+		dataPlanes.forEach(dataPlaneStorage => {
 
-			const dateRange = matchMissionDateRange(planeStorage[2], planeStorage[3])
+			const planeID = dataPlaneStorage[0]
 
-			if (dateRange) {
+			// Only collect storages with valid plane IDs
+			if (!this.planes[planeID]) {
+				return
+			}
 
-				let planeCount = planeStorage[1]
+			const dateFrom = dataPlaneStorage[2]
+			const dateTo = dataPlaneStorage[3]
+			const dateRange = matchMissionDateRange(dateFrom, dateTo)
 
-				// Pick plane count from valid array range
-				if (Array.isArray(planeCount)) {
+			// Skip plane storages that do not match mission date
+			if (!dateRange) {
+				return
+			}
 
-					const maxPlanes = Math.max.apply(null, planeCount)
-					const minPlanes = Math.min.apply(null, planeCount)
-					const rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, "days"))
-					const rangeDaysMission = this.date.diff(dateRange.from, "days")
-					let planePercent = rangeDaysMission / rangeDaysInterval
+			let planeCount = dataPlaneStorage[1]
 
-					// Use +-15% randomness
-					planePercent = rand.real(planePercent - 0.15, planePercent + 0.15, true)
-					planePercent = Math.max(planePercent, 0)
-					planePercent = Math.min(planePercent, 1)
+			// Pick plane count from valid array range
+			if (Array.isArray(planeCount)) {
 
-					// Pick plane count from valid range
-					planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * (1 - planePercent))
-					planeCount = Math.round(planeCount)
+				const maxPlanes = Math.max.apply(null, planeCount)
+				const minPlanes = Math.min.apply(null, planeCount)
+				const rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, "days"))
+				const rangeDaysMission = this.date.diff(dateRange.from, "days")
+				let planePercent = rangeDaysMission / rangeDaysInterval
 
-					// Use extra +-1 plane randomness
-					if (planeCount > 2) {
-						planeCount += rand.pick([-1, 1])
-					}
+				// Use +-15% randomness
+				planePercent = rand.real(planePercent - 0.15, planePercent + 0.15, true)
+				planePercent = Math.max(planePercent, 0)
+				planePercent = Math.min(planePercent, 1)
 
-					// Enforce min/max range bounds
-					planeCount = Math.max(planeCount, minPlanes)
-					planeCount = Math.min(planeCount, maxPlanes)
+				// Pick plane count from valid range
+				planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * (1 - planePercent))
+				planeCount = Math.round(planeCount)
 
-					planeStorage[1] = planeCount
+				// Use extra +-1 plane randomness
+				if (planeCount > 2) {
+					planeCount += rand.pick([-1, 1])
 				}
 
-				const planeID = planeStorage[0]
+				// Enforce min/max range bounds
+				planeCount = Math.max(planeCount, minPlanes)
+				planeCount = Math.min(planeCount, maxPlanes)
+			}
 
-				// Only collect storages with valid plane IDs
-				if (this.planes[planeID]) {
-					planeStorages.push(planeStorage)
-				}
+			if (planeCount > 0) {
+
+				planeStorages.push({
+					plane: planeID,
+					count: planeCount,
+					units: []
+				})
 			}
 		})
 
@@ -312,7 +323,7 @@ module.exports = function makeUnits() {
 			let unitTotalPlanes = 0
 
 			unitPlaneStorages.forEach(planeStorage => {
-				unitTotalPlanes += planeStorage[1]
+				unitTotalPlanes += planeStorage.count
 			})
 
 			// Make sure not to split unit into more parts than planes available
@@ -451,9 +462,7 @@ module.exports = function makeUnits() {
 			// Register unit plane storages
 			unitPlaneStorages.forEach(planeStorage => {
 
-				planeStorage.units = planeStorage.units || []
 				planeStorage.units.push(unitID)
-
 				planeStorages.add(planeStorage)
 			})
 
@@ -494,12 +503,12 @@ module.exports = function makeUnits() {
 		// TODO: Honor min/max plane counts
 		// TODO: Pick planes based on rating
 
-		let planeCount = planeStorage[1]
+		let planeCount = planeStorage.count
 		let unitIndex = planeStorage.units.length - 1
 
 		while (planeCount > 0) {
 
-			let planeID = planeStorage[0]
+			let planeID = planeStorage.plane
 			let plane = this.planes[planeID]
 
 			// Resolve plane groups
