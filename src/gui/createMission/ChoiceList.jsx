@@ -58,9 +58,22 @@ class ChoiceList extends React.Component {
 		return (
 			<div className={"choiceList " + type}>
 				<h2>{title}{valid}{reset}</h2>
-				<ul>{items}</ul>
+				<ul ref={ref => {this.listElement = ref}}>{items}</ul>
 			</div>
 		)
+	}
+
+	componentDidMount() {
+
+		// Scroll first selected choice list item into view (if needed)
+		if (this.listElement) {
+
+			const selectedItem = this.listElement.querySelector(".selected")
+
+			if (selectedItem) {
+				selectedItem.scrollIntoViewIfNeeded()
+			}
+		}
 	}
 
 	// Handle choice item click
