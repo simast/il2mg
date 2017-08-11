@@ -17,6 +17,11 @@ module.exports = {
 		"strict": "off",
 		"react/display-name": "off",
 		"react/prop-types": "off",
-		"react/no-danger": "off"
+		"react/no-danger": "off",
+		"react/jsx-tag-spacing": ["error", {
+			closingSlash: "never",
+			beforeSelfClosing: "always",
+			afterOpening: "never"
+		}]
 	}
 }

@@ -154,7 +154,7 @@ const difficultyModes = new Map([
 
 		return (
 			<Screen id="missions" actions={actions}>
-				<MissionsList {...missionsListProps}/>
+				<MissionsList {...missionsListProps} />
 				{mission ? <MissionDetails mission={mission} /> : ""}
 			</Screen>
 		)
