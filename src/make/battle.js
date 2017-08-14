@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict"
 
+const path = require("path")
 const log = require("../log")
 const Item = require("../item")
 const data = require("../data")
@@ -17,13 +18,13 @@ module.exports = function makeBattle() {
 	}
 
 	this.battleID = battleID
-	this.battlePath = "../../data/battles/" + battleID + "/"
+	this.battlePath = path.join("battles", battleID)
 
 	const battle = this.battle = data.battles[battleID]
 	const coalitions = this.coalitions = []
 
 	// Load battle index database
-	const index = this.index = require(this.battlePath)
+	const index = this.index = data.load(this.battlePath)
 
 	// Create main mission Options item
 	const options = this.createItem("Options")

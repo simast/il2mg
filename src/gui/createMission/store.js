@@ -27,11 +27,6 @@ class CreateMissionStore {
 
 	constructor() {
 
-		// Load data index for all supported battles
-		this.battles = {
-			[Battle.Stalingrad]: Object.freeze(require("../../../data/battles/stalingrad"))
-		}
-
 		const {battle, date, start, choice} = remote.getGlobal("config")
 
 		// Load existing create mission state from configuration data

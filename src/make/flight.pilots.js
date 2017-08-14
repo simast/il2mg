@@ -16,11 +16,16 @@ module.exports = function makeFlightPilots(flight) {
 	const unit = this.units[flight.unit]
 	const ranks = data.countries[unit.country].ranks
 	const pilotIDs = Object.create(null)
+	let {weightedRanksByCountry} = this
+
+	if (!weightedRanksByCountry) {
+		weightedRanksByCountry = this.weightedRanksByCountry = Object.create(null)
+	}
 
 	// Build an index list of weighted pilot ranks by type
-	if (!ranks.weighted) {
+	if (!weightedRanksByCountry[unit.country]) {
 
-		ranks.weighted = Object.create(null)
+		const weightedCountryRanks = Object.create(null)
 
 		for (let rankID in ranks) {
 
@@ -38,12 +43,12 @@ module.exports = function makeFlightPilots(flight) {
 
 			for (const rankType in rank.type) {
 
-				let ranksWeighted = ranks.weighted[rankType]
+				let ranksWeighted = weightedCountryRanks[rankType]
 
 				// Initialize weighted rank array
 				if (!ranksWeighted) {
 
-					ranksWeighted = ranks.weighted[rankType] = []
+					ranksWeighted = weightedCountryRanks[rankType] = []
 					ranksWeighted.ranges = Object.create(null)
 				}
 
@@ -68,6 +73,8 @@ module.exports = function makeFlightPilots(flight) {
 				}
 			}
 		}
+
+		weightedRanksByCountry[unit.country] = weightedCountryRanks
 	}
 
 	flight.elements.forEach(element => {
@@ -79,7 +86,7 @@ module.exports = function makeFlightPilots(flight) {
 
 			const isFlightLeader = (plane === flight.leader)
 			const isElementLeader = (plane === element[0])
-			const ranksWeighted = ranks.weighted.pilot
+			const ranksWeighted = weightedRanksByCountry[unit.country].pilot
 
 			// A set used to track unique pilot names (and prevent duplicates)
 			this.pilots = this.pilots || new Set()
@@ -269,7 +276,7 @@ module.exports = function makeFlightPilots(flight) {
 			return
 		}
 
-		const ranksWeighted = data.countries[unit.country].ranks.weighted.pilot
+		const ranksWeighted = weightedRanksByCountry[unit.country].pilot
 		let pilotFound
 		let pilotIndex
 		let pilotRank

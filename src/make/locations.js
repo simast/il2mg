@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
+const path = require("path")
 const rbush = require("rbush")
 const knn = require("rbush-knn")
 const {Vector} = require("sylvester")
@@ -26,7 +27,7 @@ module.exports = function makeLocations() {
 	// Load static map locations (places, rivers) from data files
 	this.battle.locations.forEach(locationsFile => {
 
-		const locationsData = require(this.battlePath + "locations/" + locationsFile)
+		const locationsData = data.load(path.join(this.battlePath, "locations", locationsFile))
 		const locationsList = []
 
 		// Build locations index per each locations file

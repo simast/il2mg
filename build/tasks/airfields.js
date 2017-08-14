@@ -1,12 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict"
 
+const path = require("path")
+const numeral = require("numeral")
+
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", () => {
 
-		const numeral = require("numeral")
 		const data = require("../../src/data")
 		const Item = require("../../src/item")
 
@@ -37,13 +39,13 @@ module.exports = function(grunt) {
 		for (const battleID in data.battles) {
 
 			const battle = data.battles[battleID]
-			const airfieldsPath = "data/battles/" + battleID + "/airfields/"
+			const airfieldsPath = path.join("data", "battles", battleID, "airfields")
 
 			// Process all airfields
 			for (const airfieldID in battle.airfields) {
 
-				const fileSource = airfieldsPath + airfieldID + ".Group"
-				const fileDestination = airfieldsPath + airfieldID + ".json"
+				const fileSource = path.join(airfieldsPath, airfieldID + ".Group")
+				const fileDestination = path.join(airfieldsPath, airfieldID + ".json")
 
 				// Ignore airfields without .Group file
 				if (!grunt.file.exists(fileSource)) {

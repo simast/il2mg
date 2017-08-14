@@ -6,7 +6,8 @@ const data = require("../data")
 // Generate mission people
 module.exports = function makePeople() {
 
-	const rand = this.rand
+	const mission = this
+	const {rand} = mission
 
 	// Get a random weighted name
 	function getName(names) {
@@ -75,11 +76,12 @@ module.exports = function makePeople() {
 	function getRank(rankID, countryID) {
 
 		const ranks = data.countries[countryID].ranks
+		const {weightedRanksByCountry} = mission
 
 		// Generate a random weighted rank based on type and/or range bounds
 		if (typeof rankID === "object") {
 
-			const ranksWeighted = ranks.weighted[rankID.type]
+			const ranksWeighted = weightedRanksByCountry[countryID][rankID.type]
 
 			// Random weighted rank for a given type
 			if (rankID.min === undefined || rankID.max === undefined) {

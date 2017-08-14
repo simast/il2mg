@@ -19,10 +19,10 @@ module.exports = function makeTasks() {
 			continue
 		}
 
-		task.id = taskID
-
 		// Register task to ID index
-		tasks[taskID] = task
+		tasks[taskID] = Object.assign({}, task, {
+			id: taskID
+		})
 	}
 
 	// Build unit tasks lists

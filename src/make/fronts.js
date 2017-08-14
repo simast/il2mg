@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict"
 
+const path = require("path")
 const {Line} = require("sylvester")
 const data = require("../data")
 const {frontLine, mapColor, territory, coalition} = data
@@ -50,7 +51,7 @@ module.exports = function makeFronts() {
 	const debugFronts = Boolean(this.debug && this.debug.fronts)
 
 	// Load fronts data file
-	const frontsData = require(this.battlePath + "fronts/" + frontsFile)
+	const frontsData = data.load(path.join(this.battlePath, "fronts", frontsFile))
 
 	if (!frontsData || !frontsData.length) {
 		return

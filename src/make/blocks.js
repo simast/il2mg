@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict"
 
+const path = require("path")
 const log = require("../log")
 const {Bridge} = require("../item")
 const data = require("../data")
@@ -18,7 +19,7 @@ module.exports = function makeBlocks() {
 
 	this.battle.blocks.forEach(blocksFile => {
 
-		const blocks = require(this.battlePath + "blocks/" + blocksFile)
+		const blocks = data.load(path.join(this.battlePath, "blocks", blocksFile))
 
 		// Add all blocks to a group
 		for (let i = 0; i < blocks.length; i++) {

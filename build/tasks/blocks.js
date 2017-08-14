@@ -1,12 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict"
 
+const path = require("path")
+const numeral = require("numeral")
+
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw blocks .Group to .json files
 	grunt.registerTask("build:blocks", "Build blocks JSON files.", () => {
 
-		const numeral = require("numeral")
 		const data = require("../../src/data")
 		const Item = require("../../src/item")
 
@@ -17,13 +19,13 @@ module.exports = function(grunt) {
 		for (const battleID in data.battles) {
 
 			const battle = data.battles[battleID]
-			const blocksPath = "data/battles/" + battleID + "/blocks/"
+			const blocksPath = path.join("data", "battles", battleID, "blocks")
 
 			// Process all blocks files
 			battle.blocks.forEach(blockFile => {
 
-				const fileSource = blocksPath + blockFile + ".Group"
-				const fileDestination = blocksPath + blockFile + ".json"
+				const fileSource = path.join(blocksPath, blockFile + ".Group")
+				const fileDestination = path.join(blocksPath, blockFile + ".json")
 
 				// Read raw blocks
 				const blocks = Item.readTextFile(fileSource)

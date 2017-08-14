@@ -3,8 +3,11 @@
 
 const fs = require("fs")
 const path = require("path")
-const requireDir = require("require-directory")
 const moment = require("moment")
+
+// Main data directory name
+const DATA_DIRECTORY = "data"
+const DATA_DIRECTORY_INDEX_FILE = "index"
 
 const data = module.exports = Object.create(null)
 
@@ -160,57 +163,137 @@ data.briefingColor = Object.freeze({
 	DARK: "#959595"
 })
 
+// Internal cache for data.load() function
+const dataCache = Object.create(null)
+
+// Map of supported data formats/extensions
+const dataFormats = Object.create(null)
+
+// NOTE: For performance reasons production build is not using JSON5 format!
+if (process.env.NODE_ENV !== "production") {
+	dataFormats[".json5"] = require("json5").parse
+}
+
+// Always enable JSON format
+dataFormats[".json"] = JSON.parse
+
+/**
+ * Load a data file from a given path.
+ *
+ * @param {string} path Data file path (relative to data directory).
+ * @returns {*} Loaded data.
+ */
+data.load = function(dataPath) {
+
+	if (typeof dataPath !== "string" || !dataPath) {
+		throw new TypeError("Invalid data path.")
+	}
+
+	// Use cached data
+	if (dataPath in dataCache) {
+		return dataCache[dataPath]
+	}
+
+	const dataDirPath = path.join(DATA_DIRECTORY, dataPath)
+	let result = undefined
+
+	// Try loading one of the supported data formats
+	for (const extension in dataFormats) {
+
+		const dataFilePath = dataDirPath + extension
+
+		if (fs.existsSync(dataFilePath)) {
+
+			result = Object.freeze(
+				dataFormats[extension](fs.readFileSync(dataFilePath, "utf-8"))
+			)
+
+			break
+		}
+	}
+
+	// Check for data directory
+	if (result === undefined) {
+
+		let isDirectory = false
+
+		if (fs.existsSync(dataDirPath)) {
+			isDirectory = fs.lstatSync(dataDirPath).isDirectory()
+		}
+
+		if (isDirectory) {
+
+			// Try loading directory index data file
+			result = data.load(path.join(dataPath, DATA_DIRECTORY_INDEX_FILE))
+
+			if (result === undefined) {
+
+				// Read all data files in a directory
+				const directoryData = fs
+					.readdirSync(dataDirPath)
+					.filter(fileName => {
+
+						const isDirectory = fs.lstatSync(path.join(dataDirPath, fileName)).isDirectory()
+
+						// Always recurse into child directories when index data file is missing
+						if (isDirectory) {
+							return true
+						}
+
+						return path.extname(fileName) in dataFormats
+					})
+					.map(fileName => path.basename(fileName, path.extname(fileName)))
+					.filter((fileKey, index, array) => array.indexOf(fileKey) === index)
+					.reduce((result, fileKey) => (
+						Object.assign(result, {
+							[fileKey]: data.load(path.join(dataPath, fileKey))
+						})
+					), {})
+
+				if (Object.keys(directoryData).length) {
+					result = Object.freeze(directoryData)
+				}
+			}
+		}
+	}
+
+	// Cache data result
+	dataCache[dataPath] = result
+
+	return result
+}
+
 // Load all static data
 ;(() => {
 
-	// NOTE: For performance reasons JSON files in the binary/compiled mode will
-	// be loaded using native JSON object.
-	const useJSON5 = !process.pkg
-
-	if (useJSON5) {
-
-		// NOTE: Having JSON5 module name as two separate string literals will trick
-		// pkg to not included it in the binary file when compiling.
-		const JSON5 = require("json" + "5")
-
-		// Add new require() loader to handle JSON5 data files
-		require.extensions[".json5"] = (module, file) => {
-			module.exports = JSON5.parse(fs.readFileSync(file, "utf-8"))
-		}
-
-		// JSON5 support for require-directory
-		requireDir.defaults.extensions.push("json5")
-	}
-
 	data.items = []
-
-	try {
-		data.items = require("../data/items")
-	}
-	catch (e) {}
-
-	data.vehicles = Object.freeze(require("../data/vehicles"))
-	data.clouds = Object.freeze(require("../data/clouds"))
-	data.time = Object.freeze(require("../data/time"))
-	data.callsigns = Object.freeze(require("../data/callsigns"))
-	data.countries = Object.freeze(require("../data/countries"))
-	data.battles = Object.freeze(require("../data/battles"))
-	data.tasks = Object.freeze(requireDir(module, "../data/tasks"))
+	data.vehicles = data.load("vehicles")
+	data.clouds = data.load("clouds")
+	data.time = data.load("time")
+	data.callsigns = data.load("callsigns")
+	data.countries = data.load("countries")
+	data.battles = data.load("battles")
+	data.tasks = data.load("tasks")
 	data.planes = Object.create(null)
+
+	// Load items index file
+	if (fs.existsSync(path.join(DATA_DIRECTORY, "items", DATA_DIRECTORY_INDEX_FILE) + ".json")) {
+		data.items = data.load("items")
+	}
 
 	// Load countries
 	for (const countryID in data.countries) {
 
 		const country = data.countries[countryID]
-		const countryPath = "../data/countries/" + countryID + "/"
+		const countryPath = path.join("countries", countryID)
 
-		country.formations = require(countryPath + "formations")
-		country.names = require(countryPath + "names")
-		country.ranks = require(countryPath + "ranks")
+		country.formations = data.load(path.join(countryPath, "formations"))
+		country.names = data.load(path.join(countryPath, "names"))
+		country.ranks = data.load(path.join(countryPath, "ranks"))
 	}
 
 	// Load planes
-	const planeData = requireDir(module, "../data/planes")
+	const planeData = data.load("planes")
 
 	for (const planeGroup in planeData) {
 		for (const planeID in planeData[planeGroup]) {
@@ -225,20 +308,20 @@ data.briefingColor = Object.freeze({
 	for (const battleID in data.battles) {
 
 		const battle = data.battles[battleID]
-		const battlePath = "../data/battles/" + battleID + "/"
+		const battlePath = path.join("battles", battleID)
 
 		battle.countries = []
-		battle.blocks = Object.freeze(require(battlePath + "blocks"))
-		battle.locations = Object.freeze(require(battlePath + "locations"))
-		battle.fronts = Object.freeze(require(battlePath + "fronts"))
-		battle.map = Object.freeze(require(battlePath + "map"))
-		battle.weather = Object.freeze(require(battlePath + "weather"))
-		battle.airfields = Object.freeze(require(battlePath + "airfields"))
-		battle.roles = Object.freeze(requireDir(module, battlePath + "roles/"))
+		battle.blocks = data.load(path.join(battlePath, "blocks"))
+		battle.locations = data.load(path.join(battlePath, "locations"))
+		battle.fronts = data.load(path.join(battlePath, "fronts"))
+		battle.map = data.load(path.join(battlePath, "map"))
+		battle.weather = data.load(path.join(battlePath, "weather"))
+		battle.airfields = data.load(path.join(battlePath, "airfields"))
+		battle.roles = data.load(path.join(battlePath, "roles"))
 		battle.units = Object.create(null)
 
 		// Load battle unit data
-		const unitsData = requireDir(module, battlePath + "units/")
+		const unitsData = data.load(path.join(battlePath, "units"))
 
 		for (let unitCountryID in unitsData) {
 
@@ -281,7 +364,7 @@ data.registerItemType = function(item) {
 		throw new TypeError("Invalid item data.")
 	}
 
-	const items = this.items
+	const {items} = data
 
 	// Lowercase and trim script/model paths
 	item.script = item.script.trim().toLowerCase()
@@ -298,13 +381,13 @@ data.registerItemType = function(item) {
 
 		numberTypeID = items.push(stringTypeID) - 1
 
-		const itemFile = "data/items/" + stringTypeID
+		const itemFile = path.join(DATA_DIRECTORY, "items", stringTypeID)
+		const itemFileExists = Boolean(Object.keys(dataFormats).find(extension => (
+			fs.existsSync(itemFile + extension)
+		)))
 
-		try {
-			require.resolve("../" + itemFile)
-		}
 		// Write item JSON file
-		catch (e) {
+		if (!itemFileExists) {
 
 			fs.writeFileSync(
 				itemFile + ".json",
@@ -329,7 +412,7 @@ data.getItemType = function(itemTypeID) {
 		itemTypeID = this.items[itemTypeID]
 	}
 
-	return require("../data/items/" + itemTypeID)
+	return data.load(path.join("items", itemTypeID))
 }
 
 /**

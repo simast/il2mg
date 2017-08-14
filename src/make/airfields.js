@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict"
 
+const path = require("path")
 const addLazyProperty = require("lazy-property")
 const log = require("../log")
 const Item = require("../item")
@@ -66,7 +67,7 @@ module.exports = function makeAirfields() {
 
 			Object.assign(
 				airfieldData,
-				require(this.battlePath + "airfields/" + airfieldID)
+				data.load(path.join(this.battlePath, "airfields", airfieldID))
 			)
 		}
 		catch (e) {}
