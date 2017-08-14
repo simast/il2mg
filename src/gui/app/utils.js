@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const {remote} = global.require("electron")
-const fs = global.require("fs")
+const {remote} = require("electron")
+const fs = require("fs")
 
 // Show error message dialog
 function showErrorMessage(message) {

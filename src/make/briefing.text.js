@@ -65,7 +65,7 @@ module.exports = function makeBriefingText(template, view) {
 		const playerPlane = this.planes[flight.player.plane]
 		const playerElement = this.player.element
 		const names = data.countries[flight.country].names
-		const ranks = data.countries[flight.country].ranks
+		const weightedRanks = this.weightedRanksByCountry[flight.country]
 
 		// Flight home airfield name
 		context.airfield = this.airfields[flight.airfield].name
@@ -272,7 +272,7 @@ module.exports = function makeBriefingText(template, view) {
 		const rankTag = context.rank = Object.create(null)
 
 		// Create tag for each valid rank type
-		for (const rankType in ranks.weighted) {
+		for (const rankType in weightedRanks) {
 
 			const rankTypeTag = rankTag[rankType] = Object.create(null)
 

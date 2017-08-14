@@ -1,10 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const fs = global.require("fs")
-const path = global.require("path")
-const {spawn} = global.require("child_process")
-const {remote} = global.require("electron")
+const fs = require("fs")
+const path = require("path")
+const {spawn} = require("child_process")
+const {remote} = require("electron")
 const React = require("react")
 const {observer} = require("mobx-react")
 const app = require("../app/store")

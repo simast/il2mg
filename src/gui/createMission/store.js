@@ -1,7 +1,9 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const {remote, ipcRenderer} = global.require("electron")
+const fs = require("fs")
+const path = require("path")
+const {remote, ipcRenderer} = require("electron")
 const {observable, computed, action, reaction} = require("mobx")
 const {Start, Battle} = require("./constants")
 
@@ -10,7 +12,10 @@ class CreateMissionStore {
 
 	// Data index for all supported battles
 	battles = {
-		[Battle.Stalingrad]: require("../../../data/battles/stalingrad")
+		[Battle.Stalingrad]: JSON.parse(fs.readFileSync(
+			path.join(remote.app.getAppPath(), "data", "battles", Battle.Stalingrad, "index") + ".json",
+			"utf-8"
+		))
 	}
 
 	// Observables

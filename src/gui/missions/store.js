@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const fs = global.require("fs")
-const path = global.require("path")
-const {remote} = global.require("electron")
+const fs = require("fs")
+const path = require("path")
+const {remote} = require("electron")
 const {observable, action} = require("mobx")
 const {FileExtension} = require("./constants")
 

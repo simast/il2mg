@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const {remote, ipcRenderer} = global.require("electron")
+const {remote, ipcRenderer} = require("electron")
 const {observable, computed, action, reaction} = require("mobx")
 const {Difficulty} = require("./constants")
 

@@ -1,79 +1,60 @@
 /** @copyright Simas Toleikis, 2015 */
 "use strict"
 
+const path = require("path")
+const JSON5 = require("json5")
+const CleanCSS = require("clean-css")
+const webpack = require("webpack")
+const electronPackager = require("electron-packager")
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+
 module.exports = function(grunt) {
 
 	// Grunt task used to build a release package
 	grunt.registerTask("build:release", "Build a release package.", async function() {
 
-		const path = require("path")
-		const JSON5 = require("json5")
-		const UglifyJS = require("uglify-es")
-		const CleanCSS = require("clean-css")
-		const browserify = require("browserify")
-		const envify = require("envify/custom")
-		const electronPackager = require("electron-packager")
-		const pkg = require("pkg")
 		const data = require("../../src/data")
-
 		const done = this.async()
 		const packageData = grunt.config("pkg")
 		const outDir = "build"
 		const buildDir = path.join(outDir, "temp")
-		const appDir = path.join(buildDir, "app")
 		const guiDir = path.join("src", "gui")
 
-		// Build CLI application
-		const buildCLIApp = async () => new Promise(resolve => {
+		// Build application data
+		const buildData = async () => new Promise(resolve => {
 
-			// List of CLI application files to process
-			const appFiles = [
-				"@(data|src)/**/*.@(js|json|json5)",
-				"!src/gui/**"
-			]
+			// Process all application JSON/JSON5 data files
+			grunt.file.expand("data/**/*.@(json|json5)").forEach(file => {
 
-			// Process all CLI application source and data files
-			grunt.file.expand(appFiles).forEach(file => {
+				let jsonParse = JSON.parse
 
-				const fileExt = path.extname(file)
-
-				// Copy over app JavaScript source code files
-				// TODO: Use UglifyJS to uglify the code?
-				if (fileExt === ".js") {
-					grunt.file.copy(file, path.join(buildDir, file))
+				// NOTE: All JSON5 files are converted to JSON in production build
+				if (path.extname(file) === ".json5") {
+					jsonParse = JSON5.parse
 				}
-				// Convert JSON5 data files to JSON format
-				else {
 
-					let jsonParse = JSON.parse
+				// Rename file path to always use .json extension
+				const fileJSON = path.join(
+					path.dirname(file),
+					path.basename(file, path.extname(file)) + ".json"
+				)
 
-					if (fileExt === ".json5") {
-						jsonParse = JSON5.parse
-					}
-
-					// Rename file path to always use .json extension
-					const fileJSON = path.join(
-						path.dirname(file),
-						path.basename(file, path.extname(file)) + ".json"
-					)
-
-					grunt.file.write(path.join(buildDir, fileJSON), JSON.stringify(
-						jsonParse(grunt.file.read(file))
-					))
-				}
+				// Write minified JSON files
+				grunt.file.write(path.join(buildDir, fileJSON), JSON.stringify(
+					jsonParse(grunt.file.read(file))
+				))
 			})
 
 			resolve()
 		})
 
 		// Build GUI application package
-		const buildGUIApp = async () => new Promise((resolve, reject) => {
+		const buildApplication = async () => {
 
-			const appFileMain = "main.js"
 			const appFileHTML = "index.html"
 			const appFileCSS = "style.css"
-			const appFileJS = "index.js"
-
+			const appFileMain = "main.js"
+			const appFileRenderer = "index.js"
 			const uglifyOptions = {
 				toplevel: true,
 				mangle: true,
@@ -82,39 +63,30 @@ module.exports = function(grunt) {
 					ecma: 8
 				},
 				output: {
-					ecma: 7
+					ecma: 7,
+					comments: false,
+					beautify: false
 				}
 			}
 
 			// Build application package.json file
-			grunt.file.write(path.join(appDir, "package.json"), JSON.stringify({
+			grunt.file.write(path.join(buildDir, "package.json"), JSON.stringify({
 				name: packageData.name,
 				private: true,
 				main: appFileMain,
 				author: packageData.author
 			}, null, "\t"))
 
-			// Build main process JavaScript file
-			grunt.file.copy(
-				path.join(guiDir, appFileMain),
-				path.join(appDir, appFileMain),
-				{
-					process(content) {
-						return UglifyJS.minify(content, uglifyOptions).code
-					}
-				}
-			)
-
 			// Build renderer process HTML file
 			grunt.file.copy(
 				path.join(guiDir, appFileHTML),
-				path.join(appDir, appFileHTML)
+				path.join(buildDir, appFileHTML)
 			)
 
 			// Build renderer process CSS file
 			grunt.file.copy(
 				path.join(guiDir, appFileCSS),
-				path.join(appDir, appFileCSS),
+				path.join(buildDir, appFileCSS),
 				{
 					process(content) {
 
@@ -127,47 +99,89 @@ module.exports = function(grunt) {
 				}
 			)
 
-			// Build renderer process JavaScript file
-			browserify({
-				entries: [path.join(guiDir, appFileJS) + "x"],
-				debug: false,
-				node: true,
-				ignoreMissing: true,
-				detectGlobals: false,
-				transform: [
-					"babelify",
-					[envify({_: "purge", NODE_ENV: "production"}), {global: true}]
-				],
-				extensions: [".jsx"]
-			}).bundle((error, buffer) => {
+			// Include assets
+			grunt.file.copy(path.join(guiDir, "assets"), path.join(buildDir, "assets"))
 
-				if (error) {
-					return reject(error)
+			// Build main and renderer process JavaScript files
+			return new Promise((resolve, reject) => {
+
+				// Common webpack config options
+				const commonOptions = {
+					devtool: false,
+					resolve: {
+						extensions: [".js", ".jsx"]
+					},
+					module: {
+						rules: [
+							// Load .js and .jsx files using Babel
+							{
+								test: /\.jsx?$/,
+								exclude: /node_modules/,
+								use: "babel-loader"
+							}
+						]
+					},
+					node: {
+						global: false,
+						process: false,
+						Buffer: false,
+						setImmediate: false,
+						__filename: false,
+						__dirname: false
+					},
+					plugins: [
+						new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/),
+						new webpack.DefinePlugin({
+							"process.env": {
+								NODE_ENV: JSON.stringify("production")
+							}
+						}),
+						new UglifyJsPlugin({uglifyOptions})
+					]
 				}
 
-				const content = buffer.toString("utf-8")
-				const contentMinified = UglifyJS.minify(content, uglifyOptions).code
+				webpack([
+					// Main process
+					Object.assign({}, commonOptions, {
+						entry: "./src/gui/run.js",
+						output: {
+							path: path.resolve(buildDir),
+							filename: appFileMain
+						},
+						target: "electron-main"
+					}),
+					// Renderer process
+					Object.assign({}, commonOptions, {
+						entry: "./src/gui/index.jsx",
+						output: {
+							path: path.resolve(buildDir),
+							filename: appFileRenderer
+						},
+						target: "electron-renderer"
+					})
+				], (error, stats) => {
 
-				grunt.file.write(path.join(appDir, appFileJS), contentMinified)
+					if (error) {
+						return reject(error)
+					}
 
-				resolve()
+					if (stats.hasErrors()) {
+						return reject(new Error(stats.toJson().errors))
+					}
+
+					resolve()
+				})
 			})
+		}
 
-			// Include assets
-			grunt.file.copy(
-				path.join(guiDir, "assets"),
-				path.join(appDir, "assets")
-			)
-		})
-
-		// Package Electron application
-		const packageElectron = async () => new Promise((resolve, reject) => {
+		// Package application using Electron
+		const packageApplication = async () => new Promise((resolve, reject) => {
 
 			electronPackager({
 				arch: "x64",
 				platform: process.platform,
 				prune: false,
-				dir: appDir,
+				dir: buildDir,
 				out: outDir,
 				asar: true,
 				icon: path.join(guiDir, "app.ico"),
@@ -180,57 +194,22 @@ module.exports = function(grunt) {
 					ProductName: packageData.name,
 					InternalName: packageData.name
 				}
-			}, (error, appPath) => {
+			}, error => {
 
 				if (error) {
 					return reject(error)
 				}
 
-				appPath = appPath.pop()
-
-				// Remove not needed files from packaged distribution
-				;["version"].forEach(file => {
-					grunt.file.delete(path.join(appPath, file))
-				})
-
-				resolve(appPath)
+				resolve()
 			})
 		})
-
-		// Compile CLI application to binary file
-		const compileCLIApp = async appPath => {
-
-			const options = []
-			const extension = (process.platform === "win32") ? ".exe" : ""
-			const binaryFilePath = path.join(
-				"../..",
-				appPath,
-				"resources",
-				packageData.name + "-cli" + extension
-			)
-
-			options.push("--target", "node8-win-x64")
-			options.push("--config", "../pkg.js")
-			options.push("--output", binaryFilePath)
-			options.push("./src/app.js")
-
-			grunt.file.setBase(buildDir)
-
-			try {
-				await pkg.exec(options)
-			}
-			finally {
-				grunt.file.setBase("../../")
-			}
-		}
 
 		// Build final release distribution package
 		try {
 
-			await buildCLIApp()
-			await buildGUIApp()
-			const appPath = await packageElectron()
-			await compileCLIApp(appPath)
+			await buildData()
+			await buildApplication()
+			await packageApplication()
 
 			grunt.log.ok()
 			done()

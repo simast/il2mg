@@ -1,8 +1,6 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const Mission = require("../mission")
-
 // Electron built-in modules
 const electron = require("electron")
 const {app, BrowserWindow, ipcMain} = electron
@@ -56,6 +54,8 @@ ipcMain.on("setConfig", (event, configData) => {
 
 // Handle create mission requests from renderer process
 ipcMain.on("createMission", async (event, params) => {
+
+	const Mission = require("../mission")
 
 	// Create a new mission
 	const mission = new Mission(params)

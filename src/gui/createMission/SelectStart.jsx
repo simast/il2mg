@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const {remote} = global.require("electron")
+const {remote} = require("electron")
 const React = require("react")
 const {computed} = require("mobx")
 const {observer} = require("mobx-react")

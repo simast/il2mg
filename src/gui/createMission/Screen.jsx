@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const {ipcRenderer} = global.require("electron")
+const {ipcRenderer} = require("electron")
 const binarySearch = require("binary-search")
 const React = require("react")
 const {computed, observable, action} = require("mobx")
