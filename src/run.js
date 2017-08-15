@@ -7,5 +7,5 @@ if (process.versions.electron) {
 }
 // Run as Node application with CLI interface only
 else {
-	require("./cli")
+	require("./cli")(process.argv)
 }

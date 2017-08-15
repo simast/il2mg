@@ -313,190 +313,193 @@ params.option(
 	value => String(value).trim()
 )
 
-const appDomain = domain.create()
+module.exports = argv => {
 
-// Handle app domain error events and uncaught exceptions
-appDomain.on("error", error => {
+	const appDomain = domain.create()
 
-	// Handle simple string errors
-	if (typeof error === "string") {
-		log.E(error)
-	}
-	// Handle array error messages (with extra meta data)
-	else if (Array.isArray(error)) {
-		log.E.apply(log, error)
-	}
-	// Log exceptions/errors
-	else if (error instanceof Error) {
+	// Handle app domain error events and uncaught exceptions
+	appDomain.on("error", error => {
 
-		let message = error.toString()
-
-		// Use full error message (with stack trace) in debug mode
-		if (params.debug && error.stack) {
-			message = error.stack
+		// Handle simple string errors
+		if (typeof error === "string") {
+			log.E(error)
 		}
-
-		log.E(message)
-	}
-
-	process.exit(1)
-})
-
-// Run app domain logic
-appDomain.run(async () => {
-
-	try {
-		params.parse(process.argv)
-	}
-	finally {
-
-		// Turn on verbose log level in debug mode
-		if (params.debug) {
-			log.transports.console.level = "I"
+		// Handle array error messages (with extra meta data)
+		else if (Array.isArray(error)) {
+			log.E.apply(log, error)
 		}
-	}
+		// Log exceptions/errors
+		else if (error instanceof Error) {
 
-	// Validate command line params
+			let message = error.toString()
 
-	// --lang
-	if (Array.isArray(params.lang)) {
-
-		params.lang.forEach(lang => {
-
-			if (data.languages.indexOf(lang) === -1) {
-				throw ["Invalid language!", {language: lang}]
+			// Use full error message (with stack trace) in debug mode
+			if (params.debug && error.stack) {
+				message = error.stack
 			}
-		})
-	}
 
-	// --debug
-	if (typeof params.debug === "boolean" && params.debug) {
-
-		// Simple debug mode (without extra features)
-		params.debug = Object.create(null)
-	}
-
-	// --format
-	if (params.format !== undefined) {
-
-		if ([Mission.FORMAT_TEXT, Mission.FORMAT_BINARY].indexOf(params.format) < 0) {
-			throw ["Unknown mission file format!", {format: params.format}]
+			log.E(message)
 		}
-	}
 
-	// --battle
-	if (params.battle && !data.battles[params.battle]) {
-		throw ["Unknown battle!", {battle: params.battle}]
-	}
+		process.exit(1)
+	})
 
-	// --date
-	if (params.date) {
+	// Run app domain logic
+	appDomain.run(async () => {
 
-		if (typeof params.date === "object") {
-			params.date = params.date.format("YYYY-MM-DD")
+		try {
+			params.parse(argv)
 		}
-		else {
+		finally {
 
-			// Validate date as a special season value
-			let isDateSeason = false
+			// Turn on verbose log level in debug mode
+			if (params.debug) {
+				log.transports.console.level = "I"
+			}
+		}
 
-			for (const type in season) {
+		// Validate command line params
 
-				if (params.date === season[type] && season[type] !== season.DESERT) {
+		// --lang
+		if (Array.isArray(params.lang)) {
 
-					isDateSeason = true
-					break
+			params.lang.forEach(lang => {
+
+				if (data.languages.indexOf(lang) === -1) {
+					throw ["Invalid language!", {language: lang}]
+				}
+			})
+		}
+
+		// --debug
+		if (typeof params.debug === "boolean" && params.debug) {
+
+			// Simple debug mode (without extra features)
+			params.debug = Object.create(null)
+		}
+
+		// --format
+		if (params.format !== undefined) {
+
+			if ([Mission.FORMAT_TEXT, Mission.FORMAT_BINARY].indexOf(params.format) < 0) {
+				throw ["Unknown mission file format!", {format: params.format}]
+			}
+		}
+
+		// --battle
+		if (params.battle && !data.battles[params.battle]) {
+			throw ["Unknown battle!", {battle: params.battle}]
+		}
+
+		// --date
+		if (params.date) {
+
+			if (typeof params.date === "object") {
+				params.date = params.date.format("YYYY-MM-DD")
+			}
+			else {
+
+				// Validate date as a special season value
+				let isDateSeason = false
+
+				for (const type in season) {
+
+					if (params.date === season[type] && season[type] !== season.DESERT) {
+
+						isDateSeason = true
+						break
+					}
+				}
+
+				if (!isDateSeason) {
+					throw ["Invalid mission date!", {date: params.date}]
 				}
 			}
+		}
 
-			if (!isDateSeason) {
-				throw ["Invalid mission date!", {date: params.date}]
+		// --time
+		if (params.time && typeof params.time === "string" && !data.time[params.time]) {
+			throw ["Invalid mission time!", {time: params.time}]
+		}
+
+		// --coalition
+		if (params.coalition !== undefined &&
+			[data.coalition.ALLIES, data.coalition.AXIS].indexOf(params.coalition) === -1) {
+
+			throw ["Unknown coalition!", {coalition: params.coalition}]
+		}
+
+		// --country
+		if (params.country !== undefined && !data.countries[params.country]) {
+			throw ["Unknown country!", {country: params.country}]
+		}
+
+		// --task
+		if (params.task !== undefined) {
+
+			// NOTE: The special ~ symbol can be used to specify task story!
+			const task = params.task.split(/~+?/)
+
+			params.task = task[0]
+
+			if (task.length > 1) {
+				params.story = task.slice(1)
 			}
 		}
-	}
 
-	// --time
-	if (params.time && typeof params.time === "string" && !data.time[params.time]) {
-		throw ["Invalid mission time!", {time: params.time}]
-	}
-
-	// --coalition
-	if (params.coalition !== undefined &&
-		[data.coalition.ALLIES, data.coalition.AXIS].indexOf(params.coalition) === -1) {
-
-		throw ["Unknown coalition!", {coalition: params.coalition}]
-	}
-
-	// --country
-	if (params.country !== undefined && !data.countries[params.country]) {
-		throw ["Unknown country!", {country: params.country}]
-	}
-
-	// --task
-	if (params.task !== undefined) {
-
-		// NOTE: The special ~ symbol can be used to specify task story!
-		const task = params.task.split(/~+?/)
-
-		params.task = task[0]
-
-		if (task.length > 1) {
-			params.story = task.slice(1)
+		// --pilot
+		if (params.pilot !== undefined && !params.pilot.length) {
+			throw ["Invalid pilot name!", {pilot: params.pilot}]
 		}
-	}
 
-	// --pilot
-	if (params.pilot !== undefined && !params.pilot.length) {
-		throw ["Invalid pilot name!", {pilot: params.pilot}]
-	}
-
-	// --plane
-	if (params.plane !== undefined && !params.plane.length) {
-		throw ["Invalid plane name!", {plane: params.plane}]
-	}
-
-	// --unit
-	if (params.unit !== undefined && !params.unit.length) {
-		throw ["Invalid unit name!", {unit: params.unit}]
-	}
-
-	// --airfield
-	if (params.airfield !== undefined && !params.airfield.length) {
-		throw ["Invalid airfield name!", {airfield: params.airfield}]
-	}
-
-	// --state
-	if (params.state !== undefined &&
-			[flightState.START, flightState.RUNWAY].indexOf(params.state) === -1 &&
-			typeof params.state !== "number") {
-
-		throw ["Invalid flight state!", {state: params.state}]
-	}
-
-	// --weather
-	if (params.weather !== undefined) {
-
-		const weather = weatherState[params.weather.toUpperCase()]
-
-		if (typeof weather !== "number") {
-			throw ["Invalid weather conditions!", {weather: params.weather}]
+		// --plane
+		if (params.plane !== undefined && !params.plane.length) {
+			throw ["Invalid plane name!", {plane: params.plane}]
 		}
-		else {
-			params.weather = weather
+
+		// --unit
+		if (params.unit !== undefined && !params.unit.length) {
+			throw ["Invalid unit name!", {unit: params.unit}]
 		}
-	}
 
-	try {
+		// --airfield
+		if (params.airfield !== undefined && !params.airfield.length) {
+			throw ["Invalid airfield name!", {airfield: params.airfield}]
+		}
 
-		// Create a new mission
-		const mission = new Mission(params)
+		// --state
+		if (params.state !== undefined &&
+				[flightState.START, flightState.RUNWAY].indexOf(params.state) === -1 &&
+				typeof params.state !== "number") {
 
-		// Save mission files
-		await mission.save(params.args[0])
+			throw ["Invalid flight state!", {state: params.state}]
+		}
 
-		log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")")
-	}
-	catch (error) {
-		appDomain.emit("error", error)
-	}
-})
+		// --weather
+		if (params.weather !== undefined) {
+
+			const weather = weatherState[params.weather.toUpperCase()]
+
+			if (typeof weather !== "number") {
+				throw ["Invalid weather conditions!", {weather: params.weather}]
+			}
+			else {
+				params.weather = weather
+			}
+		}
+
+		try {
+
+			// Create a new mission
+			const mission = new Mission(params)
+
+			// Save mission files
+			await mission.save(params.args[0])
+
+			log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")")
+		}
+		catch (error) {
+			appDomain.emit("error", error)
+		}
+	})
+}

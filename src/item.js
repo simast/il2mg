@@ -858,40 +858,42 @@ module.exports = Item
 
 // Load all supported mission item types
 ;[
-	require("./item/Airfield"),
-	require("./item/Block"),
-	require("./item/Bridge"),
-	require("./item/Effect"),
-	require("./item/Flag"),
-	require("./item/Ground"),
-	require("./item/Group"),
-	require("./item/MCU_Activate"),
-	require("./item/MCU_CheckZone"),
-	require("./item/MCU_CMD_AttackArea"),
-	require("./item/MCU_CMD_Cover"),
-	require("./item/MCU_CMD_Effect"),
-	require("./item/MCU_CMD_ForceComplete"),
-	require("./item/MCU_CMD_Formation"),
-	require("./item/MCU_CMD_Land"),
-	require("./item/MCU_CMD_TakeOff"),
-	require("./item/MCU_Counter"),
-	require("./item/MCU_Deactivate"),
-	require("./item/MCU_Delete"),
-	require("./item/MCU_Icon"),
-	require("./item/MCU_Proximity"),
-	require("./item/MCU_Spawner"),
-	require("./item/MCU_Timer"),
-	require("./item/MCU_TR_ComplexTrigger"),
-	require("./item/MCU_TR_Entity"),
-	require("./item/MCU_TR_MissionBegin"),
-	require("./item/MCU_TR_MissionEnd"),
-	require("./item/MCU_Waypoint"),
-	require("./item/Options"),
-	require("./item/Plane"),
-	require("./item/Train"),
-	require("./item/Vehicle")
-].forEach(item => {
+	"Airfield",
+	"Block",
+	"Bridge",
+	"Effect",
+	"Flag",
+	"Ground",
+	"Group",
+	"MCU_Activate",
+	"MCU_CheckZone",
+	"MCU_CMD_AttackArea",
+	"MCU_CMD_Cover",
+	"MCU_CMD_Effect",
+	"MCU_CMD_ForceComplete",
+	"MCU_CMD_Formation",
+	"MCU_CMD_Land",
+	"MCU_CMD_TakeOff",
+	"MCU_Counter",
+	"MCU_Deactivate",
+	"MCU_Delete",
+	"MCU_Icon",
+	"MCU_Proximity",
+	"MCU_Spawner",
+	"MCU_Timer",
+	"MCU_TR_ComplexTrigger",
+	"MCU_TR_Entity",
+	"MCU_TR_MissionBegin",
+	"MCU_TR_MissionEnd",
+	"MCU_Waypoint",
+	"Options",
+	"Plane",
+	"Train",
+	"Vehicle"
+].forEach(type => {
 
-	Object.defineProperty(item.prototype, "type", {value: item.name})
-	Item[item.name] = item
+	const item = require("./item/" + type)
+
+	Object.defineProperty(item.prototype, "type", {value: type})
+	Item[type] = item
 })
