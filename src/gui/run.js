@@ -12,7 +12,7 @@ if (!process.defaultApp) {
 
 	runAsCLI = argv.length > 1
 
-	// Add a fake "script" argument
+	// Add a fake "script" argument as current executable name
 	if (runAsCLI) {
 		argv.splice(1, 0, path.basename(argv[0]))
 	}
@@ -21,8 +21,11 @@ if (!process.defaultApp) {
 // Run with CLI interface
 if (runAsCLI) {
 
-	require("../cli")(argv)
-	app.exit()
+	app.on("ready", async () => {
+
+		await require("../cli")(argv)
+		app.exit()
+	})
 }
 // Run with GUI interface
 else {

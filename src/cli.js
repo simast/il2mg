@@ -313,7 +313,7 @@ params.option(
 	value => String(value).trim()
 )
 
-module.exports = argv => {
+module.exports = argv => new Promise(resolve => {
 
 	const appDomain = domain.create()
 
@@ -501,5 +501,8 @@ module.exports = argv => {
 		catch (error) {
 			appDomain.emit("error", error)
 		}
+		finally {
+			resolve()
+		}
 	})
-}
+})
