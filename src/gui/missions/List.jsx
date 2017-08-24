@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const {remote} = require("electron")
-const React = require("react")
-const MissionsListItem = require("./ListItem")
+import {remote} from "electron"
+import React from "react"
+import MissionsListItem from "./ListItem"
 
 // Missions list component
-class MissionsList extends React.Component {
+export default class MissionsList extends React.Component {
 
 	constructor({missions, removeMission, saveMission}) {
 		super(...arguments)
@@ -73,5 +73,3 @@ class MissionsList extends React.Component {
 		this.menu.popup(remote.getCurrentWindow())
 	}
 }
-
-module.exports = MissionsList

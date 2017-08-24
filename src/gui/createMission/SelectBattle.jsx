@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const React = require("react")
-const {observer} = require("mobx-react")
-const createMission = require("./store")
+import React from "react"
+import {observer} from "mobx-react"
+import createMission from "./store"
 
 // Select mission battle component
-module.exports = observer(() => {
+export default observer(() => {
 
 	// TODO: Allow selecting other battles
 	const {battle, battles} = createMission

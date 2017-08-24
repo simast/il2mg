@@ -1,17 +1,17 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const {ipcRenderer} = require("electron")
-const binarySearch = require("binary-search")
-const React = require("react")
-const {computed, observable, action} = require("mobx")
-const {observer} = require("mobx-react")
-const createMission = require("./store")
-const {Start} = require("./constants")
-const Screen = require("../app/Screen")
-const SelectStart = require("./SelectStart")
-const SelectBattle = require("./SelectBattle")
-const ChoiceList = require("./ChoiceList")
+import {ipcRenderer} from "electron"
+import binarySearch from "binary-search"
+import React from "react"
+import {computed, observable, action} from "mobx"
+import {observer} from "mobx-react"
+import {Start} from "./"
+import createMission from "./store"
+import Screen from "../app/Screen"
+import SelectStart from "./SelectStart"
+import SelectBattle from "./SelectBattle"
+import ChoiceList from "./ChoiceList"
 
 // Record key data parameter separator
 const RECORD_SEP = "~"
@@ -37,7 +37,7 @@ const choiceLists = [
 ]
 
 // Create mission screen component
-@observer class CreateMissionScreen extends React.Component {
+@observer export default class CreateMissionScreen extends React.Component {
 
 	@observable isBusy = false
 
@@ -348,5 +348,3 @@ const choiceLists = [
 		}, 100)
 	}
 }
-
-module.exports = CreateMissionScreen

@@ -1,20 +1,20 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const fs = require("fs")
-const path = require("path")
-const {spawn} = require("child_process")
-const {remote} = require("electron")
-const React = require("react")
-const {observer} = require("mobx-react")
-const app = require("../app/store")
-const missions = require("./store")
-const {Difficulty} = require("../app/constants")
-const {FileExtension} = require("./constants")
-const {showErrorMessage, moveFileSync} = require("../app/utils")
-const Screen = require("../app/Screen")
-const MissionsList = require("./List")
-const MissionDetails = require("./Details")
+import fs from "fs"
+import path from "path"
+import {spawn} from "child_process"
+import {remote} from "electron"
+import React from "react"
+import {observer} from "mobx-react"
+import app from "../app/store"
+import missions from "./store"
+import {Difficulty} from "../app/"
+import {FileExtension} from "./"
+import {showErrorMessage, moveFileSync} from "../app/utils"
+import Screen from "../app/Screen"
+import MissionsList from "./List"
+import MissionDetails from "./Details"
 
 // Autoplay file name
 const FILE_AUTOPLAY = "autoplay.cfg"
@@ -40,7 +40,7 @@ const difficultyModes = new Map([
 ])
 
 // Missions screen component
-@observer class MissionsScreen extends React.Component {
+@observer export default class MissionsScreen extends React.Component {
 
 	constructor() {
 		super(...arguments)
@@ -589,5 +589,3 @@ const difficultyModes = new Map([
 		})
 	}
 }
-
-module.exports = MissionsScreen

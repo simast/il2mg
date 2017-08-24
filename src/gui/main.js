@@ -1,9 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-// Electron built-in modules
-const electron = require("electron")
-const {app, BrowserWindow, ipcMain} = electron
+import {app, screen, BrowserWindow, ipcMain} from "electron"
 
 let mainWindow = null
 
@@ -26,8 +24,8 @@ if (isOtherInstance) {
 	app.exit(0) // Success
 }
 
-const fs = require("fs")
-const path = require("path")
+import fs from "fs"
+import path from "path"
 
 // Min and max window size
 const MIN_WINDOW_WIDTH = 800
@@ -126,7 +124,7 @@ app.on("ready", () => {
 		width = Math.max(Math.min(width, MAX_WINDOW_WIDTH), MIN_WINDOW_WIDTH)
 		height = Math.max(Math.min(height, MAX_WINDOW_HEIGHT), MIN_WINDOW_HEIGHT)
 
-		const {workArea} = electron.screen.getDisplayMatching({x, y, width, height})
+		const {workArea} = screen.getDisplayMatching({x, y, width, height})
 
 		// Make sure window is not outside display work area
 		x = Math.min(Math.max(x, workArea.x), workArea.x + workArea.width - width)

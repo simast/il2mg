@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const React = require("react")
-const ActionBar = require("./ActionBar")
-const Photos = require("./Photos")
+import React from "react"
+import ActionBar from "./ActionBar"
+import Photos from "./Photos"
 
 // Screen component
-module.exports = ({id, children, actions, isBusy = false}) => (
+export default ({id, children, actions, isBusy = false}) => (
 	<div id="screen">
 		<Photos screen={id} />
 		<div id="container">

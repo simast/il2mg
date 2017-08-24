@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const {app} = require("electron")
-const path = require("path")
+import path from "path"
+import {app} from "electron"
 
 const argv = process.argv.slice()
 let runAsCLI = argv.length > 2

@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const {remote} = require("electron")
-const React = require("react")
-const {computed} = require("mobx")
-const {observer} = require("mobx-react")
-const createMission = require("./store")
-const {Start} = require("./constants")
+import {remote} from "electron"
+import React from "react"
+import {computed} from "mobx"
+import {observer} from "mobx-react"
+import {Start} from "./"
+import createMission from "./store"
 
 // Season color values
 const seasonColor = {
@@ -27,7 +27,7 @@ const startTypes = new Map([
 let trackCSSStyle = null
 
 // Select mission start and date component
-@observer class SelectStart extends React.Component {
+@observer export default class SelectStart extends React.Component {
 
 	// Get an index of battle dates
 	@computed get dates() {
@@ -202,5 +202,3 @@ let trackCSSStyle = null
 		)
 	}
 }
-
-module.exports = SelectStart

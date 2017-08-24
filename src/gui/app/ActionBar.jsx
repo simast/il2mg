@@ -1,11 +1,11 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const React = require("react")
-const {Link} = require("react-router-dom")
+import React from "react"
+import {Link} from "react-router-dom"
 
 // ActionBar component
-module.exports = ({actions}) => (
+export default ({actions}) => (
 
 	<footer id="actionBar">
 		{Object.keys(actions).map(side => (

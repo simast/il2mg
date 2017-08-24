@@ -1,15 +1,15 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const React = require("react")
-const {observable, action} = require("mobx")
-const {observer} = require("mobx-react")
+import React from "react"
+import {observable, action} from "mobx"
+import {observer} from "mobx-react"
 
 // Number of available photos
 const AVAILABLE_PHOTOS = 12
 
 // Photos decoration component
-@observer class Photos extends React.Component {
+@observer export default class Photos extends React.Component {
 
 	@observable.ref photos = []
 
@@ -58,5 +58,3 @@ const AVAILABLE_PHOTOS = 12
 		this.photos = photos
 	}
 }
-
-module.exports = Photos

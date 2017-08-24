@@ -2,12 +2,8 @@
 "use strict"
 
 // Mission file extensions
-const FileExtension = Object.freeze({
+export const FileExtension = Object.freeze({
 	Text: "Mission",
 	Binary: "msnbin",
 	Meta: "il2mg"
 })
-
-module.exports = {
-	FileExtension
-}

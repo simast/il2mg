@@ -1,11 +1,11 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const fs = require("fs")
-const path = require("path")
-const {remote} = require("electron")
-const {observable, action} = require("mobx")
-const {FileExtension} = require("./constants")
+import fs from "fs"
+import path from "path"
+import {remote} from "electron"
+import {observable, action} from "mobx"
+import {FileExtension} from "./"
 
 // Missions state store
 class MissionsStore {
@@ -73,4 +73,4 @@ class MissionsStore {
 	}
 }
 
-module.exports = new MissionsStore()
+export default new MissionsStore()

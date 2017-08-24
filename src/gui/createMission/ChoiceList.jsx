@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const React = require("react")
-const createMission = require("./store")
-const ChoiceListItem = require("./ChoiceListItem")
+import React from "react"
+import createMission from "./store"
+import ChoiceListItem from "./ChoiceListItem"
 
 // Data choice list component
-class ChoiceList extends React.Component {
+export default class ChoiceList extends React.Component {
 
 	// Render component
 	render() {
@@ -125,5 +125,3 @@ class ChoiceList extends React.Component {
 		createMission.setChoice(choiceState)
 	}
 }
-
-module.exports = ChoiceList

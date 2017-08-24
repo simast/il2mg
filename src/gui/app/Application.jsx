@@ -1,10 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const React = require("react")
+import React from "react"
 
 // Application component
-class Application extends React.Component {
+export default class Application extends React.Component {
 
 	componentDidMount() {
 
@@ -31,5 +31,3 @@ class Application extends React.Component {
 		event.stopPropagation()
 	}
 }
-
-module.exports = Application

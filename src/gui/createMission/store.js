@@ -1,11 +1,11 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const fs = require("fs")
-const path = require("path")
-const {remote, ipcRenderer} = require("electron")
-const {observable, computed, action, reaction} = require("mobx")
-const {Start, Battle} = require("./constants")
+import fs from "fs"
+import path from "path"
+import {remote, ipcRenderer} from "electron"
+import {observable, computed, action, reaction} from "mobx"
+import {Start, Battle} from "./"
 
 // Create mission state store
 class CreateMissionStore {
@@ -73,4 +73,4 @@ class CreateMissionStore {
 	}
 }
 
-module.exports = new CreateMissionStore()
+export default new CreateMissionStore()

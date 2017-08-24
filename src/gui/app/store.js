@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const {remote, ipcRenderer} = require("electron")
-const {observable, computed, action, reaction} = require("mobx")
-const {Difficulty} = require("./constants")
+import {remote, ipcRenderer} from "electron"
+import {observable, computed, action, reaction} from "mobx"
+import {Difficulty} from "./"
 
 // Application state store
 class AppStore {
@@ -47,4 +47,4 @@ class AppStore {
 	}
 }
 
-module.exports = new AppStore()
+export default new AppStore()

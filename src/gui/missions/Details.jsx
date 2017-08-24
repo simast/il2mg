@@ -1,10 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
 "use strict"
 
-const React = require("react")
+import React from "react"
 
 // Mission details pane component
-class MissionDetails extends React.Component {
+export default class MissionDetails extends React.Component {
 
 	componentWillReceiveProps() {
 
@@ -36,5 +36,3 @@ class MissionDetails extends React.Component {
 		)
 	}
 }
-
-module.exports = MissionDetails

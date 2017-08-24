@@ -1,10 +1,10 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const React = require("react")
+import React from "react"
 
 // Data choice list item component
-class ChoiceListItem extends React.Component {
+export default class ChoiceListItem extends React.Component {
 
 	shouldComponentUpdate(nextProps) {
 
@@ -62,5 +62,3 @@ class ChoiceListItem extends React.Component {
 		)
 	}
 }
-
-module.exports = ChoiceListItem

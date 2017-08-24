@@ -1,11 +1,11 @@
 /** @copyright Simas Toleikis, 2017 */
 "use strict"
 
-const React = require("react")
-const {NavLink} = require("react-router-dom")
+import React from "react"
+import {NavLink} from "react-router-dom"
 
 // Mission list item component
-module.exports = ({mission, onContextMenu}) => {
+export default ({mission, onContextMenu}) => {
 
 	const linkProps = {
 		to: "/missions/" + mission.id,
