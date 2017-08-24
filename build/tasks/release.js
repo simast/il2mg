@@ -175,33 +175,23 @@ module.exports = function(grunt) {
 		}
 
 		// Package application using Electron
-		const packageApplication = async () => new Promise((resolve, reject) => {
-
-			electronPackager({
-				arch: "x64",
-				platform: process.platform,
-				prune: false,
-				dir: buildDir,
-				out: outDir,
-				asar: true,
-				icon: path.join(guiDir, "app.ico"),
-				appCopyright: data.copyright,
-				appVersion: "0." + data.version.match(/[0-9]+/)[0],
-				win32metadata: {
-					CompanyName: "",
-					FileDescription: packageData.description,
-					OriginalFilename: packageData.name + ".exe",
-					ProductName: packageData.name,
-					InternalName: packageData.name
-				}
-			}, error => {
-
-				if (error) {
-					return reject(error)
-				}
-
-				resolve()
-			})
+		const packageApplication = async () => electronPackager({
+			arch: "x64",
+			platform: process.platform,
+			prune: false,
+			dir: buildDir,
+			out: outDir,
+			asar: true,
+			icon: path.join(guiDir, "app.ico"),
+			appCopyright: data.copyright,
+			appVersion: "0." + data.version.match(/[0-9]+/)[0],
+			win32metadata: {
+				CompanyName: "",
+				FileDescription: packageData.description,
+				OriginalFilename: packageData.name + ".exe",
+				ProductName: packageData.name,
+				InternalName: packageData.name
+			}
 		})
 
 		// Build final release distribution package
