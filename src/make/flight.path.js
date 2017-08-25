@@ -1,12 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import sylvester from "sylvester"
-import data from "../data"
-import {makeActivity} from "./flight.plan"
+import {makeActivity, ActivityType} from "./flight.plan"
 import makeFlightFuel from "./flight.fuel"
 import {RESTRICTED_BORDER, isOffmap, getMapIntersection} from "./map"
-
-const {activityType} = data
 
 // Minimum and maximum distance from the border for offmap start/end position
 // NOTE: This is only used for player flight!
@@ -24,7 +21,7 @@ export default function makeFlightPath(flight) {
 	for (const activity of plan) {
 
 		// Process only fly plan activities
-		if (activity.type !== activityType.FLY) {
+		if (activity.type !== ActivityType.Fly) {
 			continue
 		}
 
@@ -162,7 +159,7 @@ function adjustOffmapRouteBounds(flight, activity, isForward) {
 
 				// End flight activity on map border/edge
 				plan.push(makeActivity.call(this, flight, {
-					type: activityType.END,
+					type: ActivityType.End,
 					position: offmapPosition
 				}))
 			}

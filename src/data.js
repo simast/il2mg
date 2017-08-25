@@ -5,6 +5,12 @@ import path from "path"
 import moment from "moment"
 import addLazyProperty from "lazy-property"
 
+// Application constants
+export const APPLICATION_NAME = "il2mg"
+export const APPLICATION_TITLE = "il2mg - Mission Generator"
+export const APPLICATION_VERSION = "r11"
+export const APPLICATION_COPYRIGHT = "(C) Simas Toleikis, 2015-2017"
+
 // Data directory index file key
 const DATA_INDEX_FILE = "index"
 
@@ -369,15 +375,6 @@ class Data {
 
 const data = new Data()
 
-// Application name
-data.name = "il2mg"
-
-// Application version
-data.version = "r11"
-
-// Application copyright
-data.copyright = "(C) Simas Toleikis, 2015-2017"
-
 // List of supported mission localization languages
 data.languages = Object.freeze([
 	"eng", // English (default)
@@ -418,107 +415,6 @@ data.itemFlag = Object.freeze({
 	TAXI_RUNWAY: 1, // Taxi runway point
 	ROUTE_STOP: 1, // Route stop point
 	ROUTE_ROAD: 2 // Route road formation
-})
-
-// Front line item types
-data.frontLine = Object.freeze({
-	BORDER: 1, // Border line
-	ATTACK: 2 // Attack arrow
-})
-
-// Location item types
-data.location = Object.freeze({
-	VILLAGE: 1, // Small village
-	TOWN: 2, // Medium town
-	CITY: 3, // Large city
-	AIRFIELD: 4 // Airfield
-})
-
-// Map season types
-// NOTE: Order is important (used when defining plane skins for each season)!
-data.season = Object.freeze({
-	SPRING: "spring",
-	SUMMER: "summer",
-	AUTUMN: "autumn",
-	WINTER: "winter",
-	DESERT: "desert"
-})
-
-// Altitude level types
-data.altitudeLevel = Object.freeze({
-	LOW: "low",
-	MEDIUM: "medium",
-	HIGH: "high"
-})
-
-// Coalitions
-data.coalition = Object.freeze({
-	ALLIES: 1,
-	AXIS: 2
-})
-
-// Territory types
-data.territory = Object.freeze({
-	FRONT: -1,
-	UNKNOWN: 0
-	// NOTE: Any positive territory type ID is a coalition ID
-})
-
-// Plane size constants (types/IDs)
-data.planeSize = Object.freeze({
-	SMALL: 1,
-	MEDIUM: 2,
-	LARGE: 3,
-	HUGE: 4
-})
-
-// Weather state/condition constants
-data.weatherState = Object.freeze({
-	PERFECT: 1,
-	GOOD: 2,
-	BAD: 3,
-	EXTREME: 4
-})
-
-// Precipitation type constants
-data.precipitation = Object.freeze({
-	NONE: 0,
-	RAIN: 1,
-	SNOW: 2
-})
-
-// Flight states
-// NOTE: Numeric [0..1) value state represent aircraft in the air.
-data.flightState = Object.freeze({
-	START: "start", // Parking, engine not running
-	TAXI: "taxi", // On the taxiway, engine running, taxiing to runway
-	RUNWAY: "runway" // On the runway, engine running, ready for takeoff
-})
-
-// Common flight plan activity types
-data.activityType = Object.freeze({
-	START: "start", // Initial start activity
-	TAKEOFF: "takeoff", // Taxi (optionally) and takeoff from airfield
-	FORM: "form", // Form up (set formations and element cover)
-	WAIT: "wait", // Wait for something (do nothing)
-	FLY: "fly", // Fly to waypoint/location
-	LAND: "land", // Land on airfield (ending the flight)
-	END: "end" // End flight activity
-})
-
-// Map colors as RGB array values
-data.mapColor = Object.freeze({
-	ATTACK: [156, 156, 156],
-	ROUTE: [52, 52, 52],
-	// NOTE: Special color values that will change in-game based on user settings
-	ENEMY: [10, 0, 0],
-	FRIEND: [0, 0, 10]
-})
-
-// Briefing colors as HTML hex color values
-data.briefingColor = Object.freeze({
-	LIGHT: "#fbfbfb",
-	DARK: "#959595"
 })
 
 export default data

@@ -3,6 +3,13 @@
 import numeral from "numeral"
 import data from "../../src/data"
 import Item from "../../src/item"
+import {FrontLine} from "../../src/make/fronts"
+
+// Map of front line point item names to types
+const frontLineTypeMap = {
+	BORDER: FrontLine.Border,
+	ATTACK: FrontLine.Attack
+}
 
 module.exports = function(grunt) {
 
@@ -65,8 +72,10 @@ module.exports = function(grunt) {
 						// All front line items are waypoints
 						if (item instanceof Item.MCU_Waypoint) {
 
+							const frontLineType = frontLineTypeMap[item.Name]
+
 							// Process supported front line item
-							if (data.frontLine[item.Name]) {
+							if (frontLineType) {
 
 								const point = []
 								const pointIndex = item.Index
@@ -74,7 +83,7 @@ module.exports = function(grunt) {
 								const pointID = json.push(point) - 1
 
 								// Point item type
-								point.push(data.frontLine[item.Name])
+								point.push(frontLineType)
 
 								// Point item position
 								point.push(Math.round(item.XPos))

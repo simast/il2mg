@@ -3,7 +3,7 @@
 import path from "path"
 import log from "../log"
 import {DEFAULT_COALITION, DEFAULT_COUNTRY} from "../item"
-import data from "../data"
+import data, {APPLICATION_NAME, APPLICATION_VERSION} from "../data"
 
 // Generate mission battle info
 export default function makeBattle() {
@@ -28,7 +28,7 @@ export default function makeBattle() {
 	// Create main mission Options item
 	const options = this.createItem("Options")
 
-	options.LCAuthor = this.getLC(data.name + " " + data.version)
+	options.LCAuthor = this.getLC(APPLICATION_NAME + " " + APPLICATION_VERSION)
 	options.MissionType = 0 // Single-player mission
 	options.AqmId = 0 // TODO: ?
 

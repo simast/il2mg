@@ -6,7 +6,13 @@ import CleanCSS from "clean-css"
 import webpack from "webpack"
 import electronPackager from "electron-packager"
 import UglifyJsPlugin from "uglifyjs-webpack-plugin"
-import data from "../../src/data"
+
+import {
+	APPLICATION_NAME,
+	APPLICATION_TITLE,
+	APPLICATION_VERSION,
+	APPLICATION_COPYRIGHT
+} from "../../src/data"
 
 module.exports = function(grunt) {
 
@@ -14,7 +20,6 @@ module.exports = function(grunt) {
 	grunt.registerTask("build:release", "Build a release package.", async function() {
 
 		const done = this.async()
-		const packageData = grunt.config("pkg")
 		const outDir = "build"
 		const buildDir = path.join(outDir, "temp")
 		const guiDir = path.join("src", "gui")
@@ -70,10 +75,9 @@ module.exports = function(grunt) {
 
 			// Build application package.json file
 			grunt.file.write(path.join(buildDir, "package.json"), JSON.stringify({
-				name: packageData.name,
+				name: APPLICATION_NAME,
 				private: true,
-				main: appFileMain,
-				author: packageData.author
+				main: appFileMain
 			}, null, "\t"))
 
 			// Build renderer process HTML file
@@ -182,14 +186,14 @@ module.exports = function(grunt) {
 			out: outDir,
 			asar: true,
 			icon: path.join(guiDir, "app.ico"),
-			appCopyright: data.copyright,
-			appVersion: "0." + data.version.match(/[0-9]+/)[0],
+			appCopyright: APPLICATION_COPYRIGHT,
+			appVersion: "0." + APPLICATION_VERSION.match(/[0-9]+/)[0],
 			win32metadata: {
 				CompanyName: "",
-				FileDescription: packageData.description,
-				OriginalFilename: packageData.name + ".exe",
-				ProductName: packageData.name,
-				InternalName: packageData.name
+				FileDescription: APPLICATION_TITLE,
+				OriginalFilename: APPLICATION_NAME + ".exe",
+				ProductName: APPLICATION_NAME,
+				InternalName: APPLICATION_NAME
 			}
 		})
 

@@ -2,10 +2,7 @@
 
 import numeral from "numeral"
 import sylvester from "sylvester"
-import {Location} from "./locations"
-import data from "../data"
-
-const {location} = data
+import {Location, LocationType} from "./locations"
 
 // Briefing map grid size
 const GRID_SIZE = 10000 // 10 km
@@ -15,10 +12,10 @@ const PLACE_RADIUS = 5000 // 5 Km
 
 // Names of location place types
 const placeTypeNames = {
-	[location.VILLAGE]: "village",
-	[location.TOWN]: "town",
-	[location.CITY]: "city",
-	[location.AIRFIELD]: "airfield"
+	[LocationType.Village]: "village",
+	[LocationType.Town]: "town",
+	[LocationType.City]: "city",
+	[LocationType.Airfield]: "airfield"
 }
 
 // Make briefing target/location description
@@ -119,16 +116,22 @@ export default function makeBriefingTarget(target) {
 
 				if (placeType) {
 
+					const combinedLocationTypes = [
+						LocationType.Village,
+						LocationType.Town,
+						LocationType.Airfield
+					]
+
 					// Combine same village/town place types into a single type description
 					if (nextPlace instanceof Location && nextPlace.type === place.type &&
-							[location.VILLAGE, location.TOWN, location.AIRFIELD].indexOf(place.type) >= 0) {
+						combinedLocationTypes.indexOf(place.type) !== -1) {
 
 						placeType += "s"
 						isPlaceTypeCombined = true
 					}
 
 					// Custom output for non-combined airfield locations (without "of")
-					if (!isPlaceTypeCombined && place.type === location.AIRFIELD) {
+					if (!isPlaceTypeCombined && place.type === LocationType.Airfield) {
 						fullPlaceName += placeName + " " + placeType
 					}
 					else {

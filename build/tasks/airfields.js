@@ -4,6 +4,7 @@ import path from "path"
 import numeral from "numeral"
 import data from "../../src/data"
 import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from "../../src/item"
+import {PlaneSize, getPlaneSizeFromName} from "../../src/make/planes"
 
 module.exports = function(grunt) {
 
@@ -13,7 +14,6 @@ module.exports = function(grunt) {
 		// Data constants
 		const itemTag = data.itemTag
 		const itemFlag = data.itemFlag
-		const planeSize = data.planeSize
 
 		let totalBattles = 0
 		let totalAirfields = 0
@@ -152,7 +152,7 @@ module.exports = function(grunt) {
 								itemData.push(planeTaxiRoute)
 
 								// Plane size ID
-								const planeSizeID = planeSize[planeData[planeDataIndex++]]
+								const planeSizeID = getPlaneSizeFromName(planeData[planeDataIndex++])
 
 								// Validate plane size ID
 								if (!Number.isInteger(planeSizeID)) {
@@ -182,8 +182,8 @@ module.exports = function(grunt) {
 
 									sector = json.sectors[planeSector] = {}
 
-									for (const prop in planeSize) {
-										sector[planeSize[prop]] = 0
+									for (const prop in PlaneSize) {
+										sector[PlaneSize[prop]] = 0
 									}
 								}
 

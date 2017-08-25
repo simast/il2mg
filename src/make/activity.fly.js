@@ -3,11 +3,10 @@
 import numeral from "numeral"
 import sylvester from "sylvester"
 import * as MCU_Icon from "../item/MCU_Icon"
-import data from "../data"
+import {MapColor} from "./map"
+import {AltitudeLevel} from "./flight.altitude"
 import makeFlightFuel from "./flight.fuel"
 import makeBriefingLead from "./briefing.lead"
-
-const {mapColor, altitudeLevel} = data
 
 // Minimum distance required between start position and the next spot
 const MIN_SPOT_DISTANCE = 5000 // 5 Km
@@ -102,15 +101,15 @@ export default class ActivityFly {
 
 				const lastSpotIcon = flight.lastSpotIcon || flight.startIcon
 				const spotIcon = flightGroup.createItem("MCU_Icon")
-				let routeColor = mapColor.ROUTE
+				let routeColor = MapColor.Route
 
 				if (drawAIRoute) {
 
 					if (flight.coalition === mission.player.flight.coalition) {
-						routeColor = mapColor.FRIEND
+						routeColor = MapColor.Friend
 					}
 					else {
-						routeColor = mapColor.ENEMY
+						routeColor = MapColor.Enemy
 					}
 				}
 
@@ -304,10 +303,10 @@ export default class ActivityFly {
 
 			briefingRoute.push("aiming for")
 
-			if (altitude.level === altitudeLevel.LOW) {
+			if (altitude.level === AltitudeLevel.Low) {
 				briefingRoute.push("a low")
 			}
-			else if (altitude.level === altitudeLevel.HIGH) {
+			else if (altitude.level === AltitudeLevel.High) {
 				briefingRoute.push("a high")
 			}
 

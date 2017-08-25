@@ -26,6 +26,7 @@ if (isOtherInstance) {
 import fs from "fs"
 import path from "path"
 import Mission from "../mission"
+import {APPLICATION_TITLE} from "../data"
 
 // Min and max window size
 const MIN_WINDOW_WIDTH = 800
@@ -91,7 +92,7 @@ app.on("ready", () => {
 	}
 
 	const windowConfig = {
-		title: "il2mg - Mission Generator",
+		title: APPLICATION_TITLE,
 		show: false,
 		useContentSize: true,
 		width: MIN_WINDOW_WIDTH,

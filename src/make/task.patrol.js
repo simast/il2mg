@@ -1,20 +1,17 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import sylvester from "sylvester"
-import data from "../data"
-import {makeActivity} from "./flight.plan"
-import {Location} from "./locations"
 import * as MCU_Icon from "../item/MCU_Icon"
 import * as MCU_Waypoint from "../item/MCU_Waypoint"
-
-const {activityType, territory, mapColor} = data
+import {makeActivity, ActivityType} from "./flight.plan"
+import {Location} from "./locations"
+import {MapColor} from "./map"
+import {Territory} from "./fronts"
+import {RESTRICTED_BORDER, isRestricted} from "./map"
 
 // Flight make parts
 import makeFlightAltitude from "./flight.altitude"
 import makeFlightRoute from "./flight.route"
-
-// Restricted map border zone
-import {RESTRICTED_BORDER, isRestricted} from "./map"
 
 // Max patrol area range (as a percent from total aircraft fuel range)
 const MAX_RANGE_PERCENT = 25
@@ -71,7 +68,7 @@ export default function makeTaskPatrol(flight) {
 			const patrolIcon = flight.group.createItem("MCU_Icon")
 
 			patrolIcon.setPosition(point[0], point[1])
-			patrolIcon.setColor(mapColor.ROUTE)
+			patrolIcon.setColor(MapColor.Route)
 			patrolIcon.Coalitions = [flight.coalition]
 			patrolIcon.IconId = MCU_Icon.ICON_WAYPOINT
 		}
@@ -288,7 +285,7 @@ export default function makeTaskPatrol(flight) {
 
 	// Add patrol task fly activity
 	flight.plan.push(makeActivity.call(this, flight, {
-		type: activityType.FLY,
+		type: ActivityType.Fly,
 		route,
 		visible: Boolean(flight.player) && !isPlayerFlightLeader
 	}))
@@ -361,7 +358,7 @@ export default function makeTaskPatrol(flight) {
 		const zoneIcon = flight.group.createItem("MCU_Icon")
 
 		zoneIcon.setPosition(vector.e(1), vector.e(2))
-		zoneIcon.setColor(mapColor.ROUTE)
+		zoneIcon.setColor(MapColor.Route)
 		zoneIcon.Coalitions = [flight.coalition]
 		zoneIcon.LineType = MCU_Icon.LINE_SECTOR_2
 
@@ -631,8 +628,8 @@ export function findBasePoints(flight, params) {
 	let bounds = getBounds(maxRange)
 
 	// Option 1: Find points from fronts within max allowed range
-	if (territory.FRONT in territories) {
-		findPoints(territories[territory.FRONT].findIn(bounds))
+	if (Territory.Front in territories) {
+		findPoints(territories[Territory.Front].findIn(bounds))
 	}
 
 	// Option 2: Find points on friendly territory within max allowed range
@@ -677,7 +674,7 @@ export function findBasePoints(flight, params) {
 		}
 
 		// Check front territories (may be available with the extended max range)
-		findTerritories.push(territory.FRONT)
+		findTerritories.push(Territory.Front)
 
 		// Include enemy territories as a fallback
 		if (territories[enemyCoalition]) {
@@ -685,7 +682,7 @@ export function findBasePoints(flight, params) {
 		}
 
 		// Check unknown territories as a last resort
-		findTerritories.push(territory.UNKNOWN)
+		findTerritories.push(Territory.Unknown)
 
 		// Find both points
 		for (;;) {

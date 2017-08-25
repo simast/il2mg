@@ -1,8 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
 
+import {FlightState} from "./flight"
 import data from "../data"
 
-const {flightState, itemFlag} = data
+const {itemFlag} = data
 
 // Plan activity used to taxi (optionally) and take off from airfield
 export default class ActivityTakeOff {
@@ -38,7 +39,7 @@ export default class ActivityTakeOff {
 		}
 
 		// Add a short timer before takeoff from runway start
-		if (element.state === flightState.RUNWAY) {
+		if (element.state === FlightState.Runway) {
 
 			const waitTimerBefore = flightGroup.createItem("MCU_Timer")
 			let waitTimerMin = 8
@@ -142,8 +143,8 @@ export default class ActivityTakeOff {
 		const taxiRoute = airfield.taxi[Math.abs(flight.taxi)]
 
 		// Add taxi info string only if relevant
-		if (taxiRoute && (playerElement.state === flightState.START ||
-				playerElement.state === flightState.TAXI)) {
+		if (taxiRoute && (playerElement.state === FlightState.Start ||
+				playerElement.state === FlightState.Taxi)) {
 
 			briefing.push("taxi")
 

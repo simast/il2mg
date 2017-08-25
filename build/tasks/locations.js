@@ -2,15 +2,21 @@
 
 import numeral from "numeral"
 import data from "../../src/data"
+import {LocationType} from "../../src/make/locations"
 import Item, {PRECISION_POSITION} from "../../src/item"
+
+// Map of location item names to types
+const locationTypeMap = {
+	VILLAGE: LocationType.Village,
+	TOWN: LocationType.Town,
+	CITY: LocationType.City,
+	AIRFIELD: LocationType.Airfield
+}
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert locations .Group to .json files
 	grunt.registerTask("build:locations", "Build locations JSON files.", () => {
-
-		// Data constants
-		const location = data.location
 
 		let totalBattles = 0
 		let totalItems = 0
@@ -51,9 +57,7 @@ module.exports = function(grunt) {
 							const itemData = item.Name.split(":")
 
 							// Find matching location type ID
-							const itemType = location[Object.keys(location).find(type => (
-								itemData[0].startsWith(type)
-							))]
+							const itemType = locationTypeMap[itemData[0]]
 
 							// Validate location type
 							if (!itemType) {

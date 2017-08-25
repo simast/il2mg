@@ -1,9 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 
-import data from "../data"
 import makeBriefingText from "./briefing.text"
-
-const {weatherState, precipitation} = data
+import {WeatherState, Precipitation} from "./weather"
 
 // General weather description segments
 const generalSegments = [
@@ -22,10 +20,10 @@ const temperatureSegments = [
 
 // Weather state descriptions
 const stateSegments = {
-	[weatherState.PERFECT]: ["perfect", "excellent", "great", "pleasant", "nice"],
-	[weatherState.GOOD]: ["good", "fair", "fine", "decent", "favourable"],
-	[weatherState.BAD]: ["bad", "poor", "rough", "lousy", "adverse"],
-	[weatherState.EXTREME]: ["extreme", "dreadful", "awful", "terrible", "severe"]
+	[WeatherState.Perfect]: ["perfect", "excellent", "great", "pleasant", "nice"],
+	[WeatherState.Good]: ["good", "fair", "fine", "decent", "favourable"],
+	[WeatherState.Bad]: ["bad", "poor", "rough", "lousy", "adverse"],
+	[WeatherState.Extreme]: ["extreme", "dreadful", "awful", "terrible", "severe"]
 }
 
 // Cloud cover types
@@ -259,7 +257,7 @@ export default function makeBriefingWeather() {
 	rand.shuffle(Object.keys(weatherReasons)).sort((a, b) => {
 
 		// Use worst reason first
-		if (weather.state > weatherState.GOOD) {
+		if (weather.state > WeatherState.Good) {
 			return weather.points[a] < weather.points[b]
 		}
 		// Use best reason first
@@ -276,12 +274,12 @@ export default function makeBriefingWeather() {
 	briefing.push(makeBriefingText.call(this, rand.pick(generalSegments), view))
 
 	// Render precipitation segment
-	if (weather.precipitation.type !== precipitation.NONE) {
+	if (weather.precipitation.type !== Precipitation.None) {
 
 		let precipitationSegment = "It is "
 
 		// Show precipitation type
-		if (weather.precipitation.type === precipitation.SNOW) {
+		if (weather.precipitation.type === Precipitation.Snow) {
 			precipitationSegment += "snowing"
 		}
 		else {

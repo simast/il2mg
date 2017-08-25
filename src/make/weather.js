@@ -2,8 +2,22 @@
 
 import data from "../data"
 import log from "../log"
+import {MapSeason} from "./map"
 
-const {weatherState, precipitation, season} = data
+// Weather state/condition enum
+export const WeatherState = Object.freeze({
+	Perfect: 1,
+	Good: 2,
+	Bad: 3,
+	Extreme: 4
+})
+
+// Precipitation type enum
+export const Precipitation = Object.freeze({
+	None: 0,
+	Rain: 1,
+	Snow: 2
+})
 
 // TODO: Move these constants to settings?
 const MAX_WIND_SPEED = 13 // Maximum wind speed (m/s)
@@ -27,19 +41,19 @@ const weatherPoints = {
 
 // Weather state limits
 const weatherLimits = {
-	[weatherState.PERFECT]: {
+	[WeatherState.Perfect]: {
 		clouds: 10, // Maximum cloud cover (%)
 		winds: 2 // Maximum wind speed (m/s)
 	},
-	[weatherState.GOOD]: {
+	[WeatherState.Good]: {
 		clouds: 40,
 		winds: 4
 	},
-	[weatherState.BAD]: {
+	[WeatherState.Bad]: {
 		clouds: 99,
 		winds: 6
 	},
-	[weatherState.EXTREME]: {
+	[WeatherState.Extreme]: {
 		clouds: MAX_CLOUD_COVER,
 		winds: MAX_WIND_SPEED
 	}
@@ -85,7 +99,7 @@ export default function makeWeather() {
 		// FIXME: By default we don't use extreme weather conditions with historical
 		// weather patterns. In the future - make it so larger planes in extreme
 		// weather can still try and fly missions.
-		if (state === weatherState.EXTREME) {
+		if (state === WeatherState.Extreme) {
 			state--
 		}
 	}
@@ -131,9 +145,9 @@ export default function makeWeather() {
 	const logData = ["Weather:"]
 
 	// Log weather state
-	for (const state in weatherState) {
+	for (const state in WeatherState) {
 
-		if (weatherState[state] === this.weather.state) {
+		if (WeatherState[state] === this.weather.state) {
 
 			logData.push(state.toLowerCase())
 			break
@@ -141,10 +155,10 @@ export default function makeWeather() {
 	}
 
 	// Log precipitation type (if any)
-	if (this.weather.precipitation.type === precipitation.RAIN) {
+	if (this.weather.precipitation.type === Precipitation.Rain) {
 		logData.push("rain")
 	}
-	else if (this.weather.precipitation.type === precipitation.SNOW) {
+	else if (this.weather.precipitation.type === Precipitation.Snow) {
 		logData.push("snow")
 	}
 
@@ -248,7 +262,7 @@ function makePrecipitation() {
 	const options = this.items.Options
 
 	const precData = {
-		type: precipitation.NONE,
+		type: Precipitation.None,
 		level: 0
 	}
 
@@ -262,12 +276,12 @@ function makePrecipitation() {
 		if (hasPrecipitation) {
 
 			// Use snow only in the winter season
-			if (this.season === season.WINTER) {
-				precData.type = precipitation.SNOW
+			if (this.season === MapSeason.Winter) {
+				precData.type = Precipitation.Snow
 			}
 			// Use rain for other seasons
 			else {
-				precData.type = precipitation.RAIN
+				precData.type = Precipitation.Rain
 			}
 
 			// TODO: Currently PrecLevel seems to be ignored and not supported at all
@@ -490,11 +504,7 @@ function makeWind() {
 		speed = Number(speed.toFixed(2))
 
 		// Save wind layer data
-		wind.push({
-			altitude: altitude,
-			direction: direction,
-			speed: speed
-		})
+		wind.push({altitude, direction, speed})
 
 		// Register wind layer in mission Options block
 		options.WindLayers.push([altitude, direction, speed])

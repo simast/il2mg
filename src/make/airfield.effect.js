@@ -2,8 +2,9 @@
 
 import * as MCU_CMD_Effect from "../item/MCU_CMD_Effect"
 import data from "../data"
+import {Precipitation} from "./weather"
 
-const {itemTag, itemFlag, precipitation} = data
+const {itemTag, itemFlag} = data
 
 // Make airfield effect item
 export default function makeAirfieldEffect(airfield, item) {
@@ -22,7 +23,7 @@ export default function makeAirfieldEffect(airfield, item) {
 	const rand = this.rand
 	const time = this.time
 	const zone = airfield.zone
-	const isRaining = (this.weather.precipitation.type === precipitation.RAIN)
+	const isRaining = (this.weather.precipitation.type === Precipitation.Rain)
 	const isDark = (time.evening || time.night || time.dawn)
 	const items = []
 

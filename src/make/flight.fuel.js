@@ -1,8 +1,6 @@
 /** @copyright Simas Toleikis, 2016 */
 
-import data from "../data"
-
-const {flightState} = data
+import {FlightState} from "./flight"
 
 // Minimum percent of plane fuel that is always available
 const MIN_PLANE_FUEL = 0.1 // 10%
@@ -24,11 +22,11 @@ export default function makeFlightFuel(flight, travelDistance = 0) {
 				takeoffTime = 8
 			}
 			// 5 minutes for runway start
-			else if (element.state === flightState.RUNWAY) {
+			else if (element.state === FlightState.Runway) {
 				takeoffTime = 5
 			}
 			// 1 minute for taxi start
-			else if (element.state === flightState.TAXI) {
+			else if (element.state === FlightState.Taxi) {
 				takeoffTime = 1
 			}
 		}

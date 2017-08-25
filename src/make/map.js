@@ -1,10 +1,26 @@
 /** @copyright Simas Toleikis, 2015 */
 
 import sylvester from "sylvester"
-import data from "../data"
 import * as MCU_Icon from "../item/MCU_Icon"
 
-const {mapColor} = data
+// Map season types
+// NOTE: Order is important (used when defining plane skins for each season)!
+export const MapSeason = Object.freeze({
+	Spring: "spring",
+	Summer: "summer",
+	Autumn: "autumn",
+	Winter: "winter",
+	Desert: "desert"
+})
+
+// Map colors as RGB array values
+export const MapColor = Object.freeze({
+	Attack: [156, 156, 156],
+	Route: [52, 52, 52],
+	// NOTE: Special color values that will change in-game based on user settings
+	Enemy: [10, 0, 0],
+	Friend: [0, 0, 10]
+})
 
 // Restricted zone around map area border
 // NOTE: Using 1 extra point to not overlap with map grid and location search
@@ -194,7 +210,7 @@ export function markMapArea(flight, {
 		const zoneIcon = flight.group.createItem("MCU_Icon")
 
 		zoneIcon.setPosition(pointVector.elements)
-		zoneIcon.setColor(color ? color : mapColor.ROUTE)
+		zoneIcon.setColor(color ? color : MapColor.Route)
 		zoneIcon.Coalitions = [flight.coalition]
 		zoneIcon.LineType = lineType ? lineType : MCU_Icon.LINE_SECTOR_2
 

@@ -1,10 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
 
-import data from "../data"
 import makeBriefingText from "./briefing.text"
 import makeBriefingWeather from "./briefing.weather"
 
-const {briefingColor} = data
+// Briefing colors as HTML hex color values
+export const BriefingColor = Object.freeze({
+	Light: "#fbfbfb",
+	Dark: "#959595"
+})
 
 // Generate mission briefing
 export default function makeBriefing() {
@@ -124,7 +127,7 @@ export default function makeBriefing() {
 	// NOTE: Using smaller line breaks for separating plan activities
 	if (briefingPlan.length) {
 
-		briefingPlan.unshift('<font color="' + briefingColor.DARK + '">···</font>')
+		briefingPlan.unshift('<font color="' + BriefingColor.Dark + '">···</font>')
 		briefingPlan.unshift("")
 
 		briefing += briefingPlan.join('<br><font size="8"></font><br>')
@@ -142,7 +145,7 @@ export default function makeBriefing() {
 
 		briefingHighlights.add(highlight)
 
-		return '<font color="' + briefingColor.LIGHT + '">' + highlight + "</font>"
+		return '<font color="' + BriefingColor.Light + '">' + highlight + "</font>"
 	})
 
 	options.setDescription(this.getLC(briefing))
@@ -255,7 +258,7 @@ function makeBriefingFlight() {
 
 			// Plane call number
 			if (flight.planes > 1) {
-				output += '<font size="16" color="' + briefingColor.DARK + '">' + plane.number + ".</font> "
+				output += '<font size="16" color="' + BriefingColor.Dark + '">' + plane.number + ".</font> "
 			}
 
 			output += '<font size="16"><i>' + rank + "</i></font> "
@@ -268,7 +271,7 @@ function makeBriefingFlight() {
 				output += pilot.name
 			}
 
-			output += ' <font color="' + briefingColor.DARK + '">⇢</font> <font size="16"><i>'
+			output += ' <font color="' + BriefingColor.Dark + '">⇢</font> <font size="16"><i>'
 			output += this.planes[plane.plane].name
 			output += "</i></font><br>"
 
@@ -286,7 +289,6 @@ function makeBriefingFlight() {
 		else if (flight.callsign) {
 			output += "<br>\tCallsign <i>“" + flight.callsign.name + "”</i>."
 		}
-
 	})
 
 	return output

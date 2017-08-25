@@ -5,18 +5,24 @@ import util from "util"
 import domain from "domain"
 import moment from "moment"
 import params from "commander"
-import data from "./data"
 import log from "./log"
 import Mission from "./mission"
+import {Coalition} from "./item"
+import {WeatherState} from "./make/weather"
+import {MapSeason} from "./make/map"
+import {FlightState} from "./make/flight"
 
-// Data constants
-const {flightState, weatherState, season} = data
+import data, {
+	APPLICATION_NAME,
+	APPLICATION_VERSION,
+	APPLICATION_COPYRIGHT
+} from "./data"
 
 // --help usage line output
 params.usage("[options] [mission file and/or path]")
 
 // --version output
-params.version(data.name + " " + data.version + " " + data.copyright)
+params.version(APPLICATION_NAME + " " + APPLICATION_VERSION + " " + APPLICATION_COPYRIGHT)
 
 // Create mission metadata file (--meta)
 params.option("-M, --meta", "create metadata file")
@@ -112,16 +118,16 @@ params.option(
 		desc += EOL + "\tDate can also be specified using special season values:" + EOL
 		desc += EOL + "\t"
 
-		Object.keys(season)
+		Object.keys(MapSeason)
 			// A special desert "season" is only used for desert plane skins
-			.filter(type => season[type] !== season.DESERT)
+			.filter(type => MapSeason[type] !== MapSeason.Desert)
 			.forEach((type, index, seasons) => {
 
 				if (index === seasons.length - 1) {
 					desc += " or "
 				}
 
-				desc += '"' + season[type] + '"'
+				desc += '"' + MapSeason[type] + '"'
 
 				if (index < seasons.length - 2) {
 					desc += ", "
@@ -180,8 +186,8 @@ params.option(
 
 		let desc = "select a coalition" + EOL + EOL
 
-		desc += '\t"' + data.coalition.ALLIES + '" - Allies' + EOL
-		desc += '\t"' + data.coalition.AXIS + '" - Axis' + EOL
+		desc += '\t"' + Coalition.Allies + '" - Allies' + EOL
+		desc += '\t"' + Coalition.Axis + '" - Axis' + EOL
 
 		return desc
 	})(),
@@ -252,8 +258,8 @@ params.option(
 
 		let desc = "set flight state" + EOL + EOL
 
-		desc += '\t"' + flightState.START + '" - Start from parking area or taxiway (default).' + EOL
-		desc += '\t"' + flightState.RUNWAY + '" - Start from runway.' + EOL
+		desc += '\t"' + FlightState.Start + '" - Start from parking area or taxiway (default).' + EOL
+		desc += '\t"' + FlightState.Runway + '" - Start from runway.' + EOL
 
 		return desc
 	})(),
@@ -355,137 +361,139 @@ export default argv => new Promise(resolve => {
 			}
 		}
 
-		// Validate command line params
+		try {
 
-		// --lang
-		if (Array.isArray(params.lang)) {
+			// Validate command line params
 
-			params.lang.forEach(lang => {
+			// --lang
+			if (Array.isArray(params.lang)) {
 
-				if (data.languages.indexOf(lang) === -1) {
-					throw ["Invalid language!", {language: lang}]
+				params.lang.forEach(lang => {
+
+					if (data.languages.indexOf(lang) === -1) {
+						throw ["Invalid language!", {language: lang}]
+					}
+				})
+			}
+
+			// --debug
+			if (typeof params.debug === "boolean" && params.debug) {
+
+				// Simple debug mode (without extra features)
+				params.debug = Object.create(null)
+			}
+
+			// --format
+			if (params.format !== undefined) {
+
+				if ([Mission.FORMAT_TEXT, Mission.FORMAT_BINARY].indexOf(params.format) < 0) {
+					throw ["Unknown mission file format!", {format: params.format}]
 				}
-			})
-		}
-
-		// --debug
-		if (typeof params.debug === "boolean" && params.debug) {
-
-			// Simple debug mode (without extra features)
-			params.debug = Object.create(null)
-		}
-
-		// --format
-		if (params.format !== undefined) {
-
-			if ([Mission.FORMAT_TEXT, Mission.FORMAT_BINARY].indexOf(params.format) < 0) {
-				throw ["Unknown mission file format!", {format: params.format}]
 			}
-		}
 
-		// --battle
-		if (params.battle && !data.battles[params.battle]) {
-			throw ["Unknown battle!", {battle: params.battle}]
-		}
-
-		// --date
-		if (params.date) {
-
-			if (typeof params.date === "object") {
-				params.date = params.date.format("YYYY-MM-DD")
+			// --battle
+			if (params.battle && !data.battles[params.battle]) {
+				throw ["Unknown battle!", {battle: params.battle}]
 			}
-			else {
 
-				// Validate date as a special season value
-				let isDateSeason = false
+			// --date
+			if (params.date) {
 
-				for (const type in season) {
+				if (typeof params.date === "object") {
+					params.date = params.date.format("YYYY-MM-DD")
+				}
+				else {
 
-					if (params.date === season[type] && season[type] !== season.DESERT) {
+					// Validate date as a special season value
+					let isDateSeason = false
 
-						isDateSeason = true
-						break
+					for (const type in MapSeason) {
+
+						if (params.date === MapSeason[type] && MapSeason[type] !== MapSeason.Desert) {
+
+							isDateSeason = true
+							break
+						}
+					}
+
+					if (!isDateSeason) {
+						throw ["Invalid mission date!", {date: params.date}]
 					}
 				}
+			}
 
-				if (!isDateSeason) {
-					throw ["Invalid mission date!", {date: params.date}]
+			// --time
+			if (params.time && typeof params.time === "string" && !data.time[params.time]) {
+				throw ["Invalid mission time!", {time: params.time}]
+			}
+
+			// --coalition
+			if (params.coalition !== undefined &&
+				[Coalition.Allies, Coalition.Axis].indexOf(params.coalition) === -1) {
+
+				throw ["Unknown coalition!", {coalition: params.coalition}]
+			}
+
+			// --country
+			if (params.country !== undefined && !data.countries[params.country]) {
+				throw ["Unknown country!", {country: params.country}]
+			}
+
+			// --task
+			if (params.task !== undefined) {
+
+				// NOTE: The special ~ symbol can be used to specify task story!
+				const task = params.task.split(/~+?/)
+
+				params.task = task[0]
+
+				if (task.length > 1) {
+					params.story = task.slice(1)
 				}
 			}
-		}
 
-		// --time
-		if (params.time && typeof params.time === "string" && !data.time[params.time]) {
-			throw ["Invalid mission time!", {time: params.time}]
-		}
-
-		// --coalition
-		if (params.coalition !== undefined &&
-			[data.coalition.ALLIES, data.coalition.AXIS].indexOf(params.coalition) === -1) {
-
-			throw ["Unknown coalition!", {coalition: params.coalition}]
-		}
-
-		// --country
-		if (params.country !== undefined && !data.countries[params.country]) {
-			throw ["Unknown country!", {country: params.country}]
-		}
-
-		// --task
-		if (params.task !== undefined) {
-
-			// NOTE: The special ~ symbol can be used to specify task story!
-			const task = params.task.split(/~+?/)
-
-			params.task = task[0]
-
-			if (task.length > 1) {
-				params.story = task.slice(1)
+			// --pilot
+			if (params.pilot !== undefined && !params.pilot.length) {
+				throw ["Invalid pilot name!", {pilot: params.pilot}]
 			}
-		}
 
-		// --pilot
-		if (params.pilot !== undefined && !params.pilot.length) {
-			throw ["Invalid pilot name!", {pilot: params.pilot}]
-		}
-
-		// --plane
-		if (params.plane !== undefined && !params.plane.length) {
-			throw ["Invalid plane name!", {plane: params.plane}]
-		}
-
-		// --unit
-		if (params.unit !== undefined && !params.unit.length) {
-			throw ["Invalid unit name!", {unit: params.unit}]
-		}
-
-		// --airfield
-		if (params.airfield !== undefined && !params.airfield.length) {
-			throw ["Invalid airfield name!", {airfield: params.airfield}]
-		}
-
-		// --state
-		if (params.state !== undefined &&
-				[flightState.START, flightState.RUNWAY].indexOf(params.state) === -1 &&
-				typeof params.state !== "number") {
-
-			throw ["Invalid flight state!", {state: params.state}]
-		}
-
-		// --weather
-		if (params.weather !== undefined) {
-
-			const weather = weatherState[params.weather.toUpperCase()]
-
-			if (typeof weather !== "number") {
-				throw ["Invalid weather conditions!", {weather: params.weather}]
+			// --plane
+			if (params.plane !== undefined && !params.plane.length) {
+				throw ["Invalid plane name!", {plane: params.plane}]
 			}
-			else {
-				params.weather = weather
-			}
-		}
 
-		try {
+			// --unit
+			if (params.unit !== undefined && !params.unit.length) {
+				throw ["Invalid unit name!", {unit: params.unit}]
+			}
+
+			// --airfield
+			if (params.airfield !== undefined && !params.airfield.length) {
+				throw ["Invalid airfield name!", {airfield: params.airfield}]
+			}
+
+			// --state
+			if (params.state !== undefined &&
+					[FlightState.Start, FlightState.Runway].indexOf(params.state) === -1 &&
+					typeof params.state !== "number") {
+
+				throw ["Invalid flight state!", {state: params.state}]
+			}
+
+			// --weather
+			if (params.weather !== undefined) {
+
+				const weatherState = Object.keys(WeatherState).find(state => (
+					state.toLowerCase() === params.weather.toLowerCase()
+				))
+
+				if (!weatherState) {
+					throw ["Invalid weather conditions!", {weather: params.weather}]
+				}
+				else {
+					params.weather = WeatherState[weatherState]
+				}
+			}
 
 			// Create a new mission
 			const mission = new Mission(params)

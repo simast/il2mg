@@ -7,6 +7,14 @@ import sylvester from "sylvester"
 import data from "../data"
 import log from "../log"
 
+// Location item types
+export const LocationType = Object.freeze({
+	Village: 1, // Small village
+	Town: 2, // Medium town
+	City: 3, // Large city
+	Airfield: 4 // Airfield
+})
+
 // Generate mission locations
 export default function makeLocations() {
 
@@ -69,13 +77,13 @@ export default function makeLocations() {
 
 				let totalLocationType
 
-				if (locationType === data.location.VILLAGE) {
+				if (locationType === LocationType.Village) {
 					totalLocationType = "villages"
 				}
-				else if (locationType === data.location.TOWN) {
+				else if (locationType === LocationType.Town) {
 					totalLocationType = "towns"
 				}
-				else if (locationType === data.location.CITY) {
+				else if (locationType === LocationType.City) {
 					totalLocationType = "cities"
 				}
 

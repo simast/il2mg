@@ -6,11 +6,15 @@ import getSlug from "speakingurl"
 import Lexer from "lex"
 import data from "./data"
 
-// FIXME: Used to automatically track buffer write cursor
-Buffer.prototype._offset = 0
+// Coalitions
+export const Coalition = Object.freeze({
+	Neutral: 0,
+	Allies: 1,
+	Axis: 2
+})
 
 // Default item data values
-export const DEFAULT_COALITION = 0 // Neutral coalition ID
+export const DEFAULT_COALITION = Coalition.Neutral
 export const DEFAULT_COUNTRY = 0 // Neutral country ID
 export const DEFAULT_DAMAGE_REPORT = 50 // 50% of damage
 export const DEFAULT_DURABILITY = 5000
@@ -18,6 +22,9 @@ export const DEFAULT_DURABILITY = 5000
 // Precision of position and orientation values (decimal places)
 export const PRECISION_POSITION = 2
 export const PRECISION_ORIENTATION = 2
+
+// FIXME: Used to automatically track buffer write cursor
+Buffer.prototype._offset = 0
 
 // Base (and generic) mission item
 export default class Item {

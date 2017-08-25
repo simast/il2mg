@@ -1,14 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import sylvester from "sylvester"
-import data from "../data"
-import {makeActivity} from "./flight.plan"
-import {Location} from "./locations"
 import * as MCU_Waypoint from "../item/MCU_Waypoint"
+import {makeActivity, ActivityType} from "./flight.plan"
+import {Location} from "./locations"
+import {Territory} from "./fronts"
 import {findBasePoints} from "./task.patrol"
 import {isRestricted} from "./map"
-
-const {activityType, territory} = data
 
 // Flight make parts
 import makeFlightAltitude from "./flight.altitude"
@@ -115,7 +113,7 @@ export default function makeTaskSweep(flight) {
 
 		// Use shift vector (with a non-offmap starting position only)
 		if (!airfield.offmap &&
-			this.getTerritory(location.x, location.z) === territory.FRONT) {
+			this.getTerritory(location.x, location.z) === Territory.Front) {
 
 			shiftVector = Vector.create([
 				location.x - startX,
@@ -138,7 +136,7 @@ export default function makeTaskSweep(flight) {
 			const locationVector = location.vector
 			const startDistance = locationVector.distanceFrom(startVector)
 			const hasMinStartDistance = (startDistance >= minStartDistance)
-			const nearestFront = territories[territory.FRONT].findNear(location, 1)
+			const nearestFront = territories[Territory.Front].findNear(location, 1)
 
 			// Make sure ingress/egress point is some distance away from front lines
 			if (hasMinStartDistance && nearestFront.length &&
@@ -157,7 +155,7 @@ export default function makeTaskSweep(flight) {
 			const shiftTerritory = this.getTerritory(posX, posZ)
 
 			// End shift when we reach front lines or max distance from start position
-			if (shiftTerritory === territory.UNKNOWN ||
+			if (shiftTerritory === Territory.Unknown ||
 					(hasMinStartDistance && shiftTerritory !== flight.coalition) ||
 					(startDistance >= maxStartDistance)) {
 
@@ -300,7 +298,7 @@ export default function makeTaskSweep(flight) {
 
 				scanIteration++
 			}
-			while (scanTerritory !== territory.UNKNOWN)
+			while (scanTerritory !== Territory.Unknown)
 		}
 
 		let side
@@ -390,7 +388,7 @@ export default function makeTaskSweep(flight) {
 
 	// Add fighter sweep task fly activity
 	flight.plan.push(makeActivity.call(this, flight, {
-		type: activityType.FLY,
+		type: ActivityType.Fly,
 		route,
 		visible: Boolean(flight.player)
 	}))

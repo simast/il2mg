@@ -4,11 +4,13 @@ import path from "path"
 import addLazyProperty from "lazy-property"
 import log from "../log"
 import Item from "../item"
-import {Location} from "./locations"
+import {Location, LocationType} from "./locations"
 import {isOffmap} from "./map"
+import {FlightState} from "./flight"
+import {PlaneSize, getPlaneSizeFromName} from "./planes"
 import data from "../data"
 
-const {itemTag, planeSize, flightState, location} = data
+const {itemTag} = data
 
 // Airfield make parts
 import makeAirfieldLimits from "./airfield.limits"
@@ -33,8 +35,8 @@ export default function makeAirfields() {
 	const rand = mission.rand
 
 	// Min and max plane size IDs
-	const planeSizeMin = planeSize.SMALL
-	const planeSizeMax = planeSize.HUGE
+	const planeSizeMin = PlaneSize.Small
+	const planeSizeMax = PlaneSize.Huge
 
 	// Airfield index tables
 	const airfields = Object.create(null)
@@ -81,7 +83,7 @@ export default function makeAirfields() {
 		// Register new airfield location
 		const airfieldLocation = new Location(position[0], position[2])
 
-		airfieldLocation.type = location.AIRFIELD
+		airfieldLocation.type = LocationType.Airfield
 		airfieldLocation.name = airfieldData.name
 		airfieldLocation.airfield = airfieldID
 
@@ -131,20 +133,20 @@ export default function makeAirfields() {
 				unit.planes.forEach(planeID => {
 
 					const plane = mission.planes[planeID]
-					const planeSizeID = planeSize[String(plane.size).toUpperCase()]
+					const planeSize = getPlaneSizeFromName(plane.size)
 
-					if (planeSizeID) {
+					if (planeSize) {
 
 						// Airfield value is a sum of plane size IDs (with larger planes
 						// adding more value than smaller ones)
-						airfield.value += planeSizeID
+						airfield.value += planeSize
 
 						// Register unit plane country data
 						airfield.countriesWeighted.push(unit.country)
 						countries[unit.country] = (countries[unit.country] || 0) + 1
 
 						// Build a list of plane groups indexed by plane size
-						const planeSizeGroup = planesIndex[planeSizeID] = planesIndex[planeSizeID] || {}
+						const planeSizeGroup = planesIndex[planeSize] = planesIndex[planeSize] || {}
 						const planeGroup = planeSizeGroup[groupID] = planeSizeGroup[groupID] || []
 
 						planeGroup.push([planeID, unit.country, unitID])
@@ -463,7 +465,7 @@ export default function makeAirfields() {
 					// is starting from runway and not from parking spot. An ideal fix
 					// would be to move player created airfield taxi route to the runway.
 					if (airfield.id === playerFlight.airfield &&
-							playerFlight.state === flightState.RUNWAY) {
+							playerFlight.state === FlightState.Runway) {
 
 						break
 					}

@@ -1,8 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
 
-import data from "../data"
-
-const {activityType} = data
+// Common flight plan activity types
+export const ActivityType = Object.freeze({
+	Start: "start", // Initial start activity
+	Takeoff: "takeoff", // Taxi (optionally) and takeoff from airfield
+	Form: "form", // Form up (set formations and element cover)
+	Wait: "wait", // Wait for something (do nothing)
+	Fly: "fly", // Fly to waypoint/location
+	Land: "land", // Land on airfield (ending the flight)
+	End: "end" // End flight activity
+})
 
 // Make mission flight plan
 export default function makeFlightPlan(flight) {
@@ -13,18 +20,18 @@ export default function makeFlightPlan(flight) {
 
 	// Initial start plan activity
 	plan.start = plan[plan.push(makeActivity.call(this, flight, {
-		type: activityType.START,
+		type: ActivityType.Start,
 		position: airfield.position,
 		delay: 0
 	})) - 1]
 
 	// Take off plan activity
 	if (typeof flight.state !== "number") {
-		plan.push(makeActivity.call(this, flight, {type: activityType.TAKEOFF}))
+		plan.push(makeActivity.call(this, flight, {type: ActivityType.Takeoff}))
 	}
 
 	// Form up plan activity
-	plan.push(makeActivity.call(this, flight, {type: activityType.FORM}))
+	plan.push(makeActivity.call(this, flight, {type: ActivityType.Form}))
 
 	// Make task specific plan
 	require("./task." + task.id).default.call(this, flight)
@@ -33,7 +40,7 @@ export default function makeFlightPlan(flight) {
 	if (plan.land === undefined) {
 
 		plan.land = plan[plan.push(makeActivity.call(this, flight, {
-			type: activityType.LAND
+			type: ActivityType.Land
 		})) - 1]
 	}
 }

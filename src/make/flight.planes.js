@@ -2,9 +2,11 @@
 
 import * as Plane from "../item/Plane"
 import data from "../data"
+import {getPlaneSizeFromName} from "./planes"
+import {FlightState} from "./flight"
 import makeAirfieldTaxi from "./airfield.taxi"
 
-const {planeSize, itemFlag, flightState} = data
+const {itemFlag} = data
 
 // Make mission flight plane item objects
 export default function makeFlightPlanes(flight) {
@@ -20,7 +22,7 @@ export default function makeFlightPlanes(flight) {
 
 	// NOTE: Randomize taxi spawns list as it's not fully randomized by this point
 	// (due to groups usage in airfield data files).
-	if (flight.spawns && flight.state === flightState.START) {
+	if (flight.spawns && flight.state === FlightState.Start) {
 		rand.shuffle(flight.spawns)
 	}
 
@@ -37,11 +39,11 @@ export default function makeFlightPlanes(flight) {
 		if ((!flight.player && elementIndex > 0) || (flight.player && !element.player)) {
 
 			// Only one element can start on the ramp from "start" flight state
-			if (element.state === flightState.START) {
-				element.state = flightState.TAXI
+			if (element.state === FlightState.Start) {
+				element.state = FlightState.Taxi
 			}
 			// Only one element can start on the runway from "runway" flight state
-			else if (element.state === flightState.RUNWAY) {
+			else if (element.state === FlightState.Runway) {
 				element.state = 0 // Air start
 			}
 		}
@@ -67,18 +69,18 @@ export default function makeFlightPlanes(flight) {
 			let orientationRad
 
 			// Try to start plane from parking/ramp
-			if (element.state === flightState.START) {
+			if (element.state === FlightState.Start) {
 
 				// Build a list of valid taxi spawn points
 				if (flight.spawns) {
 
-					const planeSizeID = planeSize[String(planeData.size).toUpperCase()]
+					const planeSize = getPlaneSizeFromName(planeData.size)
 
 					flight.spawns.forEach((spawnPoint, spawnIndex) => {
 
 						const spawnID = spawnIndex + 1
 
-						if (usedParkSpawns.indexOf(spawnID) === -1 && spawnPoint.size >= planeSizeID) {
+						if (usedParkSpawns.indexOf(spawnID) === -1 && spawnPoint.size >= planeSize) {
 
 							let distance = 0
 
@@ -190,7 +192,7 @@ export default function makeFlightPlanes(flight) {
 				}
 			}
 			// Try to start plane from runway
-			else if (element.state === flightState.RUNWAY) {
+			else if (element.state === FlightState.Runway) {
 
 				let runwayTaxi = airfield.taxi[flight.taxi]
 
@@ -282,7 +284,7 @@ export default function makeFlightPlanes(flight) {
 
 			// Use taxi spawn point
 			if (!foundSpawnPoint && flight.taxi &&
-					(element.state === flightState.START || element.state === flightState.TAXI)) {
+					(element.state === FlightState.Start || element.state === FlightState.Taxi)) {
 
 				const taxiData = airfield.taxi[flight.taxi]
 				const taxiPoints = taxiData[4]
@@ -328,7 +330,7 @@ export default function makeFlightPlanes(flight) {
 					foundSpawnPoint = true
 
 					// Set element state to "taxi"
-					element.state = flightState.TAXI
+					element.state = FlightState.Taxi
 
 					// Skip this plane when mapping formation number based on distance
 					sortSkip++
@@ -340,7 +342,7 @@ export default function makeFlightPlanes(flight) {
 
 				// Force air start to entire element when any of the planes must be spawned
 				// in the air (required for the planes in the air to not crash).
-				element.state = 0
+				element.state = typeof flight.state === "number" ? flight.state : 0
 
 				// Since the entire element is moved to an air start - free up previously
 				// reserved parking and taxi spawn points for other flight elements.
@@ -477,7 +479,7 @@ export default function makeFlightPlanes(flight) {
 			}
 
 			// Parking start, engine not running
-			if (element.state === flightState.START) {
+			if (element.state === FlightState.Start) {
 
 				planeItem.StartInAir = Plane.START_PARKING
 

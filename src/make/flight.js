@@ -1,9 +1,5 @@
 /** @copyright Simas Toleikis, 2015 */
 
-import data from "../data"
-
-const {flightState} = data
-
 // Flight make parts
 import makeFlightFormation from "./flight.formation"
 import makeFlightPilots from "./flight.pilots"
@@ -19,6 +15,14 @@ import makeFlightState from "./flight.state"
 import makeFlightPose from "./flight.pose"
 import makeFlightVirtual from "./flight.virtual"
 import makeAirfieldTaxi from "./airfield.taxi"
+
+// Flight states
+// NOTE: Numeric [0..1) value state represent aircraft in the air.
+export const FlightState = Object.freeze({
+	Start: "start", // Parking, engine not running
+	Taxi: "taxi", // On the taxiway, engine running, taxiing to runway
+	Runway: "runway" // On the runway, engine running, ready for takeoff
+})
 
 // Make mission flight
 export default function makeFlight(params) {
@@ -81,7 +85,7 @@ export default function makeFlight(params) {
 
 	// Set default flight state (parking start without engine running)
 	if (flight.state === undefined) {
-		flight.state = flightState.START
+		flight.state = FlightState.Start
 	}
 
 	// Make flight formation (elements/sections)

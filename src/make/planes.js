@@ -1,6 +1,23 @@
 /** @copyright Simas Toleikis, 2015 */
 
 import data from "../data"
+import {MapSeason} from "./map"
+
+// Plane size types
+export const PlaneSize = Object.freeze({
+	Small: 1,
+	Medium: 2,
+	Large: 3,
+	Huge: 4
+})
+
+// Plane size name to ID map
+const planeSizeNameMap = {
+	small: PlaneSize.Small,
+	medium: PlaneSize.Medium,
+	large: PlaneSize.Large,
+	huge: PlaneSize.Huge
+}
 
 // Generate available mission planes
 export default function makePlanes() {
@@ -9,8 +26,8 @@ export default function makePlanes() {
 
 	// Skin data array index to use when building valid/weighted plane skin list
 	const skinDataIndex = Object
-		.keys(data.season)
-		.map(season => data.season[season])
+		.keys(MapSeason)
+		.map(season => MapSeason[season])
 		.indexOf(this.season)
 
 	// Plane index tables
@@ -188,4 +205,9 @@ export default function makePlanes() {
 	// Static plane data index objects
 	this.planes = Object.freeze(planes)
 	this.planesByType = Object.freeze(planesByType)
+}
+
+// Get plane size ID from string name
+export function getPlaneSizeFromName(planeSizeName) {
+	return planeSizeNameMap[planeSizeName.toLowerCase()]
 }

@@ -1,10 +1,8 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import sylvester from "sylvester"
-import data from "../data"
+import {ActivityType} from "./flight.plan"
 import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
-
-const {activityType} = data
 
 // Minimum and maximum pitch angle (for pose orientation)
 const MIN_PITCH_ANGLE = -15
@@ -72,7 +70,7 @@ export default function makeFlightPose(flight) {
 
 			for (const activity of plan) {
 
-				if (activity.type === activityType.FLY) {
+				if (activity.type === ActivityType.Fly) {
 
 					toPosition = activity.route[0].position
 					break

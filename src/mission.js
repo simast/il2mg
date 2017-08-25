@@ -4,11 +4,11 @@ import fs from "fs"
 import os from "os"
 import path from "path"
 import Random from "random-js"
-import data from "./data"
+import data, {APPLICATION_NAME, APPLICATION_VERSION} from "./data"
 import log from "./log"
-import Item from "./item"
+import Item, {Coalition} from "./item"
 
-// Misison make parts
+// Mission make parts
 import makeBattle from "./make/battle"
 import makeChoice from "./make/choice"
 import makeDate from "./make/date"
@@ -376,14 +376,14 @@ export default class Mission {
 	 */
 	getEnemyCoalition(coalition) {
 
-		if (coalition === data.coalition.ALLIES) {
-			return data.coalition.AXIS
+		if (coalition === Coalition.Allies) {
+			return Coalition.Axis
 		}
-		else if (coalition === data.coalition.AXIS) {
-			return data.coalition.ALLIES
+		else if (coalition === Coalition.Axis) {
+			return Coalition.Allies
 		}
 
-		return 0 // Unknown/neutral
+		return Coalition.Neutral // Unknown/neutral
 	}
 
 	/**
@@ -424,7 +424,7 @@ export default class Mission {
 
 		// Generate unique mission file name (based on seed value)
 		if (!fileBase) {
-			fileBase = data.name + "-" + this.seed
+			fileBase = APPLICATION_NAME + "-" + this.seed
 		}
 
 		// Make specified directory path
@@ -698,7 +698,7 @@ export default class Mission {
 			fileStream.once("open", () => {
 
 				fileStream.write(JSON.stringify({
-					version: data.version,
+					version: APPLICATION_VERSION,
 					title: this.title,
 					plane: this.planes[this.player.plane].name,
 					country: this.player.flight.country,

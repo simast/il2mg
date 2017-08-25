@@ -14,8 +14,6 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 
-		pkg: grunt.file.readJSON("package.json"),
-
 		// ESLint JavaScript linter
 		eslint: {
 			all: {

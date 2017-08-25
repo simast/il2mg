@@ -1,11 +1,8 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import sylvester from "sylvester"
-import data from "../data"
-import {makeActivity} from "./flight.plan"
+import {makeActivity, ActivityType} from "./flight.plan"
 import {isOffmap, getMapIntersection, markMapArea} from "./map"
-
-const {activityType} = data
 
 // Flight make parts
 import makeFlightAltitude from "./flight.altitude"
@@ -51,7 +48,7 @@ export default function makeTaskRebase(flight) {
 
 	// Add rebase task fly activity
 	plan.push(makeActivity.call(this, flight, {
-		type: activityType.FLY,
+		type: ActivityType.Fly,
 		route,
 		visible: isPlayerFlight
 	}))
@@ -82,7 +79,7 @@ export default function makeTaskRebase(flight) {
 		}
 
 		const landActivity = makeActivity.call(this, flight, {
-			type: activityType.LAND,
+			type: ActivityType.Land,
 			airfield: airfieldTo.id
 		})
 

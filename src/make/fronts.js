@@ -2,11 +2,24 @@
 
 import path from "path"
 import sylvester from "sylvester"
-import data from "../data"
 import * as MCU_Icon from "../item/MCU_Icon"
+import data from "../data"
+import {Coalition} from "../item"
 import {Location} from "./locations"
+import {MapColor} from "./map"
 
-const {frontLine, mapColor, territory, coalition} = data
+// Territory types
+export const Territory = Object.freeze({
+	Front: -1,
+	Unknown: 0
+	// NOTE: Any positive territory type ID is a coalition ID
+})
+
+// Front line item types
+export const FrontLine = Object.freeze({
+	Border: 1, // Border line
+	Attack: 2 // Attack arrow
+})
 
 // Map grid size
 // NOTE: Territories will be more precise with smaller grid size
@@ -36,7 +49,7 @@ export default function makeFronts() {
 			}
 		}
 
-		return territory.UNKNOWN
+		return Territory.Unknown
 	}
 
 	// Location indexes for territories (for fronts and for each coalition)
@@ -100,7 +113,7 @@ export default function makeFronts() {
 		pointItem.Coalitions = this.coalitions
 
 		// Front border line
-		if (pointType === frontLine.BORDER) {
+		if (pointType === FrontLine.Border) {
 
 			pointItem.LineType = MCU_Icon.LINE_POSITION_0
 
@@ -119,15 +132,15 @@ export default function makeFronts() {
 
 				const territoriesZ = territories.get(gridX) || new Map()
 
-				territoriesZ.set(gridZ, {type: territory.FRONT})
+				territoriesZ.set(gridZ, {type: Territory.Front})
 				territories.set(gridX, territoriesZ)
 			}
 		}
 		// Attack arrow
-		else if (pointType === frontLine.ATTACK) {
+		else if (pointType === FrontLine.Attack) {
 
 			pointItem.LineType = MCU_Icon.LINE_ATTACK
-			pointItem.setColor(mapColor.ATTACK)
+			pointItem.setColor(MapColor.Attack)
 		}
 
 		// Index point icon item
@@ -148,7 +161,7 @@ export default function makeFronts() {
 				pointItem.addTarget(targetItem)
 
 				// Index front border lines per grid dimension (used for ray tracing)
-				if (pointType === frontLine.BORDER) {
+				if (pointType === FrontLine.Border) {
 
 					// Line used for ray intersection checks
 					let line
@@ -280,7 +293,7 @@ export default function makeFronts() {
 
 					// NOTE: Front lines in the game seems to be always rendered with
 					// allies side on the right and axis side on the left.
-					coalitionID = (intersection.face > 0 ? coalition.AXIS : coalition.ALLIES)
+					coalitionID = (intersection.face > 0 ? Coalition.Axis : Coalition.Allies)
 
 					// Mark territory before the front line intersection
 					territoriesRanges.push({
@@ -293,7 +306,7 @@ export default function makeFronts() {
 					territoriesRanges.push({
 						from: gridTo - 1,
 						to: gridTo + 1,
-						type: territory.FRONT
+						type: Territory.Front
 					})
 
 					gridFrom = gridTo + 2
@@ -306,7 +319,7 @@ export default function makeFronts() {
 						from: gridFrom,
 						to: maxRayGrid,
 						// Invert coalition side for the final range
-						type: (coalitionID === coalition.ALLIES ? coalition.AXIS : coalition.ALLIES)
+						type: (coalitionID === Coalition.Allies ? Coalition.Axis : Coalition.Allies)
 					})
 				}
 
@@ -333,7 +346,7 @@ export default function makeFronts() {
 
 						// Keep existing territories (from previous ray cast) - only front
 						// line territories are always overridden.
-						if (existingType === undefined || range.type === territory.FRONT) {
+						if (existingType === undefined || range.type === Territory.Front) {
 
 							territoriesAxis.set(c2, rangeType)
 							territories.set(c1, territoriesAxis)
@@ -526,10 +539,10 @@ export default function makeFronts() {
 
 					if (!color) {
 
-						color = mapColor.ENEMY
+						color = MapColor.Enemy
 
 						if (type === playerCoalitionID) {
-							color = mapColor.FRIEND
+							color = MapColor.Friend
 						}
 					}
 				}

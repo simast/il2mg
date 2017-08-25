@@ -1,9 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import * as MCU_Icon from "../item/MCU_Icon"
-import data from "../data"
-
-const {flightState} = data
+import {FlightState} from "./flight"
 
 // Initial plan activity used to start/initialize flights
 export default class ActivityStart {
@@ -51,7 +49,7 @@ export default class ActivityStart {
 			// NOTE: Using a short delay for flights starting from a parking spot.
 			// This is workaround as some aircraft have issues starting engines
 			// without an initial timer delay (MiG-3 for example).
-			if (!beginDelay && flight.state === flightState.START) {
+			if (!beginDelay && flight.state === FlightState.Start) {
 				beginDelay = rand.real(2, 3)
 			}
 

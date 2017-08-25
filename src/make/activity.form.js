@@ -1,9 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
-import data from "../data"
-
-const {flightState} = data
+import {FlightState} from "./flight"
 
 // Plan activity used to form up (set formation and element cover)
 export default class ActivityForm {
@@ -75,9 +73,9 @@ export default class ActivityForm {
 			for (const element of flight.elements) {
 
 				const priority = {
-					[flightState.START]: 1,
-					[flightState.TAXI]: 2,
-					[flightState.RUNWAY]: 3
+					[FlightState.Start]: 1,
+					[FlightState.Taxi]: 2,
+					[FlightState.Runway]: 3
 				}[element.state]
 
 				if (priority) {

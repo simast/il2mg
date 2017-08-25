@@ -1,14 +1,17 @@
 /** @copyright Simas Toleikis, 2016 */
 
-import data from "../data"
-
-const {altitudeLevel} = data
+// Altitude level types
+export const AltitudeLevel = Object.freeze({
+	Low: "low",
+	Medium: "medium",
+	High: "high"
+})
 
 // Valid altitude ranges (in meters)
 const altitudeRange = {
-	[altitudeLevel.LOW]: [300, 1400],
-	[altitudeLevel.MEDIUM]: [1400, 2900],
-	[altitudeLevel.HIGH]: [2900, 5000]
+	[AltitudeLevel.Low]: [300, 1400],
+	[AltitudeLevel.Medium]: [1400, 2900],
+	[AltitudeLevel.High]: [2900, 5000]
 }
 
 // Make flight altitude profile
@@ -50,16 +53,16 @@ export default function makeFlightAltitude(flight) {
 			let altitudeOptions
 
 			// Altitude level upgrade
-			if (altitude.level === altitudeLevel.LOW) {
-				altitudeOptions = [altitudeLevel.MEDIUM, altitudeLevel.HIGHT]
+			if (altitude.level === AltitudeLevel.Low) {
+				altitudeOptions = [AltitudeLevel.Medium, AltitudeLevel.High]
 			}
 			// Altitude level downgrade
-			else if (altitude.level === altitudeLevel.HIGH) {
-				altitudeOptions = [altitudeLevel.MEDIUM, altitudeLevel.LOW]
+			else if (altitude.level === AltitudeLevel.High) {
+				altitudeOptions = [AltitudeLevel.Medium, AltitudeLevel.Low]
 			}
 			// Random altitude level upgrade or downgrade
 			else {
-				altitudeOptions = rand.shuffle([altitudeLevel.LOW, altitudeLevel.HIGH])
+				altitudeOptions = rand.shuffle([AltitudeLevel.Low, AltitudeLevel.High])
 			}
 
 			delete altitude.level

@@ -1,6 +1,5 @@
 {
 	"name": "il2mg",
-	"description": "il2mg - Mission Generator",
 	"version": "0.0.0",
 	"private": true,
 	"main": "./src/run.js",
@@ -26,7 +25,7 @@
 		"rbush-knn": "2.0.0",
 		"react": "15.6.1",
 		"react-dom": "15.6.1",
-		"react-router-dom": "4.2.0",
+		"react-router-dom": "4.2.2",
 		"speakingurl": "14.0.1",
 		"suncalc": "1.8.0",
 		"sylvester": "0.0.21",

@@ -1,6 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 
 import data from "../data"
+import {FlightState} from "./flight"
 
 // List of unit data params used as combined record key
 const RECORD_PARAMS = [
@@ -93,7 +94,7 @@ export default function makeChoice() {
 
 	// Set default player flight state
 	if (params.state === undefined) {
-		params.state = data.flightState.START
+		params.state = FlightState.Start
 	}
 	else {
 		isGroundStartOnly = (typeof params.state !== "number")
