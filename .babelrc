@@ -3,7 +3,6 @@
 		["transform-decorators-legacy"],
 		["transform-class-properties"],
 		["transform-es2015-modules-commonjs"],
-		["transform-strict-mode"],
 		["transform-react-jsx", {"useBuiltIns": true}]
 	]
 }

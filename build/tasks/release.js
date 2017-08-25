@@ -179,6 +179,7 @@ module.exports = function(grunt) {
 
 		// Package application using Electron
 		const packageApplication = async () => electronPackager({
+			quiet: true,
 			arch: "x64",
 			platform: process.platform,
 			prune: false,
