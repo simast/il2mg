@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 import {remote} from "electron"
 import React from "react"

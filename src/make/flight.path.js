@@ -1,11 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {Vector} = require("sylvester")
-const {activityType} = require("../data")
-const {makeActivity} = require("./flight.plan")
-const makeFlightFuel = require("./flight.fuel")
-const {RESTRICTED_BORDER, isOffmap, getMapIntersection} = require("./map")
+import sylvester from "sylvester"
+import data from "../data"
+import {makeActivity} from "./flight.plan"
+import makeFlightFuel from "./flight.fuel"
+import {RESTRICTED_BORDER, isOffmap, getMapIntersection} from "./map"
+
+const {activityType} = data
 
 // Minimum and maximum distance from the border for offmap start/end position
 // NOTE: This is only used for player flight!
@@ -13,7 +14,7 @@ const MIN_DISTANCE_BORDER = 3000 // 3 km
 const MAX_DISTANCE_BORDER = 4000 // 4 km
 
 // Make final flight path with adjusted offmap bounds
-module.exports = function makeFlightPath(flight) {
+export default function makeFlightPath(flight) {
 
 	const {plan} = flight
 	let startPosition = plan.start.position
@@ -58,6 +59,7 @@ function adjustOffmapRouteBounds(flight, activity, isForward) {
 	// trying to iterate in both forward and backwards directions. Consider
 	// refactoring this to a more readable and understandable format.
 
+	const {Vector} = sylvester
 	const {rand, map} = this
 	const {plan} = flight
 	const {route} = activity

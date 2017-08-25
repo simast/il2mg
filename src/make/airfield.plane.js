@@ -1,11 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
+
 const {itemFlag} = data
 
 // Make airfield plane item
-module.exports = function makeAirfieldPlane(airfield, item) {
+export default function makeAirfieldPlane(airfield, item) {
 
 	const sector = item[5]
 	const maxSize = item[7]

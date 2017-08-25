@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
+import Item from "../item"
 
 // Effect item
-module.exports = class Effect extends Item {
+export default class Effect extends Item {
 
 	/**
 	 * Get binary representation of the item.

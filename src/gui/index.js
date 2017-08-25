@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 // NOTE: This file is used only in development mode - production index.js file
 // is an output (bundle) of browserify command.
@@ -27,7 +26,7 @@ document.addEventListener("keydown", event => {
 
 }, true)
 
-// Enable Babel require() hook for .es6, .es, .jsx and .js extensions
+// Enable Babel require() hook
 require("babel-register")
 
 // Run application logic

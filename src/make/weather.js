@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
+import log from "../log"
+
 const {weatherState, precipitation, season} = data
-const log = require("../log")
 
 // TODO: Move these constants to settings?
 const MAX_WIND_SPEED = 13 // Maximum wind speed (m/s)
@@ -61,7 +61,7 @@ for (const state in weatherLimits) {
 }
 
 // Generate mission weather and atmospheric conditions
-module.exports = function makeWeather() {
+export default function makeWeather() {
 
 	const rand = this.rand
 	const options = this.items.Options

@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
 
 // Make airfield beacon item
-module.exports = function makeAirfieldBeacon(airfield, item) {
+export default function makeAirfieldBeacon(airfield, item) {
 
 	if (!airfield.country) {
 		return

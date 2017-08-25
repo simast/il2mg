@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
 
 // Check zone item
-module.exports = class MCU_CheckZone extends MCU {
+export default class MCU_CheckZone extends MCU {
 
 	constructor() {
 		super()

@@ -1,11 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {activityType} = require("../data")
-const {makeActivity} = require("./flight.plan")
+import data from "../data"
+import {makeActivity} from "./flight.plan"
+
+const {activityType} = data
 
 // Make mission free flight task
-module.exports = function makeTaskFree(flight) {
+export default function makeTaskFree(flight) {
 
 	const {rand} = this
 

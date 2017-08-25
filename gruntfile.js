@@ -1,5 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
+
+// Enable Babel require() hook
+require("babel-register")
 
 module.exports = function(grunt) {
 
@@ -7,7 +9,7 @@ module.exports = function(grunt) {
 	const sourceFiles = [
 		"gruntfile.js",
 		"src/**/*.js*",
-		"build/**/*.js"
+		"build/tasks/**/*.js"
 	]
 
 	grunt.initConfig({

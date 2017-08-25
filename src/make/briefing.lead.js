@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const makeBriefingText = require("./briefing.text")
+import makeBriefingText from "./briefing.text"
 
 // Make briefing lead text segment for fly routes
-module.exports = function makeBriefingLead(flight) {
+export default function makeBriefingLead(flight) {
 
 	const playerElement = this.player.element
 	const isPlayerInLeadingElement = (playerElement === flight.elements[0])

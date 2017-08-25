@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
+import Item, {DEFAULT_COUNTRY} from "../item"
 
 // Flag item
-module.exports = class Flag extends Item {
+export default class Flag extends Item {
 
 	constructor() {
 		super()
@@ -39,7 +38,7 @@ module.exports = class Flag extends Item {
 		this.writeUInt32(buffer, this.LinkTrId || 0)
 
 		// Country
-		this.writeUInt16(buffer, this.Country || Item.DEFAULT_COUNTRY)
+		this.writeUInt16(buffer, this.Country || DEFAULT_COUNTRY)
 
 		// Unknown data
 		this.writeUInt16(buffer, 0)

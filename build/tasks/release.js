@@ -1,19 +1,18 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const path = require("path")
-const JSON5 = require("json5")
-const CleanCSS = require("clean-css")
-const webpack = require("webpack")
-const electronPackager = require("electron-packager")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+import path from "path"
+import JSON5 from "json5"
+import CleanCSS from "clean-css"
+import webpack from "webpack"
+import electronPackager from "electron-packager"
+import UglifyJsPlugin from "uglifyjs-webpack-plugin"
+import data from "../../src/data"
 
 module.exports = function(grunt) {
 
 	// Grunt task used to build a release package
 	grunt.registerTask("build:release", "Build a release package.", async function() {
 
-		const data = require("../../src/data")
 		const done = this.async()
 		const packageData = grunt.config("pkg")
 		const outDir = "build"

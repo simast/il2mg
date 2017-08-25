@@ -1,12 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {Vehicle, MCU_CMD_AttackArea} = require("../item")
-const data = require("../data")
+import * as Vehicle from "../item/Vehicle"
+import * as MCU_CMD_AttackArea from "../item/MCU_CMD_AttackArea"
+import data from "../data"
+
 const {itemTag} = data
 
 // Make airfield vehicle item
-module.exports = function makeAirfieldVehicle(airfield, item, isLive) {
+export default function makeAirfieldVehicle(airfield, item, isLive) {
 
 	if (!airfield.country) {
 		return

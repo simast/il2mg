@@ -1,13 +1,33 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const fs = require("fs")
-const os = require("os")
-const path = require("path")
-const Random = require("random-js")
-const data = require("./data")
-const log = require("./log")
-const Item = require("./item")
+import fs from "fs"
+import os from "os"
+import path from "path"
+import Random from "random-js"
+import data from "./data"
+import log from "./log"
+import Item from "./item"
+
+// Misison make parts
+import makeBattle from "./make/battle"
+import makeChoice from "./make/choice"
+import makeDate from "./make/date"
+import makeMap from "./make/map"
+import makeBubble from "./make/bubble"
+import makeTime from "./make/time"
+import makePeople from "./make/people"
+import makePlanes from "./make/planes"
+import makeUnits from "./make/units"
+import makeVehicles from "./make/vehicles"
+import makeWeather from "./make/weather"
+import makeLocations from "./make/locations"
+import makeAirfields from "./make/airfields"
+import makeTasks from "./make/tasks"
+import makeFronts from "./make/fronts"
+import makeBlocks from "./make/blocks"
+import makeFormations from "./make/formations"
+import makeForces from "./make/forces"
+import makeBriefing from "./make/briefing"
 
 // Mission file extensions
 const FILE_EXT_TEXT = "Mission"
@@ -33,7 +53,7 @@ const COMPLEX_SEED_PARAMS = [
 	"unit"
 ]
 
-class Mission {
+export default class Mission {
 
 	/**
 	 * Mission constructor.
@@ -67,25 +87,27 @@ class Mission {
 
 		// Make mission parts
 		// NOTE: Order is very important!
-		require("./make/battle").call(this)
-		require("./make/choice").call(this)
-		require("./make/date").call(this)
-		require("./make/map").call(this)
-		require("./make/bubble").call(this)
-		require("./make/time").call(this)
-		require("./make/people").call(this)
-		require("./make/planes").call(this)
-		require("./make/units").call(this)
-		require("./make/vehicles").call(this)
-		require("./make/weather").call(this)
-		require("./make/locations").call(this)
-		require("./make/airfields").call(this)
-		require("./make/tasks").call(this)
-		require("./make/fronts").call(this)
-		require("./make/blocks").call(this)
-		require("./make/formations").call(this)
-		require("./make/forces").call(this)
-		require("./make/briefing").call(this)
+		;[
+			makeBattle,
+			makeChoice,
+			makeDate,
+			makeMap,
+			makeBubble,
+			makeTime,
+			makePeople,
+			makePlanes,
+			makeUnits,
+			makeVehicles,
+			makeWeather,
+			makeLocations,
+			makeAirfields,
+			makeTasks,
+			makeFronts,
+			makeBlocks,
+			makeFormations,
+			makeForces,
+			makeBriefing
+		].forEach(makePart => makePart.call(this))
 
 		// Execute all delayed (last) mission make callbacks
 		for (const makeCallback of this.make) {
@@ -916,5 +938,3 @@ class BinaryDamageTable {
 		return buffer
 	}
 }
-
-module.exports = Mission

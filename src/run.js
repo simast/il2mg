@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict"
 
 // Enable Babel require() hook
 if (process.env.NODE_ENV !== "production") {
@@ -12,5 +11,5 @@ if (process.versions.electron) {
 }
 // Run as Node application with CLI interface only
 else {
-	require("./cli")(process.argv)
+	require("./cli").default(process.argv)
 }

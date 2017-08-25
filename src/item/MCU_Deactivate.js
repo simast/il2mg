@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
 
 // Deactivate item
-module.exports = class MCU_Deactivate extends MCU {
+export default class MCU_Deactivate extends MCU {
 
 	/**
 	 * Get binary representation of the item.

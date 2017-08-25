@@ -1,12 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {briefingColor} = require("../data")
-const makeBriefingText = require("./briefing.text")
-const makeBriefingWeather = require("./briefing.weather")
+import data from "../data"
+import makeBriefingText from "./briefing.text"
+import makeBriefingWeather from "./briefing.weather"
+
+const {briefingColor} = data
 
 // Generate mission briefing
-module.exports = function makeBriefing() {
+export default function makeBriefing() {
 
 	const {rand} = this
 	const options = this.items.Options

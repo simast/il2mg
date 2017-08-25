@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const Vehicle = require("./Vehicle")
+import Vehicle from "./Vehicle"
 
 // Train item
-module.exports = class Train extends Vehicle {
+export default class Train extends Vehicle {
 
 	constructor() {
 		super()

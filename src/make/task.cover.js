@@ -1,13 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const numeral = require("numeral")
-const {MCU_Waypoint, MCU_CMD_Cover} = require("../item")
-const {markMapArea} = require("./map")
-const {makeActivity} = require("./flight.plan")
-const makeBriefingLead = require("./briefing.lead")
-const makeFlightSpeed = require("./flight.speed")
-const makeFlightFuel = require("./flight.fuel")
+import numeral from "numeral"
+import * as MCU_Waypoint from "../item/MCU_Waypoint"
+import * as MCU_CMD_Cover from "../item/MCU_CMD_Cover"
+import {markMapArea} from "./map"
+import {makeActivity} from "./flight.plan"
+import makeBriefingLead from "./briefing.lead"
+import makeFlightSpeed from "./flight.speed"
+import makeFlightFuel from "./flight.fuel"
 
 // Min/max percent of max flight fuel range used as cover activity distance
 const MIN_COVER_RANGE_RATIO = 0.5 // 50%
@@ -30,7 +30,7 @@ const outroSegments = [
 ]
 
 // Make mission cover airfield task
-module.exports = function makeTaskCover(flight) {
+export default function makeTaskCover(flight) {
 
 	const {rand, weather} = this
 

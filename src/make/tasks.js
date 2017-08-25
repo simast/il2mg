@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
 
 // Generate available mission tasks
-module.exports = function makeTasks() {
+export default function makeTasks() {
 
 	// Index list for base/static tasks
 	const tasks = Object.create(null)

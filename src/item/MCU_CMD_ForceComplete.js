@@ -1,15 +1,19 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
+
+// Force complete command priority constants
+export const PRIORITY_LOW = 0
+export const PRIORITY_MEDIUM = 1
+export const PRIORITY_HIGH = 2
 
 // Force complete command item
-class MCU_CMD_ForceComplete extends MCU {
+export default class MCU_CMD_ForceComplete extends MCU {
 
 	constructor() {
 		super()
 
-		this.Priority = MCU_CMD_ForceComplete.PRIORITY_HIGH
+		this.Priority = PRIORITY_HIGH
 	}
 
 	/**
@@ -30,10 +34,3 @@ class MCU_CMD_ForceComplete extends MCU {
 		yield buffer
 	}
 }
-
-// Force complete command priority constants
-MCU_CMD_ForceComplete.PRIORITY_LOW = 0
-MCU_CMD_ForceComplete.PRIORITY_MEDIUM = 1
-MCU_CMD_ForceComplete.PRIORITY_HIGH = 2
-
-module.exports = MCU_CMD_ForceComplete

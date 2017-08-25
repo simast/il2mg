@@ -1,14 +1,13 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
+
+import numeral from "numeral"
+import data from "../../src/data"
+import Item, {PRECISION_POSITION} from "../../src/item"
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert locations .Group to .json files
 	grunt.registerTask("build:locations", "Build locations JSON files.", () => {
-
-		const numeral = require("numeral")
-		const data = require("../../src/data")
-		const Item = require("../../src/item")
 
 		// Data constants
 		const location = data.location
@@ -67,7 +66,7 @@ module.exports = function(grunt) {
 							// Item position
 							// NOTE: Locations do not need sub-meter X/Z axis precision
 							jsonItem.push(Math.round(item.XPos))
-							jsonItem.push(Number(item.YPos.toFixed(Item.PRECISION_POSITION)))
+							jsonItem.push(Number(item.YPos.toFixed(PRECISION_POSITION)))
 							jsonItem.push(Math.round(item.ZPos))
 
 							// Item reference zone dimensions (forward, right, backward, left)

@@ -1,15 +1,18 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
+
+// Effect command action type constants
+export const ACTION_START = 0
+export const ACTION_STOP = 1
 
 // Effect command item
-class MCU_CMD_Effect extends MCU {
+export default class MCU_CMD_Effect extends MCU {
 
 	constructor() {
 		super()
 
-		this.ActionType = MCU_CMD_Effect.ACTION_START
+		this.ActionType = ACTION_START
 	}
 
 	/**
@@ -30,9 +33,3 @@ class MCU_CMD_Effect extends MCU {
 		yield buffer
 	}
 }
-
-// Effect command action type constants
-MCU_CMD_Effect.ACTION_START = 0
-MCU_CMD_Effect.ACTION_STOP = 1
-
-module.exports = MCU_CMD_Effect

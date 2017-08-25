@@ -1,17 +1,21 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
+
+// Waypoint priority constants
+export const PRIORITY_LOW = 0
+export const PRIORITY_MEDIUM = 1
+export const PRIORITY_HIGH = 2
 
 // Waypoint item
-class MCU_Waypoint extends MCU {
+export default class MCU_Waypoint extends MCU {
 
 	constructor() {
 		super()
 
 		this.Area = 0
 		this.Speed = 0
-		this.Priority = MCU_Waypoint.PRIORITY_MEDIUM
+		this.Priority = PRIORITY_MEDIUM
 	}
 
 	/**
@@ -38,10 +42,3 @@ class MCU_Waypoint extends MCU {
 		yield buffer
 	}
 }
-
-// Waypoint priority constants
-MCU_Waypoint.PRIORITY_LOW = 0
-MCU_Waypoint.PRIORITY_MEDIUM = 1
-MCU_Waypoint.PRIORITY_HIGH = 2
-
-module.exports = MCU_Waypoint

@@ -1,15 +1,20 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {Vector} = require("sylvester")
-const {activityType, territory, mapColor} = require("../data")
-const {makeActivity} = require("./flight.plan")
-const {Location} = require("./locations")
-const {MCU_Icon, MCU_Waypoint} = require("../item")
+import sylvester from "sylvester"
+import data from "../data"
+import {makeActivity} from "./flight.plan"
+import {Location} from "./locations"
+import * as MCU_Icon from "../item/MCU_Icon"
+import * as MCU_Waypoint from "../item/MCU_Waypoint"
+
+const {activityType, territory, mapColor} = data
 
 // Flight make parts
-const makeFlightAltitude = require("./flight.altitude")
-const makeFlightRoute = require("./flight.route")
+import makeFlightAltitude from "./flight.altitude"
+import makeFlightRoute from "./flight.route"
+
+// Restricted map border zone
+import {RESTRICTED_BORDER, isRestricted} from "./map"
 
 // Max patrol area range (as a percent from total aircraft fuel range)
 const MAX_RANGE_PERCENT = 25
@@ -22,12 +27,10 @@ const MAX_DISTANCE = 60000
 // NOTE: Used to enclose patrol points when player is a flight leader
 const ZONE_PADDING = 2500
 
-// Restricted map border zone
-const {RESTRICTED_BORDER, isRestricted} = require("./map")
-
 // Make mission patrol area task
-module.exports = function makeTaskPatrol(flight) {
+export default function makeTaskPatrol(flight) {
 
+	const {Vector} = sylvester
 	const rand = this.rand
 	const airfield = this.airfields[flight.airfield]
 	const startX = airfield.position[0]
@@ -377,8 +380,9 @@ module.exports = function makeTaskPatrol(flight) {
 }
 
 // Find base reference points (for patrol area or fighter sweep route)
-function findBasePoints(flight, params) {
+export function findBasePoints(flight, params) {
 
+	const {Vector} = sylvester
 	const rand = this.rand
 	const map = this.map
 	const territories = this.locations.territories
@@ -736,5 +740,3 @@ function findBasePoints(flight, params) {
 		angle: angleAB
 	}
 }
-
-module.exports.findBasePoints = findBasePoints

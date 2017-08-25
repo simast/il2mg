@@ -1,8 +1,8 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict"
 
 import path from "path"
 import {app} from "electron"
+import runApplicationWithCLI from "../cli"
 
 const argv = process.argv.slice()
 let runAsCLI = argv.length > 2
@@ -23,7 +23,7 @@ if (runAsCLI) {
 
 	app.on("ready", async () => {
 
-		await require("../cli")(argv)
+		await runApplicationWithCLI(argv)
 		app.exit()
 	})
 }

@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
-const data = require("../data")
+import Item, {PRECISION_POSITION} from "../item"
+import data from "../data"
+
 const {itemFlag} = data
 
 // Make airfield taxi route
-module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
+export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 
 	// TODO: Invert taxi points based on takeoff against the wind requirements
 
@@ -144,8 +144,8 @@ module.exports = function makeAirfieldTaxi(airfield, taxiRouteID) {
 		const pointY = pointXDiff * Math.sin(pointTheta) + pointYDiff * Math.cos(pointTheta)
 
 		pointItem.Type = pointType
-		pointItem.X = Number(pointX.toFixed(Item.PRECISION_POSITION))
-		pointItem.Y = Number(pointY.toFixed(Item.PRECISION_POSITION))
+		pointItem.X = Number(pointX.toFixed(PRECISION_POSITION))
+		pointItem.Y = Number(pointY.toFixed(PRECISION_POSITION))
 
 		chartItem.addItem(pointItem)
 	}

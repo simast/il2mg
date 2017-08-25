@@ -1,7 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
 
 // List of unit data params used as combined record key
 const RECORD_PARAMS = [
@@ -19,7 +18,7 @@ const RECORD_SEP = "~"
 const PARAM_SEP = ","
 
 // Generate mission player choice data
-module.exports = function makeChoice() {
+export default function makeChoice() {
 
 	const {rand, params, index} = this
 

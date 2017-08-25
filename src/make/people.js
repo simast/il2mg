@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
 
 // Generate mission people
-module.exports = function makePeople() {
+export default function makePeople() {
 
 	const mission = this
 	const {rand} = mission

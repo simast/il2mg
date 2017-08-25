@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Block = require("./Block")
+import Block from "./Block"
 
 // Airfield item
-module.exports = class Airfield extends Block {
+export default class Airfield extends Block {
 
 	constructor() {
 		super()

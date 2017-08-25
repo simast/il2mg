@@ -1,10 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {itemTag, itemFlag} = require("../data")
+import data from "../data"
+
+const {itemTag, itemFlag} = data
 
 // Make airfield limits
-module.exports = function makeAirfieldLimits(airfield) {
+export default function makeAirfieldLimits(airfield) {
 
 	const limits = Object.create(null)
 	const value = airfield.value || 0

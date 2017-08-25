@@ -1,16 +1,20 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
+
+// Cover command priority constants
+export const PRIORITY_LOW = 0
+export const PRIORITY_MEDIUM = 1
+export const PRIORITY_HIGH = 2
 
 // Cover command item
-class MCU_CMD_Cover extends MCU {
+export default class MCU_CMD_Cover extends MCU {
 
 	constructor() {
 		super()
 
 		this.CoverGroup = 1
-		this.Priority = MCU_CMD_Cover.PRIORITY_MEDIUM
+		this.Priority = PRIORITY_MEDIUM
 	}
 
 	/**
@@ -34,10 +38,3 @@ class MCU_CMD_Cover extends MCU {
 		yield buffer
 	}
 }
-
-// Cover command priority constants
-MCU_CMD_Cover.PRIORITY_LOW = 0
-MCU_CMD_Cover.PRIORITY_MEDIUM = 1
-MCU_CMD_Cover.PRIORITY_HIGH = 2
-
-module.exports = MCU_CMD_Cover

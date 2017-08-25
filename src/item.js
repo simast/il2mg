@@ -1,16 +1,26 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const fs = require("fs")
-const os = require("os")
-const getSlug = require("speakingurl")
-const data = require("./data")
+import fs from "fs"
+import os from "os"
+import getSlug from "speakingurl"
+import Lexer from "lex"
+import data from "./data"
 
 // FIXME: Used to automatically track buffer write cursor
 Buffer.prototype._offset = 0
 
+// Default item data values
+export const DEFAULT_COALITION = 0 // Neutral coalition ID
+export const DEFAULT_COUNTRY = 0 // Neutral country ID
+export const DEFAULT_DAMAGE_REPORT = 50 // 50% of damage
+export const DEFAULT_DURABILITY = 5000
+
+// Precision of position and orientation values (decimal places)
+export const PRECISION_POSITION = 2
+export const PRECISION_ORIENTATION = 2
+
 // Base (and generic) mission item
-class Item {
+export default class Item {
 
 	/**
 	 * Create a new mission item.
@@ -163,15 +173,15 @@ class Item {
 		}
 
 		if (position[0] || this.XPos) {
-			this.XPos = Number(position[0].toFixed(Item.PRECISION_POSITION))
+			this.XPos = Number(position[0].toFixed(PRECISION_POSITION))
 		}
 
 		if (position[1] || this.YPos) {
-			this.YPos = Number(position[1].toFixed(Item.PRECISION_POSITION))
+			this.YPos = Number(position[1].toFixed(PRECISION_POSITION))
 		}
 
 		if (position[2] || this.ZPos) {
-			this.ZPos = Number(position[2].toFixed(Item.PRECISION_POSITION))
+			this.ZPos = Number(position[2].toFixed(PRECISION_POSITION))
 		}
 	}
 
@@ -224,15 +234,15 @@ class Item {
 		}
 
 		if (orientation[0] || this.XOri) {
-			this.XOri = Number(orientation[0].toFixed(Item.PRECISION_ORIENTATION))
+			this.XOri = Number(orientation[0].toFixed(PRECISION_ORIENTATION))
 		}
 
 		if (orientation[1] || this.YOri) {
-			this.YOri = Number(orientation[1].toFixed(Item.PRECISION_ORIENTATION))
+			this.YOri = Number(orientation[1].toFixed(PRECISION_ORIENTATION))
 		}
 
 		if (orientation[2] || this.ZOri) {
-			this.ZOri = Number(orientation[2].toFixed(Item.PRECISION_ORIENTATION))
+			this.ZOri = Number(orientation[2].toFixed(PRECISION_ORIENTATION))
 		}
 	}
 
@@ -761,7 +771,6 @@ class Item {
 			throw new Error("Could not read specified item file (no content).")
 		}
 
-		const Lexer = require("lex")
 		const lexer = new Lexer()
 		const items = []
 		const itemStack = []
@@ -844,20 +853,8 @@ function convertUnicodeToASCII(value) {
 	})
 }
 
-// Default item data values
-Item.DEFAULT_COALITION = 0 // Neutral coalition ID
-Item.DEFAULT_COUNTRY = 0 // Neutral country ID
-Item.DEFAULT_DAMAGE_REPORT = 50 // 50% of damage
-Item.DEFAULT_DURABILITY = 5000
-
-// Precision of position and orientation values (decimal places)
-Item.PRECISION_POSITION = 2
-Item.PRECISION_ORIENTATION = 2
-
-module.exports = Item
-
 // Load all supported mission item types
-;[
+[
 	"Airfield",
 	"Block",
 	"Bridge",
@@ -892,7 +889,7 @@ module.exports = Item
 	"Vehicle"
 ].forEach(type => {
 
-	const item = require("./item/" + type)
+	const item = require("./item/" + type).default
 
 	Object.defineProperty(item.prototype, "type", {value: type})
 	Item[type] = item

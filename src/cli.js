@@ -1,19 +1,16 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {EOL} = require("os")
-const util = require("util")
-const domain = require("domain")
-const moment = require("moment")
-const data = require("./data")
-const log = require("./log")
-const Mission = require("./mission")
+import {EOL} from "os"
+import util from "util"
+import domain from "domain"
+import moment from "moment"
+import params from "commander"
+import data from "./data"
+import log from "./log"
+import Mission from "./mission"
 
 // Data constants
 const {flightState, weatherState, season} = data
-
-// Setup command line interface
-const params = require("commander")
 
 // --help usage line output
 params.usage("[options] [mission file and/or path]")
@@ -313,7 +310,7 @@ params.option(
 	value => String(value).trim()
 )
 
-module.exports = argv => new Promise(resolve => {
+export default argv => new Promise(resolve => {
 
 	const appDomain = domain.create()
 

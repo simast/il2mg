@@ -1,22 +1,23 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {Vector} = require("sylvester")
-const {activityType} = require("../data")
-const {makeActivity} = require("./flight.plan")
-const {isOffmap, getMapIntersection, markMapArea} = require("./map")
+import sylvester from "sylvester"
+import data from "../data"
+import {makeActivity} from "./flight.plan"
+import {isOffmap, getMapIntersection, markMapArea} from "./map"
+
+const {activityType} = data
 
 // Flight make parts
-const makeFlightAltitude = require("./flight.altitude")
-const makeFlightRoute = require("./flight.route")
-const makeAirfieldTaxi = require("./airfield.taxi")
+import makeFlightAltitude from "./flight.altitude"
+import makeFlightRoute from "./flight.route"
+import makeAirfieldTaxi from "./airfield.taxi"
 
 // Minimum distance required between rebase airfields and map border
 const MIN_DISTANCE_AIRFIELD = 20000 // 20 km
 const MIN_DISTANCE_BORDER = 40000 // 40 km
 
 // Make mission rebase task
-module.exports = function makeTaskRebase(flight) {
+export default function makeTaskRebase(flight) {
 
 	const rand = this.rand
 	const unit = this.units[flight.unit]
@@ -111,8 +112,9 @@ module.exports = function makeTaskRebase(flight) {
 }
 
 // Check if rebase task is valid for target position/point
-function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
+export function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 
+	const {Vector} = sylvester
 	let validationCache = isValidRebaseTask.validationCache
 
 	// Initialize rebase task validation cache
@@ -189,5 +191,3 @@ function isValidRebaseTask(airfieldFrom, airfieldTo, map) {
 
 	return isValid
 }
-
-module.exports.isValidRebaseTask = isValidRebaseTask

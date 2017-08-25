@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
+import Item from "../item"
 
 // Group item
-module.exports = class Group extends Item {
+export default class Group extends Item {
 
 	get hasIndex() { return false }
 }

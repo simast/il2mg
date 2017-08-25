@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const moment = require("moment")
-const suncalc = require("suncalc")
-const data = require("../data")
-const log = require("../log")
+import moment from "moment"
+import suncalc from "suncalc"
+import data from "../data"
+import log from "../log"
 
 // Main period time lengths
 const TIME_DAWN = data.time.dawn.period
@@ -15,11 +14,10 @@ const TIME_DUSK = data.time.dusk.period
 const TIME_MIDNIGHT = data.time.midnight.period
 
 // Generate mission time
-module.exports = function makeTime() {
+export default function makeTime() {
 
 	const date = this.date.startOf("day")
-	const rand = this.rand
-	const map = this.map
+	const {rand, map} = this
 
 	// Get sun times data
 	const sunTimes = suncalc.getTimes(date.toDate(), map.latitude, map.longitude)

@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const path = require("path")
-const {Line} = require("sylvester")
-const data = require("../data")
+import path from "path"
+import sylvester from "sylvester"
+import data from "../data"
+import * as MCU_Icon from "../item/MCU_Icon"
+import {Location} from "./locations"
+
 const {frontLine, mapColor, territory, coalition} = data
-const {MCU_Icon} = require("../item")
-const {Location} = require("./locations")
 
 // Map grid size
 // NOTE: Territories will be more precise with smaller grid size
@@ -14,7 +14,9 @@ const GRID_SIZE = 5000 // 5 km
 const GRID_SIZE_HALF = GRID_SIZE / 2
 
 // Generate mission fronts and territories
-module.exports = function makeFronts() {
+export default function makeFronts() {
+
+	const {Line} = sylvester
 
 	// Territories X/Z grid
 	const territories = new Map()

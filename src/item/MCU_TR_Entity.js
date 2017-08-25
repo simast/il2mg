@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
 
 // Entity item
-module.exports = class MCU_TR_Entity extends MCU {
+export default class MCU_TR_Entity extends MCU {
 
 	constructor() {
 		super()

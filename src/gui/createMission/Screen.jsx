@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 import {ipcRenderer} from "electron"
 import binarySearch from "binary-search"

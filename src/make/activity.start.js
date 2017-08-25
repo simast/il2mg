@@ -1,11 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {MCU_Icon} = require("../item")
-const {flightState} = require("../data")
+import * as MCU_Icon from "../item/MCU_Icon"
+import data from "../data"
+
+const {flightState} = data
 
 // Initial plan activity used to start/initialize flights
-module.exports = class ActivityStart {
+export default class ActivityStart {
 
 	// Make start activity action
 	makeAction(element) {

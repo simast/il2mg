@@ -1,32 +1,32 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const path = require("path")
-const addLazyProperty = require("lazy-property")
-const log = require("../log")
-const Item = require("../item")
-const {Location} = require("./locations")
-const {isOffmap} = require("./map")
-const data = require("../data")
+import path from "path"
+import addLazyProperty from "lazy-property"
+import log from "../log"
+import Item from "../item"
+import {Location} from "./locations"
+import {isOffmap} from "./map"
+import data from "../data"
+
 const {itemTag, planeSize, flightState, location} = data
 
 // Airfield make parts
-const makeAirfieldLimits = require("./airfield.limits")
-const makeAirfieldStatic = require("./airfield.static")
-const makeAirfieldPlane = require("./airfield.plane")
-const makeAirfieldBeacon = require("./airfield.beacon")
-const makeAirfieldWindsock = require("./airfield.windsock")
-const makeAirfieldEffect = require("./airfield.effect")
-const makeAirfieldWreck = require("./airfield.wreck")
-const makeAirfieldVehicle = require("./airfield.vehicle")
-const makeAirfieldRoutes = require("./airfield.routes")
-const makeAirfieldTaxi = require("./airfield.taxi")
+import makeAirfieldLimits from "./airfield.limits"
+import makeAirfieldStatic from "./airfield.static"
+import makeAirfieldPlane from "./airfield.plane"
+import makeAirfieldBeacon from "./airfield.beacon"
+import makeAirfieldWindsock from "./airfield.windsock"
+import makeAirfieldEffect from "./airfield.effect"
+import makeAirfieldWreck from "./airfield.wreck"
+import makeAirfieldVehicle from "./airfield.vehicle"
+import makeAirfieldRoutes from "./airfield.routes"
+import makeAirfieldTaxi from "./airfield.taxi"
 
 // Airfield activity zone radius
 const AIRFIELD_ZONE_RADIUS = 6000
 
 // Generate mission airfields
-module.exports = function makeAirfields() {
+export default function makeAirfields() {
 
 	const mission = this
 	const battle = mission.battle

@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict"
 
 import {remote, ipcRenderer} from "electron"
 import {observable, computed, action, reaction} from "mobx"

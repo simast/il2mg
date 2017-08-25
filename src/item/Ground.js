@@ -1,16 +1,15 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
+import Item, {DEFAULT_DAMAGE_REPORT} from "../item"
 
 // Ground item
-module.exports = class Ground extends Item {
+export default class Ground extends Item {
 
 	constructor() {
 		super()
 
 		this.DamageThreshold = 1
-		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT
+		this.DamageReport = DEFAULT_DAMAGE_REPORT
 	}
 
 	/**

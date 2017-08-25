@@ -1,13 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const path = require("path")
-const log = require("../log")
-const {Bridge} = require("../item")
-const data = require("../data")
+import path from "path"
+import log from "../log"
+import Bridge from "../item/Bridge"
+import data from "../data"
 
 // Generate mission static blocks
-module.exports = function makeBlocks() {
+export default function makeBlocks() {
 
 	const blocksGroup = this.createItem("Group")
 

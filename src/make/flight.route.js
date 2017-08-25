@@ -1,11 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {Vector} = require("sylvester")
+import sylvester from "sylvester"
 
 // Flight make parts
-const makeFlightSpeed = require("./flight.speed")
-const makeFlightAltitude = require("./flight.altitude")
+import makeFlightSpeed from "./flight.speed"
+import makeFlightAltitude from "./flight.altitude"
 
 // Airfield as a target route constants
 const AIRFIELD_DISTANCE_EGRESS = 20000 // 20 km
@@ -16,13 +15,14 @@ const AIRFIELD_DISTANCE_MAX = 10000 // 10 km
 const ROUTE_SPLIT_DISTANCE = 80000 // 80 km
 
 // Make mission flight route
-module.exports = function makeFlightRoute(flight, fromPosition, toPoint, options = {}) {
+export default function makeFlightRoute(flight, fromPosition, toPoint, options = {}) {
 
 	// TODO: Adjust to waypoint altitude based on plane climb rate
 	// TODO: Use path-finding to avoid enemy airfields
 	// TODO: Use landmarks (places, rivers) for navigation
 
-	const rand = this.rand
+	const {Vector} = sylvester
+	const {rand} = this
 	let isEgressRoute = false
 	let altitudeProfile = options.altitude
 

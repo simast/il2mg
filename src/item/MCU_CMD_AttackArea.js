@@ -1,10 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
+
+// Attack area command priority constants
+export const PRIORITY_LOW = 0
+export const PRIORITY_MEDIUM = 1
+export const PRIORITY_HIGH = 2
 
 // Attack area command item
-class MCU_CMD_AttackArea extends MCU {
+export default class MCU_CMD_AttackArea extends MCU {
 
 	constructor() {
 		super()
@@ -14,7 +18,7 @@ class MCU_CMD_AttackArea extends MCU {
 		this.AttackGTargets = 0
 		this.AttackArea = 1000
 		this.Time = 600 // 10 minutes
-		this.Priority = MCU_CMD_AttackArea.PRIORITY_MEDIUM
+		this.Priority = PRIORITY_MEDIUM
 	}
 
 	/**
@@ -50,10 +54,3 @@ class MCU_CMD_AttackArea extends MCU {
 		yield buffer
 	}
 }
-
-// Attack area command priority constants
-MCU_CMD_AttackArea.PRIORITY_LOW = 0
-MCU_CMD_AttackArea.PRIORITY_MEDIUM = 1
-MCU_CMD_AttackArea.PRIORITY_HIGH = 2
-
-module.exports = MCU_CMD_AttackArea

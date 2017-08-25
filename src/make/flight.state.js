@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const makeFlightTime = require("./flight.time")
+import makeFlightTime from "./flight.time"
 
 // Make flight state
-module.exports = function makeFlightState(flight) {
+export default function makeFlightState(flight) {
 
 	// Process only flights with a valid state
 	if (typeof flight.state !== "number") {
@@ -40,7 +39,7 @@ module.exports = function makeFlightState(flight) {
 }
 
 // Make flight plan activity state
-function makeActivityState(activity, time) {
+export function makeActivityState(activity, time) {
 
 	const activityTime = activity.time - time
 
@@ -55,5 +54,3 @@ function makeActivityState(activity, time) {
 		activity.time = activityTime
 	}
 }
-
-module.exports.makeActivityState = makeActivityState

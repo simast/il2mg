@@ -1,8 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 // Make flight time
-module.exports = function makeFlightTime(flight) {
+export default function makeFlightTime(flight) {
 
 	let time = 0
 

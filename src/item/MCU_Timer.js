@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
 
 // Timer item
-module.exports = class MCU_Timer extends MCU {
+export default class MCU_Timer extends MCU {
 
 	constructor() {
 		super()

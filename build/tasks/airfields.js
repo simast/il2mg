@@ -1,16 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const path = require("path")
-const numeral = require("numeral")
+import path from "path"
+import numeral from "numeral"
+import data from "../../src/data"
+import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from "../../src/item"
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", () => {
-
-		const data = require("../../src/data")
-		const Item = require("../../src/item")
 
 		// Data constants
 		const itemTag = data.itemTag
@@ -30,8 +28,8 @@ module.exports = function(grunt) {
 			const positionZ = item.ZPos + pointMagnitude * Math.sin(pointOrientation)
 
 			return [
-				Number(positionX.toFixed(Item.PRECISION_POSITION)),
-				Number(positionZ.toFixed(Item.PRECISION_POSITION))
+				Number(positionX.toFixed(PRECISION_POSITION)),
+				Number(positionZ.toFixed(PRECISION_POSITION))
 			]
 		}
 
@@ -92,10 +90,10 @@ module.exports = function(grunt) {
 						}
 
 						// Item position and orientation with forced precision
-						const positionX = Number(item.XPos.toFixed(Item.PRECISION_POSITION))
-						const positionY = Number(item.YPos.toFixed(Item.PRECISION_POSITION))
-						const positionZ = Number(item.ZPos.toFixed(Item.PRECISION_POSITION))
-						const orientation = Number(item.YOri.toFixed(Item.PRECISION_ORIENTATION))
+						const positionX = Number(item.XPos.toFixed(PRECISION_POSITION))
+						const positionY = Number(item.YPos.toFixed(PRECISION_POSITION))
+						const positionZ = Number(item.ZPos.toFixed(PRECISION_POSITION))
+						const orientation = Number(item.YOri.toFixed(PRECISION_ORIENTATION))
 
 						// Item type data
 						const itemTypeData = {
@@ -427,8 +425,8 @@ module.exports = function(grunt) {
 								const waypointTarget = item.Targets[0]
 								const waypoint = []
 
-								waypoint.push(Number(item.XPos.toFixed(Item.PRECISION_POSITION)))
-								waypoint.push(Number(item.ZPos.toFixed(Item.PRECISION_POSITION)))
+								waypoint.push(Number(item.XPos.toFixed(PRECISION_POSITION)))
+								waypoint.push(Number(item.ZPos.toFixed(PRECISION_POSITION)))
 
 								if (waypointFlag) {
 									waypoint.push(waypointFlag)

@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
 
 // Generate available mission formations
-module.exports = function makeFormations() {
+export default function makeFormations() {
 
 	// Formations index table
 	const formations = Object.create(null)

@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 import React from "react"
 import {observable, action} from "mobx"

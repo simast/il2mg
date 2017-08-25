@@ -1,8 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 // Make flight max range
-module.exports = function makeFlightRange(flight) {
+export default function makeFlightRange(flight) {
 
 	let maxRange = undefined
 

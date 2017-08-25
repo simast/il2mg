@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 import {app, screen, BrowserWindow, ipcMain} from "electron"
 
@@ -26,6 +25,7 @@ if (isOtherInstance) {
 
 import fs from "fs"
 import path from "path"
+import Mission from "../mission"
 
 // Min and max window size
 const MIN_WINDOW_WIDTH = 800
@@ -52,8 +52,6 @@ ipcMain.on("setConfig", (event, configData) => {
 
 // Handle create mission requests from renderer process
 ipcMain.on("createMission", async (event, params) => {
-
-	const Mission = require("../mission")
 
 	// Create a new mission
 	const mission = new Mission(params)

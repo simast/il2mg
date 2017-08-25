@@ -1,7 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
+import Item from "../item"
 
 // Event and report child item name constants
 const ITEM_ON_EVENTS = "OnEvents"
@@ -10,7 +9,7 @@ const ITEM_ON_REPORTS = "OnReports"
 const ITEM_ON_REPORT = "OnReport"
 
 // Base MCU item
-module.exports = class MCU extends Item {
+export default class MCU extends Item {
 
 	constructor() {
 		super()

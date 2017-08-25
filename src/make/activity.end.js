@@ -1,19 +1,19 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 // NOTE: Most flights will end naturally with a "land" activity - this special
 // end flight activity is used only for rare situations - like ending the flight
 // prematurely on a route to an offmap airfield, for example.
 
-const Item = require("../item")
-const {markMapArea} = require("./map")
+import {PRECISION_POSITION} from "../item"
+import * as MCU_Icon from "../item/MCU_Icon"
+import {markMapArea} from "./map"
 
 // Min/max radius of the "mission end" circle (used with player flight only)
 const MIN_PLAYER_END_RADIUS = 9500 // 9.5 km
 const MAX_PLAYER_END_RADIUS = 10500 // 10.5 km
 
 // Plan activity used to end the flight
-module.exports = class ActivityEnd {
+export default class ActivityEnd {
 
 	// Make end activity action
 	makeAction(element, input) {
@@ -55,14 +55,14 @@ module.exports = class ActivityEnd {
 				MIN_PLAYER_END_RADIUS,
 				MAX_PLAYER_END_RADIUS,
 				true
-			).toFixed(Item.PRECISION_POSITION))
+			).toFixed(PRECISION_POSITION))
 
 			// Mark mission end area with a circle
 			const markIcons = markMapArea.call(mission, flight, {
 				position: this.position,
 				perfect: true,
 				radius: playerEndRadius,
-				lineType: Item.MCU_Icon.LINE_ZONE_2
+				lineType: MCU_Icon.LINE_ZONE_2
 			})
 
 			const endCheckZone = flightGroup.createItem("MCU_CheckZone")
@@ -90,7 +90,7 @@ module.exports = class ActivityEnd {
 
 				// Further (guard) activation check zone is +50% larger
 				let endGuardZone = Number(playerEndRadius * 1.5)
-				endGuardZone = endGuardZone.toFixed(Item.PRECISION_POSITION)
+				endGuardZone = endGuardZone.toFixed(PRECISION_POSITION)
 
 				endGuardCheckZone.Zone = endGuardZone
 				endGuardCheckZone.Closer = 0 // Further

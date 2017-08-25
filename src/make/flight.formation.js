@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {MCU_CMD_Formation} = require("../item")
+import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
 
 // Make mission flight formation
-module.exports = function makeFlightFormation(flight, isPlayer) {
+export default function makeFlightFormation(flight, isPlayer) {
 
 	const {rand, choice} = this
 	const task = flight.task

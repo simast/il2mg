@@ -1,9 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {Vector, Line} = require("sylvester")
-const {activityType} = require("../data")
-const {MCU_CMD_Formation} = require("../item")
+import sylvester from "sylvester"
+import data from "../data"
+import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
+
+const {activityType} = data
 
 // Minimum and maximum pitch angle (for pose orientation)
 const MIN_PITCH_ANGLE = -15
@@ -19,8 +20,9 @@ const FORMATION_ANGLE = 30 // Degrees
 const FORMATION_SPACING = 100 // Meters
 
 // Make flight air start pose (position and orientation based on formation)
-module.exports = function makeFlightPose(flight) {
+export default function makeFlightPose(flight) {
 
+	const {Vector, Line} = sylvester
 	const plan = flight.plan
 	const fromPosition = plan.start.position
 	const elements = flight.elements

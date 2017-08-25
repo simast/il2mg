@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
 
 // Proximity item
-module.exports = class MCU_Proximity extends MCU {
+export default class MCU_Proximity extends MCU {
 
 	constructor() {
 		super()

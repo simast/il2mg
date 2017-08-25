@@ -1,11 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
+
 const {itemFlag} = data
 
 // Make airfield static item
-module.exports = function makeAirfieldStatic(airfield, item) {
+export default function makeAirfieldStatic(airfield, item) {
 
 	const staticItem = this.createItem(data.getItemType(item[0]), false)
 

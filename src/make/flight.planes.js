@@ -1,12 +1,13 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {Plane} = require("../item")
-const {planeSize, itemFlag, flightState} = require("../data")
-const makeAirfieldTaxi = require("./airfield.taxi")
+import * as Plane from "../item/Plane"
+import data from "../data"
+import makeAirfieldTaxi from "./airfield.taxi"
+
+const {planeSize, itemFlag, flightState} = data
 
 // Make mission flight plane item objects
-module.exports = function makeFlightPlanes(flight) {
+export default function makeFlightPlanes(flight) {
 
 	// TODO: Set payload
 	// TODO: Set weapon mods

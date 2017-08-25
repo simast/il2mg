@@ -1,11 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
-const data = require("../data")
+import Item from "../item"
+import data from "../data"
 
 // Make airfield wreck item
-module.exports = function makeAirfieldWreck(airfield, item) {
+export default function makeAirfieldWreck(airfield, item) {
 
 	let wreckItems = this.wreckItems
 

@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Block = require("./Block")
+import Block from "./Block"
 
 // Bridge item
-module.exports = class Bridge extends Block {
+export default class Bridge extends Block {
 
 	/**
 	 * Get binary representation of the item.

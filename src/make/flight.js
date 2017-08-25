@@ -1,26 +1,27 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {flightState} = require("../data")
+import data from "../data"
+
+const {flightState} = data
 
 // Flight make parts
-const makeFlightFormation = require("./flight.formation")
-const makeFlightPilots = require("./flight.pilots")
-const makeFlightPlanes = require("./flight.planes")
-const makeFlightRange = require("./flight.range")
-const makeFlightPlan = require("./flight.plan")
-const makeFlightActions = require("./flight.actions")
-const makeFlightFuel = require("./flight.fuel")
-const makeFlightTime = require("./flight.time")
-const makeFlightBeacon = require("./flight.beacon")
-const makeFlightPath = require("./flight.path")
-const makeFlightState = require("./flight.state")
-const makeFlightPose = require("./flight.pose")
-const makeFlightVirtual = require("./flight.virtual")
-const makeAirfieldTaxi = require("./airfield.taxi")
+import makeFlightFormation from "./flight.formation"
+import makeFlightPilots from "./flight.pilots"
+import makeFlightPlanes from "./flight.planes"
+import makeFlightRange from "./flight.range"
+import makeFlightPlan from "./flight.plan"
+import makeFlightActions from "./flight.actions"
+import makeFlightFuel from "./flight.fuel"
+import makeFlightTime from "./flight.time"
+import makeFlightBeacon from "./flight.beacon"
+import makeFlightPath from "./flight.path"
+import makeFlightState from "./flight.state"
+import makeFlightPose from "./flight.pose"
+import makeFlightVirtual from "./flight.virtual"
+import makeAirfieldTaxi from "./airfield.taxi"
 
 // Make mission flight
-module.exports = function makeFlight(params) {
+export default function makeFlight(params) {
 
 	const rand = this.rand
 	const flight = Object.create(null)

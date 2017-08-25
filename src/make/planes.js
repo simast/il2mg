@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
 
 // Generate available mission planes
-module.exports = function makePlanes() {
+export default function makePlanes() {
 
 	const battle = this.battle
 

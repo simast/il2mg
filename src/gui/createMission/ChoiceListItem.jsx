@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict"
 
 import React from "react"
 

@@ -1,19 +1,22 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
+import Item, {
+	DEFAULT_COUNTRY,
+	DEFAULT_DAMAGE_REPORT,
+	DEFAULT_DURABILITY
+} from "../item"
 
 // Block item
-module.exports = class Block extends Item {
+export default class Block extends Item {
 
 	constructor() {
 		super()
 
 		this.DeleteAfterDeath = 0
 		this.DamageThreshold = 1
-		this.Country = Item.DEFAULT_COUNTRY
-		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT
-		this.Durability = Item.DEFAULT_DURABILITY
+		this.Country = DEFAULT_COUNTRY
+		this.DamageReport = DEFAULT_DAMAGE_REPORT
+		this.Durability = DEFAULT_DURABILITY
 	}
 
 	/**

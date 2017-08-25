@@ -1,8 +1,7 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict"
 
 // Make flight beacon
-module.exports = function makeFlightBeacon(flight) {
+export default function makeFlightBeacon(flight) {
 
 	// Enable radio navigation beacon source for player flight only
 	if (!flight.player) {

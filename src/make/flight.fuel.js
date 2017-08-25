@@ -1,13 +1,14 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {flightState} = require("../data")
+import data from "../data"
+
+const {flightState} = data
 
 // Minimum percent of plane fuel that is always available
 const MIN_PLANE_FUEL = 0.1 // 10%
 
 // Make flight fuel
-module.exports = function makeFlightFuel(flight, travelDistance = 0) {
+export default function makeFlightFuel(flight, travelDistance = 0) {
 
 	const simulateTakeoff = !travelDistance
 

@@ -1,8 +1,7 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict"
 
 // Make flight plan activity actions
-module.exports = function makeFlightActions(flight) {
+export default function makeFlightActions(flight) {
 
 	// List of output callback functions from previous plan action (for each
 	// element, used as input for the next plan action).

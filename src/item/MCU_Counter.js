@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
 
 // Counter item
-module.exports = class MCU_Counter extends MCU {
+export default class MCU_Counter extends MCU {
 
 	constructor() {
 		super()

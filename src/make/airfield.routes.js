@@ -1,12 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {itemTag, itemFlag} = require("../data")
-const {MCU_CMD_Formation, MCU_Waypoint} = require("../item")
-const makeAirfieldVehicle = require("./airfield.vehicle")
+import data from "../data"
+import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
+import * as MCU_Waypoint from "../item/MCU_Waypoint"
+import makeAirfieldVehicle from "./airfield.vehicle"
+
+const {itemTag, itemFlag} = data
 
 // Make airfield vehicle routes
-module.exports = function makeAirfieldRoutes(airfield, routes) {
+export default function makeAirfieldRoutes(airfield, routes) {
 
 	if (!airfield.value || !airfield.country || !routes || !routes.length) {
 		return

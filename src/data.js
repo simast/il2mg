@@ -1,9 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const fs = require("fs")
-const path = require("path")
-const moment = require("moment")
+import fs from "fs"
+import path from "path"
+import moment from "moment"
+import addLazyProperty from "lazy-property"
 
 // Data directory index file key
 const DATA_INDEX_FILE = "index"
@@ -35,86 +35,101 @@ class Data {
 			this.dataPath = path.join(require("electron").app.getAppPath(), this.dataPath)
 		}
 
-		// Load all static data
-		this.items = this.load(path.join("items", DATA_INDEX_FILE)) || []
-		this.vehicles = this.load("vehicles")
-		this.clouds = this.load("clouds")
-		this.time = this.load("time")
-		this.callsigns = this.load("callsigns")
-		this.countries = this.load("countries")
-		this.battles = this.load("battles")
-		this.tasks = this.load("tasks")
-		this.planes = Object.create(null)
-
-		// Load countries
-		for (const countryID in this.countries) {
-
-			const country = this.countries[countryID]
-			const countryPath = path.join("countries", countryID)
-
-			country.formations = this.load(path.join(countryPath, "formations"))
-			country.names = this.load(path.join(countryPath, "names"))
-			country.ranks = this.load(path.join(countryPath, "ranks"))
-		}
+		// Lazy load all static data
+		addLazyProperty(this, "items", () => this.load(path.join("items", DATA_INDEX_FILE)) || [])
+		addLazyProperty(this, "vehicles", () => this.load("vehicles"))
+		addLazyProperty(this, "clouds", () => this.load("clouds"))
+		addLazyProperty(this, "time", () => this.load("time"))
+		addLazyProperty(this, "callsigns", () => this.load("callsigns"))
+		addLazyProperty(this, "tasks", () => this.load("tasks"))
 
 		// Load planes
-		const planeData = this.load("planes")
+		addLazyProperty(this, "planes", () => {
 
-		for (const planeGroup in planeData) {
-			for (const planeID in planeData[planeGroup]) {
-				this.planes[planeID] = planeData[planeGroup][planeID]
+			const planes = Object.create(null)
+			const planeData = this.load("planes")
+
+			for (const planeGroup in planeData) {
+				for (const planeID in planeData[planeGroup]) {
+					planes[planeID] = planeData[planeGroup][planeID]
+				}
 			}
-		}
 
-		Object.freeze(this.planes)
+			return Object.freeze(planes)
+		})
+
+		// Load countries
+		addLazyProperty(this, "countries", () => {
+
+			const countries = this.load("countries")
+
+			for (const countryID in countries) {
+
+				const country = countries[countryID]
+				const countryPath = path.join("countries", countryID)
+
+				addLazyProperty(country, "formations", () => (
+					this.load(path.join(countryPath, "formations"))
+				))
+
+				addLazyProperty(country, "names", () => this.load(path.join(countryPath, "names")))
+				addLazyProperty(country, "ranks", () => this.load(path.join(countryPath, "ranks")))
+			}
+
+			return countries
+		})
 
 		// Load battles
-		// TODO: Load only required mission battle data
-		for (const battleID in this.battles) {
+		addLazyProperty(this, "battles", () => {
 
-			const battle = this.battles[battleID]
-			const battlePath = path.join("battles", battleID)
+			const battles = this.load("battles")
 
-			battle.countries = []
-			battle.blocks = this.load(path.join(battlePath, "blocks"))
-			battle.locations = this.load(path.join(battlePath, "locations"))
-			battle.fronts = this.load(path.join(battlePath, "fronts"))
-			battle.map = this.load(path.join(battlePath, "map"))
-			battle.weather = this.load(path.join(battlePath, "weather"))
-			battle.airfields = this.load(path.join(battlePath, "airfields"))
-			battle.roles = this.load(path.join(battlePath, "roles"))
-			battle.units = Object.create(null)
+			for (const battleID in battles) {
 
-			// Load battle unit data
-			const unitsData = this.load(path.join(battlePath, "units"))
+				const battle = battles[battleID]
+				const battlePath = path.join("battles", battleID)
 
-			for (let unitCountryID in unitsData) {
+				addLazyProperty(battle, "blocks", () => this.load(path.join(battlePath, "blocks")))
+				addLazyProperty(battle, "locations", () => this.load(path.join(battlePath, "locations")))
+				addLazyProperty(battle, "fronts", () => this.load(path.join(battlePath, "fronts")))
+				addLazyProperty(battle, "map", () => this.load(path.join(battlePath, "map")))
+				addLazyProperty(battle, "weather", () => this.load(path.join(battlePath, "weather")))
+				addLazyProperty(battle, "airfields", () => this.load(path.join(battlePath, "airfields")))
+				addLazyProperty(battle, "roles", () => this.load(path.join(battlePath, "roles")))
 
-				unitCountryID = parseInt(unitCountryID, 10)
+				// Load battle unit data
+				addLazyProperty(battle, "units", () => {
 
-				// Ignore invalid country IDs
-				if (isNaN(unitCountryID) || !this.countries[unitCountryID]) {
-					continue
-				}
+					const units = Object.create(null)
+					const unitsData = this.load(path.join(battlePath, "units"))
 
-				const unitsDataCountry = unitsData[unitCountryID]
+					for (let unitCountryID in unitsData) {
 
-				// Build units list
-				for (const unitGroup in unitsDataCountry) {
-					for (const unitID in unitsDataCountry[unitGroup]) {
+						unitCountryID = parseInt(unitCountryID, 10)
 
-						battle.units[unitID] = unitsDataCountry[unitGroup][unitID]
-						battle.units[unitID].country = unitCountryID
+						// Ignore invalid country IDs
+						if (isNaN(unitCountryID) || !this.countries[unitCountryID]) {
+							continue
+						}
+
+						const unitsDataCountry = unitsData[unitCountryID]
+
+						// Build units list
+						for (const unitGroup in unitsDataCountry) {
+							for (const unitID in unitsDataCountry[unitGroup]) {
+
+								units[unitID] = unitsDataCountry[unitGroup][unitID]
+								units[unitID].country = unitCountryID
+							}
+						}
 					}
-				}
 
-				// Register country as part of the battle
-				battle.countries.push(unitCountryID)
+					return Object.freeze(units)
+				})
 			}
 
-			Object.freeze(battle.countries)
-			Object.freeze(battle.units)
-		}
+			return battles
+		})
 	}
 
 	/**
@@ -352,7 +367,7 @@ class Data {
 	}
 }
 
-const data = module.exports = new Data()
+const data = new Data()
 
 // Application name
 data.name = "il2mg"
@@ -505,3 +520,5 @@ data.briefingColor = Object.freeze({
 	LIGHT: "#fbfbfb",
 	DARK: "#959595"
 })
+
+export default data

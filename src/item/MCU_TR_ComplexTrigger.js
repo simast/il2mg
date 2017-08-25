@@ -1,8 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
-const MCU = require("./MCU")
+import {DEFAULT_DAMAGE_REPORT} from "../item"
+import MCU from "./MCU"
 
 // Complex Trigger event filters (with order representing bit number in binary file)
 const eventFilters = [
@@ -30,7 +29,7 @@ const eventFilters = [
 ]
 
 // Complex Trigger item
-module.exports = class MCU_TR_ComplexTrigger extends MCU {
+export default class MCU_TR_ComplexTrigger extends MCU {
 
 	constructor() {
 		super()
@@ -39,7 +38,7 @@ module.exports = class MCU_TR_ComplexTrigger extends MCU {
 		this.Cylinder = 1
 		this.Radius = 1000
 		this.DamageThreshold = 1
-		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT
+		this.DamageReport = DEFAULT_DAMAGE_REPORT
 		this.CheckPlanes = 0
 		this.CheckVehicles = 0
 

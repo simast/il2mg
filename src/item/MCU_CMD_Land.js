@@ -1,15 +1,19 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
+
+// Land command priority constants
+export const PRIORITY_LOW = 0
+export const PRIORITY_MEDIUM = 1
+export const PRIORITY_HIGH = 2
 
 // Land command item
-class MCU_CMD_Land extends MCU {
+export default class MCU_CMD_Land extends MCU {
 
 	constructor() {
 		super()
 
-		this.Priority = MCU_CMD_Land.PRIORITY_MEDIUM
+		this.Priority = PRIORITY_MEDIUM
 	}
 
 	/**
@@ -30,10 +34,3 @@ class MCU_CMD_Land extends MCU {
 		yield buffer
 	}
 }
-
-// Land command priority constants
-MCU_CMD_Land.PRIORITY_LOW = 0
-MCU_CMD_Land.PRIORITY_MEDIUM = 1
-MCU_CMD_Land.PRIORITY_HIGH = 2
-
-module.exports = MCU_CMD_Land

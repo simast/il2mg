@@ -1,7 +1,8 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {altitudeLevel} = require("../data")
+import data from "../data"
+
+const {altitudeLevel} = data
 
 // Valid altitude ranges (in meters)
 const altitudeRange = {
@@ -11,7 +12,7 @@ const altitudeRange = {
 }
 
 // Make flight altitude profile
-module.exports = function makeFlightAltitude(flight) {
+export default function makeFlightAltitude(flight) {
 
 	const rand = this.rand
 	const clouds = this.weather.clouds

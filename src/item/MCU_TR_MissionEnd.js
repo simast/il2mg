@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const MCU = require("./MCU")
+import MCU from "./MCU"
 
 // Mission End item
-module.exports = class MCU_TR_MissionEnd extends MCU {
+export default class MCU_TR_MissionEnd extends MCU {
 
 	constructor() {
 		super()

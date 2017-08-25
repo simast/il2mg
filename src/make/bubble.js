@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const Quadtree = require("quadtree-lib")
-const addLazyProperty = require("lazy-property")
-const encloseCircles = require("circle-enclose")
-const {PRECISION_POSITION} = require("../item")
+import Quadtree from "quadtree-lib"
+import addLazyProperty from "lazy-property"
+import encloseCircles from "circle-enclose"
+import {PRECISION_POSITION} from "../item"
 
 // NOTE: The goal of a bubble system is to make sure that the least amount of
 // check zone triggers are active in a mission at a given time. A quad tree is
@@ -19,7 +18,7 @@ const ZONE_TIME_CHECK_MAX = 50
 const ZONE_TIME_UNLOAD = 10
 
 // Generate mission activity bubble
-module.exports = function makeBubble() {
+export default function makeBubble() {
 
 	const {rand, map} = this
 

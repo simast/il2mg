@@ -1,18 +1,23 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
+import Item, {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from "../item"
+
+// Vehicle AI level constants
+export const AI_PLAYER = 0
+export const AI_LOW = 1
+export const AI_NORMAL = 2
+export const AI_HIGH = 3
 
 // Vehicle item
-class Vehicle extends Item {
+export default class Vehicle extends Item {
 
 	constructor() {
 		super()
 
 		this.DamageThreshold = 1
-		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT
-		this.Country = Item.DEFAULT_COUNTRY
-		this.AILevel = Vehicle.AI_NORMAL
+		this.DamageReport = DEFAULT_DAMAGE_REPORT
+		this.Country = DEFAULT_COUNTRY
+		this.AILevel = AI_NORMAL
 		this.NumberInFormation = 0
 		this.Vulnerable = 1
 		this.Engageable = 1
@@ -98,11 +103,3 @@ class Vehicle extends Item {
 		yield buffer
 	}
 }
-
-// Vehicle AI level constants
-Vehicle.AI_PLAYER = 0
-Vehicle.AI_LOW = 1
-Vehicle.AI_NORMAL = 2
-Vehicle.AI_HIGH = 3
-
-module.exports = Vehicle

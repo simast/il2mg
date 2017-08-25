@@ -1,8 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
 // Plan activity used to land on airfield (and end the flight)
-module.exports = class ActivityLand {
+export default class ActivityLand {
 
 	// Make land activity action
 	makeAction(element, input) {

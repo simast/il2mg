@@ -1,13 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const moment = require("moment")
-const data = require("../data")
-const log = require("../log")
-const {isValidRebaseTask} = require("./task.rebase")
+import moment from "moment"
+import data from "../data"
+import log from "../log"
+import {isValidRebaseTask} from "./task.rebase"
 
 // Generate available mission units
-module.exports = function makeUnits() {
+export default function makeUnits() {
 
 	const {rand, battle, choice, map} = this
 	const planeStorages = new Set()

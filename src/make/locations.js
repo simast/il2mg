@@ -1,15 +1,14 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const path = require("path")
-const rbush = require("rbush")
-const knn = require("rbush-knn")
-const {Vector} = require("sylvester")
-const data = require("../data")
-const log = require("../log")
+import path from "path"
+import rbush from "rbush"
+import knn from "rbush-knn"
+import sylvester from "sylvester"
+import data from "../data"
+import log from "../log"
 
 // Generate mission locations
-module.exports = function makeLocations() {
+export default function makeLocations() {
 
 	// Locations database
 	this.locations = Object.create(null)
@@ -99,7 +98,7 @@ module.exports = function makeLocations() {
 }
 
 // Location data entry
-class Location {
+export class Location {
 
 	// NOTE: All location entries are rectangles described with x1/z1 and x2/z2
 	// bounding box corner coordinate points. A simple point location entry will
@@ -133,7 +132,7 @@ class Location {
 
 	// Get location as a 2D vector object
 	get vector() {
-		return Vector.create([this.x, this.z])
+		return sylvester.Vector.create([this.x, this.z])
 	}
 }
 
@@ -202,5 +201,3 @@ Location.Index = class {
 		return knn(this.tree, location.x, location.z, maxLocations)
 	}
 }
-
-module.exports.Location = Location

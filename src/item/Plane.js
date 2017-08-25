@@ -1,21 +1,32 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const Item = require("../item")
+import Item, {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from "../item"
+
+// Plane AI level constants
+export const AI_PLAYER = 0
+export const AI_LOW = 1
+export const AI_NORMAL = 2
+export const AI_HIGH = 3
+export const AI_ACE = 4
+
+// Plane start state constants
+export const START_AIR = 0
+export const START_RUNWAY = 1
+export const START_PARKING = 2
 
 // Plane item
-class Plane extends Item {
+export default class Plane extends Item {
 
 	constructor() {
 		super()
 
 		this.DamageThreshold = 1
-		this.DamageReport = Item.DEFAULT_DAMAGE_REPORT
-		this.Country = Item.DEFAULT_COUNTRY
-		this.AILevel = Plane.AI_NORMAL
+		this.DamageReport = DEFAULT_DAMAGE_REPORT
+		this.Country = DEFAULT_COUNTRY
+		this.AILevel = AI_NORMAL
 		this.CoopStart = 0
 		this.NumberInFormation = 0
-		this.StartInAir = Plane.START_AIR
+		this.StartInAir = START_AIR
 		this.Callsign = 0
 		this.Callnum = 0
 		this.Time = 60
@@ -121,17 +132,3 @@ class Plane extends Item {
 		yield buffer
 	}
 }
-
-// Plane AI level constants
-Plane.AI_PLAYER = 0
-Plane.AI_LOW = 1
-Plane.AI_NORMAL = 2
-Plane.AI_HIGH = 3
-Plane.AI_ACE = 4
-
-// Plane start state constants
-Plane.START_AIR = 0
-Plane.START_RUNWAY = 1
-Plane.START_PARKING = 2
-
-module.exports = Plane

@@ -1,10 +1,11 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {flightState, itemFlag} = require("../data")
+import data from "../data"
+
+const {flightState, itemFlag} = data
 
 // Plan activity used to taxi (optionally) and take off from airfield
-module.exports = class ActivityTakeOff {
+export default class ActivityTakeOff {
 
 	// Make take off activity action
 	makeAction(element, input) {

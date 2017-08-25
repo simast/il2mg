@@ -1,7 +1,6 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const winston = require("winston")
+import winston from "winston"
 
 // Colors used for each log level
 const logColors = {
@@ -18,7 +17,7 @@ Object.keys(logColors).forEach((value, index) => {
 })
 
 // Setup winston logger
-const log = module.exports = new (winston.Logger)({
+const log = new (winston.Logger)({
 	levels: logLevels,
 	colors: logColors,
 	transports: [
@@ -51,3 +50,5 @@ console.error = function() {
 		throw Array.prototype.slice.call(arguments)
 	}
 }
+
+export default log

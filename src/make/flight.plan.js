@@ -1,10 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {activityType} = require("../data")
+import data from "../data"
+
+const {activityType} = data
 
 // Make mission flight plan
-module.exports = function makeFlightPlan(flight) {
+export default function makeFlightPlan(flight) {
 
 	const plan = flight.plan = []
 	const task = flight.task
@@ -26,7 +27,7 @@ module.exports = function makeFlightPlan(flight) {
 	plan.push(makeActivity.call(this, flight, {type: activityType.FORM}))
 
 	// Make task specific plan
-	require("./task." + task.id).call(this, flight)
+	require("./task." + task.id).default.call(this, flight)
 
 	// Land plan activity
 	if (plan.land === undefined) {
@@ -38,13 +39,13 @@ module.exports = function makeFlightPlan(flight) {
 }
 
 // Utility/factory function used to create flight plan activities
-function makeActivity(flight, params = {}) {
+export function makeActivity(flight, params = {}) {
 
 	let activity = {}
 
 	// Create a common activity type/class
 	if (params.type) {
-		activity = new (require("./activity." + params.type))()
+		activity = new (require("./activity." + params.type).default)()
 	}
 
 	// Set activity params
@@ -54,5 +55,3 @@ function makeActivity(flight, params = {}) {
 
 	return activity
 }
-
-module.exports.makeActivity = makeActivity

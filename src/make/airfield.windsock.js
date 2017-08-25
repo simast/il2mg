@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
+import data from "../data"
 
 // Make airfield windsock item
-module.exports = function makeAirfieldWindsock(airfield, item) {
+export default function makeAirfieldWindsock(airfield, item) {
 
 	if (!airfield.country) {
 		return

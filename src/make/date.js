@@ -1,14 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const moment = require("moment")
-const log = require("../log")
+import moment from "moment"
+import log from "../log"
 
 // Generate mission date
-module.exports = function makeDate() {
+export default function makeDate() {
 
-	const params = this.params
-	const index = this.index
+	const {params, index} = this
 	const options = this.items.Options
 
 	// Parse date as moment object

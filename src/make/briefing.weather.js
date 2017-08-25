@@ -1,8 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {weatherState, precipitation} = require("../data")
-const makeBriefingText = require("./briefing.text")
+import data from "../data"
+import makeBriefingText from "./briefing.text"
+
+const {weatherState, precipitation} = data
 
 // General weather description segments
 const generalSegments = [
@@ -130,7 +131,7 @@ const windDirectionSegments = {
 }
 
 // Make weather briefing
-module.exports = function makeBriefingWeather() {
+export default function makeBriefingWeather() {
 
 	const rand = this.rand
 	const weather = this.weather

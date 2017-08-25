@@ -1,13 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const path = require("path")
-const log = require("../log")
-const Item = require("../item")
-const data = require("../data")
+import path from "path"
+import log from "../log"
+import {DEFAULT_COALITION, DEFAULT_COUNTRY} from "../item"
+import data from "../data"
 
 // Generate mission battle info
-module.exports = function makeBattle() {
+export default function makeBattle() {
 
 	const params = this.params
 	let battleID = params.battle
@@ -39,8 +38,8 @@ module.exports = function makeBattle() {
 		const countries = Object.create(null)
 
 		// Unknown (neutral) country and coalition
-		coalitions.push(Item.DEFAULT_COALITION)
-		countries[Item.DEFAULT_COUNTRY] = Item.DEFAULT_COALITION
+		coalitions.push(DEFAULT_COALITION)
+		countries[DEFAULT_COUNTRY] = DEFAULT_COALITION
 
 		battle.countries.forEach(countryID => {
 

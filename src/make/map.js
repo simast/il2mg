@@ -1,16 +1,17 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {Sylvester, Vector, Line, Plane} = require("sylvester")
-const {mapColor} = require("../data")
-const {MCU_Icon} = require("../item")
+import sylvester from "sylvester"
+import data from "../data"
+import * as MCU_Icon from "../item/MCU_Icon"
+
+const {mapColor} = data
 
 // Restricted zone around map area border
 // NOTE: Using 1 extra point to not overlap with map grid and location search
-const RESTRICTED_BORDER = 20000 + 1 // 20 Km
+export const RESTRICTED_BORDER = 20000 + 1 // 20 Km
 
 // Generate mission map data
-module.exports = function makeMap() {
+export default function makeMap() {
 
 	const options = this.items.Options
 	const map = {}
@@ -41,6 +42,7 @@ module.exports = function makeMap() {
 // Get X/Z point from given point/position/vector arguments
 function getPointFromArgs(args) {
 
+	const {Vector} = sylvester
 	let posX, posZ
 
 	// Array argument
@@ -68,7 +70,7 @@ function getPointFromArgs(args) {
 }
 
 // Check if a given point/position/vector is offmap
-function isOffmap(map, ...args) {
+export function isOffmap(map, ...args) {
 
 	const [posX, posZ] = getPointFromArgs(args)
 
@@ -76,7 +78,7 @@ function isOffmap(map, ...args) {
 }
 
 // Check if a given point/position/vector is in the restricted map border zone
-function isRestricted(map, ...args) {
+export function isRestricted(map, ...args) {
 
 	const [posX, posZ] = getPointFromArgs(args)
 
@@ -87,8 +89,9 @@ function isRestricted(map, ...args) {
 }
 
 // Get map border bounds intersection data
-function getMapIntersection(map, fromVector, toVector, distance) {
+export function getMapIntersection(map, fromVector, toVector, distance) {
 
+	const {Sylvester, Vector, Line, Plane} = sylvester
 	let borderPlanesCache = getMapIntersection.borderPlanesCache
 
 	// Initialize map border planes cache
@@ -151,7 +154,7 @@ function getMapIntersection(map, fromVector, toVector, distance) {
 }
 
 // Mark map area with a circle (with all GUI icons owned by a given flight)
-function markMapArea(flight, {
+export function markMapArea(flight, {
 	position, // Center positions of the circle
 	radius = 5000,
 	perfect, // Draw a perfect circle
@@ -160,6 +163,7 @@ function markMapArea(flight, {
 	color // Circle color
 }) {
 
+	const {Vector, Line} = sylvester
 	const rand = this.rand
 	const centerVector = Vector.create(position)
 	const iconDegrees = perfect ? [0, 90, 180, 270] : [0, 120, 240]
@@ -222,9 +226,3 @@ function markMapArea(flight, {
 
 	return icons
 }
-
-module.exports.RESTRICTED_BORDER = RESTRICTED_BORDER
-module.exports.isOffmap = isOffmap
-module.exports.isRestricted = isRestricted
-module.exports.getMapIntersection = getMapIntersection
-module.exports.markMapArea = markMapArea

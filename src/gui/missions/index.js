@@ -1,5 +1,4 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict"
 
 // Mission file extensions
 export const FileExtension = Object.freeze({

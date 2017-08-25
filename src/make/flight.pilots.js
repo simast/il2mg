@@ -1,12 +1,11 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const data = require("../data")
-const {Plane} = require("../item")
-const people = require("./people")
+import data from "../data"
+import * as Plane from "../item/Plane"
+import people from "./people"
 
 // Make mission flight pilots
-module.exports = function makeFlightPilots(flight) {
+export default function makeFlightPilots(flight) {
 
 	// TODO: Support female pilots/names
 

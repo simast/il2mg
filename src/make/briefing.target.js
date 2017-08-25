@@ -1,10 +1,11 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const numeral = require("numeral")
-const {Vector} = require("sylvester")
-const {Location} = require("./locations")
-const {location} = require("../data")
+import numeral from "numeral"
+import sylvester from "sylvester"
+import {Location} from "./locations"
+import data from "../data"
+
+const {location} = data
 
 // Briefing map grid size
 const GRID_SIZE = 10000 // 10 km
@@ -21,7 +22,7 @@ const placeTypeNames = {
 }
 
 // Make briefing target/location description
-module.exports = function makeBriefingTarget(target) {
+export default function makeBriefingTarget(target) {
 
 	if (!Array.isArray(target) || !target.length) {
 		return
@@ -32,6 +33,7 @@ module.exports = function makeBriefingTarget(target) {
 		target = target.slice(0, 2)
 	}
 
+	const {Vector} = sylvester
 	const isSingleTarget = (target.length < 2)
 	const locations = this.locations
 	const targetPlaces = []

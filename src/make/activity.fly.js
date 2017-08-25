@@ -1,12 +1,13 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const numeral = require("numeral")
-const {Vector} = require("sylvester")
-const {MCU_Icon} = require("../item")
-const {mapColor, altitudeLevel} = require("../data")
-const makeFlightFuel = require("./flight.fuel")
-const makeBriefingLead = require("./briefing.lead")
+import numeral from "numeral"
+import sylvester from "sylvester"
+import * as MCU_Icon from "../item/MCU_Icon"
+import data from "../data"
+import makeFlightFuel from "./flight.fuel"
+import makeBriefingLead from "./briefing.lead"
+
+const {mapColor, altitudeLevel} = data
 
 // Minimum distance required between start position and the next spot
 const MIN_SPOT_DISTANCE = 5000 // 5 Km
@@ -22,7 +23,7 @@ const outroSegments = [
 ]
 
 // Plan activity used to fly
-module.exports = class ActivityFly {
+export default class ActivityFly {
 
 	// Make fly activity action
 	makeAction(element, input) {
@@ -160,6 +161,7 @@ module.exports = class ActivityFly {
 	// Make fly activity state
 	makeState(time) {
 
+		const {Vector} = sylvester
 		const {mission, flight, route} = this
 		const {plan} = flight
 		const state = time / this.time
@@ -334,6 +336,7 @@ module.exports = class ActivityFly {
 	// Walk over route (reporting distance for each spot)
 	walkRoute(callback) {
 
+		const {Vector} = sylvester
 		let prevSpotVector = Vector.create(this.position)
 
 		// Walk each route spot

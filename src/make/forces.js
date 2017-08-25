@@ -1,11 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const log = require("../log")
-const makeFlight = require("./flight")
+import log from "../log"
+import makeFlight from "./flight"
 
 // Generate mission task forces
-module.exports = function makeForces() {
+export default function makeForces() {
 
 	this.activeFlights = []
 	this.suspendedUnits = Object.create(null)

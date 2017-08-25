@@ -1,11 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const moment = require("moment")
-const Item = require("../item")
+import moment from "moment"
+import Item from "../item"
 
 // Options item
-module.exports = class Options extends Item {
+export default class Options extends Item {
 
 	get hasIndex() { return false }
 

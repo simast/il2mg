@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const makeFlightFuel = require("./flight.fuel")
+import makeFlightFuel from "./flight.fuel"
 
 // Plan activity used to do nothing and wait for a specified amount of time
-module.exports = class ActivityWait {
+export default class ActivityWait {
 
 	// Make wait activity action
 	makeAction(element, input) {

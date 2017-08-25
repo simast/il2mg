@@ -1,10 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const mustache = require("mustache")
-const data = require("../data")
-const people = require("./people")
-const makeBriefingTarget = require("./briefing.target")
+import mustache from "mustache"
+import data from "../data"
+import people from "./people"
+import makeBriefingTarget from "./briefing.target"
 
 // Default string constants
 const PLANE = "plane"
@@ -51,7 +50,7 @@ const planeTypeNames = {
  * @param {object} [view] Extra template view data.
  * @returns {string} Rendered briefing text.
  */
-module.exports = function makeBriefingText(template, view) {
+export default function makeBriefingText(template, view) {
 
 	const rand = this.rand
 	const flight = this.player.flight

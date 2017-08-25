@@ -1,11 +1,12 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {MCU_CMD_Formation} = require("../item")
-const {flightState} = require("../data")
+import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
+import data from "../data"
+
+const {flightState} = data
 
 // Plan activity used to form up (set formation and element cover)
-module.exports = class ActivityForm {
+export default class ActivityForm {
 
 	// Make form activity action
 	makeAction(element, input) {

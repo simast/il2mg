@@ -1,12 +1,12 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const {MCU_CMD_Effect} = require("../item")
-const data = require("../data")
+import * as MCU_CMD_Effect from "../item/MCU_CMD_Effect"
+import data from "../data"
+
 const {itemTag, itemFlag, precipitation} = data
 
 // Make airfield effect item
-module.exports = function makeAirfieldEffect(airfield, item) {
+export default function makeAirfieldEffect(airfield, item) {
 
 	if (!airfield.country) {
 		return

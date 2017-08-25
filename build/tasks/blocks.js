@@ -1,16 +1,14 @@
 /** @copyright Simas Toleikis, 2015 */
-"use strict"
 
-const path = require("path")
-const numeral = require("numeral")
+import path from "path"
+import numeral from "numeral"
+import data from "../../src/data"
+import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from "../../src/item"
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw blocks .Group to .json files
 	grunt.registerTask("build:blocks", "Build blocks JSON files.", () => {
-
-		const data = require("../../src/data")
-		const Item = require("../../src/item")
 
 		let totalBattles = 0
 		let totalItems = 0
@@ -53,12 +51,12 @@ module.exports = function(grunt) {
 							jsonItem.push(itemTypeID)
 
 							// Item position
-							jsonItem.push(Number(block.XPos.toFixed(Item.PRECISION_POSITION)))
-							jsonItem.push(Number(block.YPos.toFixed(Item.PRECISION_POSITION)))
-							jsonItem.push(Number(block.ZPos.toFixed(Item.PRECISION_POSITION)))
+							jsonItem.push(Number(block.XPos.toFixed(PRECISION_POSITION)))
+							jsonItem.push(Number(block.YPos.toFixed(PRECISION_POSITION)))
+							jsonItem.push(Number(block.ZPos.toFixed(PRECISION_POSITION)))
 
 							// Item orientation
-							jsonItem.push(Number(block.YOri.toFixed(Item.PRECISION_ORIENTATION)))
+							jsonItem.push(Number(block.YOri.toFixed(PRECISION_ORIENTATION)))
 
 							json.push(jsonItem)
 

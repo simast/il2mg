@@ -1,11 +1,10 @@
 /** @copyright Simas Toleikis, 2017 */
-"use strict"
 
-const addLazyProperty = require("lazy-property")
-const {makeActivityState} = require("./flight.state")
-const makeFlightTime = require("./flight.time")
-const makeFlightPose = require("./flight.pose")
-const makeFlightActions = require("./flight.actions")
+import addLazyProperty from "lazy-property"
+import {makeActivityState} from "./flight.state"
+import makeFlightTime from "./flight.time"
+import makeFlightPose from "./flight.pose"
+import makeFlightActions from "./flight.actions"
 
 // Virtual activity zone size as inner, base and outer circle radius (km)
 // NOTE: Virtual point activity zones will use either one or two check zones.
@@ -22,7 +21,7 @@ const ZONE_RADIUS_OUTER = 10500
 const UNLOAD_PROXIMITY_DISTANCE = 11000
 
 // Make virtual flight
-module.exports = function makeFlightVirtual(flight) {
+export default function makeFlightVirtual(flight) {
 
 	if (!flight.virtual || flight.time <= 0) {
 		return

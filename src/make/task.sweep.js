@@ -1,17 +1,18 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const {Vector} = require("sylvester")
-const {activityType, territory} = require("../data")
-const {makeActivity} = require("./flight.plan")
-const {Location} = require("./locations")
-const {MCU_Waypoint} = require("../item")
-const {findBasePoints} = require("./task.patrol")
-const {isRestricted} = require("./map")
+import sylvester from "sylvester"
+import data from "../data"
+import {makeActivity} from "./flight.plan"
+import {Location} from "./locations"
+import * as MCU_Waypoint from "../item/MCU_Waypoint"
+import {findBasePoints} from "./task.patrol"
+import {isRestricted} from "./map"
+
+const {activityType, territory} = data
 
 // Flight make parts
-const makeFlightAltitude = require("./flight.altitude")
-const makeFlightRoute = require("./flight.route")
+import makeFlightAltitude from "./flight.altitude"
+import makeFlightRoute from "./flight.route"
 
 // Max fighter sweep route range restrictions
 const MAX_RANGE_FUEL = 75 // 75%
@@ -26,8 +27,9 @@ const MIN_DISTANCE = 15000
 const MAX_DISTANCE = 120000
 
 // Make mission fighter sweep task
-module.exports = function makeTaskSweep(flight) {
+export default function makeTaskSweep(flight) {
 
+	const {Vector} = sylvester
 	const {rand, map} = this
 	const airfield = this.airfields[flight.airfield]
 	const startX = airfield.position[0]

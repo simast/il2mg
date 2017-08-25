@@ -1,8 +1,10 @@
 /** @copyright Simas Toleikis, 2016 */
-"use strict"
 
-const numeral = require("numeral")
-const moment = require("moment")
+import numeral from "numeral"
+import moment from "moment"
+import data from "../../src/data"
+import {isValidRebaseTask} from "../../src/make/task.rebase"
+import {isOffmap} from "../../src/make/map"
 
 module.exports = function(grunt) {
 
@@ -10,10 +12,6 @@ module.exports = function(grunt) {
 
 	// Grunt task used to build battle index database
 	grunt.registerTask("build:index", "Build index database JSON files.", () => {
-
-		const data = require("../../src/data")
-		const {isValidRebaseTask} = require("../../src/make/task.rebase")
-		const {isOffmap} = require("../../src/make/map")
 
 		let totalBattles = 0
 		let totalUnits = 0
