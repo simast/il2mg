@@ -7,12 +7,12 @@ import moment from "moment"
 import params from "commander"
 import log from "./log"
 import Mission from "./mission"
-import {Coalition} from "./item"
 import {WeatherState} from "./make/weather"
 import {MapSeason} from "./make/map"
 import {FlightState} from "./make/flight"
 
 import data, {
+	Coalition,
 	APPLICATION_NAME,
 	APPLICATION_VERSION,
 	APPLICATION_COPYRIGHT

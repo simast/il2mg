@@ -3,8 +3,7 @@
 import path from "path"
 import sylvester from "sylvester"
 import * as MCU_Icon from "../item/MCU_Icon"
-import data from "../data"
-import {Coalition} from "../item"
+import data, {Coalition} from "../data"
 import {Location} from "./locations"
 import {MapColor} from "./map"
 

@@ -1,8 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 
-import data from "../data"
-
-const {itemFlag} = data
+import data, {ItemFlag} from "../data"
 
 // Make airfield static item
 export default function makeAirfieldStatic(airfield, item) {
@@ -13,7 +11,7 @@ export default function makeAirfieldStatic(airfield, item) {
 	staticItem.setOrientation(item[4])
 
 	// Set static item country (required for spawning infantry)
-	if (airfield.country && item[5] !== itemFlag.BLOCK_DECO) {
+	if (airfield.country && item[5] !== ItemFlag.BlockDecoration) {
 
 		const time = this.time
 		let countryChance = 0.8 // 80%

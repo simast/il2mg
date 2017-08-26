@@ -2,7 +2,7 @@
 
 import numeral from "numeral"
 import moment from "moment"
-import data from "../../src/data"
+import data, {matchDateRange} from "../../src/data"
 import {isValidRebaseTask} from "../../src/make/task.rebase"
 import {isOffmap} from "../../src/make/map"
 
@@ -199,7 +199,7 @@ module.exports = function(grunt) {
 					const dateKey = date.format("YYYY-MM-DD")
 
 					// Utility function used to match to/from date ranges
-					const matchDateRange = data.matchDateRange.bind(undefined, {
+					const isValidDateRange = matchDateRange.bind(undefined, {
 						from: battleFrom,
 						to: battleTo,
 						date
@@ -216,7 +216,7 @@ module.exports = function(grunt) {
 
 						for (const dataRole of dataRoles) {
 
-							if (matchDateRange(dataRole[1], dataRole[2])) {
+							if (isValidDateRange(dataRole[1], dataRole[2])) {
 
 								const roleData = battle.roles[unitCountry][dataRole[0]]
 
@@ -240,7 +240,7 @@ module.exports = function(grunt) {
 
 						for (const dataPlane of dataPlanes) {
 
-							if (matchDateRange(dataPlane[2], dataPlane[3])) {
+							if (isValidDateRange(dataPlane[2], dataPlane[3])) {
 
 								let planeID = dataPlane[0]
 								let planeData = data.planes[planeID]
@@ -294,7 +294,7 @@ module.exports = function(grunt) {
 								continue
 							}
 
-							if (matchDateRange(dataAirfield[1], dataAirfield[2])) {
+							if (isValidDateRange(dataAirfield[1], dataAirfield[2])) {
 
 								let availability = dataAirfield[3]
 

@@ -8,9 +8,7 @@ import {Location, LocationType} from "./locations"
 import {isOffmap} from "./map"
 import {FlightState} from "./flight"
 import {PlaneSize, getPlaneSizeFromName} from "./planes"
-import data from "../data"
-
-const {itemTag} = data
+import data, {ItemTag} from "../data"
 
 // Airfield make parts
 import makeAirfieldLimits from "./airfield.limits"
@@ -369,23 +367,23 @@ export default function makeAirfields() {
 				else {
 
 					// Plane item
-					if (itemTypeID === itemTag.PLANE) {
+					if (itemTypeID === ItemTag.Plane) {
 						itemObjects = makeAirfieldPlane.call(mission, airfield, item)
 					}
 					// Beacon item
-					else if (itemTypeID === itemTag.BEACON) {
+					else if (itemTypeID === ItemTag.Beacon) {
 						itemObjects = makeAirfieldBeacon.call(mission, airfield, item)
 					}
 					// Windsock item
-					else if (itemTypeID === itemTag.WINDSOCK) {
+					else if (itemTypeID === ItemTag.Windsock) {
 						itemObjects = makeAirfieldWindsock.call(mission, airfield, item)
 					}
 					// Effect item
-					else if (itemTypeID === itemTag.EFFECT) {
+					else if (itemTypeID === ItemTag.Effect) {
 						itemObjects = makeAirfieldEffect.call(mission, airfield, item)
 					}
 					// Wreck item
-					else if (itemTypeID === itemTag.WRECK) {
+					else if (itemTypeID === ItemTag.Wreck) {
 						itemObjects = makeAirfieldWreck.call(mission, airfield, item)
 					}
 					// Vehicle item

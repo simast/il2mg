@@ -4,14 +4,7 @@ import fs from "fs"
 import os from "os"
 import getSlug from "speakingurl"
 import Lexer from "lex"
-import data from "./data"
-
-// Coalitions
-export const Coalition = Object.freeze({
-	Neutral: 0,
-	Allies: 1,
-	Axis: 2
-})
+import data, {Coalition} from "./data"
 
 // Default item data values
 export const DEFAULT_COALITION = Coalition.Neutral

@@ -1,8 +1,6 @@
 /** @copyright Simas Toleikis, 2015 */
 
-import data from "../data"
-
-const {itemFlag} = data
+import data, {ItemFlag} from "../data"
 
 // Make airfield plane item
 export default function makeAirfieldPlane(airfield, item) {
@@ -85,7 +83,7 @@ export default function makeAirfieldPlane(airfield, item) {
 	const planeItemsByUnit = airfield.planeItemsByUnit
 	const staticPlanes = rand.shuffle(plane.static || [])
 	let planeStatic
-	let isCamo = (item[8] === itemFlag.PLANE_CAMO)
+	let isCamo = (item[8] === ItemFlag.PlaneCamouflage)
 
 	// 75% chance to use camouflaged static plane when camo flag is set
 	if (isCamo) {

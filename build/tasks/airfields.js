@@ -2,7 +2,7 @@
 
 import path from "path"
 import numeral from "numeral"
-import data from "../../src/data"
+import data, {ItemTag, ItemFlag} from "../../src/data"
 import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from "../../src/item"
 import {PlaneSize, getPlaneSizeFromName} from "../../src/make/planes"
 
@@ -10,10 +10,6 @@ module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
 	grunt.registerTask("build:airfields", "Build airfields JSON files.", () => {
-
-		// Data constants
-		const itemTag = data.itemTag
-		const itemFlag = data.itemFlag
 
 		let totalBattles = 0
 		let totalAirfields = 0
@@ -113,7 +109,7 @@ module.exports = function(grunt) {
 							// Plane spot
 							if (/^PLANE/.test(item.Name)) {
 
-								itemTypeID = itemTag.PLANE
+								itemTypeID = ItemTag.Plane
 
 								const planeData = item.Name.split(":")
 								let planeDataIndex = 1
@@ -165,7 +161,7 @@ module.exports = function(grunt) {
 								const planeFlag = planeData[planeDataIndex++]
 
 								if (planeFlag === "CAMO") {
-									itemData.push(itemFlag.PLANE_CAMO)
+									itemData.push(ItemFlag.PlaneCamouflage)
 								}
 								else if (planeFlag !== undefined) {
 									grunt.fail.fatal("Invalid plane flag in: " + item.Name)
@@ -191,44 +187,50 @@ module.exports = function(grunt) {
 							}
 							// Cargo truck
 							else if (item.Name === "TRUCK:CARGO") {
-								itemTypeID = itemTag.TRUCK_CARGO
+								itemTypeID = ItemTag.CargoTruck
 							}
 							// Fuel truck
 							else if (item.Name === "TRUCK:FUEL") {
-								itemTypeID = itemTag.TRUCK_FUEL
+								itemTypeID = ItemTag.FuelTruck
 							}
 							// Car vehicle
 							else if (item.Name === "CAR") {
-								itemTypeID = itemTag.CAR
+								itemTypeID = ItemTag.Car
 							}
 							// Anti-aircraft position (MG)
 							else if (item.Name === "AA:MG") {
-								itemTypeID = itemTag.AA_MG
+								itemTypeID = ItemTag.AntiAircraftMG
 							}
 							// Anti-aircraft position (Flak)
 							else if (item.Name === "AA:FLAK") {
-								itemTypeID = itemTag.AA_FLAK
+								itemTypeID = ItemTag.AntiAircraftFlak
 							}
 							// Anti-aircraft position (Train platform)
 							else if (item.Name === "AA:TRAIN") {
-								itemTypeID = itemTag.AA_TRAIN
+								itemTypeID = ItemTag.AntiAircraftTrain
 							}
 							// Search light
 							else if (item.Name === "LIGHT:SEARCH") {
-								itemTypeID = itemTag.LIGHT_SEARCH
+								itemTypeID = ItemTag.SearchLight
 							}
 							// Landing light
 							else if (item.Name === "LIGHT:LAND") {
-								itemTypeID = itemTag.LIGHT_LAND
+								itemTypeID = ItemTag.LandingLight
 							}
 							// Wreck
 							else if (item.Name === "WRECK") {
-								itemTypeID = itemTag.WRECK
+								itemTypeID = ItemTag.Wreck
 							}
-							// Beacon and windsock
-							else if (item.Name === "BEACON" || item.Name === "WINDSOCK") {
+							// Beacon
+							else if (item.Name === "BEACON") {
 
-								itemTypeID = itemTag[item.Name]
+								itemTypeID = ItemTag.Beacon
+								itemData.push(data.registerItemType(itemTypeData))
+							}
+							// Windsock
+							else if (item.Name === "WINDSOCK") {
+
+								itemTypeID = ItemTag.Windsock
 								itemData.push(data.registerItemType(itemTypeData))
 							}
 							// Normal item
@@ -238,11 +240,11 @@ module.exports = function(grunt) {
 
 								// Decoration item flag
 								if (item.Name === "DECO") {
-									itemData.push(itemFlag.BLOCK_DECO)
+									itemData.push(ItemFlag.BlockDecoration)
 								}
 								// Fuel item flag
 								else if (item.Name === "FUEL") {
-									itemData.push(itemFlag.BLOCK_FUEL)
+									itemData.push(ItemFlag.BlockFuel)
 								}
 							}
 
@@ -275,26 +277,26 @@ module.exports = function(grunt) {
 
 							// House smoke effect
 							if (item.Name === "EFFECT:SMOKE") {
-								effectTypeID = itemFlag.EFFECT_SMOKE
+								effectTypeID = ItemFlag.EffectSmoke
 							}
 							// Campfire effect
 							else if (item.Name === "EFFECT:CAMP") {
-								effectTypeID = itemFlag.EFFECT_CAMP
+								effectTypeID = ItemFlag.EffectCampFire
 							}
 							// Landing fire effect
 							else if (item.Name === "EFFECT:LAND") {
-								effectTypeID = itemFlag.EFFECT_LAND
+								effectTypeID = ItemFlag.EffectLandFire
 							}
 							// Siren effect
 							else if (item.Name === "EFFECT:SIREN") {
-								effectTypeID = itemFlag.EFFECT_SIREN
+								effectTypeID = ItemFlag.EffectSiren
 							}
 							// Unknown effect item definition
 							else {
 								grunt.fail.fatal("Invalid effect definition: " + item.Name)
 							}
 
-							const effect = [itemTag.EFFECT]
+							const effect = [ItemTag.Effect]
 
 							// Effect position
 							effect.push(positionX)
@@ -339,7 +341,7 @@ module.exports = function(grunt) {
 								let taxiInvert = 0
 
 								if (taxiFlag === "INV") {
-									taxiInvert = itemFlag.TAXI_INV
+									taxiInvert = ItemFlag.TaxiInvertible
 								}
 								else if (taxiFlag !== undefined) {
 									grunt.fail.fatal("Invalid taxi route flag in: " + item.Name)
@@ -366,7 +368,7 @@ module.exports = function(grunt) {
 
 									// Runway point
 									if (taxiPoint.Type === 2) {
-										taxiPointData.push(itemFlag.TAXI_RUNWAY)
+										taxiPointData.push(ItemFlag.TaxiRunway)
 									}
 
 									taxiPointsData.push(taxiPointData)
@@ -410,11 +412,11 @@ module.exports = function(grunt) {
 
 								// Stop point flag
 								if (waypointFlag === "STOP") {
-									waypointFlag = itemFlag.ROUTE_STOP
+									waypointFlag = ItemFlag.RouteStop
 								}
 								// Road formation flag
 								else if (waypointFlag === "ROAD") {
-									waypointFlag = itemFlag.ROUTE_ROAD
+									waypointFlag = ItemFlag.RouteRoad
 								}
 								// Unknown flag
 								else if (waypointFlag !== undefined) {

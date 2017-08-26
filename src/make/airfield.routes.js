@@ -1,11 +1,9 @@
 /** @copyright Simas Toleikis, 2015 */
 
-import data from "../data"
+import {ItemTag, ItemFlag} from "../data"
 import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
 import * as MCU_Waypoint from "../item/MCU_Waypoint"
 import makeAirfieldVehicle from "./airfield.vehicle"
-
-const {itemTag, itemFlag} = data
 
 // Make airfield vehicle routes
 export default function makeAirfieldRoutes(airfield, routes) {
@@ -22,10 +20,10 @@ export default function makeAirfieldRoutes(airfield, routes) {
 
 		// Weighted vehicle pool (chance) array
 		const vehiclePool = rand.shuffle([
-			itemTag.TRUCK_CARGO,
-			itemTag.TRUCK_CARGO,
-			itemTag.TRUCK_CARGO,
-			itemTag.CAR
+			ItemTag.CargoTruck,
+			ItemTag.CargoTruck,
+			ItemTag.CargoTruck,
+			ItemTag.Car
 		])
 
 		let vehicle = null
@@ -69,10 +67,10 @@ export default function makeAirfieldRoutes(airfield, routes) {
 			const item = route[w]
 			const itemNext = route[w + 1] || route[0]
 			const itemPrev = route[w - 1] || route[route.length - 1]
-			const isStop = (item[2] === itemFlag.ROUTE_STOP)
-			const isRoad = (item[2] === itemFlag.ROUTE_ROAD)
-			const isRoadNext = (itemNext[2] === itemFlag.ROUTE_ROAD)
-			const isRoadPrev = (itemPrev[2] === itemFlag.ROUTE_ROAD)
+			const isStop = (item[2] === ItemFlag.RouteStop)
+			const isRoad = (item[2] === ItemFlag.RouteRoad)
+			const isRoadNext = (itemNext[2] === ItemFlag.RouteRoad)
+			const isRoadPrev = (itemPrev[2] === ItemFlag.RouteRoad)
 
 			// Create waypoint MCU item
 			const waypoint = routeGroup.createItem("MCU_Waypoint")

@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 
 import moment from "moment"
-import data from "../data"
+import data, {matchDateRange} from "../data"
 import log from "../log"
 import {isValidRebaseTask} from "./task.rebase"
 
@@ -12,7 +12,7 @@ export default function makeUnits() {
 	const planeStorages = new Set()
 
 	// Utility function used to match to/from date ranges based on mission date
-	const matchMissionDateRange = data.matchDateRange.bind(undefined, {
+	const matchMissionDateRange = matchDateRange.bind(undefined, {
 		from: moment(battle.from).startOf("day"),
 		to: moment(battle.to).endOf("day"),
 		date: this.date

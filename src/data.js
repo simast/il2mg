@@ -11,6 +11,45 @@ export const APPLICATION_TITLE = "il2mg - Mission Generator"
 export const APPLICATION_VERSION = "r11"
 export const APPLICATION_COPYRIGHT = "(C) Simas Toleikis, 2015-2017"
 
+// Coalitions
+export const Coalition = Object.freeze({
+	Neutral: 0,
+	Allies: 1,
+	Axis: 2
+})
+
+// Data tags for special airfield items
+export const ItemTag = Object.freeze({
+	Plane: -1, // Plane spot
+	CargoTruck: -2, // Cargo truck
+	FuelTruck: -3, // Fuel truck
+	Car: -4, // Car vehicle
+	AntiAircraftMG: -5, // Anti-aircraft (MG)
+	AntiAircraftFlak: -6, // Anti-aircraft (Flak)
+	AntiAircraftTrain: -7, // Anti-aircraft (Train platform)
+	SearchLight: -8, // Search light
+	LandingLight: -9, // Landing light
+	Beacon: -10, // Beacon
+	Windsock: -11, // Windsock
+	Effect: -12, // Effect
+	Wreck: -13 // Wreckage
+})
+
+// Data flags for airfield items
+export const ItemFlag = Object.freeze({
+	BlockDecoration: 1, // Decoration
+	BlockFuel: 2, // Fuel item
+	PlaneCamouflage: 1, // Camouflage plane spot
+	EffectSmoke: 1, // House smoke effect
+	EffectCampFire: 2, // Campfire effect
+	EffectLandFire: 3, // Landing fire effect
+	EffectSiren: 4, // Siren effect
+	TaxiInvertible: 1, // Invertible taxi route
+	TaxiRunway: 1, // Taxi runway point
+	RouteStop: 1, // Route stop point
+	RouteRoad: 2 // Route road formation
+})
+
 // Data directory index file key
 const DATA_INDEX_FILE = "index"
 
@@ -43,6 +82,7 @@ class Data {
 
 		// Lazy load all static data
 		addLazyProperty(this, "items", () => this.load(path.join("items", DATA_INDEX_FILE)) || [])
+		addLazyProperty(this, "languages", () => this.load("languages"))
 		addLazyProperty(this, "vehicles", () => this.load("vehicles"))
 		addLazyProperty(this, "clouds", () => this.load("clouds"))
 		addLazyProperty(this, "time", () => this.load("time"))
@@ -288,133 +328,89 @@ class Data {
 
 		return this.load(path.join("items", itemTypeID))
 	}
-
-	/**
-	 * Match a valid date range (from data files with special date from/to values).
-	 *
-	 * @param {object} match Match data (battle from/to and target match date).
-	 * @param {string} dateFrom From date range value.
-	 * @param {string} dateTo To date range value.
-	 * @returns {object|boolean} Matched from/to range or boolean false on failure.
-	 */
-	matchDateRange(match, dateFrom, dateTo) {
-
-		// Always match if date range is undefined
-		if (!dateFrom && !dateTo) {
-
-			return {
-				from: match.from,
-				to: match.to
-			}
-		}
-
-		const range = {}
-
-		if (dateFrom) {
-			range.from = dateFrom
-		}
-
-		if (dateTo) {
-			range.to = dateTo
-		}
-
-		// Parse each from/to date string
-		for (const type in range) {
-
-			const date = range[type]
-
-			// Special "start" value means the start (min) date of the match
-			if (date === "start") {
-				range[type] = match.from
-			}
-			// Special "end" value means the end (max) date of the match
-			else if (date === "end") {
-				range[type] = match.to
-			}
-			// Other date format
-			else {
-
-				const dateParts = date.split("-")
-				const momentDate = moment()
-
-				momentDate.year(dateParts[0])
-				momentDate.month(Number(dateParts[1]) - 1)
-
-				// Only month format (YYYY-MM) or start of the month format (YYYY-MM-start)
-				if (dateParts[2] === undefined || dateParts[2] === "start") {
-					momentDate.startOf("month")
-				}
-				// End of the month format (YYYY-MM-end)
-				else if (dateParts[2] === "end") {
-					momentDate.endOf("month")
-				}
-				// Full date format (YYYY-MM-DD)
-				else {
-					momentDate.date(Number(dateParts[2]))
-				}
-
-				range[type] = momentDate
-			}
-		}
-
-		// Match to the end of the month when dateTo is not provided
-		if (!dateTo) {
-			range.to = moment(range.from).endOf("month")
-		}
-
-		if (!match.date.isBefore(range.from, "day") &&
-			!match.date.isAfter(range.to, "day")) {
-
-			// Return from/to matching range as moment date objects
-			return range
-		}
-
-		return false
-	}
 }
 
-const data = new Data()
+export default new Data()
 
-// List of supported mission localization languages
-data.languages = Object.freeze([
-	"eng", // English (default)
-	"ger", // German
-	"pol", // Polish
-	"rus", // Russian
-	"spa", // Spanish
-	"fra" // French
-])
+/**
+ * Match a valid date range (from data files with special date from/to values).
+ *
+ * @param {object} match Match data (battle from/to and target match date).
+ * @param {string} dateFrom From date range value.
+ * @param {string} dateTo To date range value.
+ * @returns {object|boolean} Matched from/to range or boolean false on failure.
+ */
+export function matchDateRange(match, dateFrom, dateTo) {
 
-// Data tags for special airfield items
-data.itemTag = Object.freeze({
-	PLANE: -1, // Plane spot
-	TRUCK_CARGO: -2, // Cargo truck
-	TRUCK_FUEL: -3, // Fuel truck
-	CAR: -4, // Car vehicle
-	AA_MG: -5, // Anti-aircraft (MG)
-	AA_FLAK: -6, // Anti-aircraft (Flak)
-	AA_TRAIN: -7, // Anti-aircraft (Train platform)
-	LIGHT_SEARCH: -8, // Search light
-	LIGHT_LAND: -9, // Landing light
-	BEACON: -10, // Beacon
-	WINDSOCK: -11, // Windsock
-	EFFECT: -12, // Effect
-	WRECK: -13 // Wreckage
-})
+	// Always match if date range is undefined
+	if (!dateFrom && !dateTo) {
 
-// Data flags for airfield items
-data.itemFlag = Object.freeze({
-	BLOCK_DECO: 1, // Decoration
-	BLOCK_FUEL: 2, // Fuel item
-	PLANE_CAMO: 1, // Camouflage plane spot
-	EFFECT_SMOKE: 1, // House smoke effect
-	EFFECT_CAMP: 2, // Campfire effect
-	EFFECT_LAND: 3, // Landing fire effect
-	EFFECT_SIREN: 4, // Siren effect
-	TAXI_INV: 1, // Invertible taxi route
-	TAXI_RUNWAY: 1, // Taxi runway point
-	ROUTE_STOP: 1, // Route stop point
-	ROUTE_ROAD: 2 // Route road formation
-})
+		return {
+			from: match.from,
+			to: match.to
+		}
+	}
 
-export default data
+	const range = {}
+
+	if (dateFrom) {
+		range.from = dateFrom
+	}
+
+	if (dateTo) {
+		range.to = dateTo
+	}
+
+	// Parse each from/to date string
+	for (const type in range) {
+
+		const date = range[type]
+
+		// Special "start" value means the start (min) date of the match
+		if (date === "start") {
+			range[type] = match.from
+		}
+		// Special "end" value means the end (max) date of the match
+		else if (date === "end") {
+			range[type] = match.to
+		}
+		// Other date format
+		else {
+
+			const dateParts = date.split("-")
+			const momentDate = moment()
+
+			momentDate.year(dateParts[0])
+			momentDate.month(Number(dateParts[1]) - 1)
+
+			// Only month format (YYYY-MM) or start of the month format (YYYY-MM-start)
+			if (dateParts[2] === undefined || dateParts[2] === "start") {
+				momentDate.startOf("month")
+			}
+			// End of the month format (YYYY-MM-end)
+			else if (dateParts[2] === "end") {
+				momentDate.endOf("month")
+			}
+			// Full date format (YYYY-MM-DD)
+			else {
+				momentDate.date(Number(dateParts[2]))
+			}
+
+			range[type] = momentDate
+		}
+	}
+
+	// Match to the end of the month when dateTo is not provided
+	if (!dateTo) {
+		range.to = moment(range.from).endOf("month")
+	}
+
+	if (!match.date.isBefore(range.from, "day") &&
+		!match.date.isAfter(range.to, "day")) {
+
+		// Return from/to matching range as moment date objects
+		return range
+	}
+
+	return false
+}

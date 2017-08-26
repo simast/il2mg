@@ -1,9 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import {FlightState} from "./flight"
-import data from "../data"
-
-const {itemFlag} = data
+import {ItemFlag} from "../data"
 
 // Plan activity used to taxi (optionally) and take off from airfield
 export default class ActivityTakeOff {
@@ -175,7 +173,7 @@ export default class ActivityTakeOff {
 					// the reference point to the player plane item is greater than 100
 					// meters. Also abort if we hit taxi runway takeoff point.
 					if (i >= 2 && (taxiDistanceReference > 100 ||
-						taxiPoints[i][2] === itemFlag.TAXI_RUNWAY)) {
+						taxiPoints[i][2] === ItemFlag.TaxiRunway)) {
 
 						break
 					}

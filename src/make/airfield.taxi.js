@@ -1,9 +1,7 @@
 /** @copyright Simas Toleikis, 2015 */
 
 import Item, {PRECISION_POSITION} from "../item"
-import data from "../data"
-
-const {itemFlag} = data
+import data, {ItemFlag} from "../data"
 
 // Make airfield taxi route
 export default function makeAirfieldTaxi(airfield, taxiRouteID) {
@@ -29,7 +27,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 		return (activeTaxiRoutes[runwayID] === taxiRouteID)
 	}
 
-	const isInvertible = (taxiRoute[2] === itemFlag.TAXI_INV)
+	const isInvertible = (taxiRoute[2] === ItemFlag.TaxiInvertible)
 	const basePoint = taxiRoute[3]
 
 	// Set unique airfield callsign
@@ -91,7 +89,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 			}
 
 			// Switch to backward distance on runway point type
-			if (point[2] === itemFlag.TAXI_RUNWAY) {
+			if (point[2] === ItemFlag.TaxiRunway) {
 
 				isForward = false
 				i++ // Skip next runway point
@@ -122,7 +120,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 			pointType = 0
 		}
 		// Runway point type
-		else if (point[2] === itemFlag.TAXI_RUNWAY) {
+		else if (point[2] === ItemFlag.TaxiRunway) {
 
 			pointType = 2
 

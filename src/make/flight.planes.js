@@ -1,12 +1,10 @@
 /** @copyright Simas Toleikis, 2015 */
 
 import * as Plane from "../item/Plane"
-import data from "../data"
+import {ItemFlag} from "../data"
 import {getPlaneSizeFromName} from "./planes"
 import {FlightState} from "./flight"
 import makeAirfieldTaxi from "./airfield.taxi"
-
-const {itemFlag} = data
 
 // Make mission flight plane item objects
 export default function makeFlightPlanes(flight) {
@@ -306,7 +304,7 @@ export default function makeFlightPlanes(flight) {
 				const taxiPoint = taxiPoints[taxiPointID]
 				const nextTaxiPoint = taxiPoints[taxiPointID + 1]
 
-				if (taxiPoint && taxiPoint[2] !== itemFlag.TAXI_RUNWAY) {
+				if (taxiPoint && taxiPoint[2] !== ItemFlag.TaxiRunway) {
 
 					positionX = taxiPoint[0]
 					positionY = airfield.position[1]

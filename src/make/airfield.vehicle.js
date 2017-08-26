@@ -2,9 +2,7 @@
 
 import * as Vehicle from "../item/Vehicle"
 import * as MCU_CMD_AttackArea from "../item/MCU_CMD_AttackArea"
-import data from "../data"
-
-const {itemTag} = data
+import data, {ItemTag} from "../data"
 
 // Make airfield vehicle item
 export default function makeAirfieldVehicle(airfield, item, isLive) {
@@ -28,42 +26,42 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 	switch (itemTagID) {
 
 		// Cargo truck
-		case itemTag.TRUCK_CARGO: {
+		case ItemTag.CargoTruck: {
 
 			vehicleType = "truck_cargo"
 			isStatic = !isLive
 			break
 		}
 		// Fuel truck
-		case itemTag.TRUCK_FUEL: {
+		case ItemTag.FuelTruck: {
 
 			vehicleType = "truck_fuel"
 			isStatic = true
 			break
 		}
 		// Car vehicle
-		case itemTag.CAR: {
+		case ItemTag.Car: {
 
 			vehicleType = "staff_car"
 			isStatic = !isLive
 			break
 		}
 		// Anti-aircraft (Flak)
-		case itemTag.AA_FLAK: {
+		case ItemTag.AntiAircraftFlak: {
 
 			vehicleType = "aa_flak"
 			useAttackArea = true
 			break
 		}
 		// Anti-aircraft (MG)
-		case itemTag.AA_MG: {
+		case ItemTag.AntiAircraftMG: {
 
 			vehicleType = "aa_mg"
 			useAttackArea = true
 			break
 		}
 		// Anti-aircraft (Train platform)
-		case itemTag.AA_TRAIN: {
+		case ItemTag.AntiAircraftTrain: {
 
 			vehicleType = "train_aa"
 			useAttackArea = true
@@ -71,7 +69,7 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 			break
 		}
 		// Search light
-		case itemTag.LIGHT_SEARCH: {
+		case ItemTag.SearchLight: {
 
 			vehicleType = "search_light"
 			useAttackArea = true

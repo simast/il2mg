@@ -4,9 +4,9 @@ import fs from "fs"
 import os from "os"
 import path from "path"
 import Random from "random-js"
-import data, {APPLICATION_NAME, APPLICATION_VERSION} from "./data"
+import data, {Coalition, APPLICATION_NAME, APPLICATION_VERSION} from "./data"
 import log from "./log"
-import Item, {Coalition} from "./item"
+import Item from "./item"
 
 // Mission make parts
 import makeBattle from "./make/battle"

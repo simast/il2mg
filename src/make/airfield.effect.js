@@ -1,10 +1,8 @@
 /** @copyright Simas Toleikis, 2015 */
 
 import * as MCU_CMD_Effect from "../item/MCU_CMD_Effect"
-import data from "../data"
+import data, {ItemTag, ItemFlag} from "../data"
 import {Precipitation} from "./weather"
-
-const {itemTag, itemFlag} = data
 
 // Make airfield effect item
 export default function makeAirfieldEffect(airfield, item) {
@@ -31,7 +29,7 @@ export default function makeAirfieldEffect(airfield, item) {
 	let startOnLoad = true
 
 	// House smoke
-	if (effect === itemFlag.EFFECT_SMOKE) {
+	if (effect === ItemFlag.EffectSmoke) {
 
 		// 50% chance for smoke when raining
 		if (!isRaining || (isRaining && rand.bool(0.5))) {
@@ -39,7 +37,7 @@ export default function makeAirfieldEffect(airfield, item) {
 		}
 	}
 	// Campfire
-	else if (effect === itemFlag.EFFECT_CAMP) {
+	else if (effect === ItemFlag.EffectCampFire) {
 
 		effectType = "landfire"
 
@@ -49,11 +47,11 @@ export default function makeAirfieldEffect(airfield, item) {
 			startOnLoad = false
 
 			const campfireSmoke = makeAirfieldEffect.call(this, airfield, [
-				itemTag.EFFECT,
+				ItemTag.Effect,
 				item[1],
 				item[2],
 				item[3],
-				itemFlag.EFFECT_SMOKE
+				ItemFlag.EffectSmoke
 			])
 
 			if (campfireSmoke && campfireSmoke.length) {
@@ -79,7 +77,7 @@ export default function makeAirfieldEffect(airfield, item) {
 		}
 	}
 	// Siren
-	else if (effect === itemFlag.EFFECT_SIREN) {
+	else if (effect === ItemFlag.EffectSiren) {
 
 		effectType = "siren"
 		startOnLoad = false
