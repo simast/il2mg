@@ -40,8 +40,8 @@ const choiceLists = [
 
 	@observable isBusy = false
 
-	@action setBusyMode() {
-		this.isBusy = true
+	@action setBusyMode(isBusy) {
+		this.isBusy = isBusy
 	}
 
 	@computed get choices() {
@@ -334,16 +334,22 @@ const choiceLists = [
 		}
 
 		// Handle create mission request response
-		ipcRenderer.once("createMission", () => {
-			history.replace("/missions")
+		ipcRenderer.once("createMission", (event, hasError) => {
+
+			if (!hasError) {
+				history.replace("/missions")
+			}
+			else {
+				this.setBusyMode(false)
+			}
 		})
 
 		// Set screen to busy mode (show wait cursor and ignore user input)
-		this.setBusyMode()
+		this.setBusyMode(true)
 
 		// Send create mission request to main process
 		setTimeout(() => {
 			ipcRenderer.send("createMission", params)
-		}, 100)
+		}, 50)
 	}
 }

@@ -1,8 +1,51 @@
 /** @copyright Simas Toleikis, 2016 */
 
-import {app, screen, BrowserWindow, ipcMain} from "electron"
+import fs from "fs"
+import path from "path"
+import Mission from "../mission"
+import {app, screen, BrowserWindow, ipcMain, dialog} from "electron"
+import {APPLICATION_TITLE} from "../data"
 
 let mainWindow = null
+
+// Use a custom error handler for the main process
+function onError(error) {
+
+	const title = "Error!"
+	let message
+
+	if (error instanceof Error) {
+
+		message = error.toString()
+
+		// Use full error message (with stack trace) in development mode
+		if (process.env.NODE_ENV !== "production" && error.stack) {
+			message = error.stack
+		}
+	}
+
+	if (!message) {
+		message = JSON.stringify(error)
+	}
+
+	if (app.isReady()) {
+
+		dialog.showMessageBox(
+			mainWindow,
+			{
+				type: "error",
+				title,
+				message
+			}
+		)
+	}
+	else {
+		dialog.showErrorBox(title, message)
+	}
+}
+
+process.removeAllListeners("uncaughtException").on("uncaughtException", onError)
+process.removeAllListeners("unhandledRejection").on("unhandledRejection", onError)
 
 // Make sure only a single app instance is allowed to run at the same time
 const isOtherInstance = app.makeSingleInstance(() => {
@@ -22,11 +65,6 @@ const isOtherInstance = app.makeSingleInstance(() => {
 if (isOtherInstance) {
 	app.exit(0) // Success
 }
-
-import fs from "fs"
-import path from "path"
-import Mission from "../mission"
-import {APPLICATION_TITLE} from "../data"
 
 // Min and max window size
 const MIN_WINDOW_WIDTH = 800
@@ -54,13 +92,21 @@ ipcMain.on("setConfig", (event, configData) => {
 // Handle create mission requests from renderer process
 ipcMain.on("createMission", async (event, params) => {
 
-	// Create a new mission
-	const mission = new Mission(params)
+	let hasError = true
 
-	// Save mission files
-	await mission.save(config.missionsPath)
+	try {
 
-	event.sender.send("createMission")
+		// Create a new mission
+		const mission = new Mission(params)
+
+		// Save mission files
+		await mission.save(config.missionsPath)
+
+		hasError = false
+	}
+	finally {
+		event.sender.send("createMission", hasError)
+	}
 })
 
 // Quit when all windows are closed

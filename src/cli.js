@@ -316,7 +316,7 @@ params.option(
 	value => String(value).trim()
 )
 
-export default argv => new Promise(resolve => {
+export default argv => {
 
 	const appDomain = domain.create()
 
@@ -502,12 +502,10 @@ export default argv => new Promise(resolve => {
 			await mission.save(params.args[0])
 
 			log.D(mission.title + " (" + mission.planes[mission.player.plane].name + ")")
+			process.exit()
 		}
 		catch (error) {
 			appDomain.emit("error", error)
 		}
-		finally {
-			resolve()
-		}
 	})
-})
+}

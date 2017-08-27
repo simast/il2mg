@@ -20,12 +20,7 @@ if (!process.defaultApp) {
 
 // Run with CLI interface
 if (runAsCLI) {
-
-	app.on("ready", async () => {
-
-		await runApplicationWithCLI(argv)
-		app.exit()
-	})
+	app.on("ready", () => runApplicationWithCLI(argv))
 }
 // Run with GUI interface
 else {
