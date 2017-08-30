@@ -33,14 +33,16 @@
 		skins: {
 			"201": {
 				"": [-3, -3, -3, 1],
-				"ju87d3\\ju87d3_skin_01.dds": [0, 0, 0, -10],
-				"ju87d3\\ju87d3_skin_03.dds": [0, 0, 0, 2],
-				"ju87d3\\ju87d3_skin_04.dds": [0, 0, 0, 2],
-				"ju87d3\\ju87d3_skin_05.dds": [0, 0, 0, 2],
-				"ju87d3\\ju87d3_skin_06.dds": [1, 1, 1, 0],
-				"ju87d3\\ju87d3_skin_08.dds": [1, 1, 1, 0],
-				"ju87d3\\ju87d3_skin_09.dds": [0, 0, 0, 2],
-				"ju87d3\\ju87d3_skin_10.dds": [0, 0, 0, 1]
+				"ju87d3\\ju87d3_skin_01.dds": [0, 0, 0, -14],
+				"ju87d3\\ju87d3_skin_02.dds": [0, 0, 0, 2],
+				"ju87d3\\ju87d3_skin_03.dds": [0, 0, 0, 1],
+				"ju87d3\\ju87d3_skin_04.dds": [1, 1, 1, 0],
+				"ju87d3\\ju87d3_skin_05.dds": [1, 1, 1, 0],
+				"ju87d3\\ju87d3_skin_06.dds": [0, 0, 0, 1],
+				"ju87d3\\ju87d3_skin_07.dds": [0, 0, 0, 1]
+			},
+			"202": {
+				"ju87d3\\ju87d3_skin_09.dds": [1, 1, 1, 1]
 			}
 		}
 	},
