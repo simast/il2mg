@@ -10,6 +10,7 @@ export default function makeUnits() {
 
 	const {rand, battle, choice, map} = this
 	const planeStorages = new Set()
+	const planeStoragesCache = new Map()
 
 	// Utility function used to match to/from date ranges based on mission date
 	const matchMissionDateRange = matchDateRange.bind(undefined, {
@@ -112,44 +113,55 @@ export default function makeUnits() {
 				return
 			}
 
-			let planeCount = dataPlaneStorage[1]
+			// NOTE: Multiple child/subordinate units can share the same plane storage
+			let planeStorage = planeStoragesCache.get(dataPlaneStorage)
 
-			// Pick plane count from valid array range
-			if (Array.isArray(planeCount)) {
+			if (!planeStorage) {
 
-				const maxPlanes = Math.max.apply(null, planeCount)
-				const minPlanes = Math.min.apply(null, planeCount)
-				const rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, "days"))
-				const rangeDaysMission = this.date.diff(dateRange.from, "days")
-				let planePercent = rangeDaysMission / rangeDaysInterval
+				let planeCount = dataPlaneStorage[1]
 
-				// Use +-15% randomness
-				planePercent = rand.real(planePercent - 0.15, planePercent + 0.15, true)
-				planePercent = Math.max(planePercent, 0)
-				planePercent = Math.min(planePercent, 1)
+				// Pick plane count from valid array range
+				if (Array.isArray(planeCount)) {
 
-				// Pick plane count from valid range
-				planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * (1 - planePercent))
-				planeCount = Math.round(planeCount)
+					const maxPlanes = Math.max.apply(null, planeCount)
+					const minPlanes = Math.min.apply(null, planeCount)
+					const rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, "days"))
+					const rangeDaysMission = this.date.diff(dateRange.from, "days")
+					let planePercent = rangeDaysMission / rangeDaysInterval
 
-				// Use extra +-1 plane randomness
-				if (planeCount > 2) {
-					planeCount += rand.pick([-1, 1])
+					// Use +-15% randomness
+					planePercent = rand.real(planePercent - 0.15, planePercent + 0.15, true)
+					planePercent = Math.max(planePercent, 0)
+					planePercent = Math.min(planePercent, 1)
+
+					// Pick plane count from valid range
+					planeCount = planeCount[1] + ((planeCount[0] - planeCount[1]) * (1 - planePercent))
+					planeCount = Math.round(planeCount)
+
+					// Use extra +-1 plane randomness
+					if (planeCount > 2) {
+						planeCount += rand.pick([-1, 1])
+					}
+
+					// Enforce min/max range bounds
+					planeCount = Math.max(planeCount, minPlanes)
+					planeCount = Math.min(planeCount, maxPlanes)
 				}
 
-				// Enforce min/max range bounds
-				planeCount = Math.max(planeCount, minPlanes)
-				planeCount = Math.min(planeCount, maxPlanes)
-			}
+				if (!planeCount) {
+					return
+				}
 
-			if (planeCount > 0) {
-
-				planeStorages.push({
+				planeStorage = {
 					plane: planeID,
 					count: planeCount,
 					units: []
-				})
+				}
+
+				planeStoragesCache.set(dataPlaneStorage, planeStorage)
 			}
+
+			planeStorages.push(planeStorage)
 		})
 
 		return planeStorages
