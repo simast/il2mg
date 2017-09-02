@@ -24,13 +24,19 @@
 		parent: "hs129"
 	},
 
+	// Hs 129 B-0
+	"hs129b0": "hs129b2",
+
+	// Hs 129 B-1
+	"hs129b1": "hs129b2",
+
 	// Hs 129 B-2
 	"hs129b2": {
 		name: "Hs 129 B-2",
 		parent: "hs129b",
 		model: "graphics\\planes\\hs129b2\\hs129b2.mgm",
 		script: "luascripts\\worldobjects\\planes\\hs129b2.txt",
-		speed: 330,
+		speed: 325,
 		range: 780,
 		skins: {
 			"201": {

@@ -279,6 +279,10 @@
 		name: "Raygorod",
 		position: [96909.95, 21.17, 278120.5]
 	},
+	rossosh: {
+		name: "Rossosh",
+		position: [302833, 0, -105723]
+	},
 	rostov: {
 		name: "Rostov",
 		position: [-23748, 0, -88569]
