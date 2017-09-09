@@ -6,12 +6,12 @@ import {spawn} from "child_process"
 import {remote} from "electron"
 import React from "react"
 import {observer} from "mobx-react"
-import app from "../app/store"
-import missions from "./store"
-import {Difficulty} from "../app/"
+import appStore from "../app/store"
+import missionsStore from "./store"
+import {Difficulty, showErrorMessage, moveFileSync} from "../app/"
 import {FileExtension} from "./"
-import {showErrorMessage, moveFileSync} from "../app/utils"
 import Screen from "../app/Screen"
+import LaunchDialog from "../launch/Dialog"
 import MissionsList from "./List"
 import MissionDetails from "./Details"
 
@@ -49,10 +49,10 @@ const difficultyModes = new Map([
 		this.restoreAutoPlay()
 
 		// Load missions from missions directory
-		missions.load()
+		missionsStore.load()
 
 		// Create context menu for launch button difficulty choice
-		if (missions.list.length) {
+		if (missionsStore.list.length) {
 
 			const {Menu, MenuItem} = remote
 			const launchMenu = this.launchMenu = new Menu()
@@ -62,9 +62,9 @@ const difficultyModes = new Map([
 				launchMenu.append(new MenuItem({
 					label: difficultyLabel,
 					type: "radio",
-					checked: (difficultyID === app.difficulty),
+					checked: (difficultyID === appStore.difficulty),
 					click: () => {
-						app.setDifficulty(difficultyID)
+						appStore.setDifficulty(difficultyID)
 					}
 				}))
 			})
@@ -79,8 +79,8 @@ const difficultyModes = new Map([
 		if (!match.params.mission) {
 
 			// Show/select first mission
-			if (missions.list.length) {
-				history.replace("/missions/" + missions.list[0].id)
+			if (missionsStore.list.length) {
+				history.replace("/missions/" + missionsStore.list[0].id)
 			}
 			// Show create mission screen
 			else {
@@ -123,7 +123,7 @@ const difficultyModes = new Map([
 
 		if (missionID) {
 
-			mission = missions.index[missionID]
+			mission = missionsStore.index[missionID]
 
 			// Remove selected mission
 			actions.left.set("Remove", {
@@ -135,7 +135,7 @@ const difficultyModes = new Map([
 			// Launch selected mission
 			actions.right = new Map()
 			actions.right.set("Launch", {
-				className: "difficulty" + app.difficulty,
+				className: "difficulty" + appStore.difficulty,
 				onClick: event => {
 					this.launchMission(event.ctrlKey)
 				},
@@ -146,17 +146,43 @@ const difficultyModes = new Map([
 		}
 
 		const missionsListProps = {
-			missions: missions.list,
+			missions: missionsStore.list,
 			removeMission: this.removeMission.bind(this),
 			saveMission: this.saveMission.bind(this)
 		}
 
+		const launchDialogProps = {
+			opened: match.params.action === "launch",
+			onClose: this.toggleLaunchDialog.bind(this)
+		}
+
 		return (
-			<Screen id="missions" actions={actions}>
-				<MissionsList {...missionsListProps} />
-				{mission ? <MissionDetails mission={mission} /> : ""}
-			</Screen>
+			<div>
+				<Screen id="missions" actions={actions}>
+					<MissionsList {...missionsListProps} />
+					{mission ? <MissionDetails mission={mission} /> : null}
+				</Screen>
+				<LaunchDialog {...launchDialogProps} />
+			</div>
 		)
+	}
+
+	toggleLaunchDialog() {
+
+		const {match, history} = this.props
+		const {mission, action} = match.params
+
+		if (!mission) {
+			return
+		}
+
+		let path = "/missions/" + mission
+
+		if (action !== "launch") {
+			path += "/launch"
+		}
+
+		history.replace(path)
 	}
 
 	// Handle local keyboard shortcuts
@@ -202,19 +228,19 @@ const difficultyModes = new Map([
 		if (result === 0) {
 
 			const {match, history} = this.props
-			const mission = missions.index[missionID]
+			const mission = missionsStore.index[missionID]
 			const {files} = mission
-			const removedIndex = missions.list.indexOf(mission)
+			const removedIndex = missionsStore.list.indexOf(mission)
 
 			for (const fileName of files) {
-				fs.unlinkSync(path.join(missions.path, fileName))
+				fs.unlinkSync(path.join(missionsStore.path, fileName))
 			}
 
 			// Reload missions
-			missions.load()
+			missionsStore.load()
 
 			// Show create mission screen
-			if (!missions.list.length) {
+			if (!missionsStore.list.length) {
 				return history.replace("/create?first=1")
 			}
 
@@ -223,11 +249,11 @@ const difficultyModes = new Map([
 
 				let nextMission
 
-				if (removedIndex < missions.list.length) {
-					nextMission = missions.list[removedIndex]
+				if (removedIndex < missionsStore.list.length) {
+					nextMission = missionsStore.list[removedIndex]
 				}
 				else {
-					nextMission = missions.list[missions.list.length - 1]
+					nextMission = missionsStore.list[missionsStore.list.length - 1]
 				}
 
 				history.replace("/missions/" + nextMission.id)
@@ -242,8 +268,8 @@ const difficultyModes = new Map([
 			return
 		}
 
-		const {gamePath} = app
-		const mission = missions.index[missionID]
+		const {gamePath} = appStore
+		const mission = missionsStore.index[missionID]
 		let savePath
 
 		// Use missions folder as default save path destination
@@ -301,7 +327,7 @@ const difficultyModes = new Map([
 
 				fs.writeFileSync(
 					path.join(saveDir, saveFile + extension),
-					fs.readFileSync(path.join(missions.path, missionFile))
+					fs.readFileSync(path.join(missionsStore.path, missionFile))
 				)
 			}
 		}
@@ -310,6 +336,14 @@ const difficultyModes = new Map([
 	// Launch mission
 	launchMission(selectFolder) {
 
+		const yes = true
+
+		this.toggleLaunchDialog()
+
+		if (yes) {
+			return
+		}
+
 		const missionID = this.props.match.params.mission
 
 		if (!missionID) {
@@ -317,7 +351,7 @@ const difficultyModes = new Map([
 		}
 
 		// Force selecting game path on first run or when existing path is invalid
-		if (!app.gamePath || !this.isValidGamePath(app.gamePath)) {
+		if (!appStore.gamePath || !this.isValidGamePath(appStore.gamePath)) {
 			selectFolder = true
 		}
 
@@ -329,7 +363,7 @@ const difficultyModes = new Map([
 				{
 					title: "Select IL-2 Sturmovik folder...",
 					properties: ["openDirectory"],
-					defaultPath: app.gamePath
+					defaultPath: appStore.gamePath
 				}
 			)
 
@@ -362,7 +396,7 @@ const difficultyModes = new Map([
 			}
 
 			if (isValidPath) {
-				app.setGamePath(gamePath)
+				appStore.setGamePath(gamePath)
 			}
 			// Show error message and abort if game path is invalid
 			else {
@@ -376,7 +410,7 @@ const difficultyModes = new Map([
 			}
 		}
 
-		const gameExePath = path.join(app.gamePath, PATH_EXE)
+		const gameExePath = path.join(appStore.gamePath, PATH_EXE)
 		let maxAutoplayTime = MAX_AUTOPLAY_TIME
 
 		try {
@@ -441,7 +475,7 @@ const difficultyModes = new Map([
 			delete this.autoplayRestoreTS
 		}
 
-		const {gamePath, difficulty} = app
+		const {gamePath, difficulty} = appStore
 
 		if (!gamePath || !missionID) {
 			return
@@ -461,7 +495,7 @@ const difficultyModes = new Map([
 				"&il2mg=1", // Flag used to identify generated autoplay file
 				"&enabled=1",
 				"&missionSettingsPreset=" + difficulty,
-				'&missionPath="' + path.join(missions.path, missionID) + '"'
+				'&missionPath="' + path.join(missionsStore.path, missionID) + '"'
 			].join("\r\n")
 		)
 	}
@@ -475,7 +509,7 @@ const difficultyModes = new Map([
 			delete this.autoplayRestoreTS
 		}
 
-		const {gamePath} = app
+		const {gamePath} = appStore
 
 		if (!gamePath) {
 			return
@@ -537,7 +571,7 @@ const difficultyModes = new Map([
 	// directory for changes and copy the mission files.
 	fixFlightRecords(missionID) {
 
-		const {gamePath} = app
+		const {gamePath} = appStore
 		const tracksPath = path.join(gamePath, PATH_TRACKS)
 
 		// Re-initialize directory watcher
@@ -569,7 +603,7 @@ const difficultyModes = new Map([
 				return
 			}
 
-			const mission = missions.index[missionID]
+			const mission = missionsStore.index[missionID]
 
 			// Copy all mission files (except metadata file)
 			for (const missionFile of mission.files) {
@@ -582,7 +616,7 @@ const difficultyModes = new Map([
 
 				fs.writeFileSync(
 					path.join(trackDir, missionFile),
-					fs.readFileSync(path.join(missions.path, missionFile))
+					fs.readFileSync(path.join(missionsStore.path, missionFile))
 				)
 			}
 		})

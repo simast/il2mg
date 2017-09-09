@@ -7,7 +7,7 @@ import {observable, computed, action, reaction} from "mobx"
 import {Start, Battle} from "./"
 
 // Create mission state store
-class CreateMissionStore {
+class CreateStore {
 
 	// Data index for all supported battles
 	battles = {
@@ -72,4 +72,4 @@ class CreateMissionStore {
 	}
 }
 
-export default new CreateMissionStore()
+export default new CreateStore()

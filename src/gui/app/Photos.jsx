@@ -32,7 +32,6 @@ const AVAILABLE_PHOTOS = 12
 				{this.photos.map((photoID, index) => (
 					<div key={photoID} className={"photo " + this.props.screen + (index + 1)}>
 						<img src={"assets/photo-" + photoID + ".jpg"} />
-						<div></div>
 					</div>
 				))}
 			</div>

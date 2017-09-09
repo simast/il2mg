@@ -18,6 +18,18 @@
 	color: var(--main-text-color);
 }
 
+/* Photos decoration */
+#photos .create1 {
+	right: 150px;
+	top: -50px;
+	transform: rotate(-11deg);
+}
+#photos .create2 {
+	right: -10px;
+	top: -25px;
+	transform: rotate(9deg);
+}
+
 /* Battle title/select */
 #create h1 {
 	display: block;

@@ -5,7 +5,7 @@ import React from "react"
 import {computed} from "mobx"
 import {observer} from "mobx-react"
 import {Start} from "./"
-import createMission from "./store"
+import createStore from "./store"
 
 // Season color values
 const seasonColor = {
@@ -31,7 +31,7 @@ let trackCSSStyle = null
 	// Get an index of battle dates
 	@computed get dates() {
 
-		const {battle, battles} = createMission
+		const {battle, battles} = createStore
 		const {seasons} = battles[battle]
 		const dates = {
 			list: [],
@@ -134,7 +134,7 @@ let trackCSSStyle = null
 			startMenu.append(new MenuItem({
 				label: startText[1],
 				type: "radio",
-				checked: (startID === createMission.start),
+				checked: (startID === createStore.start),
 				click: () => {
 					onStartChange(startID)
 				}
@@ -145,7 +145,7 @@ let trackCSSStyle = null
 	// Render component
 	render() {
 
-		const {start, date} = createMission
+		const {start, date} = createStore
 		const dates = this.dates
 		const totalDays = dates.list.length
 		const [startPrefix, startLabel] = startTypes.get(start)
@@ -161,7 +161,7 @@ let trackCSSStyle = null
 		else {
 
 			dateOutput = date + ", " + dates.index[date].season
-			reset = <a className="reset" onClick={() => createMission.setDate("")}></a>
+			reset = <a className="reset" onClick={() => createStore.setDate("")}></a>
 		}
 
 		const dateData = dates.index[date]
@@ -182,8 +182,7 @@ let trackCSSStyle = null
 		return (
 			<div id="selectStart">
 				<em>
-					{"start "}
-					{startPrefix + " "}
+					{"start " + startPrefix + " "}
 					<a {...startProps}>{startLabel.toLowerCase()}</a>, {dateOutput}
 				</em>
 				<input
@@ -194,7 +193,7 @@ let trackCSSStyle = null
 
 						// Get date from input value
 						const dateData = dates.list[event.target.value - 1]
-						createMission.setDate(dateData ? dateData.date : "")
+						createStore.setDate(dateData ? dateData.date : "")
 					}} />
 				{reset}
 			</div>

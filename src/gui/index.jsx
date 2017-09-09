@@ -6,7 +6,7 @@ import {HashRouter, Route, Switch, Redirect} from "react-router-dom"
 import {useStrict} from "mobx"
 import Application from "./app/Application"
 import MissionsScreen from "./missions/Screen"
-import CreateMissionScreen from "./createMission/Screen"
+import CreateScreen from "./create/Screen"
 
 // NOTE: Strict mode makes MobX require actions to modify state!
 useStrict(true)
@@ -23,8 +23,8 @@ ReactDOM.render((
 			return (
 				<Application>
 					<Switch>
-						<Route path="/missions/:mission?" component={MissionsScreen} />
-						<Route path="/create" component={CreateMissionScreen} />
+						<Route path="/missions/:mission?/:action?" component={MissionsScreen} />
+						<Route path="/create" component={CreateScreen} />
 					</Switch>
 				</Application>
 			)

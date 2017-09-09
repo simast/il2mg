@@ -6,7 +6,7 @@ import React from "react"
 import {computed, observable, action} from "mobx"
 import {observer} from "mobx-react"
 import {Start} from "./"
-import createMission from "./store"
+import createStore from "./store"
 import Screen from "../app/Screen"
 import SelectStart from "./SelectStart"
 import SelectBattle from "./SelectBattle"
@@ -36,7 +36,7 @@ const choiceLists = [
 ]
 
 // Create mission screen component
-@observer export default class CreateMissionScreen extends React.Component {
+@observer export default class CreateScreen extends React.Component {
 
 	@observable isBusy = false
 
@@ -45,7 +45,7 @@ const choiceLists = [
 	}
 
 	@computed get choices() {
-		return this.getChoices(createMission.start)
+		return this.getChoices(createStore.start)
 	}
 
 	// Render component
@@ -82,7 +82,7 @@ const choiceLists = [
 		}
 
 		return (
-			<Screen id="create" actions={screenActions} isBusy={this.isBusy}>
+			<Screen id="create" actions={screenActions} disabled={this.isBusy}>
 				<SelectBattle />
 				<SelectStart onStartChange={this.onStartChange.bind(this)} />
 				<div id="choices">
@@ -102,7 +102,7 @@ const choiceLists = [
 	// Get mission choice data
 	getChoices(start) {
 
-		const {battle, battles, date, choice} = createMission
+		const {battle, battles, date, choice} = createStore
 		const choices = Object.create(null)
 		const battleData = battles[battle]
 		let scanRegExp = (Object.keys(choice).length > 0)
@@ -264,7 +264,7 @@ const choiceLists = [
 	// Handle start type change
 	onStartChange(newStart) {
 
-		const {start: prevStart, choice} = createMission
+		const {start: prevStart, choice} = createStore
 
 		if (newStart === prevStart) {
 			return
@@ -292,17 +292,17 @@ const choiceLists = [
 				}
 			}
 
-			createMission.setChoice(choiceState)
+			createStore.setChoice(choiceState)
 		}
 
-		createMission.setStart(newStart)
+		createStore.setStart(newStart)
 	}
 
 	// Handle create mission button click
 	onCreateClick() {
 
 		const {history} = this.props
-		const {battle, start, date, choice} = createMission
+		const {battle, start, date, choice} = createStore
 
 		const params = {
 			battle,

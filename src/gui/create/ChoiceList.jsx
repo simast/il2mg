@@ -1,7 +1,7 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import React from "react"
-import createMission from "./store"
+import createStore from "./store"
 import ChoiceListItem from "./ChoiceListItem"
 
 // Data choice list component
@@ -78,7 +78,7 @@ export default class ChoiceList extends React.Component {
 	// Handle choice item click
 	onChoiceClick(type, choices) {
 
-		const choiceState = Object.assign({}, createMission.choice)
+		const choiceState = Object.assign({}, createStore.choice)
 
 		// NOTE: Multiple choices can be passed in (from merged data items)
 		for (const choice of choices) {
@@ -112,15 +112,15 @@ export default class ChoiceList extends React.Component {
 			}
 		}
 
-		createMission.setChoice(choiceState)
+		createStore.setChoice(choiceState)
 	}
 
 	// Handle choice reset button click
 	onChoiceReset(type) {
 
-		const choiceState = Object.assign({}, createMission.choice)
+		const choiceState = Object.assign({}, createStore.choice)
 
 		delete choiceState[type]
-		createMission.setChoice(choiceState)
+		createStore.setChoice(choiceState)
 	}
 }

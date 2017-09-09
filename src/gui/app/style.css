@@ -3,10 +3,15 @@
 :root {
 	--content-spacing: 25px;
 	--main-text-color: #262626;
+	--alt-text-color: #d6cfcf;
+	--alt-text-light-color: #fbfbfb;
+	--alt-text-dark-color: #959595;
 	--separator-color: rgba(51,51,51,0.35);
+	--alt-background-color: rgb(43,45,34);
+	--alt-background-color-transparent: rgba(43,45,34,0);
 }
 
-html, body, #main, #application, #screen, #screenBusy, #container {
+html, body, #main, #application, #screen, #screen.disabled:after, #container, .dialog {
 	height: 100vh;
 	width: 100vw;
 	max-height: 100vh;
@@ -49,8 +54,10 @@ a:focus, input:focus, textarea:focus, select:focus {
 	outline: none;
 }
 
-/* Busy screen overlay */
-#screenBusy {
+/* Disabled screen overlay */
+#screen.disabled:after {
+	content: "";
+	display: block;
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -93,33 +100,14 @@ a:focus, input:focus, textarea:focus, select:focus {
 #photos .photo:active img {
 	filter: none;
 }
-#photos .photo div {
+#photos .photo:after {
+	content: "";
+	display: block;
 	position: absolute;
 	top: 0;
 	width: 100%;
 	height: 100%;
 	background: transparent url("../assets/photo-frame.png") 0 0 no-repeat;
-}
-#photos .missions1 {
-	left: 95px;
-	top: -43px;
-	transform: rotate(-73deg);
-}
-#photos .missions2 {
-	left: -10px;
-	top: -30px;
-	transform: rotate(-9deg);
-	filter: drop-shadow(3px 1px 1px rgba(0,0,0,0.25));
-}
-#photos .create1 {
-	right: 150px;
-	top: -50px;
-	transform: rotate(-11deg);
-}
-#photos .create2 {
-	right: -10px;
-	top: -25px;
-	transform: rotate(9deg);
 }
 
 /* Bottom action bar */
@@ -179,6 +167,81 @@ a.country.c202:before {
 a.country.selected:before {
 	opacity: 1;
 	filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+}
+
+/* Dialog */
+.dialog {
+	display: none;
+}
+.dialog.opened {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+.dialog:before {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(255,255,255,0.4);
+}
+.dialog .content {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	background-color: var(--alt-background-color);
+	color: var(--alt-text-color);
+	padding: var(--content-spacing);
+	width: 50%;
+	height: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
+	border-radius: 10px;
+	box-shadow: 0 0 6px 2px rgba(0,0,0,0.35);
+}
+.dialog .close {
+	--close-button-size: 35px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.dialog .close a {
+	display: block;
+	color: var(--alt-text-color);
+	font-size: 14px;
+	text-align: center;
+	line-height: var(--close-button-size);
+	height: var(--close-button-size);
+	width: var(--close-button-size);
+}
+.dialog .close a:before {
+	content: "\2716";
+}
+.dialog .close a:hover {
+	text-decoration: none;
+	color: var(--alt-text-light-color);
+}
+.dialog-enter {
+	opacity: 0;
+}
+.dialog-enter-active {
+	opacity: 1;
+	transition: opacity 300ms linear;
+}
+.dialog-enter .content {
+	left: 100%;
+	top: 100%;
+	transform: translate(0%, 0%) scale(0);
+}
+.dialog-enter-active .content {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%) scale(1);
+	transition: all 300ms ease;
 }
 
 /* Scrollbars */
