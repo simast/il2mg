@@ -2,36 +2,36 @@
 
 import {remote} from "electron"
 import React from "react"
+import {observer} from "mobx-react"
 import MissionsListItem from "./ListItem"
+import {saveMission} from  "./actions"
+import missionsStore from "./store"
 
 // Missions list component
-export default class MissionsList extends React.Component {
+@observer export default class MissionsList extends React.Component {
 
-	constructor({missions, removeMission, saveMission}) {
+	constructor({removeMission}) {
 		super(...arguments)
 
 		// Create context menu
-		if (missions.length) {
+		const {Menu, MenuItem} = remote
+		const menu = this.menu = new Menu()
 
-			const {Menu, MenuItem} = remote
-			const menu = this.menu = new Menu()
+		// Remove menu
+		menu.append(new MenuItem({
+			label: "Remove",
+			click: () => {
+				removeMission(this.contextMission.id, true)
+			}
+		}))
 
-			// Remove menu
-			menu.append(new MenuItem({
-				label: "Remove",
-				click: () => {
-					removeMission(true, this.contextMission.id)
-				}
-			}))
-
-			// Save menu
-			menu.append(new MenuItem({
-				label: "Save As...",
-				click: () => {
-					saveMission(this.contextMission.id)
-				}
-			}))
-		}
+		// Save menu
+		menu.append(new MenuItem({
+			label: "Save As...",
+			click: () => {
+				saveMission(this.contextMission.id)
+			}
+		}))
 	}
 
 	componentDidMount() {
@@ -52,7 +52,7 @@ export default class MissionsList extends React.Component {
 
 		return (
 			<ul id="missionsList" ref={ref => {this.listElement = ref}}>
-				{this.props.missions.map(mission => {
+				{missionsStore.list.map(mission => {
 
 					const props = {
 						mission,

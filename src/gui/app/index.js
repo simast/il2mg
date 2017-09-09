@@ -3,13 +3,6 @@
 import {remote} from "electron"
 import fs from "fs"
 
-// Difficulty preset
-export const Difficulty = Object.freeze({
-	Custom: 0,
-	Normal: 1,
-	Expert: 2
-})
-
 // Show error message dialog
 export function showErrorMessage(message) {
 

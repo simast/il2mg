@@ -1,11 +1,16 @@
 /** @copyright Simas Toleikis, 2016 */
 
 import React from "react"
+import {restoreAutoPlay} from "../launch/actions"
 
 // Application component
 export default class Application extends React.Component {
 
 	componentDidMount() {
+
+		// Restore any existing autoplay.cfg file
+		// NOTE: A workaround to fix leftover file in case of a program crash
+		restoreAutoPlay()
 
 		// Handle drag and drop events on application window
 		document.addEventListener("dragover", Application.onDragAndDrop, true)

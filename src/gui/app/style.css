@@ -145,23 +145,25 @@ a:focus, input:focus, textarea:focus, select:focus {
 	color: var(--separator-color);
 }
 
-/* Links with country icons */
-a.country:before {
+/* Country icons */
+.country:before {
 	display: inline-block;
 	width: 14px;
 	padding-right: 5px;
 	position: relative;
 	top: 2px;
+}
+a.country:before {
 	opacity: 0.4;
 	filter: grayscale(0.5);
 }
-a.country.c101:before {
+.country.c101:before {
 	content: url("../assets/country-101.png");
 }
-a.country.c201:before {
+.country.c201:before {
 	content: url("../assets/country-201.png");
 }
-a.country.c202:before {
+.country.c202:before {
 	content: url("../assets/country-202.png");
 }
 a.country.selected:before {
@@ -201,15 +203,15 @@ a.country.selected:before {
 	transform: translate(-50%, -50%);
 	z-index: 2;
 	border-radius: 10px;
-	box-shadow: 0 0 6px 2px rgba(0,0,0,0.35);
+	box-shadow: 0 0 6px 1px rgba(0,0,0,0.35);
 }
 .dialog .close {
-	--close-button-size: 35px;
 	position: absolute;
 	top: 0;
 	right: 0;
 }
 .dialog .close a {
+	--close-button-size: 36px;
 	display: block;
 	color: var(--alt-text-color);
 	font-size: 14px;

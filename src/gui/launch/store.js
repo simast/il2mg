@@ -2,10 +2,10 @@
 
 import {remote, ipcRenderer} from "electron"
 import {observable, computed, action, reaction} from "mobx"
-import {Difficulty} from "./"
+import {Difficulty} from "."
 
-// Application state store
-class AppStore {
+// Launch mission state store
+class LaunchStore {
 
 	// Observables
 	@observable gamePath
@@ -19,7 +19,7 @@ class AppStore {
 
 		const {gamePath, difficulty} = remote.getGlobal("config")
 
-		// Load existing app state from configuration data
+		// Load existing launch state from configuration data
 
 		this.gamePath = gamePath
 
@@ -36,7 +36,7 @@ class AppStore {
 		)
 	}
 
-	// Application state representation as configuration data
+	// Launch state representation as configuration data
 	@computed get config() {
 
 		return {
@@ -46,4 +46,4 @@ class AppStore {
 	}
 }
 
-export default new AppStore()
+export default new LaunchStore()

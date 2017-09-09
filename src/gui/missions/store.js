@@ -1,10 +1,7 @@
 /** @copyright Simas Toleikis, 2017 */
 
-import fs from "fs"
-import path from "path"
 import {remote} from "electron"
 import {observable, action} from "mobx"
-import {FileExtension} from "./"
 
 // Missions state store
 class MissionsStore {
@@ -18,54 +15,7 @@ class MissionsStore {
 	// Mission objects indexed by ID
 	index = Object.create(null)
 
-	// Load missions from missions directory
-	@action load() {
-
-		const list = []
-		const index = Object.create(null)
-		const files = Object.create(null)
-
-		// Scan each file in the target path/directory
-		fs.readdirSync(this.path).forEach(fileName => {
-
-			const missionID = path.basename(fileName, path.extname(fileName))
-
-			// Collect all files grouped by mission ID
-			if (!files[missionID]) {
-				files[missionID] = []
-			}
-
-			files[missionID].push(fileName)
-
-			// Process only mission metadata files
-			if (path.extname(fileName) !== ("." + FileExtension.Meta)) {
-				return
-			}
-
-			let mission
-
-			try {
-
-				// Read mission metadata file
-				mission = JSON.parse(
-					fs.readFileSync(this.path + path.sep + fileName, "utf-8")
-				)
-			}
-			catch (e) {
-				return
-			}
-
-			mission.id = missionID
-			mission.files = files[missionID]
-
-			list.push(mission)
-			index[missionID] = mission
-		})
-
-		// Sort missions list based on id (new missions first)
-		if (list.length > 1) {
-			list.sort((a, b) => b.id.localeCompare(a.id))
-		}
+	@action setMissions(list, index) {
 
 		this.list = list
 		this.index = index

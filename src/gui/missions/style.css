@@ -69,8 +69,6 @@
 
 /* Mission details pane */
 #missionDetails {
-	--title-height: 54px;
-
 	flex: 1;
 	pointer-events: auto;
 	background-color: var(--alt-background-color);
@@ -84,7 +82,7 @@
 	display: block;
 	font-weight: normal;
 	font-size: 17px;
-	line-height: var(--title-height);
+	line-height: 54px;
 	color: var(--alt-text-light-color);
 	margin: 0;
 	white-space: nowrap;

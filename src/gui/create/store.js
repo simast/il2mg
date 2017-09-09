@@ -4,7 +4,7 @@ import fs from "fs"
 import path from "path"
 import {remote, ipcRenderer} from "electron"
 import {observable, computed, action, reaction} from "mobx"
-import {Start, Battle} from "./"
+import {Start, Battle} from "."
 
 // Create mission state store
 class CreateStore {

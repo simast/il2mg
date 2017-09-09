@@ -4,7 +4,7 @@ import {remote} from "electron"
 import React from "react"
 import {computed} from "mobx"
 import {observer} from "mobx-react"
-import {Start} from "./"
+import {Start} from "."
 import createStore from "./store"
 
 // Season color values

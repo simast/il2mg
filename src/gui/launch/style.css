@@ -1,3 +1,18 @@
 @charset "UTF-8";
 
 /* Launch mission dialog */
+#launchDialog {
+	text-align: center;
+}
+#launchDialog .title,
+#launchDialog .plane {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#launchDialog .title {
+	font-size: 17px;
+	color: var(--alt-text-light-color);
+	padding: 0 var(--content-spacing);
+	margin-bottom: 3px;
+}

@@ -5,10 +5,12 @@ import React from "react"
 // Mission details pane component
 export default class MissionDetails extends React.Component {
 
-	componentWillReceiveProps() {
+	componentWillReceiveProps(nextProps) {
+
+		const {mission} = this.props
 
 		// Scroll briefing text to the top
-		if (this.briefingElement) {
+		if (this.briefingElement && nextProps.mission !== mission) {
 			this.briefingElement.scrollTop = 0
 		}
 	}
