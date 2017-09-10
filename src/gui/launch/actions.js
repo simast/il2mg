@@ -4,7 +4,7 @@ import fs from "fs"
 import path from "path"
 import {spawn} from "child_process"
 import {remote} from "electron"
-import {PATH_GAME_DATA} from "."
+import {isValidGamePath, PATH_GAME_DATA, PATH_GAME_EXE} from "."
 import {moveFileSync, showErrorMessage} from "../app"
 import {FileExtension} from "../missions"
 import missionsStore from "../missions/store"
@@ -20,7 +20,6 @@ const MAX_AUTOPLAY_TIME = 10000 // 10 seconds
 
 // File and directory paths
 const PATH_USER_DATA = remote.app.getPath("userData")
-const PATH_EXE = path.join("bin", "game", "Il-2.exe")
 const PATH_AUTOPLAY = path.join(PATH_GAME_DATA, FILE_AUTOPLAY)
 const PATH_TRACKS = path.join(PATH_GAME_DATA, "Tracks")
 
@@ -29,31 +28,6 @@ let autoplayRestoreTS
 
 // Tracks directory watcher reference
 let tracksWatcher
-
-// Check if specified game path is valid
-export function isValidGamePath(gamePath) {
-
-	if (!gamePath) {
-		return false
-	}
-
-	// Check for "data" directory
-	try {
-
-		const dataPath = path.join(gamePath, PATH_GAME_DATA)
-		const hasDataDirectory = fs.statSync(dataPath).isDirectory()
-
-		if (!hasDataDirectory) {
-			return false
-		}
-	}
-	catch (e) {
-		return false
-	}
-
-	// Check for game executable
-	return fs.existsSync(path.join(gamePath, PATH_EXE))
-}
 
 // Create autoplay.cfg file
 function createAutoPlay(missionID) {
@@ -193,7 +167,7 @@ export function launchMission(missionID) {
 		return
 	}
 
-	const gameExePath = path.join(gamePath, PATH_EXE)
+	const gameExePath = path.join(gamePath, PATH_GAME_EXE)
 	let maxAutoplayTime = MAX_AUTOPLAY_TIME
 
 	try {

@@ -5,7 +5,8 @@
 	text-align: center;
 }
 #launchDialog .title,
-#launchDialog .plane {
+#launchDialog .plane,
+#selectGamePath a {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -15,4 +16,15 @@
 	color: var(--alt-text-light-color);
 	padding: 0 var(--content-spacing);
 	margin-bottom: 3px;
+}
+
+/* Game path selector */
+#selectGamePath {
+	margin-top: var(--content-spacing);
+	border: 2px solid var(--alt-text-dark-color);
+	border-radius: 10px;
+}
+#selectGamePath a {
+	display: block;
+	padding: 5px 15px;
 }

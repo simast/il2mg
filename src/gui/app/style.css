@@ -191,6 +191,9 @@ a.country.selected:before {
 	bottom: 0;
 	background-color: rgba(255,255,255,0.4);
 }
+.dialog a {
+	color: var(--alt-text-color);
+}
 .dialog .content {
 	position: absolute;
 	left: 50%;
@@ -213,7 +216,6 @@ a.country.selected:before {
 .dialog .close a {
 	--close-button-size: 36px;
 	display: block;
-	color: var(--alt-text-color);
 	font-size: 14px;
 	text-align: center;
 	line-height: var(--close-button-size);

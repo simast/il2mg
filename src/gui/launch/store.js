@@ -2,7 +2,7 @@
 
 import {remote, ipcRenderer} from "electron"
 import {observable, computed, action, reaction} from "mobx"
-import {Difficulty} from "."
+import {Difficulty, isValidGamePath} from "."
 
 // Launch mission state store
 class LaunchStore {
@@ -21,7 +21,9 @@ class LaunchStore {
 
 		// Load existing launch state from configuration data
 
-		this.gamePath = gamePath
+		if (isValidGamePath(gamePath)) {
+			this.gamePath = gamePath
+		}
 
 		if (difficulty !== undefined && Object.values(Difficulty).includes(difficulty)) {
 			this.difficulty = difficulty
