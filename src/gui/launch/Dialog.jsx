@@ -6,7 +6,7 @@ import Dialog from "../app/Dialog"
 import SelectGamePath from "./SelectGamePath"
 
 // Launch mission dialog component
-export default class LaunchDialog extends React.Component {
+export default class LaunchDialog extends React.PureComponent {
 
 	// Render component
 	render() {

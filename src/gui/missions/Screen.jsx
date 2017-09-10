@@ -1,7 +1,5 @@
 /** @copyright Simas Toleikis, 2016 */
 
-import fs from "fs"
-import path from "path"
 import {remote} from "electron"
 import React from "react"
 import {observer} from "mobx-react"
@@ -9,7 +7,7 @@ import {Difficulty} from "../launch"
 import launchStore from "../launch/store"
 import LaunchDialog from "../launch/Dialog"
 import missionsStore from "./store"
-import {loadMissions} from "./actions"
+import {loadMissions, removeMission} from "./actions"
 import Screen from "../app/Screen"
 import MissionsList from "./List"
 import MissionDetails from "./Details"
@@ -48,6 +46,11 @@ const difficultyModes = new Map([
 				}))
 			})
 		}
+
+		// Bind event handler contexts
+		this.onRemoveMission = this.onRemoveMission.bind(this)
+		this.onOpenLaunchDialog = this.onOpenLaunchDialog.bind(this)
+		this.onCloseLaunchDialog = this.onCloseLaunchDialog.bind(this)
 	}
 
 	componentWillMount() {
@@ -71,7 +74,7 @@ const difficultyModes = new Map([
 	// Render component
 	render() {
 
-		const {match} = this.props
+		const {match, location} = this.props
 		const missionID = match.params.mission
 		const actions = {
 			left: new Map()
@@ -82,128 +85,104 @@ const difficultyModes = new Map([
 			to: "/create"
 		})
 
-		// Set active mission from query params
 		let mission
+		let launchDialog
 
+		// Set active mission from query params
 		if (missionID) {
 
 			mission = missionsStore.index[missionID]
 
 			// Remove selected mission
 			actions.left.set("Remove", {
-				onClick: event => {
-					this.removeMission(missionID, !event.ctrlKey)
-				}
+				onClick: event => this.onRemoveMission(missionID, !event.ctrlKey)
 			})
 
 			// Launch selected mission
 			actions.right = new Map()
 			actions.right.set("Launch", {
 				className: "difficulty" + launchStore.difficulty,
-				onClick: () => {
-					this.toggleLaunchDialog()
-				},
-				onContextMenu: () => {
-					this.launchMenu.popup(remote.getCurrentWindow())
-				}
+				onClick: () => this.onOpenLaunchDialog(),
+				onContextMenu: () => this.launchMenu.popup(remote.getCurrentWindow())
 			})
+
+			launchDialog = (
+				<LaunchDialog
+					mission={mission}
+					opened={match.params.action === "launch"}
+					onClose={this.onCloseLaunchDialog}
+				/>
+			)
 		}
 
-		const missionsListProps = {
-			removeMission: this.removeMission.bind(this)
-		}
-
-		const launchDialogProps = {
-			mission,
-			opened: match.params.action === "launch",
-			onClose: this.toggleLaunchDialog.bind(this)
+		const missionListProps = {
+			onRemoveMission: this.onRemoveMission,
+			// NOTE: MobX observer() implements shouldComponentUpdate() with shallow property
+			// comparison and is preventing React Router <NavLink> updates. As a workaround
+			// we pass location object to re-render <MissionsList> child components during
+			// actual location changes.
+			location
 		}
 
 		return (
 			<div>
 				<Screen id="missions" actions={actions}>
-					<MissionsList {...missionsListProps} />
+					<MissionsList {...missionListProps} />
 					{mission && <MissionDetails mission={mission} />}
 				</Screen>
-				{mission && <LaunchDialog {...launchDialogProps} />}
+				{launchDialog}
 			</div>
 		)
 	}
 
-	// Show/hide launch mission dialog
-	toggleLaunchDialog() {
+	// Open launch dialog event handler
+	onOpenLaunchDialog() {
 
 		const {match, history} = this.props
-		const {mission, action} = match.params
 
-		let path = "/missions/" + mission
-
-		if (action !== "launch") {
-			path += "/launch"
-		}
-
-		history.replace(path)
+		history.replace("/missions/" + match.params.mission + "/launch")
 	}
 
-	// Remove mission
-	removeMission(missionID, confirm = false) {
+	// Close launch dialog event handler
+	onCloseLaunchDialog() {
 
-		if (!missionID) {
+		const {match, history} = this.props
+
+		history.replace("/missions/" + match.params.mission)
+	}
+
+	// Remove mission event handler
+	onRemoveMission(missionID, confirm = false) {
+
+		const removedIndex = removeMission(missionID, confirm)
+
+		if (removedIndex === false) {
 			return
 		}
 
-		let result = 0
+		const {match, history} = this.props
 
-		if (confirm) {
+		// Reload missions
+		loadMissions()
 
-			// Confirm mission remove action
-			result = remote.dialog.showMessageBox(
-				remote.getCurrentWindow(),
-				{
-					type: "warning",
-					title: "Remove Mission",
-					message: "Are you sure you want to remove this mission?",
-					buttons: ["Remove", "Cancel"],
-					defaultId: 0,
-					noLink: true
-				}
-			)
+		// Show create mission screen
+		if (!missionsStore.list.length) {
+			return history.replace("/create?first=1")
 		}
 
-		// Remove mission files
-		if (result === 0) {
+		// Select next mission on the list when removing active mission
+		if (missionID === match.params.mission) {
 
-			const {match, history} = this.props
-			const mission = missionsStore.index[missionID]
-			const {files} = mission
-			const removedIndex = missionsStore.list.indexOf(mission)
+			let nextMission
 
-			for (const fileName of files) {
-				fs.unlinkSync(path.join(missionsStore.path, fileName))
+			if (removedIndex < missionsStore.list.length) {
+				nextMission = missionsStore.list[removedIndex]
+			}
+			else {
+				nextMission = missionsStore.list[missionsStore.list.length - 1]
 			}
 
-			// Reload missions
-			loadMissions()
-
-			// Show create mission screen
-			if (!missionsStore.list.length) {
-				return history.replace("/create?first=1")
-			}
-
-			// Select next mission on the list when removing active mission
-			if (missionID === match.params.mission) {
-
-				let nextMission
-
-				if (removedIndex < missionsStore.list.length) {
-					nextMission = missionsStore.list[removedIndex]
-				}
-				else {
-					nextMission = missionsStore.list[missionsStore.list.length - 1]
-				}
-
-				history.replace("/missions/" + nextMission.id)
-			}
+			history.replace("/missions/" + nextMission.id)
 		}
 	}
 }

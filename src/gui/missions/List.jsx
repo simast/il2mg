@@ -10,7 +10,7 @@ import missionsStore from "./store"
 // Missions list component
 @observer export default class MissionsList extends React.Component {
 
-	constructor({removeMission}) {
+	constructor({onRemoveMission}) {
 		super(...arguments)
 
 		// Create context menu
@@ -20,18 +20,17 @@ import missionsStore from "./store"
 		// Remove menu
 		menu.append(new MenuItem({
 			label: "Remove",
-			click: () => {
-				removeMission(this.contextMission.id, true)
-			}
+			click: () => onRemoveMission(this.contextMission.id, true)
 		}))
 
 		// Save menu
 		menu.append(new MenuItem({
 			label: "Save As...",
-			click: () => {
-				saveMission(this.contextMission.id)
-			}
+			click: () => saveMission(this.contextMission.id)
 		}))
+
+		// Bind event handler contexts
+		this.onContextMenu = this.onContextMenu.bind(this)
 	}
 
 	componentDidMount() {
@@ -56,7 +55,7 @@ import missionsStore from "./store"
 
 					const props = {
 						mission,
-						onContextMenu: this.onContextMenu.bind(this)
+						onContextMenu: this.onContextMenu
 					}
 
 					return <MissionsListItem key={mission.id} {...props} />
@@ -65,7 +64,7 @@ import missionsStore from "./store"
 		)
 	}
 
-	// Handle mission list context/popup menu
+	// Context popup menu event handler
 	onContextMenu(mission) {
 
 		this.contextMission = mission

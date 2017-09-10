@@ -9,9 +9,7 @@ export default ({mission, onContextMenu}) => {
 	const linkProps = {
 		to: "/missions/" + mission.id,
 		activeClassName: "selected",
-		onContextMenu: () => {
-			onContextMenu(mission)
-		},
+		onContextMenu: () => onContextMenu(mission),
 		className: "country c" + mission.country
 	}
 

@@ -131,3 +131,49 @@ export function saveMission(missionID) {
 		}
 	}
 }
+
+// Remove mission
+export function removeMission(missionID, confirm = false) {
+
+	if (!missionID) {
+		return false
+	}
+
+	const mission = missionsStore.index[missionID]
+
+	if (!mission) {
+		return false
+	}
+
+	let result = 0
+
+	if (confirm) {
+
+		// Confirm mission remove action
+		result = remote.dialog.showMessageBox(
+			remote.getCurrentWindow(),
+			{
+				type: "warning",
+				title: "Remove Mission",
+				message: "Are you sure you want to remove this mission?",
+				buttons: ["Remove", "Cancel"],
+				defaultId: 0,
+				noLink: true
+			}
+		)
+	}
+
+	if (result !== 0) {
+		return false
+	}
+
+	const {files} = mission
+	const removedIndex = missionsStore.list.indexOf(mission)
+
+	// Remove mission files
+	for (const fileName of files) {
+		fs.unlinkSync(path.join(missionsStore.path, fileName))
+	}
+
+	return removedIndex
+}

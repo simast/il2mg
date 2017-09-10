@@ -3,7 +3,7 @@
 import React from "react"
 
 // Mission details pane component
-export default class MissionDetails extends React.Component {
+export default class MissionDetails extends React.PureComponent {
 
 	componentWillReceiveProps(nextProps) {
 
