@@ -6,7 +6,7 @@ import classNames from "classnames"
 
 // Dialog component
 export default ({id, children, onClose, opened = false}) => (
-	<CSSTransition in={opened} mountOnEnter unmountOnExit timeout={300} classNames="dialog">
+	<CSSTransition in={opened} mountOnEnter unmountOnExit timeout={250} classNames="dialog">
 		<div className={classNames("dialog", {opened})}>
 			<div id={id} className="content">
 				<div className="close">

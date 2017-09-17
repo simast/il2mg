@@ -4,6 +4,7 @@ import React from "react"
 import classNames from "classnames"
 import Dialog from "../app/Dialog"
 import SelectGamePath from "./SelectGamePath"
+import SelectDifficulty from "./SelectDifficulty"
 
 // Launch mission dialog component
 export default class LaunchDialog extends React.PureComponent {
@@ -19,6 +20,7 @@ export default class LaunchDialog extends React.PureComponent {
 				<div className="title">{mission.title}</div>
 				<div className={planeClassName}>{mission.plane}</div>
 				<SelectGamePath />
+				<SelectDifficulty />
 			</Dialog>
 		)
 	}

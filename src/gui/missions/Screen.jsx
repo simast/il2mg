@@ -1,23 +1,13 @@
 /** @copyright Simas Toleikis, 2016 */
 
-import {remote} from "electron"
 import React from "react"
 import {observer} from "mobx-react"
-import {Difficulty} from "../launch"
-import launchStore from "../launch/store"
 import LaunchDialog from "../launch/Dialog"
 import missionsStore from "./store"
 import {loadMissions, removeMission} from "./actions"
 import Screen from "../app/Screen"
 import MissionsList from "./List"
 import MissionDetails from "./Details"
-
-// Difficulty settings/preset modes
-const difficultyModes = new Map([
-	[Difficulty.Normal, "Normal"],
-	[Difficulty.Expert, "Expert"],
-	[Difficulty.Custom, "Custom"]
-])
 
 // Missions screen component
 @observer export default class MissionsScreen extends React.Component {
@@ -27,25 +17,6 @@ const difficultyModes = new Map([
 
 		// Load missions from missions directory
 		loadMissions()
-
-		// Create context menu for launch button difficulty choice
-		if (missionsStore.list.length) {
-
-			const {Menu, MenuItem} = remote
-			const launchMenu = this.launchMenu = new Menu()
-
-			difficultyModes.forEach((difficultyLabel, difficultyID) => {
-
-				launchMenu.append(new MenuItem({
-					label: difficultyLabel,
-					type: "radio",
-					checked: (difficultyID === launchStore.difficulty),
-					click: () => {
-						launchStore.setDifficulty(difficultyID)
-					}
-				}))
-			})
-		}
 
 		// Bind event handler contexts
 		this.onRemoveMission = this.onRemoveMission.bind(this)
@@ -101,9 +72,7 @@ const difficultyModes = new Map([
 			// Launch selected mission
 			actions.right = new Map()
 			actions.right.set("Launch", {
-				className: "difficulty" + launchStore.difficulty,
-				onClick: () => this.onOpenLaunchDialog(),
-				onContextMenu: () => this.launchMenu.popup(remote.getCurrentWindow())
+				onClick: () => this.onOpenLaunchDialog()
 			})
 
 			launchDialog = (

@@ -28,3 +28,46 @@
 	display: block;
 	padding: 5px 15px;
 }
+
+/* Difficulty selector */
+#selectDifficulty {
+	margin-top: var(--content-spacing);
+}
+
+#difficultyPreset {
+	list-style-type: none;
+	padding: 0;
+	margin: 10px 0 0 0;
+	display: flex;
+	justify-content: center;
+}
+#difficultyPreset li:first-child {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+#difficultyPreset li:last-child {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+#difficultyPreset li a {
+	display: block;
+	width: 80px;
+	padding: 6px 0;
+}
+#difficultyPreset li.selected a {
+	font-weight: bold;
+	color: var(--alt-text-light-color);
+}
+
+/* Custom difficulty */
+#difficultyPreset li.difficulty0 {
+	background-color: rgb(77,77,77);
+}
+/* Normal difficulty */
+#difficultyPreset li.difficulty1 {
+	background-color: rgb(0,129,0);
+}
+/* Expert difficulty */
+#difficultyPreset li.difficulty2 {
+	background-color: rgb(176,76,0);
+}

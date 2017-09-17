@@ -1,18 +1,5 @@
 @charset "UTF-8";
 
-/* Custom difficulty */
-#actionBar a.difficulty0 {
-	text-shadow: 0 0 30px rgba(77,77,77,1);
-}
-/* Normal difficulty */
-#actionBar a.difficulty1 {
-	text-shadow: 0 0 30px rgba(0,129,0,1);
-}
-/* Expert difficulty */
-#actionBar a.difficulty2 {
-	text-shadow: 0 0 30px rgba(176,76,0,1);
-}
-
 /* Missions screen */
 #missions {
 	display: flex;

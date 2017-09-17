@@ -234,7 +234,7 @@ a.country.selected:before {
 }
 .dialog-enter-active {
 	opacity: 1;
-	transition: opacity 300ms linear;
+	transition: opacity 250ms linear;
 }
 .dialog-enter .content {
 	left: 100%;
@@ -245,7 +245,7 @@ a.country.selected:before {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%) scale(1);
-	transition: all 300ms ease;
+	transition: all 250ms ease;
 }
 
 /* Scrollbars */
