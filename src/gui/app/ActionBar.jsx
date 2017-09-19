@@ -2,6 +2,7 @@
 
 import React from "react"
 import {Link} from "react-router-dom"
+import classNames from "classnames"
 
 // ActionBar component
 export default ({actions}) => (
@@ -15,18 +16,19 @@ export default ({actions}) => (
 					let key = 1
 
 					// Build a list of action links
-					actions[side].forEach((props, children) => {
+					actions[side].forEach(({to, onClick, disabled, primary}, children) => {
 
+						const className = classNames({primary})
 						let linkElement
 
-						if (props.disabled) {
+						if (disabled) {
 							linkElement = <span key={key}>{children}</span>
 						}
-						else if (props.to) {
-							linkElement = <Link key={key} {...props}>{children}</Link>
+						else if (to) {
+							linkElement = <Link key={key} to={to} className={className}>{children}</Link>
 						}
 						else {
-							linkElement = <a key={key} {...props}>{children}</a>
+							linkElement = <a key={key} onClick={onClick} className={className}>{children}</a>
 						}
 
 						// Render separator element

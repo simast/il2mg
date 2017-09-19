@@ -72,7 +72,8 @@ import MissionDetails from "./Details"
 			// Launch selected mission
 			actions.right = new Map()
 			actions.right.set("Launch", {
-				onClick: () => this.onOpenLaunchDialog()
+				onClick: () => this.onOpenLaunchDialog(),
+				primary: true
 			})
 
 			launchDialog = (

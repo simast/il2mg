@@ -144,10 +144,14 @@ a:focus, input:focus, textarea:focus, select:focus {
 	font-weight: bold;
 	padding: 0 6px;
 }
+.dialog .actionBar a,
+.dialog .actionBar span {
+	font-weight: 600;
+}
 .actionBar a {
 	cursor: pointer;
 }
-.dialog .actionBar a {
+.dialog .actionBar a.primary {
 	color: var(--alt-text-light-color);
 }
 .actionBar span {

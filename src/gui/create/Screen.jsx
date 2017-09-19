@@ -57,8 +57,10 @@ const choiceLists = [
 			right: new Map()
 		}
 
-		const createProps = {}
 		const isFirstCreate = new URLSearchParams(location.search).has("first")
+		const createProps = {
+			primary: true
+		}
 
 		if (choices.valid) {
 			createProps.onClick = this.onCreateClick.bind(this)
@@ -75,9 +77,7 @@ const choiceLists = [
 		if (!isFirstCreate) {
 
 			screenActions.right.set("Cancel", {
-				onClick: () => {
-					history.goBack()
-				}
+				onClick: () => history.goBack()
 			})
 		}
 

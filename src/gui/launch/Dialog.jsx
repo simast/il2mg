@@ -23,7 +23,8 @@ import SelectDifficulty from "./SelectDifficulty"
 
 		actions.center.set("Accept", {
 			onClick: () => launchMission(mission.id),
-			disabled: !launchStore.gamePath
+			disabled: !launchStore.gamePath,
+			primary: true
 		})
 
 		actions.center.set("Cancel", {
