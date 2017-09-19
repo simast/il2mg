@@ -6,7 +6,7 @@ import {Link} from "react-router-dom"
 // ActionBar component
 export default ({actions}) => (
 
-	<footer id="actionBar">
+	<footer className="actionBar">
 		{Object.keys(actions).map(side => (
 			<nav className={side} key={side}>
 				{(() => {

@@ -110,8 +110,8 @@ a:focus, input:focus, textarea:focus, select:focus {
 	background: transparent url("../assets/photo-frame.png") 0 0 no-repeat;
 }
 
-/* Bottom action bar */
-#actionBar {
+/* Screen/dialog action bar */
+.actionBar {
 	box-sizing: border-box;
 	pointer-events: auto;
 	flex: 0 0 auto;
@@ -120,29 +120,41 @@ a:focus, input:focus, textarea:focus, select:focus {
 	padding: 0 calc(var(--content-spacing) - 6px); /* 4px from action link padding */
 	border-top: 2px dotted var(--separator-color);
 }
-#actionBar nav {
+.dialog .actionBar {
+	border-color: var(--alt-text-dark-color);
+}
+.actionBar nav {
 	margin-top: 21px;
 	font-size: 15px;
 	line-height: 28px;
 }
-#actionBar nav.left {
+.actionBar nav.left {
 	float: left;
 }
-#actionBar nav.right {
+.actionBar nav.right {
 	float: right;
 }
-#actionBar a,
-#actionBar span {
+.actionBar nav.center {
+	text-align: center;
+}
+.actionBar a,
+.actionBar span {
 	display: inline-block;
 	text-transform: uppercase;
 	font-weight: bold;
 	padding: 0 6px;
 }
-#actionBar a {
+.actionBar a {
 	cursor: pointer;
 }
-#actionBar span {
+.dialog .actionBar a {
+	color: var(--alt-text-light-color);
+}
+.actionBar span {
 	color: var(--separator-color);
+}
+.dialog .actionBar span {
+	color: var(--alt-text-dark-color);
 }
 
 /* Country icons */
@@ -194,15 +206,14 @@ a.country.selected:before {
 .dialog a {
 	color: var(--alt-text-color);
 }
-.dialog .content {
+.dialog .container {
+	display: flex;
+	flex-direction: column;
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	background-color: var(--alt-background-color);
 	color: var(--alt-text-color);
-	padding: var(--content-spacing);
-	width: 50%;
-	height: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 2;
 	border-radius: 10px;
@@ -229,6 +240,10 @@ a.country.selected:before {
 	text-decoration: none;
 	color: var(--alt-text-light-color);
 }
+.dialog .content {
+	flex: 1;
+	padding: var(--content-spacing);
+}
 .dialog-enter {
 	opacity: 0;
 }
@@ -236,12 +251,12 @@ a.country.selected:before {
 	opacity: 1;
 	transition: opacity 250ms linear;
 }
-.dialog-enter .content {
+.dialog-enter .container {
 	left: 100%;
 	top: 100%;
 	transform: translate(0%, 0%) scale(0);
 }
-.dialog-enter-active .content {
+.dialog-enter-active .container {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%) scale(1);
