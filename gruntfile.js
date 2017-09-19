@@ -5,11 +5,22 @@ require("babel-register")
 
 module.exports = function(grunt) {
 
-	// All source files
-	const sourceFiles = [
+	// JavaScript source files
+	const javaScriptFiles = [
 		"gruntfile.js",
 		"src/**/*.js*",
 		"build/tasks/**/*.js"
+	]
+
+	// Style sheet files
+	const styleFiles = [
+		"src/**/*.css"
+	]
+
+	// All source files
+	const sourceFiles = [
+		...javaScriptFiles,
+		...styleFiles
 	]
 
 	grunt.initConfig({
@@ -17,7 +28,7 @@ module.exports = function(grunt) {
 		// ESLint JavaScript linter
 		eslint: {
 			all: {
-				src: sourceFiles
+				src: javaScriptFiles
 			}
 		},
 
