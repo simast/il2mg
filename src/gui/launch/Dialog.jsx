@@ -22,7 +22,7 @@ import SelectDifficulty from "./SelectDifficulty"
 		}
 
 		actions.center.set("Accept", {
-			onClick: () => launchMission(mission.id),
+			onClick: event => launchMission(mission.id, event.ctrlKey),
 			disabled: !launchStore.gamePath,
 			primary: true
 		})

@@ -148,11 +148,15 @@ a:focus, input:focus, textarea:focus, select:focus {
 .dialog .actionBar span {
 	font-weight: 600;
 }
+.actionBar a.primary {
+	text-shadow: 0 0 30px rgba(0,129,0,0.75);
+}
 .actionBar a {
 	cursor: pointer;
 }
 .dialog .actionBar a.primary {
 	color: var(--text-color-alt-light);
+	text-shadow: none;
 }
 .actionBar span {
 	color: var(--separator-color);

@@ -30,7 +30,7 @@ let autoplayRestoreTS
 let tracksWatcher
 
 // Create autoplay.cfg file
-function createAutoPlay(missionID) {
+function createAutoPlay(missionID, skipPlaneSettings) {
 
 	const {gamePath, difficulty} = launchStore
 
@@ -51,6 +51,7 @@ function createAutoPlay(missionID) {
 		[
 			"&il2mg=1", // Flag used to identify generated autoplay file
 			"&enabled=1",
+			"&autoIngame=" + (skipPlaneSettings ? 1 : 0),
 			"&missionSettingsPreset=" + difficulty,
 			'&missionPath="' + path.join(missionsStore.path, missionID) + '"'
 		].join("\r\n")
@@ -159,7 +160,7 @@ function cancelAutoPlayRestoreTimeout() {
 }
 
 // Launch mission
-export function launchMission(missionID) {
+export function launchMission(missionID, skipPlaneSettings) {
 
 	const {gamePath} = launchStore
 
@@ -175,7 +176,7 @@ export function launchMission(missionID) {
 		cancelAutoPlayRestoreTimeout()
 
 		// Create autoplay.cfg file
-		createAutoPlay(missionID)
+		createAutoPlay(missionID, skipPlaneSettings)
 
 		// Run game executable
 		const gameProcess = spawn(gameExePath, {
