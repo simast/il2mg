@@ -58,8 +58,8 @@
 #missionDetails {
 	flex: 1;
 	pointer-events: auto;
-	background-color: var(--alt-background-color);
-	color: var(--alt-text-color);
+	background-color: var(--background-color-alt);
+	color: var(--text-color-alt);
 	border-radius: 10px;
 	box-shadow: 0 10px 6px -6px rgba(0,0,0,0.35);
 }
@@ -70,7 +70,7 @@
 	font-weight: normal;
 	font-size: 17px;
 	line-height: 54px;
-	color: var(--alt-text-light-color);
+	color: var(--text-color-alt-light);
 	margin: 0;
 	white-space: nowrap;
 	overflow: hidden;
@@ -94,13 +94,13 @@
 	/* Top and bottom briefing content scroll shadows */
 	background:
 		/* Shadow covers */
-		linear-gradient(var(--alt-background-color) 30%, var(--alt-background-color-transparent)),
-		linear-gradient(var(--alt-background-color-transparent), var(--alt-background-color) 70%) 0 100%,
+		linear-gradient(var(--background-color-alt) 30%, var(--background-color-alt-transparent)),
+		linear-gradient(var(--background-color-alt-transparent), var(--background-color-alt) 70%) 0 100%,
 		/* Shadows */
 		radial-gradient(farthest-side at 50% 0, rgba(0,0,0,0.4), rgba(0,0,0,0)),
 		radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,0.4), rgba(0,0,0,0)) 0 100%;
 	background-repeat: no-repeat;
-	background-color: var(--alt-background-color);
+	background-color: var(--background-color-alt);
 	background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
 	background-attachment: local, local, scroll, scroll;
 }
@@ -123,10 +123,10 @@
 	font-size: 13px;
 }
 #briefing font[color="#fbfbfb"] {
-	color: var(--alt-text-light-color);
+	color: var(--text-color-alt-light);
 }
 #briefing font[color="#959595"] {
-	color: var(--alt-text-dark-color);
+	color: var(--text-color-alt-dark);
 }
 #briefing p {
 	padding: 0;

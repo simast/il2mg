@@ -15,7 +15,7 @@
 }
 #create .reset:hover {
 	text-decoration: none;
-	color: var(--main-text-color);
+	color: var(--text-color-main);
 }
 
 /* Photos decoration */

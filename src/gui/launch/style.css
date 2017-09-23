@@ -14,7 +14,7 @@
 }
 #launchDialog .title {
 	font-size: 17px;
-	color: var(--alt-text-light-color);
+	color: var(--text-color-alt-light);
 	padding: 0 var(--content-spacing);
 	margin-bottom: 3px;
 }
@@ -22,7 +22,7 @@
 /* Game path selector */
 #selectGamePath {
 	margin-top: var(--content-spacing);
-	border: 2px solid var(--alt-text-dark-color);
+	border: 2px solid var(--text-color-alt-dark);
 	border-radius: 10px;
 }
 #selectGamePath a {
@@ -57,7 +57,7 @@
 }
 #difficultyPreset li.selected a {
 	font-weight: 600;
-	color: var(--alt-text-light-color);
+	color: var(--text-color-alt-light);
 }
 
 /* Normal difficulty */
