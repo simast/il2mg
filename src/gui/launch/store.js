@@ -2,22 +2,22 @@
 
 import {remote, ipcRenderer} from "electron"
 import {observable, computed, action, reaction} from "mobx"
-import {Difficulty, isValidGamePath} from "."
+import {RealismPreset, isValidGamePath} from "."
 
 // Launch mission state store
 class LaunchStore {
 
 	// Observables
 	@observable gamePath
-	@observable difficulty = Difficulty.Normal
+	@observable realismPreset = RealismPreset.Normal
 
 	// Actions
 	@action setGamePath = gamePath => this.gamePath = gamePath
-	@action setDifficulty = difficulty => this.difficulty = difficulty
+	@action setRealismPreset = realismPreset => this.realismPreset = realismPreset
 
 	constructor() {
 
-		const {gamePath, difficulty} = remote.getGlobal("config")
+		const {gamePath, realismPreset} = remote.getGlobal("config")
 
 		// Load existing launch state from configuration data
 
@@ -25,8 +25,10 @@ class LaunchStore {
 			this.gamePath = gamePath
 		}
 
-		if (difficulty !== undefined && Object.values(Difficulty).includes(difficulty)) {
-			this.difficulty = difficulty
+		const validRealismPresets = Object.values(RealismPreset)
+
+		if (realismPreset !== undefined && validRealismPresets.includes(realismPreset)) {
+			this.realismPreset = realismPreset
 		}
 
 		// Send configuration data to main Electron process
@@ -43,7 +45,7 @@ class LaunchStore {
 
 		return {
 			gamePath: this.gamePath,
-			difficulty: this.difficulty
+			realismPreset: this.realismPreset
 		}
 	}
 }

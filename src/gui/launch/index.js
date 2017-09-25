@@ -3,11 +3,38 @@
 import fs from "fs"
 import path from "path"
 
-// Difficulty preset
-export const Difficulty = Object.freeze({
+// Realism presets
+export const RealismPreset = Object.freeze({
 	Custom: 0,
 	Normal: 1,
 	Expert: 2
+})
+
+// Realism options
+export const RealismOption = Object.freeze({
+	ObjectMarkers: "objectIcons",
+	AimingAssist: "aimingHelp",
+	BombingAssist: "courseWeaponsAimingHelp",
+	Padlock: "padLock",
+	NavigationMarkers: "navigationIcons",
+	InstrumentPanel: "simpleDevices",
+	AllowSpectators: "allowSpectator",
+	SimplifiedPhysics: "noMoment",
+	NoWind: "noWind",
+	NoMisfires: "noMisfire",
+	Unbreakable: "noBreak",
+	Invulnerability: "invulnerability",
+	UnlimitedFuel: "unlimitFuel",
+	UnlimitedAmmo: "unlimitAmmo",
+	NoEngineStall: "engineNoStop",
+	WarmedUpEngine: "hotEngine",
+	SimplifiedControls: "easyFlight",
+	RudderAssist: "autoCoordination",
+	CruiseControl: "autoThrottle",
+	Autopilot: "autoPilot",
+	ThrottleAutoLimit: "autoThrottleLimit",
+	EngineAutoControl: "autoMix",
+	RadiatorAssist: "autoRadiator"
 })
 
 // Game paths

@@ -30,54 +30,54 @@
 	padding: 5px 15px;
 }
 
-/* Difficulty selector */
-#selectDifficulty {
+/* Realism preset selector */
+#selectRealism {
 	margin-top: var(--content-spacing);
 }
 
-#difficultyPreset {
+#realismPreset {
 	list-style-type: none;
 	padding: 0;
 	margin: 10px 0 0 0;
 	display: flex;
 	justify-content: center;
 }
-#difficultyPreset li:first-child {
+#realismPreset li:first-child {
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
 }
-#difficultyPreset li:last-child {
+#realismPreset li:last-child {
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
-#difficultyPreset li a {
+#realismPreset li a {
 	display: block;
 	width: 80px;
 	padding: 6px 0;
 }
-#difficultyPreset li.selected a {
+#realismPreset li.selected a {
 	font-weight: 600;
 	color: var(--text-color-alt-light);
 }
 
-/* Normal difficulty */
-#difficultyPreset li.difficulty1 {
+/* Normal realism */
+#realismPreset li.realismPreset1 {
 	background-color: rgba(0,129,0,0.25);
 }
-#difficultyPreset li.selected.difficulty1 {
+#realismPreset li.selected.realismPreset1 {
 	background-color: rgb(0,129,0);
 }
-/* Expert difficulty */
-#difficultyPreset li.difficulty2 {
+/* Expert realism */
+#realismPreset li.realismPreset2 {
 	background-color: rgba(176,76,0,0.25);
 }
-#difficultyPreset li.selected.difficulty2 {
+#realismPreset li.selected.realismPreset2 {
 	background-color: rgb(176,76,0);
 }
-/* Custom difficulty */
-#difficultyPreset li.difficulty0 {
+/* Custom realism */
+#realismPreset li.realismPreset0 {
 	background-color: rgba(77,77,77,0.25);
 }
-#difficultyPreset li.selected.difficulty0 {
+#realismPreset li.selected.realismPreset0 {
 	background-color: rgb(77,77,77);
 }

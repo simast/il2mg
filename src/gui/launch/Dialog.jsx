@@ -7,7 +7,7 @@ import launchStore from "./store"
 import {launchMission} from "./actions"
 import Dialog from "../app/Dialog"
 import SelectGamePath from "./SelectGamePath"
-import SelectDifficulty from "./SelectDifficulty"
+import SelectRealism from "./SelectRealism"
 
 // Launch mission dialog component
 @observer export default class LaunchDialog extends React.Component {
@@ -36,7 +36,7 @@ import SelectDifficulty from "./SelectDifficulty"
 				<div className="title">{mission.title}</div>
 				<div className={planeClassName}>{mission.plane}</div>
 				<SelectGamePath />
-				<SelectDifficulty />
+				<SelectRealism />
 			</Dialog>
 		)
 	}

@@ -32,7 +32,7 @@ let tracksWatcher
 // Create autoplay.cfg file
 function createAutoPlay(missionID, skipPlaneSettings) {
 
-	const {gamePath, difficulty} = launchStore
+	const {gamePath, realismPreset} = launchStore
 
 	if (!gamePath) {
 		return
@@ -52,7 +52,7 @@ function createAutoPlay(missionID, skipPlaneSettings) {
 			"&il2mg=1", // Flag used to identify generated autoplay file
 			"&enabled=1",
 			"&autoIngame=" + (skipPlaneSettings ? 1 : 0),
-			"&missionSettingsPreset=" + difficulty,
+			"&missionSettingsPreset=" + realismPreset,
 			'&missionPath="' + path.join(missionsStore.path, missionID) + '"'
 		].join("\r\n")
 	)
