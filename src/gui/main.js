@@ -3,7 +3,7 @@
 import fs from "fs"
 import path from "path"
 import Mission from "../mission"
-import {app, screen, BrowserWindow, ipcMain, dialog} from "electron"
+import {app, screen, BrowserWindow, ipcMain, dialog, Menu} from "electron"
 import {APPLICATION_TITLE} from "../data"
 
 let mainWindow = null
@@ -117,6 +117,9 @@ app.on("window-all-closed", () => {
 // Create main application window
 app.on("ready", () => {
 
+	// Disable default application menu
+	Menu.setApplicationMenu(null)
+
 	const userDataPath = app.getPath("userData")
 
 	// Load JSON configuration data
@@ -180,7 +183,6 @@ app.on("ready", () => {
 
 	mainWindow = new BrowserWindow(windowConfig)
 
-	mainWindow.setMenu(null)
 	mainWindow.loadURL("file://" + __dirname + "/index.html")
 
 	// Prevent document from changing window title

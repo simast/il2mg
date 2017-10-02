@@ -12,7 +12,7 @@
 		"circle-enclose": "1.0.0",
 		"classnames": "2.2.5",
 		"commander": "2.11.0",
-		"electron": "1.7.8",
+		"electron": "1.8.1",
 		"glob": "7.1.2",
 		"lazy-property": "1.0.0",
 		"lex": "1.7.9",
