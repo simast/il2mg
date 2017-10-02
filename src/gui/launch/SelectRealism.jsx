@@ -5,6 +5,7 @@ import {observer} from "mobx-react"
 import classNames from "classnames"
 import {RealismPreset} from "."
 import launchStore from "./store"
+import RealismOptions from "./RealismOptions"
 
 // Realism settings/preset modes
 const realismPresets = [
@@ -36,6 +37,7 @@ const realismPresets = [
 						)
 					})}
 				</ul>
+				{launchStore.realismPreset === RealismPreset.Custom && <RealismOptions />}
 			</div>
 		)
 	}

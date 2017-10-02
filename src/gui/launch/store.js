@@ -10,10 +10,12 @@ class LaunchStore {
 	// Observables
 	@observable gamePath
 	@observable realismPreset = RealismPreset.Normal
+	@observable realismOptions
 
 	// Actions
 	@action setGamePath = gamePath => this.gamePath = gamePath
 	@action setRealismPreset = realismPreset => this.realismPreset = realismPreset
+	@action setRealismOptions = realismOptions => this.realismOptions = realismOptions
 
 	constructor() {
 
@@ -30,6 +32,14 @@ class LaunchStore {
 		if (realismPreset !== undefined && validRealismPresets.includes(realismPreset)) {
 			this.realismPreset = realismPreset
 		}
+
+		// Reset realism options when game path changes
+		reaction(
+			() => this.gamePath,
+			() => {
+				this.setRealismOptions(undefined)
+			}
+		)
 
 		// Send configuration data to main Electron process
 		reaction(

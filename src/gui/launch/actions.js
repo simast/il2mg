@@ -3,15 +3,23 @@
 import fs from "fs"
 import path from "path"
 import {spawn} from "child_process"
+import glob from "glob"
 import {remote} from "electron"
-import {isValidGamePath, PATH_GAME_DATA, PATH_GAME_EXE} from "."
 import {moveFileSync, showErrorMessage} from "../app"
 import {FileExtension} from "../missions"
 import missionsStore from "../missions/store"
 import launchStore from "./store"
 
-// Autoplay file name
+import {
+	isValidGamePath,
+	RealismPreset,
+	PATH_GAME_DATA,
+	PATH_GAME_EXE
+} from "."
+
+// Game file names
 const FILE_AUTOPLAY = "autoplay.cfg"
+const FILE_MISSION_SETTINGS = "missionsettings.mode=singleplayer.txt"
 
 // NOTE: This is a max time (in milliseconds) to wait before removing
 // generated autoplay.cfg file after game executable is launched. This is
@@ -19,9 +27,10 @@ const FILE_AUTOPLAY = "autoplay.cfg"
 const MAX_AUTOPLAY_TIME = 10000 // 10 seconds
 
 // File and directory paths
-const PATH_USER_DATA = remote.app.getPath("userData")
+const PATH_APP_DATA = remote.app.getPath("userData")
 const PATH_AUTOPLAY = path.join(PATH_GAME_DATA, FILE_AUTOPLAY)
 const PATH_TRACKS = path.join(PATH_GAME_DATA, "Tracks")
+const PATH_USER_DATA = path.join(PATH_GAME_DATA, "swf", "il2", "userdata")
 
 // Autoplay file restore timeout identifier
 let autoplayRestoreTS
@@ -42,7 +51,7 @@ function createAutoPlay(missionID, skipPlaneSettings) {
 
 	// Make a backup copy of the original autoplay.cfg file
 	if (fs.existsSync(autoplayPath)) {
-		moveFileSync(autoplayPath, path.join(PATH_USER_DATA, FILE_AUTOPLAY))
+		moveFileSync(autoplayPath, path.join(PATH_APP_DATA, FILE_AUTOPLAY))
 	}
 
 	// Make autoplay.cfg
@@ -68,7 +77,7 @@ export function restoreAutoPlay() {
 	}
 
 	const autoplayPath = path.join(gamePath, PATH_AUTOPLAY)
-	const backupAutoplayPath = path.join(PATH_USER_DATA, FILE_AUTOPLAY)
+	const backupAutoplayPath = path.join(PATH_APP_DATA, FILE_AUTOPLAY)
 
 	try {
 
@@ -178,6 +187,9 @@ export function launchMission(missionID, skipPlaneSettings) {
 		// Create autoplay.cfg file
 		createAutoPlay(missionID, skipPlaneSettings)
 
+		// Write custom realism options to mission settings file
+		writeRealismOptions()
+
 		// Run game executable
 		const gameProcess = spawn(gameExePath, {
 			cwd: path.dirname(gameExePath),
@@ -280,5 +292,98 @@ export function selectGamePath() {
 			"Selected folder is not a valid IL-2 Sturmovik directory:\n\n" +
 			folder
 		)
+	}
+}
+
+// Read all single-player mission settings files from all game users
+// NOTE: Files are sorted based on recent modification time
+function readMissionSettingsFiles() {
+
+	const {gamePath} = launchStore
+
+	if (!gamePath) {
+		return []
+	}
+
+	const userDataPath = path.join(gamePath, PATH_USER_DATA)
+
+	if (!fs.existsSync(userDataPath)) {
+		return []
+	}
+
+	const matches = glob.sync(
+		path.join(userDataPath, "!(default)/" + FILE_MISSION_SETTINGS),
+		{
+			silent: true,
+			nodir: true
+		}
+	)
+
+	if (!matches) {
+		return []
+	}
+
+	// Read modification time for each matched file name
+	const timeByMatch = matches.reduce(
+		(result, filePath) => result.set(filePath, fs.statSync(filePath).mtime.getTime()),
+		new Map()
+	)
+
+	// Sort matched files based on recent modification time
+	matches.sort((a, b) => timeByMatch.get(b) - timeByMatch.get(a))
+
+	return matches
+}
+
+// Read custom realism options from last active game user
+export function readRealismOptions() {
+
+	// NOTE: Using most recently modified settings file to read realism options
+	const [settingsFilePath] = readMissionSettingsFiles()
+
+	if (!settingsFilePath) {
+		return
+	}
+
+	const content = fs.readFileSync(settingsFilePath, "utf-8")
+	const settingsState = new URLSearchParams(content).get("singleplayerSettingsState")
+
+	if (!settingsState) {
+		return
+	}
+
+	const customSettings = new URLSearchParams(settingsState).get("customSettings")
+
+	if (!customSettings) {
+		return
+	}
+
+	const options = new URLSearchParams(customSettings)
+	const realismOptions = new Set()
+
+	// Map "customSettings" values to realism options
+	for (const [param, value] of options) {
+
+		if (Number(value)) {
+			realismOptions.add(param)
+		}
+	}
+
+	return realismOptions
+}
+
+// Write custom realism options for all game users
+function writeRealismOptions() {
+
+	const {gamePath, realismPreset, realismOptions} = launchStore
+
+	if (!gamePath || realismPreset !== RealismPreset.Custom || !realismOptions) {
+		return
+	}
+
+	const settingsFiles = readMissionSettingsFiles()
+
+	if (!settingsFiles.length) {
+		return
 	}
 }
