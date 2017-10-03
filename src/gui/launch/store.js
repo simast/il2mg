@@ -17,6 +17,24 @@ class LaunchStore {
 	@action setRealismPreset = realismPreset => this.realismPreset = realismPreset
 	@action setRealismOptions = realismOptions => this.realismOptions = realismOptions
 
+	@action toggleRealismOption = option => {
+
+		const {realismOptions} = this
+
+		if (!realismOptions) {
+			return
+		}
+
+		const foundIndex = realismOptions.indexOf(option)
+
+		if (foundIndex !== -1) {
+			realismOptions.splice(foundIndex, 1)
+		}
+		else {
+			realismOptions.push(option)
+		}
+	}
+
 	constructor() {
 
 		const {gamePath, realismPreset} = remote.getGlobal("config")

@@ -13,6 +13,7 @@ import launchStore from "./store"
 import {
 	isValidGamePath,
 	RealismPreset,
+	RealismOption,
 	PATH_GAME_DATA,
 	PATH_GAME_EXE
 } from "."
@@ -184,11 +185,11 @@ export function launchMission(missionID, skipPlaneSettings) {
 
 		cancelAutoPlayRestoreTimeout()
 
-		// Create autoplay.cfg file
-		createAutoPlay(missionID, skipPlaneSettings)
-
 		// Write custom realism options to mission settings file
 		writeRealismOptions()
+
+		// Create autoplay.cfg file
+		createAutoPlay(missionID, skipPlaneSettings)
 
 		// Run game executable
 		const gameProcess = spawn(gameExePath, {
@@ -359,13 +360,13 @@ export function readRealismOptions() {
 	}
 
 	const options = new URLSearchParams(customSettings)
-	const realismOptions = new Set()
+	const realismOptions = []
 
 	// Map "customSettings" values to realism options
 	for (const [param, value] of options) {
 
-		if (Number(value)) {
-			realismOptions.add(param)
+		if (Number(value) && !realismOptions.includes(param)) {
+			realismOptions.push(param)
 		}
 	}
 
@@ -385,5 +386,43 @@ function writeRealismOptions() {
 
 	if (!settingsFiles.length) {
 		return
+	}
+
+	const supportedRealismOptions = Object.values(RealismOption)
+
+	// Update all mission settings files
+	for (const settingsFilePath of settingsFiles) {
+
+		const settings = new URLSearchParams(fs.readFileSync(settingsFilePath, "utf-8"))
+		const settingsState = new URLSearchParams(settings.get("singleplayerSettingsState"))
+
+		if (!settingsState) {
+			continue
+		}
+
+		const customSettings = new URLSearchParams(settingsState.get("customSettings"))
+
+		if (!customSettings) {
+			continue
+		}
+
+		const prevCustomSettings = customSettings.toString()
+
+		// Update all supported realism options
+		for (const option of supportedRealismOptions) {
+			customSettings.set(option, Number(realismOptions.includes(option)))
+		}
+
+		const newCustomSettings = customSettings.toString()
+
+		// Skip file write when no settings are changed
+		if (prevCustomSettings === newCustomSettings) {
+			continue
+		}
+
+		settingsState.set("customSettings", newCustomSettings)
+		settings.set("singleplayerSettingsState", settingsState.toString())
+
+		fs.writeFileSync(settingsFilePath, settings.toString())
 	}
 }

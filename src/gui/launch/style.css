@@ -60,24 +60,35 @@
 	color: var(--text-color-alt-light);
 }
 
-/* Normal realism */
+/* Normal realism preset */
 #realismPreset li.realismPreset1 {
 	background-color: rgba(0,129,0,0.25);
 }
 #realismPreset li.selected.realismPreset1 {
 	background-color: rgb(0,129,0);
 }
-/* Expert realism */
+/* Expert realism preset */
 #realismPreset li.realismPreset2 {
 	background-color: rgba(176,76,0,0.25);
 }
 #realismPreset li.selected.realismPreset2 {
 	background-color: rgb(176,76,0);
 }
-/* Custom realism */
+/* Custom realism preset */
 #realismPreset li.realismPreset0 {
 	background-color: rgba(77,77,77,0.25);
 }
 #realismPreset li.selected.realismPreset0 {
 	background-color: rgb(77,77,77);
+}
+
+/* Custom realism options */
+#realismOptions {
+	display: flex;
+	text-align: left;
+	justify-content: space-around;
+}
+#realismOptions .group {
+	display: flex;
+	flex-direction: column;
 }
