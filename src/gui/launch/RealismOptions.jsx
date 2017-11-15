@@ -3,6 +3,7 @@
 import React from "react"
 import {reaction} from "mobx"
 import {observer} from "mobx-react"
+import classNames from "classnames"
 import {RealismOption} from "."
 import launchStore from "./store"
 import {readRealismOptions} from "./actions"
@@ -153,16 +154,24 @@ const realismOptionsByGroup = [
 					<div key={groupTitle}>
 						<span>{groupTitle}</span>
 						<div className="group">
-							{groupOptions.map(option => (
-								<label key={option} title={hintByRealismOption[option]}>
-									<input
-										type="checkbox"
-										checked={realismOptions.includes(option)}
-										onChange={() => launchStore.toggleRealismOption(option)}
-									/>
-									{titleByRealismOption[option]}
-								</label>
-							))}
+							{groupOptions.map(option => {
+
+								const className = classNames("checkbox", {
+									normal: normalRealismOptions.has(option),
+									hard: hardRealismOptions.has(option)
+								})
+
+								return (
+									<label className={className} key={option} title={hintByRealismOption[option]}>
+										<input
+											type="checkbox"
+											checked={realismOptions.includes(option)}
+											onChange={() => launchStore.toggleRealismOption(option)}
+										/>
+										{titleByRealismOption[option]}
+									</label>
+								)
+							})}
 						</div>
 					</div>
 				))}

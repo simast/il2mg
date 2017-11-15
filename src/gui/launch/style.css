@@ -2,6 +2,15 @@
 
 /* Launch mission dialog */
 #launchDialog {
+	--normal-color: rgb(0,129,0);
+	--normal-color-alt: rgba(0,129,0,0.25);
+	--expert-color: rgb(176,76,0);
+	--expert-color-alt: rgba(176,76,0,0.25);
+	--custom-color: rgb(77,77,77);
+	--custom-color-alt: rgba(77,77,77,0.25);
+	--hard-color: rgb(157,0,2);
+	--hard-color-alt: rgba(157,0,2,0.25);
+
 	text-align: center;
 	min-width: 60%;
 }
@@ -62,28 +71,29 @@
 
 /* Normal realism preset */
 #realismPreset li.realismPreset1 {
-	background-color: rgba(0,129,0,0.25);
+	background-color: var(--normal-color-alt);
 }
 #realismPreset li.selected.realismPreset1 {
-	background-color: rgb(0,129,0);
+	background-color: var(--normal-color);
 }
 /* Expert realism preset */
 #realismPreset li.realismPreset2 {
-	background-color: rgba(176,76,0,0.25);
+	background-color: var(--expert-color-alt);
 }
 #realismPreset li.selected.realismPreset2 {
-	background-color: rgb(176,76,0);
+	background-color: var(--expert-color);
 }
 /* Custom realism preset */
 #realismPreset li.realismPreset0 {
-	background-color: rgba(77,77,77,0.25);
+	background-color: var(--custom-color-alt);
 }
 #realismPreset li.selected.realismPreset0 {
-	background-color: rgb(77,77,77);
+	background-color: var(--custom-color);
 }
 
 /* Custom realism options */
 #realismOptions {
+	margin-top: var(--content-spacing);
 	display: flex;
 	text-align: left;
 	justify-content: space-around;
@@ -91,4 +101,54 @@
 #realismOptions .group {
 	display: flex;
 	flex-direction: column;
+	margin-top: 10px;
+}
+
+/* Realism option checkbox */
+#realismOptions .checkbox {
+	font-size: 12px;
+	padding: 3px 0;
+	cursor: pointer;
+}
+#realismOptions .checkbox input {
+	-webkit-appearance: none;
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	width: 15px;
+	height: 14px;
+	vertical-align: text-top;
+	margin: 0 4px 0 0;
+	background-color: var(--custom-color-alt);
+	border: 2px solid var(--custom-color);
+	border-radius: 2px;
+}
+#realismOptions .checkbox.normal input {
+	background-color: var(--normal-color-alt);
+	border-color: var(--normal-color);
+}
+#realismOptions .checkbox.hard input {
+	background-color: var(--hard-color-alt);
+	border-color: var(--hard-color);
+}
+#realismOptions .checkbox:hover {
+	text-decoration: underline;
+}
+#realismOptions .checkbox:active {
+	text-decoration: none;
+	position: relative;
+	top: 1px;
+	opacity: 0.8;
+}
+#realismOptions .checkbox input:checked:before {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 3px;
+	top: 0;
+	width: 3px;
+	height: 6px;
+	border-right: 2px solid var(--text-color-alt-light);
+	border-bottom: 2px solid var(--text-color-alt-light);
+	transform: rotate(45deg);
 }
