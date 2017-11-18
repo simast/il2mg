@@ -152,7 +152,7 @@ const realismOptionsByGroup = [
 			<div id="realismOptions">
 				{realismOptionsByGroup.map(([groupTitle, groupOptions]) => (
 					<div key={groupTitle}>
-						<span>{groupTitle}</span>
+						<div>{groupTitle}</div>
 						<div className="group">
 							{groupOptions.map(option => {
 

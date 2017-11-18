@@ -101,13 +101,15 @@
 #realismOptions .group {
 	display: flex;
 	flex-direction: column;
+	align-items: flex-start;
 	margin-top: 10px;
 }
 
 /* Realism option checkbox */
 #realismOptions .checkbox {
 	font-size: 12px;
-	padding: 3px 0;
+	padding: 3px 0 3px 19px;
+	text-indent: -19px;
 	cursor: pointer;
 }
 #realismOptions .checkbox input {
@@ -115,9 +117,9 @@
 	cursor: pointer;
 	display: inline-block;
 	position: relative;
+	vertical-align: bottom;
 	width: 15px;
 	height: 14px;
-	vertical-align: text-top;
 	margin: 0 4px 0 0;
 	background-color: var(--custom-color-alt);
 	border: 2px solid var(--custom-color);
