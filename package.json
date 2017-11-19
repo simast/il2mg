@@ -5,7 +5,10 @@
 	"main": "./src/run.js",
 	"author": "Simas Toleikis <simast@gmail.com>",
 	"scripts": {
-		"start": "electron ."
+		"start": "electron .",
+		"build": "grunt",
+		"lint": "grunt eslint",
+		"precommit": "npm run lint"
 	},
 	"dependencies": {
 		"binary-search": "1.3.2",
@@ -49,6 +52,7 @@
 		"grunt": "1.0.1",
 		"grunt-contrib-clean": "1.1.0",
 		"grunt-eslint": "20.1.0",
+		"husky": "0.14.3",
 		"json5": "0.5.1",
 		"sloc": "0.2.0",
 		"uglifyjs-webpack-plugin": "1.1.0",
