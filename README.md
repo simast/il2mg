@@ -26,7 +26,7 @@ Build all source data files inside */data* directory:
 npm run build
 ```
 
-> If you ever make any changes to data files in this directory - make sure to run `npm run build` again.
+If you ever make any changes to data files in this directory - make sure to run `npm run build` again.
 
 ## Run application
 
@@ -38,7 +38,7 @@ You can run this application with a GUI or a simple command-line interface.
 npm start
 ```
 
-> You can then use <kbd>F5</kbd> key to reload application and <kbd>F12</kbd> to toggle developer tools.
+You can then use <kbd>F5</kbd> key to reload application and <kbd>F12</kbd> to toggle developer tools.
 
 ### Command-line application
 
@@ -48,7 +48,11 @@ node . test -D
 
 When working with non-GUI related code it is more practical to use the command-line interface - as this allows you to use *seed* parameter which can be used to re-create exact same mission and easily test your changed code.
 
-> Use `--help` command-line parameter to see a list of supported options.
+Use `--help` command-line parameter to see a list of supported options.
+
+## Contributing
+
+Please refer to the [Wiki](https://github.com/simast/il2mg/wiki) pages for some additional information on existing project architecture.
 
 ## License
 
