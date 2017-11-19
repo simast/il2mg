@@ -45,13 +45,13 @@
 		"clean-css": "4.1.9",
 		"electron-packager": "9.1.0",
 		"eslint": "4.11.0",
-		"eslint-plugin-react": "7.4.0",
+		"eslint-plugin-react": "7.5.0",
 		"grunt": "1.0.1",
 		"grunt-contrib-clean": "1.1.0",
 		"grunt-eslint": "20.1.0",
 		"json5": "0.5.1",
 		"sloc": "0.2.0",
-		"uglifyjs-webpack-plugin": "1.0.1",
+		"uglifyjs-webpack-plugin": "1.1.0",
 		"webpack": "3.8.1"
 	}
 }
