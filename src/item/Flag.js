@@ -38,10 +38,7 @@ export default class Flag extends Item {
 		this.writeUInt32(buffer, this.LinkTrId || 0)
 
 		// Country
-		this.writeUInt16(buffer, this.Country || DEFAULT_COUNTRY)
-
-		// Unknown data
-		this.writeUInt16(buffer, 0)
+		this.writeUInt32(buffer, this.Country || DEFAULT_COUNTRY)
 
 		// StartHeight
 		this.writeFloat(buffer, this.StartHeight)

@@ -31,12 +31,7 @@ export default class Ground extends Item {
 		this.writeUInt8(buffer, this.DamageThreshold)
 
 		// DamageReport
-		this.writeUInt8(buffer, this.DamageReport)
-
-		// Unknown data
-		this.writeUInt8(buffer, 0)
-		this.writeUInt8(buffer, 0)
-		this.writeUInt8(buffer, 0)
+		this.writeUInt32(buffer, this.DamageReport)
 
 		yield buffer
 	}

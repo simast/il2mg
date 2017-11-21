@@ -54,21 +54,13 @@ export default class Vehicle extends Item {
 		this.writeUInt8(buffer, this.DamageThreshold)
 
 		// DamageReport
-		this.writeUInt8(buffer, this.DamageReport)
-
-		// Unknown data
-		this.writeUInt8(buffer, 0)
-		this.writeUInt8(buffer, 0)
-		this.writeUInt8(buffer, 0)
+		this.writeUInt32(buffer, this.DamageReport)
 
 		// Script
 		this.writeString(buffer, scriptLength, this.Script)
 
 		// Country
-		this.writeUInt16(buffer, this.Country)
-
-		// Unknown data
-		this.writeUInt16(buffer, 0)
+		this.writeUInt32(buffer, this.Country)
 
 		// AILevel
 		this.writeUInt32(buffer, this.AILevel)
