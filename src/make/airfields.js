@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import path from "path"
 import addLazyProperty from "lazy-property"
 import log from "../log"

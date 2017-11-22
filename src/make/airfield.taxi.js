@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import Item, {PRECISION_POSITION} from "../item"
 import data, {ItemFlag} from "../data"
 

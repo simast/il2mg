@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import path from "path"
 import rbush from "rbush"
 import knn from "rbush-knn"

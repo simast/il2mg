@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import path from "path"
 import sylvester from "sylvester"
 import * as MCU_Icon from "../item/MCU_Icon"

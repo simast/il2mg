@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import * as MCU_Icon from "../item/MCU_Icon"
 import {FlightState} from "./flight"
 

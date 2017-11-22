@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 import {remote, ipcRenderer} from "electron"
 import {observable, computed, action, reaction} from "mobx"
 import {RealismPreset, isValidGamePath} from "."

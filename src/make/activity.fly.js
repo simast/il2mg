@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import numeral from "numeral"
 import sylvester from "sylvester"
 import * as MCU_Icon from "../item/MCU_Icon"

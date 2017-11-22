@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import sylvester from "sylvester"
 import {ActivityType} from "./flight.plan"
 import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"

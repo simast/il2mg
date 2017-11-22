@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import sylvester from "sylvester"
 import * as MCU_Icon from "../item/MCU_Icon"
 import * as MCU_Waypoint from "../item/MCU_Waypoint"

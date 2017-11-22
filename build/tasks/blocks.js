@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import path from "path"
 import numeral from "numeral"
 import data from "../../src/data"

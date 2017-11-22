@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import sylvester from "sylvester"
 
 // Flight make parts

@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 // Enable Babel require() hook
 if (process.env.NODE_ENV !== "production") {
 	require("babel-register")

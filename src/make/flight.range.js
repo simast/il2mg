@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 // Make flight max range
 export default function makeFlightRange(flight) {
 

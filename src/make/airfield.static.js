@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import data, {ItemFlag} from "../data"
 
 // Make airfield static item

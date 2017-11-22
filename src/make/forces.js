@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import log from "../log"
 import makeFlight from "./flight"
 

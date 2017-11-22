@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 // Starting mode
 export const Start = Object.freeze({
 	Parking: 0,

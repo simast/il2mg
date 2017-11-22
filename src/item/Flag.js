@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import Item, {DEFAULT_COUNTRY} from "../item"
 
 // Flag item

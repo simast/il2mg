@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import makeBriefingText from "./briefing.text"
 import makeBriefingWeather from "./briefing.weather"
 

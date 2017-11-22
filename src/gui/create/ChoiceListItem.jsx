@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 import React from "react"
 
 // Data choice list item component

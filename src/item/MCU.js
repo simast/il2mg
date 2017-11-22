@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import Item from "../item"
 
 // Event and report child item name constants

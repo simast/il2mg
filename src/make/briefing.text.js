@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import mustache from "mustache"
 import data from "../data"
 import people from "./people"

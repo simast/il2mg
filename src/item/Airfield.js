@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import Block from "./Block"
 
 // Airfield item

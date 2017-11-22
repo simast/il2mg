@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import * as MCU_CMD_Effect from "../item/MCU_CMD_Effect"
 import data, {ItemTag, ItemFlag} from "../data"
 import {Precipitation} from "./weather"

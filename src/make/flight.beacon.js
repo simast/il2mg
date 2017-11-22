@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 // Make flight beacon
 export default function makeFlightBeacon(flight) {
 

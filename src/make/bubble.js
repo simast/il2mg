@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import Quadtree from "quadtree-lib"
 import addLazyProperty from "lazy-property"
 import encloseCircles from "circle-enclose"

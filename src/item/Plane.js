@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import Item, {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from "../item"
 
 // Plane AI level constants

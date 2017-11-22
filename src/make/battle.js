@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import path from "path"
 import log from "../log"
 import {DEFAULT_COALITION, DEFAULT_COUNTRY} from "../item"

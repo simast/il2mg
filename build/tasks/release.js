@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import path from "path"
 import JSON5 from "json5"
 import CleanCSS from "clean-css"

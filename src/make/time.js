@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import moment from "moment"
 import suncalc from "suncalc"
 import data from "../data"

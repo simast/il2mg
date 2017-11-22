@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import React from "react"
 import ActionBar from "./ActionBar"
 import Photos from "./Photos"

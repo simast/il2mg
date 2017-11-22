@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import numeral from "numeral"
 import moment from "moment"
 import data, {matchDateRange} from "../../src/data"

@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import numeral from "numeral"
 import data from "../../src/data"
 import {LocationType} from "../../src/make/locations"

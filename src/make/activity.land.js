@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 // Plan activity used to land on airfield (and end the flight)
 export default class ActivityLand {
 

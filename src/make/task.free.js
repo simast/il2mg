@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import {makeActivity, ActivityType} from "./flight.plan"
 
 // Make mission free flight task

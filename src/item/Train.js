@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import Vehicle from "./Vehicle"
 
 // Train item

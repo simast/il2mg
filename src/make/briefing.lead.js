@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import makeBriefingText from "./briefing.text"
 
 // Make briefing lead text segment for fly routes

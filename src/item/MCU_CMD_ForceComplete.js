@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import MCU from "./MCU"
 
 // Force complete command priority constants

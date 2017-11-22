@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 // Make flight time
 export default function makeFlightTime(flight) {
 

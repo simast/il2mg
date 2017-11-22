@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import makeFlightFuel from "./flight.fuel"
 
 // Plan activity used to do nothing and wait for a specified amount of time

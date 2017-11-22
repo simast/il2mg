@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 // Altitude level types
 export const AltitudeLevel = Object.freeze({
 	Low: "low",

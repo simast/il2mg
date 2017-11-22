@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import * as Vehicle from "../item/Vehicle"
 import * as MCU_CMD_AttackArea from "../item/MCU_CMD_AttackArea"
 import data, {ItemTag} from "../data"

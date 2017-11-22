@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import moment from "moment"
 import data, {matchDateRange} from "../data"
 import log from "../log"

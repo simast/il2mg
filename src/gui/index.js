@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 // NOTE: This file is used only in development mode - production index.js file
 // is an output (bundle) of browserify command.
 

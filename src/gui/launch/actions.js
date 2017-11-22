@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 import fs from "fs"
 import path from "path"
 import {spawn} from "child_process"

@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import sylvester from "sylvester"
 import {makeActivity, ActivityType} from "./flight.plan"
 import makeFlightFuel from "./flight.fuel"

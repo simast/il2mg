@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 // Common flight plan activity types
 export const ActivityType = Object.freeze({
 	Start: "start", // Initial start activity

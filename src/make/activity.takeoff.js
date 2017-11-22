@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import {FlightState} from "./flight"
 import {ItemFlag} from "../data"
 

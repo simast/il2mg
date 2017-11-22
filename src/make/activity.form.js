@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
 import {FlightState} from "./flight"
 

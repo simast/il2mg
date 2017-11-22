@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import {FlightState} from "./flight"
 
 // Minimum percent of plane fuel that is always available

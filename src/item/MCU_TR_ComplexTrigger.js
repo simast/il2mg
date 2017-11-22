@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import {DEFAULT_DAMAGE_REPORT} from "../item"
 import MCU from "./MCU"
 

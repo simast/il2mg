@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import data from "../data"
 
 // Make airfield beacon item

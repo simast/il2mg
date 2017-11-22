@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import numeral from "numeral"
 import * as MCU_Waypoint from "../item/MCU_Waypoint"
 import * as MCU_CMD_Cover from "../item/MCU_CMD_Cover"

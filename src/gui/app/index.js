@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 import {remote} from "electron"
 import fs from "fs"
 

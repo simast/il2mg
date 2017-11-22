@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
 
 // Make mission flight formation

@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import {EOL} from "os"
 import util from "util"
 import domain from "domain"

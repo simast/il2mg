@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 // Enable Babel require() hook
 require("babel-register")
 

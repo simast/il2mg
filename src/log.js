@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import winston from "winston"
 
 // Colors used for each log level

@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import {remote} from "electron"
 import React from "react"
 import {observer} from "mobx-react"

@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 // NOTE: Most flights will end naturally with a "land" activity - this special
 // end flight activity is used only for rare situations - like ending the flight
 // prematurely on a route to an offmap airfield, for example.

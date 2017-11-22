@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import * as Plane from "../item/Plane"
 import {ItemFlag} from "../data"
 import {getPlaneSizeFromName} from "./planes"

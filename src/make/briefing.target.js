@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import numeral from "numeral"
 import sylvester from "sylvester"
 import {Location, LocationType} from "./locations"

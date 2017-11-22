@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 import addLazyProperty from "lazy-property"
 import {makeActivityState} from "./flight.state"
 import makeFlightTime from "./flight.time"

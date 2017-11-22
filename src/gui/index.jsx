@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import React from "react"
 import ReactDOM from "react-dom"
 import {HashRouter, Route, Switch, Redirect} from "react-router-dom"

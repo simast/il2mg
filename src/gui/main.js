@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import fs from "fs"
 import path from "path"
 import Mission from "../mission"

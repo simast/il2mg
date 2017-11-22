@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 import path from "path"
 import {app} from "electron"
 import runApplicationWithCLI from "../cli"

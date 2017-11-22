@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 import React from "react"
 import {NavLink} from "react-router-dom"
 

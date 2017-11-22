@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 // Cold temperature speed boost effect (+0.24% km/h for each -1°C)
 const COLD_BOOST = 0.0024
 

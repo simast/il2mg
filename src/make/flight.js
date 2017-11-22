@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 // Flight make parts
 import makeFlightFormation from "./flight.formation"
 import makeFlightPilots from "./flight.pilots"

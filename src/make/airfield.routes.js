@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import {ItemTag, ItemFlag} from "../data"
 import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
 import * as MCU_Waypoint from "../item/MCU_Waypoint"

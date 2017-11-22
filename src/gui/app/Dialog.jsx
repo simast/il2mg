@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 import React from "react"
 import CSSTransition from "react-transition-group/CSSTransition"
 import classNames from "classnames"

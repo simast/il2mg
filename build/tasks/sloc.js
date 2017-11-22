@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2015 */
-
 import sloc from "sloc"
 import path from "path"
 import numeral from "numeral"

@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import React from "react"
 
 // Mission details pane component

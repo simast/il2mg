@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2016 */
-
 import MCU from "./MCU"
 
 // Proximity item

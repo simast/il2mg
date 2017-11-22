@@ -1,5 +1,3 @@
-/** @copyright Simas Toleikis, 2017 */
-
 // Make flight plan activity actions
 export default function makeFlightActions(flight) {
 
