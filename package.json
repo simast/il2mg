@@ -8,6 +8,7 @@
 	"scripts": {
 		"start": "electron .",
 		"build": "grunt",
+		"build:release": "grunt release",
 		"lint": "grunt eslint",
 		"precommit": "npm run lint"
 	},
@@ -20,9 +21,9 @@
 		"glob": "7.1.2",
 		"lazy-property": "1.0.0",
 		"lex": "1.7.9",
-		"mobx": "3.3.2",
+		"mobx": "3.4.1",
 		"mobx-react": "4.3.5",
-		"moment": "2.19.3",
+		"moment": "2.20.0",
 		"mustache": "2.3.0",
 		"numeral": "2.0.6",
 		"quadtree-lib": "1.0.9",
@@ -39,7 +40,7 @@
 		"winston": "2.4.0"
 	},
 	"devDependencies": {
-		"babel-eslint": "8.0.2",
+		"babel-eslint": "8.0.3",
 		"babel-loader": "7.1.2",
 		"babel-plugin-transform-class-properties": "6.24.1",
 		"babel-plugin-transform-decorators-legacy": "1.3.4",
@@ -48,7 +49,7 @@
 		"babel-register": "6.26.0",
 		"clean-css": "4.1.9",
 		"electron-packager": "10.1.0",
-		"eslint": "4.12.1",
+		"eslint": "4.13.1",
 		"eslint-plugin-react": "7.5.1",
 		"grunt": "1.0.1",
 		"grunt-contrib-clean": "1.1.0",
@@ -56,7 +57,7 @@
 		"husky": "0.14.3",
 		"json5": "0.5.1",
 		"sloc": "0.2.0",
-		"uglifyjs-webpack-plugin": "1.1.2",
-		"webpack": "3.9.1"
+		"uglifyjs-webpack-plugin": "1.1.4",
+		"webpack": "3.10.0"
 	}
 }

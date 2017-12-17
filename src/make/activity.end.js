@@ -1,10 +1,10 @@
-// NOTE: Most flights will end naturally with a "land" activity - this special
-// end flight activity is used only for rare situations - like ending the flight
-// prematurely on a route to an offmap airfield, for example.
-
 import {PRECISION_POSITION} from "../item"
 import * as MCU_Icon from "../item/MCU_Icon"
 import {markMapArea} from "./map"
+
+// NOTE: Most flights will end naturally with a "land" activity - this special
+// end flight activity is used only for rare situations - like ending the flight
+// prematurely on a route to an offmap airfield, for example.
 
 // Min/max radius of the "mission end" circle (used with player flight only)
 const MIN_PLAYER_END_RADIUS = 9500 // 9.5 km

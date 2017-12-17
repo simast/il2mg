@@ -1,11 +1,20 @@
 import log from "../log"
 import makeFlight from "./flight"
+import makePlayerForce from "./forces.player"
+import makeAIForces from "./forces.ai"
 
 // Generate mission task forces
 export default function makeForces() {
 
-	this.activeFlights = []
+	// A map used to track number of unit planes suspended due to failed flight
+	// creation (as a result of not enough planes to make a formation for example).
+	// This map is updated when flights are finished.
 	this.suspendedUnits = Object.create(null)
+
+	// A set used to track airfields that have active local flights. This is used
+	// to limit local flights to max 1 flight per airfield at the same time. This
+	// set is updated when flights are finished.
+	this.activeLocalFlightAirfields = new Set()
 
 	// Make player force
 	makePlayerForce.call(this)
@@ -15,31 +24,22 @@ export default function makeForces() {
 }
 
 // Make a new task force
-function makeForce({player = false, choice = {}, state = 0, virtual = false}) {
+export function makeForce({player = false, choice = {}, state = 0, virtual = false}) {
 
-	const {rand, availableUnits, suspendedUnits, activeFlights} = this
+	const {rand, availableUnits, suspendedUnits, activeLocalFlightAirfields} = this
 	const force = []
-	const flightParams = {}
+	const flightParams = {
+		player,
+		virtual,
+		state
+	}
+
 	let flight
 
-	// Make player flight and task force
-	if (player) {
-		flightParams.player = true
-	}
-
-	// Make a virtual flight
-	if (virtual) {
-		flightParams.virtual = true
-	}
-
-	flightParams.state = state
-
-	// FIXME: Make a number of active and shedulled flights
+	// Try to create a valid flight
 	do {
 
 		const unit = chooseFlightUnit.call(this, choice)
-
-		flightParams.unit = unit.id
 
 		if (choice.task) {
 
@@ -53,6 +53,20 @@ function makeForce({player = false, choice = {}, state = 0, virtual = false}) {
 				}
 			}
 		}
+		// Force a limit of one local flight per airfield
+		else if (activeLocalFlightAirfields.has(unit.airfield)) {
+
+			const nonLocalTasks = unit.tasks.filter(task => !task.local)
+
+			// Try another unit
+			if (!nonLocalTasks.length) {
+				continue
+			}
+
+			flightParams.task = rand.pick(nonLocalTasks).id
+		}
+
+		flightParams.unit = unit.id
 
 		try {
 			flight = makeFlight.call(this, flightParams)
@@ -106,92 +120,15 @@ function makeForce({player = false, choice = {}, state = 0, virtual = false}) {
 		removeItemsCount--
 	}
 
-	// Track all AI active flights
-	if (!player) {
-		activeFlights.push(flight)
+	// Mark airfields with local flights/tasks
+	if (!player && flight.task.local) {
+		activeLocalFlightAirfields.add(flight.airfield)
 	}
 
 	// Add flight to task force
 	force.push(flight)
 
 	return force
-}
-
-// Make player task force
-function makePlayerForce() {
-
-	const {choice, params} = this
-
-	// Create player task force
-	const force = makeForce.call(this, {
-		player: true,
-		choice,
-		state: params.state
-	})
-
-	const [flight] = force
-
-	// Set player flight info references
-	const player = this.player = Object.create(null)
-
-	player.force = force
-	player.flight = flight
-	player.plane = flight.player.plane
-	player.item = flight.player.item
-
-	// Find player element
-	for (const element of flight.elements) {
-
-		if (element.player) {
-
-			player.element = element
-			break
-		}
-	}
-
-	// Log player flight info
-	const logData = ["Flight:"]
-
-	// Log flight unit name
-	const unit = this.units[player.flight.unit]
-	let unitName = unit.name
-
-	if (unit.suffix) {
-		unitName += " " + unit.suffix
-	}
-
-	if (unit.alias) {
-		unitName += " “" + unit.alias + "”"
-	}
-
-	logData.push(unitName)
-
-	// Log flight formation and state (for player element)
-	const formation = player.flight.formation
-	let formationID = formation.id
-
-	if (!formationID) {
-		formationID = formation.elements.join(":")
-	}
-
-	logData.push({
-		formation: formationID,
-		state: player.element.state
-	})
-
-	log.I.apply(log, logData)
-}
-
-// Make AI forces
-function makeAIForces() {
-
-	for (let i = 1; i <= 1; i++) {
-
-		makeForce.call(this, {
-			state: 0,
-			virtual: true
-		})
-	}
 }
 
 // Choose a valid flight unit based on choice data
@@ -280,9 +217,8 @@ function chooseFlightUnit(choice) {
 		return
 	}
 
-	// FIXME: Make a more efficient selection (not filtering weighted unit list)
-
 	// Select a matching unit (from a weighted list)
+	// FIXME: Make a more efficient selection (not filtering weighted unit list)
 	return this.units[rand.pick(
 		availableUnits.filter(unitID => validUnits.has(unitID))
 	)]

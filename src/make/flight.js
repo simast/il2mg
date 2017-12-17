@@ -1,4 +1,3 @@
-// Flight make parts
 import makeFlightFormation from "./flight.formation"
 import makeFlightPilots from "./flight.pilots"
 import makeFlightPlanes from "./flight.planes"
