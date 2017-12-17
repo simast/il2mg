@@ -1,4 +1,3 @@
-import log from "../log"
 import {makeForce} from "./forces"
 
 // NOTE: We have to limit max number of planes even with virtual flights where
@@ -31,16 +30,14 @@ export default function makeAIForces() {
 	*/
 
 	const {rand, availableUnits} = this
+	const activeFlights = []
+
 	const maxPlanesCount = Math.round(Math.min(
 		availableUnits.length * PLANES_SERVICEABILITY_PERCENT,
 		PLANES_MAX_COUNT
 	))
-	const maxPlanesInAirCount = Math.round(maxPlanesCount * PLANES_IN_AIR_PERCENT)
-	const activeFlights = []
 
-	let totalForces = 0
-	let totalFlights = 0
-	let totalPlanes = 0
+	const maxPlanesInAirCount = Math.round(maxPlanesCount * PLANES_IN_AIR_PERCENT)
 
 	// Make initial forces that are in progress and in the air when mission starts
 	do {
@@ -52,14 +49,6 @@ export default function makeAIForces() {
 
 		// Track all AI active flights
 		activeFlights.push(...force)
-
-		// Collect stats
-		totalForces++
-		totalFlights += force.length
-		totalPlanes += force.reduce((count, flight) => count + flight.planes, 0)
 	}
-	while (totalPlanes < maxPlanesInAirCount)
-
-	// Log mission AI forces info
-	log.I("Forces:", totalForces, {flights: totalFlights, planes: totalPlanes})
+	while (this.totalPlanes < maxPlanesInAirCount)
 }

@@ -140,6 +140,7 @@ function makeVirtualFlightPlanes(flight) {
 
 			// Create a new entity
 			newItem.createEntity(true)
+			this.totalEntities++
 
 			// Group subordinate planes with element leader
 			if (element.length > 1 && !isElementLeader) {

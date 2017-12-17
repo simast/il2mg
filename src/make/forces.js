@@ -6,6 +6,12 @@ import makeAIForces from "./forces.ai"
 // Generate mission task forces
 export default function makeForces() {
 
+	// Statistics data
+	this.totalForces = 0
+	this.totalFlights = 0
+	this.totalPlanes = 0
+	this.totalEntities = 0
+
 	// A map used to track number of unit planes suspended due to failed flight
 	// creation (as a result of not enough planes to make a formation for example).
 	// This map is updated when flights are finished.
@@ -21,6 +27,13 @@ export default function makeForces() {
 
 	// Make AI forces
 	makeAIForces.call(this)
+
+	// Log mission forces info
+	log.I("Forces:", this.totalForces, {
+		flights: this.totalFlights,
+		planes: this.totalPlanes,
+		entities: this.totalEntities
+	})
 }
 
 // Make a new task force
@@ -124,6 +137,12 @@ export function makeForce({player = false, choice = {}, state = 0, virtual = fal
 	if (!player && flight.task.local) {
 		activeLocalFlightAirfields.add(flight.airfield)
 	}
+
+	// Update statistics data
+	this.totalForces++
+	this.totalFlights++
+	this.totalPlanes += flight.planes
+	this.totalEntities += flight.planes
 
 	// Add flight to task force
 	force.push(flight)
