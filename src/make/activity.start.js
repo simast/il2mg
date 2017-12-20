@@ -14,7 +14,8 @@ export default class ActivityStart {
 		const debugFlights = Boolean(mission.debug && mission.debug.flights)
 
 		// Create start location icon
-		if (!flight.startIcon && (flight.player || debugFlights)) {
+		if ((!flight.startIcon || (flight.virtual && debugFlights)) &&
+			(flight.player || debugFlights)) {
 
 			const startIcon = flight.startIcon = flightGroup.createItem("MCU_Icon")
 
@@ -26,7 +27,12 @@ export default class ActivityStart {
 				startIcon.IconId = MCU_Icon.ICON_ACTION_POINT
 			}
 			else {
+
 				startIcon.Coalitions = mission.coalitions
+
+				if (flight.virtual) {
+					startIcon.IconId = MCU_Icon.ICON_WAYPOINT
+				}
 			}
 		}
 
