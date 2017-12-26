@@ -24,6 +24,7 @@ module.exports = {
 		"for-direction": "error",
 		"brace-style": ["error", "stroustrup", {allowSingleLine: true}],
 		"curly": "error",
+		"comma-dangle": ["error", "never"],
 		"eqeqeq": "error",
 		"indent": ["error", "tab", {SwitchCase: 1}],
 		"key-spacing": "error",
