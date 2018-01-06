@@ -41,11 +41,6 @@ export function makeForce({player = false, choice = {}, state = 0, virtual = fal
 
 	const {rand, availableUnits, suspendedUnits, activeLocalFlightAirfields} = this
 	const force = []
-	const flightParams = {
-		player,
-		virtual,
-		state
-	}
 
 	let flight
 
@@ -53,6 +48,11 @@ export function makeForce({player = false, choice = {}, state = 0, virtual = fal
 	do {
 
 		const unit = chooseFlightUnit.call(this, choice)
+		const flightParams = {
+			player,
+			virtual,
+			state
+		}
 
 		if (choice.task) {
 
