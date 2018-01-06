@@ -3,7 +3,7 @@ import {makeForce} from "./forces"
 // NOTE: We have to limit max number of plane entities even with virtual flights
 // It seems disabled entities still consume a lot of memory and have a significant
 // impact on CPU usage.
-const PLANE_ENTITIES_MAX_COUNT = 450
+const PLANE_ENTITIES_MAX_COUNT = 400
 
 // Percent of serviceable planes available for actual flights.
 // TODO: Make this configurable per battle, coalition and date
@@ -29,7 +29,7 @@ export default function makeAIForces() {
 	do {
 
 		const force = makeForce.call(this, {
-			state: rand.real(0, 1),
+			state: rand.real(0, 0.75),
 			virtual: true
 		})
 
