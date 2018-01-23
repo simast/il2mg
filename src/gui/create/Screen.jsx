@@ -46,6 +46,14 @@ const choiceLists = [
 		return this.getChoices(createStore.start)
 	}
 
+	constructor() {
+		super(...arguments)
+
+		// Bind event handler contexts
+		this.onStartChange = this.onStartChange.bind(this)
+		this.onCreateClick = this.onCreateClick.bind(this)
+	}
+
 	// Render component
 	render() {
 
@@ -61,7 +69,7 @@ const choiceLists = [
 		}
 
 		if (choices.valid) {
-			createProps.onClick = this.onCreateClick.bind(this)
+			createProps.onClick = this.onCreateClick
 		}
 		// Show create action button in a disabled state
 		else {
@@ -82,7 +90,7 @@ const choiceLists = [
 		return (
 			<Screen id="create" actions={screenActions} disabled={this.isBusy}>
 				<SelectBattle />
-				<SelectStart onStartChange={this.onStartChange.bind(this)} />
+				<SelectStart onStartChange={this.onStartChange} />
 				<div id="choices">
 					{choiceLists.map(([type, title]) => (
 						<ChoiceList

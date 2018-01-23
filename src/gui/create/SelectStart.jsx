@@ -192,7 +192,8 @@ let trackCSSStyle = null
 						// Get date from input value
 						const dateData = dates.list[event.target.value - 1]
 						createStore.setDate(dateData ? dateData.date : "")
-					}} />
+					}}
+				/>
 				{reset}
 			</div>
 		)
