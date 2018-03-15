@@ -30,7 +30,7 @@ export default class MCU_Proximity extends MCU {
 			size += this.VehicleCoalitions.length * 4
 		}
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// Distance
 		this.writeUInt32(buffer, this.Distance)

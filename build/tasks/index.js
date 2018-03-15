@@ -497,17 +497,19 @@ module.exports = function(grunt) {
 			}
 
 			// Sort and build dates index
-			Object.keys(datesIndex).sort().forEach(date => {
+			Object.keys(datesIndex)
+				.sort()
+				.forEach(date => {
 
-				json.dates[date] = []
+					json.dates[date] = []
 
-				for (const recordID in datesIndex[date]) {
-					json.dates[date].push(+recordID)
-				}
+					for (const recordID in datesIndex[date]) {
+						json.dates[date].push(Number(recordID))
+					}
 
-				// NOTE: Sort date record ids to be used for binary search
-				json.dates[date].sort((a, b) => (a - b))
-			})
+					// NOTE: Sort date record ids to be used for binary search
+					json.dates[date].sort((a, b) => (a - b))
+				})
 
 			// Write battle JSON index file
 			grunt.file.write(

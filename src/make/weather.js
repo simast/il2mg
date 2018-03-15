@@ -334,9 +334,9 @@ function makeTemperature(weather) {
 	const tDelta = temperature.variation = tMax - tMin
 	const tAvg = (tMin + tMax) / 2
 	const tAmp = tDelta / 2
-	const timeNow = (date.hour() * 60 + date.minute()) / 60
-	const timeTempMin = (sunrise.hour() * 60 + sunrise.minute()) / 60
-	const timeTempMax = (noon.hour() * 60 + noon.minute()) / 60 + 1 // 1 hour after solar noon
+	const timeNow = ((date.hour() * 60) + date.minute()) / 60
+	const timeTempMin = ((sunrise.hour() * 60) + sunrise.minute()) / 60
+	const timeTempMax = (((noon.hour() * 60) + noon.minute()) / 60) + 1 // 1 hour after solar noon
 	const timeMid = 24 - timeTempMax // Time left from TMAX to midnight (00:00)
 
 	// Get temperature at a given point in time (minutes from midnight)
@@ -353,11 +353,10 @@ function makeTemperature(weather) {
 				timeAmp = time - timeTempMax
 			}
 
-			return tAvg + tAmp * Math.cos(Math.PI * timeAmp / (timeMid + timeTempMin))
+			return tAvg + (tAmp * Math.cos(Math.PI * timeAmp / (timeMid + timeTempMin)))
 		}
-		else {
-			return tAvg - tAmp * Math.cos(Math.PI * (time - timeTempMin) / (timeTempMax - timeTempMin))
-		}
+
+		return tAvg - (tAmp * Math.cos(Math.PI * (time - timeTempMin) / (timeTempMax - timeTempMin)))
 	}
 
 	// Get current temperature

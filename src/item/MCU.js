@@ -178,10 +178,10 @@ export default class MCU extends Item {
 			size += this.Objects.length * 4
 		}
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// Enabled
-		this.writeUInt8(buffer, this.Enabled !== undefined ? this.Enabled : 1)
+		this.writeUInt8(buffer, this.Enabled === undefined ? 1 : this.Enabled)
 
 		// Targets list
 		this.writeUInt32Array(buffer, this.Targets)

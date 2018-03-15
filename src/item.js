@@ -41,7 +41,7 @@ export default class Item {
 	}
 
 	// By default all items have "Index" field
-	get hasIndex() { return true }
+	get hasIndex() {return true}
 
 	/**
 	 * Create a new child item (linked to current item mission).
@@ -202,8 +202,8 @@ export default class Item {
 		const itemPosX = targetItem.XPos || 0
 		const itemPosZ = targetItem.ZPos || 0
 
-		const posX = itemPosX + magnitude * Math.cos(orientation)
-		const posZ = itemPosZ + magnitude * Math.sin(orientation)
+		const posX = itemPosX + (magnitude * Math.cos(orientation))
+		const posZ = itemPosZ + (magnitude * Math.sin(orientation))
 
 		// Set nearby position
 		this.setPosition(posX, targetItem.YPos, posZ)
@@ -464,7 +464,7 @@ export default class Item {
 
 		indentLevel = indentLevel || 0
 
-		const indent = new Array(2 * indentLevel + 1).join(" ")
+		const indent = new Array((2 * indentLevel) + 1).join(" ")
 		let value = indent + this.type + os.EOL + indent + "{"
 
 		// Build property and value textual representation
@@ -583,7 +583,7 @@ export default class Item {
 		}
 
 		// Write base item binary information
-		const buffer = new Buffer(46)
+		const buffer = Buffer.allocUnsafe(46)
 
 		// Item binary type ID
 		this.writeUInt32(buffer, typeID)
@@ -810,13 +810,13 @@ export default class Item {
 
 			const item = itemStack.pop()
 
-			// Root item element
-			if (!itemStack.length) {
-				items.push(item)
-			}
 			// Child item element
-			else {
+			if (itemStack.length) {
 				itemStack[itemStack.length - 1].addItem(item)
+			}
+			// Root item element
+			else {
+				items.push(item)
 			}
 		})
 

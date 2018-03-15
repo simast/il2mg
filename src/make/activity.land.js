@@ -75,7 +75,7 @@ export default class ActivityLand {
 					// Short timer used to delay land command
 					landWaitTimer = flightGroup.createItem("MCU_Timer")
 
-					landWaitTimer.Time = +(rand.real(10, 15).toFixed(3))
+					landWaitTimer.Time = Number(rand.real(10, 15).toFixed(3))
 					landWaitTimer.setPositionNear(leaderPlaneItem)
 					landWaitTimer.addTarget(landCommand)
 

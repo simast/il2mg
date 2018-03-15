@@ -1,7 +1,7 @@
 // Make flight max range
 export default function makeFlightRange(flight) {
 
-	let maxRange = undefined
+	let maxRange
 
 	// TODO: Payloads should affect max range
 

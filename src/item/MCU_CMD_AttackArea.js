@@ -29,7 +29,7 @@ export default class MCU_CMD_AttackArea extends MCU {
 
 		yield* super.toBinary(index, 20)
 
-		const buffer = new Buffer(19)
+		const buffer = Buffer.allocUnsafe(19)
 
 		// AttackArea
 		this.writeDouble(buffer, this.AttackArea)

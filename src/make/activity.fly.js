@@ -10,14 +10,10 @@ import makeBriefingLead from "./briefing.lead"
 const MIN_SPOT_DISTANCE = 5000 // 5 Km
 
 // First (intro) plan description segments
-const introSegments = [
-	"proceed with your mission"
-]
+const introSegments = ["proceed with your mission"]
 
 // Last (outro) plan description segments
-const outroSegments = [
-	"keep your eyes open for any enemy contacts"
-]
+const outroSegments = ["keep your eyes open for any enemy contacts"]
 
 // Plan activity used to fly
 export default class ActivityFly {

@@ -81,35 +81,41 @@ const normalRealismOptions = new Set([
 
 // Realism options grouped by function
 const realismOptionsByGroup = [
-	["Gameplay", [
-		RealismOption.ObjectMarkers,
-		RealismOption.AimingAssist,
-		RealismOption.BombingAssist,
-		RealismOption.Padlock,
-		RealismOption.NavigationMarkers,
-		RealismOption.InstrumentPanel,
-		RealismOption.AllowSpectators
-	]],
-	["Simplifications", [
-		RealismOption.SimplifiedPhysics,
-		RealismOption.NoWind,
-		RealismOption.NoMisfires,
-		RealismOption.Unbreakable,
-		RealismOption.Invulnerability,
-		RealismOption.UnlimitedFuel,
-		RealismOption.UnlimitedAmmo,
-		RealismOption.NoEngineStall,
-		RealismOption.WarmedUpEngine
-	]],
-	["Piloting assistance", [
-		RealismOption.SimplifiedControls,
-		RealismOption.RudderAssist,
-		RealismOption.CruiseControl,
-		RealismOption.Autopilot,
-		RealismOption.ThrottleAutoLimit,
-		RealismOption.EngineAutoControl,
-		RealismOption.RadiatorAssist
-	]]
+	[
+		"Gameplay", [
+			RealismOption.ObjectMarkers,
+			RealismOption.AimingAssist,
+			RealismOption.BombingAssist,
+			RealismOption.Padlock,
+			RealismOption.NavigationMarkers,
+			RealismOption.InstrumentPanel,
+			RealismOption.AllowSpectators
+		]
+	],
+	[
+		"Simplifications", [
+			RealismOption.SimplifiedPhysics,
+			RealismOption.NoWind,
+			RealismOption.NoMisfires,
+			RealismOption.Unbreakable,
+			RealismOption.Invulnerability,
+			RealismOption.UnlimitedFuel,
+			RealismOption.UnlimitedAmmo,
+			RealismOption.NoEngineStall,
+			RealismOption.WarmedUpEngine
+		]
+	],
+	[
+		"Piloting assistance", [
+			RealismOption.SimplifiedControls,
+			RealismOption.RudderAssist,
+			RealismOption.CruiseControl,
+			RealismOption.Autopilot,
+			RealismOption.ThrottleAutoLimit,
+			RealismOption.EngineAutoControl,
+			RealismOption.RadiatorAssist
+		]
+	]
 ]
 
 // Custom realism options component

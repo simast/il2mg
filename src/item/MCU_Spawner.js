@@ -19,7 +19,7 @@ export default class MCU_Spawner extends MCU {
 
 		yield* super.toBinary(index, 48)
 
-		const buffer = new Buffer(1)
+		const buffer = Buffer.allocUnsafe(1)
 
 		// SpawnAtMe
 		this.writeUInt8(buffer, this.SpawnAtMe)

@@ -40,7 +40,7 @@ export default class MCU_CMD_Formation extends MCU {
 
 		yield* super.toBinary(index, 19)
 
-		const buffer = new Buffer(8)
+		const buffer = Buffer.allocUnsafe(8)
 
 		// FormationType
 		this.writeUInt32(buffer, this.FormationType)

@@ -20,7 +20,7 @@ export default class Ground extends Item {
 
 		yield* super.toBinary(index, 7)
 
-		const buffer = new Buffer(9)
+		const buffer = Buffer.allocUnsafe(9)
 
 		// LinkTrId
 		this.writeUInt32(buffer, this.LinkTrId || 0)

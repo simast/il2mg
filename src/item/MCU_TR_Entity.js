@@ -84,7 +84,7 @@ export default class MCU_TR_Entity extends MCU {
 			size += this.reports.items.length * 12
 		}
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// Events list
 		this.writeEvents(buffer)

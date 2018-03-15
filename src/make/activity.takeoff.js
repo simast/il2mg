@@ -48,7 +48,7 @@ export default class ActivityTakeOff {
 				waitTimerMax = 30
 			}
 
-			waitTimerBefore.Time = +(rand.real(waitTimerMin, waitTimerMax).toFixed(3))
+			waitTimerBefore.Time = Number(rand.real(waitTimerMin, waitTimerMax).toFixed(3))
 			waitTimerBefore.setPositionNear(takeoffCommand)
 			waitTimerBefore.addTarget(takeoffCommand)
 
@@ -67,7 +67,7 @@ export default class ActivityTakeOff {
 		// Short timer used to delay next command after takeoff is reported
 		const waitTimerAfter = flightGroup.createItem("MCU_Timer")
 
-		waitTimerAfter.Time = +(rand.real(12, 18).toFixed(3))
+		waitTimerAfter.Time = Number(rand.real(12, 18).toFixed(3))
 
 		if (takeoffCommand) {
 			waitTimerAfter.setPositionNear(takeoffCommand)

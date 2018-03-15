@@ -95,9 +95,9 @@ function makeTaskCoverAction(element, input) {
 
 			// Set waypoint position above the airfield
 			coverCommand.setPosition(
-				airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
+				airfield.position[0] + (rand.pick([-1, 1]) * rand.integer(200, 600)),
 				this.altitude,
-				airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
+				airfield.position[2] + (rand.pick([-1, 1]) * rand.integer(200, 600))
 			)
 
 			// NOTE: The waypoint command is a cylinder and not a sphere. To make flights
@@ -159,9 +159,9 @@ function makeTaskCoverState(time) {
 	if (this.altitude) {
 
 		flight.plan.start.position = [
-			airfield.position[0] + rand.pick([-1, 1]) * rand.integer(200, 600),
+			airfield.position[0] + (rand.pick([-1, 1]) * rand.integer(200, 600)),
 			this.altitude,
-			airfield.position[2] + rand.pick([-1, 1]) * rand.integer(200, 600)
+			airfield.position[2] + (rand.pick([-1, 1]) * rand.integer(200, 600))
 		]
 	}
 

@@ -25,7 +25,7 @@ export default class MCU_CMD_Cover extends MCU {
 
 		yield* super.toBinary(index, 25)
 
-		const buffer = new Buffer(5)
+		const buffer = Buffer.allocUnsafe(5)
 
 		// CoverGroup
 		this.writeUInt8(buffer, this.CoverGroup)

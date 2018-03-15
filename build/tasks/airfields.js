@@ -16,10 +16,10 @@ module.exports = function(grunt) {
 		// Utility function used to get absolute Point item position
 		function getPointPosition(item, point) {
 
-			const pointOrientation = item.YOri * (Math.PI / 180) + Math.atan2(point.Y, point.X)
-			const pointMagnitude = Math.sqrt(point.Y * point.Y + point.X * point.X)
-			const positionX = item.XPos + pointMagnitude * Math.cos(pointOrientation)
-			const positionZ = item.ZPos + pointMagnitude * Math.sin(pointOrientation)
+			const pointOrientation = (item.YOri * (Math.PI / 180)) + Math.atan2(point.Y, point.X)
+			const pointMagnitude = Math.sqrt((point.Y * point.Y) + (point.X * point.X))
+			const positionX = item.XPos + (pointMagnitude * Math.cos(pointOrientation))
+			const positionZ = item.ZPos + (pointMagnitude * Math.sin(pointOrientation))
 
 			return [
 				Number(positionX.toFixed(PRECISION_POSITION)),
@@ -113,7 +113,7 @@ module.exports = function(grunt) {
 								let planeDataIndex = 1
 
 								// Plane sector number
-								const planeSector = +planeData[planeDataIndex++]
+								const planeSector = Number(planeData[planeDataIndex++])
 
 								// Validate plane sector number
 								if (!Number.isInteger(planeSector)) {
@@ -129,8 +129,8 @@ module.exports = function(grunt) {
 
 								if (planeTaxiData) {
 
-									planeTaxiRoute = +planeTaxiData[1]
-									planeTaxiOffset = +planeTaxiData[2]
+									planeTaxiRoute = Number(planeTaxiData[1])
+									planeTaxiOffset = Number(planeTaxiData[2])
 								}
 
 								if (!Number.isInteger(planeTaxiRoute)) {
@@ -315,7 +315,7 @@ module.exports = function(grunt) {
 							if (/^TAXI/.test(item.Name)) {
 
 								const taxiData = item.Name.split(":")
-								const taxiID = +taxiData[1]
+								const taxiID = Number(taxiData[1])
 
 								// Validate taxi route ID
 								if (!Number.isInteger(taxiID)) {
@@ -327,7 +327,7 @@ module.exports = function(grunt) {
 									grunt.fail.fatal("Missing TAXI definition Chart and Point data.")
 								}
 
-								const taxiRunwayID = +taxiData[2]
+								const taxiRunwayID = Number(taxiData[2])
 
 								// Validate taxi runway ID
 								if (!Number.isInteger(taxiRunwayID)) {
@@ -394,7 +394,7 @@ module.exports = function(grunt) {
 							if (/^ROUTE/.test(item.Name)) {
 
 								const waypointData = item.Name.split(":").slice(1)
-								const routeID = +waypointData[0]
+								const routeID = Number(waypointData[0])
 
 								// Validate route ID
 								if (!Number.isInteger(routeID)) {

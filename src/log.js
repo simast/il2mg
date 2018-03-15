@@ -32,6 +32,7 @@ log.info = log.I
 
 // HACK: Intercept all console.error calls (from commander error messages) and
 // log them as winston "error" level messages.
+// eslint-disable-next-line no-console
 console.error = function() {
 
 	if (!arguments.length) {

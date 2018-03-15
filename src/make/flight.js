@@ -284,7 +284,7 @@ export default function makeFlight(params) {
 			const posZDiff = playerItem.ZPos - taxiRoute[3][1]
 
 			taxiRoutes.push({
-				id: +taxiRouteID,
+				id: Number(taxiRouteID),
 				distance: Math.sqrt(Math.pow(posXDiff, 2) + Math.pow(posZDiff, 2))
 			})
 		}

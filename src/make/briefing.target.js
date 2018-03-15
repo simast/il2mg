@@ -150,14 +150,14 @@ export default function makeBriefingTarget(target) {
 		else {
 
 			// NOTE: Map grid is based on top/left coordinate space
-			const gridX = 1 + (this.map.height - place[0]) / GRID_SIZE
-			const gridZ = 1 + place[1] / GRID_SIZE
+			const gridX = 1 + ((this.map.height - place[0]) / GRID_SIZE)
+			const gridZ = 1 + (place[1] / GRID_SIZE)
 
 			// Each grid is sub-divided into 9 smaller sub-grids
 			const subgridSize = Math.sqrt(9)
-			const subgridX = (1 - gridX % 1) * subgridSize
+			const subgridX = (1 - (gridX % 1)) * subgridSize
 			const subgridZ = (gridZ % 1) * subgridSize
-			const subgrid = Math.floor(subgridX) * subgridSize + 1 + Math.floor(subgridZ)
+			const subgrid = (Math.floor(subgridX) * subgridSize) + 1 + Math.floor(subgridZ)
 
 			fullPlaceName = "grid "
 			fullPlaceName += ("00" + Math.floor(gridX)).substr(-2, 2)

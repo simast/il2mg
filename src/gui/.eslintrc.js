@@ -12,7 +12,6 @@ module.exports = {
 	],
 	extends: "plugin:react/recommended",
 	rules: {
-		"no-console": "error",
 		"strict": "off",
 		"react/display-name": "off",
 		"react/prop-types": "off",

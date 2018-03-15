@@ -136,8 +136,8 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 		const pointXDiff = point[0] - basePoint[0]
 		const pointYDiff = point[1] - basePoint[1]
 		const pointTheta = -basePoint[2] * (Math.PI / 180)
-		const pointX = pointXDiff * Math.cos(pointTheta) - pointYDiff * Math.sin(pointTheta)
-		const pointY = pointXDiff * Math.sin(pointTheta) + pointYDiff * Math.cos(pointTheta)
+		const pointX = (pointXDiff * Math.cos(pointTheta)) - (pointYDiff * Math.sin(pointTheta))
+		const pointY = (pointXDiff * Math.sin(pointTheta)) + (pointYDiff * Math.cos(pointTheta))
 
 		pointItem.Type = pointType
 		pointItem.X = Number(pointX.toFixed(PRECISION_POSITION))

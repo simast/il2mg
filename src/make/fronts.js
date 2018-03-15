@@ -370,7 +370,7 @@ export default function makeFronts() {
 
 					const territoriesZ = territories.get(gridX) || new Map()
 
-					territoriesZ.set(gridZ, {type: +coalitionID})
+					territoriesZ.set(gridZ, {type: Number(coalitionID)})
 					territories.set(gridX, territoriesZ)
 				}
 			}
@@ -388,8 +388,8 @@ export default function makeFronts() {
 				x * GRID_SIZE,
 				z * GRID_SIZE,
 				// FIXME: Locations can overlap?
-				x * GRID_SIZE + GRID_SIZE,
-				z * GRID_SIZE + GRID_SIZE
+				(x * GRID_SIZE) + GRID_SIZE,
+				(z * GRID_SIZE) + GRID_SIZE
 			)
 
 			if (!(type in locationsData)) {

@@ -342,11 +342,11 @@ const choiceLists = [
 		// Handle create mission request response
 		ipcRenderer.once("createMission", (event, hasError) => {
 
-			if (!hasError) {
-				history.replace("/missions")
+			if (hasError) {
+				this.setBusyMode(false)
 			}
 			else {
-				this.setBusyMode(false)
+				history.replace("/missions")
 			}
 		})
 

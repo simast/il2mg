@@ -28,7 +28,7 @@ export default class Block extends Item {
 
 		yield* super.toBinary(index, typeID ? typeID : 1)
 
-		const buffer = new Buffer(13)
+		const buffer = Buffer.allocUnsafe(13)
 		let damageItem
 
 		// Find Damaged item

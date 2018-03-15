@@ -24,7 +24,7 @@ export default class MCU_CMD_ForceComplete extends MCU {
 
 		yield* super.toBinary(index, 24)
 
-		const buffer = new Buffer(4)
+		const buffer = Buffer.allocUnsafe(4)
 
 		// Priority
 		this.writeUInt32(buffer, this.Priority)

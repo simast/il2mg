@@ -140,7 +140,7 @@ export default class Mission {
 
 			// Try a complex seed value (with Base64 parameters)
 			try {
-				complexSeed = JSON.parse(new Buffer(params.seed, "base64").toString("utf-8"))
+				complexSeed = JSON.parse(Buffer.from(params.seed, "base64").toString("utf-8"))
 			}
 			catch (e) {}
 
@@ -200,7 +200,7 @@ export default class Mission {
 
 		// Save seed value as a localization string
 		if (complexSeed) {
-			seedParam = new Buffer(JSON.stringify(complexSeed), "utf-8").toString("base64")
+			seedParam = Buffer.from(JSON.stringify(complexSeed), "utf-8").toString("base64")
 		}
 		else {
 			seedParam = this.seed.toString()
@@ -377,7 +377,8 @@ export default class Mission {
 		if (coalition === Coalition.Allies) {
 			return Coalition.Axis
 		}
-		else if (coalition === Coalition.Axis) {
+
+		if (coalition === Coalition.Axis) {
 			return Coalition.Allies
 		}
 
@@ -390,7 +391,7 @@ export default class Mission {
 	 * @param {string} fileName Mission file name.
 	 * @returns {Promise} Promise object.
 	 */
-	async save(fileName) {
+	save(fileName) {
 
 		const {params, debug} = this
 		const format = params.format || Mission.FORMAT_BINARY
@@ -459,7 +460,7 @@ export default class Mission {
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
 	 */
-	async saveText(fileName) {
+	saveText(fileName) {
 
 		const profileName = "Saving ." + FILE_EXT_TEXT
 
@@ -503,7 +504,7 @@ export default class Mission {
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
 	 */
-	async saveBinary(fileName) {
+	saveBinary(fileName) {
 
 		const profileName = "Saving ." + FILE_EXT_BINARY
 
@@ -582,8 +583,8 @@ export default class Mission {
 				}
 
 				const indexTableNames = Object.keys(indexTables)
-				const itlhBuffer = new Buffer(7) // Index table list header buffer
-				const bsBuffer = new Buffer(4) // Item size buffer
+				const itlhBuffer = Buffer.allocUnsafe(7) // Index table list header buffer
+				const bsBuffer = Buffer.allocUnsafe(4) // Item size buffer
 
 				// Write index table list header (number of index tables + 3 unknown bytes)
 				itlhBuffer.writeUInt32LE(indexTableNames.length, 0)
@@ -624,7 +625,7 @@ export default class Mission {
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
 	 */
-	async saveLang(fileName) {
+	saveLang(fileName) {
 
 		const promises = []
 		let languages = this.params.lang
@@ -682,7 +683,7 @@ export default class Mission {
 	 * @param {string} fileName Mission file name (without extension).
 	 * @returns {Promise} Promise object.
 	 */
-	async saveMeta(fileName) {
+	saveMeta(fileName) {
 
 		const profileName = "Saving ." + FILE_EXT_META
 
@@ -785,7 +786,7 @@ class BinaryStringTable {
 		size += itemsCount * 2
 		size += itemsCount * dataLength
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// Max size of item
 		buffer.writeUInt32LE(dataLength, offset)
@@ -873,10 +874,10 @@ class BinaryDamageTable {
 		if (itemsCount > 0) {
 
 			size += 4
-			size += itemsCount * (1 + this.maxDamageValues * 2)
+			size += itemsCount * (1 + (this.maxDamageValues * 2))
 		}
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// Max number of damage values
 		buffer.writeUInt32LE(this.maxDamageValues, offset)

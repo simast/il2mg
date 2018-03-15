@@ -181,7 +181,7 @@ app.on("ready", () => {
 
 	mainWindow = new BrowserWindow(windowConfig)
 
-	mainWindow.loadURL("file://" + __dirname + "/index.html")
+	mainWindow.loadURL("file://" + path.join(__dirname, "index.html"))
 
 	// Prevent document from changing window title
 	mainWindow.on("page-title-updated", event => {

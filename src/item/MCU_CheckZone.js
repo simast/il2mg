@@ -31,7 +31,7 @@ export default class MCU_CheckZone extends MCU {
 			size += this.VehicleCoalitions.length * 4
 		}
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// Zone
 		this.writeDouble(buffer, this.Zone)

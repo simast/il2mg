@@ -118,7 +118,7 @@ export default function makeAirfieldRoutes(airfield, routes) {
 			const c = Math.pow(itemNext[0] - itemPrev[0], 2) + Math.pow(itemNext[1] - itemPrev[1], 2)
 
 			const angle = Math.acos((a + b - c) / Math.sqrt(4 * a * b))
-			const angleDiff = Math.abs(angle * (180 / Math.PI) - 180)
+			const angleDiff = Math.abs((angle * (180 / Math.PI)) - 180)
 			let area = angleDiff / 180 * 40
 
 			// Waypoint area radius limits (from 10 to 20 meters)

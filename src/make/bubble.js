@@ -86,7 +86,7 @@ export default function makeBubble() {
 
 		// Single check zone item used to track plane/vehicle activity
 		// TODO: Also set VehicleCoalitions?
-		checkZone.Zone = +(radius.toFixed(PRECISION_POSITION))
+		checkZone.Zone = Number(radius.toFixed(PRECISION_POSITION))
 		checkZone.PlaneCoalitions = this.coalitions
 		checkZone.setPosition(x, z)
 		checkZone.addTarget(checkZoneCheck)
@@ -106,7 +106,7 @@ export default function makeBubble() {
 		// NOTE: The player might start in an area covered by multiple zones - and
 		// they will all get activated at the same time. As a result - we randomize
 		// bubble zone re-check time slightly to distribute the load.
-		const checkTime = +(rand.real(
+		const checkTime = Number(rand.real(
 			ZONE_TIME_CHECK_MIN,
 			ZONE_TIME_CHECK_MAX,
 			true

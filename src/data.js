@@ -196,7 +196,7 @@ class Data {
 		}
 
 		const dataItemPath = path.join(dataPath, itemPath)
-		let result = undefined
+		let result
 
 		// Try loading one of the supported data formats
 		for (const extension in dataFormats) {

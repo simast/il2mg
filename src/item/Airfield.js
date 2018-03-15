@@ -58,7 +58,7 @@ export default class Airfield extends Block {
 
 		size += pointItems.length * 20
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// ReturnPlanes
 		this.writeUInt8(buffer, this.ReturnPlanes)

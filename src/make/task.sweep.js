@@ -192,14 +192,14 @@ export default function makeTaskSweep(flight) {
 
 		const pointDistance = pointVector.modulus()
 
-		let minDistance = Math.round(maxRouteRangeSegment * 1.0)
+		let minDistance = Math.round(maxRouteRangeSegment)
 		let maxDistance = Math.round(maxRouteRangeSegment * 1.5)
 
 		// Adjusted middle point logic for extended routes (from offmap airfields)
 		if (maxRouteRangeSegment - pointDistance <= 0) {
 
 			minDistance = Math.round(pointDistance)
-			maxDistance = Math.round(pointDistance + maxRouteRangeSegment * 0.5)
+			maxDistance = Math.round(pointDistance + (maxRouteRangeSegment * 0.5))
 		}
 
 		// Set random middle point distance (from the starting position)

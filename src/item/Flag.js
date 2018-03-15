@@ -30,7 +30,7 @@ export default class Flag extends Item {
 
 		size += scriptLength
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// LinkTrId
 		this.writeUInt32(buffer, this.LinkTrId || 0)

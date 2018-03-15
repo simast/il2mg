@@ -53,10 +53,12 @@ export default function makeChoice() {
 		if (params.coalition &&
 			data.countries[params.country].coalition !== params.coalition) {
 
-			throw ["Country is not part of coalition!", {
-				country: params.country,
-				coalition: params.coalition
-			}]
+			throw [
+				"Country is not part of coalition!", {
+					country: params.country,
+					coalition: params.coalition
+				}
+			]
 		}
 
 		// Inactive country
