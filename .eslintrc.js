@@ -59,6 +59,6 @@ module.exports = {
 		"prefer-arrow-callback": "error",
 		"prefer-const": "error",
 		"require-yield": "error",
-		"eol-last": ["error", "never"]
+		"eol-last": ["error", "always"]
 	}
 }
