@@ -14,8 +14,8 @@ export default ({mission, onContextMenu}) => {
 	return (
 		<li>
 			<NavLink {...linkProps}>
+				<span>{mission.title}</span>
 				<em>{mission.plane}</em>
-				{mission.title}
 			</NavLink>
 		</li>
 	)

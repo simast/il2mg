@@ -1,9 +1,14 @@
 import fs from "fs"
 import path from "path"
-import Mission from "../mission"
 import {app, screen, BrowserWindow, ipcMain, dialog, Menu} from "electron"
+import electronDebug from "electron-debug"
+import Mission from "../mission"
 import {APPLICATION_TITLE} from "../data"
 
+// Disable built-in Electron security warnings
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
+
+const isDevMode = process.env.NODE_ENV !== "production"
 let mainWindow = null
 
 // Use a custom error handler for the main process
@@ -17,7 +22,7 @@ function onError(error) {
 		message = error.toString()
 
 		// Use full error message (with stack trace) in development mode
-		if (process.env.NODE_ENV !== "production" && error.stack) {
+		if (isDevMode && error.stack) {
 			message = error.stack
 		}
 	}
@@ -62,6 +67,11 @@ const isOtherInstance = app.makeSingleInstance(() => {
 
 if (isOtherInstance) {
 	app.exit(0) // Success
+}
+
+// Enable development mode tools
+if (isDevMode) {
+	electronDebug({showDevTools: "undocked"})
 }
 
 // Min and max window size
@@ -155,9 +165,11 @@ app.on("ready", () => {
 		autoHideMenuBar: true,
 		backgroundColor: "#FAEABD",
 		webPreferences: {
+			devTools: isDevMode,
 			webgl: false,
 			webaudio: false,
 			plugins: false,
+			webviewTag: false,
 			defaultEncoding: "utf-8"
 		}
 	}

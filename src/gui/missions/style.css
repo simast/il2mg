@@ -29,12 +29,15 @@
 	overflow-y: auto;
 }
 #missionsList a {
-	display: block;
+	display: flex;
+	line-height: 25px;
+	font-size: 14px;
+}
+#missionsList span {
+	flex: 1 1 0;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	line-height: 25px;
-	font-size: 14px;
 }
 #missionsList em {
 	font-size: 13px;

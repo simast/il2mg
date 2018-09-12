@@ -9,6 +9,15 @@ import CreateScreen from "./create/Screen"
 // NOTE: Strict mode makes MobX require actions to modify state!
 useStrict(true)
 
+// Create main application container element
+const createAppContainer = () => {
+
+	const appContainer = document.createElement("div")
+	appContainer.id = "main"
+
+	return document.body.appendChild(appContainer)
+}
+
 // Render application
 ReactDOM.render((
 	<HashRouter>
@@ -31,4 +40,4 @@ ReactDOM.render((
 			}}
 		/>
 	</HashRouter>
-), document.getElementById("main"))
+), createAppContainer())
