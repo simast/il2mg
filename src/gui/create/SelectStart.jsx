@@ -151,15 +151,15 @@ let trackCSSStyle = null
 		let dateOutput
 		let reset
 
-		// Show a number of days in the battle when date is not selected
-		if (!date) {
-			dateOutput = totalDays + " days"
-		}
 		// Show selected date (and a reset button)
-		else {
+		if (date) {
 
 			dateOutput = date + ", " + dates.index[date].season
 			reset = <a className="reset" onClick={() => createStore.setDate("")}></a>
+		}
+		// Show a number of days in the battle when date is not selected
+		else {
+			dateOutput = totalDays + " days"
 		}
 
 		const dateData = dates.index[date]
@@ -192,7 +192,8 @@ let trackCSSStyle = null
 						// Get date from input value
 						const dateData = dates.list[event.target.value - 1]
 						createStore.setDate(dateData ? dateData.date : "")
-					}} />
+					}}
+				/>
 				{reset}
 			</div>
 		)

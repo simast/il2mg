@@ -104,7 +104,7 @@ export default function makeTaskPatrol(flight) {
 		// Rotate vector to the right by random angle
 		// NOTE: Using lower rotation angle the larger the patrol area
 		const rotMin = Math.PI / 6
-		const rotMax = Math.max(rotMin, rotMin + Math.PI / 6 * (1 - areaRatio))
+		const rotMax = Math.max(rotMin, rotMin + (Math.PI / 6 * (1 - areaRatio)))
 		const rotDelta = rotMax - rotMin
 		const rotAngle = rand.real(rotMin, rotMax, true)
 
@@ -112,12 +112,12 @@ export default function makeTaskPatrol(flight) {
 
 		// Scale vector based on the rotation
 		const scaleMin = 1 / 4 // 25%
-		const scaleMax = 1 - 1 / 4 // 75%
+		const scaleMax = 1 - (1 / 4) // 75%
 		const scaleDelta = scaleMax - scaleMin // 50%
 		let scaleFactor = scaleMax
 
 		if (rotDelta > 0) {
-			scaleFactor = scaleMin + scaleDelta * (1 - (rotAngle - rotMin) / rotDelta)
+			scaleFactor = scaleMin + (scaleDelta * (1 - ((rotAngle - rotMin) / rotDelta)))
 		}
 
 		// Use +-10% randomness when placing additional patrol area points
@@ -127,7 +127,10 @@ export default function makeTaskPatrol(flight) {
 		vectorAB = vectorAB.multiply(scaleFactor)
 
 		// Build final (result) point
-		const point = Vector.create(pointA).add(vectorAB).round().elements
+		const point = Vector.create(pointA)
+			.add(vectorAB)
+			.round()
+			.elements
 
 		// Validated point
 		if (isRestricted(this.map, point)) {
@@ -521,15 +524,16 @@ export function findBasePoints(flight, params) {
 		if (locationX > startX && locationZ > startZ) {
 			return "tr"
 		}
-		else if (locationX < startX && locationZ > startZ) {
+
+		if (locationX < startX && locationZ > startZ) {
 			return "br"
 		}
-		else if (locationX < startX && locationZ < startZ) {
+
+		if (locationX < startX && locationZ < startZ) {
 			return "bl"
 		}
-		else {
-			return "tl"
-		}
+
+		return "tl"
 	}
 
 	// Adjust (align and face) bounds based on a list of "hot" points

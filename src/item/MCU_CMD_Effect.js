@@ -23,7 +23,7 @@ export default class MCU_CMD_Effect extends MCU {
 
 		yield* super.toBinary(index, 26)
 
-		const buffer = new Buffer(4)
+		const buffer = Buffer.allocUnsafe(4)
 
 		// ActionType
 		this.writeUInt32(buffer, this.ActionType)

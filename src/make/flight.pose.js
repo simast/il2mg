@@ -96,7 +96,7 @@ export default function makeFlightPose(flight) {
 			let yaw = Math.atan2(diffZ, diffX)
 			let pitch = Math.atan2(
 				diffY,
-				Math.sqrt(diffZ * diffZ + diffX * diffX)
+				Math.sqrt((diffZ * diffZ) + (diffX * diffX))
 			)
 
 			yaw = yaw * (180 / Math.PI)
@@ -195,7 +195,7 @@ export default function makeFlightPose(flight) {
 
 			const angleBack = rand.real(-FORMATION_ANGLE, FORMATION_ANGLE, true)
 			const distanceRand = FORMATION_SPACING * 0.1
-			let distanceBack = elementDistance + FORMATION_SPACING * 2
+			let distanceBack = elementDistance + (FORMATION_SPACING * 2)
 			let distanceUp = FORMATION_SPACING
 
 			// Add a small +- 10% element spacing randomness

@@ -11,9 +11,9 @@ class LaunchStore {
 	@observable realismOptions
 
 	// Actions
-	@action setGamePath = gamePath => this.gamePath = gamePath
-	@action setRealismPreset = realismPreset => this.realismPreset = realismPreset
-	@action setRealismOptions = realismOptions => this.realismOptions = realismOptions
+	@action setGamePath = gamePath => {this.gamePath = gamePath}
+	@action setRealismPreset = realismPreset => {this.realismPreset = realismPreset}
+	@action setRealismOptions = realismOptions => {this.realismOptions = realismOptions}
 
 	@action toggleRealismOption = option => {
 
@@ -25,11 +25,11 @@ class LaunchStore {
 
 		const foundIndex = realismOptions.indexOf(option)
 
-		if (foundIndex !== -1) {
-			realismOptions.splice(foundIndex, 1)
+		if (foundIndex === -1) {
+			realismOptions.push(option)
 		}
 		else {
-			realismOptions.push(option)
+			realismOptions.splice(foundIndex, 1)
 		}
 	}
 

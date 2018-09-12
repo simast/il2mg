@@ -188,7 +188,9 @@ export default function makeTime() {
 			case "night": {
 
 				time = moment(duskEnd)
-				time.add(randValue * moment(dawnStart).add(1, "d").diff(duskEnd), "ms")
+				time.add(randValue * moment(dawnStart)
+					.add(1, "d")
+					.diff(duskEnd), "ms")
 
 				break
 			}

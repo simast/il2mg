@@ -20,7 +20,7 @@ export default class MCU_Timer extends MCU {
 
 		yield* super.toBinary(index, 41)
 
-		const buffer = new Buffer(9)
+		const buffer = Buffer.allocUnsafe(9)
 
 		// Time
 		this.writeDouble(buffer, this.Time)

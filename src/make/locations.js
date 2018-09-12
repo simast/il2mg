@@ -45,10 +45,10 @@ export default function makeLocations() {
 			const y = locationData[2]
 			const z = locationData[3]
 
-			const x1 = x - locationData[6] // x - backward
-			const z1 = z - locationData[7] // z - left
-			const x2 = x + locationData[4] // x + forward
-			const z2 = z + locationData[5] // z + right
+			const x1 = x - locationData[6] // X - backward
+			const z1 = z - locationData[7] // Z - left
+			const x2 = x + locationData[4] // X + forward
+			const z2 = z + locationData[5] // Z + right
 
 			const location = new Location(x1, z1, x2, z2)
 
@@ -131,10 +131,10 @@ export class Location {
 
 	// Helper getters and setters for simple location point entries
 	// NOTE: X/Z getters return the center point of location entry bounding box
-	get x() { return (this.x1 + this.x2) / 2 }
-	get z() { return (this.z1 + this.z2) / 2 }
-	set x(x) { this.x1 = this.x2 = x }
-	set z(z) { this.z1 = this.z2 = z }
+	get x() {return (this.x1 + this.x2) / 2}
+	get z() {return (this.z1 + this.z2) / 2}
+	set x(x) {this.x1 = this.x2 = x}
+	set z(z) {this.z1 = this.z2 = z}
 
 	// Get location as a 2D vector object
 	get vector() {

@@ -113,7 +113,7 @@ export default class MCU_Icon extends MCU {
 			size += this.Coalitions.length * 4
 		}
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// IconId
 		this.writeUInt32(buffer, this.IconId)

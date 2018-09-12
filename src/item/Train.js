@@ -36,7 +36,7 @@ export default class Train extends Vehicle {
 			}
 		}
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// Number of Carriages items
 		this.writeUInt32(buffer, carriages.length)

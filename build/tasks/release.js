@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 		const guiDir = path.join("src", "gui")
 
 		// Build application data
-		const buildData = async () => new Promise(resolve => {
+		const buildData = () => new Promise(resolve => {
 
 			// Process all application JSON/JSON5 data files
 			grunt.file.expand("data/**/*.@(json|json5)").forEach(file => {
@@ -51,7 +51,7 @@ module.exports = function(grunt) {
 		})
 
 		// Build GUI application package
-		const buildApplication = async () => {
+		const buildApplication = () => {
 
 			const appFileHTML = "index.html"
 			const appFileCSS = "style.css"
@@ -181,7 +181,7 @@ module.exports = function(grunt) {
 		}
 
 		// Package application using Electron
-		const packageApplication = async () => electronPackager({
+		const packageApplication = () => electronPackager({
 			quiet: true,
 			arch: "x64",
 			platform: process.platform,

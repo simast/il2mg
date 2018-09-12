@@ -466,7 +466,7 @@ export default function makeAirfields() {
 						break
 					}
 
-					makeAirfieldTaxi.call(mission, airfield, +taxiRouteID)
+					makeAirfieldTaxi.call(mission, airfield, Number(taxiRouteID))
 				}
 			}
 		}

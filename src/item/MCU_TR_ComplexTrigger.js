@@ -122,7 +122,7 @@ export default class MCU_TR_ComplexTrigger extends MCU {
 			}
 		}
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// Events list
 		this.writeEvents(buffer)

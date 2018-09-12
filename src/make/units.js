@@ -320,9 +320,7 @@ export default function makeUnits() {
 			unitData = battle.units[unitParentID]
 		}
 
-		const unitParts = [
-			unit // Original unit
-		]
+		const unitParts = [unit] // Original unit
 
 		// Split unit into separate parts (based on number of airfields)
 		// NOTE: Don't split units with planesMin/planesMax

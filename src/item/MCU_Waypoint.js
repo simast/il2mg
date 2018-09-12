@@ -26,7 +26,7 @@ export default class MCU_Waypoint extends MCU {
 
 		yield* super.toBinary(index, 42)
 
-		const buffer = new Buffer(20)
+		const buffer = Buffer.allocUnsafe(20)
 
 		// Area (m)
 		this.writeDouble(buffer, this.Area)

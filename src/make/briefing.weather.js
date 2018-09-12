@@ -230,7 +230,7 @@ export default function makeBriefingWeather() {
 		windDirection = (windDirection + 180) % 360
 
 		const windBearingSize = 360 / windPrecision
-		const windBearing = Math.floor((windBearingSize / 2 + windDirection) / windBearingSize % windPrecision)
+		const windBearing = Math.floor(((windBearingSize / 2) + windDirection) / windBearingSize % windPrecision)
 
 		windSegment += " " + windSpeed + " m/s"
 
@@ -252,19 +252,20 @@ export default function makeBriefingWeather() {
 	context.reason = []
 
 	// Order weather reason context based on state priority
-	rand.shuffle(Object.keys(weatherReasons)).sort((a, b) => {
+	rand.shuffle(Object.keys(weatherReasons))
+		.sort((a, b) => {
 
-		// Use worst reason first
-		if (weather.state > WeatherState.Good) {
-			return weather.points[a] < weather.points[b]
-		}
-		// Use best reason first
-		else {
+			// Use worst reason first
+			if (weather.state > WeatherState.Good) {
+				return weather.points[a] < weather.points[b]
+			}
+
+			// Use best reason first
 			return weather.points[a] > weather.points[b]
-		}
-	}).forEach(reasonType => {
-		context.reason.push(weatherReasons[reasonType])
-	})
+		})
+		.forEach(reasonType => {
+			context.reason.push(weatherReasons[reasonType])
+		})
 
 	const view = {weather: context}
 

@@ -22,10 +22,10 @@ class CreateStore {
 	@observable.ref choice = {}
 
 	// Actions
-	@action setBattle = battle => this.battle = battle
-	@action setDate = date => this.date = date
-	@action setStart = start => this.start = start
-	@action setChoice = choice => this.choice = choice
+	@action setBattle = battle => {this.battle = battle}
+	@action setDate = date => {this.date = date}
+	@action setStart = start => {this.start = start}
+	@action setChoice = choice => {this.choice = choice}
 
 	constructor() {
 

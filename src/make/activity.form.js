@@ -99,7 +99,7 @@ export default class ActivityForm {
 					// of the flight after take off (just before proceeding with the task).
 					const waitTimerLink = flightGroup.createItem("MCU_Timer")
 
-					waitTimerLink.Time = +(rand.real(40, 60).toFixed(3))
+					waitTimerLink.Time = Number(rand.real(40, 60).toFixed(3))
 					waitTimerLink.setPositionNear(flight.takeoffCommand)
 					waitTimerLink.addTarget(input)
 

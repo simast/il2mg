@@ -58,14 +58,15 @@ if (process.env.NODE_ENV !== "production") {
 
 			const features = Object.create(null)
 
-			String(value).split(",").forEach(feature => {
+			String(value).split(",")
+				.forEach(feature => {
 
-				feature = feature.trim()
+					feature = feature.trim()
 
-				if (feature) {
-					features[feature] = true
-				}
-			})
+					if (feature) {
+						features[feature] = true
+					}
+				})
 
 			return features
 		}
@@ -485,11 +486,11 @@ export default argv => {
 					state.toLowerCase() === params.weather.toLowerCase()
 				))
 
-				if (!weatherState) {
-					throw ["Invalid weather conditions!", {weather: params.weather}]
+				if (weatherState) {
+					params.weather = WeatherState[weatherState]
 				}
 				else {
-					params.weather = WeatherState[weatherState]
+					throw ["Invalid weather conditions!", {weather: params.weather}]
 				}
 			}
 

@@ -4,7 +4,7 @@ import Item from "../item"
 // Options item
 export default class Options extends Item {
 
-	get hasIndex() { return false }
+	get hasIndex() {return false}
 
 	/**
 	 * Get binary representation of the item.
@@ -39,7 +39,7 @@ export default class Options extends Item {
 		size += this.WindLayers.length * 8 * 3
 		size += this.Countries.length * 4 * 2
 
-		const buffer = new Buffer(size)
+		const buffer = Buffer.allocUnsafe(size)
 
 		// File version
 		this.writeUInt32(buffer, 28)

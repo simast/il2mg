@@ -12,21 +12,23 @@ useStrict(true)
 // Render application
 ReactDOM.render((
 	<HashRouter>
-		<Route path="/" render={({match}) => {
+		<Route
+			path="/"
+			render={({match}) => {
 
-			if (match.isExact) {
-				return <Redirect to="/missions" />
-			}
+				if (match.isExact) {
+					return <Redirect to="/missions" />
+				}
 
-			return (
-				<Application>
-					<Switch>
-						<Route path="/missions/:mission?/:action?" component={MissionsScreen} />
-						<Route path="/create" component={CreateScreen} />
-					</Switch>
-				</Application>
-			)
-		}}
+				return (
+					<Application>
+						<Switch>
+							<Route path="/missions/:mission?/:action?" component={MissionsScreen} />
+							<Route path="/create" component={CreateScreen} />
+						</Switch>
+					</Application>
+				)
+			}}
 		/>
 	</HashRouter>
 ), document.getElementById("main"))

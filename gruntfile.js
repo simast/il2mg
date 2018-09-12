@@ -11,9 +11,7 @@ module.exports = function(grunt) {
 	]
 
 	// Style sheet files
-	const styleFiles = [
-		"src/**/*.css"
-	]
+	const styleFiles = ["src/**/*.css"]
 
 	// All source files
 	const sourceFiles = [

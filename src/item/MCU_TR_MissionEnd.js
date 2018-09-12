@@ -20,7 +20,7 @@ export default class MCU_TR_MissionEnd extends MCU {
 
 		yield* super.toBinary(index, 29)
 
-		const buffer = new Buffer(1)
+		const buffer = Buffer.allocUnsafe(1)
 
 		// Succeeded
 		this.writeUInt8(buffer, this.Succeeded)

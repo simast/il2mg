@@ -61,7 +61,7 @@ export default function makeTaskRebase(flight) {
 		// Pick a taxi route for landing on target airfield
 		if (airfieldTo.taxi) {
 
-			taxiRouteID = +rand.pick(Object.keys(airfieldTo.taxi))
+			taxiRouteID = Number(rand.pick(Object.keys(airfieldTo.taxi)))
 
 			const activeTaxiRoutes = airfieldTo.activeTaxiRoutes
 			const taxiRunwayID = airfieldTo.taxi[taxiRouteID][1]
