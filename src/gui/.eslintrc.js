@@ -1,14 +1,14 @@
 module.exports = {
 	parserOptions: {
 		ecmaFeatures: {
-	    jsx: true
-	  }
+			jsx: true
+		}
 	},
 	env: {
 		browser: true
 	},
 	plugins: [
-	  "react"
+		"react"
 	],
 	extends: "plugin:react/recommended",
 	rules: {

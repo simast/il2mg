@@ -14,7 +14,7 @@ import SelectRealism from "./SelectRealism"
 	render() {
 
 		const {mission, onClose} = this.props
-		const planeClassName = classNames("plane",  "country", "c" + mission.country)
+		const planeClassName = classNames("plane", "country", "c" + mission.country)
 		const actions = {
 			center: new Map()
 		}

@@ -2,7 +2,7 @@ import {remote} from "electron"
 import React from "react"
 import {observer} from "mobx-react"
 import MissionsListItem from "./ListItem"
-import {saveMission} from  "./actions"
+import {saveMission} from "./actions"
 import missionsStore from "./store"
 
 // Missions list component

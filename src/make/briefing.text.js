@@ -23,8 +23,8 @@ const planeTypeNames = {
  * Supported template tags:
  *
  * 	{{airfield}} - Name of the player flight airfield.
- *  {{target}} - Player task target location description.
- *  {{enemy.demonym}} - Name of main enemy country demonym.
+ * 	{{target}} - Player task target location description.
+ * 	{{enemy.demonym}} - Name of main enemy country demonym.
  *
  * 	{{{plane}}} - Any player plane name representation.
  * 	{{plane.name}} - Player plane model name.

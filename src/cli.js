@@ -217,7 +217,7 @@ params.option(
 
 		for (const taskID in data.tasks) {
 
-			const task =  data.tasks[taskID]
+			const task = data.tasks[taskID]
 
 			if (task.name) {
 				desc += util.format('\t"%s" - %s.' + EOL, taskID, task.name)
