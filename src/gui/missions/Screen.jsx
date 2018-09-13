@@ -22,7 +22,7 @@ import MissionDetails from "./Details"
 		this.onCloseLaunchDialog = this.onCloseLaunchDialog.bind(this)
 	}
 
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 
 		const {match, history} = this.props
 

@@ -1,7 +1,13 @@
 module.exports = {
 	parserOptions: {
 		ecmaFeatures: {
-			jsx: true
+			jsx: true,
+			legacyDecorators: true
+		}
+	},
+	settings: {
+		react: {
+			version: "16.5"
 		}
 	},
 	env: {
@@ -42,6 +48,7 @@ module.exports = {
 		}],
 		"react/jsx-curly-brace-presence": "error",
 		"react/jsx-pascal-case": "error",
-		"react/jsx-wrap-multilines": "error"
+		"react/jsx-wrap-multilines": "error",
+		"react/jsx-props-no-multi-spaces": "error"
 	}
 }

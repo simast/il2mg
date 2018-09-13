@@ -121,7 +121,7 @@ const realismOptionsByGroup = [
 // Custom realism options component
 @observer export default class RealismOptions extends React.Component {
 
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 
 		// Read/reset realism options
 		this.disposeReaction = reaction(

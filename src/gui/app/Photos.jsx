@@ -10,11 +10,11 @@ const AVAILABLE_PHOTOS = 12
 
 	@observable.ref photos = []
 
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 		this.choosePhotos()
 	}
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 
 		// Update photo selection on screen change
 		if (this.props.screen !== nextProps.screen) {

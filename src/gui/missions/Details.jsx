@@ -3,7 +3,7 @@ import React from "react"
 // Mission details pane component
 export default class MissionDetails extends React.PureComponent {
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 
 		const {mission} = this.props
 
