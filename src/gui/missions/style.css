@@ -42,7 +42,6 @@
 #missionsList em {
 	font-size: 13px;
 	font-style: normal;
-	float: right;
 	margin-left: 8px;
 }
 #missionsList em:before {
@@ -55,6 +54,12 @@
 }
 #missionsList a.selected em {
 	font-weight: normal;
+}
+#missionsList a:hover {
+	text-decoration: none;
+}
+#missionsList a:hover span {
+	text-decoration: underline;
 }
 
 /* Mission details pane */
