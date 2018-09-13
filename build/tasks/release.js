@@ -108,6 +108,7 @@ module.exports = function(grunt) {
 
 				// Common webpack config options
 				const commonOptions = {
+					mode: "production",
 					devtool: false,
 					resolve: {
 						extensions: [".js", ".jsx"]
@@ -119,13 +120,13 @@ module.exports = function(grunt) {
 								test: /\.jsx?$/,
 								exclude: /node_modules/,
 								use: {
-									loader: "babel-loader",
-									options: {
-										forceEnv: "production"
-									}
+									loader: "babel-loader"
 								}
 							}
 						]
+					},
+					optimization: {
+						minimizer: [new UglifyJsPlugin({uglifyOptions})]
 					},
 					node: {
 						global: false,
@@ -135,15 +136,7 @@ module.exports = function(grunt) {
 						__filename: false,
 						__dirname: false
 					},
-					plugins: [
-						new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/),
-						new webpack.DefinePlugin({
-							"process.env": {
-								NODE_ENV: JSON.stringify("production")
-							}
-						}),
-						new UglifyJsPlugin({uglifyOptions})
-					]
+					plugins: [new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en/)]
 				}
 
 				webpack([

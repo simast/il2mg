@@ -1,6 +1,6 @@
 // Enable Babel require() hook
 if (process.env.NODE_ENV !== "production") {
-	require("babel-register")
+	require("@babel/register")
 }
 
 // Run as Electron application with both GUI and CLI interfaces

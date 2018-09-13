@@ -1,5 +1,5 @@
 // Enable Babel require() hook
-require("babel-register")
+require("@babel/register")
 
 module.exports = function(grunt) {
 

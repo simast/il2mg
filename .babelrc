@@ -1,13 +1,15 @@
 {
+	"presets": [
+		["@babel/preset-react", {"useBuiltIns": true}]
+	],
 	"plugins": [
-		["transform-decorators-legacy"],
-		["transform-class-properties"],
-		["transform-react-jsx", {"useBuiltIns": true}]
+		["@babel/plugin-proposal-decorators", {"legacy": true}],
+		["@babel/plugin-proposal-class-properties", {"loose": true}]
 	],
 	"env": {
 		"development": {
 			"plugins": [
-				["transform-es2015-modules-commonjs"]
+				["@babel/plugin-transform-modules-commonjs"]
 			]
 		}
 	}
