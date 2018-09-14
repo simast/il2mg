@@ -93,13 +93,13 @@ import MissionDetails from "./Details"
 		}
 
 		return (
-			<div>
+			<>
 				<Screen id="missions" actions={actions}>
 					<MissionsList {...missionListProps} />
 					{mission && <MissionDetails mission={mission} />}
 				</Screen>
 				{launchDialog}
-			</div>
+			</>
 		)
 	}
 

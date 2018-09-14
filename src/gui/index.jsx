@@ -1,13 +1,16 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import {HashRouter, Route, Switch, Redirect} from "react-router-dom"
-import {useStrict} from "mobx"
+import {configure} from "mobx"
 import Application from "./app/Application"
 import MissionsScreen from "./missions/Screen"
 import CreateScreen from "./create/Screen"
 
-// NOTE: Strict mode makes MobX require actions to modify state!
-useStrict(true)
+// Configure MobX
+configure({
+	enforceActions: "observed",
+	computedRequiresReaction: true
+})
 
 // Create main application container element
 const createAppContainer = () => {

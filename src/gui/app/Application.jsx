@@ -19,11 +19,7 @@ export default class Application extends React.Component {
 	render() {
 
 		// NOTE: Router will provide child components
-		return (
-			<div id="application">
-				{this.props.children}
-			</div>
-		)
+		return this.props.children
 	}
 
 	static onDragAndDrop(event) {

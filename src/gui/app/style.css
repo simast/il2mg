@@ -11,7 +11,7 @@
 	--background-color-alt-transparent: rgba(43,45,34,0);
 }
 
-html, body, #main, #application, #screen, #screen.disabled:after, #container, .dialog {
+html, body, #main, #screen, #screen.disabled:after, #container, .dialog {
 	width: 100vw;
 	height: 100vh;
 	max-width: 100vw;

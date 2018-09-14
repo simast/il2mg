@@ -132,7 +132,9 @@ const realismOptionsByGroup = [
 					launchStore.setRealismOptions(readRealismOptions())
 				}
 			},
-			true // Run immediately
+			{
+				fireImmediately: true
+			}
 		)
 	}
 
