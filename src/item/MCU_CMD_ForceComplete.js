@@ -12,6 +12,7 @@ export default class MCU_CMD_ForceComplete extends MCU {
 		super()
 
 		this.Priority = PRIORITY_HIGH
+		this.EmergencyOrdnanceDrop = 0
 	}
 
 	/**
@@ -24,10 +25,13 @@ export default class MCU_CMD_ForceComplete extends MCU {
 
 		yield* super.toBinary(index, 24)
 
-		const buffer = Buffer.allocUnsafe(4)
+		const buffer = Buffer.allocUnsafe(5)
 
 		// Priority
 		this.writeUInt32(buffer, this.Priority)
+
+		// EmergencyOrdnanceDrop
+		this.writeUInt8(buffer, this.EmergencyOrdnanceDrop)
 
 		yield buffer
 	}

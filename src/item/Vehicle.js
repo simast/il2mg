@@ -23,8 +23,19 @@ export default class Vehicle extends Item {
 		this.Spotter = -1
 		this.BeaconChannel = 0
 		this.Callsign = 0
+		this.Callnum = 0
 		this.DeleteAfterDeath = 1
 		this.CoopStart = 0
+		this.PayloadId = 0
+		this.WMMask = 0
+		this.Fuel = 1
+		this.RepairFriendlies = 0
+		this.RearmFriendlies = 0
+		this.RefuelFriendlies = 0
+		this.RepairTime = 0
+		this.RearmTime = 0
+		this.RefuelTime = 0
+		this.MaintenanceRadius = 0
 	}
 
 	/**
@@ -38,7 +49,7 @@ export default class Vehicle extends Item {
 
 		yield* super.toBinary(index, typeID || 2)
 
-		let size = 39
+		let size = 71
 		const scriptLength = Buffer.byteLength(this.Script)
 
 		size += scriptLength
@@ -89,6 +100,39 @@ export default class Vehicle extends Item {
 
 		// CoopStart
 		this.writeUInt8(buffer, this.CoopStart || 0)
+
+		// PayloadId
+		this.writeUInt32(buffer, this.PayloadId)
+
+		// WMMask
+		this.writeUInt32(buffer, this.WMMask)
+
+		// Fuel
+		this.writeFloat(buffer, this.Fuel)
+
+		// Callnum
+		this.writeUInt8(buffer, this.Callnum)
+
+		// RepairFriendlies
+		this.writeUInt8(buffer, this.RepairFriendlies)
+
+		// RearmFriendlies
+		this.writeUInt8(buffer, this.RearmFriendlies)
+
+		// RefuelFriendlies
+		this.writeUInt8(buffer, this.RefuelFriendlies)
+
+		// RepairTime
+		this.writeUInt32(buffer, this.RepairTime)
+
+		// RearmTime
+		this.writeUInt32(buffer, this.RearmTime)
+
+		// RefuelTime
+		this.writeUInt32(buffer, this.RefuelTime)
+
+		// MaintenanceRadius
+		this.writeUInt32(buffer, this.MaintenanceRadius)
 
 		yield buffer
 	}
