@@ -13,7 +13,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_54.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -34,7 +34,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -55,7 +55,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_02.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -76,7 +76,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_03.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -97,7 +97,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_04.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -118,7 +118,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_05.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -139,7 +139,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_06.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -160,7 +160,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_07.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -181,7 +181,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_08.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -202,7 +202,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_04.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -223,7 +223,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_05.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -244,7 +244,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\bar_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -265,7 +265,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\bar_02.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -286,7 +286,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\bar_03.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -307,7 +307,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\bar_04.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -328,7 +328,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\bar_05.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -349,7 +349,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\bar_06.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -370,7 +370,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\bar_07.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -391,7 +391,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\bar_09.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -412,7 +412,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_04.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -433,7 +433,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_04.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -454,7 +454,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\okt_03.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -475,7 +475,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -496,7 +496,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_02.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -517,7 +517,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_03.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -538,7 +538,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_04.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -559,7 +559,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_05.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -580,7 +580,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_06.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -601,7 +601,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_07.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -622,7 +622,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_08.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -643,7 +643,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_09.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -664,7 +664,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_10.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -685,7 +685,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -706,7 +706,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -727,7 +727,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -748,7 +748,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -769,7 +769,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_11.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -790,7 +790,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\fountain.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -811,7 +811,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stz_12.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 100000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -832,7 +832,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -853,7 +853,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_02.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -874,7 +874,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_03.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -895,7 +895,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_04.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -916,7 +916,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_05.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -937,7 +937,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_06.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -958,7 +958,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_07.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -979,7 +979,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_08.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1000,7 +1000,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_09.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1021,7 +1021,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_10.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1042,7 +1042,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_11.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1063,7 +1063,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_12.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1084,7 +1084,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_13.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1105,7 +1105,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_14.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1126,7 +1126,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_15.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1147,7 +1147,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_16.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -1168,7 +1168,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_17.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4318,7 +4318,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\sklad_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4363,7 +4363,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\meh_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4408,7 +4408,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_18.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4429,7 +4429,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_19.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4450,7 +4450,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_20.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4471,7 +4471,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_21.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4492,7 +4492,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_22.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4513,7 +4513,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_23.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4534,7 +4534,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_24.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4555,7 +4555,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_25.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4576,7 +4576,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_24.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4597,7 +4597,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_26.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4639,7 +4639,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_27.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4660,7 +4660,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_28.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4681,7 +4681,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_29.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4702,7 +4702,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_30.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4723,7 +4723,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_31.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4744,7 +4744,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_32.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4765,7 +4765,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_33.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4786,7 +4786,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_34.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4807,7 +4807,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_35.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4828,7 +4828,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_35.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4849,7 +4849,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_35.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -4870,7 +4870,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_20.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5017,7 +5017,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_36.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5038,7 +5038,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_37.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5059,7 +5059,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_38.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5080,7 +5080,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_39.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5101,7 +5101,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_40.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5122,7 +5122,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_41.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5164,7 +5164,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_35.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5206,7 +5206,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_42.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5227,7 +5227,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_43.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5248,7 +5248,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_44.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5290,7 +5290,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_45.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5311,7 +5311,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_46.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5332,7 +5332,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_00.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5416,7 +5416,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_47.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5437,7 +5437,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_48.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5458,7 +5458,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_49.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5479,7 +5479,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_50.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5542,7 +5542,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_51.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5563,7 +5563,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_52.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -5605,7 +5605,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_53.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -6592,7 +6592,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\meh_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -6638,7 +6638,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\sklad_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -6685,7 +6685,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\scot_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -6731,7 +6731,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\scot_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7365,7 +7365,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\scot_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7411,7 +7411,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\meh_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7460,7 +7460,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\sklad_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7507,7 +7507,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\country_m_corner_block2.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7535,7 +7535,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\country_m_corner_block2.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7563,7 +7563,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\country_200x100_2.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7595,7 +7595,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\country_m_corner_block7.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7622,7 +7622,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\village_200_block2.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7654,7 +7654,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\village_200_block3.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7686,7 +7686,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\village_400_block1.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7718,7 +7718,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\village_400_block1.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7750,7 +7750,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\village_200_block3.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 10000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7783,7 +7783,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_bridge_01.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7804,7 +7804,7 @@ Block
   Script = "LuaScripts\WorldObjects\Blocks\stalingrad_bridge_02.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
@@ -7825,7 +7825,7 @@ Bridge
   Script = "LuaScripts\WorldObjects\Bridges\bridge_section_dmg.txt";
   Country = 0;
   Desc = "";
-  Durability = 25000;
+  Durability = 50000;
   DamageReport = 50;
   DamageThreshold = 1;
   DeleteAfterDeath = 1;
