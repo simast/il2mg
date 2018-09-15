@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\art_position_small.txt
+model: graphics\blocks\art_position_small.mgm
+durability: 1000
+damage: [0, 1]

@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\static_stug37l24.txt
+model: graphics\blocks\static_stug37l24.mgm
+durability: 2500
+damage: [0]

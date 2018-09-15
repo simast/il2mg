@@ -1,5 +1,0 @@
-{
-	type: "Effect",
-	script: "luascripts\\worldobjects\\mapemitters\\villagesmoke.txt",
-	time: 16.66
-}

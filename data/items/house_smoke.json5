@@ -1,4 +1,0 @@
-{
-	type: "Effect",
-	script: "luascripts\\worldobjects\\mapemitters\\house_smoke.txt"
-}

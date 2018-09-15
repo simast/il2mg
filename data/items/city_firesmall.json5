@@ -1,5 +1,0 @@
-{
-	type: "Effect",
-	script: "luascripts\\worldobjects\\mapemitters\\city_firesmall.txt",
-	time: 16.66
-}

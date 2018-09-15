@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\static_e.txt
+model: graphics\blocks\static_e.mgm
+durability: 2500
+damage: [0]

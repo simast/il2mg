@@ -1,7 +1,0 @@
-{
-	type: "Block",
-	script: "luascripts\\worldobjects\\blocks\\static_he111_open.txt",
-	model: "graphics\\blocks\\static_he111_open.mgm",
-	durability: 3000,
-	damage: [0]
-}

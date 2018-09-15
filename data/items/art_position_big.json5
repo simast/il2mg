@@ -1,7 +1,0 @@
-{
-	type: "Block",
-	script: "luascripts\\worldobjects\\blocks\\art_position_big.txt",
-	model: "graphics\\blocks\\art_position_big.mgm",
-	durability: 1000,
-	damage: [0, 1, 2, 3]
-}
