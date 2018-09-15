@@ -1,0 +1,57 @@
+# Yak-1
+yak1:
+  manufacturer: Yakovlev
+  name: Yak-1
+  type: [fighter, fighter_light]
+  size: small
+  static:
+    - static_yak1
+    - static_yak1_open
+    - static_yak1_net
+
+# Yak-1 ser.69
+yak1s69:
+  name: Yak-1 ser.69
+  parent: yak1
+  model: graphics\planes\yak1s69\yak1s69.mgm
+  script: luascripts\worldobjects\planes\yak1s69.txt
+  speed: 415
+  range: 620
+  skins:
+    101:
+      '': [-4, -4, -4, 1]
+      yak1s69\yak1s69_skin_01.dds: [0, 0, 0, -10]
+      yak1s69\yak1s69_skin_02.dds: [1, 1, 1, 0]
+      yak1s69\yak1s69_skin_03.dds: [0, 0, 0, 3]
+      yak1s69\yak1s69_skin_04.dds: [1, 1, 1, 0]
+      yak1s69\yak1s69_skin_05.dds: [0, 0, 0, 4]
+      yak1s69\yak1s69_skin_06.dds: [1, 1, 1, 0]
+      yak1s69\yak1s69_skin_07.dds: [0, 0, 0, 1]
+      yak1s69\yak1s69_skin_08.dds: [0, 0, 0, 1]
+      yak1s69\yak1s69_skin_10.dds: [1, 1, 1, 0]
+
+# Yak-1 ser.96
+yak1s96: yak1s69
+
+# Yak-1b ser.127
+yak1s127:
+  name: Yak-1b ser.127
+  parent: yak1
+  model: graphics\planes\yak1s127\yak1s127.mgm
+  script: luascripts\worldobjects\planes\yak1s127.txt
+  speed: 420
+  range: 670
+  skins:
+    101:
+      '': [-11, -10, -11, 1]
+      yak1s127\yak1s127_skin_01.dds: [0, 0, 0, -16]
+      yak1s127\yak1s127_skin_02.dds: [3, 3, 3, 0]
+      yak1s127\yak1s127_skin_04.dds: [1, 1, 1, 0]
+      yak1s127\yak1s127_skin_05.dds: [0, 0, 0, 3]
+      yak1s127\yak1s127_skin_06.dds: [1, 1, 1, 0]
+      yak1s127\yak1s127_skin_07.dds: [1, 1, 1, 0]
+      yak1s127\yak1s127_skin_08.dds: [1, 1, 1, 0]
+      yak1s127\yak1s127_skin_09.dds: [1, 1, 1, 0]
+      yak1s127\yak1s127_skin_10.dds: [1, 1, 1, 0]
+      yak1s127\yak1s127_skin_11.dds: [1, 1, 1, 0]
+      yak1s127\yak1s127_skin_12.dds: [1, 0, 1, 0]

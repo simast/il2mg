@@ -1,0 +1,83 @@
+# Il-2
+il2:
+  manufacturer: Ilyushin
+  name: Il-2
+  alias: Sturmovik
+  type: [ground_attack]
+  size: medium
+  altitude:
+    low: 3 # 75% (low altitude preference)
+    medium: 1 # 25%
+  static:
+    - static_il2
+    - static_il2_net
+
+# Il-2 mod.1941
+il2m41:
+  name: Il-2 mod.1941
+  parent: il2
+  model: graphics\planes\il2m41\il2m41.mgm
+  script: luascripts\worldobjects\planes\il2m41.txt
+  speed: 355
+  range: 590
+  skins:
+    101:
+      '': [-8, -8, -8, 1]
+      il2m41\il2m41_skin_01.dds: [0, 0, 0, -16]
+      il2m41\il2m41_skin_02.dds: [1, 1, 1, 0]
+      il2m41\il2m41_skin_03.dds: [1, 1, 1, 0]
+      il2m41\il2m41_skin_04.dds: [1, 1, 1, 0]
+      il2m41\il2m41_skin_05.dds: [0, 0, 0, 3]
+      il2m41\il2m41_skin_06.dds: [1, 1, 1, 0]
+      il2m41\il2m41_skin_07.dds: [1, 1, 1, 0]
+      il2m41\il2m41_skin_08.dds: [1, 1, 1, 0]
+      il2m41\il2m41_skin_09.dds: [1, 1, 1, 0]
+      il2m41\il2m41_skin_10.dds: [1, 1, 1, 0]
+
+# Il-2 mod.1942
+il2m42:
+  name: Il-2 mod.1942
+  parent: il2
+  model: graphics\planes\il2m42\il2m42.mgm
+  script: luascripts\worldobjects\planes\il2m42.txt
+  speed: 330
+  range: 620
+  skins:
+    101:
+      '': [-3, -3, -3, 1]
+      il2m42\il2m42_skin_01.dds: [0, 0, 0, -8]
+      il2m42\il2m42_skin_02.dds: [1, 1, 1, 0]
+      il2m42\il2m42_skin_03.dds: [0, 0, 0, 2]
+      il2m42\il2m42_skin_04.dds: [1, 1, 1, 0]
+      il2m42\il2m42_skin_05.dds: [0, 0, 0, 4]
+      il2m42\il2m42_skin_06.dds: [1, 1, 1, 0]
+      il2m42\il2m42_skin_07.dds: [0, 0, 0, 1]
+      il2m42\il2m42_skin_08.dds: [0, 0, 0, 2]
+      il2m42\il2m42_skin_09.dds: [0, 0, 0, 1]
+      il2m42\il2m42_skin_10.dds: [0, 0, 0, 1]
+
+# Il-2 mod.1943
+il2m43:
+  name: Il-2 mod.1943
+  parent: il2
+  model: graphics\planes\il2m43\il2m43.mgm
+  script: luascripts\worldobjects\planes\il2m43.txt
+  speed: 325
+  range: 610
+  skins:
+    101:
+      '': [-17, 17, -14, 1]
+      il2m43\il2m43_skin_01.dds: [0, 0, 0, -16]
+      il2m43\il2m43_skin_02.dds: [5, -5, 2, 1]
+      il2m43\il2m43_skin_03.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_04.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_05.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_06.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_07.dds: [1, 1, 1, 1]
+      il2m43\il2m43_skin_08.dds: [1, 1, 1, 1]
+      il2m43\il2m43_skin_09.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_10.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_11.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_12.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_13.dds: [1, 1, 1, 0]
+      il2m43\il2m43_skin_14.dds: [1, 1, 1, 0]

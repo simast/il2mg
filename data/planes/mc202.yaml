@@ -1,0 +1,21 @@
+# MC.202
+mc202:
+  manufacturer: Macchi
+  name: MC.202
+  alias: Folgore
+  type: [fighter, fighter_light]
+  size: small
+  # NOTE: Static MC.202 models are not available, using Bf 109 as a workaround
+  static:
+    - static_bf109
+    - static_bf109_open
+    - static_bf109_net
+
+# MC.202 ser.VIII
+mc202s8:
+  name: MC.202 ser.VIII
+  parent: mc202
+  model: graphics\planes\mc202s8\mc202s8.mgm
+  script: luascripts\worldobjects\planes\mc202s8.txt
+  speed: 415
+  range: 720

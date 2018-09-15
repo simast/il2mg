@@ -405,7 +405,7 @@ first:
 
 last:
   - 0:
-    - ""
+    - ''
     3:
     - von
     total: 100

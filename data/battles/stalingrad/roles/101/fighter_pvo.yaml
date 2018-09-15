@@ -1,0 +1,5 @@
+# Fighter air defence (IAP PVO) role
+sweep: 1
+patrol: 2
+cover: 1
+free: 1

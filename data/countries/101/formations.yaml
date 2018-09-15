@@ -12,13 +12,13 @@ fighter_1x1:
 fighter_2:
   parent: fighter
   name: Para
-  from: "1942-08-15"
+  from: '1942-08-15'
   elements: [2]
 
 # Fighter (3 planes)
 fighter_3:
   parent: fighter
-  to: "1942-09-30"
+  to: '1942-09-30'
   elements: [3]
 
 # Fighter (4 planes)
@@ -32,14 +32,14 @@ fighter_4:
 # German schwarm formations did (due to lack of radio transmitters for example).
 fighter_4x:
   parent: fighter_4
-  from: "1942-08-15"
-  to: "1942-11-15"
+  from: '1942-08-15'
+  to: '1942-11-15'
   elements: [4]
 
 # Fighter (4 planes with 2 elements)
 fighter_2x2:
   parent: fighter_4
-  from: "1942-10-01"
+  from: '1942-10-01'
   elements: [fighter_2, fighter_2] # Finger-four
 
 # Bomber

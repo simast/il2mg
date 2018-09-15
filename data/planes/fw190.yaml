@@ -1,0 +1,55 @@
+# Fw 190
+fw190:
+  manufacturer: Focke-Wulf
+  name: Fw 190
+  alias: Würger
+  type: [fighter, fighter_light]
+  size: small
+
+# Fw 190 A
+fw190a:
+  name: Fw 190 A
+  parent: fw190
+
+# Fw 190 A-3
+fw190a3:
+  name: Fw 190 A-3
+  parent: fw190a
+  model: graphics\planes\fw190a3\fw190a3.mgm
+  script: luascripts\worldobjects\planes\fw190a3.txt
+  speed: 435
+  range: 970
+  skins:
+    201:
+      '': [-6, -6, -6, 1]
+      fw190a3\fw190a3_skin_01.dds: [0, 0, 0, -11]
+      fw190a3\fw190a3_skin_02.dds: [1, 1, 1, 0]
+      fw190a3\fw190a3_skin_04.dds: [0, 0, 0, 2]
+      fw190a3\fw190a3_skin_05.dds: [1, 1, 1, 0]
+      fw190a3\fw190a3_skin_06.dds: [0, 0, 0, 2]
+      fw190a3\fw190a3_skin_07.dds: [1, 1, 1, 0]
+      fw190a3\fw190a3_skin_08.dds: [0, 0, 0, 2]
+      fw190a3\fw190a3_skin_09.dds: [0, 0, 0, 2]
+      fw190a3\fw190a3_skin_12.dds: [1, 1, 1, 0]
+      fw190a3\fw190a3_skin_13.dds: [1, 1, 1, 0]
+
+# Fw 190 A-5
+fw190a5:
+  name: Fw 190 A-5
+  parent: fw190a
+  model: graphics\planes\fw190a5\fw190a5.mgm
+  script: luascripts\worldobjects\planes\fw190a5.txt
+  speed: 435
+  range: 1000
+  skins:
+    201:
+      '': [-7, -7, -7, 1]
+      fw190a5\fw190a5_skin_01.dds: [0, 0, 0, -15]
+      fw190a5\fw190a5_skin_02.dds: [1, 1, 1, 0]
+      fw190a5\fw190a5_skin_04.dds: [1, 1, 1, 0]
+      fw190a5\fw190a5_skin_05.dds: [0, 0, 0, 3]
+      fw190a5\fw190a5_skin_06.dds: [1, 1, 1, 0]
+      fw190a5\fw190a5_skin_07.dds: [1, 1, 1, 0]
+      fw190a5\fw190a5_skin_08.dds: [1, 1, 1, 1]
+      fw190a5\fw190a5_skin_09.dds: [1, 1, 1, 0]
+      fw190a5\fw190a5_skin_10.dds: [1, 1, 1, 0]

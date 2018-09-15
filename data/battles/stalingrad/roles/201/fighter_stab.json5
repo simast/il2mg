@@ -1,6 +1,0 @@
-// Fighter (jagdflieger) role for Stab units
-{
-	sweep: 3,
-	patrol: 2,
-	cover: 1
-}
