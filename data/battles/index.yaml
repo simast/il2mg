@@ -1,0 +1,6 @@
+# Battle of Stalingrad
+stalingrad:
+  name: Battle of Stalingrad
+  from: "1942-07-17"
+  to: "1943-02-02"
+  countries: [101, 201, 202]
