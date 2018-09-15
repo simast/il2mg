@@ -47,17 +47,18 @@
 		range: 950,
 		skins: {
 			"101": {
-				"": [-5, -4, -5, 1],
+				"": [-6, -4, -6, 1],
 				"pe2s87\\pe2s87_skin_01.dds": [0, 0, 0, -11],
-				"pe2s87\\pe2s87_skin_02.dds": [0, 1, 0, 0],
-				"pe2s87\\pe2s87_skin_03.dds": [1, 1, 1, 1],
-				"pe2s87\\pe2s87_skin_04.dds": [0, 0, 0, 4],
-				"pe2s87\\pe2s87_skin_05.dds": [1, 0, 1, 1],
-				"pe2s87\\pe2s87_skin_06.dds": [1, 0, 1, 0],
-				"pe2s87\\pe2s87_skin_07.dds": [0, 0, 0, 1],
+				"pe2s87\\pe2s87_skin_02.dds": [1, 1, 1, 0],
+				"pe2s87\\pe2s87_skin_03.dds": [0, 1, 0, 0],
+				"pe2s87\\pe2s87_skin_04.dds": [1, 1, 1, 1],
+				"pe2s87\\pe2s87_skin_05.dds": [0, 0, 0, 4],
+				"pe2s87\\pe2s87_skin_06.dds": [1, 0, 1, 1],
+				"pe2s87\\pe2s87_skin_07.dds": [1, 0, 1, 0],
 				"pe2s87\\pe2s87_skin_08.dds": [0, 0, 0, 1],
-				"pe2s87\\pe2s87_skin_09.dds": [1, 1, 1, 0],
-				"pe2s87\\pe2s87_skin_10.dds": [1, 0, 1, 0]
+				"pe2s87\\pe2s87_skin_09.dds": [0, 0, 0, 1],
+				"pe2s87\\pe2s87_skin_10.dds": [1, 1, 1, 0],
+				"pe2s87\\pe2s87_skin_11.dds": [1, 0, 1, 0]
 			}
 		}
 	}
