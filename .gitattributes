@@ -1,4 +1,3 @@
 * text=auto
 *.json eol=lf
-*.json5 eol=lf
 *.Group binary

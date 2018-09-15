@@ -1,5 +1,4 @@
 import path from "path"
-import JSON5 from "json5"
 import yaml from "js-yaml"
 import CleanCSS from "clean-css"
 import webpack from "webpack"
@@ -26,17 +25,14 @@ module.exports = function(grunt) {
 		// Build application data
 		const buildData = () => new Promise(resolve => {
 
-			// Process all application JSON/JSON5/YAML data files
-			grunt.file.expand("data/**/*.@(json|json5|yaml)").forEach(file => {
+			// Process all application JSON/YAML data files
+			grunt.file.expand("data/**/*.@(json|yaml)").forEach(file => {
 
 				let parseDataFile = JSON.parse
 
-				// NOTE: All JSON5/YAML files are converted to JSON in production build
+				// NOTE: All YAML files are converted to JSON in production build
 				if (path.extname(file) === ".yaml") {
 					parseDataFile = yaml.safeLoad
-				}
-				else if (path.extname(file) === ".json5") {
-					parseDataFile = JSON5.parse
 				}
 
 				// Rename file path to always use .json extension
