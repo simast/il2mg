@@ -1,0 +1,19 @@
+# 512 IAP
+512iap:
+  name: 512 IAP
+  role: fighter
+
+  airfields:
+    # 220 IAD
+    - [davydovka, 1942-08-06, 1942-12-01] # Proleyskoe/Semyonovka
+    - [kachalinskaya, 1942-12-01, end] # Kotluban
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [yak1s69, [7, 6], 1942-08-06, 1942-09-21]
+    - [yak7b, [7, 5], 1942-08-06, 1942-09-21]
+    - [yak1s69, [6, 11], 1942-09-22, 1942-12-01]
+    - [yak7b, [5, 6], 1942-09-22, 1942-12-01]
+    # TOE 015/284 (32 aircraft)
+    - [yak1s96, [11, 15], 1942-12-02, end]
+    - [yak7b, [6, 8], 1942-12-02, end]

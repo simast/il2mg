@@ -1,0 +1,14 @@
+# 254 IAP
+254iap:
+  name: 254 IAP
+  role: fighter
+
+  airfields:
+    # 269 IAD
+    - [kalach, start, 1942-07-24]
+    - [bol_rossoshka, 1942-07-24, 1942-08-20]
+    - [zhitkur, 1942-08-20, 1942-08-20, 0]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [lagg3s29, [13, 6], start, 1942-08-20]

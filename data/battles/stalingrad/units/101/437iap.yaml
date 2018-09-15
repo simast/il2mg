@@ -1,0 +1,46 @@
+437iap:
+  role: fighter
+
+# 437 IAP
+437iap_1:
+  name: 437 IAP
+  parent: 437iap
+
+  airfields:
+    # 287 IAD
+    - [verh_ahtuba, 1942-08-19, 1942-09-07]
+    - [srednyaya_ahtuba, 1942-09-07, 1942-10-24]
+    - [zhitkur, 1942-10-24, 1942-11-11, 0]
+    # 201 IAD
+    - [smutnev, 1942-11-11, 1942-12-02]
+    - [abganerovo, 1942-12-02, 1943-01-13]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [la5s8, [18, 8], 1942-08-19, 1942-09-10]
+    - [la5s8, [8, 11], 1942-09-11, 1942-10-24]
+    # TOE 015/284 (32 aircraft)
+    - [la5s8, [26, 13], 1942-11-11, 1943-01-13]
+    # ... transferred remaining aircraft to 13 IAP?
+
+# Attached all-woman flight from 586 IAP PVO
+437iap_2:
+  name: 437 IAP
+  parent: 437iap
+
+  airfields:
+    # 287 IAD
+    - [kamyshin, 1942-09-09, 1942-09-09, 0]
+    - [srednyaya_ahtuba, 1942-09-09, 1942-10-24]
+    - [zhitkur, 1942-10-24, 1942-10-24, 0]
+
+  planes:
+    # A single flight (4 aircraft)
+    - [yak1s69, 4, 1942-09-09, 1942-09-09]
+    - [yak1s69, [4, 2], 1942-09-10, 1942-10-24]
+
+  pilots:
+    - [Yekaterina Budanova, 9]
+    - [Liliya Litvyak, -4]
+    - [Raisa Belyayeva, 8]
+    - [Mariya Kuznetsova, 7]

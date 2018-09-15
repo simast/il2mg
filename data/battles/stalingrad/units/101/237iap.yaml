@@ -1,0 +1,16 @@
+# 237 IAP
+237iap:
+  name: 237 IAP
+  role: fighter
+
+  airfields:
+    # 220 IAD
+    - [davydovka, 1942-08-28, 1942-12-01] # Semyonovka
+    - [kachalinskaya, 1942-12-01, end]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [yak1s69, [18, 9], 1942-08-28, 1942-09-16]
+    - [yak1s69, [9, 15], 1942-09-17, 1942-11-25]
+    # TOE 015/284 (32 aircraft)
+    - [yak1s69, [15, 23], 1942-11-26, end]

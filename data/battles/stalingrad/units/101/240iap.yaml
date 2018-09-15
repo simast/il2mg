@@ -1,0 +1,14 @@
+# 240 IAP
+240iap:
+  name: 240 IAP
+  role: fighter
+
+  airfields:
+    # 287 IAD
+    - [verh_ahtuba, 1942-08-19, 1942-08-27]
+    - [srednyaya_ahtuba, 1942-08-27, 1942-09-09]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [la5s8, [19, 11], 1942-08-19, 1942-09-09]
+    # ... transferred remaining aircraft to 15 IAP

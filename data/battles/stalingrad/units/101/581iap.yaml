@@ -1,0 +1,16 @@
+# 581 IAP
+581iap:
+  name: 581 IAP
+  role: fighter
+
+  airfields:
+    # 220 IAD
+    - [davydovka, 1942-09-02, 1942-12-01] # Semyonovka
+    - [kachalinskaya, 1942-12-01, end]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [yak1s69, [16, 8], 1942-09-02, 1942-09-11]
+    - [yak1s69, [8, 15], 1942-09-12, 1942-12-01]
+    # TOE 015/284 (32 aircraft)
+    - [yak1s69, [16, 22], 1942-12-02, end]

@@ -336,8 +336,8 @@ export default new Data()
  * Match a valid date range (from data files with special date from/to values).
  *
  * @param {object} match Match data (battle from/to and target match date).
- * @param {string} dateFrom From date range value.
- * @param {string} dateTo To date range value.
+ * @param {string|Date} dateFrom From date range value.
+ * @param {string|Date} dateTo To date range value.
  * @returns {object|boolean} Matched from/to range or boolean false on failure.
  */
 export function matchDateRange(match, dateFrom, dateTo) {
@@ -364,7 +364,7 @@ export function matchDateRange(match, dateFrom, dateTo) {
 	// Parse each from/to date string
 	for (const type in range) {
 
-		const date = range[type]
+		let date = range[type]
 
 		// Special "start" value means the start (min) date of the match
 		if (date === "start") {
@@ -376,6 +376,11 @@ export function matchDateRange(match, dateFrom, dateTo) {
 		}
 		// Other date format
 		else {
+
+			// Handle range as Date object (from YAML built-in date type support)
+			if (date instanceof Date) {
+				date = moment(date).format("YYYY-MM-DD")
+			}
 
 			const dateParts = date.split("-")
 			const momentDate = moment()

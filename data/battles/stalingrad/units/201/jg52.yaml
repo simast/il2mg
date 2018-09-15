@@ -1,0 +1,103 @@
+# Jagdgeschwader 52
+jg52:
+  role: fighter
+
+# I./JG 52
+jg52_i:
+  parent: jg52
+
+  airfields:
+    - [pitomnik, 1942-09-22, 1942-11-05]
+
+  planes:
+    - [bf109g2, [26, 25], 1942-09-22, 1942-09-end]
+    - [bf109g2, [25, 24], 1942-10]
+    - [bf109g2, [24, 18], 1942-11]
+
+jg52_i_stab:
+  name: Stab I./JG 52
+  parent: jg52_i
+  role: fighter_stab
+  planesMin: 3
+  planesMax: 5
+
+jg52_1:
+  name: 1./JG 52
+  parent: jg52_i
+
+jg52_2:
+  name: 2./JG 52
+  parent: jg52_i
+
+jg52_3:
+  name: 3./JG 52
+  parent: jg52_i
+
+# II./JG 52
+jg52_ii:
+  parent: jg52
+
+  airfields:
+    - [tuzov, 1942-08-20, 1942-09-01]
+    # ... went to Crimea/Kerch then Caucasus
+    - [morozovskiy_south, 1942-11-26, 1942-12-12]
+    - [zimovniki, 1942-12-12, 1942-12-17, 0.25]
+    - [kotelnikovsky, 1942-12-17, 1942-12-26]
+    - [zimovniki, 1942-12-26, 1942-12-30, 0.25]
+
+  planes:
+    - [bf109g2, [47, 35], 1942-08-20, 1942-09-01]
+    - [bf109g2, [43, 42], 1942-11-20, 1942-11-end]
+    - [bf109g2, [43, 27], 1942-12-01, 1942-12-20]
+    - [bf109g2, [27, 26], 1942-12-21, 1942-12-30]
+
+jg52_ii_stab:
+  name: Stab II./JG 52
+  parent: jg52_ii
+  role: fighter_stab
+  planesMin: 3
+  planesMax: 5
+
+jg52_4:
+  name: 4./JG 52
+  parent: jg52_ii
+
+jg52_5:
+  name: 5./JG 52
+  parent: jg52_ii
+
+jg52_6:
+  name: 6./JG 52
+  parent: jg52_ii
+
+# Mixed III./JG 52 detachment sent to Stalingrad area
+jg52_iii:
+  name: III./JG 52
+  alias: Stalingrad
+  role: jg52_iii
+  parent: jg52
+
+  airfields:
+    - [tuzov, 1942-08-21, 1942-09-10]
+    - [pitomnik, 1942-09-10, 1942-09-26]
+
+  # Each staffel detached one swarm (around 12 planes total)
+  planes:
+    - [bf109g2, [12, 8], 1942-08-21, 1942-09-26]
+
+  pilots:
+    - [Otto Decker, -13, start, 1942-08-27]
+    - [Hermann Graf, -13, start, 1942-09-15]
+    - [Hermann Graf, -14, 1942-09-16, end]
+    - [Heinrich Füllgrabe, -9]
+    - [Johann Kalb, -5, start, 1942-09-16]
+    - [Hermann Wolf, 5]
+    - [Werner Höhenberg, 5]
+    - [Ernst Süss, -9]
+    - [Josef Zwernemann, 9]
+    - [Hans Dammers, -7]
+    - [Karl-Heinz Meier, 5, start, 1942-09-15]
+    - [Hans Funcke, 12]
+    - [Heinz Ermisch, 5]
+    - [Karl Schumacher, 5]
+    - [Manfred Lotzmann, 5]

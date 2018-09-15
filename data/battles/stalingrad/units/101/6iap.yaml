@@ -1,0 +1,17 @@
+# 6 IAP
+6iap:
+  name: 6 IAP
+  role: fighter
+
+  airfields:
+    # 269 IAD
+    - [illarionovsky, start, 1942-07-22]
+    - [kachalinskaya, 1942-07-22, 1942-08-05]
+    - [bol_rossoshka, 1942-08-05, 1942-08-20]
+    - [srednyaya_ahtuba, 1942-08-20, 1942-08-24]
+    - [zhitkur, 1942-08-24, 1942-08-24, 0]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [yak1s69, [13, 6], start, 1942-08-20]
+    - [yak1s69, [10, 7], 1942-08-21, 1942-08-24]

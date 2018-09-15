@@ -1,0 +1,110 @@
+# Sturzkampfgeschwader 77
+stg77:
+  role: dive_bomber
+
+# Stab/StG 77
+stg77_stab:
+  name: Stab/StG 77
+  parent: stg77
+
+  airfields:
+    # ... arrived from Caucasus
+    - [millerovo, 1942-11-21, 1942-12-20, 0.25]
+    - [kotelnikovsky, 1942-12-20, 1942-12-26]
+    - [zimovniki, 1942-12-26, 1942-12-26, 0]
+
+  planes:
+    # 1942-11
+    - [ju87b2, [3, 2], 1942-11-21, 1942-11-end]
+    - [ju87r2, 1, 1942-11-21, 1942-11-end]
+    - [bf110e3, [3, 4], 1942-11-21, 1942-11-end]
+    - [bf110d3, [4, 3], 1942-11-21, 1942-11-end]
+    # 1942-12
+    - [ju87b2, 2, 1942-12-01, 1942-12-26]
+    - [ju87r2, 1, 1942-12-01, 1942-12-26]
+    - [bf110e3, [4, 1], 1942-12-01, 1942-12-26]
+    - [bf110d3, [3, 1], 1942-12-01, 1942-12-26]
+
+# I./StG 77
+stg77_i:
+  parent: stg77
+
+  airfields:
+    - [taganrog, 1942-08-20, 1942-08-20, 0]
+    - [oblivskaya, 1942-08-20, 1942-10-12]
+    # ... rest and refit from 1942-08-26 (one staffel at a time)
+    - [karpovka, 1942-10-12, 1942-11-22]
+    - [oblivskaya, 1942-11-22, 1942-11-23]
+    - [millerovo, 1942-11-23, 1942-12-20, 0.25]
+    - [kotelnikovsky, 1942-12-20, 1942-12-26]
+    - [zimovniki, 1942-12-26, 1942-12-26, 0]
+
+  planes:
+    # To 1942-08-26
+    - [ju87d1, [21, 20], 1942-08-20, 1942-08-26]
+    - [ju87d3, [6, 5], 1942-08-20, 1942-08-26]
+    - [ju87r4, 2, 1942-08-20, 1942-08-26]
+    - [ju87r2, 1, 1942-08-20, 1942-08-26]
+    # To 1942-09-11
+    - [ju87d1, [9, 8], 1942-08-27, 1942-09-11]
+    - [ju87d3, [5, 4], 1942-08-27, 1942-09-11]
+    - [ju87r4, 2, 1942-08-27, 1942-09-11]
+    - [ju87r2, 1, 1942-08-27, 1942-09-11]
+    # To 1942-11-22
+    - [ju87d1, [6, 3], 1942-09-12, 1942-11-22]
+    - [ju87d3, 4, 1942-09-12, 1942-11-22]
+    # To 1942-12-26
+    - [ju87d1, [3, 5], 1942-11-23, 1942-12-26]
+    - [ju87d3, [4, 5], 1942-11-23, 1942-12-26]
+
+stg77_i_stab:
+  name: Stab I./StG 77
+  parent: stg77_i
+  planesMin: 3
+  planesMax: 5
+  to: 1942-08-26 # Rest and refit?
+
+stg77_1:
+  name: 1./StG 77
+  parent: stg77_i
+  to: 1942-08-26 # Rest and refit?
+
+stg77_2:
+  name: 2./StG 77
+  parent: stg77_i
+  to: 1942-09-11 # Rest and refit?
+
+stg77_3:
+  name: 3./StG 77
+  parent: stg77_i
+
+# II./StG 77
+stg77_ii:
+  parent: stg77
+
+  airfields:
+    - [zimovniki, 1942-12-09, 1942-12-17, 0.75]
+    - [kotelnikovsky, 1942-12-17, 1942-12-26]
+    - [zimovniki, 1942-12-26, 1942-12-26, 0]
+
+  planes:
+    - [ju87d1, [8, 7], 1942-12-09, 1942-12-26]
+    - [ju87d3, [17, 16], 1942-12-09, 1942-12-26]
+
+stg77_ii_stab:
+  name: Stab II./StG 77
+  parent: stg77_ii
+  planesMin: 3
+  planesMax: 4
+
+stg77_4:
+  name: 4./StG 77
+  parent: stg77_ii
+
+stg77_5:
+  name: 5./StG 77
+  parent: stg77_ii
+
+stg77_6:
+  name: 6./StG 77
+  parent: stg77_ii

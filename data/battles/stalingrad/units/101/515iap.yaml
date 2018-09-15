@@ -1,0 +1,17 @@
+# 515 IAP
+515iap:
+  name: 515 IAP
+  role: fighter
+
+  airfields:
+    # 206 IAD/ShAD
+    - [aksay, start, 1942-08-02]
+    - [shkolniy, 1942-08-02, 1942-08-27]
+    - [leninsk, 1942-08-27, 1942-09-07]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [yak1s69, [19, 8], start, 1942-09-07]
+
+  pilots:
+    - [Stepan V. Baranov, 11]

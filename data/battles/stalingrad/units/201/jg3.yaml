@@ -1,0 +1,293 @@
+# Jagdgeschwader 3 "Udet"
+jg3:
+  alias: Udet
+  role: fighter
+
+# Stab/JG 3
+jg3_stab:
+  name: Stab/JG 3
+  parent: jg3
+  role: fighter_stab
+
+  airfields:
+    - [millerovo, start, 1942-07-22]
+    - [tatsinskaya, 1942-07-22, 1942-07-28] # Nowy-Cholan ("a field near Tazinskaya")
+    - [frolov, 1942-07-28, 1942-08-10]
+    - [tuzov, 1942-08-10, 1942-09-13]
+    - [pitomnik, 1942-09-13, 1942-11-20]
+    - [morozovskiy_west, 1942-11-20, 1942-12-23]
+    - [morozovskiy_south, 1942-12-23, 1943-01-02]
+    - [tatsinskaya, 1943-01-02, 1943-01-08]
+    - [shakhty, 1943-01-08, 1943-01-25, 0.5]
+
+  planes:
+    # 1942-07
+    - [bf109f4, [6, 3], 1942-07-01, 1942-07-20]
+    - [bf109f4, [3, 5], 1942-07-21, 1942-07-end]
+    # 1942-08
+    - [bf109f4, [5, 4], 1942-08-01, 1942-08-20]
+    - [bf109f4, 4, 1942-08-21, 1942-08-end]
+    # 1942-09
+    - [bf109f4, [4, 3], 1942-09-01, 1942-09-25]
+    - [bf109g2, [7, 5], 1942-09-26, 1942-09-end]
+    # 1942-10
+    - [bf109g2, [5, 6], 1942-10]
+    # 1942-11
+    - [bf109g2, [6, 7], 1942-11-01, 1942-11-20]
+    - [bf109g2, 7, 1942-11-21, 1942-11-end]
+    # 1942-12
+    - [bf109g2, [7, 3], 1942-12-01, 1942-12-16]
+    - [bf109g4, 3, 1942-12-17, 1942-12-end]
+    # 1943-01
+    - [bf109g4, 3, 1943-01]
+
+  pilots:
+    - [Günther Lützow, -16, start, 1942-08-11]
+    - [Wolf-Dietrich Wilcke, -14, start, 1942-12-22]
+    - [Wolf-Dietrich Wilcke, -15, 1942-12-23, end]
+    - [Walther Dahl, 13]
+    - [Rudolf Germeroth, 14, 1942-09-15, 1942-11-28]
+
+# I./JG 3
+jg3_i:
+  parent: jg3
+
+  airfields:
+    - [millerovo, start, 1942-07-18]
+    - [morozovskiy_south, 1942-07-18, 1942-07-27]
+    - [frolov, 1942-07-27, 1942-08-10]
+    - [tuzov, 1942-08-10, 1942-09-07]
+    - [novocherkassk, 1942-09-07, 1942-09-25, 0] # Rest and refit
+    # ... received all Bf 109 G-2 planes from I./JG 53
+    - [pitomnik, 1942-09-25, 1942-11-28]
+    - [morozovskiy_west, 1942-11-28, 1942-12-23]
+    - [morozovskiy_south, 1942-12-23, 1943-01-02]
+    - [tatsinskaya, 1943-01-02, 1943-01-06]
+    - [shakhty, 1943-01-06, 1943-01-20, 0.5]
+
+  planes:
+    # 1942-07
+    - [bf109f4, [20, 24], 1942-07-01, 1942-07-20]
+    - [bf109f4, [24, 32], 1942-07-21, 1942-07-end]
+    # 1942-08
+    - [bf109f4, [32, 31], 1942-08]
+    # 1942-09
+    - [bf109f4, [31, 26], 1942-09-01, 1942-09-07]
+    - [bf109g2, [37, 36], 1942-09-26, 1942-09-end]
+    # 1942-10
+    - [bf109g2, [36, 33], 1942-10]
+    # 1942-11
+    - [bf109g2, [33, 39], 1942-11-01, 1942-11-20]
+    - [bf109g2, [39, 36], 1942-11-21, 1942-11-end]
+    # 1942-12
+    - [bf109g2, [36, 27], 1942-12-01, 1942-12-20]
+    - [bf109g2, [27, 21], 1942-12-21, 1942-12-end]
+    # 1943-01
+    - [bf109g2, [21, 15], 1943-01-01, 1943-01-20]
+
+jg3_i_stab:
+  name: Stab I./JG 3
+  parent: jg3_i
+  role: fighter_stab
+  planesMin: 3
+  planesMax: 5
+
+  pilots:
+    - [Klaus Quaet-Faslem, 14, 1942-08-20, end]
+    - [Nikolaus Pfützer, 13, start, 1942-09-06]
+
+jg3_1:
+  name: 1./JG 3
+  parent: jg3_i
+
+  pilots:
+    - [Alfred Riha, 12, start, 1942-07-28]
+    - [Heinz Schlegel, 5, start, 1942-08-20]
+    - [Jakob Götz, 5, start, 1942-08-28]
+    - [Wolfgang Wahl, 5, start, 1942-10-01]
+    - [Werner Teegler, 8, start, 1942-11-04]
+    - [Peter Wünsch, 5, start, 1943-01-11]
+    - [Helmut Rüffler, -7, start, 1942-12-23]
+
+jg3_2:
+  name: 2./JG 3
+  parent: jg3_i
+
+  pilots:
+    - [Erwin Straznicky, 13, start, 1942-10-03]
+
+jg3_3:
+  name: 3./JG 3
+  parent: jg3_i
+
+  pilots:
+    - [Heinz Obst, 5, start, 1943-01-03]
+    - [Ludwig Häfner, -12, 1942-10-01, 1942-11-10]
+
+# II./JG 3
+jg3_ii:
+  parent: jg3
+
+  airfields:
+    - [millerovo, start, 1942-07-21]
+    - [tatsinskaya, 1942-07-21, 1942-07-27] # Nowy-Cholan ("a field near Tazinskaya")
+    - [frolov, 1942-07-27, 1942-08-10]
+    - [tuzov, 1942-08-10, 1942-08-23]
+    # ... left for Germany, re-equipped with Bf 109 G-2 and then went up north
+    # near Leningrad, then to Smolensk, then returned to Stalingrad.
+    - [morozovskiy_west, 1942-12-12, 1942-12-23]
+    - [morozovskiy_south, 1942-12-23, 1943-01-02]
+    - [tatsinskaya, 1943-01-02, 1943-01-05]
+    - [shakhty, 1943-01-05, 1943-01-22, 0.5]
+
+  planes:
+    # 1942-07
+    - [bf109f4, [25, 22], 1942-07-01, 1942-07-20]
+    - [bf109f4, [22, 30], 1942-07-21, 1942-07-end]
+    # To 1942-08-23
+    - [bf109f4, [30, 23], 1942-08-01, 1942-08-23]
+    # ... transferred remainimg aircraft to III./JG 3?
+    # 1942-12
+    - [bf109g2, [35, 30], 1942-12-01, 1942-12-20]
+    - [bf109g2, [30, 17], 1942-12-21, 1942-12-end]
+    # To 1943-01-22
+    - [bf109g2, [17, 12], 1943-01-01, 1943-01-22]
+
+jg3_ii_stab:
+  name: Stab II./JG 3
+  parent: jg3_ii
+  role: fighter_stab
+  planesMin: 3
+  planesMax: 5
+
+jg3_4:
+  name: 4./JG 3
+  parent: jg3_ii
+
+  pilots:
+    - [Fritz Köhler, 5, start, 1942-12-31]
+
+jg3_5:
+  name: 5./JG 3
+  parent: jg3_ii
+
+jg3_6:
+  name: 6./JG 3
+  parent: jg3_ii
+
+  pilots:
+    - [Wolfgang Vogel, 5, start, 1942-08-01]
+    - [Ludwig Häfner, -12, start, 1942-09-31]
+
+# III./JG 3
+jg3_iii:
+  parent: jg3
+
+  airfields:
+    - [millerovo, start, 1942-07-20]
+    - [tatsinskaya, 1942-07-20, 1942-07-27] # Nowy-Cholan ("a field near Tazinskaya")
+    - [frolov, 1942-07-27, 1942-08-10]
+    - [tuzov, 1942-08-10, 1942-09-10]
+    - [pitomnik, 1942-09-10, 1942-11-22]
+    - [oblivskaya, 1942-11-22, 1942-11-27]
+    - [morozovskiy_west, 1942-11-27, 1942-12-23]
+    - [morozovskiy_south, 1942-12-23, 1943-01-02]
+    - [tatsinskaya, 1943-01-02, 1943-01-08]
+    - [shakhty, 1943-01-08, 1943-01-25, 0.5]
+
+  planes:
+    # 1942-07
+    - [bf109f4, [17, 25], 1942-07-01, 1942-07-20]
+    - [bf109f4, [25, 30], 1942-07-21, 1942-07-end]
+    # 1942-08
+    - [bf109f4, [30, 20], 1942-08-01, 1942-08-23]
+    # ... received remainimg aircraft from II./JG 3?
+    - [bf109f4, [33, 29], 1942-08-24, 1942-08-end]
+    # 1942-09
+    - [bf109f4, [29, 31], 1942-09-01, 1942-09-20]
+    - [bf109f4, [31, 29], 1942-09-21, 1942-09-end]
+    # 1942-10
+    - [bf109f4, [29, 28], 1942-10-01, 1942-10-20]
+    - [bf109f4, [28, 23], 1942-10-21, 1942-10-end]
+    # 1942-11
+    - [bf109f4, [23, 14], 1942-11]
+    - [bf109g2, [7, 11], 1942-11-23, 1942-11-end]
+    # 1942-12
+    - [bf109f4, [14, 8], 1942-12-01, 1942-12-17]
+    - [bf109g2, [11, 18], 1942-12-01, 1942-12-20]
+    - [bf109g2, [17, 18], 1942-12-21, 1942-12-end]
+    # To 1943-01-25
+    - [bf109g2, [18, 15], 1943-01-01, 1943-01-25]
+
+jg3_iii_stab:
+  name: Stab III./JG 3
+  parent: jg3_iii
+  role: fighter_stab
+  planesMin: 3
+  planesMax: 5
+
+  pilots:
+    - [Otto Betz, 7, start, 1942-08-02]
+
+# NOTE: 7./JG 3 was temporary disbanded between 1942-08 and 1943-02.
+jg3_8:
+  name: 8./JG 3
+  parent: jg3_iii
+  pilots:
+    - [Horst Krause, 5, start, 1942-08-26]
+    - [Fritz Junk, 5, start, 1942-08-28]
+    - [Gottfried Loos, 5, start, 1942-10-25]
+    - [Aldemar Matzdorf, 7, start, 1942-10-26]
+    - [Wilhelm Lemke, -12, start, 1942-08-11]
+
+jg3_9:
+  name: 9./JG 3
+  parent: jg3_iii
+  pilots:
+    - [Rolf Diergardt, 12, start, 1942-08-11]
+    - [Wilhelm Lemke, -12, 1942-08-12, end]
+    - [Klaus Starke, 13, start, 1942-08-17]
+    - [Kurt Brosche, 7, start, 1942-09-21]
+    - [Reinhard Weise, 5, start, 1942-10-29]
+    - [Werner Rose, 5, start, 1942-11-14]
+    - [Hermann Boll, 5, start, 1942-12-12]
+    - [Franz Thümer, 5, start, 1942-12-27]
+    - [Willy Giese, 5, start, 1942-12-31]
+    - [Walter Ohlrogge, 9, start, 1942-09-05]
+
+# Pitomnik airfield defence squadron for Stalingrad pocket
+jg3_pitomnik:
+  name: Platzschutzstaffel
+  alias: Pitomnik
+  role: jg3_pitomnik
+  parent: jg3
+
+  airfields:
+    - [pitomnik, 1942-11-29, 1943-01-16]
+    - [gumrak, 1943-01-16, 1943-01-16, 0]
+
+  planes:
+    # Formed with half-dozen volunteers from I./JG 3
+    - [bf109g2, [6, 8], 1942-11-29, 1942-12-11]
+    # On 1942-12-12 was reinforced with another half-dozen volunteers from II./JG 3
+    - [bf109g2, [13, 6], 1942-12-12, 1943-01-16]
+
+  pilots:
+    - [Rudolf Germeroth, 14]
+    - [Franz Beyer, 13, 1942-12]
+    - [Werner Lucas, -13, 1942-12-16, end]
+    - [Gustav Frielinghaus, -13, 1942-12-15, end]
+    - [Gustav Dilling, 7]
+    - [Franz Daspelgruber, -12]
+    - [Georg Pissarski, 5]
+    - [Hans Grünberg, 5, 1942-12-12, end]
+    - [Hans Frese, 7, 1942-12-12, end]
+    - [Rudolf Traphan, 7, 1942-12-12, end]
+    - [Georg Schentke, -12, start, 1942-12-25]
+    - [Kurt Ebener, -7, 1942-12-12, end]
+    - [Karl-Heinz Langer, 13, start, 1942-12-17]
+    - [Heinrich Blaut, 5, start, 1942-11-30]
+    - [Kurt Hofrath, -5, start, 1943-01-03]
+    - [Heinz Obst, 5, start, 1943-01-03]
+    - [Richard Eisele, 5, start, 1943-01-14]
+    - [Hans Reiff, -7, 1942-12-12, end]

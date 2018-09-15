@@ -1,0 +1,26 @@
+# 15 IAP
+15iap:
+  name: 15 IAP
+  role: fighter
+
+  airfields:
+    # 287 IAD
+    - [srednyaya_ahtuba, 1942-09-04, 1942-09-24]
+    - [zhitkur, 1942-09-24, 1942-10-02, 0]
+    - [klh_im_kaganovicha, 1942-10-02, 1942-10-23]
+    # 226 SAD
+    - [stolyarov, 1942-10-23, 1942-12-23]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    # 20 La-5 and several LaGG-3 on 1942-09-04
+    - [la5s8, [19, 13], 1942-09-04, 1942-09-08]
+    - [lagg3s29, [3, 2], 1942-09-04, 1942-09-08]
+    # ... received 12 La-5 from 240 IAP
+    - [la5s8, [24, 11], 1942-09-09, 1942-09-24]
+    - [lagg3s29, [2, 1], 1942-09-09, 1942-09-24]
+    # ... re-equipped with LaGG-3
+    - [lagg3s29, [16, 9], 1942-10-02, 1942-11-17]
+    # ... picked up 10 new aircraft
+    - [lagg3s29, [13, 8], 1942-11-18, 1942-12-23]
+    - [la5s8, [6, 5], 1942-11-18, 1942-12-23]

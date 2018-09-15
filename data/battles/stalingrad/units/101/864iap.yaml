@@ -1,0 +1,14 @@
+# 864 IAP
+864iap:
+  name: 864 IAP
+  role: fighter
+
+  airfields:
+    # 269 IAD
+    - [kalach, start, 1942-07-24]
+    - [bol_rossoshka, 1942-07-24, 1942-08-16]
+    - [zhitkur, 1942-08-16, 1942-08-16, 0]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [lagg3s29, [15, 5], start, 1942-08-16]

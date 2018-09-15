@@ -1,0 +1,19 @@
+# 273 IAP
+273iap:
+  name: 273 IAP # After 1942-11-21 known as 31 GIAP
+  role: fighter
+
+  airfields:
+    # 268 IAD
+    - [illarionovsky, start, 1942-07-22]
+    - [kachalinskaya, 1942-07-22, 1942-08-05]
+    - [shkolniy, 1942-08-05, 1942-08-27]
+    - [srednyaya_ahtuba, 1942-08-27, 1942-09-03]
+    - [solodovka, 1942-09-03, 1942-11-21]
+    # ... see 31 GIAP
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [yak1s69, [15, 10], start, 1942-08-13]
+    - [yak1s69, [10, 8], 1942-08-14, 1942-08-26]
+    - [yak1s69, [8, 12], 1942-08-27, 1942-11-21]

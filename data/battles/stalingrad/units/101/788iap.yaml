@@ -1,0 +1,22 @@
+# 788 IAP PVO
+788iap:
+  name: 788 IAP
+  suffix: PVO
+  role: fighter_pvo
+
+  airfields:
+    - [voroponovo, start, 1942-08-27]
+    - [verh_ahtuba, 1942-08-27, 1942-09-07]
+    - [zaplavnoe, 1942-09-07, 1942-10-16]
+    - [vladimirovka, 1942-10-16, end, 0.2]
+
+  planes:
+    # TOE 015/134 (32 aircraft)
+    - [yak1s69, [26, 13], start, 1942-09-04]
+    - [yak1s69, [23, 15], 1942-09-05, 1942-09-15]
+    - [yak1s69, [15, 9], 1942-09-16, 1942-10-16]
+    - [yak1s69, [9, 6], 1942-10-17, end]
+    - [yak7b, [4, 1], 1942-12-01, end]
+
+  pilots:
+    - [Ivan Sytov, -8, start, 1942-12-10]

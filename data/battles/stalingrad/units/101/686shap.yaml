@@ -1,0 +1,22 @@
+# 686 ShAP
+686shap:
+  name: 686 ShAP
+  role: ground_attack
+
+  airfields:
+    # 206 IAD/ShAD
+    - [kamyshin, 1942-08-06, 1942-08-06, 0]
+    - [gumrak, 1942-08-06, 1942-08-17]
+    - [srednyaya_ahtuba, 1942-08-17, 1942-08-22]
+    - [leninsk, 1942-08-22, 1942-11-03]
+    - [konstitutsiya, 1942-11-03, 1942-12-09] # Kapustin Yar
+    - [plodovitoye, 1942-12-09, 1943-01-23]
+    - [kotelnikovsky, 1943-01-23, end]
+
+  planes:
+    - [il2m42, [18, 12], 1942-08-06, 1942-08-17]
+    - [il2m42, [12, 9], 1942-08-18, 1942-10-02]
+    # ... received remaining aircraft of 503 ShAP?
+    - [il2m42, [19, 8], 1942-10-03, 1942-11-10]
+    - [il2m42, [8, 15], 1942-11-11, 1942-12-04]
+    - [il2m42, [15, 12], 1942-12-05, end]

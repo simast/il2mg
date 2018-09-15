@@ -1,0 +1,12 @@
+# 926 IAP PVO
+926iap:
+  name: 926 IAP
+  suffix: PVO
+  role: fighter_pvo
+
+  airfields:
+    - [beketovka, 1942-07-22, 1942-08-23]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [i153, [20, 8], 1942-07-22, 1942-08-23]

@@ -1,0 +1,22 @@
+# 807 ShAP
+807shap:
+  name: 807 ShAP
+  role: ground_attack
+
+  airfields:
+    # 206 IAD/ShAD
+    - [kamyshin, 1942-09-13, 1942-09-13, 0]
+    - [leninsk, 1942-09-13, 1942-11-03]
+    - [konstitutsiya, 1942-11-03, 1942-12-09] # Kapustin Yar
+    - [plodovitoye, 1942-12-09, 1943-01-23]
+    - [kotelnikovsky, 1943-01-23, end]
+
+  planes:
+    - [il2m42, [19, 11], 1942-09-13, 1942-09-30]
+    - [il2m42, [11, 18], 1942-10-01, 1942-11-10]
+    - [il2m42, [18, 9], 1942-11-11, 1942-12-27]
+    # ... received remaining aircraft of 811 ShAP?
+    - [il2m42, [17, 13], 1942-12-28, end]
+
+  pilots:
+    - [Stepan Lobanov, -10]

@@ -1,0 +1,15 @@
+# 11 IAP
+11iap:
+  name: 11 IAP
+  role: fighter
+
+  airfields:
+    - [zaplavnoe, 1942-08-28, 1942-11-03]
+    - [konstitutsiya, 1942-11-03, 1942-12-02] # Kapustin Yar
+    - [zety, 1942-12-02, 1942-12-25]
+
+  planes:
+    - [yak1s69, [17, 10], 1942-08-28, 1942-12-25]
+
+  pilots:
+    - [Viktor Bychkov, 8, start, 1942-10-27]

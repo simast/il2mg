@@ -1,0 +1,20 @@
+# 27 IAP
+27iap:
+  name: 27 IAP
+  role: fighter
+
+  airfields:
+    # 287 IAD
+    - [shkolniy, 1942-08-19, 1942-08-27]
+    - [verh_ahtuba, 1942-08-27, 1942-09-07]
+    - [srednyaya_ahtuba, 1942-09-07, 1942-12-24]
+
+  planes:
+    # TOE 015/174 (20 aircraft)
+    - [la5s8, [19, 10], 1942-08-19, 1942-09-07]
+    - [la5s8, [10, 15], 1942-09-08, 1942-11-10]
+    - [la5s8, [15, 8], 1942-11-11, 1942-12-24]
+    # ... transferred remaining 5 La-5 aircraft to other 287 IAD units
+
+  pilots:
+    - [Arkadiy Kovachevich, -9, start, 1942-09-15]

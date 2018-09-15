@@ -1,0 +1,13 @@
+# 629 IAP PVO
+629iap:
+  name: 629 IAP
+  suffix: PVO
+  role: fighter_pvo
+
+  airfields:
+    - [beketovka, start, 1942-08-27]
+    - [zaplavnoe, 1942-08-27, 1942-09-26]
+
+  planes:
+    - [i16, [21, 9], start, 1942-09-26]
+    - [i153, [6, 3], 1942-08-07, 1942-09-26]
