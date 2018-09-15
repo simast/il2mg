@@ -1,0 +1,380 @@
+# Trucks
+
+- name: Opel Blitz
+  type: [truck, truck_cargo]
+  countries: [201, 202]
+  model: graphics\vehicles\opel\opel-blitz.mgm
+  script: luascripts\worldobjects\vehicles\opel-blitz.txt
+  static: static_opel
+
+- name: ZiS-5
+  type: [truck, truck_cargo]
+  countries: [101]
+  model: graphics\vehicles\zis5\zis5.mgm
+  script: luascripts\worldobjects\vehicles\zis5.txt
+  static: static_zis
+
+- name: Ford G917T
+  type: [truck, truck_cargo]
+  countries: [201, 202]
+  model: graphics\vehicles\ford-g917\ford-g917.mgm
+  script: luascripts\worldobjects\vehicles\ford-g917.txt
+  static: static_ford-g917
+
+- name: GAZ-AA
+  type: [truck, truck_cargo]
+  countries: [101]
+  model: graphics\vehicles\gaz-aa\gaz-aa.mgm
+  script: luascripts\worldobjects\vehicles\gaz-aa.txt
+  static: static_gazaa
+
+- name: Opel Blitz (Fuel)
+  type: [truck, truck_fuel]
+  countries: [201, 202]
+  static: static_opel_fuel
+
+- name: ZiS-5 (Fuel)
+  type: [truck, truck_fuel]
+  countries: [101]
+  static: static_zis_fuel
+
+# Anti-aircraft (Flak)
+
+- name: 61-K
+  type: [aa, aa_flak, aa_flak_light]
+  countries: [101]
+  model: graphics\artillery\61k\61k.mgm
+  script: luascripts\worldobjects\vehicles\61k.txt
+
+- name: FlaK 38
+  type: [aa, aa_flak, aa_flak_light]
+  countries: [201, 202]
+  model: graphics\artillery\flak38\flak38.mgm
+  script: luascripts\worldobjects\vehicles\flak38.txt
+
+- name: 52-K
+  type: [aa, aa_flak, aa_flak_heavy]
+  countries: [101]
+  model: graphics\artillery\52k\52k.mgm
+  script: luascripts\worldobjects\vehicles\52k.txt
+
+- name: FlaK 37
+  type: [aa, aa_flak, aa_flak_heavy]
+  countries: [201, 202]
+  model: graphics\artillery\flak37\flak37.mgm
+  script: luascripts\worldobjects\vehicles\flak37.txt
+
+- name: 72-K
+  type: [aa, aa_flak, aa_flak_light]
+  countries: [101]
+  model: graphics\artillery\72k\72k.mgm
+  script: luascripts\worldobjects\vehicles\72k.txt
+
+- name: FlaK 36
+  type: [aa, aa_flak, aa_flak_light]
+  countries: [201, 202]
+  model: graphics\artillery\flak36\flak36.mgm
+  script: luascripts\worldobjects\vehicles\flak36.txt
+
+# Anti-aircraft (MG)
+
+- name: Quad Maxim AA
+  type: [aa, aa_mg]
+  countries: [101]
+  model: graphics\artillery\maksim4-aa\maksim4-aa.mgm
+  script: luascripts\worldobjects\vehicles\maksim4-aa.txt
+
+- name: MG 34 AA
+  type: [aa, aa_mg]
+  countries: [201, 202]
+  model: graphics\artillery\mg34-aa\mg34-aa.mgm
+  script: luascripts\worldobjects\vehicles\mg34-aa.txt
+
+# Anti-aircraft (Mobile)
+
+- name: GAZ-AA Quad Maxim AA
+  type: [aa, aa_mobile]
+  countries: [101]
+  model: graphics\artillery\gaz\gaz-aa-m4-aa.mgm
+  script: luascripts\worldobjects\vehicles\gaz-aa-m4-aa.txt
+
+- name: Sd.Kfz.10 FlaK 38
+  type: [aa, aa_mobile]
+  countries: [201]
+  model: graphics\artillery\sdkfz10-flak38\sdkfz10-flak38.mgm
+  script: luascripts\worldobjects\vehicles\sdkfz10-flak38.txt
+
+- name: ZiS-5 72-K
+  type: [aa, aa_mobile]
+  countries: [101]
+  model: graphics\vehicles\zis\zis5-72k.mgm
+  script: luascripts\worldobjects\vehicles\zis5-72k.txt
+
+# Tanks
+
+- name: KV-1 mod.1941
+  type: [tank, tank_heavy]
+  countries: [101]
+  model: graphics\vehicles\kv1-41\kv1-41.mgm
+  script: luascripts\worldobjects\vehicles\kv1-41.txt
+  static: static_kv1-41
+
+- name: KV-1 mod.1942
+  type: [tank, tank_heavy]
+  countries: [101]
+  model: graphics\vehicles\kv1-42\kv1-42.mgm
+  script: luascripts\worldobjects\vehicles\kv1-42.txt
+
+- name: Pz.Kpfw.IV Ausf.F1
+  type: [tank, tank_heavy, tank_medium]
+  countries: [201]
+  model: graphics\vehicles\pziv-f1\pziv-f1.mgm
+  script: luascripts\worldobjects\vehicles\pziv-f1.txt
+  static: static_pz_ivf1
+
+- name: Pz.Kpfw.IV Ausf.G
+  type: [tank, tank_heavy, tank_medium]
+  countries: [201]
+  model: graphics\vehicles\pziv-g\pziv-g.mgm
+  script: luascripts\worldobjects\vehicles\pziv-g.txt
+
+- name: T-34 STZ mod.1941
+  type: [tank, tank_medium]
+  countries: [101]
+  model: graphics\vehicles\t34-76stz-41\t34-76stz-41.mgm
+  script: luascripts\worldobjects\vehicles\t34-76stz-41.txt
+
+- name: T-34 STZ
+  type: [tank, tank_medium]
+  countries: [101]
+  model: graphics\vehicles\t34-76stz\t34-76stz.mgm
+  script: luascripts\worldobjects\vehicles\t34-76stz.txt
+  static: static_t34-76
+
+- name: Pz.Kpfw.III Ausf.H
+  type: [tank, tank_medium, tank_light]
+  countries: [201]
+  model: graphics\vehicles\pziii-h\pziii-h.mgm
+  script: luascripts\worldobjects\vehicles\pziii-h.txt
+  static: static_pz_iiih
+
+- name: Pz.Kpfw.III Ausf.L
+  type: [tank, tank_medium, tank_light]
+  countries: [201]
+  model: graphics\vehicles\pziii-l\pziii-l.mgm
+  script: luascripts\worldobjects\vehicles\pziii-l.txt
+
+- name: T-70
+  type: [tank, tank_light]
+  countries: [101]
+  model: graphics\vehicles\t70\t70.mgm
+  script: luascripts\worldobjects\vehicles\t70.txt
+  static: static_t70
+
+- name: BT-7M
+  type: [tank, tank_light]
+  countries: [101]
+  model: graphics\vehicles\bt7m\bt7m.mgm
+  script: luascripts\worldobjects\vehicles\bt7m.txt
+  static: static_bt-7m
+
+- name: StuG III Ausf.E
+  type: [tank, tank_destroyer]
+  countries: [201]
+  model: graphics\vehicles\stug37l24\stug37l24.mgm
+  script: luascripts\worldobjects\vehicles\stug37l24.txt
+  static: static_stug37l24
+
+- name: StuG III Ausf.F/8
+  type: [tank, tank_destroyer]
+  countries: [201]
+  model: graphics\vehicles\stug40l43\stug40l43.mgm
+  script: luascripts\worldobjects\vehicles\stug40l43.txt
+
+- name: Pz.Kpfw.38(t)
+  type: [tank, tank_medium, tank_light]
+  countries: [201]
+  model: graphics\vehicles\pz38t\pz38t.mgm
+  script: luascripts\worldobjects\vehicles\pz38t.txt
+
+- name: Marder III Ausf.H
+  type: [tank, tank_destroyer]
+  countries: [201]
+  model: graphics\vehicles\pz38t\marderiii-h.mgm
+  script: luascripts\worldobjects\vehicles\marderiii-h.txt
+
+# APCs armored cars and rocket artillery
+
+- name: BA-64
+  type: [armored_car, scout]
+  countries: [101]
+  model: graphics\vehicles\ba64\ba64.mgm
+  script: luascripts\worldobjects\vehicles\ba64.txt
+
+- name: BA-10M
+  type: [armored_car, scout]
+  countries: [101]
+  model: graphics\vehicles\ba10m\ba10m.mgm
+  script: luascripts\worldobjects\vehicles\ba10m.txt
+
+- name: Sd.Kfz.251/1 Ausf.C
+  type: [apc, scout]
+  countries: [201]
+  model: graphics\vehicles\sdkfz251-1c\sdkfz251-1c.mgm
+  script: luascripts\worldobjects\vehicles\sdkfz251-1c.txt
+  static: static_sdkfz251-1c
+
+- name: Sd.Kfz.251 Wurfrahmen 40
+  type: [apc, rocket_artillery]
+  countries: [201]
+  model: graphics\vehicles\sdkfz251-szf\sdkfz251-szf.mgm
+  script: luascripts\worldobjects\vehicles\sdkfz251-szf.txt
+
+- name: BM-13
+  type: [rocket_artillery]
+  countries: [101]
+  model: graphics\artillery\zis\bm13.mgm
+  script: luascripts\worldobjects\vehicles\bm13.txt
+  static: static_bm13
+
+# Staff cars
+
+- name: GAZ-M1
+  type: [staff_car]
+  countries: [101]
+  model: graphics\vehicles\gaz-m\gaz-m.mgm
+  script: luascripts\worldobjects\vehicles\gaz-m.txt
+  static: static_gaz-m
+
+- name: Horch 830
+  type: [staff_car]
+  countries: [201, 202]
+  model: graphics\vehicles\horch830\horch830.mgm
+  script: luascripts\worldobjects\vehicles\horch830.txt
+  static: static_horch830
+
+# Machine gun
+
+- name: MG 34
+  type: [mg]
+  countries: [201]
+  model: graphics\artillery\mg34\mg34.mgm
+  script: luascripts\worldobjects\vehicles\mg34.txt
+
+- name: DShK
+  type: [mg]
+  countries: [101]
+  model: graphics\artillery\dshk\dshk.mgm
+  script: luascripts\worldobjects\vehicles\dshk.txt
+
+# Artillery
+
+- name: leFH 18
+  type: [artillery, artillery_howitzer]
+  countries: [201]
+  model: graphics\artillery\lefh18\lefh18.mgm
+  script: luascripts\worldobjects\vehicles\lefh18.txt
+
+- name: ML-20
+  type: [artillery, artillery_howitzer]
+  countries: [101]
+  model: graphics\artillery\ml20\ml20.mgm
+  script: luascripts\worldobjects\vehicles\ml20.txt
+
+- name: M-30
+  type: [artillery, artillery_howitzer]
+  countries: [101]
+  model: graphics\artillery\m30\m30.mgm
+  script: luascripts\worldobjects\vehicles\m30.txt
+
+# Anti-tank guns
+
+- name: PaK 38
+  type: [at_gun]
+  countries: [201]
+  model: graphics\artillery\pak38\pak38.mgm
+  script: luascripts\worldobjects\vehicles\pak38.txt
+
+- name: ZiS-3
+  type: [at_gun]
+  countries: [101]
+  model: graphics\artillery\zis3gun\zis3gun.mgm
+  script: luascripts\worldobjects\vehicles\zis3gun.txt
+
+- name: PaK 40
+  type: [at_gun]
+  countries: [201]
+  model: graphics\artillery\pak40\pak40.mgm
+  script: luascripts\worldobjects\vehicles\pak40.txt
+
+- name: ZiS-2
+  type: [at_gun]
+  countries: [101]
+  model: graphics\artillery\zis2gun\zis2gun.mgm
+  script: luascripts\worldobjects\vehicles\zis2gun.txt
+
+- name: 53-K
+  type: [at_gun]
+  countries: [101]
+  model: graphics\artillery\53k\53k.mgm
+  script: luascripts\worldobjects\vehicles\53k.txt
+
+- name: PaK 35/36
+  type: [at_gun]
+  countries: [201]
+  model: graphics\artillery\pak35\pak35.mgm
+  script: luascripts\worldobjects\vehicles\pak35.txt
+
+# Landing lights
+
+- name: Landing light
+  type: [landing_light]
+  countries: [201, 202]
+  model: graphics\artillery\searchlightger\landlightger.mgm
+  script: luascripts\worldobjects\vehicles\landlightger.txt
+
+- name: Landing light
+  type: [landing_light]
+  countries: [101]
+  model: graphics\artillery\searchlights\landlightsu.mgm
+  script: luascripts\worldobjects\vehicles\landlightsu.txt
+
+# Search lights
+
+- name: Search light
+  type: [search_light]
+  countries: [201, 202]
+  model: graphics\artillery\searchlightger\searchlightger.mgm
+  script: luascripts\worldobjects\vehicles\searchlightger.txt
+
+- name: Search light
+  type: [search_light]
+  countries: [101]
+  model: graphics\artillery\searchlights\searchlightsu.mgm
+  script: luascripts\worldobjects\vehicles\searchlightsu.txt
+
+# Trains
+
+- name: 61-K (Platform)
+  type: [train, train_aa]
+  countries: [101]
+  model: graphics\trains\wagons\platformaa-61k.mgm
+  script: luascripts\worldobjects\trains\platformaa-61k.txt
+
+- name: FlaK 38 (Platform)
+  type: [train, train_aa]
+  countries: [201, 202]
+  model: graphics\trains\wagons\platformaa-flak38.mgm
+  script: luascripts\worldobjects\trains\platformaa-flak38.txt
+
+- name: Quad Maxim AA (Platform)
+  type: [train, train_aa]
+  countries: [101]
+  model: graphics\trains\wagons\platformaa-m4.mgm
+  script: luascripts\worldobjects\trains\platformaa-m4.txt
+
+- name: MG 34 AA (Platform)
+  type: [train, train_aa]
+  countries: [201, 202]
+  model: graphics\trains\wagons\platformaa-mg34.mgm
+  script: luascripts\worldobjects\trains\platformaa-mg34.txt

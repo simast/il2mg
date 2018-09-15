@@ -1,5 +1,6 @@
 import path from "path"
 import JSON5 from "json5"
+import yaml from "js-yaml"
 import CleanCSS from "clean-css"
 import webpack from "webpack"
 import electronPackager from "electron-packager"
@@ -25,14 +26,17 @@ module.exports = function(grunt) {
 		// Build application data
 		const buildData = () => new Promise(resolve => {
 
-			// Process all application JSON/JSON5 data files
-			grunt.file.expand("data/**/*.@(json|json5)").forEach(file => {
+			// Process all application JSON/JSON5/YAML data files
+			grunt.file.expand("data/**/*.@(json|json5|yaml)").forEach(file => {
 
-				let jsonParse = JSON.parse
+				let parseDataFile = JSON.parse
 
-				// NOTE: All JSON5 files are converted to JSON in production build
-				if (path.extname(file) === ".json5") {
-					jsonParse = JSON5.parse
+				// NOTE: All JSON5/YAML files are converted to JSON in production build
+				if (path.extname(file) === ".yaml") {
+					parseDataFile = yaml.safeLoad
+				}
+				else if (path.extname(file) === ".json5") {
+					parseDataFile = JSON5.parse
 				}
 
 				// Rename file path to always use .json extension
@@ -43,7 +47,7 @@ module.exports = function(grunt) {
 
 				// Write minified JSON files
 				grunt.file.write(path.join(buildDir, fileJSON), JSON.stringify(
-					jsonParse(grunt.file.read(file))
+					parseDataFile(grunt.file.read(file))
 				))
 			})
 
