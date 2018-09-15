@@ -3,7 +3,7 @@ import yaml from "js-yaml"
 import CleanCSS from "clean-css"
 import webpack from "webpack"
 import electronPackager from "electron-packager"
-import UglifyJsPlugin from "uglifyjs-webpack-plugin"
+import TerserPlugin from "terser-webpack-plugin"
 
 import {
 	APPLICATION_NAME,
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
 			const appFileCSS = "style.css"
 			const appFileMain = "main.js"
 			const appFileRenderer = "index.js"
-			const uglifyOptions = {
+			const terserOptions = {
 				toplevel: true,
 				mangle: true,
 				compress: true,
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
 						]
 					},
 					optimization: {
-						minimizer: [new UglifyJsPlugin({uglifyOptions})]
+						minimizer: [new TerserPlugin({terserOptions})]
 					},
 					node: {
 						global: false,
