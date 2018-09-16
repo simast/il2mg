@@ -1,5 +1,37 @@
 # Yak-7
-yak7: yak1s69
+yak7:
+  manufacturer: Yakovlev
+  name: Yak-7
+  type: [fighter, fighter_light]
+  size: small
+  static:
+    - static_yak1
+    - static_yak1_open
+    - static_yak1_net
 
 # Yak-7B
-yak7b: yak1s69
+yak7b: yak7bs36
+
+# Yak-7B ser.36
+yak7bs36:
+  name: Yak-7B ser.36
+  parent: yak7
+  model: graphics\planes\yak7bs36\yak7bs36.mgm
+  script: luascripts\worldobjects\planes\yak7bs36.txt
+  speed: 425
+  range: 620
+  skins:
+    101:
+      '': [-9, -9, -9, 1]
+      yak7bs36\yak7bs36_skin_01.dds: [0, 0, 0, -13]
+      yak7bs36\yak7bs36_skin_02.dds: [1, 1, 1, 0]
+      yak7bs36\yak7bs36_skin_03.dds: [1, 1, 1, 0]
+      yak7bs36\yak7bs36_skin_04.dds: [0, 0, 0, 3]
+      yak7bs36\yak7bs36_skin_05.dds: [1, 1, 1, 0]
+      yak7bs36\yak7bs36_skin_06.dds: [1, 1, 1, 0]
+      yak7bs36\yak7bs36_skin_07.dds: [1, 1, 1, 0]
+      yak7bs36\yak7bs36_skin_08.dds: [1, 1, 1, 0]
+      yak7bs36\yak7bs36_skin_09.dds: [0, 0, 0, 3]
+      yak7bs36\yak7bs36_skin_10.dds: [1, 1, 1, 0]
+      yak7bs36\yak7bs36_skin_11.dds: [1, 1, 1, 0]
+      yak7bs36\yak7bs36_skin_12.dds: [1, 1, 1, 0]
