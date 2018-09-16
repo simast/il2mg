@@ -27,7 +27,7 @@ export default class Vehicle extends Item {
 		this.DeleteAfterDeath = 1
 		this.CoopStart = 0
 		this.PayloadId = 0
-		this.WMMask = 0
+		this.WMMask = 1
 		this.Fuel = 1
 		this.RepairFriendlies = 0
 		this.RearmFriendlies = 0

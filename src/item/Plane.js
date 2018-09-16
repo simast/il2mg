@@ -33,7 +33,7 @@ export default class Plane extends Item {
 		this.LimitAmmo = 1
 		this.Spotter = -1
 		this.PayloadId = 0
-		this.WMMask = 0
+		this.WMMask = 1
 		this.AiRTBDecision = 1
 		this.DeleteAfterDeath = 1
 		this.Fuel = 1
