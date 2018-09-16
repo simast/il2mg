@@ -149,7 +149,7 @@ a:focus, input:focus, textarea:focus, select:focus {
 	font-weight: 600;
 }
 .actionBar a.primary {
-	text-shadow: 0 0 30px rgba(0,129,0,0.75);
+	text-shadow: 0 0 40px rgba(0,180,0,0.75);
 }
 .actionBar a {
 	cursor: pointer;

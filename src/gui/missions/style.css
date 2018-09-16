@@ -130,10 +130,10 @@
 #briefing font[size="16"] {
 	font-size: 13px;
 }
-#briefing font[color="#fbfbfb"] {
+#briefing font[color="#c2c2c2"] {
 	color: var(--text-color-alt-light);
 }
-#briefing font[color="#959595"] {
+#briefing font[color="#595959"] {
 	color: var(--text-color-alt-dark);
 }
 #briefing p {

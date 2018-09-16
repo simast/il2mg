@@ -268,13 +268,14 @@ function makeVirtualFlightZone(flight, virtualZones, waitTime) {
 	}
 
 	proximityCheck.Time = 10
-	proximityCheck.setPositionNear(onUnload)
-	proximityCheck.addTarget(proximityActivate)
 
 	onUnload.Time = proximityCheck.Time + 5
 	onUnload.setPositionNear(checkZone)
 	onUnload.addTarget(proximityDeactivate)
 	onUnload.addTarget(onDelete)
+
+	proximityCheck.setPositionNear(onUnload)
+	proximityCheck.addTarget(proximityActivate)
 
 	onProximityPlayer.Distance = UNLOAD_PROXIMITY_DISTANCE
 	onProximityPlayer.setPositionNear(onUnload)

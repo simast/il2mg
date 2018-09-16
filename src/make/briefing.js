@@ -3,8 +3,8 @@ import makeBriefingWeather from "./briefing.weather"
 
 // Briefing colors as HTML hex color values
 export const BriefingColor = Object.freeze({
-	Light: "#fbfbfb",
-	Dark: "#959595"
+	Light: "#c2c2c2",
+	Dark: "#595959"
 })
 
 // Generate mission briefing
@@ -125,7 +125,7 @@ export default function makeBriefing() {
 	// NOTE: Using smaller line breaks for separating plan activities
 	if (briefingPlan.length) {
 
-		briefingPlan.unshift('<font color="' + BriefingColor.Dark + '">···</font>')
+		briefingPlan.unshift(`<font color="${BriefingColor.Dark}">···</font>`)
 		briefingPlan.unshift("")
 
 		briefing += briefingPlan.join('<br><font size="8"></font><br>')
@@ -143,7 +143,7 @@ export default function makeBriefing() {
 
 		briefingHighlights.add(highlight)
 
-		return '<font color="' + BriefingColor.Light + '">' + highlight + "</font>"
+		return `<font color="${BriefingColor.Light}">${highlight}</font>`
 	})
 
 	options.setDescription(this.getLC(briefing))
@@ -215,11 +215,12 @@ function makeBriefingFlight() {
 
 	const flight = this.player.flight
 	const unit = this.units[flight.unit]
+	const indentSpacing = " ".repeat(4)
 	let output = ""
 
 	// Country specific formation name
 	if (flight.formation.name) {
-		output += "<i>" + flight.formation.name + "</i>"
+		output += `<i>${flight.formation.name}</i>`
 	}
 	// Generic formation name
 	else {
@@ -227,7 +228,7 @@ function makeBriefingFlight() {
 	}
 
 	// Unit name
-	output += " of [" + unit.name + "]"
+	output += ` of [${unit.name}]`
 
 	// Unit suffix
 	if (unit.suffix) {
@@ -236,7 +237,7 @@ function makeBriefingFlight() {
 
 	// Unit alias
 	if (unit.alias) {
-		output += " <i>“" + unit.alias + "”</i>"
+		output += ` <i>“${unit.alias}”</i>`
 	}
 
 	output += ",<br><br>"
@@ -252,24 +253,24 @@ function makeBriefingFlight() {
 				rank = pilot.rank.name
 			}
 
-			output += "\t"
+			output += indentSpacing
 
 			// Plane call number
 			if (flight.planes > 1) {
-				output += '<font size="16" color="' + BriefingColor.Dark + '">' + plane.number + ".</font> "
+				output += `<font size="16" color="${BriefingColor.Dark }">${plane.number}.</font> `
 			}
 
-			output += '<font size="16"><i>' + rank + "</i></font> "
+			output += `<font size="16"><i>${rank}</i></font> `
 
 			// Highlighted player pilot name
 			if (plane === flight.player) {
-				output += "[" + pilot.name + "]"
+				output += `[${pilot.name}]`
 			}
 			else {
 				output += pilot.name
 			}
 
-			output += ' <font color="' + BriefingColor.Dark + '">⇢</font> <font size="16"><i>'
+			output += ` <font color="${BriefingColor.Dark}">⇢</font> <font size="16"><i>`
 			output += this.planes[plane.plane].name
 			output += "</i></font><br>"
 
@@ -285,7 +286,7 @@ function makeBriefingFlight() {
 		}
 		// Flight callsign
 		else if (flight.callsign) {
-			output += "<br>\tCallsign <i>“" + flight.callsign.name + "”</i>."
+			output += `<br>${indentSpacing}Callsign <i>“${flight.callsign.name}”</i>.`
 		}
 	})
 
