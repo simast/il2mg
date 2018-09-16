@@ -233,10 +233,8 @@ export default function makeTaskPatrol(flight) {
 
 		const options = {altitude}
 
-		// Use a solid ingress route line (with split)
+		// Enable split for ingress route line
 		if (pointIndex === 0) {
-
-			options.solid = true
 			options.split = true
 		}
 		// Set patrol area route waypoints to low priority

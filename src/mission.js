@@ -312,8 +312,6 @@ export default class Mission {
 			throw new TypeError("Invalid mission language string.")
 		}
 
-		text = text.trim()
-
 		let languageCode = this.lang.indexOf(text)
 
 		if (languageCode < 0) {

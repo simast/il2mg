@@ -23,6 +23,22 @@ export default class ActivityStart {
 
 			if (flight.player) {
 
+				const fromAirfield = mission.airfields[flight.airfield]
+
+				// NOTE: Using a single whitespace to disable showing default "Point 1/2/etc"
+				// text on the map near flight route points.
+				let iconName = " "
+
+				if (isAirStart && element.state === 0) {
+					iconName = (fromAirfield.offmap ? "from " : "") + fromAirfield.name
+				}
+
+				// NOTE: Omitting Y position to hide altitude display on the map route point!
+				if (!isAirStart || (element.state === 0 && !fromAirfield.offmap)) {
+					startIcon.YPos = 0
+				}
+
+				startIcon.setName(mission.getLC(iconName))
 				startIcon.Coalitions = [flight.coalition]
 				startIcon.IconId = MCU_Icon.ICON_ACTION_POINT
 			}
@@ -48,7 +64,7 @@ export default class ActivityStart {
 
 			onBegin.setPositionNear(flight.leader.item)
 
-			let beginDelay = this.delay
+			let beginDelay = flight.player ? 0 : this.delay
 
 			// NOTE: Using a short delay for flights starting from a parking spot.
 			// This is workaround as some aircraft have issues starting engines

@@ -33,14 +33,7 @@ export default function makeTaskRebase(flight) {
 		airfieldTo.id,
 		{
 			altitude,
-			split: true,
-			hidden: (
-				isPlayerFlightLeader &&
-				!airfieldFrom.offmap &&
-				!airfieldTo.offmap &&
-				!debugFlights
-			),
-			solid: true
+			split: !isPlayerFlightLeader || debugFlights
 		}
 	)
 
@@ -92,8 +85,7 @@ export default function makeTaskRebase(flight) {
 
 		// Mark target airfield area on the map
 		markMapArea.call(this, flight, {
-			position: airfieldTo.position,
-			centerIcon: true
+			position: airfieldTo.position
 		})
 
 		// Use target airfield radio navigation beacon

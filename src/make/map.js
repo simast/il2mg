@@ -172,7 +172,6 @@ export function markMapArea(flight, {
 	position, // Center positions of the circle
 	radius = 5000,
 	perfect, // Draw a perfect circle
-	centerIcon, // Draw center icon
 	lineType, // MCU_Icon line type
 	color // Circle color
 }) {
@@ -225,18 +224,6 @@ export function markMapArea(flight, {
 
 	// Connect zone icons in a loop
 	lastZoneIcon.addTarget(firstZoneIcon)
-
-	// Set icon on the center
-	if (centerIcon) {
-
-		const iconItem = flight.group.createItem("MCU_Icon")
-
-		iconItem.setPosition(position)
-		iconItem.Coalitions = [flight.coalition]
-		iconItem.IconId = MCU_Icon.ICON_WAYPOINT
-
-		icons.push(iconItem)
-	}
 
 	return icons
 }

@@ -106,8 +106,14 @@ export default class ActivityFly {
 						routeColor = MapColor.Enemy
 					}
 				}
+				else {
 
-				spotIcon.setPosition(spot.position)
+					// NOTE: Empty whitespace is used to disable default "Point 1/2/etc" text
+					spotIcon.setName(mission.getLC(" "))
+				}
+
+				// NOTE: By setting Y position to 0 we can hide route altitude display on the map
+				spotIcon.setPosition(spot.position[0], spot.position[2])
 				spotIcon.Coalitions = [flight.coalition]
 
 				if (debugFlights) {
@@ -127,13 +133,9 @@ export default class ActivityFly {
 					if (drawAIRoute) {
 						lastSpotIcon.LineType = MCU_Icon.LINE_NORMAL
 					}
-					// Use solid line
-					else if (spot.solid) {
-						lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_3
-					}
 					// Use dashed line
 					else {
-						lastSpotIcon.LineType = MCU_Icon.LINE_SECTOR_4
+						lastSpotIcon.LineType = MCU_Icon.LINE_POSITION_2
 					}
 				}
 

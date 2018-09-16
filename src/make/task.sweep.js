@@ -34,8 +34,6 @@ export default function makeTaskSweep(flight) {
 	const startVector = startLocation.vector
 	const territories = this.locations.territories
 	const originVector = Vector.Zero(2)
-	const isPlayerFlightLeader = (flight.player === flight.leader)
-	const debugFlights = Boolean(this.debug && this.debug.flights)
 
 	// Max fighter sweep route range based on max aircraft fuel range
 	const maxPlaneRange = flight.range
@@ -341,14 +339,9 @@ export default function makeTaskSweep(flight) {
 
 		const options = {altitude}
 
-		// Use solid ingress route line (when player is not flight leader)
+		// Enable split for ingress route line
 		if (point === ingressPoint) {
-
 			options.split = true
-
-			if (!isPlayerFlightLeader || debugFlights) {
-				options.solid = true
-			}
 		}
 		// Set waypoints to low priority (for sweep route only)
 		else {
