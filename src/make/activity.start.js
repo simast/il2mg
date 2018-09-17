@@ -24,17 +24,18 @@ export default class ActivityStart {
 			if (flight.player) {
 
 				const fromAirfield = mission.airfields[flight.airfield]
+				const isForwardState = isAirStart && element.state > 0
 
 				// NOTE: Using a single whitespace to disable showing default "Point 1/2/etc"
 				// text on the map near flight route points.
 				let iconName = " "
 
-				if (isAirStart && element.state === 0) {
+				if (!isForwardState) {
 					iconName = (fromAirfield.offmap ? "from " : "") + fromAirfield.name
 				}
 
 				// NOTE: Omitting Y position to hide altitude display on the map route point!
-				if (!isAirStart || (element.state === 0 && !fromAirfield.offmap)) {
+				if (!isForwardState || (element.state === 0 && !fromAirfield.offmap)) {
 					startIcon.YPos = 0
 				}
 

@@ -59,17 +59,6 @@ export default function makeTaskPatrol(flight) {
 		]
 
 		patrolPoints.push(point)
-
-		// Mark base patrol area points with icons when player is a flight leader
-		if (isPlayerFlightLeader && !debugFlights) {
-
-			const patrolIcon = flight.group.createItem("MCU_Icon")
-
-			patrolIcon.setPosition(point[0], point[1])
-			patrolIcon.setColor(MapColor.Route)
-			patrolIcon.Coalitions = [flight.coalition]
-			patrolIcon.IconId = MCU_Icon.ICON_WAYPOINT
-		}
 	}
 
 	// Register base two patrol reference points as flight target
@@ -235,7 +224,7 @@ export default function makeTaskPatrol(flight) {
 
 		// Enable split for ingress route line
 		if (pointIndex === 0) {
-			options.split = true
+			options.split = !isPlayerFlightLeader || debugFlights
 		}
 		// Set patrol area route waypoints to low priority
 		else {
@@ -244,6 +233,13 @@ export default function makeTaskPatrol(flight) {
 
 		// Hide repeating patrol route points
 		if (!isRequiredPoint && !isForwardState) {
+			options.hidden = true
+		}
+
+		// Do not show flight route on the map when player is leading the flight (as
+		// the patrol area will be indicated by a separate patrol zone marker).
+		// NOTE: Only ingress route line is displayed in this case.
+		if (pointIndex > 0 && isPlayerFlightLeader && !debugFlights) {
 			options.hidden = true
 		}
 
@@ -275,7 +271,7 @@ export default function makeTaskPatrol(flight) {
 			flight.airfield,
 			{
 				altitude,
-				split: true,
+				split: !isPlayerFlightLeader || debugFlights,
 				// Don't show map egress route lines for patrol task
 				hidden: !isForwardState
 			}
@@ -286,7 +282,7 @@ export default function makeTaskPatrol(flight) {
 	flight.plan.push(makeActivity.call(this, flight, {
 		type: ActivityType.Fly,
 		route,
-		visible: Boolean(flight.player) && !isPlayerFlightLeader
+		visible: Boolean(flight.player)
 	}))
 
 	// Disable land activity when operating from offmap airfield
