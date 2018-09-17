@@ -1,5 +1,5 @@
 type: Block
 script: luascripts\worldobjects\blocks\static_ju87_open.txt
 model: graphics\blocks\static_ju87_open.mgm
-durability: 2000
+durability: 7000
 damage: [0]

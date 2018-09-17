@@ -1,5 +1,5 @@
 type: Block
 script: luascripts\worldobjects\blocks\tank_position.txt
 model: graphics\blocks\tank_position.mgm
-durability: 1500
+durability: 10000
 damage: [0]

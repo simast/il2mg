@@ -1,4 +1,4 @@
 type: Block
 script: luascripts\worldobjects\blocks\art_position_amb2.txt
 model: graphics\blocks\art_position_amb2.mgm
-durability: 500
+durability: 2000

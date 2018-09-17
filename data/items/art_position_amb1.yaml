@@ -1,5 +1,5 @@
 type: Block
 script: luascripts\worldobjects\blocks\art_position_amb1.txt
 model: graphics\blocks\art_position_amb1.mgm
-durability: 500
+durability: 2000
 damage: [0]

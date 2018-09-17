@@ -1,4 +1,4 @@
 type: Block
 script: luascripts\worldobjects\blocks\mg_position.txt
 model: graphics\blocks\mg_position.mgm
-durability: 1000
+durability: 10000
