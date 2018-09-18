@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\arf_gsm_2.txt
+model: graphics\blocks\arf_gsm_2.mgm
+durability: 5000
+damage: [0, 1, 2, 3]

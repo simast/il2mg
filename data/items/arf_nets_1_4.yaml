@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\arf_nets_1_4.txt
+model: graphics\blocks\arf_nets_1_4.mgm
+durability: 5000
+damage: [0, 1, 2, 3, 4]
