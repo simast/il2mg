@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\bar_09.txt
+model: graphics\buildings\bar_09.mgm
+durability: 100000

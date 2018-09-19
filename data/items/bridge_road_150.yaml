@@ -1,0 +1,5 @@
+type: Bridge
+script: luascripts\worldobjects\bridges\bridge_road_150.txt
+model: graphics\bridges\bridge_road_150.mgm
+durability: 15000
+damage: [1, 2, 3, 4, 5]

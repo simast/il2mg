@@ -1,0 +1,4 @@
+type: Bridge
+script: luascripts\worldobjects\bridges\bridge_section_dmg.txt
+model: graphics\bridges\bridge_section_dmg.mgm
+durability: 50000
