@@ -2,6 +2,7 @@ import fs from "fs"
 import path from "path"
 import {app, screen, BrowserWindow, ipcMain, dialog, Menu} from "electron"
 import electronDebug from "electron-debug"
+
 import Mission from "../mission"
 import {APPLICATION_TITLE} from "../data"
 
@@ -51,23 +52,26 @@ process.removeAllListeners("uncaughtException").on("uncaughtException", onError)
 process.removeAllListeners("unhandledRejection").on("unhandledRejection", onError)
 
 // Make sure only a single app instance is allowed to run at the same time
-const isOtherInstance = app.makeSingleInstance(() => {
+const isPrimaryInstance = app.requestSingleInstanceLock()
 
-	if (mainWindow) {
-
-		// Restore minimized main window
-		if (mainWindow.isMinimized()) {
-			mainWindow.restore()
-		}
-
-		// Focus main window
-		mainWindow.focus()
-	}
-})
-
-if (isOtherInstance) {
+if (!isPrimaryInstance) {
 	app.exit(0) // Success
 }
+
+app.on("second-instance", () => {
+
+	if (!mainWindow) {
+		return
+	}
+
+	// Restore minimized main window
+	if (mainWindow.isMinimized()) {
+		mainWindow.restore()
+	}
+
+	// Focus main window
+	mainWindow.focus()
+})
 
 // Enable development mode tools
 if (isDevMode) {
