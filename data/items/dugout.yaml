@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\dugout.txt
+model: graphics\blocks\dugout.mgm
+durability: 25000
+damage: [0]

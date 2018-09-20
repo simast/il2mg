@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\stalingrad_30.txt
+model: graphics\buildings\stalingrad_30.mgm
+durability: 50000

@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\country_m_corner_block4.txt
+model: graphics\blocks\country_m_corner_block4.mgm
+durability: 10000
+damage: [0, 1, 2, 3]

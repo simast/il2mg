@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\okt_07.txt
+model: graphics\buildings\okt_07.mgm
+durability: 100000

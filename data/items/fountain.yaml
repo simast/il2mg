@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\fountain.txt
+model: graphics\buildings\fountain.mgm
+durability: 10000

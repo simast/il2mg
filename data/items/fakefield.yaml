@@ -1,0 +1,4 @@
+type: Airfield
+script: luascripts\worldobjects\airfields\fakefield.txt
+model: graphics\airfields\fakefield.mgm
+durability: 25000

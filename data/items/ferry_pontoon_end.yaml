@@ -1,0 +1,5 @@
+type: Bridge
+script: luascripts\worldobjects\bridges\ferry_pontoon_end.txt
+model: graphics\bridges\ferry_pontoon_end.mgm
+durability: 15000
+damage: [0]

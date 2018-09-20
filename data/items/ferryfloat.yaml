@@ -1,0 +1,5 @@
+type: Bridge
+script: luascripts\worldobjects\bridges\ferryfloat.txt
+model: graphics\bridges\ferryfloat.mgm
+durability: 15000
+damage: [0]

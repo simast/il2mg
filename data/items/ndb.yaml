@@ -1,0 +1,3 @@
+type: Vehicle
+script: luascripts\worldobjects\vehicles\ndb.txt
+model: graphics\vehicles\ndb\ndb.mgm
