@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\vl_wagon_pass.txt
+model: graphics\blocks\vl_wagon_pass.mgm
+durability: 15000
+damage: [0, 1]

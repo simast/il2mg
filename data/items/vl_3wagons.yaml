@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\vl_3wagons.txt
+model: graphics\blocks\vl_3wagons.mgm
+durability: 15000

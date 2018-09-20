@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\vl_tupik.txt
+model: graphics\blocks\vl_tupik.mgm
+durability: 15000

@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\townblock500x500u_04.txt
+model: graphics\buildings\townblock500x500u_04.mgm
+durability: 25000

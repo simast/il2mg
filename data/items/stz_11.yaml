@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\stz_11.txt
+model: graphics\buildings\stz_11.mgm
+durability: 100000

@@ -1,0 +1,4 @@
+type: Block
+script: luascripts\worldobjects\blocks\tacinskaya_1.txt
+model: graphics\blocks\tacinskaya_1.mgm
+durability: 25000

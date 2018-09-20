@@ -8,7 +8,7 @@ import data, {Coalition} from "./data"
 export const DEFAULT_COALITION = Coalition.Neutral
 export const DEFAULT_COUNTRY = 0 // Neutral country ID
 export const DEFAULT_DAMAGE_REPORT = 50 // 50% of damage
-export const DEFAULT_DURABILITY = 5000
+export const DEFAULT_DURABILITY = 25000
 
 // Precision of position and orientation values (decimal places)
 export const PRECISION_POSITION = 2

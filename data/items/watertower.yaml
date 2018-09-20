@@ -1,0 +1,5 @@
+type: Block
+script: luascripts\worldobjects\blocks\watertower.txt
+model: graphics\blocks\watertower.mgm
+durability: 25000
+damage: [0]
