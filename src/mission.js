@@ -2,7 +2,9 @@ import fs from "fs"
 import os from "os"
 import path from "path"
 import Random from "random-js"
-import data, {Coalition, APPLICATION_NAME, APPLICATION_VERSION} from "./data"
+
+import data, {Coalition} from "./data"
+import {APPLICATION_NAME, APPLICATION_VERSION} from "./constants"
 import log from "./log"
 import Item from "./item"
 

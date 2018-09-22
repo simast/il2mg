@@ -10,7 +10,7 @@ import {
 	APPLICATION_TITLE,
 	APPLICATION_VERSION,
 	APPLICATION_COPYRIGHT
-} from "../../src/data"
+} from "../../src/constants"
 
 module.exports = function(grunt) {
 

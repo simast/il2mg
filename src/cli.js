@@ -3,18 +3,19 @@ import util from "util"
 import domain from "domain"
 import moment from "moment"
 import params from "commander"
+
 import log from "./log"
 import Mission from "./mission"
 import {WeatherState} from "./make/weather"
 import {MapSeason} from "./make/map"
 import {FlightState} from "./make/flight"
+import data, {Coalition} from "./data"
 
-import data, {
-	Coalition,
+import {
 	APPLICATION_NAME,
 	APPLICATION_VERSION,
 	APPLICATION_COPYRIGHT
-} from "./data"
+} from "./constants"
 
 // --help usage line output
 params.usage("[options] [mission file and/or path]")

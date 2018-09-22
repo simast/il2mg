@@ -3,12 +3,6 @@ import path from "path"
 import moment from "moment"
 import addLazyProperty from "lazy-property"
 
-// Application constants
-export const APPLICATION_NAME = "il2mg"
-export const APPLICATION_TITLE = "il2mg - Mission Generator"
-export const APPLICATION_VERSION = "r12"
-export const APPLICATION_COPYRIGHT = "(C) Simas Toleikis, 2014-2018"
-
 // Coalitions
 export const Coalition = Object.freeze({
 	Neutral: 0,

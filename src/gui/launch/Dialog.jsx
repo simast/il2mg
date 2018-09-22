@@ -22,8 +22,9 @@ import SelectRealism from "./SelectRealism"
 		actions.center.set("Accept", {
 			onClick: event => {
 
-				launchMission(mission.id, event.ctrlKey)
-				onClose()
+				if (launchMission(mission.id, event.ctrlKey)) {
+					onClose()
+				}
 			},
 			disabled: !launchStore.gamePath,
 			primary: true

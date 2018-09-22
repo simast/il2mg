@@ -3,8 +3,9 @@ import path from "path"
 import {spawn} from "child_process"
 import glob from "glob"
 import {remote} from "electron"
+
+import {APPLICATION_TITLE} from "../../constants"
 import {moveFileSync, showErrorMessage} from "../app"
-import {FileExtension} from "../missions"
 import missionsStore from "../missions/store"
 import launchStore from "./store"
 
@@ -28,14 +29,11 @@ const MAX_AUTOPLAY_TIME = 10000 // 10 seconds
 // File and directory paths
 const PATH_APP_DATA = remote.app.getPath("userData")
 const PATH_AUTOPLAY = path.join(PATH_GAME_DATA, FILE_AUTOPLAY)
-const PATH_TRACKS = path.join(PATH_GAME_DATA, "Tracks")
+const PATH_MISSIONS_LINK = path.join("Missions", APPLICATION_TITLE)
 const PATH_USER_DATA = path.join(PATH_GAME_DATA, "swf", "il2", "userdata")
 
 // Autoplay file restore timeout identifier
 let autoplayRestoreTS
-
-// Tracks directory watcher reference
-let tracksWatcher
 
 // Create autoplay.cfg file
 function createAutoPlay(missionID, skipPlaneSettings) {
@@ -61,7 +59,7 @@ function createAutoPlay(missionID, skipPlaneSettings) {
 			"&enabled=1",
 			"&autoIngame=" + (skipPlaneSettings ? 1 : 0),
 			"&missionSettingsPreset=" + realismPreset,
-			'&missionPath="' + path.join(missionsStore.path, missionID) + '"'
+			'&missionPath="' + path.join(PATH_MISSIONS_LINK, missionID) + '"'
 		].join("\r\n")
 	)
 }
@@ -98,63 +96,46 @@ export function restoreAutoPlay() {
 	catch (e) {}
 }
 
-// HACK: There is a bug in IL-2 Sturmovik where flight records for a mission
-// launched with autoplay.cfg are activated, but the mission file is not
-// copied together with the track recording files. This seems to be a problem
-// related to the fact our mission files are external and are not part of the
-// "data/Missions" directory. As a workaround - watch the track recordings
-// directory for changes and copy the mission files.
-function fixFlightRecords(missionID) {
+// Link our missions directory with game missions directory
+function linkMissionsDirectory() {
 
 	const {gamePath} = launchStore
-	const tracksPath = path.join(gamePath, PATH_TRACKS)
 
-	// Re-initialize directory watcher
-	if (tracksWatcher) {
-		tracksWatcher.close()
+	const pathTo = missionsStore.path
+	const pathFrom = path.join(gamePath, PATH_GAME_DATA, PATH_MISSIONS_LINK)
+
+	// Check existing link
+	if (fs.existsSync(pathFrom)) {
+
+		const isSymLink = fs.lstatSync(pathFrom).isSymbolicLink()
+
+		if (!isSymLink) {
+			throw new Error(`"${PATH_MISSIONS_LINK}" directory already exists!`)
+		}
+
+		const linkTarget = fs.readlinkSync(pathFrom)
+
+		// Skip if link is already established and valid
+		if (path.resolve(linkTarget) === path.resolve(pathTo)) {
+			return
+		}
+
+		// Re-establish link with new target path
+		fs.unlinkSync(pathFrom)
 	}
 
-	// Watch for changes in the tracks directory
-	tracksWatcher = fs.watch(tracksPath, {
-		persistent: false,
-		recursive: false
-	}, (eventType, fileName) => {
+	// Try creating a proper directory symlink
+	// NOTE: This will probably require elevated user permissions (however this
+	// limitation has been removed in Windows 10 build 14972 if "Developer Mode"
+	// is enabled)
+	try {
+		fs.symlinkSync(pathTo, pathFrom, "dir")
+	}
+	catch (e) {
 
-		if (!fileName || eventType !== "rename") {
-			return
-		}
-
-		const trackDir = path.join(tracksPath, fileName)
-
-		// Track records will have a separate directory for mission files
-		if (!fs.statSync(trackDir).isDirectory()) {
-			return
-		}
-
-		const trackMissionID = path.basename(trackDir, path.extname(trackDir))
-
-		// Apply fix only for our mission launched via autoplay.cfg
-		if (trackMissionID !== missionID) {
-			return
-		}
-
-		const mission = missionsStore.index[missionID]
-
-		// Copy all mission files (except metadata file)
-		for (const missionFile of mission.files) {
-
-			const extension = path.extname(missionFile)
-
-			if (extension === ("." + FileExtension.Meta)) {
-				continue
-			}
-
-			fs.writeFileSync(
-				path.join(trackDir, missionFile),
-				fs.readFileSync(path.join(missionsStore.path, missionFile))
-			)
-		}
-	})
+		// Fallback to "junction" directory symlinks
+		fs.symlinkSync(pathTo, pathFrom, "junction")
+	}
 }
 
 // Clear active autoplay restore timeout
@@ -173,7 +154,7 @@ export function launchMission(missionID, skipPlaneSettings) {
 	const {gamePath} = launchStore
 
 	if (!gamePath || !isValidGamePath(gamePath)) {
-		return
+		return false
 	}
 
 	const gameExePath = path.join(gamePath, PATH_GAME_EXE)
@@ -182,6 +163,9 @@ export function launchMission(missionID, skipPlaneSettings) {
 	try {
 
 		cancelAutoPlayRestoreTimeout()
+
+		// Create missions directory symlink
+		linkMissionsDirectory()
 
 		// Write custom realism options to mission settings file
 		writeRealismOptions()
@@ -202,16 +186,16 @@ export function launchMission(missionID, skipPlaneSettings) {
 		// Minimize the window
 		remote.getCurrentWindow().minimize()
 
-		// Activate the fix for flight recording
-		fixFlightRecords(missionID)
+		return true
 	}
-	catch (e) {
+	catch (error) {
 
 		maxAutoplayTime = 0
 
 		// Show an error suggesting to use elevated il2mg executable permissions
 		showErrorMessage(
-			"Could not launch IL-2 Sturmovik!\n\n" +
+			"Could not launch IL-2 Sturmovik! The reported error was:\n\n" +
+			error.message + "\n\n" +
 			"Please close this application and then run il2mg.exe again by right " +
 			'clicking and using the "Run as administrator" menu option.'
 		)
@@ -238,6 +222,8 @@ export function launchMission(missionID, skipPlaneSettings) {
 
 		}, maxAutoplayTime)
 	}
+
+	return false
 }
 
 // Select a valid game path
