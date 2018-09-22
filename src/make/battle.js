@@ -28,7 +28,7 @@ export default function makeBattle() {
 	// Create main mission Options item
 	const options = this.createItem("Options")
 
-	options.LCAuthor = this.getLC(APPLICATION_NAME + " " + APPLICATION_VERSION)
+	options.LCAuthor = this.getLC(APPLICATION_NAME + " r" + APPLICATION_VERSION)
 	options.MissionType = 0 // Single-player mission
 	options.AqmId = 0 // TODO: ?
 

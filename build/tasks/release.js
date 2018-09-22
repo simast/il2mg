@@ -184,7 +184,7 @@ module.exports = function(grunt) {
 			asar: true,
 			icon: path.join(guiDir, "app.ico"),
 			appCopyright: APPLICATION_COPYRIGHT,
-			appVersion: "0." + APPLICATION_VERSION.match(/[0-9]+/)[0],
+			appVersion: "0." + APPLICATION_VERSION,
 			win32metadata: {
 				CompanyName: "",
 				FileDescription: APPLICATION_TITLE,

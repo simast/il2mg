@@ -1,6 +1,8 @@
 import fs from "fs"
 import path from "path"
 import {remote} from "electron"
+
+import {MIN_COMPATIBLE_MISSION_VERSION} from "../../constants"
 import {PATH_GAME_DATA} from "../launch"
 import launchStore from "../launch/store"
 import {FileExtension} from "../missions"
@@ -12,6 +14,7 @@ export function loadMissions() {
 	const list = []
 	const index = Object.create(null)
 	const files = Object.create(null)
+	const removeIds = new Set()
 
 	// Scan each file in the target path/directory
 	fs.readdirSync(missionsStore.path).forEach(fileName => {
@@ -36,18 +39,34 @@ export function loadMissions() {
 
 			// Read mission metadata file
 			mission = JSON.parse(
-				fs.readFileSync(missionsStore.path + path.sep + fileName, "utf-8")
+				fs.readFileSync(path.join(missionsStore.path, fileName), "utf-8")
 			)
 		}
 		catch (e) {
+
+			removeIds.add(missionID)
 			return
 		}
 
-		mission.id = missionID
-		mission.files = files[missionID]
+		// Validate missions for compatibility
+		if (mission.version >= MIN_COMPATIBLE_MISSION_VERSION) {
 
-		list.push(mission)
-		index[missionID] = mission
+			mission.id = missionID
+			mission.files = files[missionID]
+
+			list.push(mission)
+			index[missionID] = mission
+
+			return
+		}
+
+		// Mark old/incompatible missions for removal
+		removeIds.add(missionID)
+	})
+
+	// Clean-up old/incompatible mission files
+	removeIds.forEach(missionId => {
+		removeMissionFiles(files[missionId])
 	})
 
 	// Sort missions list based on id (new missions first)
@@ -168,10 +187,16 @@ export function removeMission(missionID, confirm = false) {
 	const {files} = mission
 	const removedIndex = missionsStore.list.indexOf(mission)
 
-	// Remove mission files
-	for (const fileName of files) {
-		fs.unlinkSync(path.join(missionsStore.path, fileName))
-	}
+	removeMissionFiles(files)
 
 	return removedIndex
 }
+
+// Remove mission files
+function removeMissionFiles(files) {
+
+	for (const fileName of files) {
+		fs.unlinkSync(path.join(missionsStore.path, fileName))
+	}
+}
+

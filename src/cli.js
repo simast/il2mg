@@ -21,7 +21,7 @@ import {
 params.usage("[options] [mission file and/or path]")
 
 // --version output
-params.version(APPLICATION_NAME + " " + APPLICATION_VERSION + " " + APPLICATION_COPYRIGHT)
+params.version(APPLICATION_NAME + " r" + APPLICATION_VERSION + " " + APPLICATION_COPYRIGHT)
 
 // Create mission metadata file (--meta)
 params.option("-M, --meta", "create metadata file")
