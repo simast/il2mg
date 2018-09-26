@@ -93,7 +93,15 @@ export default function makeAirfieldPlane(airfield, item) {
 
 		const staticPlane = data.getItemType(staticPlaneID)
 
-		if ((staticPlane.camo && !isCamo) || (isCamo && !staticPlane.camo)) {
+		// Can only place camo static planes on special camo-marked spots
+		if (staticPlane.camo && !isCamo) {
+			continue
+		}
+
+		const isLastStaticPlaneOption = (staticPlaneID === staticPlanes[staticPlanes.length - 1])
+
+		// Try next match to find a valid static plane with camo
+		if (!isLastStaticPlaneOption && isCamo && !staticPlane.camo) {
 			continue
 		}
 
