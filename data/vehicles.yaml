@@ -10,21 +10,21 @@
 - name: ZiS-5
   type: [truck, truck_cargo]
   countries: [101]
-  model: graphics\vehicles\zis5\zis5.mgm
+  model: graphics\vehicles\zis\zis5.mgm
   script: luascripts\worldobjects\vehicles\zis5.txt
   static: static_zis
 
 - name: Ford G917T
   type: [truck, truck_cargo]
   countries: [201, 202]
-  model: graphics\vehicles\ford-g917\ford-g917.mgm
+  model: graphics\vehicles\ford\ford-g917.mgm
   script: luascripts\worldobjects\vehicles\ford-g917.txt
   static: static_ford-g917
 
 - name: GAZ-AA
   type: [truck, truck_cargo]
   countries: [101]
-  model: graphics\vehicles\gaz-aa\gaz-aa.mgm
+  model: graphics\vehicles\gaz\gaz-aa.mgm
   script: luascripts\worldobjects\vehicles\gaz-aa.txt
   static: static_gazaa
 
@@ -95,13 +95,13 @@
 - name: GAZ-AA Quad Maxim AA
   type: [aa, aa_mobile]
   countries: [101]
-  model: graphics\artillery\gaz\gaz-aa-m4-aa.mgm
+  model: graphics\vehicles\gaz\gaz-aa-m4-aa.mgm
   script: luascripts\worldobjects\vehicles\gaz-aa-m4-aa.txt
 
 - name: Sd.Kfz.10 FlaK 38
   type: [aa, aa_mobile]
   countries: [201]
-  model: graphics\artillery\sdkfz10-flak38\sdkfz10-flak38.mgm
+  model: graphics\vehicles\sdkfz10-flak38\sdkfz10-flak38.mgm
   script: luascripts\worldobjects\vehicles\sdkfz10-flak38.txt
 
 - name: ZiS-5 72-K
@@ -220,20 +220,20 @@
 - name: Sd.Kfz.251/1 Ausf.C
   type: [apc, scout]
   countries: [201]
-  model: graphics\vehicles\sdkfz251-1c\sdkfz251-1c.mgm
+  model: graphics\vehicles\sdkfz251\sdkfz251-1c.mgm
   script: luascripts\worldobjects\vehicles\sdkfz251-1c.txt
   static: static_sdkfz251-1c
 
 - name: Sd.Kfz.251 Wurfrahmen 40
   type: [apc, rocket_artillery]
   countries: [201]
-  model: graphics\vehicles\sdkfz251-szf\sdkfz251-szf.mgm
+  model: graphics\vehicles\sdkfz251\sdkfz251-szf.mgm
   script: luascripts\worldobjects\vehicles\sdkfz251-szf.txt
 
 - name: BM-13
   type: [rocket_artillery]
   countries: [101]
-  model: graphics\artillery\zis\bm13.mgm
+  model: graphics\vehicles\zis\bm13.mgm
   script: luascripts\worldobjects\vehicles\bm13.txt
   static: static_bm13
 
@@ -242,14 +242,14 @@
 - name: GAZ-M1
   type: [staff_car]
   countries: [101]
-  model: graphics\vehicles\gaz-m\gaz-m.mgm
+  model: graphics\vehicles\gaz\gaz-m.mgm
   script: luascripts\worldobjects\vehicles\gaz-m.txt
   static: static_gaz-m
 
 - name: Horch 830
   type: [staff_car]
   countries: [201, 202]
-  model: graphics\vehicles\horch830\horch830.mgm
+  model: graphics\vehicles\horch\horch830.mgm
   script: luascripts\worldobjects\vehicles\horch830.txt
   static: static_horch830
 
