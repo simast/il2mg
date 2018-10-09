@@ -8,14 +8,14 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Install latest [Node.js](https://nodejs.org/en/). As an optional step also consider installing [ESLint](https://eslint.org/docs/user-guide/integrations#editors) and [EditorConfig](http://editorconfig.org/#download) extensions for your favorite editor - this will help you apply project specific source code style rules from within the editor.
+Install latest [Node.js](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/). As an optional step also consider installing [ESLint](https://eslint.org/docs/user-guide/integrations#editors) and [EditorConfig](http://editorconfig.org/#download) extensions for your favorite editor - this will help you apply project specific source code style rules from within the editor.
 
 ### Install dependencies
 
 Clone this repository with git and install third-party dependencies:
 
 ```
-npm install
+yarn install
 ```
 
 ### Build data files
@@ -23,10 +23,10 @@ npm install
 Build all source data files inside */data* directory:
 
 ```
-npm run build
+yarn build
 ```
 
-If you ever make any changes to data files in this directory - make sure to run `npm run build` again.
+If you ever make any changes to data files in this directory - make sure to run `yarn build` again.
 
 ## Run application
 
@@ -35,7 +35,7 @@ You can run this application with a GUI or a simple command-line interface.
 ### GUI application
 
 ```
-npm start
+yarn start
 ```
 
 You can then use <kbd>F5</kbd> key to reload application and <kbd>F12</kbd> to toggle developer tools.
