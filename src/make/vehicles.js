@@ -1,4 +1,4 @@
-import data from "../data"
+import data from '../data'
 
 // Generate available mission vehicles
 export default function makeVehicles() {

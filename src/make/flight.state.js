@@ -1,10 +1,10 @@
-import makeFlightTime from "./flight.time"
+import makeFlightTime from './flight.time'
 
 // Make flight state
 export default function makeFlightState(flight) {
 
 	// Process only flights with a valid state
-	if (typeof flight.state !== "number") {
+	if (typeof flight.state !== 'number') {
 		return
 	}
 

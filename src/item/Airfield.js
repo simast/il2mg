@@ -1,4 +1,4 @@
-import Block from "./Block"
+import Block from './Block'
 
 // Airfield item
 export default class Airfield extends Block {
@@ -38,7 +38,7 @@ export default class Airfield extends Block {
 			let chartItem
 			for (const item of this.items) {
 
-				if (item.type === "Chart") {
+				if (item.type === 'Chart') {
 
 					chartItem = item
 					break
@@ -49,7 +49,7 @@ export default class Airfield extends Block {
 
 				chartItem.items.forEach(item => {
 
-					if (item.type === "Point") {
+					if (item.type === 'Point') {
 						pointItems.push(item)
 					}
 				})

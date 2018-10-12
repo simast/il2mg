@@ -1,4 +1,4 @@
-import {makeForce} from "./forces"
+import {makeForce} from './forces'
 
 // NOTE: We have to limit max number of plane entities even with virtual flights
 // It seems disabled entities still consume a lot of memory and have a significant

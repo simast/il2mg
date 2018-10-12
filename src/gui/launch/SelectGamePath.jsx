@@ -1,13 +1,13 @@
-import React from "react"
-import {observer} from "mobx-react"
-import launchStore from "./store"
-import {selectGamePath} from "./actions"
+import React from 'react'
+import {observer} from 'mobx-react'
+import launchStore from './store'
+import {selectGamePath} from './actions'
 
 // Select game path component
 export default observer(() => (
 	<div id="selectGamePath">
 		<a onClick={() => selectGamePath()}>
-			{launchStore.gamePath || "Select IL-2 Sturmovik folder..."}
+			{launchStore.gamePath || 'Select IL-2 Sturmovik folder...'}
 		</a>
 	</div>
 ))

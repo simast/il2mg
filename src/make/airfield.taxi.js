@@ -1,5 +1,5 @@
-import Item, {PRECISION_POSITION} from "../item"
-import data, {ItemFlag} from "../data"
+import Item, {PRECISION_POSITION} from '../item'
+import data, {ItemFlag} from '../data'
 
 // Make airfield taxi route
 export default function makeAirfieldTaxi(airfield, taxiRouteID) {
@@ -31,7 +31,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 	// Set unique airfield callsign
 	if (!airfield.callsign) {
 
-		airfield.callsign = this.getCallsign("airfield")
+		airfield.callsign = this.getCallsign('airfield')
 
 		// Make sure the callsign used for player home airfield is unique
 		if (this.player && this.player.flight) {
@@ -41,7 +41,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 			if (airfield.id !== playerAirfield.id && playerAirfield.callsign) {
 
 				while (airfield.callsign.id === playerAirfield.callsign.id) {
-					airfield.callsign = this.getCallsign("airfield")
+					airfield.callsign = this.getCallsign('airfield')
 				}
 			}
 		}
@@ -102,7 +102,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 		}
 	}
 
-	const chartItem = new Item("Chart")
+	const chartItem = new Item('Chart')
 	const firstPoint = taxiPoints[0]
 	const lastPoint = taxiPoints[taxiPoints.length - 1]
 
@@ -110,7 +110,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 	for (let i = 0; i < taxiPoints.length; i++) {
 
 		const point = taxiPoints[i]
-		const pointItem = new Item("Point")
+		const pointItem = new Item('Point')
 		let pointType = 1 // Taxi point type
 
 		// Parking point type

@@ -1,44 +1,44 @@
-import path from "path"
-import yaml from "js-yaml"
-import CleanCSS from "clean-css"
-import webpack from "webpack"
-import electronPackager from "electron-packager"
-import TerserPlugin from "terser-webpack-plugin"
+import path from 'path'
+import yaml from 'js-yaml'
+import CleanCSS from 'clean-css'
+import webpack from 'webpack'
+import electronPackager from 'electron-packager'
+import TerserPlugin from 'terser-webpack-plugin'
 
 import {
 	APPLICATION_NAME,
 	APPLICATION_TITLE,
 	APPLICATION_VERSION,
 	APPLICATION_COPYRIGHT
-} from "../../src/constants"
+} from '../../src/constants'
 
 module.exports = function(grunt) {
 
 	// Grunt task used to build a release package
-	grunt.registerTask("build:release", "Build a release package.", async function() {
+	grunt.registerTask('build:release', 'Build a release package.', async function() {
 
 		const done = this.async()
-		const outDir = "build"
-		const buildDir = path.join(outDir, "temp")
-		const guiDir = path.join("src", "gui")
+		const outDir = 'build'
+		const buildDir = path.join(outDir, 'temp')
+		const guiDir = path.join('src', 'gui')
 
 		// Build application data
 		const buildData = () => new Promise(resolve => {
 
 			// Process all application JSON/YAML data files
-			grunt.file.expand("data/**/*.@(json|yaml)").forEach(file => {
+			grunt.file.expand('data/**/*.@(json|yaml)').forEach(file => {
 
 				let parseDataFile = JSON.parse
 
 				// NOTE: All YAML files are converted to JSON in production build
-				if (path.extname(file) === ".yaml") {
+				if (path.extname(file) === '.yaml') {
 					parseDataFile = yaml.safeLoad
 				}
 
 				// Rename file path to always use .json extension
 				const fileJSON = path.join(
 					path.dirname(file),
-					path.basename(file, path.extname(file)) + ".json"
+					path.basename(file, path.extname(file)) + '.json'
 				)
 
 				// Write minified JSON files
@@ -53,10 +53,10 @@ module.exports = function(grunt) {
 		// Build GUI application package
 		const buildApplication = () => {
 
-			const appFileHTML = "index.html"
-			const appFileCSS = "style.css"
-			const appFileMain = "main.js"
-			const appFileRenderer = "index.js"
+			const appFileHTML = 'index.html'
+			const appFileCSS = 'style.css'
+			const appFileMain = 'main.js'
+			const appFileRenderer = 'index.js'
 			const terserOptions = {
 				toplevel: true,
 				mangle: true,
@@ -72,11 +72,11 @@ module.exports = function(grunt) {
 			}
 
 			// Build application package.json file
-			grunt.file.write(path.join(buildDir, "package.json"), JSON.stringify({
+			grunt.file.write(path.join(buildDir, 'package.json'), JSON.stringify({
 				name: APPLICATION_NAME,
 				private: true,
 				main: appFileMain
-			}, null, "\t"))
+			}, null, '\t'))
 
 			// Build renderer process HTML file
 			grunt.file.copy(
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
 
 						grunt.file.setBase(guiDir)
 						const {styles} = new CleanCSS().minify(content)
-						grunt.file.setBase("../../")
+						grunt.file.setBase('../../')
 
 						return styles
 					}
@@ -101,17 +101,17 @@ module.exports = function(grunt) {
 			)
 
 			// Include assets
-			grunt.file.copy(path.join(guiDir, "assets"), path.join(buildDir, "assets"))
+			grunt.file.copy(path.join(guiDir, 'assets'), path.join(buildDir, 'assets'))
 
 			// Build main and renderer process JavaScript files
 			return new Promise((resolve, reject) => {
 
 				// Common webpack config options
 				const commonOptions = {
-					mode: "production",
+					mode: 'production',
 					devtool: false,
 					resolve: {
-						extensions: [".js", ".jsx"]
+						extensions: ['.js', '.jsx']
 					},
 					module: {
 						rules: [
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
 								test: /\.jsx?$/,
 								exclude: /node_modules/,
 								use: {
-									loader: "babel-loader"
+									loader: 'babel-loader'
 								}
 							}
 						]
@@ -142,21 +142,21 @@ module.exports = function(grunt) {
 				webpack([
 					// Main process
 					Object.assign({}, commonOptions, {
-						entry: "./src/gui/run.js",
+						entry: './src/gui/run.js',
 						output: {
 							path: path.resolve(buildDir),
 							filename: appFileMain
 						},
-						target: "electron-main"
+						target: 'electron-main'
 					}),
 					// Renderer process
 					Object.assign({}, commonOptions, {
-						entry: "./src/gui/index.jsx",
+						entry: './src/gui/index.jsx',
 						output: {
 							path: path.resolve(buildDir),
 							filename: appFileRenderer
 						},
-						target: "electron-renderer"
+						target: 'electron-renderer'
 					})
 				], (error, stats) => {
 
@@ -176,19 +176,19 @@ module.exports = function(grunt) {
 		// Package application using Electron
 		const packageApplication = () => electronPackager({
 			quiet: true,
-			arch: "x64",
+			arch: 'x64',
 			platform: process.platform,
 			prune: false,
 			dir: buildDir,
 			out: outDir,
 			asar: true,
-			icon: path.join(guiDir, "app.ico"),
+			icon: path.join(guiDir, 'app.ico'),
 			appCopyright: APPLICATION_COPYRIGHT,
-			appVersion: "0." + APPLICATION_VERSION,
+			appVersion: '0.' + APPLICATION_VERSION,
 			win32metadata: {
-				CompanyName: "",
+				CompanyName: '',
 				FileDescription: APPLICATION_TITLE,
-				OriginalFilename: APPLICATION_NAME + ".exe",
+				OriginalFilename: APPLICATION_NAME + '.exe',
 				ProductName: APPLICATION_NAME,
 				InternalName: APPLICATION_NAME
 			}

@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Formation command type constants
 export const TYPE_PLANE_NONE = 0 // Plane: None

@@ -1,6 +1,6 @@
-import * as Vehicle from "../item/Vehicle"
-import * as MCU_CMD_AttackArea from "../item/MCU_CMD_AttackArea"
-import data, {ItemTag} from "../data"
+import * as Vehicle from '../item/Vehicle'
+import * as MCU_CMD_AttackArea from '../item/MCU_CMD_AttackArea'
+import data, {ItemTag} from '../data'
 
 // Make airfield vehicle item
 export default function makeAirfieldVehicle(airfield, item, isLive) {
@@ -26,42 +26,42 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 		// Cargo truck
 		case ItemTag.CargoTruck: {
 
-			vehicleType = "truck_cargo"
+			vehicleType = 'truck_cargo'
 			isStatic = !isLive
 			break
 		}
 		// Fuel truck
 		case ItemTag.FuelTruck: {
 
-			vehicleType = "truck_fuel"
+			vehicleType = 'truck_fuel'
 			isStatic = true
 			break
 		}
 		// Car vehicle
 		case ItemTag.Car: {
 
-			vehicleType = "staff_car"
+			vehicleType = 'staff_car'
 			isStatic = !isLive
 			break
 		}
 		// Anti-aircraft (Flak)
 		case ItemTag.AntiAircraftFlak: {
 
-			vehicleType = "aa_flak"
+			vehicleType = 'aa_flak'
 			useAttackArea = true
 			break
 		}
 		// Anti-aircraft (MG)
 		case ItemTag.AntiAircraftMG: {
 
-			vehicleType = "aa_mg"
+			vehicleType = 'aa_mg'
 			useAttackArea = true
 			break
 		}
 		// Anti-aircraft (Train platform)
 		case ItemTag.AntiAircraftTrain: {
 
-			vehicleType = "train_aa"
+			vehicleType = 'train_aa'
 			useAttackArea = true
 			isTrain = true
 			break
@@ -69,7 +69,7 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 		// Search light
 		case ItemTag.SearchLight: {
 
-			vehicleType = "search_light"
+			vehicleType = 'search_light'
 			useAttackArea = true
 			break
 		}
@@ -99,13 +99,13 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 		vehicle = data.getItemType(vehicle.static)
 	}
 
-	let itemType = "Vehicle"
+	let itemType = 'Vehicle'
 
 	if (isStatic) {
 		itemType = vehicle
 	}
 	else if (isTrain) {
-		itemType = "Train"
+		itemType = 'Train'
 	}
 
 	// Create vehicle item
@@ -159,7 +159,7 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 			// Create a shared attack area command (activated when airfield is loaded)
 			if (!onAttackArea) {
 
-				onAttackArea = zone.onAttackArea = zone.group.createItem("MCU_CMD_AttackArea")
+				onAttackArea = zone.onAttackArea = zone.group.createItem('MCU_CMD_AttackArea')
 
 				onAttackArea.setPositionNear(zone.onLoad)
 				onAttackArea.AttackAir = 1 // Attack air targets

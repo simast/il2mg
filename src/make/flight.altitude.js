@@ -1,8 +1,8 @@
 // Altitude level types
 export const AltitudeLevel = Object.freeze({
-	Low: "low",
-	Medium: "medium",
-	High: "high"
+	Low: 'low',
+	Medium: 'medium',
+	High: 'high'
 })
 
 // Valid altitude ranges (in meters)

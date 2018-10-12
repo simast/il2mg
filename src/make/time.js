@@ -1,7 +1,7 @@
-import moment from "moment"
-import suncalc from "suncalc"
-import data from "../data"
-import log from "../log"
+import moment from 'moment'
+import suncalc from 'suncalc'
+import data from '../data'
+import log from '../log'
 
 // Main period time lengths
 const TIME_DAWN = data.time.dawn.period
@@ -14,7 +14,7 @@ const TIME_MIDNIGHT = data.time.midnight.period
 // Generate mission time
 export default function makeTime() {
 
-	const date = this.date.startOf("day")
+	const date = this.date.startOf('day')
 	const {rand, map} = this
 
 	// Get sun times data
@@ -32,8 +32,8 @@ export default function makeTime() {
 		minute: sunriseTime.minute()
 	})
 
-	const sunriseStart = moment(sunrise).subtract(TIME_SUNRISE / 2, "s")
-	const sunriseEnd = moment(sunrise).add(TIME_SUNRISE / 2, "s")
+	const sunriseStart = moment(sunrise).subtract(TIME_SUNRISE / 2, 's')
+	const sunriseEnd = moment(sunrise).add(TIME_SUNRISE / 2, 's')
 
 	// Noon time objects
 	const noon = this.noon = moment(date)
@@ -44,33 +44,33 @@ export default function makeTime() {
 		minute: noonTime.minute()
 	})
 
-	const noonStart = moment(noon).subtract(TIME_NOON / 2, "s")
-	const noonEnd = moment(noon).add(TIME_NOON / 2, "s")
+	const noonStart = moment(noon).subtract(TIME_NOON / 2, 's')
+	const noonEnd = moment(noon).add(TIME_NOON / 2, 's')
 
 	// Sunset time objects
 	const sunset = this.sunset = moment(date)
 	const sunsetTime = moment(sunTimes.sunsetStart).utcOffset(map.utcOffset)
 
 	// NOTE: In-game sunset start time is off by around 30 minutes from SunCalc results
-	sunsetTime.subtract(30, "minutes")
+	sunsetTime.subtract(30, 'minutes')
 
 	sunset.set({
 		hour: sunsetTime.hour(),
 		minute: sunsetTime.minute()
 	})
 
-	const sunsetStart = moment(sunset).subtract(TIME_SUNSET / 2, "s")
-	const sunsetEnd = moment(sunset).add(TIME_SUNSET / 2, "s")
+	const sunsetStart = moment(sunset).subtract(TIME_SUNSET / 2, 's')
+	const sunsetEnd = moment(sunset).add(TIME_SUNSET / 2, 's')
 
 	// Midnight time objects
-	const midnight = this.midnight = moment(noon).subtract(12, "h")
-	const midnightStart = moment(midnight).subtract(TIME_MIDNIGHT / 2, "s")
-	const midnightEnd = moment(midnight).add(TIME_MIDNIGHT / 2, "s")
+	const midnight = this.midnight = moment(noon).subtract(12, 'h')
+	const midnightStart = moment(midnight).subtract(TIME_MIDNIGHT / 2, 's')
+	const midnightEnd = moment(midnight).add(TIME_MIDNIGHT / 2, 's')
 
 	// Other time objects
-	const dawnStart = moment(sunriseStart).subtract(TIME_DAWN, "s")
-	const duskEnd = moment(sunsetEnd).add(TIME_DUSK, "s")
-	const eveningStart = moment(noonEnd).add(sunsetEnd.diff(noonEnd) / 2, "ms")
+	const dawnStart = moment(sunriseStart).subtract(TIME_DAWN, 's')
+	const duskEnd = moment(sunsetEnd).add(TIME_DUSK, 's')
+	const eveningStart = moment(noonEnd).add(sunsetEnd.diff(noonEnd) / 2, 'ms')
 
 	let time = this.params.time
 
@@ -97,109 +97,109 @@ export default function makeTime() {
 	}
 
 	// Generate time from a named time period
-	if (typeof time === "string") {
+	if (typeof time === 'string') {
 
 		const randValue = rand.real(0, 1)
 
 		switch (time) {
 
 			// Dawn (from night to sunrise)
-			case "dawn": {
+			case 'dawn': {
 
 				time = moment(dawnStart)
-				time.add(randValue * TIME_DAWN, "s")
+				time.add(randValue * TIME_DAWN, 's')
 
 				break
 			}
 
 			// Sunrise (time around sunrise)
-			case "sunrise": {
+			case 'sunrise': {
 
 				time = moment(sunriseStart)
-				time.add(randValue * TIME_SUNRISE, "s")
+				time.add(randValue * TIME_SUNRISE, 's')
 
 				break
 			}
 
 			// Morning (from sunrise to noon)
-			case "morning": {
+			case 'morning': {
 
 				time = moment(sunriseStart)
-				time.add(randValue * noonStart.diff(time), "ms")
+				time.add(randValue * noonStart.diff(time), 'ms')
 
 				break
 			}
 
 			// Day (from sunrise to sunset)
-			case "day": {
+			case 'day': {
 
 				time = moment(sunriseStart)
-				time.add(randValue * sunsetEnd.diff(time), "ms")
+				time.add(randValue * sunsetEnd.diff(time), 'ms')
 
 				break
 			}
 
 			// Noon (time around solar noon)
-			case "noon": {
+			case 'noon': {
 
 				time = moment(noonStart)
-				time.add(randValue * TIME_NOON, "s")
+				time.add(randValue * TIME_NOON, 's')
 
 				break
 			}
 
 			// Afternoon (from noon to evening)
-			case "afternoon": {
+			case 'afternoon': {
 
 				time = moment(noonEnd)
-				time.add(randValue * eveningStart.diff(time), "ms")
+				time.add(randValue * eveningStart.diff(time), 'ms')
 
 				break
 			}
 
 			// Evening (from afternoon to night)
-			case "evening": {
+			case 'evening': {
 
 				time = moment(eveningStart)
-				time.add(randValue * duskEnd.diff(time), "ms")
+				time.add(randValue * duskEnd.diff(time), 'ms')
 
 				break
 			}
 
 			// Sunset (time around sunset)
-			case "sunset": {
+			case 'sunset': {
 
 				time = moment(sunsetStart)
-				time.add(randValue * TIME_SUNSET, "s")
+				time.add(randValue * TIME_SUNSET, 's')
 
 				break
 			}
 
 			// Dusk (from sunset to night)
-			case "dusk": {
+			case 'dusk': {
 
 				time = moment(sunsetEnd)
-				time.add(randValue * TIME_DUSK, "s")
+				time.add(randValue * TIME_DUSK, 's')
 
 				break
 			}
 
 			// Night (from dusk to dawn)
-			case "night": {
+			case 'night': {
 
 				time = moment(duskEnd)
 				time.add(randValue * moment(dawnStart)
-					.add(1, "d")
-					.diff(duskEnd), "ms")
+					.add(1, 'd')
+					.diff(duskEnd), 'ms')
 
 				break
 			}
 
 			// Midnight (time around solar midnight)
-			case "midnight": {
+			case 'midnight': {
 
 				time = moment(midnightStart)
-				time.add(randValue * TIME_MIDNIGHT, "s")
+				time.add(randValue * TIME_MIDNIGHT, 's')
 
 				break
 			}
@@ -273,13 +273,13 @@ export default function makeTime() {
 	}
 
 	// Set mission options time
-	this.items.Options.Time = new String(date.format("H:m:s"))
+	this.items.Options.Time = new String(date.format('H:m:s'))
 
 	// Log mission time info
 	let logData = []
 
-	logData.push("Time:")
-	logData.push(date.format("HH:mm"))
+	logData.push('Time:')
+	logData.push(date.format('HH:mm'))
 	logData = logData.concat(Object.keys(timeFlags))
 
 	log.I.apply(log, logData)

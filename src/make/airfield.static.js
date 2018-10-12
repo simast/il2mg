@@ -1,4 +1,4 @@
-import data, {ItemFlag} from "../data"
+import data, {ItemFlag} from '../data'
 
 // Make airfield static item
 export default function makeAirfieldStatic(airfield, item) {

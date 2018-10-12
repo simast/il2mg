@@ -1,12 +1,12 @@
-import path from "path"
-import numeral from "numeral"
-import data from "../../src/data"
-import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from "../../src/item"
+import path from 'path'
+import numeral from 'numeral'
+import data from '../../src/data'
+import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from '../../src/item'
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw blocks .Group to .json files
-	grunt.registerTask("build:blocks", "Build blocks JSON files.", () => {
+	grunt.registerTask('build:blocks', 'Build blocks JSON files.', () => {
 
 		let totalBattles = 0
 		let totalItems = 0
@@ -15,13 +15,13 @@ module.exports = function(grunt) {
 		for (const battleID in data.battles) {
 
 			const battle = data.battles[battleID]
-			const blocksPath = path.join("data", "battles", battleID, "blocks")
+			const blocksPath = path.join('data', 'battles', battleID, 'blocks')
 
 			// Process all blocks files
 			battle.blocks.forEach(blockFile => {
 
-				const fileSource = path.join(blocksPath, blockFile + ".Group")
-				const fileDestination = path.join(blocksPath, blockFile + ".json")
+				const fileSource = path.join(blocksPath, blockFile + '.Group')
+				const fileDestination = path.join(blocksPath, blockFile + '.json')
 
 				// Read raw blocks
 				const blocks = Item.readTextFile(fileSource)
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 				// Write output JSON blocks file
 				grunt.file.write(
 					fileDestination,
-					JSON.stringify(json, null, "\t")
+					JSON.stringify(json, null, '\t')
 				)
 			})
 
@@ -79,16 +79,16 @@ module.exports = function(grunt) {
 
 		// Write items type JSON data file
 		grunt.file.write(
-			"data/items/index.json",
-			JSON.stringify(data.items, null, "\t")
+			'data/items/index.json',
+			JSON.stringify(data.items, null, '\t')
 		)
 
-		let message = ""
+		let message = ''
 
-		message += numeral(totalItems).format("0,0") + " "
-		message += grunt.util.pluralize(totalItems, "item/items")
-		message += " processed from " + numeral(totalBattles).format("0,0") + " "
-		message += grunt.util.pluralize(totalBattles, "battle/battles") + "."
+		message += numeral(totalItems).format('0,0') + ' '
+		message += grunt.util.pluralize(totalItems, 'item/items')
+		message += ' processed from ' + numeral(totalBattles).format('0,0') + ' '
+		message += grunt.util.pluralize(totalBattles, 'battle/battles') + '.'
 
 		grunt.log.ok(message)
 	})

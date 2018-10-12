@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 // Data choice list item component
 export default class ChoiceListItem extends React.Component {
@@ -21,11 +21,11 @@ export default class ChoiceListItem extends React.Component {
 		let suffix, alias
 
 		if (data.suffix) {
-			suffix = <span>{" " + data.suffix}</span>
+			suffix = <span>{' ' + data.suffix}</span>
 		}
 
 		if (data.alias) {
-			alias = <em>{" “" + data.alias + "”"}</em>
+			alias = <em>{' “' + data.alias + '”'}</em>
 		}
 
 		const propsItem = {}
@@ -38,18 +38,18 @@ export default class ChoiceListItem extends React.Component {
 		const className = []
 
 		if (data.country) {
-			className.push("country", "c" + data.country)
+			className.push('country', 'c' + data.country)
 		}
 
 		if (choice.selected) {
-			className.push("selected")
+			className.push('selected')
 		}
 		else if (!choice.valid) {
-			propsItem.className = "invalid"
+			propsItem.className = 'invalid'
 		}
 
 		if (className.length) {
-			propsLink.className = className.join(" ")
+			propsLink.className = className.join(' ')
 		}
 
 		return (

@@ -1,4 +1,4 @@
-import Item, {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from "../item"
+import Item, {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from '../item'
 
 // Plane AI level constants
 export const AI_PLAYER = 0

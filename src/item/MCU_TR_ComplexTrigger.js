@@ -1,29 +1,29 @@
-import {DEFAULT_DAMAGE_REPORT} from "../item"
-import MCU from "./MCU"
+import {DEFAULT_DAMAGE_REPORT} from '../item'
+import MCU from './MCU'
 
 // Complex Trigger event filters (with order representing bit number in binary file)
 const eventFilters = [
-	"EventsFilterSpawned",
-	"EventsFilterEnteredSimple",
-	"EventsFilterEnteredAlive",
-	"EventsFilterLeftSimple",
-	"EventsFilterLeftAlive",
-	"EventsFilterFinishedSimple",
-	"EventsFilterFinishedAlive",
-	"EventsFilterStationaryAndAlive",
-	"EventsFilterFinishedStationaryAndAlive",
-	"EventsFilterTookOff",
-	"EventsFilterDamaged",
-	"EventsFilterCriticallyDamaged",
-	"EventsFilterRepaired",
-	"EventsFilterKilled",
-	"EventsFilterDropedBombs",
-	"EventsFilterFiredFlare",
-	"EventsFilterFiredRockets",
-	"EventsFilterDroppedCargoContainers",
-	"EventsFilterDeliveredCargo",
-	"EventsFilterParatrooperJumped",
-	"EventsFilterParatrooperLandedAlive"
+	'EventsFilterSpawned',
+	'EventsFilterEnteredSimple',
+	'EventsFilterEnteredAlive',
+	'EventsFilterLeftSimple',
+	'EventsFilterLeftAlive',
+	'EventsFilterFinishedSimple',
+	'EventsFilterFinishedAlive',
+	'EventsFilterStationaryAndAlive',
+	'EventsFilterFinishedStationaryAndAlive',
+	'EventsFilterTookOff',
+	'EventsFilterDamaged',
+	'EventsFilterCriticallyDamaged',
+	'EventsFilterRepaired',
+	'EventsFilterKilled',
+	'EventsFilterDropedBombs',
+	'EventsFilterFiredFlare',
+	'EventsFilterFiredRockets',
+	'EventsFilterDroppedCargoContainers',
+	'EventsFilterDeliveredCargo',
+	'EventsFilterParatrooperJumped',
+	'EventsFilterParatrooperLandedAlive'
 ]
 
 // Complex Trigger item

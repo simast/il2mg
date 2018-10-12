@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Delete item
 export default class MCU_Delete extends MCU {

@@ -1,5 +1,5 @@
-import moment from "moment"
-import log from "../log"
+import moment from 'moment'
+import log from '../log'
 
 // Generate mission date
 export default function makeDate() {
@@ -21,8 +21,8 @@ export default function makeDate() {
 	}
 
 	// Set mission options date
-	options.Date = new String(date.format("D.M.YYYY"))
+	options.Date = new String(date.format('D.M.YYYY'))
 
 	// Log mission date and season
-	log.I("Date:", params.date, this.season)
+	log.I('Date:', params.date, this.season)
 }

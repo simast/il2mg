@@ -1,9 +1,9 @@
-import path from "path"
-import rbush from "rbush"
-import knn from "rbush-knn"
-import sylvester from "sylvester"
-import data from "../data"
-import log from "../log"
+import path from 'path'
+import rbush from 'rbush'
+import knn from 'rbush-knn'
+import sylvester from 'sylvester'
+import data from '../data'
+import log from '../log'
 
 // Location item types
 export const LocationType = Object.freeze({
@@ -32,7 +32,7 @@ export default function makeLocations() {
 	// Load static map locations (places, rivers) from data files
 	this.battle.locations.forEach(locationsFile => {
 
-		const locationsData = data.load(path.join(this.battlePath, "locations", locationsFile))
+		const locationsData = data.load(path.join(this.battlePath, 'locations', locationsFile))
 		const locationsList = []
 
 		// Build locations index per each locations file
@@ -76,13 +76,13 @@ export default function makeLocations() {
 				let totalLocationType
 
 				if (locationType === LocationType.Village) {
-					totalLocationType = "villages"
+					totalLocationType = 'villages'
 				}
 				else if (locationType === LocationType.Town) {
-					totalLocationType = "towns"
+					totalLocationType = 'towns'
 				}
 				else if (locationType === LocationType.City) {
-					totalLocationType = "cities"
+					totalLocationType = 'cities'
 				}
 
 				if (totalLocationType) {
@@ -100,7 +100,7 @@ export default function makeLocations() {
 		totalLocationsByType[type] = totalLocationsByType[type].size
 	}
 
-	log.I("Locations:", totalLocations, totalLocationsByType)
+	log.I('Locations:', totalLocations, totalLocationsByType)
 }
 
 // Location data entry
@@ -119,7 +119,7 @@ export class Location {
 		}
 		// Invalid location position
 		else if (arguments.length !== 4) {
-			throw new TypeError("Invalid location position value.")
+			throw new TypeError('Invalid location position value.')
 		}
 
 		// Define location position as two x1/z1 and x2/z2 bounding box corner points
@@ -148,7 +148,7 @@ Location.Index = class {
 	constructor(locations) {
 
 		// TODO: Figure out best value for the optional rbush(maxEntries) parameter
-		this.tree = rbush(9, [".x1", ".z1", ".x2", ".z2"])
+		this.tree = rbush(9, ['.x1', '.z1', '.x2', '.z2'])
 
 		if (locations) {
 			this.load(locations)

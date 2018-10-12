@@ -1,6 +1,6 @@
-import {PRECISION_POSITION} from "../item"
-import * as MCU_Icon from "../item/MCU_Icon"
-import {markMapArea} from "./map"
+import {PRECISION_POSITION} from '../item'
+import * as MCU_Icon from '../item/MCU_Icon'
+import {markMapArea} from './map'
 
 // NOTE: Most flights will end naturally with a "land" activity - this special
 // end flight activity is used only for rare situations - like ending the flight
@@ -28,7 +28,7 @@ export default class ActivityEnd {
 
 			if (!onEnd && input) {
 
-				onEnd = flight.onEnd = flightGroup.createItem("MCU_Delete")
+				onEnd = flight.onEnd = flightGroup.createItem('MCU_Delete')
 
 				onEnd.setPosition(this.position)
 				input(onEnd)
@@ -63,8 +63,8 @@ export default class ActivityEnd {
 				lineType: MCU_Icon.LINE_ZONE_2
 			})
 
-			const endCheckZone = flightGroup.createItem("MCU_CheckZone")
-			const endMissionItem = flightGroup.createItem("MCU_TR_MissionEnd")
+			const endCheckZone = flightGroup.createItem('MCU_CheckZone')
+			const endMissionItem = flightGroup.createItem('MCU_TR_MissionEnd')
 
 			endCheckZone.Zone = playerEndRadius
 			endCheckZone.setPosition(this.position)
@@ -81,10 +81,10 @@ export default class ActivityEnd {
 			// exit offmap route points might be inside the check zone area.
 			if (airfield.offmap) {
 
-				const endGuardTimer = flightGroup.createItem("MCU_Timer")
-				const endGuardCheckZone = flightGroup.createItem("MCU_CheckZone")
-				const endGuardActivate = flightGroup.createItem("MCU_Activate")
-				const endGuardDeactivate = flightGroup.createItem("MCU_Deactivate")
+				const endGuardTimer = flightGroup.createItem('MCU_Timer')
+				const endGuardCheckZone = flightGroup.createItem('MCU_CheckZone')
+				const endGuardActivate = flightGroup.createItem('MCU_Activate')
+				const endGuardDeactivate = flightGroup.createItem('MCU_Deactivate')
 
 				// Further (guard) activation check zone is +50% larger
 				let endGuardZone = Number(playerEndRadius * 1.5)

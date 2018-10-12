@@ -1,8 +1,8 @@
-import sylvester from "sylvester"
+import sylvester from 'sylvester'
 
 // Flight make parts
-import makeFlightSpeed from "./flight.speed"
-import makeFlightAltitude from "./flight.altitude"
+import makeFlightSpeed from './flight.speed'
+import makeFlightAltitude from './flight.altitude'
 
 // Airfield as a target route constants
 const AIRFIELD_DISTANCE_EGRESS = 20000 // 20 km
@@ -30,7 +30,7 @@ export default function makeFlightRoute(flight, fromPosition, toPoint, options =
 	}
 
 	// Plan a route to an airfield (instead of a target point)
-	if (typeof toPoint === "string") {
+	if (typeof toPoint === 'string') {
 
 		const airfield = this.airfields[toPoint]
 		const airfieldPosition = airfield.position

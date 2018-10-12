@@ -1,8 +1,8 @@
-import fs from "fs"
-import path from "path"
-import {remote, ipcRenderer} from "electron"
-import {observable, computed, action, reaction} from "mobx"
-import {Start, Battle} from "."
+import fs from 'fs'
+import path from 'path'
+import {remote, ipcRenderer} from 'electron'
+import {observable, computed, action, reaction} from 'mobx'
+import {Start, Battle} from '.'
 
 // Create mission state store
 class CreateStore {
@@ -10,14 +10,14 @@ class CreateStore {
 	// Data index for all supported battles
 	battles = {
 		[Battle.Stalingrad]: JSON.parse(fs.readFileSync(
-			path.join(remote.app.getAppPath(), "data", "battles", Battle.Stalingrad, "index") + ".json",
-			"utf-8"
+			path.join(remote.app.getAppPath(), 'data', 'battles', Battle.Stalingrad, 'index') + '.json',
+			'utf-8'
 		))
 	}
 
 	// Observables
 	@observable battle = Battle.Stalingrad
-	@observable date = ""
+	@observable date = ''
 	@observable start = Start.Parking
 	@observable.ref choice = {}
 
@@ -29,7 +29,7 @@ class CreateStore {
 
 	constructor() {
 
-		const {battle, date, start, choice} = remote.getGlobal("config")
+		const {battle, date, start, choice} = remote.getGlobal('config')
 
 		// Load existing create mission state from configuration data
 
@@ -41,11 +41,11 @@ class CreateStore {
 			this.battle = battle
 		}
 
-		if (typeof date === "string" && date in this.battles[this.battle].dates) {
+		if (typeof date === 'string' && date in this.battles[this.battle].dates) {
 			this.date = date
 		}
 
-		if (typeof choice === "object") {
+		if (typeof choice === 'object') {
 			this.choice = choice
 		}
 
@@ -53,7 +53,7 @@ class CreateStore {
 		reaction(
 			() => this.config,
 			config => {
-				ipcRenderer.sendSync("setConfig", config)
+				ipcRenderer.sendSync('setConfig', config)
 			}
 		)
 	}

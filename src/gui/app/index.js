@@ -1,5 +1,5 @@
-import {remote} from "electron"
-import fs from "fs"
+import {remote} from 'electron'
+import fs from 'fs'
 
 // Show error message dialog
 export function showErrorMessage(message) {
@@ -7,10 +7,10 @@ export function showErrorMessage(message) {
 	remote.dialog.showMessageBox(
 		remote.getCurrentWindow(),
 		{
-			type: "error",
-			title: "Error!",
+			type: 'error',
+			title: 'Error!',
 			message,
-			buttons: ["OK"],
+			buttons: ['OK'],
 			noLink: true
 		}
 	)
@@ -27,7 +27,7 @@ export function moveFileSync(sourceFile, destFile) {
 	}
 	catch (e) {
 
-		if (e.code !== "EXDEV") {
+		if (e.code !== 'EXDEV') {
 			throw e
 		}
 

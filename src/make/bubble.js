@@ -1,7 +1,7 @@
-import Quadtree from "quadtree-lib"
-import addLazyProperty from "lazy-property"
-import encloseCircles from "circle-enclose"
-import {PRECISION_POSITION} from "../item"
+import Quadtree from 'quadtree-lib'
+import addLazyProperty from 'lazy-property'
+import encloseCircles from 'circle-enclose'
+import {PRECISION_POSITION} from '../item'
 
 // NOTE: The goal of a bubble system is to make sure that the least amount of
 // check zone triggers are active in a mission at a given time. A quad tree is
@@ -38,7 +38,7 @@ export default function makeBubble() {
 
 		// Validate parameters
 		if (x < 0 || x > map.height || z < 0 || z > map.width || !radius) {
-			throw TypeError("Invalid activity zone parameters.")
+			throw TypeError('Invalid activity zone parameters.')
 		}
 
 		// Public activity zone interface
@@ -65,24 +65,24 @@ export default function makeBubble() {
 		// Initialize base bubble group
 		if (!bubbleGroup) {
 
-			bubbleGroup = this.createItem("Group")
-			bubbleGroup.setName("BUBBLE")
+			bubbleGroup = this.createItem('Group')
+			bubbleGroup.setName('BUBBLE')
 		}
 
 		let zoneGroup = zone.group
 
 		if (!zoneGroup) {
-			zoneGroup = zone.group = bubbleGroup.createItem("Group")
+			zoneGroup = zone.group = bubbleGroup.createItem('Group')
 		}
 
-		const checkZone = zoneGroup.createItem("MCU_CheckZone")
-		const checkZoneActivate = zoneGroup.createItem("MCU_Activate")
-		const checkZoneDeactivate = zoneGroup.createItem("MCU_Deactivate")
-		const checkZoneCheck = zoneGroup.createItem("MCU_Timer")
-		const checkZoneUnload = zoneGroup.createItem("MCU_Timer")
-		const checkZoneLoad = zoneGroup.createItem("MCU_Timer")
-		const checkZoneLoadActivate = zoneGroup.createItem("MCU_Activate")
-		const checkZoneLoadDeactivate = zoneGroup.createItem("MCU_Deactivate")
+		const checkZone = zoneGroup.createItem('MCU_CheckZone')
+		const checkZoneActivate = zoneGroup.createItem('MCU_Activate')
+		const checkZoneDeactivate = zoneGroup.createItem('MCU_Deactivate')
+		const checkZoneCheck = zoneGroup.createItem('MCU_Timer')
+		const checkZoneUnload = zoneGroup.createItem('MCU_Timer')
+		const checkZoneLoad = zoneGroup.createItem('MCU_Timer')
+		const checkZoneLoadActivate = zoneGroup.createItem('MCU_Activate')
+		const checkZoneLoadDeactivate = zoneGroup.createItem('MCU_Deactivate')
 
 		// Single check zone item used to track plane/vehicle activity
 		// TODO: Also set VehicleCoalitions?
@@ -139,9 +139,9 @@ export default function makeBubble() {
 		zone.onUnload = checkZoneUnload
 
 		// Lazy onActivate event item (triggered when zone is loaded)
-		addLazyProperty(zone, "onActivate", () => {
+		addLazyProperty(zone, 'onActivate', () => {
 
-			const onActivate = zoneGroup.createItem("MCU_Activate")
+			const onActivate = zoneGroup.createItem('MCU_Activate')
 
 			checkZoneLoad.addTarget(onActivate)
 			onActivate.setPositionNear(checkZoneLoad)
@@ -150,9 +150,9 @@ export default function makeBubble() {
 		})
 
 		// Lazy onDeactivate event item (triggered when zone is unloaded)
-		addLazyProperty(zone, "onDeactivate", () => {
+		addLazyProperty(zone, 'onDeactivate', () => {
 
-			const onDeactivate = zoneGroup.createItem("MCU_Deactivate")
+			const onDeactivate = zoneGroup.createItem('MCU_Deactivate')
 
 			checkZoneUnload.addTarget(onDeactivate)
 			onDeactivate.setPositionNear(checkZoneUnload)
@@ -161,9 +161,9 @@ export default function makeBubble() {
 		})
 
 		// Lazy onInitialize event item (triggered when zone is intialized)
-		addLazyProperty(zone, "onInitialize", () => {
+		addLazyProperty(zone, 'onInitialize', () => {
 
-			const onInitialize = zoneGroup.createItem("MCU_Counter")
+			const onInitialize = zoneGroup.createItem('MCU_Counter')
 
 			checkZone.addTarget(onInitialize)
 			onInitialize.setPositionNear(checkZone)
@@ -254,8 +254,8 @@ export default function makeBubble() {
 		if (zones.length) {
 
 			// Initialize base mission start trigger (used to activate bubble logic)
-			const missionBegin = bubbleGroup.createItem("MCU_TR_MissionBegin")
-			const missionBeginTimer = bubbleGroup.createItem("MCU_Timer")
+			const missionBegin = bubbleGroup.createItem('MCU_TR_MissionBegin')
+			const missionBeginTimer = bubbleGroup.createItem('MCU_Timer')
 
 			missionBegin.setPosition(qt.height / 2, qt.width / 2)
 			missionBegin.addTarget(missionBeginTimer)

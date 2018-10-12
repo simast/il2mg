@@ -1,11 +1,11 @@
-import numeral from "numeral"
-import * as MCU_Waypoint from "../item/MCU_Waypoint"
-import * as MCU_CMD_Cover from "../item/MCU_CMD_Cover"
-import {markMapArea} from "./map"
-import {makeActivity} from "./flight.plan"
-import makeBriefingLead from "./briefing.lead"
-import makeFlightSpeed from "./flight.speed"
-import makeFlightFuel from "./flight.fuel"
+import numeral from 'numeral'
+import * as MCU_Waypoint from '../item/MCU_Waypoint'
+import * as MCU_CMD_Cover from '../item/MCU_CMD_Cover'
+import {markMapArea} from './map'
+import {makeActivity} from './flight.plan'
+import makeBriefingLead from './briefing.lead'
+import makeFlightSpeed from './flight.speed'
+import makeFlightFuel from './flight.fuel'
 
 // Min/max percent of max flight fuel range used as cover activity distance
 const MIN_COVER_RANGE_RATIO = 0.5 // 50%
@@ -13,18 +13,18 @@ const MAX_COVER_RANGE_RATIO = 0.7 // 70%
 
 // First (intro) plan description segments
 const introSegments = [
-	"stay within visual range of the airfield",
-	"carry out an effective cover for the airfield",
-	"fly over and around the airfield",
-	"support local anti-aircraft ground defense units"
+	'stay within visual range of the airfield',
+	'carry out an effective cover for the airfield',
+	'fly over and around the airfield',
+	'support local anti-aircraft ground defense units'
 ]
 
 // Last (outro) plan description segments
 const outroSegments = [
-	"ground staff will be in close contact and will provide full radio support",
-	"proceed with your mission until out of fuel or ammunition",
-	"keep your eyes open for any enemy contacts",
-	"maintain a strict and tight formation"
+	'ground staff will be in close contact and will provide full radio support',
+	'proceed with your mission until out of fuel or ammunition',
+	'keep your eyes open for any enemy contacts',
+	'maintain a strict and tight formation'
 ]
 
 // Make mission cover airfield task
@@ -87,7 +87,7 @@ function makeTaskCoverAction(element, input) {
 		// Use climb waypoint above the airfield as a cover command
 		if (this.altitude) {
 
-			coverCommand = flight.group.createItem("MCU_Waypoint")
+			coverCommand = flight.group.createItem('MCU_Waypoint')
 
 			coverCommand.Area = rand.integer(75, 125)
 			coverCommand.Speed = this.speed
@@ -104,7 +104,7 @@ function makeTaskCoverAction(element, input) {
 			// actually reach required waypoint altitude and not to abort on first pass
 			// below the waypoint - we use a trick with a timer that keeps activating
 			// the same low priority waypoint over and over again.
-			const altitudeTimer = flight.group.createItem("MCU_Timer")
+			const altitudeTimer = flight.group.createItem('MCU_Timer')
 
 			// TODO: Disable this altitude timer at some point?
 
@@ -117,7 +117,7 @@ function makeTaskCoverAction(element, input) {
 		// Use cover command with airfield beacon
 		else if (beacon) {
 
-			coverCommand = flight.group.createItem("MCU_CMD_Cover")
+			coverCommand = flight.group.createItem('MCU_CMD_Cover')
 
 			coverCommand.setPositionNear(beacon)
 			coverCommand.addTarget(beacon.entity)
@@ -194,23 +194,23 @@ function makeTaskCoverBriefing() {
 		briefingIntro.push(rand.pick(introSegments))
 	}
 
-	briefing.push(briefingIntro.join(" and "))
+	briefing.push(briefingIntro.join(' and '))
 
 	// Add climb altitude briefing segment
 	if (this.altitude) {
 
 		// TODO: Use feets for other countries?
 		let altitudeStr = Math.round(this.altitude / 100) * 100
-		altitudeStr = numeral(altitudeStr).format("0,0")
+		altitudeStr = numeral(altitudeStr).format('0,0')
 
-		briefing.push("Climb to [" + altitudeStr + " meters] altitude")
+		briefing.push('Climb to [' + altitudeStr + ' meters] altitude')
 	}
 
 	briefing.push(rand.pick(outroSegments))
 
 	return briefing.map(value => (
 		value.charAt(0).toUpperCase() + value.slice(1)
-	)).join(". ") + "."
+	)).join('. ') + '.'
 }
 
 // Make cover airfield activity time

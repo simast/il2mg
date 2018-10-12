@@ -1,5 +1,5 @@
-import moment from "moment"
-import Item from "../item"
+import moment from 'moment'
+import Item from '../item'
 
 // Options item
 export default class Options extends Item {
@@ -13,8 +13,8 @@ export default class Options extends Item {
 	 */
 	*toBinary() {
 
-		const date = moment(this.Date, "D.M.YYYY", true)
-		const time = moment(this.Time, "H:m:s", true)
+		const date = moment(this.Date, 'D.M.YYYY', true)
+		const time = moment(this.Time, 'H:m:s', true)
 
 		const hmapLength = Buffer.byteLength(this.HMap)
 		const texturesLength = Buffer.byteLength(this.Textures)

@@ -1,25 +1,25 @@
-import path from "path"
-import addLazyProperty from "lazy-property"
+import path from 'path'
+import addLazyProperty from 'lazy-property'
 
-import log from "../log"
-import Item from "../item"
-import {Location, LocationType} from "./locations"
-import {isOffmap} from "./map"
-import {FlightState} from "./flight"
-import {PlaneSize, getPlaneSizeFromName} from "./planes"
-import data, {ItemTag} from "../data"
+import log from '../log'
+import Item from '../item'
+import {Location, LocationType} from './locations'
+import {isOffmap} from './map'
+import {FlightState} from './flight'
+import {PlaneSize, getPlaneSizeFromName} from './planes'
+import data, {ItemTag} from '../data'
 
 // Airfield make parts
-import makeAirfieldLimits from "./airfield.limits"
-import makeAirfieldStatic from "./airfield.static"
-import makeAirfieldPlane from "./airfield.plane"
-import makeAirfieldBeacon from "./airfield.beacon"
-import makeAirfieldWindsock from "./airfield.windsock"
-import makeAirfieldEffect from "./airfield.effect"
-import makeAirfieldWreck from "./airfield.wreck"
-import makeAirfieldVehicle from "./airfield.vehicle"
-import makeAirfieldRoutes from "./airfield.routes"
-import makeAirfieldTaxi from "./airfield.taxi"
+import makeAirfieldLimits from './airfield.limits'
+import makeAirfieldStatic from './airfield.static'
+import makeAirfieldPlane from './airfield.plane'
+import makeAirfieldBeacon from './airfield.beacon'
+import makeAirfieldWindsock from './airfield.windsock'
+import makeAirfieldEffect from './airfield.effect'
+import makeAirfieldWreck from './airfield.wreck'
+import makeAirfieldVehicle from './airfield.vehicle'
+import makeAirfieldRoutes from './airfield.routes'
+import makeAirfieldTaxi from './airfield.taxi'
 
 // Airfield activity zone radius
 const AIRFIELD_ZONE_RADIUS = 6000
@@ -66,7 +66,7 @@ export default function makeAirfields() {
 
 			Object.assign(
 				airfieldData,
-				data.load(path.join(this.battlePath, "airfields", airfieldID))
+				data.load(path.join(this.battlePath, 'airfields', airfieldID))
 			)
 		}
 		catch (e) {}
@@ -94,9 +94,9 @@ export default function makeAirfields() {
 		}
 
 		// Lazy getter for airfield items group
-		addLazyProperty(airfield, "group", () => {
+		addLazyProperty(airfield, 'group', () => {
 
-			const airfieldGroup = mission.createItem("Group")
+			const airfieldGroup = mission.createItem('Group')
 			airfieldGroup.setName(airfield.name)
 
 			return airfieldGroup
@@ -278,15 +278,15 @@ export default function makeAirfields() {
 
 				// NOTE: Icon text can only have a custom color if it is linked to another
 				// icon. As a workaround - we are creating two icons at the same location.
-				const airfieldIcon1 = airfield.group.createItem("MCU_Icon")
-				const airfieldIcon2 = airfield.group.createItem("MCU_Icon")
+				const airfieldIcon1 = airfield.group.createItem('MCU_Icon')
+				const airfieldIcon2 = airfield.group.createItem('MCU_Icon')
 
 				// TODO: Show icon at the edge of the map for off-map airfields
 				airfieldIcon1.setPosition(position)
 				airfieldIcon2.setPosition(position)
 
 				airfieldIcon1.LineType = Item.MCU_Icon.LINE_BOLD
-				airfieldIcon1.setName(mission.getLC(airfield.planes + "\u2708"))
+				airfieldIcon1.setName(mission.getLC(airfield.planes + '\u2708'))
 				airfieldIcon1.setColor(data.countries[airfield.country].color)
 
 				airfieldIcon1.Coalitions = mission.coalitions
@@ -309,7 +309,7 @@ export default function makeAirfields() {
 		}
 
 		// Initialize airfield zone using a lazy getter
-		addLazyProperty(airfield, "zone", () => mission.createActivityZone({
+		addLazyProperty(airfield, 'zone', () => mission.createActivityZone({
 			group: airfield.group,
 			point: [position[0], position[2]],
 			radius: AIRFIELD_ZONE_RADIUS
@@ -476,7 +476,7 @@ export default function makeAirfields() {
 	})
 
 	// Log mission airfields info
-	log.I("Airfields:", totalAirfields, {
+	log.I('Airfields:', totalAirfields, {
 		offmap: totalOffmap,
 		active: totalActive
 	})

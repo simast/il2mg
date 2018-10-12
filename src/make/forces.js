@@ -1,7 +1,7 @@
-import log from "../log"
-import makeFlight from "./flight"
-import makePlayerForce from "./forces.player"
-import makeAIForces from "./forces.ai"
+import log from '../log'
+import makeFlight from './flight'
+import makePlayerForce from './forces.player'
+import makeAIForces from './forces.ai'
 
 // Generate mission task forces
 export default function makeForces() {
@@ -29,7 +29,7 @@ export default function makeForces() {
 	makeAIForces.call(this)
 
 	// Log mission forces info
-	log.I("Forces:", this.totalForces, {
+	log.I('Forces:', this.totalForces, {
 		flights: this.totalFlights,
 		planes: this.totalPlanes,
 		entities: this.totalEntities

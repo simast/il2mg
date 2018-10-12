@@ -43,7 +43,7 @@ export default class ActivityLand {
 
 			if (!landCommand) {
 
-				landCommand = flightGroup.createItem("MCU_CMD_Land")
+				landCommand = flightGroup.createItem('MCU_CMD_Land')
 
 				// Landing point position and orientation is the same as takeoff
 				landCommand.setPosition(taxiRoute.takeoffStart)
@@ -73,7 +73,7 @@ export default class ActivityLand {
 				if (!landWaitTimer) {
 
 					// Short timer used to delay land command
-					landWaitTimer = flightGroup.createItem("MCU_Timer")
+					landWaitTimer = flightGroup.createItem('MCU_Timer')
 
 					landWaitTimer.Time = Number(rand.real(10, 15).toFixed(3))
 					landWaitTimer.setPositionNear(leaderPlaneItem)
@@ -83,7 +83,7 @@ export default class ActivityLand {
 				}
 
 				flight.leader.item.entity.addReport(
-					"OnLanded",
+					'OnLanded',
 					leadingElement.landCommand,
 					landWaitTimer
 				)
@@ -104,31 +104,31 @@ export default class ActivityLand {
 			taxiRoute = airfield.taxi[this.taxi || Math.abs(flight.taxi)]
 		}
 
-		briefing.push("Land at")
+		briefing.push('Land at')
 
 		// Show airfield name (when target airfield is different or with air start)
 		if (airfield.id !== flight.airfield ||
-			typeof playerElement.state === "number") {
+			typeof playerElement.state === 'number') {
 
-			briefing.push("[" + airfield.name + "]")
+			briefing.push('[' + airfield.name + ']')
 		}
 		// Hide airfield name (should be already visibile in take off briefing)
 		else {
-			briefing.push("the")
+			briefing.push('the')
 		}
 
-		briefing.push("airfield")
+		briefing.push('airfield')
 
 		// Target airfield callsign
 		if (airfield.callsign && (airfield.id !== flight.airfield ||
-			typeof playerElement.state === "number")) {
+			typeof playerElement.state === 'number')) {
 
-			briefing.push("(callsign <i>“" + airfield.callsign.name + "”</i>)")
+			briefing.push('(callsign <i>“' + airfield.callsign.name + '”</i>)')
 		}
 
 		// Add landing heading/direction
 		if (taxiRoute && (airfield.id !== flight.airfield ||
-			typeof playerElement.state === "number")) {
+			typeof playerElement.state === 'number')) {
 
 			let heading = Math.atan2(
 				taxiRoute.takeoffEnd[2] - taxiRoute.takeoffStart[2],
@@ -136,15 +136,15 @@ export default class ActivityLand {
 			) * (180 / Math.PI)
 
 			heading = Math.round((heading + 360) % 360)
-			heading = ("000" + heading).substr(-3, 3)
+			heading = ('000' + heading).substr(-3, 3)
 
-			briefing.push("heading " + heading)
+			briefing.push('heading ' + heading)
 
 			// TODO: Add info about parking area location (to your left/right/forward)
 		}
 
-		briefing.push("and taxi to the parking area")
+		briefing.push('and taxi to the parking area')
 
-		return briefing.join(" ") + "."
+		return briefing.join(' ') + '.'
 	}
 }

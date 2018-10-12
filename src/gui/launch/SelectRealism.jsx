@@ -1,15 +1,15 @@
-import React from "react"
-import {observer} from "mobx-react"
-import classNames from "classnames"
-import {RealismPreset} from "."
-import launchStore from "./store"
-import RealismOptions from "./RealismOptions"
+import React from 'react'
+import {observer} from 'mobx-react'
+import classNames from 'classnames'
+import {RealismPreset} from '.'
+import launchStore from './store'
+import RealismOptions from './RealismOptions'
 
 // Realism settings/preset modes
 const realismPresets = [
-	[RealismPreset.Normal, "Normal"],
-	[RealismPreset.Expert, "Expert"],
-	[RealismPreset.Custom, "Custom"]
+	[RealismPreset.Normal, 'Normal'],
+	[RealismPreset.Expert, 'Expert'],
+	[RealismPreset.Custom, 'Custom']
 ]
 
 // Select realism component
@@ -24,7 +24,7 @@ const realismPresets = [
 				<ul id="realismPreset">
 					{realismPresets.map(([presetID, presetLabel]) => {
 
-						const className = classNames("realismPreset" + presetID, {
+						const className = classNames('realismPreset' + presetID, {
 							selected: presetID === launchStore.realismPreset
 						})
 

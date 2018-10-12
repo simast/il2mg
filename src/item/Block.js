@@ -2,7 +2,7 @@ import Item, {
 	DEFAULT_COUNTRY,
 	DEFAULT_DAMAGE_REPORT,
 	DEFAULT_DURABILITY
-} from "../item"
+} from '../item'
 
 // Block item
 export default class Block extends Item {
@@ -36,7 +36,7 @@ export default class Block extends Item {
 
 			for (const item of this.items) {
 
-				if (item.type === "Damaged") {
+				if (item.type === 'Damaged') {
 
 					damageItem = item
 					break

@@ -1,4 +1,4 @@
-import data, {ItemFlag} from "../data"
+import data, {ItemFlag} from '../data'
 
 // Make airfield plane item
 export default function makeAirfieldPlane(airfield, item) {

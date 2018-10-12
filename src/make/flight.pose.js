@@ -1,6 +1,6 @@
-import sylvester from "sylvester"
-import {ActivityType} from "./flight.plan"
-import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
+import sylvester from 'sylvester'
+import {ActivityType} from './flight.plan'
+import * as MCU_CMD_Formation from '../item/MCU_CMD_Formation'
 
 // Minimum and maximum pitch angle (for pose orientation)
 const MIN_PITCH_ANGLE = -15
@@ -34,7 +34,7 @@ export default function makeFlightPose(flight) {
 		const element = elements[e]
 
 		// Apply pose only to elements with air start
-		if (typeof element.state !== "number") {
+		if (typeof element.state !== 'number') {
 			continue
 		}
 
@@ -64,7 +64,7 @@ export default function makeFlightPose(flight) {
 		}
 
 		// Try to use next route point position (for orientation)
-		if (!toPosition && typeof flight.state === "number") {
+		if (!toPosition && typeof flight.state === 'number') {
 
 			for (const activity of plan) {
 

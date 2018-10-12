@@ -2,9 +2,9 @@
 // is a bundle built with webpack.
 
 // Enable Babel require() hook
-require("@babel/register")({
-	extends: "./.babelrc"
+require('@babel/register')({
+	extends: './.babelrc'
 })
 
 // Run application logic
-require("./index.jsx")
+require('./index.jsx')

@@ -1,13 +1,13 @@
-import fs from "fs"
-import path from "path"
-import {spawn} from "child_process"
-import glob from "glob"
-import {remote} from "electron"
+import fs from 'fs'
+import path from 'path'
+import {spawn} from 'child_process'
+import glob from 'glob'
+import {remote} from 'electron'
 
-import {APPLICATION_TITLE} from "../../constants"
-import {moveFileSync, showErrorMessage} from "../app"
-import missionsStore from "../missions/store"
-import launchStore from "./store"
+import {APPLICATION_TITLE} from '../../constants'
+import {moveFileSync, showErrorMessage} from '../app'
+import missionsStore from '../missions/store'
+import launchStore from './store'
 
 import {
 	isValidGamePath,
@@ -15,11 +15,11 @@ import {
 	RealismOption,
 	PATH_GAME_DATA,
 	PATH_GAME_EXE
-} from "."
+} from '.'
 
 // Game file names
-const FILE_AUTOPLAY = "autoplay.cfg"
-const FILE_MISSION_SETTINGS = "missionsettings.mode=singleplayer.txt"
+const FILE_AUTOPLAY = 'autoplay.cfg'
+const FILE_MISSION_SETTINGS = 'missionsettings.mode=singleplayer.txt'
 
 // NOTE: This is a max time (in milliseconds) to wait before removing
 // generated autoplay.cfg file after game executable is launched. This is
@@ -27,10 +27,10 @@ const FILE_MISSION_SETTINGS = "missionsettings.mode=singleplayer.txt"
 const MAX_AUTOPLAY_TIME = 10000 // 10 seconds
 
 // File and directory paths
-const PATH_APP_DATA = remote.app.getPath("userData")
+const PATH_APP_DATA = remote.app.getPath('userData')
 const PATH_AUTOPLAY = path.join(PATH_GAME_DATA, FILE_AUTOPLAY)
-const PATH_MISSIONS_LINK = path.join("Missions", APPLICATION_TITLE)
-const PATH_USER_DATA = path.join(PATH_GAME_DATA, "swf", "il2", "userdata")
+const PATH_MISSIONS_LINK = path.join('Missions', APPLICATION_TITLE)
+const PATH_USER_DATA = path.join(PATH_GAME_DATA, 'swf', 'il2', 'userdata')
 
 // Autoplay file restore timeout identifier
 let autoplayRestoreTS
@@ -55,12 +55,12 @@ function createAutoPlay(missionID, skipPlaneSettings) {
 	fs.writeFileSync(
 		autoplayPath,
 		[
-			"&il2mg=1", // Flag used to identify generated autoplay file
-			"&enabled=1",
-			"&autoIngame=" + (skipPlaneSettings ? 1 : 0),
-			"&missionSettingsPreset=" + realismPreset,
+			'&il2mg=1', // Flag used to identify generated autoplay file
+			'&enabled=1',
+			'&autoIngame=' + (skipPlaneSettings ? 1 : 0),
+			'&missionSettingsPreset=' + realismPreset,
 			'&missionPath="' + path.join(PATH_MISSIONS_LINK, missionID) + '"'
-		].join("\r\n")
+		].join('\r\n')
 	)
 }
 
@@ -85,10 +85,10 @@ export function restoreAutoPlay() {
 		// Remove existing autoplay.cfg file
 		else if (fs.existsSync(autoplayPath)) {
 
-			const autoplayContent = fs.readFileSync(autoplayPath, "utf-8")
+			const autoplayContent = fs.readFileSync(autoplayPath, 'utf-8')
 
 			// Remove only known/generated autoplay file
-			if (autoplayContent.indexOf("&il2mg=1") >= 0) {
+			if (autoplayContent.indexOf('&il2mg=1') >= 0) {
 				fs.unlinkSync(autoplayPath)
 			}
 		}
@@ -129,12 +129,12 @@ function linkMissionsDirectory() {
 	// limitation has been removed in Windows 10 build 14972 if "Developer Mode"
 	// is enabled)
 	try {
-		fs.symlinkSync(pathTo, pathFrom, "dir")
+		fs.symlinkSync(pathTo, pathFrom, 'dir')
 	}
 	catch (e) {
 
 		// Fallback to "junction" directory symlinks
-		fs.symlinkSync(pathTo, pathFrom, "junction")
+		fs.symlinkSync(pathTo, pathFrom, 'junction')
 	}
 }
 
@@ -176,7 +176,7 @@ export function launchMission(missionID, skipPlaneSettings) {
 		// Run game executable
 		const gameProcess = spawn(gameExePath, {
 			cwd: path.dirname(gameExePath),
-			stdio: "ignore",
+			stdio: 'ignore',
 			detached: true
 		})
 
@@ -194,9 +194,9 @@ export function launchMission(missionID, skipPlaneSettings) {
 
 		// Show an error suggesting to use elevated il2mg executable permissions
 		showErrorMessage(
-			"Could not launch IL-2 Sturmovik! The reported error was:\n\n" +
-			error.message + "\n\n" +
-			"Please close this application and then run il2mg.exe again by right " +
+			'Could not launch IL-2 Sturmovik! The reported error was:\n\n' +
+			error.message + '\n\n' +
+			'Please close this application and then run il2mg.exe again by right ' +
 			'clicking and using the "Run as administrator" menu option.'
 		)
 	}
@@ -210,7 +210,7 @@ export function launchMission(missionID, skipPlaneSettings) {
 
 		// Register window unload event (as a backup for restoring autoplay.cfg
 		// file on application quit before delayed timeout event is executed).
-		window.addEventListener("unload", onWindowUnload)
+		window.addEventListener('unload', onWindowUnload)
 
 		// Setup delayed autoplay.cfg file restore event - making sure game
 		// executable has enough time to actually read the generated file.
@@ -218,7 +218,7 @@ export function launchMission(missionID, skipPlaneSettings) {
 		autoplayRestoreTS = setTimeout(() => {
 
 			restoreAutoPlay()
-			window.removeEventListener("unload", onWindowUnload)
+			window.removeEventListener('unload', onWindowUnload)
 
 		}, maxAutoplayTime)
 	}
@@ -233,8 +233,8 @@ export function selectGamePath() {
 	let gamePath = remote.dialog.showOpenDialog(
 		remote.getCurrentWindow(),
 		{
-			title: "Select IL-2 Sturmovik folder...",
-			properties: ["openDirectory"],
+			title: 'Select IL-2 Sturmovik folder...',
+			properties: ['openDirectory'],
 			defaultPath: launchStore.gamePath
 		}
 	)
@@ -274,7 +274,7 @@ export function selectGamePath() {
 	else {
 
 		showErrorMessage(
-			"Selected folder is not a valid IL-2 Sturmovik directory:\n\n" +
+			'Selected folder is not a valid IL-2 Sturmovik directory:\n\n' +
 			folder
 		)
 	}
@@ -297,7 +297,7 @@ function readMissionSettingsFiles() {
 	}
 
 	const matches = glob.sync(
-		path.join(userDataPath, "!(default)/" + FILE_MISSION_SETTINGS),
+		path.join(userDataPath, '!(default)/' + FILE_MISSION_SETTINGS),
 		{
 			silent: true,
 			nodir: true
@@ -330,14 +330,14 @@ export function readRealismOptions() {
 		return
 	}
 
-	const content = fs.readFileSync(settingsFilePath, "utf-8")
-	const settingsState = new URLSearchParams(content).get("singleplayerSettingsState")
+	const content = fs.readFileSync(settingsFilePath, 'utf-8')
+	const settingsState = new URLSearchParams(content).get('singleplayerSettingsState')
 
 	if (!settingsState) {
 		return
 	}
 
-	const customSettings = new URLSearchParams(settingsState).get("customSettings")
+	const customSettings = new URLSearchParams(settingsState).get('customSettings')
 
 	if (!customSettings) {
 		return
@@ -377,14 +377,14 @@ function writeRealismOptions() {
 	// Update all mission settings files
 	for (const settingsFilePath of settingsFiles) {
 
-		const settings = new URLSearchParams(fs.readFileSync(settingsFilePath, "utf-8"))
-		const settingsState = new URLSearchParams(settings.get("singleplayerSettingsState"))
+		const settings = new URLSearchParams(fs.readFileSync(settingsFilePath, 'utf-8'))
+		const settingsState = new URLSearchParams(settings.get('singleplayerSettingsState'))
 
 		if (!settingsState) {
 			continue
 		}
 
-		const customSettings = new URLSearchParams(settingsState.get("customSettings"))
+		const customSettings = new URLSearchParams(settingsState.get('customSettings'))
 
 		if (!customSettings) {
 			continue
@@ -404,8 +404,8 @@ function writeRealismOptions() {
 			continue
 		}
 
-		settingsState.set("customSettings", newCustomSettings)
-		settings.set("singleplayerSettingsState", settingsState.toString())
+		settingsState.set('customSettings', newCustomSettings)
+		settings.set('singleplayerSettingsState', settingsState.toString())
 
 		fs.writeFileSync(settingsFilePath, settings.toString())
 	}

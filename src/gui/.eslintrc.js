@@ -16,7 +16,10 @@ module.exports = {
 	plugins: [
 		"react"
 	],
-	extends: "plugin:react/recommended",
+	extends: [
+		"../../.eslintrc.js",
+		"plugin:react/recommended"
+	],
 	rules: {
 		"strict": "off",
 		"react/display-name": "off",

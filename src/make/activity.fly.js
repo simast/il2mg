@@ -1,19 +1,19 @@
-import numeral from "numeral"
-import sylvester from "sylvester"
-import * as MCU_Icon from "../item/MCU_Icon"
-import {MapColor} from "./map"
-import {AltitudeLevel} from "./flight.altitude"
-import makeFlightFuel from "./flight.fuel"
-import makeBriefingLead from "./briefing.lead"
+import numeral from 'numeral'
+import sylvester from 'sylvester'
+import * as MCU_Icon from '../item/MCU_Icon'
+import {MapColor} from './map'
+import {AltitudeLevel} from './flight.altitude'
+import makeFlightFuel from './flight.fuel'
+import makeBriefingLead from './briefing.lead'
 
 // Minimum distance required between start position and the next spot
 const MIN_SPOT_DISTANCE = 5000 // 5 Km
 
 // First (intro) plan description segments
-const introSegments = ["proceed with your mission"]
+const introSegments = ['proceed with your mission']
 
 // Last (outro) plan description segments
-const outroSegments = ["keep your eyes open for any enemy contacts"]
+const outroSegments = ['keep your eyes open for any enemy contacts']
 
 // Plan activity used to fly
 export default class ActivityFly {
@@ -54,7 +54,7 @@ export default class ActivityFly {
 
 				if (!waypoint) {
 
-					waypoint = flightGroup.createItem("MCU_Waypoint")
+					waypoint = flightGroup.createItem('MCU_Waypoint')
 
 					if (spot.priority !== undefined) {
 						waypoint.Priority = spot.priority
@@ -94,7 +94,7 @@ export default class ActivityFly {
 			if (drawIcons && (!spot.hidden || isNextSpotVisible)) {
 
 				const lastSpotIcon = flight.lastSpotIcon || flight.startIcon
-				const spotIcon = flightGroup.createItem("MCU_Icon")
+				const spotIcon = flightGroup.createItem('MCU_Icon')
 				let routeColor = MapColor.Route
 
 				if (drawAIRoute) {
@@ -109,7 +109,7 @@ export default class ActivityFly {
 				else {
 
 					// NOTE: Empty whitespace is used to disable default "Point 1/2/etc" text
-					spotIcon.setName(mission.getLC(" "))
+					spotIcon.setName(mission.getLC(' '))
 				}
 
 				// NOTE: By setting Y position to 0 we can hide route altitude display on the map
@@ -248,7 +248,7 @@ export default class ActivityFly {
 			joinIntroOutro = true
 		}
 
-		briefingIntro = briefingIntro.join(" and ")
+		briefingIntro = briefingIntro.join(' and ')
 
 		// Add flight route altitude/speed data
 		if (!isPlayerFlightLeader) {
@@ -256,17 +256,17 @@ export default class ActivityFly {
 			const briefingRoute = []
 			const clouds = mission.weather.clouds
 			const {altitude, speed} = this.route[0]
-			const altitudeStr = numeral(Math.round(altitude.target / 100) * 100).format("0,0")
-			const speedStr = numeral(Math.round(speed / 10) * 10).format("0,0")
+			const altitudeStr = numeral(Math.round(altitude.target / 100) * 100).format('0,0')
+			const speedStr = numeral(Math.round(speed / 10) * 10).format('0,0')
 
-			let routeType = "designated"
+			let routeType = 'designated'
 
 			// NOTE: Avoiding multiple "flight" references in the same sentence
-			if (briefingIntro.indexOf("flight") === -1) {
-				routeType += " flight"
+			if (briefingIntro.indexOf('flight') === -1) {
+				routeType += ' flight'
 			}
 
-			briefingRoute.push("on a " + routeType + " route")
+			briefingRoute.push('on a ' + routeType + ' route')
 
 			// Include clouds level reference (for significant cover only)
 			if (clouds.cover > 20) {
@@ -284,40 +284,40 @@ export default class ActivityFly {
 
 				if (cloudsDelta && Math.abs(cloudsDelta) < 600) {
 
-					briefingRoute.push("just")
+					briefingRoute.push('just')
 
 					if (cloudsDelta > 0) {
-						briefingRoute.push("above")
+						briefingRoute.push('above')
 					}
 					else {
-						briefingRoute.push("below")
+						briefingRoute.push('below')
 					}
 
-					briefingRoute.push("the clouds")
+					briefingRoute.push('the clouds')
 				}
 			}
 
-			briefingRoute.push("aiming for")
+			briefingRoute.push('aiming for')
 
 			if (altitude.level === AltitudeLevel.Low) {
-				briefingRoute.push("a low")
+				briefingRoute.push('a low')
 			}
 			else if (altitude.level === AltitudeLevel.High) {
-				briefingRoute.push("a high")
+				briefingRoute.push('a high')
 			}
 
-			briefingRoute.push("[" + altitudeStr + " meters]")
-			briefingRoute.push("altitude and")
-			briefingRoute.push("[" + speedStr + " km/h] speed")
+			briefingRoute.push('[' + altitudeStr + ' meters]')
+			briefingRoute.push('altitude and')
+			briefingRoute.push('[' + speedStr + ' km/h] speed')
 
-			briefingIntro += " " + briefingRoute.join(" ")
+			briefingIntro += ' ' + briefingRoute.join(' ')
 		}
 
 		// Pick a random outro segment
 		const briefingOutro = rand.pick(outroSegments)
 
 		if (joinIntroOutro) {
-			briefing.push([briefingIntro, briefingOutro].join(" and "))
+			briefing.push([briefingIntro, briefingOutro].join(' and '))
 		}
 		else {
 			briefing.push(briefingIntro, briefingOutro)
@@ -325,7 +325,7 @@ export default class ActivityFly {
 
 		return briefing.map(value => (
 			value.charAt(0).toUpperCase() + value.slice(1)
-		)).join(". ") + "."
+		)).join('. ') + '.'
 	}
 
 	// Walk over route (reporting distance for each spot)

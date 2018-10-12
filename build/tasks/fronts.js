@@ -1,7 +1,7 @@
-import numeral from "numeral"
-import data from "../../src/data"
-import Item from "../../src/item"
-import {FrontLine} from "../../src/make/fronts"
+import numeral from 'numeral'
+import data from '../../src/data'
+import Item from '../../src/item'
+import {FrontLine} from '../../src/make/fronts'
 
 // Map of front line point item names to types
 const frontLineTypeMap = {
@@ -12,7 +12,7 @@ const frontLineTypeMap = {
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw front .Group to .json files
-	grunt.registerTask("build:fronts", "Build fronts JSON files.", () => {
+	grunt.registerTask('build:fronts', 'Build fronts JSON files.', () => {
 
 		let totalBattles = 0
 		let totalItems = 0
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 		for (const battleID in data.battles) {
 
 			const battle = data.battles[battleID]
-			const frontsPath = "data/battles/" + battleID + "/fronts/"
+			const frontsPath = 'data/battles/' + battleID + '/fronts/'
 			const frontsProcessed = Object.create(null)
 
 			// Process all fronts
@@ -34,8 +34,8 @@ module.exports = function(grunt) {
 					continue
 				}
 
-				const fileSource = frontsPath + frontFile + ".Group"
-				const fileDestination = frontsPath + frontFile + ".json"
+				const fileSource = frontsPath + frontFile + '.Group'
+				const fileDestination = frontsPath + frontFile + '.json'
 
 				// Read raw fronts Group text file
 				const items = Item.readTextFile(fileSource)
@@ -94,7 +94,7 @@ module.exports = function(grunt) {
 								for (const targetIndex of item.Targets) {
 
 									// Target point is already processed
-									if (typeof pointsIndex[targetIndex] === "number") {
+									if (typeof pointsIndex[targetIndex] === 'number') {
 										pointTargets.push(pointsIndex[targetIndex])
 									}
 									// Target point is pending
@@ -132,7 +132,7 @@ module.exports = function(grunt) {
 							}
 							// Unknown front point item definition
 							else {
-								grunt.fail.fatal("Invalid front point definition: " + item.Name)
+								grunt.fail.fatal('Invalid front point definition: ' + item.Name)
 							}
 
 							totalItems++
@@ -143,7 +143,7 @@ module.exports = function(grunt) {
 				// Write output JSON fronts file
 				grunt.file.write(
 					fileDestination,
-					JSON.stringify(json, null, "\t")
+					JSON.stringify(json, null, '\t')
 				)
 
 				// Mark front file as processed
@@ -153,12 +153,12 @@ module.exports = function(grunt) {
 			totalBattles++
 		}
 
-		let message = ""
+		let message = ''
 
-		message += numeral(totalItems).format("0,0") + " "
-		message += grunt.util.pluralize(totalItems, "item/items")
-		message += " processed from " + numeral(totalBattles).format("0,0") + " "
-		message += grunt.util.pluralize(totalBattles, "battle/battles") + "."
+		message += numeral(totalItems).format('0,0') + ' '
+		message += grunt.util.pluralize(totalItems, 'item/items')
+		message += ' processed from ' + numeral(totalBattles).format('0,0') + ' '
+		message += grunt.util.pluralize(totalBattles, 'battle/battles') + '.'
 
 		grunt.log.ok(message)
 	})

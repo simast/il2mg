@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Check zone item
 export default class MCU_CheckZone extends MCU {

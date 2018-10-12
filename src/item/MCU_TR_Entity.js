@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Entity item
 export default class MCU_TR_Entity extends MCU {

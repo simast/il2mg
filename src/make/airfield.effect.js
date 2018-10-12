@@ -1,6 +1,6 @@
-import * as MCU_CMD_Effect from "../item/MCU_CMD_Effect"
-import data, {ItemTag, ItemFlag} from "../data"
-import {Precipitation} from "./weather"
+import * as MCU_CMD_Effect from '../item/MCU_CMD_Effect'
+import data, {ItemTag, ItemFlag} from '../data'
+import {Precipitation} from './weather'
 
 // Make airfield effect item
 export default function makeAirfieldEffect(airfield, item) {
@@ -31,13 +31,13 @@ export default function makeAirfieldEffect(airfield, item) {
 
 		// 50% chance for smoke when raining
 		if (!isRaining || (isRaining && rand.bool(0.5))) {
-			effectType = "house_smoke"
+			effectType = 'house_smoke'
 		}
 	}
 	// Campfire
 	else if (effect === ItemFlag.EffectCampFire) {
 
-		effectType = "landfire"
+		effectType = 'landfire'
 
 		// When raining/dark or 75% chance - the campfire has no fire (but smoke)
 		if (isRaining || isDark || rand.bool(0.75)) {
@@ -66,7 +66,7 @@ export default function makeAirfieldEffect(airfield, item) {
 			item[2] = campfirePosY - 0.18 // -18 cm
 
 			// Create a small burned/melted ground effect (crater) underneath the campfire
-			const campfireGround = this.createItem(data.getItemType("crater_16"), false)
+			const campfireGround = this.createItem(data.getItemType('crater_16'), false)
 
 			campfireGround.setPosition(item[1], campfirePosY - 0.28, item[3])
 			campfireGround.setOrientation(rand.real(0, 360))
@@ -77,7 +77,7 @@ export default function makeAirfieldEffect(airfield, item) {
 	// Siren
 	else if (effect === ItemFlag.EffectSiren) {
 
-		effectType = "siren"
+		effectType = 'siren'
 		startOnLoad = false
 	}
 
@@ -106,7 +106,7 @@ export default function makeAirfieldEffect(airfield, item) {
 		// Create a shared effect start command (activated when airfield is loaded)
 		if (!onEffectStart) {
 
-			onEffectStart = zone.onEffectStart = zone.group.createItem("MCU_CMD_Effect")
+			onEffectStart = zone.onEffectStart = zone.group.createItem('MCU_CMD_Effect')
 
 			onEffectStart.setPositionNear(zone.onLoad)
 			onEffectStart.ActionType = MCU_CMD_Effect.ACTION_START

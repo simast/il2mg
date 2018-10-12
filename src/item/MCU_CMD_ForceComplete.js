@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Force complete command priority constants
 export const PRIORITY_LOW = 0

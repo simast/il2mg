@@ -1,5 +1,5 @@
-import * as MCU_Icon from "../item/MCU_Icon"
-import {FlightState} from "./flight"
+import * as MCU_Icon from '../item/MCU_Icon'
+import {FlightState} from './flight'
 
 // Initial plan activity used to start/initialize flights
 export default class ActivityStart {
@@ -10,14 +10,14 @@ export default class ActivityStart {
 		const {mission, flight} = this
 		const {rand} = mission
 		const flightGroup = flight.group
-		const isAirStart = (typeof element.state === "number")
+		const isAirStart = (typeof element.state === 'number')
 		const debugFlights = Boolean(mission.debug && mission.debug.flights)
 
 		// Create start location icon
 		if ((!flight.startIcon || (flight.virtual && debugFlights)) &&
 			(flight.player || debugFlights)) {
 
-			const startIcon = flight.startIcon = flightGroup.createItem("MCU_Icon")
+			const startIcon = flight.startIcon = flightGroup.createItem('MCU_Icon')
 
 			startIcon.setPosition(this.position)
 
@@ -28,10 +28,10 @@ export default class ActivityStart {
 
 				// NOTE: Using a single whitespace to disable showing default "Point 1/2/etc"
 				// text on the map near flight route points.
-				let iconName = " "
+				let iconName = ' '
 
 				if (!isForwardState) {
-					iconName = (fromAirfield.offmap ? "from " : "") + fromAirfield.name
+					iconName = (fromAirfield.offmap ? 'from ' : '') + fromAirfield.name
 				}
 
 				// NOTE: Omitting Y position to hide altitude display on the map route point!
@@ -61,7 +61,7 @@ export default class ActivityStart {
 		// Create flight onBegin event command
 		if (!flight.onBegin) {
 
-			let onBegin = flightGroup.createItem("MCU_TR_MissionBegin")
+			let onBegin = flightGroup.createItem('MCU_TR_MissionBegin')
 
 			onBegin.setPositionNear(flight.leader.item)
 
@@ -76,7 +76,7 @@ export default class ActivityStart {
 
 			if (beginDelay) {
 
-				const onBeginTimer = flightGroup.createItem("MCU_Timer")
+				const onBeginTimer = flightGroup.createItem('MCU_Timer')
 
 				onBeginTimer.Time = Number(beginDelay.toFixed(3))
 				onBeginTimer.setPositionNear(onBegin)
@@ -97,7 +97,7 @@ export default class ActivityStart {
 			// after being activated.
 			if (flight.virtual) {
 
-				onStart = flightGroup.createItem("MCU_Timer")
+				onStart = flightGroup.createItem('MCU_Timer')
 
 				// Short delay used to wait for virtual flight plane activation
 				onStart.Time = 1

@@ -1,4 +1,4 @@
-import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
+import * as MCU_CMD_Formation from '../item/MCU_CMD_Formation'
 
 // Make mission flight formation
 export default function makeFlightFormation(flight, isPlayer) {
@@ -43,7 +43,7 @@ export default function makeFlightFormation(flight, isPlayer) {
 			let planesRequired
 
 			// Basic flight formation (with number of max planes specified)
-			if (typeof taskFormation === "number") {
+			if (typeof taskFormation === 'number') {
 				checkFormations[taskFormation] = taskFormation
 			}
 			// Advanced flight formation
@@ -170,7 +170,7 @@ export default function makeFlightFormation(flight, isPlayer) {
 
 	// Could not match unit to any of the required formations
 	if (!formation) {
-		throw ["No valid flight formation!", {unit: unit.id, task: flight.task.id}]
+		throw ['No valid flight formation!', {unit: unit.id, task: flight.task.id}]
 	}
 
 	flight.elements = []

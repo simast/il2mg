@@ -1,8 +1,8 @@
-import * as Plane from "../item/Plane"
-import {ItemFlag} from "../data"
-import {getPlaneSizeFromName} from "./planes"
-import {FlightState} from "./flight"
-import makeAirfieldTaxi from "./airfield.taxi"
+import * as Plane from '../item/Plane'
+import {ItemFlag} from '../data'
+import {getPlaneSizeFromName} from './planes'
+import {FlightState} from './flight'
+import makeAirfieldTaxi from './airfield.taxi'
 
 // Make mission flight plane item objects
 export default function makeFlightPlanes(flight) {
@@ -56,7 +56,7 @@ export default function makeFlightPlanes(flight) {
 			let foundSpawnPoint = false
 			let foundStaticPlane = false
 			const pilot = plane.pilot
-			const planeItem = plane.item = flight.group.createItem("Plane")
+			const planeItem = plane.item = flight.group.createItem('Plane')
 			let positionX
 			let positionY
 			let positionZ
@@ -338,7 +338,7 @@ export default function makeFlightPlanes(flight) {
 
 				// Force air start to entire element when any of the planes must be spawned
 				// in the air (required for the planes in the air to not crash).
-				element.state = typeof flight.state === "number" ? flight.state : 0
+				element.state = typeof flight.state === 'number' ? flight.state : 0
 
 				// Since the entire element is moved to an air start - free up previously
 				// reserved parking and taxi spawn points for other flight elements.
@@ -420,7 +420,7 @@ export default function makeFlightPlanes(flight) {
 
 		// Sort subordinate planes in an element formation on the ground based on
 		// the distance to the leader plane (will avoid taxi issues).
-		if (element.length > 2 && typeof element.state !== "number") {
+		if (element.length > 2 && typeof element.state !== 'number') {
 
 			// Sort reference plane (either element leader or the last on the taxi way)
 			let sortPlane
@@ -485,7 +485,7 @@ export default function makeFlightPlanes(flight) {
 				}
 			}
 			// Ready, taxi or runway start with engine running
-			else if (typeof element.state === "string") {
+			else if (typeof element.state === 'string') {
 				planeItem.StartInAir = Plane.START_RUNWAY
 			}
 			// Air start

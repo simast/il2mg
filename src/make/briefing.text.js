@@ -1,20 +1,20 @@
-import mustache from "mustache"
-import data from "../data"
-import people from "./people"
-import makeBriefingTarget from "./briefing.target"
+import mustache from 'mustache'
+import data from '../data'
+import people from './people'
+import makeBriefingTarget from './briefing.target'
 
 // Default string constants
-const PLANE = "plane"
-const FLIGHT = "flight"
+const PLANE = 'plane'
+const FLIGHT = 'flight'
 
 // Plane type names
 const planeTypeNames = {
-	fighter: "fighter",
-	fighter_heavy: "heavy fighter",
-	ground_attack: "ground attack " + PLANE,
-	dive_bomber: "dive bomber",
-	level_bomber: "bomber",
-	transport: "transport " + PLANE
+	fighter: 'fighter',
+	fighter_heavy: 'heavy fighter',
+	ground_attack: 'ground attack ' + PLANE,
+	dive_bomber: 'dive bomber',
+	level_bomber: 'bomber',
+	transport: 'transport ' + PLANE
 }
 
 /**
@@ -97,7 +97,7 @@ export default function makeBriefingText(template, view) {
 				}
 			}
 
-			return enemyCountry.demonym || ""
+			return enemyCountry.demonym || ''
 		}
 
 		// {{{plane}}} template tag
@@ -111,7 +111,7 @@ export default function makeBriefingText(template, view) {
 		}
 
 		if (playerPlane.alias) {
-			planeTag.alias = "<i>“" + playerPlane.alias + "”</i>"
+			planeTag.alias = '<i>“' + playerPlane.alias + '”</i>'
 		}
 
 		if (playerPlane.type) {
@@ -173,7 +173,7 @@ export default function makeBriefingText(template, view) {
 				result.push(PLANE)
 			}
 
-			return result.join(" ")
+			return result.join(' ')
 		}
 
 		// {{name}} template tag
@@ -193,7 +193,7 @@ export default function makeBriefingText(template, view) {
 			// Mark all player flight pilot names as used
 			for (let pilotName of this.pilots) {
 
-				pilotName = pilotName.split(" ")
+				pilotName = pilotName.split(' ')
 
 				usedNames.first.add(pilotName[0])
 				usedNames.last.add(pilotName[pilotName.length - 1])
@@ -220,7 +220,7 @@ export default function makeBriefingText(template, view) {
 				nameParts = nameParts.concat(name[namePart])
 			}
 
-			return nameParts.join(" ")
+			return nameParts.join(' ')
 		}
 
 		// Any first name
@@ -259,7 +259,7 @@ export default function makeBriefingText(template, view) {
 			usedNames.last.add(lastKey)
 
 			last.toString = function() {
-				return this.join(" ")
+				return this.join(' ')
 			}
 
 			return last
@@ -279,7 +279,7 @@ export default function makeBriefingText(template, view) {
 				const rank = people.getRank({type: this}, flight.country)
 
 				if (rank.name) {
-					return "<i>" + rank.name + "</i>"
+					return '<i>' + rank.name + '</i>'
 				}
 
 			}.bind(rankType)
@@ -290,7 +290,7 @@ export default function makeBriefingText(template, view) {
 				const rank = people.getRank({type: this}, flight.country)
 
 				if (rank.abbr) {
-					return "<i>" + rank.abbr + "</i>"
+					return '<i>' + rank.abbr + '</i>'
 				}
 
 			}.bind(rankType)
@@ -306,7 +306,7 @@ export default function makeBriefingText(template, view) {
 
 			// Country specific formation name
 			if (flight.formation.name) {
-				formation = "<i>" + flight.formation.name.toLowerCase() + "</i>"
+				formation = '<i>' + flight.formation.name.toLowerCase() + '</i>'
 			}
 
 			return formation
@@ -321,12 +321,12 @@ export default function makeBriefingText(template, view) {
 			const playerFormation = flight.formation.elements[playerFormationIndex]
 
 			// Use element sub-formation
-			if (typeof playerFormation !== "number") {
+			if (typeof playerFormation !== 'number') {
 
 				const subFormation = this.formations[flight.country][playerFormation]
 
 				if (subFormation && subFormation.name) {
-					formation = "<i>" + subFormation.name.toLowerCase() + "</i>"
+					formation = '<i>' + subFormation.name.toLowerCase() + '</i>'
 				}
 			}
 
@@ -344,5 +344,5 @@ export default function makeBriefingText(template, view) {
 	}
 
 	// Render template using Mustache
-	return mustache.render(template, view).replace(/\s{2,}/g, " ")
+	return mustache.render(template, view).replace(/\s{2,}/g, ' ')
 }

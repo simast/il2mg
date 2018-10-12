@@ -1,12 +1,12 @@
 // Common flight plan activity types
 export const ActivityType = Object.freeze({
-	Start: "start", // Initial start activity
-	Takeoff: "takeoff", // Taxi (optionally) and takeoff from airfield
-	Form: "form", // Form up (set formations and element cover)
-	Wait: "wait", // Wait for something (do nothing)
-	Fly: "fly", // Fly to waypoint/location
-	Land: "land", // Land on airfield (ending the flight)
-	End: "end" // End flight activity
+	Start: 'start', // Initial start activity
+	Takeoff: 'takeoff', // Taxi (optionally) and takeoff from airfield
+	Form: 'form', // Form up (set formations and element cover)
+	Wait: 'wait', // Wait for something (do nothing)
+	Fly: 'fly', // Fly to waypoint/location
+	Land: 'land', // Land on airfield (ending the flight)
+	End: 'end' // End flight activity
 })
 
 // Make mission flight plan
@@ -24,7 +24,7 @@ export default function makeFlightPlan(flight) {
 	})) - 1]
 
 	// Take off plan activity
-	if (typeof flight.state !== "number") {
+	if (typeof flight.state !== 'number') {
 		plan.push(makeActivity.call(this, flight, {type: ActivityType.Takeoff}))
 	}
 
@@ -32,7 +32,7 @@ export default function makeFlightPlan(flight) {
 	plan.push(makeActivity.call(this, flight, {type: ActivityType.Form}))
 
 	// Make task specific plan
-	require("./task." + task.id).default.call(this, flight)
+	require('./task.' + task.id).default.call(this, flight)
 
 	// Land plan activity
 	if (plan.land === undefined) {
@@ -50,13 +50,13 @@ export function makeActivity(flight, params = {}) {
 
 	// Create a common activity type/class
 	if (params.type) {
-		activity = new (require("./activity." + params.type).default)()
+		activity = new (require('./activity.' + params.type).default)()
 	}
 
 	// Set activity params
 	Object.assign(activity, params)
-	Object.defineProperty(activity, "mission", {value: this})
-	Object.defineProperty(activity, "flight", {value: flight})
+	Object.defineProperty(activity, 'mission', {value: this})
+	Object.defineProperty(activity, 'flight', {value: flight})
 
 	return activity
 }

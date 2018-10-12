@@ -1,11 +1,11 @@
-import {remote} from "electron"
-import {observable, action} from "mobx"
+import {remote} from 'electron'
+import {observable, action} from 'mobx'
 
 // Missions state store
 class MissionsStore {
 
 	// Missions directory path
-	path = remote.getGlobal("config").missionsPath
+	path = remote.getGlobal('config').missionsPath
 
 	// Sorted list of mission objects
 	@observable.ref list = []

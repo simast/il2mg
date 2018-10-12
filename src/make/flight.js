@@ -1,24 +1,24 @@
-import makeFlightFormation from "./flight.formation"
-import makeFlightPilots from "./flight.pilots"
-import makeFlightPlanes from "./flight.planes"
-import makeFlightRange from "./flight.range"
-import makeFlightPlan from "./flight.plan"
-import makeFlightActions from "./flight.actions"
-import makeFlightFuel from "./flight.fuel"
-import makeFlightTime from "./flight.time"
-import makeFlightBeacon from "./flight.beacon"
-import makeFlightPath from "./flight.path"
-import makeFlightState from "./flight.state"
-import makeFlightPose from "./flight.pose"
-import makeFlightVirtual from "./flight.virtual"
-import makeAirfieldTaxi from "./airfield.taxi"
+import makeFlightFormation from './flight.formation'
+import makeFlightPilots from './flight.pilots'
+import makeFlightPlanes from './flight.planes'
+import makeFlightRange from './flight.range'
+import makeFlightPlan from './flight.plan'
+import makeFlightActions from './flight.actions'
+import makeFlightFuel from './flight.fuel'
+import makeFlightTime from './flight.time'
+import makeFlightBeacon from './flight.beacon'
+import makeFlightPath from './flight.path'
+import makeFlightState from './flight.state'
+import makeFlightPose from './flight.pose'
+import makeFlightVirtual from './flight.virtual'
+import makeAirfieldTaxi from './airfield.taxi'
 
 // Flight states
 // NOTE: Numeric [0..1) value state represent aircraft in the air.
 export const FlightState = Object.freeze({
-	Start: "start", // Parking, engine not running
-	Taxi: "taxi", // On the taxiway, engine running, taxiing to runway
-	Runway: "runway" // On the runway, engine running, ready for takeoff
+	Start: 'start', // Parking, engine not running
+	Taxi: 'taxi', // On the taxiway, engine running, taxiing to runway
+	Runway: 'runway' // On the runway, engine running, ready for takeoff
 })
 
 // Make mission flight
@@ -29,12 +29,12 @@ export default function makeFlight(params) {
 
 	// Validate required unit parameter
 	if (!params.unit || !this.units[params.unit]) {
-		throw new TypeError("Invalid flight unit ID value.")
+		throw new TypeError('Invalid flight unit ID value.')
 	}
 
 	// Validate optional task parameter
 	if (params.task && !this.tasks[params.task]) {
-		throw new TypeError("Invalid flight task value.")
+		throw new TypeError('Invalid flight task value.')
 	}
 
 	const isPlayer = Boolean(params.player)
@@ -69,7 +69,7 @@ export default function makeFlight(params) {
 	}
 
 	if (!task) {
-		throw new Error("Invalid flight unit task.")
+		throw new Error('Invalid flight unit task.')
 	}
 
 	flight.task = task
@@ -224,7 +224,7 @@ export default function makeFlight(params) {
 	// Option 3: Force (forward to) air start state if no valid taxi route is found
 	if (flight.taxi === undefined) {
 
-		flight.state = (typeof flight.state === "number") ? flight.state : 0
+		flight.state = (typeof flight.state === 'number') ? flight.state : 0
 
 		// Also reset each individual element state
 		for (const element of flight.elements) {
@@ -242,11 +242,11 @@ export default function makeFlight(params) {
 	}
 
 	// Create flight group item
-	flight.group = this.createItem("Group")
-	flight.group.setName(task.id + " (" + unit.name + ")")
+	flight.group = this.createItem('Group')
+	flight.group.setName(task.id + ' (' + unit.name + ')')
 
 	// Set unique flight callsign
-	flight.callsign = this.getCallsign("plane")
+	flight.callsign = this.getCallsign('plane')
 
 	// Make sure the callsign used for player flight is unique
 	if (!isPlayer && this.player.flight) {
@@ -256,7 +256,7 @@ export default function makeFlight(params) {
 		if (playerCallsign) {
 
 			while (flight.callsign.id === playerCallsign.id) {
-				flight.callsign = this.getCallsign("plane")
+				flight.callsign = this.getCallsign('plane')
 			}
 		}
 	}

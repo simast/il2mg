@@ -1,4 +1,4 @@
-import data from "../data"
+import data from '../data'
 
 // Generate mission people
 export default function makePeople() {
@@ -76,7 +76,7 @@ export default function makePeople() {
 		const {weightedRanksByCountry} = mission
 
 		// Generate a random weighted rank based on type and/or range bounds
-		if (typeof rankID === "object") {
+		if (typeof rankID === 'object') {
 
 			const ranksWeighted = weightedRanksByCountry[countryID][rankID.type]
 

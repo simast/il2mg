@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Counter item
 export default class MCU_Counter extends MCU {

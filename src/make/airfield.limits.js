@@ -1,4 +1,4 @@
-import {ItemTag, ItemFlag} from "../data"
+import {ItemTag, ItemFlag} from '../data'
 
 // Make airfield limits
 export default function makeAirfieldLimits(airfield) {

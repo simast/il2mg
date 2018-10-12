@@ -1,36 +1,36 @@
-import {ipcRenderer} from "electron"
-import binarySearch from "binary-search"
-import React from "react"
-import {computed, observable, action} from "mobx"
-import {observer} from "mobx-react"
-import {Start} from "."
-import createStore from "./store"
-import Screen from "../app/Screen"
-import SelectStart from "./SelectStart"
-import SelectBattle from "./SelectBattle"
-import ChoiceList from "./ChoiceList"
+import {ipcRenderer} from 'electron'
+import binarySearch from 'binary-search'
+import React from 'react'
+import {computed, observable, action} from 'mobx'
+import {observer} from 'mobx-react'
+import {Start} from '.'
+import createStore from './store'
+import Screen from '../app/Screen'
+import SelectStart from './SelectStart'
+import SelectBattle from './SelectBattle'
+import ChoiceList from './ChoiceList'
 
 // Record key data parameter separator
-const RECORD_SEP = "~"
+const RECORD_SEP = '~'
 
 // Multiple param values separator (as OR choice)
-const PARAM_SEP = ","
+const PARAM_SEP = ','
 
 // List of record key data parameters
 const recordParams = [
-	["country", "countries"],
-	["unit", "units"],
-	["plane", "planes"],
-	["airfield", "airfields"],
-	["task", "tasks"]
+	['country', 'countries'],
+	['unit', 'units'],
+	['plane', 'planes'],
+	['airfield', 'airfields'],
+	['task', 'tasks']
 ]
 
 // Available battle data choice lists
 const choiceLists = [
-	["unit", "Units"],
-	["plane", "Aircraft"],
-	["task", "Tasks"],
-	["airfield", "Airfields"]
+	['unit', 'Units'],
+	['plane', 'Aircraft'],
+	['task', 'Tasks'],
+	['airfield', 'Airfields']
 ]
 
 // Create mission screen component
@@ -63,7 +63,7 @@ const choiceLists = [
 			right: new Map()
 		}
 
-		const isFirstCreate = new URLSearchParams(location.search).has("first")
+		const isFirstCreate = new URLSearchParams(location.search).has('first')
 		const createProps = {
 			primary: true
 		}
@@ -77,12 +77,12 @@ const choiceLists = [
 		}
 
 		// Create mission action
-		screenActions.right.set("Create", createProps)
+		screenActions.right.set('Create', createProps)
 
 		// Cancel create mission action
 		if (!isFirstCreate) {
 
-			screenActions.right.set("Cancel", {
+			screenActions.right.set('Cancel', {
 				onClick: () => history.goBack()
 			})
 		}
@@ -121,17 +121,17 @@ const choiceLists = [
 			for (const [param] of recordParams) {
 
 				const choiceData = choice[param]
-				let paramRegExp = ".+?"
+				let paramRegExp = '.+?'
 
 				// Match only specified choice values
 				if (Array.isArray(choiceData) && choiceData.length) {
-					paramRegExp = "(?:" + choiceData.join("|") + ")"
+					paramRegExp = '(?:' + choiceData.join('|') + ')'
 				}
 
 				scanRegExp.push(paramRegExp)
 			}
 
-			scanRegExp = new RegExp("^" + scanRegExp.join(RECORD_SEP) + "$")
+			scanRegExp = new RegExp('^' + scanRegExp.join(RECORD_SEP) + '$')
 		}
 
 		// Scan for valid battle data index records
@@ -182,7 +182,7 @@ const choiceLists = [
 					const choiceData = battleData[paramData][paramID]
 
 					// Choice data as a single string (name only)
-					if (typeof choiceData === "string") {
+					if (typeof choiceData === 'string') {
 						item.data = {name: choiceData}
 					}
 					// Choice data as an object
@@ -235,7 +235,7 @@ const choiceLists = [
 					indexName.push(alias)
 				}
 
-				indexName = indexName.join(" ")
+				indexName = indexName.join(' ')
 
 				// Merge choice items with the same name into one selection
 				if (nameIndex[indexName]) {
@@ -251,10 +251,10 @@ const choiceLists = [
 			}
 
 			// Sort items by data name
-			if (choiceType !== "unit") {
+			if (choiceType !== 'unit') {
 
 				items.sort((a, b) => (
-					a.data.name.localeCompare(b.data.name, "en", {numeric: true})
+					a.data.name.localeCompare(b.data.name, 'en', {numeric: true})
 				))
 			}
 
@@ -312,16 +312,16 @@ const choiceLists = [
 
 		const params = {
 			battle,
-			format: "binary",
+			format: 'binary',
 			meta: true, // Generate metadata .il2mg file
 			lang: true // Create all language files
 		}
 
 		// Set start position type
-		let stateValue = "start" // Parking
+		let stateValue = 'start' // Parking
 
 		if (start === Start.Runway) {
-			stateValue = "runway"
+			stateValue = 'runway'
 		}
 		else if (start === Start.Air) {
 			stateValue = 0
@@ -340,13 +340,13 @@ const choiceLists = [
 		}
 
 		// Handle create mission request response
-		ipcRenderer.once("createMission", (event, hasError) => {
+		ipcRenderer.once('createMission', (event, hasError) => {
 
 			if (hasError) {
 				this.setBusyMode(false)
 			}
 			else {
-				history.replace("/missions")
+				history.replace('/missions')
 			}
 		})
 
@@ -355,7 +355,7 @@ const choiceLists = [
 
 		// Send create mission request to main process
 		setTimeout(() => {
-			ipcRenderer.send("createMission", params)
+			ipcRenderer.send('createMission', params)
 		}, 50)
 	}
 }

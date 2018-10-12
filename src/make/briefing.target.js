@@ -1,6 +1,6 @@
-import numeral from "numeral"
-import sylvester from "sylvester"
-import {Location, LocationType} from "./locations"
+import numeral from 'numeral'
+import sylvester from 'sylvester'
+import {Location, LocationType} from './locations'
 
 // Briefing map grid size
 const GRID_SIZE = 10000 // 10 km
@@ -10,10 +10,10 @@ const PLACE_RADIUS = 5000 // 5 Km
 
 // Names of location place types
 const placeTypeNames = {
-	[LocationType.Village]: "village",
-	[LocationType.Town]: "town",
-	[LocationType.City]: "city",
-	[LocationType.Airfield]: "airfield"
+	[LocationType.Village]: 'village',
+	[LocationType.Town]: 'town',
+	[LocationType.City]: 'city',
+	[LocationType.Airfield]: 'airfield'
 }
 
 // Make briefing target/location description
@@ -88,7 +88,7 @@ export default function makeBriefingTarget(target) {
 
 	// Target place as two locations
 	if (targetPlaces.length > 1) {
-		briefing.push("between")
+		briefing.push('between')
 	}
 
 	const placeNames = []
@@ -96,12 +96,12 @@ export default function makeBriefingTarget(target) {
 
 	targetPlaces.forEach((place, placeIndex) => {
 
-		let fullPlaceName = ""
+		let fullPlaceName = ''
 		let placeName = place.name
 
 		// Highlight target place (with single target only)
 		if (isSingleTarget) {
-			placeName = "[" + placeName + "]"
+			placeName = '[' + placeName + ']'
 		}
 
 		// Use location name
@@ -124,21 +124,21 @@ export default function makeBriefingTarget(target) {
 					if (nextPlace instanceof Location && nextPlace.type === place.type &&
 						combinedLocationTypes.indexOf(place.type) !== -1) {
 
-						placeType += "s"
+						placeType += 's'
 						isPlaceTypeCombined = true
 					}
 
 					// Custom output for non-combined airfield locations (without "of")
 					if (!isPlaceTypeCombined && place.type === LocationType.Airfield) {
-						fullPlaceName += placeName + " " + placeType
+						fullPlaceName += placeName + ' ' + placeType
 					}
 					else {
 
 						if (!nextPlace) {
-							fullPlaceName += "the "
+							fullPlaceName += 'the '
 						}
 
-						fullPlaceName += placeType + " of " + placeName
+						fullPlaceName += placeType + ' of ' + placeName
 					}
 				}
 			}
@@ -159,13 +159,13 @@ export default function makeBriefingTarget(target) {
 			const subgridZ = (gridZ % 1) * subgridSize
 			const subgrid = (Math.floor(subgridX) * subgridSize) + 1 + Math.floor(subgridZ)
 
-			fullPlaceName = "grid "
-			fullPlaceName += ("00" + Math.floor(gridX)).substr(-2, 2)
-			fullPlaceName += ("00" + Math.floor(gridZ)).substr(-2, 2)
+			fullPlaceName = 'grid '
+			fullPlaceName += ('00' + Math.floor(gridX)).substr(-2, 2)
+			fullPlaceName += ('00' + Math.floor(gridZ)).substr(-2, 2)
 
 			// NOTE: Subgrid number 5 is not visible on the map
 			if (subgrid !== 5) {
-				fullPlaceName += ":" + subgrid
+				fullPlaceName += ':' + subgrid
 			}
 		}
 
@@ -176,15 +176,15 @@ export default function makeBriefingTarget(target) {
 			const startPosition = this.airfields[this.player.flight.airfield].position
 			const startVector = Vector.create([startPosition[0], startPosition[2]])
 			const distance = place.vector.distanceFrom(startVector) / 1000
-			const distanceStr = numeral(Math.round(distance / 10) * 10).format("0,0")
+			const distanceStr = numeral(Math.round(distance / 10) * 10).format('0,0')
 
-			fullPlaceName += ", " + distanceStr + " kilometers away"
+			fullPlaceName += ', ' + distanceStr + ' kilometers away'
 		}
 
 		placeNames.push(fullPlaceName)
 	})
 
-	briefing.push(placeNames.join(" and "))
+	briefing.push(placeNames.join(' and '))
 
-	return briefing.join(" ")
+	return briefing.join(' ')
 }

@@ -1,14 +1,14 @@
-import sylvester from "sylvester"
-import * as MCU_Waypoint from "../item/MCU_Waypoint"
-import {makeActivity, ActivityType} from "./flight.plan"
-import {Location} from "./locations"
-import {Territory} from "./fronts"
-import {findBasePoints} from "./task.patrol"
-import {isRestricted} from "./map"
+import sylvester from 'sylvester'
+import * as MCU_Waypoint from '../item/MCU_Waypoint'
+import {makeActivity, ActivityType} from './flight.plan'
+import {Location} from './locations'
+import {Territory} from './fronts'
+import {findBasePoints} from './task.patrol'
+import {isRestricted} from './map'
 
 // Flight make parts
-import makeFlightAltitude from "./flight.altitude"
-import makeFlightRoute from "./flight.route"
+import makeFlightAltitude from './flight.altitude'
+import makeFlightRoute from './flight.route'
 
 // Max fighter sweep route range restrictions
 const MAX_RANGE_FUEL = 75 // 75%

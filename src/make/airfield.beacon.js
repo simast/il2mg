@@ -1,4 +1,4 @@
-import data from "../data"
+import data from '../data'
 
 // Make airfield beacon item
 export default function makeAirfieldBeacon(airfield, item) {
@@ -9,7 +9,7 @@ export default function makeAirfieldBeacon(airfield, item) {
 
 	const beaconItem = this.createItem(data.getItemType(item[5]), false)
 
-	beaconItem.setName("NOICON")
+	beaconItem.setName('NOICON')
 	beaconItem.setPosition(item[1], item[2], item[3])
 	beaconItem.setOrientation(item[4])
 	beaconItem.setCountry(airfield.country)

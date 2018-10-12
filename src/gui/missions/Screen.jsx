@@ -1,11 +1,11 @@
-import React from "react"
-import {observer} from "mobx-react"
-import LaunchDialog from "../launch/Dialog"
-import missionsStore from "./store"
-import {loadMissions, removeMission} from "./actions"
-import Screen from "../app/Screen"
-import MissionsList from "./List"
-import MissionDetails from "./Details"
+import React from 'react'
+import {observer} from 'mobx-react'
+import LaunchDialog from '../launch/Dialog'
+import missionsStore from './store'
+import {loadMissions, removeMission} from './actions'
+import Screen from '../app/Screen'
+import MissionsList from './List'
+import MissionDetails from './Details'
 
 // Missions screen component
 @observer export default class MissionsScreen extends React.Component {
@@ -31,11 +31,11 @@ import MissionDetails from "./Details"
 
 			// Show/select first mission
 			if (missionsStore.list.length) {
-				history.replace("/missions/" + missionsStore.list[0].id)
+				history.replace('/missions/' + missionsStore.list[0].id)
 			}
 			// Show create mission screen
 			else {
-				history.replace("/create?first=1")
+				history.replace('/create?first=1')
 			}
 		}
 	}
@@ -50,8 +50,8 @@ import MissionDetails from "./Details"
 		}
 
 		// Create a new mission
-		actions.left.set("Create New", {
-			to: "/create"
+		actions.left.set('Create New', {
+			to: '/create'
 		})
 
 		let mission
@@ -63,13 +63,13 @@ import MissionDetails from "./Details"
 			mission = missionsStore.index[missionID]
 
 			// Remove selected mission
-			actions.left.set("Remove", {
+			actions.left.set('Remove', {
 				onClick: event => this.onRemoveMission(missionID, !event.ctrlKey)
 			})
 
 			// Launch selected mission
 			actions.right = new Map()
-			actions.right.set("Launch", {
+			actions.right.set('Launch', {
 				onClick: () => this.onOpenLaunchDialog(),
 				primary: true
 			})
@@ -77,7 +77,7 @@ import MissionDetails from "./Details"
 			launchDialog = (
 				<LaunchDialog
 					mission={mission}
-					opened={match.params.action === "launch"}
+					opened={match.params.action === 'launch'}
 					onClose={this.onCloseLaunchDialog}
 				/>
 			)
@@ -108,7 +108,7 @@ import MissionDetails from "./Details"
 
 		const {match, history} = this.props
 
-		history.replace("/missions/" + match.params.mission + "/launch")
+		history.replace('/missions/' + match.params.mission + '/launch')
 	}
 
 	// Close launch dialog event handler
@@ -116,7 +116,7 @@ import MissionDetails from "./Details"
 
 		const {match, history} = this.props
 
-		history.replace("/missions/" + match.params.mission)
+		history.replace('/missions/' + match.params.mission)
 	}
 
 	// Remove mission event handler
@@ -135,7 +135,7 @@ import MissionDetails from "./Details"
 
 		// Show create mission screen
 		if (!missionsStore.list.length) {
-			return history.replace("/create?first=1")
+			return history.replace('/create?first=1')
 		}
 
 		// Select next mission on the list when removing active mission
@@ -150,7 +150,7 @@ import MissionDetails from "./Details"
 				nextMission = missionsStore.list[missionsStore.list.length - 1]
 			}
 
-			history.replace("/missions/" + nextMission.id)
+			history.replace('/missions/' + nextMission.id)
 		}
 	}
 }

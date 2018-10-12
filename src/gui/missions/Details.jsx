@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 // Mission details pane component
 export default class MissionDetails extends React.PureComponent {

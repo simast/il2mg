@@ -1,4 +1,4 @@
-import makeFlightFuel from "./flight.fuel"
+import makeFlightFuel from './flight.fuel'
 
 // Plan activity used to do nothing and wait for a specified amount of time
 export default class ActivityWait {
@@ -22,7 +22,7 @@ export default class ActivityWait {
 		const leaderPlaneItem = element[0].item
 
 		// Wait using timer command
-		const waitTimer = flight.group.createItem("MCU_Timer")
+		const waitTimer = flight.group.createItem('MCU_Timer')
 
 		waitTimer.Time = Number(this.time.toFixed(3))
 		waitTimer.setPositionNear(leaderPlaneItem)

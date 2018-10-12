@@ -1,5 +1,5 @@
-import {makeActivity, ActivityType} from "./flight.plan"
-import {markMapArea} from "./map"
+import {makeActivity, ActivityType} from './flight.plan'
+import {markMapArea} from './map'
 
 // Make mission free flight task
 export default function makeTaskFree(flight) {

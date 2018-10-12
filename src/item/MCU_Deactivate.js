@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Deactivate item
 export default class MCU_Deactivate extends MCU {

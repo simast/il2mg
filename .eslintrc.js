@@ -33,7 +33,7 @@ module.exports = {
 		"semi-spacing": ["error", {before: false, after: true}],
 		"semi-style": ["error", "first"],
 		"quote-props": ["error", "as-needed"],
-		"quotes": ["error", "double", {avoidEscape: true, allowTemplateLiterals: true}],
+		"quotes": ["error", "single", {avoidEscape: true, allowTemplateLiterals: true}],
 		"radix": "error",
 		"keyword-spacing": "error",
 		"space-before-blocks": ["error", "always"],

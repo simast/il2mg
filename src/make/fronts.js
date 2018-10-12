@@ -1,9 +1,9 @@
-import path from "path"
-import sylvester from "sylvester"
-import * as MCU_Icon from "../item/MCU_Icon"
-import data, {Coalition} from "../data"
-import {Location} from "./locations"
-import {MapColor} from "./map"
+import path from 'path'
+import sylvester from 'sylvester'
+import * as MCU_Icon from '../item/MCU_Icon'
+import data, {Coalition} from '../data'
+import {Location} from './locations'
+import {MapColor} from './map'
 
 // Territory types
 export const Territory = Object.freeze({
@@ -53,7 +53,7 @@ export default function makeFronts() {
 	const locations = this.locations.territories = Object.create(null)
 
 	// Resolve required fronts file based on mission date
-	const frontsFile = this.battle.fronts[this.date.format("YYYY-MM-DD")]
+	const frontsFile = this.battle.fronts[this.date.format('YYYY-MM-DD')]
 
 	if (!frontsFile) {
 		return
@@ -63,15 +63,15 @@ export default function makeFronts() {
 	const debugFronts = Boolean(this.debug && this.debug.fronts)
 
 	// Load fronts data file
-	const frontsData = data.load(path.join(this.battlePath, "fronts", frontsFile))
+	const frontsData = data.load(path.join(this.battlePath, 'fronts', frontsFile))
 
 	if (!frontsData || !frontsData.length) {
 		return
 	}
 
 	// Front icons group
-	const frontsGroup = this.createItem("Group")
-	frontsGroup.setName("FRONT")
+	const frontsGroup = this.createItem('Group')
+	frontsGroup.setName('FRONT')
 
 	// Index of created point icons
 	const pointItems = new Map()
@@ -104,7 +104,7 @@ export default function makeFronts() {
 		const pointX = point[1]
 		const pointZ = point[2]
 		const pointTargets = point[3]
-		const pointItem = frontsGroup.createItem("MCU_Icon")
+		const pointItem = frontsGroup.createItem('MCU_Icon')
 
 		pointItem.setPosition(pointX, pointZ)
 		pointItem.Coalitions = this.coalitions
@@ -177,7 +177,7 @@ export default function makeFronts() {
 					}
 
 					// Index line for each grid dimension
-					;["x", "z"].forEach(dimension => {
+					;['x', 'z'].forEach(dimension => {
 
 						for (let c = gridFrom[dimension]; c <= gridTo[dimension]; c++) {
 
@@ -220,13 +220,13 @@ export default function makeFronts() {
 	(() => {
 
 		// Run ray tracing over each map dimension (for precision)
-		["x", "z"].forEach(dimension => {
+		['x', 'z'].forEach(dimension => {
 
 			if (!rayLines[dimension].size) {
 				return
 			}
 
-			const isXDimension = (dimension === "x")
+			const isXDimension = (dimension === 'x')
 
 			// Dimension and ray coordinate indexes
 			const axisIndexDimension = (isXDimension ? 0 : 2)
@@ -465,8 +465,8 @@ export default function makeFronts() {
 		// Draw a territory line in the debug mode output
 		const drawDebugLine = (posFrom, posTo, color) => {
 
-			const lineItemFrom = frontsGroup.createItem("MCU_Icon")
-			const lineItemTo = frontsGroup.createItem("MCU_Icon")
+			const lineItemFrom = frontsGroup.createItem('MCU_Icon')
+			const lineItemTo = frontsGroup.createItem('MCU_Icon')
 
 			lineItemFrom.setPosition(posFrom)
 			lineItemTo.setPosition(posTo)

@@ -1,56 +1,56 @@
-import fs from "fs"
-import os from "os"
-import path from "path"
-import Random from "random-js"
+import fs from 'fs'
+import os from 'os'
+import path from 'path'
+import Random from 'random-js'
 
-import data, {Coalition} from "./data"
-import {APPLICATION_NAME, APPLICATION_VERSION} from "./constants"
-import log from "./log"
-import Item from "./item"
+import data, {Coalition} from './data'
+import {APPLICATION_NAME, APPLICATION_VERSION} from './constants'
+import log from './log'
+import Item from './item'
 
 // Mission make parts
-import makeBattle from "./make/battle"
-import makeChoice from "./make/choice"
-import makeDate from "./make/date"
-import makeMap from "./make/map"
-import makeBubble from "./make/bubble"
-import makeTime from "./make/time"
-import makePeople from "./make/people"
-import makePlanes from "./make/planes"
-import makeUnits from "./make/units"
-import makeVehicles from "./make/vehicles"
-import makeWeather from "./make/weather"
-import makeLocations from "./make/locations"
-import makeAirfields from "./make/airfields"
-import makeTasks from "./make/tasks"
-import makeFronts from "./make/fronts"
-import makeBlocks from "./make/blocks"
-import makeFormations from "./make/formations"
-import makeForces from "./make/forces"
-import makeBriefing from "./make/briefing"
+import makeBattle from './make/battle'
+import makeChoice from './make/choice'
+import makeDate from './make/date'
+import makeMap from './make/map'
+import makeBubble from './make/bubble'
+import makeTime from './make/time'
+import makePeople from './make/people'
+import makePlanes from './make/planes'
+import makeUnits from './make/units'
+import makeVehicles from './make/vehicles'
+import makeWeather from './make/weather'
+import makeLocations from './make/locations'
+import makeAirfields from './make/airfields'
+import makeTasks from './make/tasks'
+import makeFronts from './make/fronts'
+import makeBlocks from './make/blocks'
+import makeFormations from './make/formations'
+import makeForces from './make/forces'
+import makeBriefing from './make/briefing'
 
 // Mission file extensions
-const FILE_EXT_TEXT = "Mission"
-const FILE_EXT_BINARY = "msnbin"
-const FILE_EXT_META = "il2mg"
+const FILE_EXT_TEXT = 'Mission'
+const FILE_EXT_BINARY = 'msnbin'
+const FILE_EXT_META = 'il2mg'
 
 // List of mission parameters that make up the complex seed value
 // NOTE: The order is important and is used to define parameter sequence
 const COMPLEX_SEED_PARAMS = [
-	"seed", // Base seed value (numeric)
-	"debug",
-	"battle",
-	"date",
-	"time",
-	"coalition",
-	"country",
-	"task",
-	"pilot",
-	"plane",
-	"state",
-	"airfield",
-	"weather",
-	"unit"
+	'seed', // Base seed value (numeric)
+	'debug',
+	'battle',
+	'date',
+	'time',
+	'coalition',
+	'country',
+	'task',
+	'pilot',
+	'plane',
+	'state',
+	'airfield',
+	'weather',
+	'unit'
 ]
 
 export default class Mission {
@@ -71,11 +71,11 @@ export default class Mission {
 		// Last item index value
 		this.lastIndex = 0
 
-		log.I("Making mission...")
+		log.I('Making mission...')
 
 		// Reserve an empty localization string (used in binary mission generation
 		// for items without LCName or LCDesc properties).
-		this.getLC("")
+		this.getLC('')
 
 		// Initialize random number generator
 		this.initRand(params)
@@ -83,7 +83,7 @@ export default class Mission {
 		// Debug mode
 		this.debug = (this.params.debug ? this.params.debug : false)
 
-		log.profile("Making")
+		log.profile('Making')
 
 		// Make mission parts
 		// NOTE: Order is very important!
@@ -114,7 +114,7 @@ export default class Mission {
 			makeCallback()
 		}
 
-		log.profile("Making")
+		log.profile('Making')
 	}
 
 	/**
@@ -142,11 +142,11 @@ export default class Mission {
 
 			// Try a complex seed value (with Base64 parameters)
 			try {
-				complexSeed = JSON.parse(Buffer.from(params.seed, "base64").toString("utf-8"))
+				complexSeed = JSON.parse(Buffer.from(params.seed, 'base64').toString('utf-8'))
 			}
 			catch (e) {}
 
-			if (typeof complexSeed === "object") {
+			if (typeof complexSeed === 'object') {
 
 				// Restore parameters from complex seed value
 				COMPLEX_SEED_PARAMS.forEach((param, paramIndex) => {
@@ -169,7 +169,7 @@ export default class Mission {
 
 			// Validate seed value
 			if (!this.seed) {
-				throw ["Invalid mission seed!", {seed: params.seed}]
+				throw ['Invalid mission seed!', {seed: params.seed}]
 			}
 		}
 		// Create a new seed
@@ -202,7 +202,7 @@ export default class Mission {
 
 		// Save seed value as a localization string
 		if (complexSeed) {
-			seedParam = Buffer.from(JSON.stringify(complexSeed), "utf-8").toString("base64")
+			seedParam = Buffer.from(JSON.stringify(complexSeed), 'utf-8').toString('base64')
 		}
 		else {
 			seedParam = this.seed.toString()
@@ -212,7 +212,7 @@ export default class Mission {
 		this.getLC(seedParam)
 
 		// Log seed param value
-		log.I("Seed:", seedParam)
+		log.I('Seed:', seedParam)
 	}
 
 	/**
@@ -226,14 +226,14 @@ export default class Mission {
 		let itemData
 
 		// Item type as an object with meta data
-		if (typeof itemType === "object") {
+		if (typeof itemType === 'object') {
 
 			itemData = itemType
 			itemType = itemData.type
 		}
 
 		if (!Item[itemType]) {
-			throw new TypeError("Invalid item type value.")
+			throw new TypeError('Invalid item type value.')
 		}
 
 		// Add item to mission if parent is not specified
@@ -246,14 +246,14 @@ export default class Mission {
 		if (item.hasIndex) {
 
 			// Set unique item index
-			Object.defineProperty(item, "Index", {
+			Object.defineProperty(item, 'Index', {
 				enumerable: true,
 				value: ++this.lastIndex
 			})
 		}
 
 		// Set item mission reference
-		Object.defineProperty(item, "mission", {
+		Object.defineProperty(item, 'mission', {
 			value: this
 		})
 
@@ -289,14 +289,14 @@ export default class Mission {
 	addItem(item) {
 
 		if (!(item instanceof Item)) {
-			throw new TypeError("Invalid item value.")
+			throw new TypeError('Invalid item value.')
 		}
 
 		// Add child item
 		this.items.push(item)
 
 		// Set child item parent reference
-		Object.defineProperty(item, "parent", {
+		Object.defineProperty(item, 'parent', {
 			value: this,
 			configurable: true
 		})
@@ -310,8 +310,8 @@ export default class Mission {
 	 */
 	getLC(text) {
 
-		if (typeof text !== "string") {
-			throw new TypeError("Invalid mission language string.")
+		if (typeof text !== 'string') {
+			throw new TypeError('Invalid mission language string.')
 		}
 
 		let languageCode = this.lang.indexOf(text)
@@ -332,7 +332,7 @@ export default class Mission {
 	getCallsign(type) {
 
 		if (!data.callsigns[type]) {
-			throw new TypeError("Invalid callsign type value.")
+			throw new TypeError('Invalid callsign type value.')
 		}
 
 		// Track last used callsign index
@@ -397,9 +397,9 @@ export default class Mission {
 		const format = params.format || Mission.FORMAT_BINARY
 		const promises = []
 
-		log.I("Saving mission...")
+		log.I('Saving mission...')
 
-		let fileDir = ""
+		let fileDir = ''
 		let fileBase
 
 		// Use specified mission file path and/or name
@@ -423,7 +423,7 @@ export default class Mission {
 
 		// Generate unique mission file name (based on seed value)
 		if (!fileBase) {
-			fileBase = APPLICATION_NAME + "-" + this.seed
+			fileBase = APPLICATION_NAME + '-' + this.seed
 		}
 
 		// Make specified directory path
@@ -462,19 +462,19 @@ export default class Mission {
 	 */
 	saveText(fileName) {
 
-		const profileName = "Saving ." + FILE_EXT_TEXT
+		const profileName = 'Saving .' + FILE_EXT_TEXT
 
 		log.profile(profileName)
 
 		const promise = new Promise((resolve, reject) => {
 
-			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_TEXT)
+			const fileStream = fs.createWriteStream(fileName + '.' + FILE_EXT_TEXT)
 
 			// Write .Mission data
-			fileStream.once("open", () => {
+			fileStream.once('open', () => {
 
 				// Required mission file header
-				fileStream.write("# Mission File Version = 1.0;" + os.EOL)
+				fileStream.write('# Mission File Version = 1.0;' + os.EOL)
 
 				// Write mission items
 				this.items.forEach(item => {
@@ -482,13 +482,13 @@ export default class Mission {
 				})
 
 				// Required mission file footer
-				fileStream.write(os.EOL + "# end of file")
+				fileStream.write(os.EOL + '# end of file')
 
 				fileStream.end()
 			})
 
-			fileStream.once("finish", resolve)
-			fileStream.once("error", reject)
+			fileStream.once('finish', resolve)
+			fileStream.once('error', reject)
 		})
 
 		promise.then(() => {
@@ -506,7 +506,7 @@ export default class Mission {
 	 */
 	saveBinary(fileName) {
 
-		const profileName = "Saving ." + FILE_EXT_BINARY
+		const profileName = 'Saving .' + FILE_EXT_BINARY
 
 		log.profile(profileName)
 
@@ -573,9 +573,9 @@ export default class Mission {
 				throw new Error()
 			}
 
-			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_BINARY)
+			const fileStream = fs.createWriteStream(fileName + '.' + FILE_EXT_BINARY)
 
-			fileStream.once("open", () => {
+			fileStream.once('open', () => {
 
 				// Write Options item buffers (has to be the first one in the file)
 				while (optionsBuffers.length) {
@@ -608,8 +608,8 @@ export default class Mission {
 				fileStream.end()
 			})
 
-			fileStream.once("finish", resolve)
-			fileStream.once("error", reject)
+			fileStream.once('finish', resolve)
+			fileStream.once('error', reject)
 		})
 
 		promise.then(() => {
@@ -642,29 +642,29 @@ export default class Mission {
 		// Make language files
 		languages.forEach(lang => {
 
-			const profileName = "Saving ." + lang
+			const profileName = 'Saving .' + lang
 
 			log.profile(profileName)
 
 			const promise = new Promise((resolve, reject) => {
 
-				const fileStream = fs.createWriteStream(fileName + "." + lang)
+				const fileStream = fs.createWriteStream(fileName + '.' + lang)
 
-				fileStream.once("open", () => {
+				fileStream.once('open', () => {
 
 					// Write UCS2 little-endian BOM
-					fileStream.write("FFFE", "hex")
+					fileStream.write('FFFE', 'hex')
 
 					// Write language data
 					this.lang.forEach((value, index) => {
-						fileStream.write(index + ":" + value + os.EOL, "ucs2")
+						fileStream.write(index + ':' + value + os.EOL, 'ucs2')
 					})
 
 					fileStream.end()
 				})
 
-				fileStream.once("finish", resolve)
-				fileStream.once("error", reject)
+				fileStream.once('finish', resolve)
+				fileStream.once('error', reject)
 			})
 
 			promise.then(() => {
@@ -685,16 +685,16 @@ export default class Mission {
 	 */
 	saveMeta(fileName) {
 
-		const profileName = "Saving ." + FILE_EXT_META
+		const profileName = 'Saving .' + FILE_EXT_META
 
 		log.profile(profileName)
 
 		const promise = new Promise((resolve, reject) => {
 
-			const fileStream = fs.createWriteStream(fileName + "." + FILE_EXT_META)
+			const fileStream = fs.createWriteStream(fileName + '.' + FILE_EXT_META)
 
 			// Write .il2mg data
-			fileStream.once("open", () => {
+			fileStream.once('open', () => {
 
 				fileStream.write(JSON.stringify({
 					version: APPLICATION_VERSION,
@@ -702,13 +702,13 @@ export default class Mission {
 					plane: this.planes[this.player.plane].name,
 					country: this.player.flight.country,
 					briefing: this.briefing
-				}, null, "\t"))
+				}, null, '\t'))
 
 				fileStream.end()
 			})
 
-			fileStream.once("finish", resolve)
-			fileStream.once("error", reject)
+			fileStream.once('finish', resolve)
+			fileStream.once('error', reject)
 		})
 
 		promise.then(() => {
@@ -720,8 +720,8 @@ export default class Mission {
 }
 
 // Mission file formats
-Mission.FORMAT_TEXT = "text"
-Mission.FORMAT_BINARY = "binary"
+Mission.FORMAT_TEXT = 'text'
+Mission.FORMAT_BINARY = 'binary'
 
 // Binary string data index table (used in saving .msnbin file)
 class BinaryStringTable {
@@ -750,7 +750,7 @@ class BinaryStringTable {
 	value(value) {
 
 		// No index
-		if (typeof value !== "string") {
+		if (typeof value !== 'string') {
 			return 0xFFFF
 		}
 
@@ -808,7 +808,7 @@ class BinaryStringTable {
 		// Data items
 		for (let d = 0; d < itemsCount; d++) {
 
-			const dataItem = this.data[d] || ""
+			const dataItem = this.data[d] || ''
 
 			buffer.fill(0, offset, offset + dataLength)
 			buffer.write(dataItem, offset)
@@ -838,8 +838,8 @@ class BinaryDamageTable {
 	value(damageItem) {
 
 		// Invalid arguments
-		if (!(damageItem instanceof Item) || damageItem.type !== "Damaged") {
-			throw new TypeError("Invalid damage item value.")
+		if (!(damageItem instanceof Item) || damageItem.type !== 'Damaged') {
+			throw new TypeError('Invalid damage item value.')
 		}
 
 		// TODO: Sort damage index values before JSON stringify

@@ -1,27 +1,27 @@
-import makeBriefingText from "./briefing.text"
-import {WeatherState, Precipitation} from "./weather"
+import makeBriefingText from './briefing.text'
+import {WeatherState, Precipitation} from './weather'
 
 // General weather description segments
 const generalSegments = [
-	"{{weather.state}} weather conditions on the airfield {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}",
-	"{{name.first}}, our weather officer, has reported {{weather.state}} flying conditions {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}",
-	"Latest weather reports indicate {{weather.state}} flying conditions {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}"
+	'{{weather.state}} weather conditions on the airfield {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}',
+	'{{name.first}}, our weather officer, has reported {{weather.state}} flying conditions {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}',
+	'Latest weather reports indicate {{weather.state}} flying conditions {{weather.time}} with {{weather.reason.0}} and {{weather.reason.1}}'
 ]
 
 // Temperature description segments
 const temperatureSegments = [
-	"The temperature on the ground is {{weather.temp}}",
-	"Current temperature on the spot is {{weather.temp}}",
-	"Present temperature on site is {{weather.temp}}",
-	"Thermometer is measuring a temperature of {{weather.temp.value}}"
+	'The temperature on the ground is {{weather.temp}}',
+	'Current temperature on the spot is {{weather.temp}}',
+	'Present temperature on site is {{weather.temp}}',
+	'Thermometer is measuring a temperature of {{weather.temp.value}}'
 ]
 
 // Weather state descriptions
 const stateSegments = {
-	[WeatherState.Perfect]: ["perfect", "excellent", "great", "pleasant", "nice"],
-	[WeatherState.Good]: ["good", "fair", "fine", "decent", "favourable"],
-	[WeatherState.Bad]: ["bad", "poor", "rough", "lousy", "adverse"],
-	[WeatherState.Extreme]: ["extreme", "dreadful", "awful", "terrible", "severe"]
+	[WeatherState.Perfect]: ['perfect', 'excellent', 'great', 'pleasant', 'nice'],
+	[WeatherState.Good]: ['good', 'fair', 'fine', 'decent', 'favourable'],
+	[WeatherState.Bad]: ['bad', 'poor', 'rough', 'lousy', 'adverse'],
+	[WeatherState.Extreme]: ['extreme', 'dreadful', 'awful', 'terrible', 'severe']
 }
 
 // Cloud cover types
@@ -36,31 +36,31 @@ const cloudCover = {
 // Sky and cloud cover description segments
 const skySegments = {
 	[cloudCover.CLEAR]: [
-		"clear skies",
-		"cloudless skies",
-		"crystal clear skies"
+		'clear skies',
+		'cloudless skies',
+		'crystal clear skies'
 	],
 	[cloudCover.FEW]: [
-		"small patches of clouds in the sky",
-		"few clouds hanging in the sky",
-		"mostly cloudless skies",
-		"some clouds in the sky"
+		'small patches of clouds in the sky',
+		'few clouds hanging in the sky',
+		'mostly cloudless skies',
+		'some clouds in the sky'
 	],
 	[cloudCover.SCATTERED]: [
-		"partly clouded skies",
-		"scattered cloud cover",
-		"low clouds in the sky"
+		'partly clouded skies',
+		'scattered cloud cover',
+		'low clouds in the sky'
 	],
 	[cloudCover.BROKEN]: [
-		"dense cloud cover",
-		"grey clouded skies",
-		"thick cloud cover",
-		"sky full of clouds"
+		'dense cloud cover',
+		'grey clouded skies',
+		'thick cloud cover',
+		'sky full of clouds'
 	],
 	[cloudCover.OVERCAST]: [
-		"dense cloud cover",
-		"thick cloud cover",
-		"full overcast"
+		'dense cloud cover',
+		'thick cloud cover',
+		'full overcast'
 	]
 }
 
@@ -75,11 +75,11 @@ const windType = {
 
 // Wind type description segments
 const windTypeSegments = {
-	[windType.NONE]: ["no noticeable wind", "calm winds"],
-	[windType.CALM]: ["calm", "mild", "light"],
-	[windType.MODERATE]: [""],
-	[windType.STRONG]: ["strong", "powerful"],
-	[windType.VIOLENT]: ["violent", "fierce"]
+	[windType.NONE]: ['no noticeable wind', 'calm winds'],
+	[windType.CALM]: ['calm', 'mild', 'light'],
+	[windType.MODERATE]: [''],
+	[windType.STRONG]: ['strong', 'powerful'],
+	[windType.VIOLENT]: ['violent', 'fierce']
 }
 
 // Wind direction description segments
@@ -87,42 +87,42 @@ const windDirectionSegments = {
 
 	// 4 point directions
 	4: [
-		"northerly",
-		"easterly",
-		"southerly",
-		"westerly"
+		'northerly',
+		'easterly',
+		'southerly',
+		'westerly'
 	],
 
 	// 8 point directions
 	8: [
-		"the north",
-		"northeast",
-		"the east",
-		"southeast",
-		"the south",
-		"southwest",
-		"the west",
-		"northwest"
+		'the north',
+		'northeast',
+		'the east',
+		'southeast',
+		'the south',
+		'southwest',
+		'the west',
+		'northwest'
 	],
 
 	// 16 point directions
 	16: [
-		"the north",
-		"north-northeast",
-		"northeast",
-		"east-northeast",
-		"the east",
-		"east-southeast",
-		"southeast",
-		"south-southeast",
-		"the south",
-		"south-southwest",
-		"southwest",
-		"west-southwest",
-		"the west",
-		"west-northwest",
-		"northwest",
-		"north-northwest"
+		'the north',
+		'north-northeast',
+		'northeast',
+		'east-northeast',
+		'the east',
+		'east-southeast',
+		'southeast',
+		'south-southeast',
+		'the south',
+		'south-southwest',
+		'southwest',
+		'west-southwest',
+		'the west',
+		'west-northwest',
+		'northwest',
+		'north-northwest'
 	]
 }
 
@@ -139,15 +139,15 @@ export default function makeBriefingWeather() {
 
 	// 25% chance to add season as part of weather state, e.g. "perfect summer"
 	if (rand.bool(0.25)) {
-		context.state += " " + this.season
+		context.state += ' ' + this.season
 	}
 
 	// Set specific weather time context (if any)
-	for (const time of ["morning", "afternoon", "evening", "night"]) {
+	for (const time of ['morning', 'afternoon', 'evening', 'night']) {
 
 		if (this.time[time]) {
 
-			context.time = "this " + time
+			context.time = 'this ' + time
 			break
 		}
 	}
@@ -155,13 +155,13 @@ export default function makeBriefingWeather() {
 	// Use default generic time context (25% chance to always prefer generic one)
 	if (!context.time || rand.bool(0.25)) {
 
-		const timeNow = ["right now", "at the moment", "just now"]
+		const timeNow = ['right now', 'at the moment', 'just now']
 
 		if (this.time.night) {
-			timeNow.push("tonight")
+			timeNow.push('tonight')
 		}
 		else {
-			timeNow.push("today")
+			timeNow.push('today')
 		}
 
 		context.time = rand.pick(timeNow)
@@ -232,18 +232,18 @@ export default function makeBriefingWeather() {
 		const windBearingSize = 360 / windPrecision
 		const windBearing = Math.floor(((windBearingSize / 2) + windDirection) / windBearingSize % windPrecision)
 
-		windSegment += " " + windSpeed + " m/s"
+		windSegment += ' ' + windSpeed + ' m/s'
 
 		// Just 4 directions for calm winds
 		if (windPrecision === 4) {
-			windSegment += " " + windDirectionSegments[windPrecision][windBearing]
+			windSegment += ' ' + windDirectionSegments[windPrecision][windBearing]
 		}
 
-		windSegment += " winds"
+		windSegment += ' winds'
 
 		// Use more direction precision points for stronger winds
 		if (windPrecision > 4) {
-			windSegment += " blowing from " + windDirectionSegments[windPrecision][windBearing]
+			windSegment += ' blowing from ' + windDirectionSegments[windPrecision][windBearing]
 		}
 	}
 
@@ -275,14 +275,14 @@ export default function makeBriefingWeather() {
 	// Render precipitation segment
 	if (weather.precipitation.type !== Precipitation.None) {
 
-		let precipitationSegment = "It is "
+		let precipitationSegment = 'It is '
 
 		// Show precipitation type
 		if (weather.precipitation.type === Precipitation.Snow) {
-			precipitationSegment += "snowing"
+			precipitationSegment += 'snowing'
 		}
 		else {
-			precipitationSegment += "raining"
+			precipitationSegment += 'raining'
 		}
 
 		// TODO: Show precipitation level?
@@ -294,7 +294,7 @@ export default function makeBriefingWeather() {
 	context.temp = {
 
 		// TODO: Use Fahrenheit or Celcius based on player unit country
-		value: Math.round(weather.temperature.level) + "°C",
+		value: Math.round(weather.temperature.level) + '°C',
 
 		// {{weather.temp}} value output
 		toString: function() {
@@ -302,7 +302,7 @@ export default function makeBriefingWeather() {
 			let output = this.value
 
 			if (this.state) {
-				output += " " + this.state
+				output += ' ' + this.state
 			}
 
 			return output
@@ -313,17 +313,17 @@ export default function makeBriefingWeather() {
 
 	// 1.25+% change (for the next 15 minutes)
 	if (temperatureState >= 1.25) {
-		context.temp.state = "and rising"
+		context.temp.state = 'and rising'
 	}
 	// 1.25-% change (for the next 15 minutes)
 	else if (temperatureState <= -1.25) {
-		context.temp.state = "and falling"
+		context.temp.state = 'and falling'
 	}
 
 	// Render temperature segment
 	briefing.push(makeBriefingText.call(this, rand.pick(temperatureSegments), view))
 
-	briefing = briefing.join(". ") + "."
+	briefing = briefing.join('. ') + '.'
 	briefing = briefing.charAt(0).toUpperCase() + briefing.slice(1)
 
 	return briefing

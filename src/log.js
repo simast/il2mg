@@ -1,11 +1,11 @@
-import winston from "winston"
+import winston from 'winston'
 
 // Colors used for each log level
 const logColors = {
-	D: "green", // Done
-	E: "red", // Error
-	W: "yellow", // Warning
-	I: "gray" // Info
+	D: 'green', // Done
+	E: 'red', // Error
+	W: 'yellow', // Warning
+	I: 'gray' // Info
 }
 
 // Set active log levels
@@ -20,8 +20,8 @@ const log = new (winston.Logger)({
 	colors: logColors,
 	transports: [
 		new winston.transports.Console({
-			level: "E", // Default log reporting level (Error + Done)
-			stderrLevels: ["E"],
+			level: 'E', // Default log reporting level (Error + Done)
+			stderrLevels: ['E'],
 			colorize: true
 		})
 	]
@@ -43,7 +43,7 @@ console.error = function() {
 
 	if (message.length) {
 
-		message = message.replace(/^error:\s*/i, "").trim()
+		message = message.replace(/^error:\s*/i, '').trim()
 
 		arguments[0] = message
 		throw Array.prototype.slice.call(arguments)

@@ -1,7 +1,7 @@
-import fs from "fs"
-import path from "path"
-import moment from "moment"
-import addLazyProperty from "lazy-property"
+import fs from 'fs'
+import path from 'path'
+import moment from 'moment'
+import addLazyProperty from 'lazy-property'
 
 // Coalitions
 export const Coalition = Object.freeze({
@@ -43,7 +43,7 @@ export const ItemFlag = Object.freeze({
 })
 
 // Data directory index file key
-const DATA_INDEX_FILE = "index"
+const DATA_INDEX_FILE = 'index'
 
 class Data {
 
@@ -57,35 +57,35 @@ class Data {
 
 		// NOTE: For performance reasons YAML files are only used in development mode
 		// (while in production build data files are loaded using native JSON support).
-		if (process.env.NODE_ENV !== "production") {
-			this.dataFormats[".yaml"] = require("js-yaml").safeLoad
+		if (process.env.NODE_ENV !== 'production') {
+			this.dataFormats['.yaml'] = require('js-yaml').safeLoad
 		}
 
 		// Always enable JSON format
-		this.dataFormats[".json"] = JSON.parse
+		this.dataFormats['.json'] = JSON.parse
 
 		// Main data directory path
-		this.dataPath = "data"
+		this.dataPath = 'data'
 
 		// Prepend app path when running as Electron application
 		if (process.versions.electron) {
-			this.dataPath = path.join(require("electron").app.getAppPath(), this.dataPath)
+			this.dataPath = path.join(require('electron').app.getAppPath(), this.dataPath)
 		}
 
 		// Lazy load all static data
-		addLazyProperty(this, "items", () => this.load(path.join("items", DATA_INDEX_FILE)) || [])
-		addLazyProperty(this, "languages", () => this.load("languages"))
-		addLazyProperty(this, "vehicles", () => this.load("vehicles"))
-		addLazyProperty(this, "clouds", () => this.load("clouds"))
-		addLazyProperty(this, "time", () => this.load("time"))
-		addLazyProperty(this, "callsigns", () => this.load("callsigns"))
-		addLazyProperty(this, "tasks", () => this.load("tasks"))
+		addLazyProperty(this, 'items', () => this.load(path.join('items', DATA_INDEX_FILE)) || [])
+		addLazyProperty(this, 'languages', () => this.load('languages'))
+		addLazyProperty(this, 'vehicles', () => this.load('vehicles'))
+		addLazyProperty(this, 'clouds', () => this.load('clouds'))
+		addLazyProperty(this, 'time', () => this.load('time'))
+		addLazyProperty(this, 'callsigns', () => this.load('callsigns'))
+		addLazyProperty(this, 'tasks', () => this.load('tasks'))
 
 		// Load planes
-		addLazyProperty(this, "planes", () => {
+		addLazyProperty(this, 'planes', () => {
 
 			const planes = Object.create(null)
-			const planeData = this.load("planes")
+			const planeData = this.load('planes')
 
 			for (const planeGroup in planeData) {
 				for (const planeID in planeData[planeGroup]) {
@@ -97,49 +97,49 @@ class Data {
 		})
 
 		// Load countries
-		addLazyProperty(this, "countries", () => {
+		addLazyProperty(this, 'countries', () => {
 
-			const countries = this.load("countries")
+			const countries = this.load('countries')
 
 			for (const countryID in countries) {
 
 				const country = countries[countryID]
-				const countryPath = path.join("countries", countryID)
+				const countryPath = path.join('countries', countryID)
 
-				addLazyProperty(country, "formations", () => (
-					this.load(path.join(countryPath, "formations"))
+				addLazyProperty(country, 'formations', () => (
+					this.load(path.join(countryPath, 'formations'))
 				))
 
-				addLazyProperty(country, "names", () => this.load(path.join(countryPath, "names")))
-				addLazyProperty(country, "ranks", () => this.load(path.join(countryPath, "ranks")))
+				addLazyProperty(country, 'names', () => this.load(path.join(countryPath, 'names')))
+				addLazyProperty(country, 'ranks', () => this.load(path.join(countryPath, 'ranks')))
 			}
 
 			return countries
 		})
 
 		// Load battles
-		addLazyProperty(this, "battles", () => {
+		addLazyProperty(this, 'battles', () => {
 
-			const battles = this.load("battles")
+			const battles = this.load('battles')
 
 			for (const battleID in battles) {
 
 				const battle = battles[battleID]
-				const battlePath = path.join("battles", battleID)
+				const battlePath = path.join('battles', battleID)
 
-				addLazyProperty(battle, "blocks", () => this.load(path.join(battlePath, "blocks")))
-				addLazyProperty(battle, "locations", () => this.load(path.join(battlePath, "locations")))
-				addLazyProperty(battle, "fronts", () => this.load(path.join(battlePath, "fronts")))
-				addLazyProperty(battle, "map", () => this.load(path.join(battlePath, "map")))
-				addLazyProperty(battle, "weather", () => this.load(path.join(battlePath, "weather")))
-				addLazyProperty(battle, "airfields", () => this.load(path.join(battlePath, "airfields")))
-				addLazyProperty(battle, "roles", () => this.load(path.join(battlePath, "roles")))
+				addLazyProperty(battle, 'blocks', () => this.load(path.join(battlePath, 'blocks')))
+				addLazyProperty(battle, 'locations', () => this.load(path.join(battlePath, 'locations')))
+				addLazyProperty(battle, 'fronts', () => this.load(path.join(battlePath, 'fronts')))
+				addLazyProperty(battle, 'map', () => this.load(path.join(battlePath, 'map')))
+				addLazyProperty(battle, 'weather', () => this.load(path.join(battlePath, 'weather')))
+				addLazyProperty(battle, 'airfields', () => this.load(path.join(battlePath, 'airfields')))
+				addLazyProperty(battle, 'roles', () => this.load(path.join(battlePath, 'roles')))
 
 				// Load battle unit data
-				addLazyProperty(battle, "units", () => {
+				addLazyProperty(battle, 'units', () => {
 
 					const units = Object.create(null)
-					const unitsData = this.load(path.join(battlePath, "units"))
+					const unitsData = this.load(path.join(battlePath, 'units'))
 
 					for (let unitCountryID in unitsData) {
 
@@ -178,8 +178,8 @@ class Data {
 	 */
 	load(itemPath) {
 
-		if (typeof itemPath !== "string" || !itemPath) {
-			throw new TypeError("Invalid data path.")
+		if (typeof itemPath !== 'string' || !itemPath) {
+			throw new TypeError('Invalid data path.')
 		}
 
 		const {dataPath, dataCache, dataFormats} = this
@@ -200,7 +200,7 @@ class Data {
 			if (fs.existsSync(filePath)) {
 
 				result = Object.freeze(
-					dataFormats[extension](fs.readFileSync(filePath, "utf-8"))
+					dataFormats[extension](fs.readFileSync(filePath, 'utf-8'))
 				)
 
 				break
@@ -266,8 +266,8 @@ class Data {
 	 */
 	registerItemType(item) {
 
-		if (typeof item !== "object" || !item.type || !item.script || !item.model) {
-			throw new TypeError("Invalid item data.")
+		if (typeof item !== 'object' || !item.type || !item.script || !item.model) {
+			throw new TypeError('Invalid item data.')
 		}
 
 		const {items, dataPath, dataFormats} = this
@@ -277,7 +277,7 @@ class Data {
 		item.model = item.model.trim().toLowerCase()
 
 		// Item type ID as a string (lowercase file name without extension)
-		const stringTypeID = path.win32.basename(item.script, ".txt")
+		const stringTypeID = path.win32.basename(item.script, '.txt')
 
 		// Try to find existing item type ID by script index
 		let numberTypeID = items.indexOf(stringTypeID)
@@ -287,7 +287,7 @@ class Data {
 
 			numberTypeID = items.push(stringTypeID) - 1
 
-			const itemFile = path.join(dataPath, "items", stringTypeID)
+			const itemFile = path.join(dataPath, 'items', stringTypeID)
 			const itemFileExists = Boolean(Object.keys(dataFormats).find(extension => (
 				fs.existsSync(itemFile + extension)
 			)))
@@ -296,8 +296,8 @@ class Data {
 			if (!itemFileExists) {
 
 				fs.writeFileSync(
-					itemFile + ".json",
-					JSON.stringify(item, null, "\t")
+					itemFile + '.json',
+					JSON.stringify(item, null, '\t')
 				)
 			}
 		}
@@ -314,11 +314,11 @@ class Data {
 	getItemType(itemTypeID) {
 
 		// Look up string item type ID
-		if (typeof itemTypeID === "number") {
+		if (typeof itemTypeID === 'number') {
 			itemTypeID = this.items[itemTypeID]
 		}
 
-		return this.load(path.join("items", itemTypeID))
+		return this.load(path.join('items', itemTypeID))
 	}
 }
 
@@ -359,11 +359,11 @@ export function matchDateRange(match, dateFrom, dateTo) {
 		let date = range[type]
 
 		// Special "start" value means the start (min) date of the match
-		if (date === "start") {
+		if (date === 'start') {
 			range[type] = match.from
 		}
 		// Special "end" value means the end (max) date of the match
-		else if (date === "end") {
+		else if (date === 'end') {
 			range[type] = match.to
 		}
 		// Other date format
@@ -371,22 +371,22 @@ export function matchDateRange(match, dateFrom, dateTo) {
 
 			// Handle range as Date object (from YAML built-in date type support)
 			if (date instanceof Date) {
-				date = moment(date).format("YYYY-MM-DD")
+				date = moment(date).format('YYYY-MM-DD')
 			}
 
-			const dateParts = date.split("-")
+			const dateParts = date.split('-')
 			const momentDate = moment()
 
 			momentDate.year(dateParts[0])
 			momentDate.month(Number(dateParts[1]) - 1)
 
 			// Only month format (YYYY-MM) or start of the month format (YYYY-MM-start)
-			if (dateParts[2] === undefined || dateParts[2] === "start") {
-				momentDate.startOf("month")
+			if (dateParts[2] === undefined || dateParts[2] === 'start') {
+				momentDate.startOf('month')
 			}
 			// End of the month format (YYYY-MM-end)
-			else if (dateParts[2] === "end") {
-				momentDate.endOf("month")
+			else if (dateParts[2] === 'end') {
+				momentDate.endOf('month')
 			}
 			// Full date format (YYYY-MM-DD)
 			else {
@@ -399,11 +399,11 @@ export function matchDateRange(match, dateFrom, dateTo) {
 
 	// Match to the end of the month when dateTo is not provided
 	if (!dateTo) {
-		range.to = moment(range.from).endOf("month")
+		range.to = moment(range.from).endOf('month')
 	}
 
-	if (!match.date.isBefore(range.from, "day") &&
-		!match.date.isAfter(range.to, "day")) {
+	if (!match.date.isBefore(range.from, 'day') &&
+		!match.date.isAfter(range.to, 'day')) {
 
 		// Return from/to matching range as moment date objects
 		return range

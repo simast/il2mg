@@ -1,5 +1,5 @@
-import React from "react"
-import {restoreAutoPlay} from "../launch/actions"
+import React from 'react'
+import {restoreAutoPlay} from '../launch/actions'
 
 // Application component
 export default class Application extends React.Component {
@@ -11,8 +11,8 @@ export default class Application extends React.Component {
 		restoreAutoPlay()
 
 		// Handle drag and drop events on application window
-		document.addEventListener("dragover", Application.onDragAndDrop, true)
-		document.addEventListener("drop", Application.onDragAndDrop, true)
+		document.addEventListener('dragover', Application.onDragAndDrop, true)
+		document.addEventListener('drop', Application.onDragAndDrop, true)
 	}
 
 	// Render component

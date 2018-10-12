@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Effect command action type constants
 export const ACTION_START = 0

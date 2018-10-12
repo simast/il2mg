@@ -1,23 +1,23 @@
-import {remote} from "electron"
-import React from "react"
-import {computed} from "mobx"
-import {observer} from "mobx-react"
-import {Start} from "."
-import createStore from "./store"
+import {remote} from 'electron'
+import React from 'react'
+import {computed} from 'mobx'
+import {observer} from 'mobx-react'
+import {Start} from '.'
+import createStore from './store'
 
 // Season color values
 const seasonColor = {
-	spring: "#a99a35",
-	summer: "#8baa43",
-	autumn: "#e89c3c",
-	winter: "#9a9997"
+	spring: '#a99a35',
+	summer: '#8baa43',
+	autumn: '#e89c3c',
+	winter: '#9a9997'
 }
 
 // Start position types
 const startTypes = new Map([
-	[Start.Parking, ["from", "Parking"]],
-	[Start.Runway, ["on", "Runway"]],
-	[Start.Air, ["in", "Air"]]
+	[Start.Parking, ['from', 'Parking']],
+	[Start.Runway, ['on', 'Runway']],
+	[Start.Air, ['in', 'Air']]
 ])
 
 // Style object reference (for date range input track CSS rule)
@@ -77,7 +77,7 @@ let trackCSSStyle = null
 			const {cssRules} = styleSheet
 
 			const cssRuleIndex = styleSheet.insertRule(
-				"#selectStart input::-webkit-slider-runnable-track {}",
+				'#selectStart input::-webkit-slider-runnable-track {}',
 				cssRules.length // At the end of stylesheet
 			)
 
@@ -109,13 +109,13 @@ let trackCSSStyle = null
 				stopEnd -= 1.5
 			}
 
-			colorStops.push(stopColor + " " + stopStart + "%")
-			colorStops.push(stopColor + " " + stopEnd + "%")
+			colorStops.push(stopColor + ' ' + stopStart + '%')
+			colorStops.push(stopColor + ' ' + stopEnd + '%')
 
 			lastStopPos = stopPos
 		}
 
-		trackCSSStyle.backgroundImage = "linear-gradient(to right, " + colorStops.join(",") + ")"
+		trackCSSStyle.backgroundImage = 'linear-gradient(to right, ' + colorStops.join(',') + ')'
 
 		return dates
 	}
@@ -131,7 +131,7 @@ let trackCSSStyle = null
 
 			startMenu.append(new MenuItem({
 				label: startText[1],
-				type: "radio",
+				type: 'radio',
 				checked: (startID === createStore.start),
 				click: () => {
 					onStartChange(startID)
@@ -154,12 +154,12 @@ let trackCSSStyle = null
 		// Show selected date (and a reset button)
 		if (date) {
 
-			dateOutput = date + ", " + dates.index[date].season
-			reset = <a className="reset" onClick={() => createStore.setDate("")}></a>
+			dateOutput = date + ', ' + dates.index[date].season
+			reset = <a className="reset" onClick={() => createStore.setDate('')}></a>
 		}
 		// Show a number of days in the battle when date is not selected
 		else {
-			dateOutput = totalDays + " days"
+			dateOutput = totalDays + ' days'
 		}
 
 		const dateData = dates.index[date]
@@ -180,7 +180,7 @@ let trackCSSStyle = null
 		return (
 			<div id="selectStart">
 				<em>
-					{"start " + startPrefix + " "}
+					{'start ' + startPrefix + ' '}
 					<a {...startProps}>{startLabel.toLowerCase()}</a>, {dateOutput}
 				</em>
 				<input
@@ -191,7 +191,7 @@ let trackCSSStyle = null
 
 						// Get date from input value
 						const dateData = dates.list[event.target.value - 1]
-						createStore.setDate(dateData ? dateData.date : "")
+						createStore.setDate(dateData ? dateData.date : '')
 					}}
 				/>
 				{reset}

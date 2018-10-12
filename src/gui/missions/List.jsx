@@ -1,9 +1,9 @@
-import {remote} from "electron"
-import React from "react"
-import {observer} from "mobx-react"
-import MissionsListItem from "./ListItem"
-import {saveMission} from "./actions"
-import missionsStore from "./store"
+import {remote} from 'electron'
+import React from 'react'
+import {observer} from 'mobx-react'
+import MissionsListItem from './ListItem'
+import {saveMission} from './actions'
+import missionsStore from './store'
 
 // Missions list component
 @observer export default class MissionsList extends React.Component {
@@ -17,13 +17,13 @@ import missionsStore from "./store"
 
 		// Remove menu
 		menu.append(new MenuItem({
-			label: "Remove",
+			label: 'Remove',
 			click: () => onRemoveMission(this.contextMission.id, true)
 		}))
 
 		// Save menu
 		menu.append(new MenuItem({
-			label: "Save As...",
+			label: 'Save As...',
 			click: () => saveMission(this.contextMission.id)
 		}))
 
@@ -36,7 +36,7 @@ import missionsStore from "./store"
 		// Scroll active/selected mission item into view (if needed)
 		if (this.listElement) {
 
-			const activeElement = this.listElement.querySelector(".selected")
+			const activeElement = this.listElement.querySelector('.selected')
 
 			if (activeElement) {
 				activeElement.scrollIntoViewIfNeeded()

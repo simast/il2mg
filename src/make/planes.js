@@ -1,5 +1,5 @@
-import data from "../data"
-import {MapSeason} from "./map"
+import data from '../data'
+import {MapSeason} from './map'
 
 // Plane size types
 export const PlaneSize = Object.freeze({
@@ -41,7 +41,7 @@ export default function makePlanes() {
 		let planeData = data.planes[planeID]
 
 		// Alias reference to another plane type
-		if (typeof planeData === "string") {
+		if (typeof planeData === 'string') {
 
 			planeAlias[planeID] = planeData
 			continue
@@ -63,7 +63,7 @@ export default function makePlanes() {
 			for (const prop in planeData) {
 
 				// Collect plane skin data
-				if (prop === "skins") {
+				if (prop === 'skins') {
 
 					const skins = getSkins(planeData)
 

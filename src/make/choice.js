@@ -1,20 +1,20 @@
-import data from "../data"
-import {FlightState} from "./flight"
+import data from '../data'
+import {FlightState} from './flight'
 
 // List of unit data params used as combined record key
 const RECORD_PARAMS = [
-	"country",
-	"unit",
-	"plane",
-	"airfield",
-	"task"
+	'country',
+	'unit',
+	'plane',
+	'airfield',
+	'task'
 ]
 
 // Record key data parameter separator
-const RECORD_SEP = "~"
+const RECORD_SEP = '~'
 
 // Multiple param values separator (as OR choice)
-const PARAM_SEP = ","
+const PARAM_SEP = ','
 
 // Generate mission player choice data
 export default function makeChoice() {
@@ -39,7 +39,7 @@ export default function makeChoice() {
 
 		// Inactive coalition
 		if (!countries.length) {
-			throw ["Coalition is not active!", {coalition: params.coalition}]
+			throw ['Coalition is not active!', {coalition: params.coalition}]
 		}
 
 		filter.coalition = params.coalition
@@ -54,7 +54,7 @@ export default function makeChoice() {
 			data.countries[params.country].coalition !== params.coalition) {
 
 			throw [
-				"Country is not part of coalition!", {
+				'Country is not part of coalition!', {
 					country: params.country,
 					coalition: params.coalition
 				}
@@ -63,14 +63,14 @@ export default function makeChoice() {
 
 		// Inactive country
 		if (!index.countries[params.country]) {
-			throw ["Country is not active!", {country: params.country}]
+			throw ['Country is not active!', {country: params.country}]
 		}
 
 		filter.country = params.country
 	}
 
 	// Filter on desired data choice params
-	for (const param of ["task", "plane", "unit", "airfield"]) {
+	for (const param of ['task', 'plane', 'unit', 'airfield']) {
 
 		if (!params[param]) {
 			continue
@@ -81,8 +81,8 @@ export default function makeChoice() {
 			value = value.trim()
 
 			// Unknown param value
-			if (!index[param + "s"][value]) {
-				throw ["Unknown " + param + "!", {[param]: value}]
+			if (!index[param + 's'][value]) {
+				throw ['Unknown ' + param + '!', {[param]: value}]
 			}
 
 			filter[param] = filter[param] || []
@@ -97,7 +97,7 @@ export default function makeChoice() {
 		params.state = FlightState.Start
 	}
 	else {
-		isGroundStartOnly = (typeof params.state !== "number")
+		isGroundStartOnly = (typeof params.state !== 'number')
 	}
 
 	const choice = this.choice = {
@@ -118,7 +118,7 @@ export default function makeChoice() {
 
 			// No specific filter on this data param
 			if (filterData === undefined) {
-				scanRegExp.push(".+?")
+				scanRegExp.push('.+?')
 			}
 			else {
 
@@ -128,7 +128,7 @@ export default function makeChoice() {
 
 				// Filter on multiple data types (as OR condition)
 				if (filterData.length > 1) {
-					scanRegExp.push("(?:" + filterData.join("|") + ")")
+					scanRegExp.push('(?:' + filterData.join('|') + ')')
 				}
 				// Filter on a single data param
 				else {
@@ -139,7 +139,7 @@ export default function makeChoice() {
 			}
 		})
 
-		scanRegExp = new RegExp("^" + scanRegExp.join(RECORD_SEP) + "$")
+		scanRegExp = new RegExp('^' + scanRegExp.join(RECORD_SEP) + '$')
 	}
 
 	// Scan for valid battle index records
@@ -167,7 +167,7 @@ export default function makeChoice() {
 					let paramData = recordData[paramIndex]
 
 					// Country choice is a number
-					if (param === "country") {
+					if (param === 'country') {
 						paramData = Number(paramData)
 					}
 
@@ -222,7 +222,7 @@ export default function makeChoice() {
 			}
 		}
 
-		throw ["No valid missions found!", errorParams]
+		throw ['No valid missions found!', errorParams]
 	}
 
 	// Pick a random valid battle date

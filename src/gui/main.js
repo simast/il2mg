@@ -1,21 +1,21 @@
-import fs from "fs"
-import path from "path"
-import {app, screen, BrowserWindow, ipcMain, dialog, Menu} from "electron"
-import electronDebug from "electron-debug"
+import fs from 'fs'
+import path from 'path'
+import {app, screen, BrowserWindow, ipcMain, dialog, Menu} from 'electron'
+import electronDebug from 'electron-debug'
 
-import Mission from "../mission"
-import {APPLICATION_TITLE} from "../constants"
+import Mission from '../mission'
+import {APPLICATION_TITLE} from '../constants'
 
 // Disable built-in Electron security warnings
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
 
-const isDevMode = process.env.NODE_ENV !== "production"
+const isDevMode = process.env.NODE_ENV !== 'production'
 let mainWindow = null
 
 // Use a custom error handler for the main process
 function onError(error) {
 
-	const title = "Error!"
+	const title = 'Error!'
 	let message
 
 	if (error instanceof Error) {
@@ -37,7 +37,7 @@ function onError(error) {
 		dialog.showMessageBox(
 			mainWindow,
 			{
-				type: "error",
+				type: 'error',
 				title,
 				message
 			}
@@ -48,8 +48,8 @@ function onError(error) {
 	}
 }
 
-process.removeAllListeners("uncaughtException").on("uncaughtException", onError)
-process.removeAllListeners("unhandledRejection").on("unhandledRejection", onError)
+process.removeAllListeners('uncaughtException').on('uncaughtException', onError)
+process.removeAllListeners('unhandledRejection').on('unhandledRejection', onError)
 
 // Make sure only a single app instance is allowed to run at the same time
 const isPrimaryInstance = app.requestSingleInstanceLock()
@@ -58,7 +58,7 @@ if (!isPrimaryInstance) {
 	app.exit(0) // Success
 }
 
-app.on("second-instance", () => {
+app.on('second-instance', () => {
 
 	if (!mainWindow) {
 		return
@@ -75,7 +75,7 @@ app.on("second-instance", () => {
 
 // Enable development mode tools
 if (isDevMode) {
-	electronDebug({showDevTools: "undocked"})
+	electronDebug({showDevTools: 'undocked'})
 }
 
 // Min and max window size
@@ -85,24 +85,24 @@ const MIN_WINDOW_HEIGHT = 600
 const MAX_WINDOW_HEIGHT = 750
 
 // Config file name
-const CONFIG_FILE = "Config.json"
+const CONFIG_FILE = 'Config.json'
 
 // Default missions storage directory name
-const MISSIONS_DIR = "Missions"
+const MISSIONS_DIR = 'Missions'
 
 // Global JSON configuration data object
 const config = global.config = {}
 let configPath
 
 // Handle set config data requests from renderer process
-ipcMain.on("setConfig", (event, configData) => {
+ipcMain.on('setConfig', (event, configData) => {
 
 	Object.assign(config, configData)
 	event.returnValue = true
 })
 
 // Handle create mission requests from renderer process
-ipcMain.on("createMission", async (event, params) => {
+ipcMain.on('createMission', async (event, params) => {
 
 	let hasError = true
 
@@ -117,28 +117,28 @@ ipcMain.on("createMission", async (event, params) => {
 		hasError = false
 	}
 	finally {
-		event.sender.send("createMission", hasError)
+		event.sender.send('createMission', hasError)
 	}
 })
 
 // Quit when all windows are closed
-app.on("window-all-closed", () => {
+app.on('window-all-closed', () => {
 	app.quit()
 })
 
 // Create main application window
-app.on("ready", () => {
+app.on('ready', () => {
 
 	// Disable default application menu
 	Menu.setApplicationMenu(null)
 
-	const userDataPath = app.getPath("userData")
+	const userDataPath = app.getPath('userData')
 
 	// Load JSON configuration data
 	configPath = path.join(userDataPath, CONFIG_FILE)
 
 	try {
-		Object.assign(config, JSON.parse(fs.readFileSync(configPath, "utf-8")))
+		Object.assign(config, JSON.parse(fs.readFileSync(configPath, 'utf-8')))
 	}
 	catch (e) {}
 
@@ -167,14 +167,14 @@ app.on("ready", () => {
 		acceptFirstMouse: true,
 		fullscreenable: false,
 		autoHideMenuBar: true,
-		backgroundColor: "#FAEABD",
+		backgroundColor: '#FAEABD',
 		webPreferences: {
 			devTools: isDevMode,
 			webgl: false,
 			webaudio: false,
 			plugins: false,
 			webviewTag: false,
-			defaultEncoding: "utf-8"
+			defaultEncoding: 'utf-8'
 		}
 	}
 
@@ -197,25 +197,25 @@ app.on("ready", () => {
 
 	mainWindow = new BrowserWindow(windowConfig)
 
-	mainWindow.loadURL("file://" + path.join(__dirname, "index.html"))
+	mainWindow.loadURL('file://' + path.join(__dirname, 'index.html'))
 
 	// Prevent document from changing window title
-	mainWindow.on("page-title-updated", event => {
+	mainWindow.on('page-title-updated', event => {
 		event.preventDefault()
 	})
 
 	// Show main window (without a visual flash)
-	mainWindow.once("ready-to-show", () => {
+	mainWindow.once('ready-to-show', () => {
 		mainWindow.show()
 	})
 
 	// Disable opening new windows (also fixes shift+click on link issue)
-	mainWindow.webContents.on("new-window", event => {
+	mainWindow.webContents.on('new-window', event => {
 		event.preventDefault()
 	})
 
 	// Save main window position and size
-	mainWindow.on("close", () => {
+	mainWindow.on('close', () => {
 
 		const {x, y} = mainWindow.getBounds()
 		const [width, height] = mainWindow.getContentSize()
@@ -227,15 +227,15 @@ app.on("ready", () => {
 	})
 
 	// Invalidate main window reference
-	mainWindow.on("closed", () => {
+	mainWindow.on('closed', () => {
 		mainWindow = null
 	})
 })
 
 // Write application configuration data
-app.on("before-quit", () => {
+app.on('before-quit', () => {
 
 	if (configPath) {
-		fs.writeFileSync(configPath, JSON.stringify(config, null, "\t"))
+		fs.writeFileSync(configPath, JSON.stringify(config, null, '\t'))
 	}
 })

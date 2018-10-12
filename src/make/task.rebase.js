@@ -1,11 +1,11 @@
-import sylvester from "sylvester"
-import {makeActivity, ActivityType} from "./flight.plan"
-import {isOffmap, getMapIntersection, markMapArea} from "./map"
+import sylvester from 'sylvester'
+import {makeActivity, ActivityType} from './flight.plan'
+import {isOffmap, getMapIntersection, markMapArea} from './map'
 
 // Flight make parts
-import makeFlightAltitude from "./flight.altitude"
-import makeFlightRoute from "./flight.route"
-import makeAirfieldTaxi from "./airfield.taxi"
+import makeFlightAltitude from './flight.altitude'
+import makeFlightRoute from './flight.route'
+import makeAirfieldTaxi from './airfield.taxi'
 
 // Minimum distance required between rebase airfields and map border
 const MIN_DISTANCE_AIRFIELD = 20000 // 20 km

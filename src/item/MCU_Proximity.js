@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Proximity item
 export default class MCU_Proximity extends MCU {

@@ -1,4 +1,4 @@
-import {FlightState} from "./flight"
+import {FlightState} from './flight'
 
 // Minimum percent of plane fuel that is always available
 const MIN_PLANE_FUEL = 0.1 // 10%
@@ -16,7 +16,7 @@ export default function makeFlightFuel(flight, travelDistance = 0) {
 		if (simulateTakeoff) {
 
 			// 8 minutes for air start
-			if (typeof element.state === "number") {
+			if (typeof element.state === 'number') {
 				takeoffTime = 8
 			}
 			// 5 minutes for runway start

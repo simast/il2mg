@@ -1,4 +1,4 @@
-import data from "../data"
+import data from '../data'
 
 // Generate available mission formations
 export default function makeFormations() {
@@ -25,8 +25,8 @@ export default function makeFormations() {
 			const formationTo = formationData.to
 
 			// Filter out formations with from/to dates
-			if ((formationFrom && this.date.isBefore(formationFrom, "day")) ||
-					(formationTo && this.date.isAfter(formationTo, "day"))) {
+			if ((formationFrom && this.date.isBefore(formationFrom, 'day')) ||
+					(formationTo && this.date.isAfter(formationTo, 'day'))) {
 
 				continue
 			}
@@ -98,7 +98,7 @@ export default function makeFormations() {
 				for (const element of elements) {
 
 					// Add required plane count for simple element
-					if (typeof element === "number") {
+					if (typeof element === 'number') {
 						planes.push(element)
 					}
 					// Resolve required plane count for sub-formation elements

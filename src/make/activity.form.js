@@ -1,5 +1,5 @@
-import * as MCU_CMD_Formation from "../item/MCU_CMD_Formation"
-import {FlightState} from "./flight"
+import * as MCU_CMD_Formation from '../item/MCU_CMD_Formation'
+import {FlightState} from './flight'
 
 // Plan activity used to form up (set formation and element cover)
 export default class ActivityForm {
@@ -11,7 +11,7 @@ export default class ActivityForm {
 		const {rand} = mission
 		const flightGroup = flight.group
 		const leaderPlaneItem = element[0].item
-		const isFlightAirStart = (typeof flight.state === "number")
+		const isFlightAirStart = (typeof flight.state === 'number')
 		const isLeadingElement = (element === flight.elements[0])
 		const isPlayerFlightLeader = (flight.player === flight.leader)
 		const debugFlights = Boolean(mission.debug && mission.debug.flights)
@@ -23,7 +23,7 @@ export default class ActivityForm {
 
 			if (!coverCommand) {
 
-				coverCommand = flightGroup.createItem("MCU_CMD_Cover")
+				coverCommand = flightGroup.createItem('MCU_CMD_Cover')
 				coverCommand.setPositionNear(leaderPlaneItem)
 
 				element.coverCommand = coverCommand
@@ -42,7 +42,7 @@ export default class ActivityForm {
 
 			if (!formationCommand) {
 
-				formationCommand = flightGroup.createItem("MCU_CMD_Formation")
+				formationCommand = flightGroup.createItem('MCU_CMD_Formation')
 
 				formationCommand.FormationType = element.formation
 				formationCommand.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE
@@ -97,7 +97,7 @@ export default class ActivityForm {
 
 					// Add a small timer so that other elements can link up with the rest
 					// of the flight after take off (just before proceeding with the task).
-					const waitTimerLink = flightGroup.createItem("MCU_Timer")
+					const waitTimerLink = flightGroup.createItem('MCU_Timer')
 
 					waitTimerLink.Time = Number(rand.real(40, 60).toFixed(3))
 					waitTimerLink.setPositionNear(flight.takeoffCommand)
@@ -105,7 +105,7 @@ export default class ActivityForm {
 
 					// Connect form up action using last ground element "took off" report
 					lastStartingElement[0].item.entity.addReport(
-						"OnTookOff",
+						'OnTookOff',
 						flight.takeoffCommand,
 						waitTimerLink
 					)

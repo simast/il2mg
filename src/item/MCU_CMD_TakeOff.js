@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Take off command item
 export default class MCU_CMD_TakeOff extends MCU {

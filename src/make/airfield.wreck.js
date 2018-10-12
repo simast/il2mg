@@ -1,5 +1,5 @@
-import Item from "../item"
-import data from "../data"
+import Item from '../item'
+import data from '../data'
 
 // Make airfield wreck item
 export default function makeAirfieldWreck(airfield, item) {
@@ -97,7 +97,7 @@ export default function makeAirfieldWreck(airfield, item) {
 	wreckItem.setOrientation(orientation)
 
 	// Set plane/vehicle damaged state (for destroyed effect)
-	const damageItem = new Item("Damaged")
+	const damageItem = new Item('Damaged')
 
 	wreckType.damage.forEach(damageIndex => {
 		damageItem[damageIndex] = 1

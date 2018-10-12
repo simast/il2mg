@@ -1,6 +1,6 @@
-import data from "../data"
-import * as Plane from "../item/Plane"
-import people from "./people"
+import data from '../data'
+import * as Plane from '../item/Plane'
+import people from './people'
 
 // Make mission flight pilots
 export default function makeFlightPilots(flight) {
@@ -34,7 +34,7 @@ export default function makeFlightPilots(flight) {
 
 			const rank = ranks[rankID]
 
-			if (typeof rank.type !== "object") {
+			if (typeof rank.type !== 'object') {
 				continue
 			}
 
@@ -90,7 +90,7 @@ export default function makeFlightPilots(flight) {
 
 			// Lower and upper pilot rank weighted list range bounds
 			const rankRange = {
-				type: "pilot",
+				type: 'pilot',
 				min: 0,
 				max: Math.max(ranksWeighted.length - 1, 0)
 			}
@@ -123,12 +123,12 @@ export default function makeFlightPilots(flight) {
 			}
 
 			// Modify max rank range based on task rankMax configuration parameter
-			if (typeof task.rankMax === "number") {
+			if (typeof task.rankMax === 'number') {
 				rankRange.max = Math.min(Math.floor(ranksWeighted.length * task.rankMax), rankRange.max)
 			}
 
 			// Modify min rank range based on task rankMin configuration parameter
-			if (typeof task.rankMin === "number") {
+			if (typeof task.rankMin === 'number') {
 				rankRange.min = Math.max(Math.floor(ranksWeighted.length * task.rankMin), rankRange.min)
 			}
 
@@ -161,7 +161,7 @@ export default function makeFlightPilots(flight) {
 
 						useKnownPilot = Math.max(useKnownPilot, 0.5)
 
-						if (typeof task.rankMax !== "number") {
+						if (typeof task.rankMax !== 'number') {
 							useKnownPilotMaxRankRange = false
 						}
 					}
@@ -226,7 +226,7 @@ export default function makeFlightPilots(flight) {
 
 							uniqueIDList.delete(pilot.id)
 
-							pilot.id = pilot.name.substr(0, prependLength) + ". " + baseID
+							pilot.id = pilot.name.substr(0, prependLength) + '. ' + baseID
 
 							if (uniqueIDList.has(pilot.id)) {
 								uniqueIDIndex[pilot.id]++
@@ -308,14 +308,14 @@ export default function makeFlightPilots(flight) {
 		// Pilot name as array of name components
 		if (Array.isArray(pilotFound.name)) {
 
-			pilot.name = pilotFound.name.join(" ")
+			pilot.name = pilotFound.name.join(' ')
 			pilot.id = pilotFound.name.slice(-1)[0]
 		}
 		// Pilot name as full name string
 		else {
 
 			pilot.name = pilotFound.name
-			pilot.id = pilotFound.name.split(" ").slice(-1)[0]
+			pilot.id = pilotFound.name.split(' ').slice(-1)[0]
 		}
 
 		// Force ace pilot level
@@ -335,8 +335,8 @@ export default function makeFlightPilots(flight) {
 
 		do {
 
-			pilot.name = ""
-			pilot.id = ""
+			pilot.name = ''
+			pilot.id = ''
 
 			name = people.getName(names)
 
@@ -344,7 +344,7 @@ export default function makeFlightPilots(flight) {
 			if (name.first && name.last && name.first[0] !== name.last[name.last.length - 1]) {
 
 				// Set full pilot name
-				pilot.name = name.first.join(" ") + " " + name.last.join(" ")
+				pilot.name = name.first.join(' ') + ' ' + name.last.join(' ')
 			}
 		}
 		// NOTE: Enforce max 22 characters for full pilot name
@@ -352,7 +352,7 @@ export default function makeFlightPilots(flight) {
 
 		// Pilot ID (unique short name)
 		if (name.last) {
-			pilot.id = name.last.join(" ")
+			pilot.id = name.last.join(' ')
 		}
 
 		// Set an unknown pilot rank
@@ -394,7 +394,7 @@ export default function makeFlightPilots(flight) {
 		// Set custom player name and id
 		else {
 
-			pilot.name = playerName.join(" ").replace(/\s+/g, " ")
+			pilot.name = playerName.join(' ').replace(/\s+/g, ' ')
 			pilot.id = playerName[playerName.length - 1]
 
 			// Use last word from name as pilot id
@@ -402,7 +402,7 @@ export default function makeFlightPilots(flight) {
 				pilot.id = playerName[0].split(/\s+/).slice(-1)[0]
 			}
 
-			pilot.id = pilot.id.replace(/\s+/g, " ")
+			pilot.id = pilot.id.replace(/\s+/g, ' ')
 		}
 
 		// Use a custom requested rank

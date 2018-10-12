@@ -1,4 +1,4 @@
-import Item from "../item"
+import Item from '../item'
 
 // Effect item
 export default class Effect extends Item {

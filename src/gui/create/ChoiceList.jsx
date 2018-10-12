@@ -1,6 +1,6 @@
-import React from "react"
-import createStore from "./store"
-import ChoiceListItem from "./ChoiceListItem"
+import React from 'react'
+import createStore from './store'
+import ChoiceListItem from './ChoiceListItem'
 
 // Data choice list component
 export default class ChoiceList extends React.Component {
@@ -27,7 +27,7 @@ export default class ChoiceList extends React.Component {
 
 			return (
 				<ChoiceListItem
-					key={choice.id.join("")}
+					key={choice.id.join('')}
 					choice={choice}
 					onChoiceClick={choices => {
 						this.onChoiceClick(type, choices)
@@ -53,7 +53,7 @@ export default class ChoiceList extends React.Component {
 		}
 
 		return (
-			<div className={"choiceList " + type}>
+			<div className={'choiceList ' + type}>
 				<h2>{title}{valid}{reset}</h2>
 				<ul ref={ref => {this.listElement = ref}}>{items}</ul>
 			</div>
@@ -65,7 +65,7 @@ export default class ChoiceList extends React.Component {
 		// Scroll first selected choice list item into view (if needed)
 		if (this.listElement) {
 
-			const selectedItem = this.listElement.querySelector(".selected")
+			const selectedItem = this.listElement.querySelector('.selected')
 
 			if (selectedItem) {
 				selectedItem.scrollIntoViewIfNeeded()

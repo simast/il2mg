@@ -1,13 +1,13 @@
-import path from "path"
-import numeral from "numeral"
-import data, {ItemTag, ItemFlag} from "../../src/data"
-import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from "../../src/item"
-import {PlaneSize, getPlaneSizeFromName} from "../../src/make/planes"
+import path from 'path'
+import numeral from 'numeral'
+import data, {ItemTag, ItemFlag} from '../../src/data'
+import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from '../../src/item'
+import {PlaneSize, getPlaneSizeFromName} from '../../src/make/planes'
 
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert raw airfields .Group to .json files
-	grunt.registerTask("build:airfields", "Build airfields JSON files.", () => {
+	grunt.registerTask('build:airfields', 'Build airfields JSON files.', () => {
 
 		let totalBattles = 0
 		let totalAirfields = 0
@@ -31,13 +31,13 @@ module.exports = function(grunt) {
 		for (const battleID in data.battles) {
 
 			const battle = data.battles[battleID]
-			const airfieldsPath = path.join("data", "battles", battleID, "airfields")
+			const airfieldsPath = path.join('data', 'battles', battleID, 'airfields')
 
 			// Process all airfields
 			for (const airfieldID in battle.airfields) {
 
-				const fileSource = path.join(airfieldsPath, airfieldID + ".Group")
-				const fileDestination = path.join(airfieldsPath, airfieldID + ".json")
+				const fileSource = path.join(airfieldsPath, airfieldID + '.Group')
+				const fileDestination = path.join(airfieldsPath, airfieldID + '.json')
 
 				// Ignore airfields without .Group file
 				if (!grunt.file.exists(fileSource)) {
@@ -109,7 +109,7 @@ module.exports = function(grunt) {
 
 								itemTypeID = ItemTag.Plane
 
-								const planeData = item.Name.split(":")
+								const planeData = item.Name.split(':')
 								let planeDataIndex = 1
 
 								// Plane sector number
@@ -117,7 +117,7 @@ module.exports = function(grunt) {
 
 								// Validate plane sector number
 								if (!Number.isInteger(planeSector)) {
-									grunt.fail.fatal("Invalid plane sector in: " + item.Name)
+									grunt.fail.fatal('Invalid plane sector in: ' + item.Name)
 								}
 
 								itemData.push(planeSector)
@@ -150,7 +150,7 @@ module.exports = function(grunt) {
 
 								// Validate plane size ID
 								if (!Number.isInteger(planeSizeID)) {
-									grunt.fail.fatal("Invalid plane size in: " + item.Name)
+									grunt.fail.fatal('Invalid plane size in: ' + item.Name)
 								}
 
 								itemData.push(planeSizeID)
@@ -158,11 +158,11 @@ module.exports = function(grunt) {
 								// Camo plane flag
 								const planeFlag = planeData[planeDataIndex++]
 
-								if (planeFlag === "CAMO") {
+								if (planeFlag === 'CAMO') {
 									itemData.push(ItemFlag.PlaneCamouflage)
 								}
 								else if (planeFlag !== undefined) {
-									grunt.fail.fatal("Invalid plane flag in: " + item.Name)
+									grunt.fail.fatal('Invalid plane flag in: ' + item.Name)
 								}
 
 								if (!json.sectors) {
@@ -184,49 +184,49 @@ module.exports = function(grunt) {
 								sector[planeSizeID]++
 							}
 							// Cargo truck
-							else if (item.Name === "TRUCK:CARGO") {
+							else if (item.Name === 'TRUCK:CARGO') {
 								itemTypeID = ItemTag.CargoTruck
 							}
 							// Fuel truck
-							else if (item.Name === "TRUCK:FUEL") {
+							else if (item.Name === 'TRUCK:FUEL') {
 								itemTypeID = ItemTag.FuelTruck
 							}
 							// Car vehicle
-							else if (item.Name === "CAR") {
+							else if (item.Name === 'CAR') {
 								itemTypeID = ItemTag.Car
 							}
 							// Anti-aircraft position (MG)
-							else if (item.Name === "AA:MG") {
+							else if (item.Name === 'AA:MG') {
 								itemTypeID = ItemTag.AntiAircraftMG
 							}
 							// Anti-aircraft position (Flak)
-							else if (item.Name === "AA:FLAK") {
+							else if (item.Name === 'AA:FLAK') {
 								itemTypeID = ItemTag.AntiAircraftFlak
 							}
 							// Anti-aircraft position (Train platform)
-							else if (item.Name === "AA:TRAIN") {
+							else if (item.Name === 'AA:TRAIN') {
 								itemTypeID = ItemTag.AntiAircraftTrain
 							}
 							// Search light
-							else if (item.Name === "LIGHT:SEARCH") {
+							else if (item.Name === 'LIGHT:SEARCH') {
 								itemTypeID = ItemTag.SearchLight
 							}
 							// Landing light
-							else if (item.Name === "LIGHT:LAND") {
+							else if (item.Name === 'LIGHT:LAND') {
 								itemTypeID = ItemTag.LandingLight
 							}
 							// Wreck
-							else if (item.Name === "WRECK") {
+							else if (item.Name === 'WRECK') {
 								itemTypeID = ItemTag.Wreck
 							}
 							// Beacon
-							else if (item.Name === "BEACON") {
+							else if (item.Name === 'BEACON') {
 
 								itemTypeID = ItemTag.Beacon
 								itemData.push(data.registerItemType(itemTypeData))
 							}
 							// Windsock
-							else if (item.Name === "WINDSOCK") {
+							else if (item.Name === 'WINDSOCK') {
 
 								itemTypeID = ItemTag.Windsock
 								itemData.push(data.registerItemType(itemTypeData))
@@ -237,11 +237,11 @@ module.exports = function(grunt) {
 								itemTypeID = data.registerItemType(itemTypeData)
 
 								// Decoration item flag
-								if (item.Name === "DECO") {
+								if (item.Name === 'DECO') {
 									itemData.push(ItemFlag.BlockDecoration)
 								}
 								// Fuel item flag
-								else if (item.Name === "FUEL") {
+								else if (item.Name === 'FUEL') {
 									itemData.push(ItemFlag.BlockFuel)
 								}
 							}
@@ -274,24 +274,24 @@ module.exports = function(grunt) {
 							let effectTypeID = null
 
 							// House smoke effect
-							if (item.Name === "EFFECT:SMOKE") {
+							if (item.Name === 'EFFECT:SMOKE') {
 								effectTypeID = ItemFlag.EffectSmoke
 							}
 							// Campfire effect
-							else if (item.Name === "EFFECT:CAMP") {
+							else if (item.Name === 'EFFECT:CAMP') {
 								effectTypeID = ItemFlag.EffectCampFire
 							}
 							// Landing fire effect
-							else if (item.Name === "EFFECT:LAND") {
+							else if (item.Name === 'EFFECT:LAND') {
 								effectTypeID = ItemFlag.EffectLandFire
 							}
 							// Siren effect
-							else if (item.Name === "EFFECT:SIREN") {
+							else if (item.Name === 'EFFECT:SIREN') {
 								effectTypeID = ItemFlag.EffectSiren
 							}
 							// Unknown effect item definition
 							else {
-								grunt.fail.fatal("Invalid effect definition: " + item.Name)
+								grunt.fail.fatal('Invalid effect definition: ' + item.Name)
 							}
 
 							const effect = [ItemTag.Effect]
@@ -314,35 +314,35 @@ module.exports = function(grunt) {
 							// Taxi route
 							if (/^TAXI/.test(item.Name)) {
 
-								const taxiData = item.Name.split(":")
+								const taxiData = item.Name.split(':')
 								const taxiID = Number(taxiData[1])
 
 								// Validate taxi route ID
 								if (!Number.isInteger(taxiID)) {
-									grunt.fail.fatal("Invalid taxi route ID in: " + item.Name)
+									grunt.fail.fatal('Invalid taxi route ID in: ' + item.Name)
 								}
 
 								// Validate required taxi route child items
-								if (!item.items[0] || item.items[0].type !== "Chart" || !item.items[0].items.length) {
-									grunt.fail.fatal("Missing TAXI definition Chart and Point data.")
+								if (!item.items[0] || item.items[0].type !== 'Chart' || !item.items[0].items.length) {
+									grunt.fail.fatal('Missing TAXI definition Chart and Point data.')
 								}
 
 								const taxiRunwayID = Number(taxiData[2])
 
 								// Validate taxi runway ID
 								if (!Number.isInteger(taxiRunwayID)) {
-									grunt.fail.fatal("Invalid taxi runway ID in: " + item.Name)
+									grunt.fail.fatal('Invalid taxi runway ID in: ' + item.Name)
 								}
 
 								// Invert taxi route flag
 								const taxiFlag = taxiData[3]
 								let taxiInvert = 0
 
-								if (taxiFlag === "INV") {
+								if (taxiFlag === 'INV') {
 									taxiInvert = ItemFlag.TaxiInvertible
 								}
 								else if (taxiFlag !== undefined) {
-									grunt.fail.fatal("Invalid taxi route flag in: " + item.Name)
+									grunt.fail.fatal('Invalid taxi route flag in: ' + item.Name)
 								}
 
 								const taxiRoute = []
@@ -382,7 +382,7 @@ module.exports = function(grunt) {
 							}
 							// Unknown Airfield item definition
 							else {
-								grunt.fail.fatal("Invalid airfield definition: " + item.Name)
+								grunt.fail.fatal('Invalid airfield definition: ' + item.Name)
 							}
 
 							totalItems++
@@ -393,32 +393,32 @@ module.exports = function(grunt) {
 							// Route waypoint
 							if (/^ROUTE/.test(item.Name)) {
 
-								const waypointData = item.Name.split(":").slice(1)
+								const waypointData = item.Name.split(':').slice(1)
 								const routeID = Number(waypointData[0])
 
 								// Validate route ID
 								if (!Number.isInteger(routeID)) {
-									grunt.fail.fatal("Invalid route ID in: " + item.Name)
+									grunt.fail.fatal('Invalid route ID in: ' + item.Name)
 								}
 
 								// Validate waypoint target
 								if (item.Targets.length !== 1) {
-									grunt.fail.fatal("Invalid route waypoint target in: " + item.Name)
+									grunt.fail.fatal('Invalid route waypoint target in: ' + item.Name)
 								}
 
 								let waypointFlag = waypointData[1]
 
 								// Stop point flag
-								if (waypointFlag === "STOP") {
+								if (waypointFlag === 'STOP') {
 									waypointFlag = ItemFlag.RouteStop
 								}
 								// Road formation flag
-								else if (waypointFlag === "ROAD") {
+								else if (waypointFlag === 'ROAD') {
 									waypointFlag = ItemFlag.RouteRoad
 								}
 								// Unknown flag
 								else if (waypointFlag !== undefined) {
-									grunt.fail.fatal("Invalid route waypoint flag in: " + item.Name)
+									grunt.fail.fatal('Invalid route waypoint flag in: ' + item.Name)
 								}
 
 								const waypointIndex = item.Index
@@ -444,7 +444,7 @@ module.exports = function(grunt) {
 							}
 							// Unknown waypoint item definition
 							else {
-								grunt.fail.fatal("Invalid waypoint definition: " + item.Name)
+								grunt.fail.fatal('Invalid waypoint definition: ' + item.Name)
 							}
 
 							totalItems++
@@ -479,7 +479,7 @@ module.exports = function(grunt) {
 				// Write output JSON items file
 				grunt.file.write(
 					fileDestination,
-					JSON.stringify(json, null, "\t")
+					JSON.stringify(json, null, '\t')
 				)
 
 				totalAirfields++
@@ -490,18 +490,18 @@ module.exports = function(grunt) {
 
 		// Write items type JSON data file
 		grunt.file.write(
-			"data/items/index.json",
-			JSON.stringify(data.items, null, "\t")
+			'data/items/index.json',
+			JSON.stringify(data.items, null, '\t')
 		)
 
-		let message = ""
+		let message = ''
 
-		message += numeral(totalItems).format("0,0") + " "
-		message += grunt.util.pluralize(totalItems, "item/items")
-		message += " processed from " + numeral(totalBattles).format("0,0") + " "
-		message += grunt.util.pluralize(totalBattles, "battle/battles")
-		message += " and " + numeral(totalAirfields).format("0,0") + " "
-		message += grunt.util.pluralize(totalAirfields, "airfield/airfields") + "."
+		message += numeral(totalItems).format('0,0') + ' '
+		message += grunt.util.pluralize(totalItems, 'item/items')
+		message += ' processed from ' + numeral(totalBattles).format('0,0') + ' '
+		message += grunt.util.pluralize(totalBattles, 'battle/battles')
+		message += ' and ' + numeral(totalAirfields).format('0,0') + ' '
+		message += grunt.util.pluralize(totalAirfields, 'airfield/airfields') + '.'
 
 		grunt.log.ok(message)
 	})

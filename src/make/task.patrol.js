@@ -1,15 +1,15 @@
-import sylvester from "sylvester"
-import * as MCU_Icon from "../item/MCU_Icon"
-import * as MCU_Waypoint from "../item/MCU_Waypoint"
-import {makeActivity, ActivityType} from "./flight.plan"
-import {Location} from "./locations"
-import {MapColor} from "./map"
-import {Territory} from "./fronts"
-import {RESTRICTED_BORDER, isRestricted} from "./map"
+import sylvester from 'sylvester'
+import * as MCU_Icon from '../item/MCU_Icon'
+import * as MCU_Waypoint from '../item/MCU_Waypoint'
+import {makeActivity, ActivityType} from './flight.plan'
+import {Location} from './locations'
+import {MapColor} from './map'
+import {Territory} from './fronts'
+import {RESTRICTED_BORDER, isRestricted} from './map'
 
 // Flight make parts
-import makeFlightAltitude from "./flight.altitude"
-import makeFlightRoute from "./flight.route"
+import makeFlightAltitude from './flight.altitude'
+import makeFlightRoute from './flight.route'
 
 // Max patrol area range (as a percent from total aircraft fuel range)
 const MAX_RANGE_PERCENT = 25
@@ -34,7 +34,7 @@ export default function makeTaskPatrol(flight) {
 	const startVector = startLocation.vector
 	const isPlayerFlightLeader = (flight.player === flight.leader)
 	const debugFlights = Boolean(this.debug && this.debug.flights)
-	const isForwardState = (typeof flight.state === "number" && flight.state > 0)
+	const isForwardState = (typeof flight.state === 'number' && flight.state > 0)
 
 	// Max patrol area range based on max aircraft fuel range
 	const maxPlaneRange = flight.range
@@ -350,7 +350,7 @@ export default function makeTaskPatrol(flight) {
 		// Translate 0,0 origin vector back to original position
 		vector = zoneCenter.add(vector)
 
-		const zoneIcon = flight.group.createItem("MCU_Icon")
+		const zoneIcon = flight.group.createItem('MCU_Icon')
 
 		zoneIcon.setPosition(vector.e(1), vector.e(2))
 		zoneIcon.setColor(MapColor.Route)
@@ -516,18 +516,18 @@ export function findBasePoints(flight, params) {
 		const locationZ = location.z
 
 		if (locationX > startX && locationZ > startZ) {
-			return "tr"
+			return 'tr'
 		}
 
 		if (locationX < startX && locationZ > startZ) {
-			return "br"
+			return 'br'
 		}
 
 		if (locationX < startX && locationZ < startZ) {
-			return "bl"
+			return 'bl'
 		}
 
-		return "tl"
+		return 'tl'
 	}
 
 	// Adjust (align and face) bounds based on a list of "hot" points

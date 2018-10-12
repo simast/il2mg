@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Spawner item
 export default class MCU_Spawner extends MCU {

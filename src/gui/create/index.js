@@ -7,5 +7,5 @@ export const Start = Object.freeze({
 
 // Supported battles
 export const Battle = Object.freeze({
-	Stalingrad: "stalingrad"
+	Stalingrad: 'stalingrad'
 })

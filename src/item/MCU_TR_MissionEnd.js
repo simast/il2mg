@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Mission End item
 export default class MCU_TR_MissionEnd extends MCU {

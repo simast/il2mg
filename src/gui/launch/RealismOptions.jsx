@@ -1,61 +1,61 @@
-import React from "react"
-import {reaction} from "mobx"
-import {observer} from "mobx-react"
-import classNames from "classnames"
-import {RealismOption} from "."
-import launchStore from "./store"
-import {readRealismOptions} from "./actions"
+import React from 'react'
+import {reaction} from 'mobx'
+import {observer} from 'mobx-react'
+import classNames from 'classnames'
+import {RealismOption} from '.'
+import launchStore from './store'
+import {readRealismOptions} from './actions'
 
 const titleByRealismOption = {
-	[RealismOption.ObjectMarkers]: "Object markers",
-	[RealismOption.AimingAssist]: "Aiming assist",
-	[RealismOption.BombingAssist]: "Bombing assist",
-	[RealismOption.Padlock]: "Padlock",
-	[RealismOption.NavigationMarkers]: "Navigation markers",
-	[RealismOption.InstrumentPanel]: "Instrument panel",
-	[RealismOption.AllowSpectators]: "Allow spectators",
-	[RealismOption.SimplifiedPhysics]: "Simplified physics",
-	[RealismOption.NoWind]: "No wind",
-	[RealismOption.NoMisfires]: "No misfires",
-	[RealismOption.Unbreakable]: "Unbreakable",
-	[RealismOption.Invulnerability]: "Invulnerability",
-	[RealismOption.UnlimitedFuel]: "Unlimited fuel",
-	[RealismOption.UnlimitedAmmo]: "Unlimited ammo",
-	[RealismOption.NoEngineStall]: "No engine stall",
-	[RealismOption.WarmedUpEngine]: "Warmed up engine",
-	[RealismOption.SimplifiedControls]: "Simplified controls",
-	[RealismOption.RudderAssist]: "Rudder assist",
-	[RealismOption.CruiseControl]: "Cruise control",
-	[RealismOption.Autopilot]: "Autopilot",
-	[RealismOption.ThrottleAutoLimit]: "Throttle auto limit",
-	[RealismOption.EngineAutoControl]: "Engine auto control",
-	[RealismOption.RadiatorAssist]: "Radiator assist"
+	[RealismOption.ObjectMarkers]: 'Object markers',
+	[RealismOption.AimingAssist]: 'Aiming assist',
+	[RealismOption.BombingAssist]: 'Bombing assist',
+	[RealismOption.Padlock]: 'Padlock',
+	[RealismOption.NavigationMarkers]: 'Navigation markers',
+	[RealismOption.InstrumentPanel]: 'Instrument panel',
+	[RealismOption.AllowSpectators]: 'Allow spectators',
+	[RealismOption.SimplifiedPhysics]: 'Simplified physics',
+	[RealismOption.NoWind]: 'No wind',
+	[RealismOption.NoMisfires]: 'No misfires',
+	[RealismOption.Unbreakable]: 'Unbreakable',
+	[RealismOption.Invulnerability]: 'Invulnerability',
+	[RealismOption.UnlimitedFuel]: 'Unlimited fuel',
+	[RealismOption.UnlimitedAmmo]: 'Unlimited ammo',
+	[RealismOption.NoEngineStall]: 'No engine stall',
+	[RealismOption.WarmedUpEngine]: 'Warmed up engine',
+	[RealismOption.SimplifiedControls]: 'Simplified controls',
+	[RealismOption.RudderAssist]: 'Rudder assist',
+	[RealismOption.CruiseControl]: 'Cruise control',
+	[RealismOption.Autopilot]: 'Autopilot',
+	[RealismOption.ThrottleAutoLimit]: 'Throttle auto limit',
+	[RealismOption.EngineAutoControl]: 'Engine auto control',
+	[RealismOption.RadiatorAssist]: 'Radiator assist'
 }
 
 const hintByRealismOption = {
-	[RealismOption.ObjectMarkers]: "Displays markers over various objects for easier identification",
-	[RealismOption.AimingAssist]: "Display aiming assist mark for guns",
-	[RealismOption.BombingAssist]: "Display aiming assist mark for bombs and rockets",
-	[RealismOption.Padlock]: "Lets you fix your view on enemy",
-	[RealismOption.NavigationMarkers]: "Shows navigation markers for waypoints",
-	[RealismOption.InstrumentPanel]: "Displays a convenient instrument data panel in the low left corner of the screen",
-	[RealismOption.AllowSpectators]: "Allow spectating players (unchecking it also limits pilot view in VR)",
-	[RealismOption.SimplifiedPhysics]: "Plane physics modeling is simplified",
-	[RealismOption.NoWind]: "Completely still air",
-	[RealismOption.NoMisfires]: "Your guns are always in top-notch shape",
-	[RealismOption.Unbreakable]: "You can smash into things harmlessly",
+	[RealismOption.ObjectMarkers]: 'Displays markers over various objects for easier identification',
+	[RealismOption.AimingAssist]: 'Display aiming assist mark for guns',
+	[RealismOption.BombingAssist]: 'Display aiming assist mark for bombs and rockets',
+	[RealismOption.Padlock]: 'Lets you fix your view on enemy',
+	[RealismOption.NavigationMarkers]: 'Shows navigation markers for waypoints',
+	[RealismOption.InstrumentPanel]: 'Displays a convenient instrument data panel in the low left corner of the screen',
+	[RealismOption.AllowSpectators]: 'Allow spectating players (unchecking it also limits pilot view in VR)',
+	[RealismOption.SimplifiedPhysics]: 'Plane physics modeling is simplified',
+	[RealismOption.NoWind]: 'Completely still air',
+	[RealismOption.NoMisfires]: 'Your guns are always in top-notch shape',
+	[RealismOption.Unbreakable]: 'You can smash into things harmlessly',
 	[RealismOption.Invulnerability]: "Enemy weapons won't harm you",
-	[RealismOption.UnlimitedFuel]: "Lets you stay in air indefinitely",
+	[RealismOption.UnlimitedFuel]: 'Lets you stay in air indefinitely',
 	[RealismOption.UnlimitedAmmo]: "Ammunition won't run out",
 	[RealismOption.NoEngineStall]: "Your engine won't stall because of aggressive maneuvering",
-	[RealismOption.WarmedUpEngine]: "Engine is always warmed up",
-	[RealismOption.SimplifiedControls]: "Plane controls are simplified for easier maneuvering",
-	[RealismOption.RudderAssist]: "Turns on rudder assistance",
-	[RealismOption.CruiseControl]: "Enables automatic speed",
-	[RealismOption.Autopilot]: "Lets you activate automatic pilot",
-	[RealismOption.ThrottleAutoLimit]: "Automatically limits maximum throttle",
-	[RealismOption.EngineAutoControl]: "Regulates optimal fuel mixture, propeller pitch (RPM), supercharger speed",
-	[RealismOption.RadiatorAssist]: "Automates opening or closing the radiator"
+	[RealismOption.WarmedUpEngine]: 'Engine is always warmed up',
+	[RealismOption.SimplifiedControls]: 'Plane controls are simplified for easier maneuvering',
+	[RealismOption.RudderAssist]: 'Turns on rudder assistance',
+	[RealismOption.CruiseControl]: 'Enables automatic speed',
+	[RealismOption.Autopilot]: 'Lets you activate automatic pilot',
+	[RealismOption.ThrottleAutoLimit]: 'Automatically limits maximum throttle',
+	[RealismOption.EngineAutoControl]: 'Regulates optimal fuel mixture, propeller pitch (RPM), supercharger speed',
+	[RealismOption.RadiatorAssist]: 'Automates opening or closing the radiator'
 }
 
 // Realism options that are displayed with red outline and are always enabled
@@ -82,7 +82,7 @@ const normalRealismOptions = new Set([
 // Realism options grouped by function
 const realismOptionsByGroup = [
 	[
-		"Gameplay", [
+		'Gameplay', [
 			RealismOption.ObjectMarkers,
 			RealismOption.AimingAssist,
 			RealismOption.BombingAssist,
@@ -93,7 +93,7 @@ const realismOptionsByGroup = [
 		]
 	],
 	[
-		"Simplifications", [
+		'Simplifications', [
 			RealismOption.SimplifiedPhysics,
 			RealismOption.NoWind,
 			RealismOption.NoMisfires,
@@ -106,7 +106,7 @@ const realismOptionsByGroup = [
 		]
 	],
 	[
-		"Piloting assistance", [
+		'Piloting assistance', [
 			RealismOption.SimplifiedControls,
 			RealismOption.RudderAssist,
 			RealismOption.CruiseControl,
@@ -162,7 +162,7 @@ const realismOptionsByGroup = [
 						<div className="group">
 							{groupOptions.map(option => {
 
-								const className = classNames("checkbox", {
+								const className = classNames('checkbox', {
 									normal: normalRealismOptions.has(option),
 									hard: hardRealismOptions.has(option)
 								})

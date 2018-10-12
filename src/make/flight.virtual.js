@@ -1,8 +1,8 @@
-import addLazyProperty from "lazy-property"
-import {makeActivityState} from "./flight.state"
-import makeFlightTime from "./flight.time"
-import makeFlightPose from "./flight.pose"
-import makeFlightActions from "./flight.actions"
+import addLazyProperty from 'lazy-property'
+import {makeActivityState} from './flight.state'
+import makeFlightTime from './flight.time'
+import makeFlightPose from './flight.pose'
+import makeFlightActions from './flight.actions'
 
 // Virtual activity zone size as inner, base and outer circle radius (km)
 // NOTE: Virtual point activity zones will use either one or two check zones.
@@ -131,7 +131,7 @@ function makeVirtualFlightPlanes(flight) {
 			for (const prop in oldItem) {
 
 				// Keep unique item index
-				if (prop === "Index") {
+				if (prop === 'Index') {
 					continue
 				}
 
@@ -162,18 +162,18 @@ function makeVirtualFlightZone(flight, virtualZones, waitTime) {
 	const flightDelay = flight.plan.start.delay
 
 	const onBegin = flight.onBegin
-	const zoneGroup = flightGroup.createItem("Group")
-	const checkZone = zoneGroup.createItem("MCU_CheckZone")
-	const onActivate = zoneGroup.createItem("MCU_Activate")
-	const onNextBegin = zoneGroup.createItem("MCU_Timer")
-	const onDelete = zoneGroup.createItem("MCU_Delete")
-	const beginDeactivate = zoneGroup.createItem("MCU_Deactivate")
-	const onUnload = zoneGroup.createItem("MCU_Timer")
-	const onProximityPlayer = zoneGroup.createItem("MCU_Proximity")
-	const onProximityEnemy = zoneGroup.createItem("MCU_Proximity")
-	const proximityCheck = zoneGroup.createItem("MCU_Timer")
-	const proximityActivate = zoneGroup.createItem("MCU_Activate")
-	const proximityDeactivate = zoneGroup.createItem("MCU_Deactivate")
+	const zoneGroup = flightGroup.createItem('Group')
+	const checkZone = zoneGroup.createItem('MCU_CheckZone')
+	const onActivate = zoneGroup.createItem('MCU_Activate')
+	const onNextBegin = zoneGroup.createItem('MCU_Timer')
+	const onDelete = zoneGroup.createItem('MCU_Delete')
+	const beginDeactivate = zoneGroup.createItem('MCU_Deactivate')
+	const onUnload = zoneGroup.createItem('MCU_Timer')
+	const onProximityPlayer = zoneGroup.createItem('MCU_Proximity')
+	const onProximityEnemy = zoneGroup.createItem('MCU_Proximity')
+	const proximityCheck = zoneGroup.createItem('MCU_Timer')
+	const proximityActivate = zoneGroup.createItem('MCU_Activate')
+	const proximityDeactivate = zoneGroup.createItem('MCU_Deactivate')
 
 	checkZone.Zone = ZONE_RADIUS_BASE
 	checkZone.PlaneCoalitions = this.coalitions
@@ -194,16 +194,16 @@ function makeVirtualFlightZone(flight, virtualZones, waitTime) {
 	// virtual flights that move around do not activate on top of other flights.
 	if (flightDelay || (!isFirstPoint && !task.local)) {
 
-		const checkZoneOuter = zoneGroup.createItem("MCU_CheckZone")
-		const checkZoneOuterCheck = zoneGroup.createItem("MCU_Timer")
-		const checkZoneOuterActivate = zoneGroup.createItem("MCU_Activate")
-		const checkZoneOuterDeactivate = zoneGroup.createItem("MCU_Deactivate")
-		const checkZoneActivate = zoneGroup.createItem("MCU_Activate")
-		const checkZoneDeactivate = zoneGroup.createItem("MCU_Deactivate")
-		const activateTimer = zoneGroup.createItem("MCU_Timer")
-		const activateTimerDelay = zoneGroup.createItem("MCU_Timer")
-		const activateTimerActivate = zoneGroup.createItem("MCU_Activate")
-		const recheckTimer = zoneGroup.createItem("MCU_Timer")
+		const checkZoneOuter = zoneGroup.createItem('MCU_CheckZone')
+		const checkZoneOuterCheck = zoneGroup.createItem('MCU_Timer')
+		const checkZoneOuterActivate = zoneGroup.createItem('MCU_Activate')
+		const checkZoneOuterDeactivate = zoneGroup.createItem('MCU_Deactivate')
+		const checkZoneActivate = zoneGroup.createItem('MCU_Activate')
+		const checkZoneDeactivate = zoneGroup.createItem('MCU_Deactivate')
+		const activateTimer = zoneGroup.createItem('MCU_Timer')
+		const activateTimerDelay = zoneGroup.createItem('MCU_Timer')
+		const activateTimerActivate = zoneGroup.createItem('MCU_Activate')
+		const recheckTimer = zoneGroup.createItem('MCU_Timer')
 
 		checkZone.Zone = ZONE_RADIUS_INNER
 		checkZone.addTarget(checkZoneDeactivate)
@@ -311,9 +311,9 @@ function makeVirtualFlightZone(flight, virtualZones, waitTime) {
 	onDelete.setPositionNear(onNextBegin)
 
 	// Lazy getter/event used to delete all further zone plane items
-	addLazyProperty(zone, "onDeleteNext", () => {
+	addLazyProperty(zone, 'onDeleteNext', () => {
 
-		const onDeleteNext = zoneGroup.createItem("MCU_Delete")
+		const onDeleteNext = zoneGroup.createItem('MCU_Delete')
 
 		onDeleteNext.setPositionNear(onCheckActivate)
 		onCheckActivate.addTarget(onDeleteNext)

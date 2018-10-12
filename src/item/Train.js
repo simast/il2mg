@@ -1,4 +1,4 @@
-import Vehicle from "./Vehicle"
+import Vehicle from './Vehicle'
 
 // Train item
 export default class Train extends Vehicle {

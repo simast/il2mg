@@ -1,7 +1,7 @@
-import moment from "moment"
-import data, {matchDateRange} from "../data"
-import log from "../log"
-import {isValidRebaseTask} from "./task.rebase"
+import moment from 'moment'
+import data, {matchDateRange} from '../data'
+import log from '../log'
+import {isValidRebaseTask} from './task.rebase'
 
 // Generate available mission units
 export default function makeUnits() {
@@ -12,8 +12,8 @@ export default function makeUnits() {
 
 	// Utility function used to match to/from date ranges based on mission date
 	const matchMissionDateRange = matchDateRange.bind(undefined, {
-		from: moment(battle.from).startOf("day"),
-		to: moment(battle.to).endOf("day"),
+		from: moment(battle.from).startOf('day'),
+		to: moment(battle.to).endOf('day'),
 		date: this.date
 	})
 
@@ -37,7 +37,7 @@ export default function makeUnits() {
 				// Forth parameter in the array can be used to specify unit availability (%)
 				let availability = airfield[3]
 
-				if (typeof availability !== "number") {
+				if (typeof availability !== 'number') {
 					availability = 1
 				}
 
@@ -123,8 +123,8 @@ export default function makeUnits() {
 
 					const maxPlanes = Math.max.apply(null, planeCount)
 					const minPlanes = Math.min.apply(null, planeCount)
-					const rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, "days"))
-					const rangeDaysMission = this.date.diff(dateRange.from, "days")
+					const rangeDaysInterval = Math.abs(dateRange.from.diff(dateRange.to, 'days'))
+					const rangeDaysMission = this.date.diff(dateRange.from, 'days')
 					let planePercent = rangeDaysMission / rangeDaysInterval
 
 					// Use +-15% randomness
@@ -171,8 +171,8 @@ export default function makeUnits() {
 		const name = unitData.name
 
 		// Validate unit name
-		if (typeof name !== "string" || !name.length) {
-			throw new Error("Invalid unit name.")
+		if (typeof name !== 'string' || !name.length) {
+			throw new Error('Invalid unit name.')
 		}
 
 		return name
@@ -199,8 +199,8 @@ export default function makeUnits() {
 		}
 
 		// Validate unit role
-		if (typeof role !== "string" || !battle.roles[unitData.country][role]) {
-			throw new Error("Invalid unit role.")
+		if (typeof role !== 'string' || !battle.roles[unitData.country][role]) {
+			throw new Error('Invalid unit role.')
 		}
 
 		return role
@@ -234,8 +234,8 @@ export default function makeUnits() {
 		const unitTo = unitData.to
 
 		// Filter out units with from/to dates
-		if ((unitFrom && this.date.isBefore(unitFrom, "day")) ||
-				(unitTo && this.date.isAfter(unitTo, "day"))) {
+		if ((unitFrom && this.date.isBefore(unitFrom, 'day')) ||
+				(unitTo && this.date.isAfter(unitTo, 'day'))) {
 
 			continue
 		}
@@ -254,7 +254,7 @@ export default function makeUnits() {
 			for (const prop in unitData) {
 
 				// Collect airfield data
-				if (prop === "airfields") {
+				if (prop === 'airfields') {
 
 					if (unitAirfields.length) {
 						continue
@@ -263,11 +263,11 @@ export default function makeUnits() {
 					unitAirfields = makeAirfields(unitData)
 				}
 				// Collect plane storage data
-				else if (prop === "planes") {
+				else if (prop === 'planes') {
 					unitPlaneStorages = unitPlaneStorages.concat(makePlaneStorages(unitData))
 				}
 				// Collect pilot data
-				else if (prop === "pilots") {
+				else if (prop === 'pilots') {
 
 					if (unitPilots.length) {
 						continue
@@ -279,11 +279,11 @@ export default function makeUnits() {
 				else if (unit[prop] === undefined) {
 
 					// Resolve unit name
-					if (prop === "name") {
+					if (prop === 'name') {
 						unit[prop] = makeName(unitData)
 					}
 					// Resolve unit role
-					else if (prop === "role") {
+					else if (prop === 'role') {
 						unit[prop] = makeRole(unitData)
 					}
 					// Copy other data
@@ -343,7 +343,7 @@ export default function makeUnits() {
 				const unitPart = JSON.parse(JSON.stringify(unit))
 
 				// Assign new unique unit ID
-				unitPart.id = unitPart.id + "_" + i + rand.hex(3)
+				unitPart.id = unitPart.id + '_' + i + rand.hex(3)
 
 				// Register new unit in the parent group hierarchy
 				let unitPartParentID = unitPart.parent
@@ -630,5 +630,5 @@ export default function makeUnits() {
 	this.availableUnits = availableUnits
 
 	// Log mission units info
-	log.I("Units:", totalUnits, {planes: totalPlanes, pilots: totalPilots})
+	log.I('Units:', totalUnits, {planes: totalPlanes, pilots: totalPilots})
 }

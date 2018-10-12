@@ -1,4 +1,4 @@
-import makeBriefingText from "./briefing.text"
+import makeBriefingText from './briefing.text'
 
 // Make briefing lead text segment for fly routes
 export default function makeBriefingLead(flight) {
@@ -19,29 +19,29 @@ export default function makeBriefingLead(flight) {
 
 		// Use flight formation name when player is a flight leader
 		if (isPlayerFlightLeader) {
-			briefingLead.push("lead your {{{formation}}}")
+			briefingLead.push('lead your {{{formation}}}')
 		}
 		// Use element sub-formation name when player is an element leader
 		else if (isPlayerElementLeader) {
 
 			const flightLeaderID = flight.leader.pilot.id
 
-			briefingLead.push("lead your {{{formation.element}}}")
-			briefingLead.push("cover your {{{formation}}} leader " + flightLeaderID)
+			briefingLead.push('lead your {{{formation.element}}}')
+			briefingLead.push('cover your {{{formation}}} leader ' + flightLeaderID)
 		}
 		// Link to AI element leader
 		else if (!isPlayerInLeadingElement && playerElement.length > 1) {
 
 			const elementLeaderID = playerElement[0].pilot.id
 
-			briefingLead.push("follow your {{{formation.element}}} leader " + elementLeaderID)
-			briefingLead.push("cover your {{{formation}}}")
+			briefingLead.push('follow your {{{formation.element}}} leader ' + elementLeaderID)
+			briefingLead.push('cover your {{{formation}}}')
 		}
 		// Link to AI flight leader
 		else {
 
 			const flightLeaderID = flight.leader.pilot.id
-			briefingLead.push("follow your {{{formation}}} leader " + flightLeaderID)
+			briefingLead.push('follow your {{{formation}}} leader ' + flightLeaderID)
 		}
 
 		briefingLead = briefingLead.map(value => makeBriefingText.call(this, value))

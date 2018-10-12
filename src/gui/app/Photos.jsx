@@ -1,6 +1,6 @@
-import React from "react"
-import {observable, action} from "mobx"
-import {observer} from "mobx-react"
+import React from 'react'
+import {observable, action} from 'mobx'
+import {observer} from 'mobx-react'
 
 // Number of available photos
 const AVAILABLE_PHOTOS = 12
@@ -28,8 +28,8 @@ const AVAILABLE_PHOTOS = 12
 		return (
 			<div id="photos">
 				{this.photos.map((photoID, index) => (
-					<div key={photoID} className={"photo " + this.props.screen + (index + 1)}>
-						<img src={"assets/photo-" + photoID + ".jpg"} />
+					<div key={photoID} className={'photo ' + this.props.screen + (index + 1)}>
+						<img src={'assets/photo-' + photoID + '.jpg'} />
 					</div>
 				))}
 			</div>

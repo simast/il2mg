@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Waypoint priority constants
 export const PRIORITY_LOW = 0

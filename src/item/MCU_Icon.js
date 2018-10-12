@@ -1,4 +1,4 @@
-import MCU from "./MCU"
+import MCU from './MCU'
 
 // Icon type constants
 export const ICON_NONE = 0
@@ -89,7 +89,7 @@ export default class MCU_Icon extends MCU {
 
 		// Validate color value
 		if (!Array.isArray(color) || color.length !== 3) {
-			throw new Error("Invalid icon item color value.")
+			throw new Error('Invalid icon item color value.')
 		}
 
 		this.RColor = color[0]

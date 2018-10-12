@@ -1,5 +1,5 @@
-import {FlightState} from "./flight"
-import {ItemFlag} from "../data"
+import {FlightState} from './flight'
+import {ItemFlag} from '../data'
 
 // Plan activity used to taxi (optionally) and take off from airfield
 export default class ActivityTakeOff {
@@ -11,7 +11,7 @@ export default class ActivityTakeOff {
 		const {rand} = mission
 		const flightGroup = flight.group
 		const leaderPlaneItem = element[0].item
-		const isAirStart = (typeof element.state === "number")
+		const isAirStart = (typeof element.state === 'number')
 		const isLastElement = (element === flight.elements[flight.elements.length - 1])
 		const airfield = mission.airfields[flight.airfield]
 		let takeoffCommand = flight.takeoffCommand
@@ -25,7 +25,7 @@ export default class ActivityTakeOff {
 		// NOTE: Flight will use a single take off command for all elements
 		if (!takeoffCommand && taxiRoute && !isAirStart) {
 
-			takeoffCommand = flightGroup.createItem("MCU_CMD_TakeOff")
+			takeoffCommand = flightGroup.createItem('MCU_CMD_TakeOff')
 
 			// Set takeoff command position and orientation
 			takeoffCommand.setPosition(taxiRoute.takeoffStart)
@@ -37,7 +37,7 @@ export default class ActivityTakeOff {
 		// Add a short timer before takeoff from runway start
 		if (element.state === FlightState.Runway) {
 
-			const waitTimerBefore = flightGroup.createItem("MCU_Timer")
+			const waitTimerBefore = flightGroup.createItem('MCU_Timer')
 			let waitTimerMin = 8
 			let waitTimerMax = 12
 
@@ -65,7 +65,7 @@ export default class ActivityTakeOff {
 		}
 
 		// Short timer used to delay next command after takeoff is reported
-		const waitTimerAfter = flightGroup.createItem("MCU_Timer")
+		const waitTimerAfter = flightGroup.createItem('MCU_Timer')
 
 		waitTimerAfter.Time = Number(rand.real(12, 18).toFixed(3))
 
@@ -80,7 +80,7 @@ export default class ActivityTakeOff {
 		// are not repeated after the second take off (for player flight only)
 		if (element.player && !isAirStart) {
 
-			const deactivateAfter = flightGroup.createItem("MCU_Deactivate")
+			const deactivateAfter = flightGroup.createItem('MCU_Deactivate')
 
 			deactivateAfter.setPositionNear(waitTimerAfter)
 			deactivateAfter.addTarget(waitTimerAfter)
@@ -94,7 +94,7 @@ export default class ActivityTakeOff {
 			if (takeoffCommand) {
 
 				leaderPlaneItem.entity.addReport(
-					"OnTookOff",
+					'OnTookOff',
 					takeoffCommand,
 					waitTimerAfter
 				)
@@ -103,7 +103,7 @@ export default class ActivityTakeOff {
 			else {
 
 				leaderPlaneItem.entity.addEvent(
-					"OnPlaneTookOff",
+					'OnPlaneTookOff',
 					waitTimerAfter
 				)
 			}
@@ -129,7 +129,7 @@ export default class ActivityTakeOff {
 		// NOTE: This may happen when the flight state was "start" - but the player
 		// element was pushed for air start (due to lack of plane spots or taxi
 		// routes for example).
-		if (typeof playerElement.state === "number") {
+		if (typeof playerElement.state === 'number') {
 			return
 		}
 
@@ -142,7 +142,7 @@ export default class ActivityTakeOff {
 		if (taxiRoute && (playerElement.state === FlightState.Start ||
 				playerElement.state === FlightState.Taxi)) {
 
-			briefing.push("taxi")
+			briefing.push('taxi')
 
 			// Add taxi direction hint
 			if (taxiRoute) {
@@ -211,27 +211,27 @@ export default class ActivityTakeOff {
 
 					// Forward direction from -25 to +25 orientation
 					if (Math.abs(taxiHintOrientation) <= 25) {
-						briefing.push("forward")
+						briefing.push('forward')
 					}
 					// Left direction from -25 to -150
 					else if (taxiHintOrientation < -25 && taxiHintOrientation > -150) {
-						briefing.push("to your left")
+						briefing.push('to your left')
 					}
 					// Right direction from +25 to +150
 					else if (taxiHintOrientation > 25 && taxiHintOrientation < 150) {
-						briefing.push("to your right")
+						briefing.push('to your right')
 					}
 				}
 			}
 
-			briefing.push("and")
+			briefing.push('and')
 		}
 
-		briefing.push("take off from [" + airfield.name + "] airfield")
+		briefing.push('take off from [' + airfield.name + '] airfield')
 
 		// Airfield callsign
 		if (airfield.callsign) {
-			briefing.push("(callsign <i>“" + airfield.callsign.name + "”</i>)")
+			briefing.push('(callsign <i>“' + airfield.callsign.name + '”</i>)')
 		}
 
 		// Add take off heading/direction
@@ -243,12 +243,12 @@ export default class ActivityTakeOff {
 			) * (180 / Math.PI)
 
 			heading = Math.round((heading + 360) % 360)
-			heading = ("000" + heading).substr(-3, 3)
+			heading = ('000' + heading).substr(-3, 3)
 
-			briefing.push("heading " + heading)
+			briefing.push('heading ' + heading)
 		}
 
-		briefing = briefing.join(" ") + "."
+		briefing = briefing.join(' ') + '.'
 		briefing = briefing.charAt(0).toUpperCase() + briefing.slice(1)
 
 		return briefing

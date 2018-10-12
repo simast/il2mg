@@ -1,10 +1,10 @@
-import makeBriefingText from "./briefing.text"
-import makeBriefingWeather from "./briefing.weather"
+import makeBriefingText from './briefing.text'
+import makeBriefingWeather from './briefing.weather'
 
 // Briefing colors as HTML hex color values
 export const BriefingColor = Object.freeze({
-	Light: "#c2c2c2",
-	Dark: "#595959"
+	Light: '#c2c2c2',
+	Dark: '#595959'
 })
 
 // Generate mission briefing
@@ -41,7 +41,7 @@ export default function makeBriefing() {
 			}
 		}
 
-		if (typeof story === "object" && !Array.isArray(story)) {
+		if (typeof story === 'object' && !Array.isArray(story)) {
 
 			if (paramsStoryType) {
 				storyType = paramsStoryType
@@ -78,7 +78,7 @@ export default function makeBriefing() {
 	// Use task title
 	if (task.title) {
 
-		if (typeof task.title === "object" && storyType) {
+		if (typeof task.title === 'object' && storyType) {
 			title = task.title[storyType]
 		}
 		else {
@@ -103,7 +103,7 @@ export default function makeBriefing() {
 	// Weather report
 	briefing.push(makeBriefingWeather.call(this))
 
-	briefing = briefing.join("<br><br>")
+	briefing = briefing.join('<br><br>')
 
 	const briefingPlan = []
 
@@ -126,7 +126,7 @@ export default function makeBriefing() {
 	if (briefingPlan.length) {
 
 		briefingPlan.unshift(`<font color="${BriefingColor.Dark}">···</font>`)
-		briefingPlan.unshift("")
+		briefingPlan.unshift('')
 
 		briefing += briefingPlan.join('<br><font size="8"></font><br>')
 	}
@@ -154,26 +154,26 @@ export default function makeBriefing() {
 function makeBriefingDateAndTime() {
 
 	const time = this.time
-	let output = ""
+	let output = ''
 
-	output += this.date.format("MMMM Do, YYYY") + "<br>"
+	output += this.date.format('MMMM Do, YYYY') + '<br>'
 	output += '<font size="14">'
-	output += this.date.format("HH.mm") + " hrs"
+	output += this.date.format('HH.mm') + ' hrs'
 
 	// Display time period names
-	if (typeof this.time === "object") {
+	if (typeof this.time === 'object') {
 
 		const timePeriods = Object.keys(time)
 
 		// Remove "day" as daylight will be indicated by other periods
 		if (time.day) {
-			timePeriods.splice(timePeriods.indexOf("day"), 1)
+			timePeriods.splice(timePeriods.indexOf('day'), 1)
 		}
 
 		// Remove "night" when night-time is indicated as midnight
 		if (time.midnight) {
 
-			const nightIndex = timePeriods.indexOf("night")
+			const nightIndex = timePeriods.indexOf('night')
 
 			if (nightIndex >= 0) {
 				timePeriods.splice(nightIndex, 1)
@@ -183,7 +183,7 @@ function makeBriefingDateAndTime() {
 		// Remove "morning" when morning is indicated as sunrise
 		if (time.sunrise) {
 
-			const morningIndex = timePeriods.indexOf("morning")
+			const morningIndex = timePeriods.indexOf('morning')
 
 			if (morningIndex >= 0) {
 				timePeriods.splice(morningIndex, 1)
@@ -193,7 +193,7 @@ function makeBriefingDateAndTime() {
 		// Remove "evening" when evening is indicated as sunset or dusk
 		if (time.sunset || time.dusk) {
 
-			const eveningIndex = timePeriods.indexOf("evening")
+			const eveningIndex = timePeriods.indexOf('evening')
 
 			if (eveningIndex >= 0) {
 				timePeriods.splice(eveningIndex, 1)
@@ -201,11 +201,11 @@ function makeBriefingDateAndTime() {
 		}
 
 		if (timePeriods.length) {
-			output += ", " + timePeriods.join(", ")
+			output += ', ' + timePeriods.join(', ')
 		}
 	}
 
-	output += "</font>"
+	output += '</font>'
 
 	return output
 }
@@ -215,8 +215,8 @@ function makeBriefingFlight() {
 
 	const flight = this.player.flight
 	const unit = this.units[flight.unit]
-	const indentSpacing = " ".repeat(4)
-	let output = ""
+	const indentSpacing = ' '.repeat(4)
+	let output = ''
 
 	// Country specific formation name
 	if (flight.formation.name) {
@@ -224,7 +224,7 @@ function makeBriefingFlight() {
 	}
 	// Generic formation name
 	else {
-		output += "Flight"
+		output += 'Flight'
 	}
 
 	// Unit name
@@ -232,7 +232,7 @@ function makeBriefingFlight() {
 
 	// Unit suffix
 	if (unit.suffix) {
-		output += " " + unit.suffix
+		output += ' ' + unit.suffix
 	}
 
 	// Unit alias
@@ -240,7 +240,7 @@ function makeBriefingFlight() {
 		output += ` <i>“${unit.alias}”</i>`
 	}
 
-	output += ",<br><br>"
+	output += ',<br><br>'
 
 	flight.elements.forEach((element, elementIndex) => {
 		element.forEach(plane => {
@@ -272,7 +272,7 @@ function makeBriefingFlight() {
 
 			output += ` <font color="${BriefingColor.Dark}">⇢</font> <font size="16"><i>`
 			output += this.planes[plane.plane].name
-			output += "</i></font><br>"
+			output += '</i></font><br>'
 
 		})
 

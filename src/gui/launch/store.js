@@ -1,6 +1,6 @@
-import {remote, ipcRenderer} from "electron"
-import {observable, computed, action, reaction} from "mobx"
-import {RealismPreset, isValidGamePath} from "."
+import {remote, ipcRenderer} from 'electron'
+import {observable, computed, action, reaction} from 'mobx'
+import {RealismPreset, isValidGamePath} from '.'
 
 // Launch mission state store
 class LaunchStore {
@@ -35,7 +35,7 @@ class LaunchStore {
 
 	constructor() {
 
-		const {gamePath, realismPreset} = remote.getGlobal("config")
+		const {gamePath, realismPreset} = remote.getGlobal('config')
 
 		// Load existing launch state from configuration data
 
@@ -61,7 +61,7 @@ class LaunchStore {
 		reaction(
 			() => this.config,
 			config => {
-				ipcRenderer.sendSync("setConfig", config)
+				ipcRenderer.sendSync('setConfig', config)
 			}
 		)
 	}

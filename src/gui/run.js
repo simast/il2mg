@@ -1,6 +1,6 @@
-import path from "path"
-import {app} from "electron"
-import runApplicationWithCLI from "../cli"
+import path from 'path'
+import {app} from 'electron'
+import runApplicationWithCLI from '../cli'
 
 const argv = process.argv.slice()
 let runAsCLI = argv.length > 2
@@ -18,9 +18,9 @@ if (!process.defaultApp) {
 
 // Run with CLI interface
 if (runAsCLI) {
-	app.on("ready", () => runApplicationWithCLI(argv))
+	app.on('ready', () => runApplicationWithCLI(argv))
 }
 // Run with GUI interface
 else {
-	require("./main")
+	require('./main')
 }

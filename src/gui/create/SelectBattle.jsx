@@ -1,6 +1,6 @@
-import React from "react"
-import {observer} from "mobx-react"
-import createStore from "./store"
+import React from 'react'
+import {observer} from 'mobx-react'
+import createStore from './store'
 
 // Select mission battle component
 export default observer(() => {

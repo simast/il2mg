@@ -1,5 +1,5 @@
-import log from "../log"
-import {makeForce} from "./forces"
+import log from '../log'
+import {makeForce} from './forces'
 
 // Make player task force
 export default function makePlayerForce() {
@@ -34,18 +34,18 @@ export default function makePlayerForce() {
 	}
 
 	// Log player flight info
-	const logData = ["Flight:"]
+	const logData = ['Flight:']
 
 	// Log flight unit name
 	const unit = this.units[player.flight.unit]
 	let unitName = unit.name
 
 	if (unit.suffix) {
-		unitName += " " + unit.suffix
+		unitName += ' ' + unit.suffix
 	}
 
 	if (unit.alias) {
-		unitName += " “" + unit.alias + "”"
+		unitName += ' “' + unit.alias + '”'
 	}
 
 	logData.push(unitName)
@@ -55,7 +55,7 @@ export default function makePlayerForce() {
 	let formationID = formation.id
 
 	if (!formationID) {
-		formationID = formation.elements.join(":")
+		formationID = formation.elements.join(':')
 	}
 
 	logData.push({

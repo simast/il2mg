@@ -1,14 +1,14 @@
-import sylvester from "sylvester"
-import * as MCU_Icon from "../item/MCU_Icon"
+import sylvester from 'sylvester'
+import * as MCU_Icon from '../item/MCU_Icon'
 
 // Map season types
 // NOTE: Order is important (used when defining plane skins for each season)!
 export const MapSeason = Object.freeze({
-	Spring: "spring",
-	Summer: "summer",
-	Autumn: "autumn",
-	Winter: "winter",
-	Desert: "desert"
+	Spring: 'spring',
+	Summer: 'summer',
+	Autumn: 'autumn',
+	Winter: 'winter',
+	Desert: 'desert'
 })
 
 // Map colors as RGB array values
@@ -35,7 +35,7 @@ export default function makeMap() {
 	const seasonData = map.season[this.season]
 
 	if (!seasonData) {
-		throw new Error("Could not find a valid battle map!")
+		throw new Error('Could not find a valid battle map!')
 	}
 
 	delete map.season
@@ -45,7 +45,7 @@ export default function makeMap() {
 	options.HMap = map.heightmap
 	options.Textures = map.textures
 	options.Forests = map.forests
-	options.Layers = "" // TODO: ?
+	options.Layers = '' // TODO: ?
 	options.GuiMap = map.gui
 	options.SeasonPrefix = map.prefix
 
@@ -204,7 +204,7 @@ export function markMapArea(flight, {
 		// Build zone point vector
 		pointVector = centerVector.add(pointVector.rotate(rotateRad, rotateAxisLine))
 
-		const zoneIcon = flight.group.createItem("MCU_Icon")
+		const zoneIcon = flight.group.createItem('MCU_Icon')
 
 		zoneIcon.setPosition(pointVector.elements)
 		zoneIcon.setColor(color ? color : MapColor.Route)

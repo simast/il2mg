@@ -1,8 +1,8 @@
-import fs from "fs"
-import os from "os"
-import getSlug from "speakingurl"
-import Lexer from "lex"
-import data, {Coalition} from "./data"
+import fs from 'fs'
+import os from 'os'
+import getSlug from 'speakingurl'
+import Lexer from 'lex'
+import data, {Coalition} from './data'
 
 // Default item data values
 export const DEFAULT_COALITION = Coalition.Neutral
@@ -33,11 +33,11 @@ export default class Item {
 			return
 		}
 
-		if (typeof type !== "string" || !type.length) {
-			throw new TypeError("Invalid item type value.")
+		if (typeof type !== 'string' || !type.length) {
+			throw new TypeError('Invalid item type value.')
 		}
 
-		Object.defineProperty(this, "type", {value: type})
+		Object.defineProperty(this, 'type', {value: type})
 	}
 
 	// By default all items have "Index" field
@@ -51,7 +51,7 @@ export default class Item {
 	createItem(itemType) {
 
 		if (!this.mission) {
-			throw new TypeError("Item is not part of a mission.")
+			throw new TypeError('Item is not part of a mission.')
 		}
 
 		return this.mission.createItem(itemType, this)
@@ -65,19 +65,19 @@ export default class Item {
 	addItem(item) {
 
 		if (!(item instanceof Item)) {
-			throw new TypeError("Invalid child item value.")
+			throw new TypeError('Invalid child item value.')
 		}
 
 		// Initialize child items list
 		if (!this.items) {
-			Object.defineProperty(this, "items", {value: []})
+			Object.defineProperty(this, 'items', {value: []})
 		}
 
 		// Add child item
 		this.items.push(item)
 
 		// Set child item parent reference
-		Object.defineProperty(item, "parent", {
+		Object.defineProperty(item, 'parent', {
 			value: this,
 			configurable: true
 		})
@@ -89,19 +89,19 @@ export default class Item {
 	remove() {
 
 		if (!this.parent) {
-			throw new Error("Item has no parent.")
+			throw new Error('Item has no parent.')
 		}
 
 		const parent = this.parent
 
 		if (!parent.items || !parent.items.length) {
-			throw new Error("Parent item has no children.")
+			throw new Error('Parent item has no children.')
 		}
 
 		const itemIndex = parent.items.indexOf(this)
 
 		if (itemIndex < 0) {
-			throw new Error("Item is not part of a parent.")
+			throw new Error('Item is not part of a parent.')
 		}
 
 		// Remove item from parent item hierarchy
@@ -116,14 +116,14 @@ export default class Item {
 	 */
 	setName(name) {
 
-		if (typeof name === "number") {
+		if (typeof name === 'number') {
 			this.LCName = name
 		}
-		else if (typeof name === "string") {
+		else if (typeof name === 'string') {
 			this.Name = convertUnicodeToASCII(name)
 		}
 		else {
-			throw new TypeError("Invalid item name value.")
+			throw new TypeError('Invalid item name value.')
 		}
 	}
 
@@ -134,14 +134,14 @@ export default class Item {
 	 */
 	setDescription(desc) {
 
-		if (typeof desc === "number") {
+		if (typeof desc === 'number') {
 			this.LCDesc = desc
 		}
-		else if (typeof desc === "string") {
+		else if (typeof desc === 'string') {
 			this.Desc = convertUnicodeToASCII(desc)
 		}
 		else {
-			throw new TypeError("Invalid item description value.")
+			throw new TypeError('Invalid item description value.')
 		}
 	}
 
@@ -191,7 +191,7 @@ export default class Item {
 	setPositionNear(targetItem) {
 
 		if (!(targetItem instanceof Item)) {
-			throw new TypeError("Invalid nearby item value.")
+			throw new TypeError('Invalid nearby item value.')
 		}
 
 		// TODO: Improve nearby item positioning algorithm
@@ -301,7 +301,7 @@ export default class Item {
 
 		// Unknown/invalid orientation target position
 		if (targetX === undefined || targetZ === undefined) {
-			throw new TypeError("Invalid orientation target value.")
+			throw new TypeError('Invalid orientation target value.')
 		}
 
 		const sourceX = this.XPos || 0
@@ -327,8 +327,8 @@ export default class Item {
 	 */
 	setCountry(countryID) {
 
-		if (typeof countryID !== "number") {
-			throw new TypeError("Invalid item country value.")
+		if (typeof countryID !== 'number') {
+			throw new TypeError('Invalid item country value.')
 		}
 
 		// Support for "alias" (hidden) countries
@@ -345,7 +345,7 @@ export default class Item {
 	addTarget(item) {
 
 		if (!(item instanceof Item)) {
-			throw new TypeError("Invalid target item value.")
+			throw new TypeError('Invalid target item value.')
 		}
 
 		this.Targets = this.Targets || []
@@ -364,7 +364,7 @@ export default class Item {
 	removeTarget(item) {
 
 		if (!(item instanceof Item)) {
-			throw new TypeError("Invalid target item value.")
+			throw new TypeError('Invalid target item value.')
 		}
 
 		if (!this.Targets || !this.Targets.length) {
@@ -387,7 +387,7 @@ export default class Item {
 	addObject(item) {
 
 		if (!(item instanceof Item)) {
-			throw new TypeError("Invalid object item value.")
+			throw new TypeError('Invalid object item value.')
 		}
 
 		// Object links are always linked to entities
@@ -411,7 +411,7 @@ export default class Item {
 	removeObject(item) {
 
 		if (!(item instanceof Item)) {
-			throw new TypeError("Invalid object item value.")
+			throw new TypeError('Invalid object item value.')
 		}
 
 		if (!item.entity || !this.Objects || !this.Objects.length) {
@@ -435,16 +435,16 @@ export default class Item {
 	createEntity(disabled) {
 
 		if (this.entity) {
-			throw new Error("Item is already linked to an entity.")
+			throw new Error('Item is already linked to an entity.')
 		}
 
-		const entity = this.mission.createItem("MCU_TR_Entity", false)
+		const entity = this.mission.createItem('MCU_TR_Entity', false)
 
 		// Link the item with entity
 		this.LinkTrId = entity.Index
 		entity.MisObjID = this.Index
 
-		Object.defineProperty(this, "entity", {value: entity})
+		Object.defineProperty(this, 'entity', {value: entity})
 
 		// Set entity to an initial disabled state
 		if (disabled) {
@@ -464,8 +464,8 @@ export default class Item {
 
 		indentLevel = indentLevel || 0
 
-		const indent = new Array((2 * indentLevel) + 1).join(" ")
-		let value = indent + this.type + os.EOL + indent + "{"
+		const indent = new Array((2 * indentLevel) + 1).join(' ')
+		let value = indent + this.type + os.EOL + indent + '{'
 
 		// Build property and value textual representation
 		function propertyToString(propName, propValue) {
@@ -474,7 +474,7 @@ export default class Item {
 			let isArray = false
 			let isArrayComplex = false
 
-			if (propType === "object") {
+			if (propType === 'object') {
 
 				// Set with multiple values output
 				if (propValue instanceof Set) {
@@ -488,41 +488,41 @@ export default class Item {
 				}
 
 				isArray = Array.isArray(propValue)
-				isArrayComplex = isArray && (typeof propValue[0] === "object")
+				isArrayComplex = isArray && (typeof propValue[0] === 'object')
 			}
 
-			value += os.EOL + indent + "  " + propName
+			value += os.EOL + indent + '  ' + propName
 
 			if (!isArrayComplex) {
-				value += " = "
+				value += ' = '
 			}
 
 			// Quoted string output
-			if (propType === "string" && !(propValue instanceof String)) {
+			if (propType === 'string' && !(propValue instanceof String)) {
 				value += '"' + propValue + '"'
 			}
 			// Complex array output
 			else if (isArrayComplex) {
 
-				value += os.EOL + indent + "  {"
+				value += os.EOL + indent + '  {'
 
 				propValue.forEach(itemValue => {
 
-					value += os.EOL + indent + "    "
+					value += os.EOL + indent + '    '
 
 					// Inner list of items joined by ":" symbol
 					if (Array.isArray(itemValue)) {
-						value += itemValue.join(":")
+						value += itemValue.join(':')
 					}
 					// Item as a quoted string
 					else {
 						value += '"' + itemValue + '"'
 					}
 
-					value += ";"
+					value += ';'
 				})
 
-				value += os.EOL + indent + "  }"
+				value += os.EOL + indent + '  }'
 			}
 			// Simple array output
 			else if (isArray) {
@@ -534,7 +534,7 @@ export default class Item {
 			}
 
 			if (!isArrayComplex) {
-				value += ";"
+				value += ';'
 			}
 		}
 
@@ -559,7 +559,7 @@ export default class Item {
 			})
 		}
 
-		value += os.EOL + indent + "}"
+		value += os.EOL + indent + '}'
 
 		// Include linked item entity
 		if (this.entity) {
@@ -579,7 +579,7 @@ export default class Item {
 	*toBinary(index, typeID) {
 
 		if (!typeID) {
-			throw new Error("Invalid binary item type ID.")
+			throw new Error('Invalid binary item type ID.')
 		}
 
 		// Write base item binary information
@@ -746,7 +746,7 @@ export default class Item {
 
 			// Check for valid integer value
 			if (!Number.isInteger(value)) {
-				throw new Error("Invalid item array value.")
+				throw new Error('Invalid item array value.')
 			}
 
 			this.writeUInt32(buffer, value)
@@ -762,11 +762,11 @@ export default class Item {
 	static readTextFile(file) {
 
 		const fileContent = fs.readFileSync(file, {
-			encoding: "ascii" // TODO
+			encoding: 'ascii' // TODO
 		})
 
 		if (!fileContent.length) {
-			throw new Error("Could not read specified item file (no content).")
+			throw new Error('Could not read specified item file (no content).')
 		}
 
 		const lexer = new Lexer()
@@ -797,7 +797,7 @@ export default class Item {
 			const item = itemStack[itemStack.length - 1]
 
 			// Escape backslash (\) character for JavaScript strings
-			propValue = propValue.replace(/\\/g, "\\\\")
+			propValue = propValue.replace(/\\/g, '\\\\')
 
 			// TODO: Handle complex property types (like with the Options item)
 
@@ -841,8 +841,8 @@ function convertUnicodeToASCII(value) {
 	// well. As a workaround we transliterate all non-localized strings to a safe
 	// ASCII character set.
 	return getSlug(value, {
-		lang: "en",
-		separator: " ",
+		lang: 'en',
+		separator: ' ',
 		symbols: false,
 		maintainCase: true,
 		titleCase: false,
@@ -853,42 +853,42 @@ function convertUnicodeToASCII(value) {
 
 // Load all supported mission item types
 [
-	"Airfield",
-	"Block",
-	"Bridge",
-	"Effect",
-	"Flag",
-	"Ground",
-	"Group",
-	"MCU_Activate",
-	"MCU_CheckZone",
-	"MCU_CMD_AttackArea",
-	"MCU_CMD_Cover",
-	"MCU_CMD_Effect",
-	"MCU_CMD_ForceComplete",
-	"MCU_CMD_Formation",
-	"MCU_CMD_Land",
-	"MCU_CMD_TakeOff",
-	"MCU_Counter",
-	"MCU_Deactivate",
-	"MCU_Delete",
-	"MCU_Icon",
-	"MCU_Proximity",
-	"MCU_Spawner",
-	"MCU_Timer",
-	"MCU_TR_ComplexTrigger",
-	"MCU_TR_Entity",
-	"MCU_TR_MissionBegin",
-	"MCU_TR_MissionEnd",
-	"MCU_Waypoint",
-	"Options",
-	"Plane",
-	"Train",
-	"Vehicle"
+	'Airfield',
+	'Block',
+	'Bridge',
+	'Effect',
+	'Flag',
+	'Ground',
+	'Group',
+	'MCU_Activate',
+	'MCU_CheckZone',
+	'MCU_CMD_AttackArea',
+	'MCU_CMD_Cover',
+	'MCU_CMD_Effect',
+	'MCU_CMD_ForceComplete',
+	'MCU_CMD_Formation',
+	'MCU_CMD_Land',
+	'MCU_CMD_TakeOff',
+	'MCU_Counter',
+	'MCU_Deactivate',
+	'MCU_Delete',
+	'MCU_Icon',
+	'MCU_Proximity',
+	'MCU_Spawner',
+	'MCU_Timer',
+	'MCU_TR_ComplexTrigger',
+	'MCU_TR_Entity',
+	'MCU_TR_MissionBegin',
+	'MCU_TR_MissionEnd',
+	'MCU_Waypoint',
+	'Options',
+	'Plane',
+	'Train',
+	'Vehicle'
 ].forEach(type => {
 
-	const item = require("./item/" + type).default
+	const item = require('./item/' + type).default
 
-	Object.defineProperty(item.prototype, "type", {value: type})
+	Object.defineProperty(item.prototype, 'type', {value: type})
 	Item[type] = item
 })

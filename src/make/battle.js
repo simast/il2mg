@@ -1,9 +1,9 @@
-import path from "path"
+import path from 'path'
 
-import log from "../log"
-import {DEFAULT_COALITION, DEFAULT_COUNTRY} from "../item"
-import data from "../data"
-import {APPLICATION_NAME, APPLICATION_VERSION} from "../constants"
+import log from '../log'
+import {DEFAULT_COALITION, DEFAULT_COUNTRY} from '../item'
+import data from '../data'
+import {APPLICATION_NAME, APPLICATION_VERSION} from '../constants'
 
 // Generate mission battle info
 export default function makeBattle() {
@@ -17,7 +17,7 @@ export default function makeBattle() {
 	}
 
 	this.battleID = battleID
-	this.battlePath = path.join("battles", battleID)
+	this.battlePath = path.join('battles', battleID)
 
 	const battle = this.battle = data.battles[battleID]
 	const coalitions = this.coalitions = []
@@ -26,9 +26,9 @@ export default function makeBattle() {
 	const index = this.index = data.load(this.battlePath)
 
 	// Create main mission Options item
-	const options = this.createItem("Options")
+	const options = this.createItem('Options')
 
-	options.LCAuthor = this.getLC(APPLICATION_NAME + " r" + APPLICATION_VERSION)
+	options.LCAuthor = this.getLC(APPLICATION_NAME + ' r' + APPLICATION_VERSION)
 	options.MissionType = 0 // Single-player mission
 	options.AqmId = 0 // TODO: ?
 
@@ -70,5 +70,5 @@ export default function makeBattle() {
 	this.items.Options = options
 
 	// Log mission battle
-	log.I("Battle:", battle.name, {days: Object.keys(index.dates).length})
+	log.I('Battle:', battle.name, {days: Object.keys(index.dates).length})
 }

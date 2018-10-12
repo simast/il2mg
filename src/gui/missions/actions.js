@@ -1,12 +1,12 @@
-import fs from "fs"
-import path from "path"
-import {remote} from "electron"
+import fs from 'fs'
+import path from 'path'
+import {remote} from 'electron'
 
-import {MIN_COMPATIBLE_MISSION_VERSION} from "../../constants"
-import {PATH_GAME_DATA} from "../launch"
-import launchStore from "../launch/store"
-import {FileExtension} from "../missions"
-import missionsStore from "../missions/store"
+import {MIN_COMPATIBLE_MISSION_VERSION} from '../../constants'
+import {PATH_GAME_DATA} from '../launch'
+import launchStore from '../launch/store'
+import {FileExtension} from '../missions'
+import missionsStore from '../missions/store'
 
 // Load missions from missions directory
 export function loadMissions() {
@@ -29,7 +29,7 @@ export function loadMissions() {
 		files[missionID].push(fileName)
 
 		// Process only mission metadata files
-		if (path.extname(fileName) !== ("." + FileExtension.Meta)) {
+		if (path.extname(fileName) !== ('.' + FileExtension.Meta)) {
 			return
 		}
 
@@ -39,7 +39,7 @@ export function loadMissions() {
 
 			// Read mission metadata file
 			mission = JSON.parse(
-				fs.readFileSync(path.join(missionsStore.path, fileName), "utf-8")
+				fs.readFileSync(path.join(missionsStore.path, fileName), 'utf-8')
 			)
 		}
 		catch (e) {
@@ -90,11 +90,11 @@ export function saveMission(missionID) {
 
 	// Use missions folder as default save path destination
 	if (gamePath) {
-		savePath = path.join(gamePath, PATH_GAME_DATA, "Missions")
+		savePath = path.join(gamePath, PATH_GAME_DATA, 'Missions')
 	}
 	// Use desktop as default save path destination
 	else {
-		savePath = remote.app.getPath("desktop")
+		savePath = remote.app.getPath('desktop')
 	}
 
 	// Suggest default mission file name
@@ -105,7 +105,7 @@ export function saveMission(missionID) {
 
 	for (const missionFile of mission.files) {
 
-		if (path.extname(missionFile) === ("." + FileExtension.Binary)) {
+		if (path.extname(missionFile) === ('.' + FileExtension.Binary)) {
 
 			mainExtension = FileExtension.Binary
 			break
@@ -119,7 +119,7 @@ export function saveMission(missionID) {
 			defaultPath: savePath,
 			filters: [
 				{
-					name: "Mission files (*." + mainExtension + ")",
+					name: 'Mission files (*.' + mainExtension + ')',
 					extensions: [mainExtension]
 				}
 			]
@@ -137,7 +137,7 @@ export function saveMission(missionID) {
 
 			const extension = path.extname(missionFile)
 
-			if (extension === ("." + FileExtension.Meta)) {
+			if (extension === ('.' + FileExtension.Meta)) {
 				continue
 			}
 
@@ -170,10 +170,10 @@ export function removeMission(missionID, confirm = false) {
 		result = remote.dialog.showMessageBox(
 			remote.getCurrentWindow(),
 			{
-				type: "warning",
-				title: "Remove Mission",
-				message: "Are you sure you want to remove this mission?",
-				buttons: ["Remove", "Cancel"],
+				type: 'warning',
+				title: 'Remove Mission',
+				message: 'Are you sure you want to remove this mission?',
+				buttons: ['Remove', 'Cancel'],
 				defaultId: 0,
 				noLink: true
 			}

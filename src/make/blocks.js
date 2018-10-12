@@ -1,14 +1,14 @@
-import path from "path"
-import log from "../log"
-import Bridge from "../item/Bridge"
-import data from "../data"
+import path from 'path'
+import log from '../log'
+import Bridge from '../item/Bridge'
+import data from '../data'
 
 // Generate mission static blocks
 export default function makeBlocks() {
 
-	const blocksGroup = this.createItem("Group")
+	const blocksGroup = this.createItem('Group')
 
-	blocksGroup.setName("BLOCK")
+	blocksGroup.setName('BLOCK')
 
 	// Total block count
 	let totalBlocks = 0
@@ -16,7 +16,7 @@ export default function makeBlocks() {
 
 	this.battle.blocks.forEach(blocksFile => {
 
-		const blocks = data.load(path.join(this.battlePath, "blocks", blocksFile))
+		const blocks = data.load(path.join(this.battlePath, 'blocks', blocksFile))
 
 		// Add all blocks to a group
 		for (let i = 0; i < blocks.length; i++) {
@@ -36,5 +36,5 @@ export default function makeBlocks() {
 	})
 
 	// Log mission blocks info
-	log.I("Blocks:", totalBlocks, {bridges: totalBridges})
+	log.I('Blocks:', totalBlocks, {bridges: totalBridges})
 }

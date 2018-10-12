@@ -1,6 +1,6 @@
-import data from "../data"
-import log from "../log"
-import {MapSeason} from "./map"
+import data from '../data'
+import log from '../log'
+import {MapSeason} from './map'
 
 // Weather state/condition enum
 export const WeatherState = Object.freeze({
@@ -77,7 +77,7 @@ export default function makeWeather() {
 
 	const rand = this.rand
 	const options = this.items.Options
-	const weather = this.battle.weather[this.date.format("YYYY-MM-DD")]
+	const weather = this.battle.weather[this.date.format('YYYY-MM-DD')]
 	let state
 
 	// Set requested weather condition
@@ -140,7 +140,7 @@ export default function makeWeather() {
 	makePressure.call(this, weather)
 
 	// Log mission weather info
-	const logData = ["Weather:"]
+	const logData = ['Weather:']
 
 	// Log weather state
 	for (const state in WeatherState) {
@@ -154,23 +154,23 @@ export default function makeWeather() {
 
 	// Log precipitation type (if any)
 	if (this.weather.precipitation.type === Precipitation.Rain) {
-		logData.push("rain")
+		logData.push('rain')
 	}
 	else if (this.weather.precipitation.type === Precipitation.Snow) {
-		logData.push("snow")
+		logData.push('snow')
 	}
 
 	// Log mist state
 	if (this.weather.mist) {
-		logData.push("mist")
+		logData.push('mist')
 	}
 
 	// Log other weather info
 	logData.push({
-		temp: this.weather.temperature.level + "°C",
-		wind: Math.round(this.weather.wind[0].speed) + "m/s",
+		temp: this.weather.temperature.level + '°C',
+		wind: Math.round(this.weather.wind[0].speed) + 'm/s',
 		turb: this.weather.turbulence,
-		clouds: Math.round(this.weather.clouds.cover) + "%"
+		clouds: Math.round(this.weather.clouds.cover) + '%'
 	})
 
 	log.I.apply(log, logData)
@@ -241,7 +241,7 @@ function makeClouds() {
 	}
 
 	// Register clouds data in mission Options block
-	options.CloudConfig = this.map.clouds + "\\" + config
+	options.CloudConfig = this.map.clouds + '\\' + config
 	options.CloudLevel = altitude
 	options.CloudHeight = thickness
 

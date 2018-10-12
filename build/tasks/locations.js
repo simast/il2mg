@@ -1,7 +1,7 @@
-import numeral from "numeral"
-import data from "../../src/data"
-import {LocationType} from "../../src/make/locations"
-import Item, {PRECISION_POSITION} from "../../src/item"
+import numeral from 'numeral'
+import data from '../../src/data'
+import {LocationType} from '../../src/make/locations'
+import Item, {PRECISION_POSITION} from '../../src/item'
 
 // Map of location item names to types
 const locationTypeMap = {
@@ -14,7 +14,7 @@ const locationTypeMap = {
 module.exports = function(grunt) {
 
 	// Grunt task used to import/convert locations .Group to .json files
-	grunt.registerTask("build:locations", "Build locations JSON files.", () => {
+	grunt.registerTask('build:locations', 'Build locations JSON files.', () => {
 
 		let totalBattles = 0
 		let totalItems = 0
@@ -23,13 +23,13 @@ module.exports = function(grunt) {
 		for (const battleID in data.battles) {
 
 			const battle = data.battles[battleID]
-			const locationsPath = "data/battles/" + battleID + "/locations/"
+			const locationsPath = 'data/battles/' + battleID + '/locations/'
 
 			// Process all location files
 			battle.locations.forEach(locationFile => {
 
-				const fileSource = locationsPath + locationFile + ".Group"
-				const fileDestination = locationsPath + locationFile + ".json"
+				const fileSource = locationsPath + locationFile + '.Group'
+				const fileDestination = locationsPath + locationFile + '.json'
 
 				// Read raw locations
 				const items = Item.readTextFile(fileSource)
@@ -49,17 +49,17 @@ module.exports = function(grunt) {
 					items.forEach(item => {
 
 						// Process locations from reference point items
-						if (item.type === "MCU_H_ReferencePoint") {
+						if (item.type === 'MCU_H_ReferencePoint') {
 
 							const jsonItem = []
-							const itemData = item.Name.split(":")
+							const itemData = item.Name.split(':')
 
 							// Find matching location type ID
 							const itemType = locationTypeMap[itemData[0]]
 
 							// Validate location type
 							if (!itemType) {
-								grunt.fail.fatal("Invalid location type: " + itemData[0])
+								grunt.fail.fatal('Invalid location type: ' + itemData[0])
 							}
 
 							// Item type
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
 							jsonItem.push(Math.round(item.Left))
 
 							// Optional item name
-							const itemName = itemData[1] ? itemData[1].trim() : ""
+							const itemName = itemData[1] ? itemData[1].trim() : ''
 
 							if (itemName.length) {
 								jsonItem.push(itemName)
@@ -98,19 +98,19 @@ module.exports = function(grunt) {
 				// Write output JSON locations file
 				grunt.file.write(
 					fileDestination,
-					JSON.stringify(json, null, "\t")
+					JSON.stringify(json, null, '\t')
 				)
 			})
 
 			totalBattles++
 		}
 
-		let message = ""
+		let message = ''
 
-		message += numeral(totalItems).format("0,0") + " "
-		message += grunt.util.pluralize(totalItems, "item/items")
-		message += " processed from " + numeral(totalBattles).format("0,0") + " "
-		message += grunt.util.pluralize(totalBattles, "battle/battles") + "."
+		message += numeral(totalItems).format('0,0') + ' '
+		message += grunt.util.pluralize(totalItems, 'item/items')
+		message += ' processed from ' + numeral(totalBattles).format('0,0') + ' '
+		message += grunt.util.pluralize(totalBattles, 'battle/battles') + '.'
 
 		grunt.log.ok(message)
 	})

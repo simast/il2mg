@@ -1,15 +1,15 @@
-import numeral from "numeral"
-import moment from "moment"
-import data, {matchDateRange} from "../../src/data"
-import {isValidRebaseTask} from "../../src/make/task.rebase"
-import {isOffmap} from "../../src/make/map"
+import numeral from 'numeral'
+import moment from 'moment'
+import data, {matchDateRange} from '../../src/data'
+import {isValidRebaseTask} from '../../src/make/task.rebase'
+import {isOffmap} from '../../src/make/map'
 
 module.exports = function(grunt) {
 
 	// FIXME: Refactor and simplify index building
 
 	// Grunt task used to build battle index database
-	grunt.registerTask("build:index", "Build index database JSON files.", () => {
+	grunt.registerTask('build:index', 'Build index database JSON files.', () => {
 
 		let totalBattles = 0
 		let totalUnits = 0
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 			let planeData = data.planes[planeID]
 
 			// Ignore dummy plane definitions (and groups used to catalog planes)
-			if (!planeData || typeof planeData !== "object" || !planeData.name ||
+			if (!planeData || typeof planeData !== 'object' || !planeData.name ||
 				!planeData.model || !planeData.script) {
 
 				continue
@@ -107,14 +107,14 @@ module.exports = function(grunt) {
 
 			// Initialize battle index JSON structure
 			;[
-				"countries",
-				"units",
-				"airfields",
-				"planes",
-				"tasks",
-				"records",
-				"seasons",
-				"dates"
+				'countries',
+				'units',
+				'airfields',
+				'planes',
+				'tasks',
+				'records',
+				'seasons',
+				'dates'
 			].forEach(dataType => {
 				json[dataType] = Object.create(null)
 			})
@@ -192,9 +192,9 @@ module.exports = function(grunt) {
 
 				// Index unit for each day of the battle
 				const date = moment(unitFrom)
-				for (; date.isSameOrBefore(unitTo, "day"); date.add(1, "day")) {
+				for (; date.isSameOrBefore(unitTo, 'day'); date.add(1, 'day')) {
 
-					const dateKey = date.format("YYYY-MM-DD")
+					const dateKey = date.format('YYYY-MM-DD')
 
 					// Utility function used to match to/from date ranges
 					const isValidDateRange = matchDateRange.bind(undefined, {
@@ -244,7 +244,7 @@ module.exports = function(grunt) {
 								let planeData = data.planes[planeID]
 
 								// Resolve plane alias
-								while (typeof planeData === "string") {
+								while (typeof planeData === 'string') {
 
 									planeID = planeData
 									planeData = data.planes[planeID]
@@ -296,7 +296,7 @@ module.exports = function(grunt) {
 
 								let availability = dataAirfield[3]
 
-								if (typeof availability !== "number") {
+								if (typeof availability !== 'number') {
 									availability = 1
 								}
 
@@ -327,7 +327,7 @@ module.exports = function(grunt) {
 					}
 
 					if (rebase.to.length) {
-						tasks.add("rebase")
+						tasks.add('rebase')
 					}
 					else {
 						delete rebase.from
@@ -368,8 +368,8 @@ module.exports = function(grunt) {
 								const seasonFrom = moment(seasonData.from)
 								const seasonTo = moment(seasonData.to)
 
-								if (!date.isBefore(seasonFrom, "day") &&
-										!date.isAfter(seasonTo, "day")) {
+								if (!date.isBefore(seasonFrom, 'day') &&
+										!date.isAfter(seasonTo, 'day')) {
 
 									foundSeason = season
 									break
@@ -431,7 +431,7 @@ module.exports = function(grunt) {
 
 							airfields.forEach((availability, airfieldID) => {
 
-								const isRebaseTask = (taskID === "rebase")
+								const isRebaseTask = (taskID === 'rebase')
 
 								// Apply availability constrain for non-rebase tasks
 								if (availability <= 0 && !isRebaseTask) {
@@ -457,7 +457,7 @@ module.exports = function(grunt) {
 									planeID,
 									airfieldID,
 									taskID
-								].join("~")
+								].join('~')
 
 								let recordID = json.records[recordKey]
 
@@ -513,19 +513,19 @@ module.exports = function(grunt) {
 
 			// Write battle JSON index file
 			grunt.file.write(
-				"data/battles/" + battleID + "/index.json",
-				JSON.stringify(json, null, "\t")
+				'data/battles/' + battleID + '/index.json',
+				JSON.stringify(json, null, '\t')
 			)
 
 			totalBattles++
 		}
 
-		let message = ""
+		let message = ''
 
-		message += numeral(totalUnits).format("0,0") + " "
-		message += grunt.util.pluralize(totalUnits, "unit/units")
-		message += " indexed from " + numeral(totalBattles).format("0,0") + " "
-		message += grunt.util.pluralize(totalBattles, "battle/battles") + "."
+		message += numeral(totalUnits).format('0,0') + ' '
+		message += grunt.util.pluralize(totalUnits, 'unit/units')
+		message += ' indexed from ' + numeral(totalBattles).format('0,0') + ' '
+		message += grunt.util.pluralize(totalBattles, 'battle/battles') + '.'
 
 		grunt.log.ok(message)
 	})

@@ -1,10 +1,10 @@
-import Item from "../item"
+import Item from '../item'
 
 // Event and report child item name constants
-const ITEM_ON_EVENTS = "OnEvents"
-const ITEM_ON_EVENT = "OnEvent"
-const ITEM_ON_REPORTS = "OnReports"
-const ITEM_ON_REPORT = "OnReport"
+const ITEM_ON_EVENTS = 'OnEvents'
+const ITEM_ON_EVENT = 'OnEvent'
+const ITEM_ON_REPORTS = 'OnReports'
+const ITEM_ON_REPORT = 'OnReport'
 
 // Base MCU item
 export default class MCU extends Item {
@@ -17,12 +17,12 @@ export default class MCU extends Item {
 
 		// Events container item reference
 		if (this.EVENTS) {
-			Object.defineProperty(this, "events", {value: null, writable: true})
+			Object.defineProperty(this, 'events', {value: null, writable: true})
 		}
 
 		// Reports container item reference
 		if (this.REPORTS) {
-			Object.defineProperty(this, "reports", {value: null, writable: true})
+			Object.defineProperty(this, 'reports', {value: null, writable: true})
 		}
 	}
 
@@ -35,13 +35,13 @@ export default class MCU extends Item {
 	addEvent(type, target) {
 
 		// Validate event type
-		if (typeof this.EVENTS !== "object" || this.EVENTS[type] === undefined) {
-			throw new Error("Invalid item event type.")
+		if (typeof this.EVENTS !== 'object' || this.EVENTS[type] === undefined) {
+			throw new Error('Invalid item event type.')
 		}
 
 		// Validate event target command item
 		if (!(target instanceof MCU)) {
-			throw new Error("Invalid event target command item.")
+			throw new Error('Invalid event target command item.')
 		}
 
 		// Create a new events container child item
@@ -72,13 +72,13 @@ export default class MCU extends Item {
 	addReport(type, command, target) {
 
 		// Validate report type
-		if (typeof this.REPORTS !== "object" || this.REPORTS[type] === undefined) {
-			throw new Error("Invalid item report type.")
+		if (typeof this.REPORTS !== 'object' || this.REPORTS[type] === undefined) {
+			throw new Error('Invalid item report type.')
 		}
 
 		// Validate report source and target command items
 		if (!(command instanceof MCU) || !(target instanceof MCU)) {
-			throw new Error("Invalid item report source or target command item.")
+			throw new Error('Invalid item report source or target command item.')
 		}
 
 		// Create a new reports container child item

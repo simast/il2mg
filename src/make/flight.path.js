@@ -1,7 +1,7 @@
-import sylvester from "sylvester"
-import {makeActivity, ActivityType} from "./flight.plan"
-import makeFlightFuel from "./flight.fuel"
-import {RESTRICTED_BORDER, isOffmap, getMapIntersection} from "./map"
+import sylvester from 'sylvester'
+import {makeActivity, ActivityType} from './flight.plan'
+import makeFlightFuel from './flight.fuel'
+import {RESTRICTED_BORDER, isOffmap, getMapIntersection} from './map'
 
 // Minimum and maximum distance from the border for offmap start/end position
 // NOTE: This is only used for player flight!
