@@ -1,5 +1,6 @@
 import path from "path"
 import addLazyProperty from "lazy-property"
+
 import log from "../log"
 import Item from "../item"
 import {Location, LocationType} from "./locations"
@@ -203,6 +204,8 @@ export default function makeAirfields() {
 			// Assign planes to sectors
 			(() => {
 
+				const airfieldDataSectors = JSON.parse(JSON.stringify(airfieldData.sectors || {}))
+
 				// NOTE: During distribution large size planes take priority over small size
 				for (let planeSizeID = planeSizeMax; planeSizeID >= planeSizeMin; planeSizeID--) {
 
@@ -242,7 +245,7 @@ export default function makeAirfields() {
 								for (let n = 0; n < sectorMaxPlanes; n++) {
 
 									const plane = unitPlanes.shift()
-									const sector = airfieldData.sectors[sectorID]
+									const sector = airfieldDataSectors[sectorID]
 									let sectorPlaneSize = []
 
 									for (let x = planeSizeID; x <= planeSizeMax; x++) {
