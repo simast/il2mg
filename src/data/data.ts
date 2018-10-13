@@ -3,7 +3,15 @@ import path from 'path'
 import addLazyProperty from 'lazy-property'
 import yaml from 'js-yaml'
 
-import {DataItems, DataItem} from './types'
+import {
+	DataItems,
+	DataItem,
+	DataLanguages,
+	DataVehicles,
+	DataClouds,
+	DataTime,
+	DataCallsigns
+} from './types'
 
 // Data directory index file key
 const DATA_INDEX_FILE = 'index'
@@ -25,11 +33,11 @@ class Data {
 
 	// Common data access properties
 	public readonly items!: DataItems
-	public readonly languages: any
-	public readonly vehicles: any
-	public readonly clouds: any
-	public readonly time: any
-	public readonly callsigns: any
+	public readonly languages!: DataLanguages
+	public readonly vehicles!: DataVehicles
+	public readonly clouds!: DataClouds
+	public readonly time!: DataTime
+	public readonly callsigns!: DataCallsigns
 	public readonly tasks: any
 	public readonly planes: any
 	public readonly countries: any
@@ -53,11 +61,11 @@ class Data {
 
 		// Lazy load all static data
 		addLazyProperty(this, 'items', () => this.load<DataItems>(path.join('items', DATA_INDEX_FILE)) || [])
-		addLazyProperty(this, 'languages', () => this.load('languages'))
-		addLazyProperty(this, 'vehicles', () => this.load('vehicles'))
-		addLazyProperty(this, 'clouds', () => this.load('clouds'))
-		addLazyProperty(this, 'time', () => this.load('time'))
-		addLazyProperty(this, 'callsigns', () => this.load('callsigns'))
+		addLazyProperty(this, 'languages', () => this.load<DataLanguages>('languages'))
+		addLazyProperty(this, 'vehicles', () => this.load<DataVehicles>('vehicles'))
+		addLazyProperty(this, 'clouds', () => this.load<DataClouds>('clouds'))
+		addLazyProperty(this, 'time', () => this.load<DataTime>('time'))
+		addLazyProperty(this, 'callsigns', () => this.load<DataCallsigns>('callsigns'))
 		addLazyProperty(this, 'tasks', () => this.load('tasks'))
 
 		// Load planes

@@ -5,6 +5,13 @@ export enum Coalition {
 	Axis = 2
 }
 
+// Countries
+export const enum Country {
+	SovietUnion = 101,
+	Germany = 201,
+	Romania = 202
+}
+
 // Data tags for special airfield items
 export enum ItemTag {
 	Plane = -1, // Plane spot
@@ -35,4 +42,57 @@ export enum ItemFlag {
 	TaxiRunway = 1, // Taxi runway point
 	RouteStop = 1, // Route stop point
 	RouteRoad = 2 // Route road formation
+}
+
+// Vehicle types
+export const enum Vehicle {
+	Truck = 'truck',
+	TruckCargo = 'truck_cargo',
+	TruckFuel = 'truck_fuel',
+	AntiAir = 'aa',
+	AntiAirFlak = 'aa_flak',
+	AntiAirFlakLight = 'aa_flak_light',
+	AntiAirFlakHeavy = 'aa_flak_heavy',
+	AntiAirMG = 'aa_mg',
+	AntiAirMobile = 'aa_mobile',
+	Tank = 'tank',
+	TankHeavy = 'tank_heavy',
+	TankMedium = 'tank_medium',
+	TankLight = 'tank_light',
+	TankDestroyer = 'tank_destroyer',
+	ArmoredCar = 'armored_car',
+	Scout = 'scout',
+	ArmoredPersonnelCarrier = 'apc',
+	RocketArtillery = 'rocket_artillery',
+	StaffCar = 'staff_car',
+	MachineGun = 'mg',
+	Artillery = 'artillery',
+	ArtilleryHowitzer = 'artillery_howitzer',
+	AntiTankGun = 'at_gun',
+	LandingLight = 'landing_light',
+	SearchLight = 'search_light',
+	Train = 'train',
+	TrainAntiAir = 'train_aa'
+}
+
+// Named time periods
+export const enum Time {
+	Dawn = 'dawn',
+	Sunrise = 'sunrise',
+	Morning = 'morning',
+	Day = 'day',
+	Noon = 'noon',
+	Afternoon = 'afternoon',
+	Evening = 'evening',
+	Sunset = 'sunset',
+	Dusk = 'dusk',
+	Night = 'night',
+	Midnight = 'midnight'
+}
+
+// Callsign groups
+export const enum CallsignGroup {
+	Plane = 'plane',
+	Airfield = 'airfield',
+	Vehicle = 'vehicle'
 }
