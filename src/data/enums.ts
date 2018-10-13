@@ -45,7 +45,7 @@ export enum ItemFlag {
 }
 
 // Vehicle types
-export const enum Vehicle {
+export const enum VehicleType {
 	Truck = 'truck',
 	TruckCargo = 'truck_cargo',
 	TruckFuel = 'truck_fuel',
@@ -76,7 +76,7 @@ export const enum Vehicle {
 }
 
 // Named time periods
-export const enum Time {
+export const enum TimePeriod {
 	Dawn = 'dawn',
 	Sunrise = 'sunrise',
 	Morning = 'morning',
@@ -95,4 +95,30 @@ export const enum CallsignGroup {
 	Plane = 'plane',
 	Airfield = 'airfield',
 	Vehicle = 'vehicle'
+}
+
+// Task types
+export const enum TaskType {
+	Cover = 'cover',
+	Free = 'free',
+	Patrol = 'patrol',
+	Rebase = 'rebase',
+	Sweep = 'sweep'
+}
+
+// Altitude level types
+export const enum AltitudeLevel {
+	Low = 'low',
+	Medium = 'medium',
+	High = 'high'
+}
+
+// Plane types
+export const enum PlaneType {
+	Fighter = 'fighter',
+	FighterLight = 'fighter_light',
+	GroundAttack = 'ground_attack',
+	DiveBomber = 'dive_bomber',
+	LevelBomber = 'level_bomber',
+	Transport = 'transport'
 }

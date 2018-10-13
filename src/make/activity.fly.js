@@ -1,8 +1,8 @@
 import numeral from 'numeral'
 import sylvester from 'sylvester'
 import * as MCU_Icon from '../item/MCU_Icon'
+import {AltitudeLevel} from '../data'
 import {MapColor} from './map'
-import {AltitudeLevel} from './flight.altitude'
 import makeFlightFuel from './flight.fuel'
 import makeBriefingLead from './briefing.lead'
 

@@ -1,4 +1,12 @@
-import {Country, Vehicle, Time, CallsignGroup} from './enums'
+import {
+	Country,
+	VehicleType,
+	TimePeriod,
+	CallsignGroup,
+	TaskType,
+	AltitudeLevel,
+	PlaneType
+} from './enums'
 
 // data/items/item files
 export interface DataItem {
@@ -23,7 +31,7 @@ export type DataVehicles = DataVehicle[]
 
 interface DataVehicle {
 	name: string
-	type: Vehicle[]
+	type: VehicleType[]
 	countries: Country[]
 	model: string
 	script: string
@@ -42,7 +50,7 @@ export interface DataClouds {
 
 // data/time file
 export type DataTime = {
-	[time in Time]: {
+	[timePeriod in TimePeriod]: {
 		description: string
 		period?: number
 	}
@@ -51,4 +59,19 @@ export type DataTime = {
 // data/callsigns file
 export type DataCallsigns = {
 	[callsignGroup in CallsignGroup]: [number, string][]
+}
+
+// data/tasks files
+export type DataTasks = {
+	[taskType in TaskType]: {
+		name: string
+		title: string | {[storyId: string]: string}
+		time: TimePeriod
+		offmap?: boolean // Flag used to enable task for offmap airfields and flight routes
+		local?: boolean // Flag used to indicate that this task is over local airfield
+		rankMax?: number
+		altitude?: {[altitudeLevel in AltitudeLevel]?: number}
+		planes: {[planeType in PlaneType]?: number | string | string[]} // Plane type to formation map
+		story: string[] | {[storyId: string]: string[]}
+	}
 }

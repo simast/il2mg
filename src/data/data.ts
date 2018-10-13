@@ -10,7 +10,8 @@ import {
 	DataVehicles,
 	DataClouds,
 	DataTime,
-	DataCallsigns
+	DataCallsigns,
+	DataTasks
 } from './types'
 
 // Data directory index file key
@@ -38,7 +39,7 @@ class Data {
 	public readonly clouds!: DataClouds
 	public readonly time!: DataTime
 	public readonly callsigns!: DataCallsigns
-	public readonly tasks: any
+	public readonly tasks!: DataTasks
 	public readonly planes: any
 	public readonly countries: any
 	public readonly battles: any
@@ -66,7 +67,7 @@ class Data {
 		addLazyProperty(this, 'clouds', () => this.load<DataClouds>('clouds'))
 		addLazyProperty(this, 'time', () => this.load<DataTime>('time'))
 		addLazyProperty(this, 'callsigns', () => this.load<DataCallsigns>('callsigns'))
-		addLazyProperty(this, 'tasks', () => this.load('tasks'))
+		addLazyProperty(this, 'tasks', () => this.load<DataTasks>('tasks'))
 
 		// Load planes
 		addLazyProperty(this, 'planes', () => {

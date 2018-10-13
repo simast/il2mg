@@ -7,7 +7,7 @@ title:
   test: Test flight over {{airfield}}
 
 time: day
-local: true # Local tasks are only for airfields present on the map
+local: true
 rankMax: 0.5 # Don't use high ranking pilots (use 50% max weighted rank range)
 
 planes:

@@ -5,7 +5,7 @@
 
 name: Transfer airfield
 title: Transfer from {{airfield}} airfield
-offmap: true # Enable task for offmap airfields and flight routes
+offmap: true
 time: day
 
 altitude:
