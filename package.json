@@ -11,11 +11,6 @@
 		"build:release": "grunt release",
 		"lint": "grunt eslint"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "yarn lint"
-		}
-	},
 	"engines": {
 		"yarn": ">=1.10.1"
 	},
@@ -44,29 +39,24 @@
 		"speakingurl": "14.0.1",
 		"suncalc": "1.8.0",
 		"sylvester": "0.0.21",
+		"tslib": "1.9.3",
 		"winston": "2.4.4"
 	},
 	"devDependencies": {
-		"@babel/core": "7.1.2",
-		"@babel/plugin-proposal-class-properties": "7.1.0",
-		"@babel/plugin-proposal-decorators": "7.1.2",
-		"@babel/plugin-transform-modules-commonjs": "7.1.0",
-		"@babel/preset-react": "7.0.0",
-		"@babel/register": "7.0.0",
-		"babel-eslint": "10.0.1",
-		"babel-loader": "8.0.4",
+		"@types/js-yaml": "3.11.2",
+		"@types/node": "10.11.7",
+		"@types/speakingurl": "13.0.2",
 		"clean-css": "4.2.1",
 		"electron-debug": "2.0.0",
 		"electron-packager": "12.2.0",
-		"eslint": "5.6.1",
-		"eslint-plugin-react": "7.11.1",
 		"grunt": "1.0.3",
 		"grunt-contrib-clean": "2.0.0",
 		"grunt-eslint": "21.0.0",
-		"husky": "1.1.2",
 		"js-yaml": "3.12.0",
 		"sloc": "0.2.0",
 		"terser-webpack-plugin": "1.1.0",
+		"ts-node": "7.0.1",
+		"typescript": "3.1.3",
 		"webpack": "4.20.2"
 	}
 }

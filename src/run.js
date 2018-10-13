@@ -1,6 +1,6 @@
-// Enable Babel require() hook
+// Enable ts-node require() hook
 if (process.env.NODE_ENV !== 'production') {
-	require('@babel/register')
+	require('ts-node').register()
 }
 
 // Run as Electron application with both GUI and CLI interfaces

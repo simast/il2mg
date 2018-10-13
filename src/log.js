@@ -30,24 +30,4 @@ const log = new (winston.Logger)({
 // HACK: Workaround for log.profile() using hardcoded "info" level
 log.info = log.I
 
-// HACK: Intercept all console.error calls (from commander error messages) and
-// log them as winston "error" level messages.
-// eslint-disable-next-line no-console
-console.error = function() {
-
-	if (!arguments.length) {
-		return
-	}
-
-	let message = String(arguments[0]).trim()
-
-	if (message.length) {
-
-		message = message.replace(/^error:\s*/i, '').trim()
-
-		arguments[0] = message
-		throw Array.prototype.slice.call(arguments)
-	}
-}
-
 export default log
