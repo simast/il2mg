@@ -3,7 +3,7 @@ import path from 'path'
 import addLazyProperty from 'lazy-property'
 import yaml from 'js-yaml'
 
-import {getEnumValues} from '../utils'
+import {getEnumValues, Immutable, Mutable} from '../utils'
 import {Country} from './enums'
 
 import {
@@ -40,16 +40,16 @@ class Data {
 	private dataPath = 'data'
 
 	// Common data access properties
-	public readonly items!: DataItems
-	public readonly languages!: DataLanguages
-	public readonly vehicles!: DataVehicles
-	public readonly clouds!: DataClouds
-	public readonly time!: DataTime
-	public readonly callsigns!: DataCallsigns
-	public readonly tasks!: DataTasks
-	public readonly planes!: DataPlanes
-	public readonly countries!: DataCountries
-	public readonly battles: any
+	public readonly items!: Immutable<DataItems>
+	public readonly languages!: Immutable<DataLanguages>
+	public readonly vehicles!: Immutable<DataVehicles>
+	public readonly clouds!: Immutable<DataClouds>
+	public readonly time!: Immutable<DataTime>
+	public readonly callsigns!: Immutable<DataCallsigns>
+	public readonly tasks!: Immutable<DataTasks>
+	public readonly planes!: Immutable<DataPlanes>
+	public readonly countries!: Immutable<DataCountries>
+	public readonly battles: unknown
 
 	constructor() {
 
@@ -164,7 +164,7 @@ class Data {
 	 * @param itemPath Data file path (relative to data directory).
 	 * @returns Loaded data.
 	 */
-	load<T>(itemPath: string): T {
+	load<T>(itemPath: string): Immutable<T> {
 
 		if (!itemPath.length) {
 			throw new TypeError('Invalid data file path.')
@@ -273,7 +273,7 @@ class Data {
 		// Add new item type
 		if (numberTypeId === -1) {
 
-			numberTypeId = items.push(stringTypeId) - 1
+			numberTypeId = (items as Mutable<typeof items>).push(stringTypeId) - 1
 
 			const itemFile = path.join(dataPath, 'items', stringTypeId)
 			const itemFileExists = Boolean(Object.keys(dataFormats).find(extension => (
@@ -299,7 +299,7 @@ class Data {
 	 * @param itemTypeId Item type ID as numeric or string value.
 	 * @returns Item type data.
 	 */
-	getItemType(itemTypeId: number | string): DataItem {
+	getItemType(itemTypeId: number | string): Immutable<DataItem> {
 
 		// Look up string item type ID
 		if (typeof itemTypeId === 'number') {
