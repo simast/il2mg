@@ -1,33 +1,13 @@
-# I-16
-i16:
-  manufacturer: Polikarpov
-  name: I-16
-  alias: Ishak
-  type: [fighter, fighter_light]
-  size: small
-  altitude:
-    low: 2 # 66.6% (open cockpit!)
-    medium: 1 # 33.3%
-  static:
-    - static_i16
-    - static_i16_net
+manufacturer: Polikarpov
+name: I-16
+alias: Ishak
+type: [fighter, fighter_light]
+size: small
 
-# I-16 type 24
-i16t24:
-  name: I-16 type 24
-  parent: i16
-  model: graphics\planes\i16t24\i16t24.mgm
-  script: luascripts\worldobjects\planes\i16t24.txt
-  speed: 355
-  range: 390
-  skins:
-    101:
-      '': [-6, -6, -6, 1]
-      i16t24\i16t24_skin_01.dds: [0, 0, 0, -11]
-      i16t24\i16t24_skin_02.dds: [1, 1, 1, 0]
-      i16t24\i16t24_skin_03.dds: [0, 0, 0, 3]
-      i16t24\i16t24_skin_04.dds: [2, 2, 2, 0]
-      i16t24\i16t24_skin_05.dds: [0, 0, 0, 3]
-      i16t24\i16t24_skin_06.dds: [1, 1, 1, 0]
-      i16t24\i16t24_skin_07.dds: [0, 0, 0, 2]
-      i16t24\i16t24_skin_09.dds: [2, 2, 2, 0]
+altitude:
+  low: 2 # 66.6% (open cockpit!)
+  medium: 1 # 33.3%
+
+static:
+  - static_i16
+  - static_i16_net

@@ -1,0 +1,16 @@
+name: Bf 110 E-2
+parent: bf110e
+model: graphics\planes\bf110e2\bf110e2.mgm
+script: luascripts\worldobjects\planes\bf110e2.txt
+speed: 390
+range: 990
+
+skins:
+  201:
+    '': [-5, -5, -5, 1]
+    bf110e2\bf110e2_skin_01.dds: [0, 0, 0, -16]
+    bf110e2\bf110e2_skin_02.dds: [1, 1, 1, 0]
+    bf110e2\bf110e2_skin_03.dds: [1, 1, 1, 0]
+    bf110e2\bf110e2_skin_05.dds: [1, 1, 1, 0]
+    bf110e2\bf110e2_skin_06.dds: [1, 1, 1, 0]
+    bf110e2\bf110e2_skin_09.dds: [0, 0, 0, 3]

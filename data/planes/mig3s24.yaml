@@ -1,0 +1,20 @@
+name: MiG-3 ser.24
+parent: mig3
+model: graphics\planes\mig3s24\mig3s24.mgm
+script: luascripts\worldobjects\planes\mig3s24.txt
+speed: 405
+range: 890
+
+skins:
+  101:
+    '': [-6, -6, -6, 1]
+    mig3s24\mig3s24_skin_01.dds: [0, 0, 0, -11]
+    mig3s24\mig3s24_skin_02.dds: [1, 1, 1, 0]
+    mig3s24\mig3s24_skin_03.dds: [1, 1, 1, 0]
+    mig3s24\mig3s24_skin_04.dds: [1, 1, 1, 0]
+    mig3s24\mig3s24_skin_05.dds: [0, 0, 0, 3]
+    mig3s24\mig3s24_skin_06.dds: [1, 1, 1, 0]
+    mig3s24\mig3s24_skin_07.dds: [1, 1, 1, 0]
+    mig3s24\mig3s24_skin_08.dds: [0, 0, 0, 2]
+    mig3s24\mig3s24_skin_09.dds: [1, 1, 1, 0]
+    mig3s24\mig3s24_skin_10.dds: [0, 0, 0, 3]

@@ -1,0 +1,19 @@
+name: Yak-1 ser.69
+parent: yak1
+model: graphics\planes\yak1s69\yak1s69.mgm
+script: luascripts\worldobjects\planes\yak1s69.txt
+speed: 415
+range: 620
+
+skins:
+  101:
+    '': [-4, -4, -4, 1]
+    yak1s69\yak1s69_skin_01.dds: [0, 0, 0, -10]
+    yak1s69\yak1s69_skin_02.dds: [1, 1, 1, 0]
+    yak1s69\yak1s69_skin_03.dds: [0, 0, 0, 3]
+    yak1s69\yak1s69_skin_04.dds: [1, 1, 1, 0]
+    yak1s69\yak1s69_skin_05.dds: [0, 0, 0, 4]
+    yak1s69\yak1s69_skin_06.dds: [1, 1, 1, 0]
+    yak1s69\yak1s69_skin_07.dds: [0, 0, 0, 1]
+    yak1s69\yak1s69_skin_08.dds: [0, 0, 0, 1]
+    yak1s69\yak1s69_skin_10.dds: [1, 1, 1, 0]

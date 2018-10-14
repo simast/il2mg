@@ -117,8 +117,17 @@ export const enum AltitudeLevel {
 export const enum PlaneType {
 	Fighter = 'fighter',
 	FighterLight = 'fighter_light',
+	FighterHeavy = 'fighter_heavy',
 	GroundAttack = 'ground_attack',
 	DiveBomber = 'dive_bomber',
 	LevelBomber = 'level_bomber',
 	Transport = 'transport'
+}
+
+// Plane sizes
+export const enum PlaneSize {
+	Small = 'small',
+	Medium = 'medium',
+	Large = 'large',
+	Huge = 'huge'
 }

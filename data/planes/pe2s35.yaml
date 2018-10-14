@@ -1,0 +1,20 @@
+name: Pe-2 ser.35
+parent: pe2
+model: graphics\planes\pe2s35\pe2s35.mgm
+script: luascripts\worldobjects\planes\pe2s35.txt
+speed: 365
+range: 1030
+
+skins:
+  101:
+    '': [-5, -5, -5, 1]
+    pe2s35\pe2s35_skin_01.dds: [0, 0, 0, -10]
+    pe2s35\pe2s35_skin_02.dds: [1, 1, 1, 0]
+    pe2s35\pe2s35_skin_03.dds: [1, 1, 1, 0]
+    pe2s35\pe2s35_skin_04.dds: [1, 1, 1, 0]
+    pe2s35\pe2s35_skin_05.dds: [0, 0, 0, 9]
+    pe2s35\pe2s35_skin_06.dds: [1, 1, 1, 0]
+    pe2s35\pe2s35_skin_07.dds: [1, 1, 1, 0]
+    pe2s35\pe2s35_skin_08.dds: [1, 1, 1, 0]
+    pe2s35\pe2s35_skin_09.dds: [1, 1, 1, 0]
+    pe2s35\pe2s35_skin_10.dds: [1, 1, 1, 0]

@@ -1,0 +1,20 @@
+name: Il-2 mod.1942
+parent: il2
+model: graphics\planes\il2m42\il2m42.mgm
+script: luascripts\worldobjects\planes\il2m42.txt
+speed: 330
+range: 620
+
+skins:
+  101:
+    '': [-3, -3, -3, 1]
+    il2m42\il2m42_skin_01.dds: [0, 0, 0, -8]
+    il2m42\il2m42_skin_02.dds: [1, 1, 1, 0]
+    il2m42\il2m42_skin_03.dds: [0, 0, 0, 2]
+    il2m42\il2m42_skin_04.dds: [1, 1, 1, 0]
+    il2m42\il2m42_skin_05.dds: [0, 0, 0, 4]
+    il2m42\il2m42_skin_06.dds: [1, 1, 1, 0]
+    il2m42\il2m42_skin_07.dds: [0, 0, 0, 1]
+    il2m42\il2m42_skin_08.dds: [0, 0, 0, 2]
+    il2m42\il2m42_skin_09.dds: [0, 0, 0, 1]
+    il2m42\il2m42_skin_10.dds: [0, 0, 0, 1]

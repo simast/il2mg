@@ -1,12 +1,12 @@
 import moment, {Moment} from 'moment'
 
-interface MatchContext {
+type MatchContext = {
 	from: Moment
 	to: Moment
 	date: Moment
 }
 
-interface MatchRange {
+type MatchRange = {
 	from: Moment
 	to: Moment
 }

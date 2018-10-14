@@ -1,0 +1,18 @@
+name: Bf 109 G-4
+parent: bf109g
+model: graphics\planes\bf109g4\bf109g4.mgm
+script: luascripts\worldobjects\planes\bf109g4.txt
+speed: 435
+range: 680
+
+skins:
+  201:
+    '': [-5, -5, -5, 1]
+    bf109g4\bf109g4_skin_01.dds: [0, 0, 0, -15]
+    bf109g4\bf109g4_skin_03.dds: [1, 1, 1, 0]
+    bf109g4\bf109g4_skin_04.dds: [0, 0, 0, 4]
+    bf109g4\bf109g4_skin_06.dds: [1, 1, 1, 0]
+    bf109g4\bf109g4_skin_07.dds: [1, 1, 1, 0]
+    bf109g4\bf109g4_skin_10.dds: [1, 1, 1, 0]
+  202:
+    bf109g4\bf109g4_skin_02.dds: [1, 1, 1, 1]

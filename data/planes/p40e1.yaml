@@ -1,0 +1,15 @@
+name: P-40E-1
+parent: p40e
+model: graphics\planes\p40e1\p40e1.mgm
+script: luascripts\worldobjects\planes\p40e1.txt
+speed: 375
+range: 1120
+
+skins:
+  101:
+    '': [-3, -3, -3, 1]
+    p40e1\p40e1_skin_01.dds: [0, 0, 0, -13]
+    p40e1\p40e1_skin_02.dds: [1, 1, 1, 1]
+    p40e1\p40e1_skin_04.dds: [1, 1, 1, 1]
+    p40e1\p40e1_skin_05.dds: [0, 0, 0, 4]
+    p40e1\p40e1_skin_09.dds: [1, 1, 1, 0]

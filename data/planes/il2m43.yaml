@@ -1,0 +1,24 @@
+name: Il-2 mod.1943
+parent: il2
+model: graphics\planes\il2m43\il2m43.mgm
+script: luascripts\worldobjects\planes\il2m43.txt
+speed: 325
+range: 610
+
+skins:
+  101:
+    '': [-17, 17, -14, 1]
+    il2m43\il2m43_skin_01.dds: [0, 0, 0, -16]
+    il2m43\il2m43_skin_02.dds: [5, -5, 2, 1]
+    il2m43\il2m43_skin_03.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_04.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_05.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_06.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_07.dds: [1, 1, 1, 1]
+    il2m43\il2m43_skin_08.dds: [1, 1, 1, 1]
+    il2m43\il2m43_skin_09.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_10.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_11.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_12.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_13.dds: [1, 1, 1, 0]
+    il2m43\il2m43_skin_14.dds: [1, 1, 1, 0]

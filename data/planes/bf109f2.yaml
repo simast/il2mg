@@ -1,0 +1,19 @@
+name: Bf 109 F-2
+parent: bf109f
+model: graphics\planes\bf109f2\bf109f2.mgm
+script: luascripts\worldobjects\planes\bf109f2.txt
+speed: 420
+range: 830
+
+skins:
+  201:
+    '': [-6, -6, -6, 1]
+    bf109f2\bf109f2_skin_01.dds: [0, 0, 0, -13]
+    bf109f2\bf109f2_skin_02.dds: [1, 1, 1, 0]
+    bf109f2\bf109f2_skin_03.dds: [0, 0, 0, 2]
+    bf109f2\bf109f2_skin_07.dds: [0, 0, 0, 3]
+    bf109f2\bf109f2_skin_08.dds: [1, 1, 1, 0]
+    bf109f2\bf109f2_skin_09.dds: [1, 1, 1, 0]
+    bf109f2\bf109f2_skin_12.dds: [1, 1, 1, 1]
+    bf109f2\bf109f2_skin_13.dds: [1, 1, 1, 0]
+    bf109f2\bf109f2_unique_01.dds: [1, 1, 1, 0]

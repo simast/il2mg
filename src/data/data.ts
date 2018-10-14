@@ -11,23 +11,23 @@ import {
 	DataClouds,
 	DataTime,
 	DataCallsigns,
-	DataTasks
+	DataTasks,
+	DataPlanes
 } from './types'
 
 // Data directory index file key
 const DATA_INDEX_FILE = 'index'
 
+type DataCache = {[itemPath: string]: any}
+type DataFormats = {[extension: string]: ((content: string) => any) | undefined}
+
 class Data {
 
 	// Internal cache for data.load() function
-	private dataCache: {
-		[itemPath: string]: any
-	} = Object.create(null)
+	private dataCache: DataCache = Object.create(null)
 
 	// Map of supported data formats/extensions and their parse functions
-	private dataFormats: {
-		[extension: string]: ((content: string) => any) | undefined
-	} = Object.create(null)
+	private dataFormats: DataFormats = Object.create(null)
 
 	// Main data directory path
 	private dataPath = 'data'
@@ -40,7 +40,7 @@ class Data {
 	public readonly time!: DataTime
 	public readonly callsigns!: DataCallsigns
 	public readonly tasks!: DataTasks
-	public readonly planes: any
+	public readonly planes!: DataPlanes
 	public readonly countries: any
 	public readonly battles: any
 
@@ -68,21 +68,7 @@ class Data {
 		addLazyProperty(this, 'time', () => this.load<DataTime>('time'))
 		addLazyProperty(this, 'callsigns', () => this.load<DataCallsigns>('callsigns'))
 		addLazyProperty(this, 'tasks', () => this.load<DataTasks>('tasks'))
-
-		// Load planes
-		addLazyProperty(this, 'planes', () => {
-
-			const planes = Object.create(null)
-			const planeData = this.load<any>('planes')
-
-			for (const planeGroup in planeData) {
-				for (const planeId in planeData[planeGroup]) {
-					planes[planeId] = planeData[planeGroup][planeId]
-				}
-			}
-
-			return Object.freeze(planes)
-		})
+		addLazyProperty(this, 'planes', () => this.load<DataPlanes>('planes'))
 
 		// Load countries
 		addLazyProperty(this, 'countries', () => {

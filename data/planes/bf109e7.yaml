@@ -1,0 +1,24 @@
+name: Bf 109 E-7
+parent: bf109e
+model: graphics\planes\bf109e7\bf109e7.mgm
+script: luascripts\worldobjects\planes\bf109e7.txt
+
+static:
+  - static_bf109e7
+  - static_bf109e7_net
+  - static_bf109e7_open
+
+speed: 395
+range: 730
+
+skins:
+  201:
+    '': [-5, -5, -5, 1]
+    bf109e7\bf109e7_skin_01.dds: [0, 0, 0, -15]
+    bf109e7\bf109e7_skin_02.dds: [1, 1, 1, 0]
+    bf109e7\bf109e7_skin_03.dds: [1, 1, 1, 0]
+    bf109e7\bf109e7_skin_04.dds: [0, 0, 0, 4]
+    bf109e7\bf109e7_skin_05.dds: [1, 1, 1, 0]
+    bf109e7\bf109e7_skin_09.dds: [1, 1, 1, 0]
+  202:
+    bf109e7\bf109e7_skin_06.dds: [1, 1, 1, 1]

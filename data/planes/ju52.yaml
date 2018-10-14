@@ -1,29 +1,12 @@
-# Ju 52
-ju52:
-  manufacturer: Junkers
-  name: Ju 52
-  alias: Tante Ju
-  type: [transport]
-  size: large
-  altitude:
-    low: 3 # 75% (low altitude preference)
-    medium: 1 # 25%
-  static:
-    - static_ju52
+manufacturer: Junkers
+name: Ju 52
+alias: Tante Ju
+type: [transport]
+size: large
 
-# Ju 52/3mg4e
-ju523mg4e:
-  name: Ju 52 3mg4e
-  parent: ju52
-  model: graphics\planes\ju523mg4e\ju523mg4e.mgm
-  script: luascripts\worldobjects\planes\ju523mg4e.txt
-  speed: 230
-  range: 1250
-  skins:
-    201:
-      '': [-3, -3, -3, 1]
-      ju523mg4e\ju523mg4e_skin_01.dds: [0, 0, 0, -15]
-      ju523mg4e\ju523mg4e_skin_02.dds: [1, 1, 1, 0]
-      ju523mg4e\ju523mg4e_skin_06.dds: [1, 1, 1, 0]
-      ju523mg4e\ju523mg4e_skin_07.dds: [0, 0, 0, 4]
-      ju523mg4e\ju523mg4e_skin_09.dds: [1, 1, 1, 0]
+altitude:
+  low: 3 # 75% (low altitude preference)
+  medium: 1 # 25%
+
+static:
+  - static_ju52

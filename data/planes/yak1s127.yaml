@@ -1,0 +1,21 @@
+name: Yak-1b ser.127
+parent: yak1
+model: graphics\planes\yak1s127\yak1s127.mgm
+script: luascripts\worldobjects\planes\yak1s127.txt
+speed: 420
+range: 670
+
+skins:
+  101:
+    '': [-11, -10, -11, 1]
+    yak1s127\yak1s127_skin_01.dds: [0, 0, 0, -16]
+    yak1s127\yak1s127_skin_02.dds: [3, 3, 3, 0]
+    yak1s127\yak1s127_skin_04.dds: [1, 1, 1, 0]
+    yak1s127\yak1s127_skin_05.dds: [0, 0, 0, 3]
+    yak1s127\yak1s127_skin_06.dds: [1, 1, 1, 0]
+    yak1s127\yak1s127_skin_07.dds: [1, 1, 1, 0]
+    yak1s127\yak1s127_skin_08.dds: [1, 1, 1, 0]
+    yak1s127\yak1s127_skin_09.dds: [1, 1, 1, 0]
+    yak1s127\yak1s127_skin_10.dds: [1, 1, 1, 0]
+    yak1s127\yak1s127_skin_11.dds: [1, 1, 1, 0]
+    yak1s127\yak1s127_skin_12.dds: [1, 0, 1, 0]
