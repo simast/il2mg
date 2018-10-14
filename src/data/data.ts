@@ -24,7 +24,10 @@ import {
 	DataBattleBlocks,
 	DataBattleLocations,
 	DataBattleFronts,
-	DataBattleMap
+	DataBattleMap,
+	DataBattleWeather,
+	DataBattleAirfields,
+	DataBattleRoles
 } from './types'
 
 // Data directory index file key
@@ -129,9 +132,14 @@ class Data {
 				addLazyProperty(battle, 'map', () =>
 					this.load<DataBattleMap>(path.join(battlePath, 'map')))
 
-				addLazyProperty(battle, 'weather', () => this.load(path.join(battlePath, 'weather')))
-				addLazyProperty(battle, 'airfields', () => this.load(path.join(battlePath, 'airfields')))
-				addLazyProperty(battle, 'roles', () => this.load(path.join(battlePath, 'roles')))
+				addLazyProperty(battle, 'weather', () =>
+					this.load<DataBattleWeather>(path.join(battlePath, 'weather')))
+
+				addLazyProperty(battle, 'airfields', () =>
+					this.load<DataBattleAirfields>(path.join(battlePath, 'airfields')))
+
+				addLazyProperty(battle, 'roles', () =>
+					this.load<DataBattleRoles>(path.join(battlePath, 'roles')))
 
 				// Load battle unit data
 				addLazyProperty(battle, 'units', () => {

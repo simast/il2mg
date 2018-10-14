@@ -181,9 +181,9 @@ type DataBattle = {
 	locations: DataBattleLocations
 	fronts: DataBattleFronts
 	map: DataBattleMap
-	weather: any
-	airfields: any
-	roles: any
+	weather: DataBattleWeather
+	airfields: DataBattleAirfields
+	roles: DataBattleRoles
 	units: any
 }
 
@@ -220,4 +220,40 @@ type DataBattleMapSeason = {
 	forests: string
 	gui: string
 	clouds: string
+}
+
+// data/battles/{battleId}/weather file
+export type DataBattleWeather = {
+	[date: string]: DataBattleWeatherEntry | undefined
+}
+
+type DataBattleWeatherEntry = [
+	number, // Min ~ temperature at sunrise (celcius)
+	number, // Max ~ temperature 1 hour after solar noon (celcius)
+
+	// Weather state/condition:
+	// 1 - perfect, 2 - good, 3 - bad, 4 - extreme
+	// (can be an array representing a from-to interval)
+	number | [number, number]
+]
+
+// data/battles/{battleId}/airfields/index file
+export type DataBattleAirfields = {
+	[airfieldId: string]: DataBattleAirfield | undefined
+}
+
+type DataBattleAirfield = {
+	name: string
+	position: [number, number, number]
+}
+
+// data/battles/{battleId}/roles/* files
+export type DataBattleRoles = {
+	[countryId in Country]?: {
+		[roleId: string]: DataBattleRole | undefined
+	}
+}
+
+type DataBattleRole = {
+	[taskType in TaskType]?: number
 }

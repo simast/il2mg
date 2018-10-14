@@ -1,10 +1,3 @@
-# Format:
-#   Min ~ temperature at sunrise (celcius).
-#   Max ~ temperature 1 hour after solar noon (celcius).
-#   Weather state/condition:
-#     1 - perfect, 2 - good, 3 - bad, 4 - extreme
-#     (can be an array representing a from-to interval)
-
 # 1942-07
 '1942-07-17': [17, 28, [1, 2]]
 '1942-07-18': [15, 25, [2, 3]]
