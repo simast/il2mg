@@ -11,7 +11,7 @@ type MatchRange = {
 	to: Moment
 }
 
-type DateValue = string | Date
+export type DateValue = string | Date
 
 /**
  * Match a valid date range (from data files with special date from/to values).

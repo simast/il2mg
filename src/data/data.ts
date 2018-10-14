@@ -3,6 +3,9 @@ import path from 'path'
 import addLazyProperty from 'lazy-property'
 import yaml from 'js-yaml'
 
+import {getEnumValues} from '../utils'
+import {Country} from './enums'
+
 import {
 	DataItems,
 	DataItem,
@@ -12,7 +15,11 @@ import {
 	DataTime,
 	DataCallsigns,
 	DataTasks,
-	DataPlanes
+	DataPlanes,
+	DataCountries,
+	DataCountryFormations,
+	DataCountryNames,
+	DataCountryRanks
 } from './types'
 
 // Data directory index file key
@@ -41,7 +48,7 @@ class Data {
 	public readonly callsigns!: DataCallsigns
 	public readonly tasks!: DataTasks
 	public readonly planes!: DataPlanes
-	public readonly countries: any
+	public readonly countries!: DataCountries
 	public readonly battles: any
 
 	constructor() {
@@ -61,7 +68,9 @@ class Data {
 		}
 
 		// Lazy load all static data
-		addLazyProperty(this, 'items', () => this.load<DataItems>(path.join('items', DATA_INDEX_FILE)) || [])
+		addLazyProperty(this, 'items', () =>
+			this.load<DataItems>(path.join('items', DATA_INDEX_FILE)) || []
+		)
 		addLazyProperty(this, 'languages', () => this.load<DataLanguages>('languages'))
 		addLazyProperty(this, 'vehicles', () => this.load<DataVehicles>('vehicles'))
 		addLazyProperty(this, 'clouds', () => this.load<DataClouds>('clouds'))
@@ -73,20 +82,25 @@ class Data {
 		// Load countries
 		addLazyProperty(this, 'countries', () => {
 
-			const countries = this.load<any>('countries')
+			const countries = this.load<DataCountries>('countries')
 
-			for (const countryId in countries) {
+			getEnumValues(Country).forEach(countryId => {
 
 				const country = countries[countryId]
-				const countryPath = path.join('countries', countryId)
+				const countryPath = path.join('countries', String(countryId))
 
-				addLazyProperty(country, 'formations', () => (
-					this.load(path.join(countryPath, 'formations'))
-				))
+				addLazyProperty(country, 'formations', () =>
+					this.load<DataCountryFormations>(path.join(countryPath, 'formations'))
+				)
 
-				addLazyProperty(country, 'names', () => this.load(path.join(countryPath, 'names')))
-				addLazyProperty(country, 'ranks', () => this.load(path.join(countryPath, 'ranks')))
-			}
+				addLazyProperty(country, 'names', () => (
+					this.load<DataCountryNames>(path.join(countryPath, 'names')))
+				)
+
+				addLazyProperty(country, 'ranks', () => (
+					this.load<DataCountryRanks>(path.join(countryPath, 'ranks')))
+				)
+			})
 
 			return countries
 		})
@@ -117,7 +131,7 @@ class Data {
 
 					for (let unitCountryKey in unitsData) {
 
-						const countryId = parseInt(unitCountryKey, 10)
+						const countryId = parseInt(unitCountryKey, 10) as Country
 
 						// Ignore invalid country IDs
 						if (isNaN(countryId) || !this.countries[countryId]) {

@@ -6,7 +6,7 @@ export enum Coalition {
 }
 
 // Countries
-export const enum Country {
+export enum Country {
 	SovietUnion = 101,
 	Germany = 201,
 	Romania = 202
@@ -130,4 +130,14 @@ export const enum PlaneSize {
 	Medium = 'medium',
 	Large = 'large',
 	Huge = 'huge'
+}
+
+// Rank types
+export const enum RankType {
+	Pilot = 'pilot',
+	Leader = 'leader',
+	Liaison = 'liaison',
+	Commander = 'commander',
+	AntiAir = 'aa',
+	Brass = 'brass'
 }

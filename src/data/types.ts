@@ -1,4 +1,5 @@
 import {
+	Coalition,
 	Country,
 	VehicleType,
 	TimePeriod,
@@ -6,8 +7,11 @@ import {
 	TaskType,
 	AltitudeLevel,
 	PlaneType,
-	PlaneSize
+	PlaneSize,
+	RankType
 } from './enums'
+
+import {DateValue} from './utils'
 
 // data/items/item files
 export type DataItem = {
@@ -101,10 +105,63 @@ type DataPlane = {
 	speed?: number // Cruising speed at 0°C temperature and ~1.5 km altitude
 	range?: number // Max range at cruising speed (km)
 	skins?: {
-		[countryId in Country]: {
+		[countryId in Country]?: {
 			// NOTE: Array contains weighted chances for each season (spring, summer,
 			// autumn and winter). Negative values indicate player skin selection.
-			[skinId: string]: [number, number, number, number]
+			[skinId: string]: [number, number, number, number] | undefined
 		}
+	}
+}
+
+// data/countries/index file
+export type DataCountries = {
+	[countryId in Country]: DataCountry
+}
+
+type DataCountry = {
+	name: string
+	demonym: string
+	coalition: Coalition
+	alias?: Country
+	color: [number, number, number]
+	formations: DataCountryFormations
+	names: DataCountryNames
+	ranks: DataCountryRanks
+}
+
+// data/countries/{countryId}/formations file
+export type DataCountryFormations = {
+	[formationId: string]: DataCountryFormation | undefined
+}
+
+type DataCountryFormation = {
+	name?: string
+	parent?: string
+	hidden?: boolean
+	from?: DateValue
+	to?: DateValue
+	elements?: number[] | string[]
+}
+
+// data/countries/{countryId}/names file
+export type DataCountryNames = {
+	[namePart: string]: DataCountryNameSubPart[] | undefined
+}
+
+type DataCountryNameSubPart = {
+	[weight: number]: string[] | undefined
+	total: number
+}
+
+// data/countries/{countryId}/ranks file
+export type DataCountryRanks = {
+	[rankId: number]: DataCountryRank | undefined
+}
+
+type DataCountryRank = {
+	name: string
+	abbr?: string
+	type?: {
+		[rankType in RankType]?: number
 	}
 }
