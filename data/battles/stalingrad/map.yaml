@@ -1,9 +1,9 @@
-width: 358400 # In meters
+width: 358400
 height: 230400
-level: 74 # Average ground altitude above sea level
-latitude: 48.566 # Latitude for the map center midpoint
-longitude: 43.452 # Longitude for the map center midpoint
-utcOffset: 4 # UTC+4 (used for sun time computations)
+level: 74
+latitude: 48.566
+longitude: 43.452
+utcOffset: 4 # UTC+4
 
 season:
   # Summer

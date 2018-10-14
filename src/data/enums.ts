@@ -141,3 +141,13 @@ export const enum RankType {
 	AntiAir = 'aa',
 	Brass = 'brass'
 }
+
+// Map season types
+// NOTE: Order is important (used when defining plane skins for each season)!
+export enum MapSeason {
+	Spring = 'spring',
+	Summer = 'summer',
+	Autumn = 'autumn',
+	Winter = 'winter',
+	Desert = 'desert'
+}

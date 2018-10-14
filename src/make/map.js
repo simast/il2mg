@@ -1,16 +1,6 @@
 import sylvester from 'sylvester'
 import * as MCU_Icon from '../item/MCU_Icon'
 
-// Map season types
-// NOTE: Order is important (used when defining plane skins for each season)!
-export const MapSeason = Object.freeze({
-	Spring: 'spring',
-	Summer: 'summer',
-	Autumn: 'autumn',
-	Winter: 'winter',
-	Desert: 'desert'
-})
-
 // Map colors as RGB array values
 export const MapColor = Object.freeze({
 	Attack: [156, 156, 156],

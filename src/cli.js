@@ -5,11 +5,11 @@ import moment from 'moment'
 import params from 'commander'
 
 import log from './log'
+import {getEnumValues, enumContainsValue} from './utils'
 import Mission from './mission'
 import {WeatherState} from './make/weather'
-import {MapSeason} from './make/map'
 import {FlightState} from './make/flight'
-import data, {Coalition} from './data'
+import data, {Coalition, MapSeason} from './data'
 
 import {
 	APPLICATION_NAME,
@@ -118,16 +118,16 @@ params.option(
 		desc += EOL + '\tDate can also be specified using special season values:' + EOL
 		desc += EOL + '\t'
 
-		Object.keys(MapSeason)
+		getEnumValues(MapSeason)
 			// A special desert "season" is only used for desert plane skins
-			.filter(type => MapSeason[type] !== MapSeason.Desert)
-			.forEach((type, index, seasons) => {
+			.filter(season => season !== MapSeason.Desert)
+			.forEach((season, index, seasons) => {
 
 				if (index === seasons.length - 1) {
 					desc += ' or '
 				}
 
-				desc += '"' + MapSeason[type] + '"'
+				desc += '"' + season + '"'
 
 				if (index < seasons.length - 2) {
 					desc += ', '
@@ -407,13 +407,8 @@ export default argv => {
 					// Validate date as a special season value
 					let isDateSeason = false
 
-					for (const type in MapSeason) {
-
-						if (params.date === MapSeason[type] && MapSeason[type] !== MapSeason.Desert) {
-
-							isDateSeason = true
-							break
-						}
+					if (enumContainsValue(MapSeason, params.date) && params.date !== MapSeason.Desert) {
+						isDateSeason = true
 					}
 
 					if (!isDateSeason) {

@@ -1,5 +1,5 @@
-import data from '../data'
-import {MapSeason} from './map'
+import data, {MapSeason} from '../data'
+import {getEnumValues} from '../utils'
 
 // Plane size types
 export const PlaneSize = Object.freeze({
@@ -23,10 +23,7 @@ export default function makePlanes() {
 	const battle = this.battle
 
 	// Skin data array index to use when building valid/weighted plane skin list
-	const skinDataIndex = Object
-		.keys(MapSeason)
-		.map(season => MapSeason[season])
-		.indexOf(this.season)
+	const skinDataIndex = getEnumValues(MapSeason).indexOf(this.season)
 
 	// Plane index tables
 	const planes = Object.create(null)

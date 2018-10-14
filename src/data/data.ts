@@ -19,7 +19,12 @@ import {
 	DataCountries,
 	DataCountryFormations,
 	DataCountryNames,
-	DataCountryRanks
+	DataCountryRanks,
+	DataBattles,
+	DataBattleBlocks,
+	DataBattleLocations,
+	DataBattleFronts,
+	DataBattleMap
 } from './types'
 
 // Data directory index file key
@@ -49,7 +54,7 @@ class Data {
 	public readonly tasks!: Immutable<DataTasks>
 	public readonly planes!: Immutable<DataPlanes>
 	public readonly countries!: Immutable<DataCountries>
-	public readonly battles: unknown
+	public readonly battles!: Immutable<DataBattles>
 
 	constructor() {
 
@@ -68,9 +73,6 @@ class Data {
 		}
 
 		// Lazy load all static data
-		addLazyProperty(this, 'items', () =>
-			this.load<DataItems>(path.join('items', DATA_INDEX_FILE)) || []
-		)
 		addLazyProperty(this, 'languages', () => this.load<DataLanguages>('languages'))
 		addLazyProperty(this, 'vehicles', () => this.load<DataVehicles>('vehicles'))
 		addLazyProperty(this, 'clouds', () => this.load<DataClouds>('clouds'))
@@ -78,6 +80,9 @@ class Data {
 		addLazyProperty(this, 'callsigns', () => this.load<DataCallsigns>('callsigns'))
 		addLazyProperty(this, 'tasks', () => this.load<DataTasks>('tasks'))
 		addLazyProperty(this, 'planes', () => this.load<DataPlanes>('planes'))
+
+		addLazyProperty(this, 'items', () =>
+			this.load<DataItems>(path.join('items', DATA_INDEX_FILE)) || [])
 
 		// Load countries
 		addLazyProperty(this, 'countries', () => {
@@ -90,16 +95,13 @@ class Data {
 				const countryPath = path.join('countries', String(countryId))
 
 				addLazyProperty(country, 'formations', () =>
-					this.load<DataCountryFormations>(path.join(countryPath, 'formations'))
-				)
+					this.load<DataCountryFormations>(path.join(countryPath, 'formations')))
 
-				addLazyProperty(country, 'names', () => (
+				addLazyProperty(country, 'names', () =>
 					this.load<DataCountryNames>(path.join(countryPath, 'names')))
-				)
 
-				addLazyProperty(country, 'ranks', () => (
+				addLazyProperty(country, 'ranks', () =>
 					this.load<DataCountryRanks>(path.join(countryPath, 'ranks')))
-				)
 			})
 
 			return countries
@@ -108,17 +110,25 @@ class Data {
 		// Load battles
 		addLazyProperty(this, 'battles', () => {
 
-			const battles = this.load<any>('battles')
+			const battles = this.load<DataBattles>('battles')
 
 			for (const battleId in battles) {
 
-				const battle = battles[battleId]
+				const battle = battles[battleId]!
 				const battlePath = path.join('battles', battleId)
 
-				addLazyProperty(battle, 'blocks', () => this.load(path.join(battlePath, 'blocks')))
-				addLazyProperty(battle, 'locations', () => this.load(path.join(battlePath, 'locations')))
-				addLazyProperty(battle, 'fronts', () => this.load(path.join(battlePath, 'fronts')))
-				addLazyProperty(battle, 'map', () => this.load(path.join(battlePath, 'map')))
+				addLazyProperty(battle, 'blocks', () =>
+					this.load<DataBattleBlocks>(path.join(battlePath, 'blocks')))
+
+				addLazyProperty(battle, 'locations', () =>
+					this.load<DataBattleLocations>(path.join(battlePath, 'locations')))
+
+				addLazyProperty(battle, 'fronts', () =>
+					this.load<DataBattleFronts>(path.join(battlePath, 'fronts')))
+
+				addLazyProperty(battle, 'map', () =>
+					this.load<DataBattleMap>(path.join(battlePath, 'map')))
+
 				addLazyProperty(battle, 'weather', () => this.load(path.join(battlePath, 'weather')))
 				addLazyProperty(battle, 'airfields', () => this.load(path.join(battlePath, 'airfields')))
 				addLazyProperty(battle, 'roles', () => this.load(path.join(battlePath, 'roles')))
@@ -150,7 +160,7 @@ class Data {
 						}
 					}
 
-					return Object.freeze(units)
+					return units
 				})
 			}
 

@@ -8,7 +8,8 @@ import {
 	AltitudeLevel,
 	PlaneType,
 	PlaneSize,
-	RankType
+	RankType,
+	MapSeason
 } from './enums'
 
 import {DateValue} from './utils'
@@ -164,4 +165,59 @@ type DataCountryRank = {
 	type?: {
 		[rankType in RankType]?: number
 	}
+}
+
+// data/battles/index file
+export type DataBattles = {
+	[battleId: string]: DataBattle | undefined
+}
+
+type DataBattle = {
+	name: string
+	from: DateValue
+	to: DateValue
+	countries: Country[]
+	blocks: DataBattleBlocks
+	locations: DataBattleLocations
+	fronts: DataBattleFronts
+	map: DataBattleMap
+	weather: any
+	airfields: any
+	roles: any
+	units: any
+}
+
+// data/battles/{battleId}/blocks/index file
+export type DataBattleBlocks = string[]
+
+// data/battles/{battleId}/locations/index file
+export type DataBattleLocations = string[]
+
+// data/battles/{battleId}/fronts/index file
+export type DataBattleFronts = {
+	[date: string]: string | undefined // mission date => front file name
+}
+
+// data/battles/{battleId}/map file
+export type DataBattleMap = {
+	width: number // In meters
+	height: number // In meters
+	level: number // Average ground altitude above sea level
+	latitude: number // Latitude for the map center midpoint
+	longitude: number // Longitude for the map center midpoint
+	utcOffset: 4 // Used for sun time computations
+	season: {
+		[season in MapSeason]?: DataBattleMapSeason
+	}
+}
+
+type DataBattleMapSeason = {
+	from: DateValue
+	to: DateValue
+	prefix: string
+	heightmap: string
+	textures: string
+	forests: string
+	gui: string
+	clouds: string
 }
