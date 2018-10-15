@@ -27,7 +27,9 @@ import {
 	DataBattleMap,
 	DataBattleWeather,
 	DataBattleAirfields,
-	DataBattleRoles
+	DataBattleRoles,
+	DataBattleUnits,
+	DataBattleUnitsTransformed
 } from './types'
 
 // Data directory index file key
@@ -142,31 +144,36 @@ class Data {
 					this.load<DataBattleRoles>(path.join(battlePath, 'roles')))
 
 				// Load battle unit data
+				// FIXME: Here we should just load units as is and any transformations necessary
+				// should be done in make/units.
 				addLazyProperty(battle, 'units', () => {
 
-					const units = Object.create(null)
-					const unitsData = this.load<any>(path.join(battlePath, 'units'))
+					const units: DataBattleUnitsTransformed = Object.create(null)
+					const unitsData = this.load<DataBattleUnits>(path.join(battlePath, 'units'))
 
-					for (let unitCountryKey in unitsData) {
-
-						const countryId = parseInt(unitCountryKey, 10) as Country
-
-						// Ignore invalid country IDs
-						if (isNaN(countryId) || !this.countries[countryId]) {
-							continue
-						}
+					getEnumValues(Country).forEach(countryId => {
 
 						const unitsDataCountry = unitsData[countryId]
 
-						// Build units list
-						for (const unitGroup in unitsDataCountry) {
-							for (const unitId in unitsDataCountry[unitGroup]) {
+						// Skip countries not active in battle
+						if (!unitsDataCountry) {
+							return
+						}
 
-								units[unitId] = unitsDataCountry[unitGroup][unitId]
-								units[unitId].country = countryId
+						// Build units list
+						for (const unitGroupId in unitsDataCountry) {
+
+							const unitsDataGroup = unitsDataCountry[unitGroupId]!
+
+							for (const unitId in unitsDataGroup) {
+
+								units[unitId] = {
+									...unitsDataGroup[unitId],
+									country: countryId
+								}
 							}
 						}
-					}
+					})
 
 					return units
 				})

@@ -184,7 +184,7 @@ type DataBattle = {
 	weather: DataBattleWeather
 	airfields: DataBattleAirfields
 	roles: DataBattleRoles
-	units: any
+	units: DataBattleUnitsTransformed
 }
 
 // data/battles/{battleId}/blocks/index file
@@ -256,4 +256,42 @@ export type DataBattleRoles = {
 
 type DataBattleRole = {
 	[taskType in TaskType]?: number
+}
+
+// data/battles/{battleId}/units/* files
+export type DataBattleUnits = {
+	[countryId in Country]?: {
+		[unitGroupId: string]: {
+			[unitId: string]: DataBattleUnit | undefined
+		} | undefined
+	}
+}
+
+type DataBattleUnit = {
+	name?: string
+	suffix?: string
+	alias?: string
+	parent?: string
+	role?: string
+	planesMin?: number
+	planesMax?: number
+	to?: DateValue
+	from?: DateValue
+	airfields?: [
+		[string, DateValue?, DateValue?, number?]
+	]
+	planes?: [
+		[string, number | [number, number], DateValue?, DateValue?]
+	]
+	pilots?: [
+		[string, number, DateValue?, DateValue?]
+	]
+}
+
+export type DataBattleUnitsTransformed = {
+	[unitId: string]: DataBattleUnitTransformed | undefined
+}
+
+type DataBattleUnitTransformed = DataBattleUnit & {
+	country: Country
 }
