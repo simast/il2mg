@@ -21,13 +21,6 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 
-		// ESLint JavaScript linter
-		eslint: {
-			all: {
-				src: javaScriptFiles
-			}
-		},
-
 		// Source code report task
 		sloc: sourceFiles,
 
@@ -50,7 +43,6 @@ module.exports = function(grunt) {
 	})
 
 	// Load all required NPM Grunt tasks
-	grunt.loadNpmTasks('grunt-eslint')
 	grunt.loadNpmTasks('grunt-contrib-clean')
 
 	// Load custom build Grunt tasks
@@ -59,7 +51,6 @@ module.exports = function(grunt) {
 	// Default task used for building the project
 	grunt.registerTask('default', [
 		'clean:data',
-		'eslint',
 		'build:sloc',
 		'build:blocks',
 		'build:locations',
