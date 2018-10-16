@@ -1,23 +1,27 @@
 import winston from 'winston'
 
 // Colors used for each log level
-const logColors = {
+const colors = {
 	D: 'green', // Done
 	E: 'red', // Error
 	W: 'yellow', // Warning
 	I: 'gray' // Info
 }
 
+type Log = winston.LoggerInstance & {
+	[level in keyof typeof colors]: winston.LeveledLogMethod
+}
+
 // Set active log levels
-const logLevels = {}
-Object.keys(logColors).forEach((value, index) => {
-	logLevels[value] = index
-})
+const levels = Object.keys(colors).reduce((result, level, index) => ({
+	...result,
+	[level]: index
+}), {})
 
 // Setup winston logger
 const log = new (winston.Logger)({
-	levels: logLevels,
-	colors: logColors,
+	levels,
+	colors,
 	transports: [
 		new winston.transports.Console({
 			level: 'E', // Default log reporting level (Error + Done)
@@ -25,7 +29,7 @@ const log = new (winston.Logger)({
 			colorize: true
 		})
 	]
-})
+}) as Log
 
 // HACK: Workaround for log.profile() using hardcoded "info" level
 log.info = log.I
