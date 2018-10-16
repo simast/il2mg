@@ -3,7 +3,8 @@ import path from 'path'
 import addLazyProperty from 'lazy-property'
 import yaml from 'js-yaml'
 
-import {getEnumValues, Immutable, Mutable} from '../utils'
+import {getEnumValues} from '../utils'
+import {Immutable, Mutable} from '../types'
 import {Country} from './enums'
 
 import {
@@ -189,19 +190,16 @@ class Data {
 	 * @param itemPath Data file path (relative to data directory).
 	 * @returns Loaded data.
 	 */
-	load<T>(itemPath: string): Immutable<T> {
+	public load<T>(itemPath: string): Immutable<T> {
 
-		if (!itemPath.length) {
-			throw new TypeError('Invalid data file path.')
-		}
-
-		const {dataPath, dataCache, dataFormats} = this
+		const {dataCache} = this
 
 		// Use cached data
 		if (itemPath in dataCache) {
 			return dataCache[itemPath]
 		}
 
+		const {dataPath, dataFormats} = this
 		const dataItemPath = path.join(dataPath, itemPath)
 		let result: any
 
@@ -212,55 +210,43 @@ class Data {
 
 			if (fs.existsSync(filePath)) {
 
-				result = Object.freeze(
-					dataFormats[extension]!(fs.readFileSync(filePath, 'utf-8'))
-				)
-
+				result = dataFormats[extension]!(fs.readFileSync(filePath, 'utf-8'))
 				break
 			}
 		}
 
 		// Check for data directory
-		if (result === undefined) {
+		if (result === undefined && fs.existsSync(dataItemPath)
+			&& fs.lstatSync(dataItemPath).isDirectory()) {
 
-			let isDirectory = false
+			// Try loading directory index data file
+			result = this.load(path.join(itemPath, DATA_INDEX_FILE))
 
-			if (fs.existsSync(dataItemPath)) {
-				isDirectory = fs.lstatSync(dataItemPath).isDirectory()
-			}
+			if (result === undefined) {
 
-			if (isDirectory) {
+				// Read all data files in a directory
+				const directoryDataFiles = fs
+					.readdirSync(dataItemPath)
+					.filter(fileName => {
 
-				// Try loading directory index data file
-				result = this.load(path.join(itemPath, DATA_INDEX_FILE))
+						const isDirectory = fs.lstatSync(path.join(dataItemPath, fileName)).isDirectory()
 
-				if (result === undefined) {
+						// Always recurse into child directories when index data file is missing
+						if (isDirectory) {
+							return true
+						}
 
-					// Read all data files in a directory
-					const directoryData = fs
-						.readdirSync(dataItemPath)
-						.filter(fileName => {
+						return path.extname(fileName) in dataFormats
+					})
+					.map(fileName => path.basename(fileName, path.extname(fileName)))
+					.filter((fileKey, index, array) => array.indexOf(fileKey) === index)
 
-							const isDirectory = fs.lstatSync(path.join(dataItemPath, fileName)).isDirectory()
+				if (directoryDataFiles.length) {
 
-							// Always recurse into child directories when index data file is missing
-							if (isDirectory) {
-								return true
-							}
-
-							return path.extname(fileName) in dataFormats
-						})
-						.map(fileName => path.basename(fileName, path.extname(fileName)))
-						.filter((fileKey, index, array) => array.indexOf(fileKey) === index)
-						.reduce((result, fileKey) => (
-							Object.assign(result, {
-								[fileKey]: this.load(path.join(itemPath, fileKey))
-							})
-						), Object.create(null))
-
-					if (Object.keys(directoryData).length) {
-						result = Object.freeze(directoryData)
-					}
+					result = directoryDataFiles.reduce((result, fileKey) => ({
+						...result,
+						[fileKey]: this.load(path.join(itemPath, fileKey))
+					}), {})
 				}
 			}
 		}
@@ -274,23 +260,19 @@ class Data {
 	/**
 	 * Register a new item (world object) type.
 	 *
-	 * @param item Item data.
+	 * @param itemData Item data.
 	 * @returns Item type ID.
 	 */
-	registerItemType(item: DataItem): number {
-
-		if (typeof item !== 'object' || !item.type || !item.script || !item.model) {
-			throw new TypeError('Invalid item data.')
-		}
+	public registerItemType(itemData: Immutable<DataItem>): number {
 
 		const {items, dataPath, dataFormats} = this
 
 		// Lowercase and trim script/model paths
-		item.script = item.script.trim().toLowerCase()
-		item.model = item.model.trim().toLowerCase()
+		const script = itemData.script.trim().toLowerCase()
+		const model = itemData.model.trim().toLowerCase()
 
 		// Item type ID as a string (lowercase file name without extension)
-		const stringTypeId = path.win32.basename(item.script, '.txt')
+		const stringTypeId = path.win32.basename(script, '.txt')
 
 		// Try to find existing item type ID by script index
 		let numberTypeId = items.indexOf(stringTypeId)
@@ -301,16 +283,16 @@ class Data {
 			numberTypeId = (items as Mutable<typeof items>).push(stringTypeId) - 1
 
 			const itemFile = path.join(dataPath, 'items', stringTypeId)
-			const itemFileExists = Boolean(Object.keys(dataFormats).find(extension => (
+			const itemFileExists = Object.keys(dataFormats).some(extension => (
 				fs.existsSync(itemFile + extension)
-			)))
+			))
 
 			// Write item JSON file
 			if (!itemFileExists) {
 
 				fs.writeFileSync(
 					itemFile + '.json',
-					JSON.stringify(item, null, '\t')
+					JSON.stringify({...itemData, script, model}, null, '\t')
 				)
 			}
 		}
@@ -324,7 +306,7 @@ class Data {
 	 * @param itemTypeId Item type ID as numeric or string value.
 	 * @returns Item type data.
 	 */
-	getItemType(itemTypeId: number | string): Immutable<DataItem> {
+	public getItemType(itemTypeId: number | string): Immutable<DataItem> {
 
 		// Look up string item type ID
 		if (typeof itemTypeId === 'number') {
