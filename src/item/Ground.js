@@ -1,4 +1,5 @@
-import Item, {DEFAULT_DAMAGE_REPORT} from '../item'
+import {Item} from './item'
+import {DEFAULT_DAMAGE_REPORT} from './constants'
 
 // Ground item
 export default class Ground extends Item {

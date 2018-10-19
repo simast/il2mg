@@ -1,32 +1,57 @@
-import fs from 'fs'
 import os from 'os'
-import getSlug from 'speakingurl'
-import Lexer from 'lex'
-import data, {Coalition} from './data'
 
-// Default item data values
-export const DEFAULT_COALITION = Coalition.Neutral
-export const DEFAULT_COUNTRY = 0 // Neutral country ID
-export const DEFAULT_DAMAGE_REPORT = 50 // 50% of damage
-export const DEFAULT_DURABILITY = 25000
+import {Immutable} from '../types'
+import data from '../data'
+import {Country} from '../data/enums'
+import {PRECISION_ORIENTATION, PRECISION_POSITION} from './constants'
+import {convertUnicodeToASCII} from './utils'
 
-// Precision of position and orientation values (decimal places)
-export const PRECISION_POSITION = 2
-export const PRECISION_ORIENTATION = 2
+declare global {
+	interface Buffer {
+		_offset: number
+	}
+}
 
 // FIXME: Used to automatically track buffer write cursor
 Buffer.prototype._offset = 0
 
-// Base (and generic) mission item
-export default class Item {
+// Base mission item
+export class Item {
+
+	// Protected non-enumerable item properties
+	protected mission?: any
+	protected items?: Item[]
+	protected parent?: Item
+	protected type?: string
+	protected entity?: any // FIXME: Use MCU_TR_Entity
+
+	// Common enumerable item properties
+	protected Model?: string
+	protected Script?: string
+	protected Skin?: string
+	protected Durability?: number
+	protected LCName?: number
+	protected LCDesc?: number
+	protected Name?: string
+	protected Desc?: string
+	protected XPos?: number
+	protected YPos?: number
+	protected ZPos?: number
+	protected XOri?: number
+	protected YOri?: number
+	protected ZOri?: number
+	protected Country?: Country
+	protected Targets?: number[]
+	protected Objects?: number[]
+	protected Index?: number
+	protected LinkTrId?: number
 
 	/**
 	 * Create a new mission item.
 	 *
-	 * @param {string} type Item type name.
-	 * @constructor
+	 * @param type Item type name.
 	 */
-	constructor(type) {
+	constructor(type?: string) {
 
 		// The explicit type value is only required for generic items
 		if (Object.getPrototypeOf(this) !== Item.prototype) {
@@ -46,35 +71,36 @@ export default class Item {
 	/**
 	 * Create a new child item (linked to current item mission).
 	 *
-	 * @param {string} itemType Item type name.
+	 * @param type Item type name.
+	 * @returns New item.
 	 */
-	createItem(itemType) {
+	public createItem(type: string) {
 
 		if (!this.mission) {
 			throw new TypeError('Item is not part of a mission.')
 		}
 
-		return this.mission.createItem(itemType, this)
+		return this.mission.createItem(type, this)
 	}
 
 	/**
 	 * Add a new child item.
 	 *
-	 * @param {Item} item Child item object.
+	 * @param item Child item object.
 	 */
-	addItem(item) {
+	public addItem(item: Item) {
 
-		if (!(item instanceof Item)) {
-			throw new TypeError('Invalid child item value.')
-		}
+		let {items} = this
 
 		// Initialize child items list
-		if (!this.items) {
-			Object.defineProperty(this, 'items', {value: []})
+		if (!items) {
+
+			items = []
+			Object.defineProperty(this, 'items', {value: items})
 		}
 
 		// Add child item
-		this.items.push(item)
+		items.push(item)
 
 		// Set child item parent reference
 		Object.defineProperty(item, 'parent', {
@@ -86,35 +112,37 @@ export default class Item {
 	/**
 	 * Remove/detach item from parent item hierarchy.
 	 */
-	remove() {
+	public remove(): void {
 
-		if (!this.parent) {
+		const {parent} = this
+
+		if (!parent) {
 			throw new Error('Item has no parent.')
 		}
 
-		const parent = this.parent
+		const {items} = parent
 
-		if (!parent.items || !parent.items.length) {
+		if (!items || !items.length) {
 			throw new Error('Parent item has no children.')
 		}
 
-		const itemIndex = parent.items.indexOf(this)
+		const itemIndex = items.indexOf(this)
 
 		if (itemIndex < 0) {
 			throw new Error('Item is not part of a parent.')
 		}
 
 		// Remove item from parent item hierarchy
-		parent.items.splice(itemIndex, 1)
+		items.splice(itemIndex, 1)
 		delete this.parent
 	}
 
 	/**
 	 * Set item name.
 	 *
-	 * @param {mixed} name Localized (number) or non-localized (string) name.
+	 * @param name Localized (number) or non-localized (string) name.
 	 */
-	setName(name) {
+	public setName(name: string | number): void {
 
 		if (typeof name === 'number') {
 			this.LCName = name
@@ -130,9 +158,9 @@ export default class Item {
 	/**
 	 * Set item description.
 	 *
-	 * @param {mixed} desc Localized (number) or non-localized (string) description.
+	 * @param desc Localized (number) or non-localized (string) description.
 	 */
-	setDescription(desc) {
+	public setDescription(desc: string | number): void {
 
 		if (typeof desc === 'number') {
 			this.LCDesc = desc
@@ -148,26 +176,45 @@ export default class Item {
 	/**
 	 * Set item position.
 	 *
-	 * @param {number|array} [...] Position X/Y/Z coordinates.
+	 * @param position Position coordinates as an [X, Y, Z] array.
 	 */
-	setPosition() {
+	public setPosition(position: Immutable<[number, number, number]>): void
 
-		// TODO: Validate item position in context of mission map size
-		// TODO: Build a items index (to quickly lookup items based on position)
+	/**
+	 * Set item position.
+	 *
+	 * @param x Position X coordinate.
+	 * @param y Position Y coordinate.
+	 * @param z Position Z coordinate.
+	 */
+	public setPosition(x: number, y: number, z: number): void
 
-		// Array position version: setPosition([X, Y, Z])
-		let position = arguments[0]
+	/**
+	 * Set item position.
+	 *
+	 * @param x Position X coordinate.
+	 * @param z Position Z coordinate.
+	 */
+	public setPosition(x: number, z: number): void
 
-		if (!Array.isArray(position)) {
+	public setPosition(...args: [number | [number, number, number], number?, number?]): void {
+
+		let position: [number, number, number]
+
+		if (!Array.isArray(args[0])) {
 
 			// Short X/Z position version: setPosition(X, Z)
-			if (arguments.length === 2) {
-				position = [arguments[0], 0, arguments[1]]
+			if (args.length === 2) {
+				position = [args[0], 0, args[1]!]
 			}
-			// Argument position version: setPosition(X, Y, Z)
+			// Full X/Y/Z position version: setPosition(X, Y, Z)
 			else {
-				position = [arguments[0], arguments[1], arguments[2]]
+				position = [args[0], args[1]!, args[2]!]
 			}
+		}
+		// Array position version: setPosition([X, Y, Z])
+		else {
+			position = args[0]
 		}
 
 		if (position[0] || this.XPos) {
@@ -186,49 +233,66 @@ export default class Item {
 	/**
 	 * Set item position close to another nearby item.
 	 *
-	 * @param {Item} item Nearby item object.
+	 * @param item Nearby item object.
 	 */
-	setPositionNear(targetItem) {
-
-		if (!(targetItem instanceof Item)) {
-			throw new TypeError('Invalid nearby item value.')
-		}
+	public setPositionNear(item: Item): void {
 
 		// TODO: Improve nearby item positioning algorithm
 
-		const rand = targetItem.mission.rand
+		const {rand} = item.mission
 		const orientation = rand.real(0, 360) * (Math.PI / 180)
 		const magnitude = rand.integer(30, 60)
-		const itemPosX = targetItem.XPos || 0
-		const itemPosZ = targetItem.ZPos || 0
+		const itemPosX = item.XPos || 0
+		const itemPosZ = item.ZPos || 0
 
 		const posX = itemPosX + (magnitude * Math.cos(orientation))
 		const posZ = itemPosZ + (magnitude * Math.sin(orientation))
 
 		// Set nearby position
-		this.setPosition(posX, targetItem.YPos, posZ)
+		this.setPosition(posX, item.YPos || 0, posZ)
 	}
 
 	/**
 	 * Set item orientation.
 	 *
-	 * @param {number|array} [...] Orientation X/Y/Z coordinates.
+	 * @param orientation Orientation coordinates as an [X, Y, Z] array.
 	 */
-	setOrientation() {
+	public setOrientation(orientation: Immutable<[number, number, number]>): void
 
-		// Array orientation version: setOrientation([X, Y, Z])
-		let orientation = arguments[0]
+	/**
+	 * Set item orientation.
+	 *
+	 * @param x Orientation X coordinate.
+	 * @param y Orientation Y coordinate.
+	 * @param z Orientation Z coordinate.
+	 */
+	public setOrientation(x: number, y: number, z: number): void
 
-		if (!Array.isArray(orientation)) {
+	/**
+	 * Set item orientation.
+	 *
+	 * @param y Orientation Y coordinate.
+	 */
+	public setOrientation(y: number): void
+
+	public setOrientation(...args: [number | [number, number, number], number?, number?]): void {
+
+		let orientation: [number, number, number]
+
+		if (!Array.isArray(args[0])) {
 
 			// Short Y orientation version: setOrientation(Y)
-			if (arguments.length === 1) {
-				orientation = [0, arguments[0], 0]
+			if (args.length === 1) {
+				orientation = [0, args[0], 0]
 			}
-			// Argument orientation version: setOrientation(X, Y, Z)
+			// Full X/Y/Z position version: setOrientation(X, Y, Z)
 			else {
-				orientation = [arguments[0], arguments[1], arguments[2]]
+				orientation = [args[0], args[1]!, args[2]!]
 			}
+		}
+		// Array orientation version: setOrientation([X, Y, Z])
+		else {
+			orientation = args[0]
 		}
 
 		if (orientation[0] || this.XOri) {
@@ -245,39 +309,64 @@ export default class Item {
 	}
 
 	/**
-	 * Set item orientation to another target item object or position.
+	 * Set item orientation to another target item.
 	 *
-	 * @param {number|array|object} [...] Target coordinates or target item object.
+	 * @param item Target item object.
 	 */
-	setOrientationTo() {
+	public setOrientationTo(item: Item): void
 
-		let targetX
-		let targetY // eslint-disable-line no-unused-vars
-		let targetZ
+	/**
+	 * Set item orientation to position.
+	 *
+	 * @param position Position coordinates as [X, Z] array.
+	 */
+	public setOrientationTo(position: Immutable<[number, number]>): void
+
+	/**
+	 * Set item orientation to position.
+	 *
+	 * @param position Position coordinates as [X, Y, Z] array.
+	 */
+	public setOrientationTo(position: Immutable<[number, number, number]>): void
+
+	/**
+	 * Set item orientation to position.
+	 *
+	 * @param x Position X coordinate.
+	 * @param z Position Z coordinate.
+	 */
+	public setOrientationTo(x: number, z: number): void
+
+	/**
+	 * Set item orientation to position.
+	 *
+	 * @param x Position X coordinate.
+	 * @param y Position Y coordinate.
+	 * @param z Position Z coordinate.
+	 */
+	public setOrientationTo(x: number, y: number, z: number): void
+
+	public setOrientationTo(...args: [Item | number | [number, number, number?], number?, number?]): void {
+
+		let targetX: number | undefined
+		let targetZ: number | undefined
 
 		// Arguments as another target item object: setOrientationTo(item)
-		if (arguments[0] instanceof Item) {
+		if (args[0] instanceof Item) {
 
-			const targetItem = arguments[0]
+			const targetItem = args[0]
 
 			targetX = targetItem.XPos || 0
-
-			if (targetItem.YPos) {
-				targetY = targetItem.YPos
-			}
-
 			targetZ = targetItem.ZPos || 0
 		}
-		// Arguments as array of target position components: setOrientationTo([X, Y, Z])
-		else if (Array.isArray(arguments[0])) {
+		// Arguments as array of target position components: setOrientationTo([X, Y, Z] or [X, Z])
+		else if (Array.isArray(args[0])) {
 
-			const targetPosition = arguments[0]
+			const targetPosition = args[0]
 
 			targetX = targetPosition[0]
 
 			if (targetPosition.length > 2) {
-
-				targetY = targetPosition[1]
 				targetZ = targetPosition[2]
 			}
 			else {
@@ -287,15 +376,13 @@ export default class Item {
 		// Arguments as separate target position components: setOrientationTo(X, Y, Z)
 		else {
 
-			targetX = arguments[0]
+			targetX = args[0]
 
-			if (arguments.length > 2) {
-
-				targetY = arguments[1]
-				targetZ = arguments[2]
+			if (args.length > 2) {
+				targetZ = args[2]
 			}
 			else {
-				targetZ = arguments[1]
+				targetZ = args[1]
 			}
 		}
 
@@ -323,116 +410,110 @@ export default class Item {
 	/**
 	 * Set item country.
 	 *
-	 * @param {number} countryID Country ID value.
+	 * @param countryId Country ID value.
 	 */
-	setCountry(countryID) {
-
-		if (typeof countryID !== 'number') {
-			throw new TypeError('Invalid item country value.')
-		}
+	public setCountry(countryId: Country): void {
 
 		// Support for "alias" (hidden) countries
-		countryID = data.countries[countryID].alias || countryID
-
-		this.Country = countryID
+		this.Country = data.countries[countryId].alias || countryId
 	}
 
 	/**
 	 * Add a new item target link.
 	 *
-	 * @param {Item} item Target item object to link.
+	 * @param item Target item object to link.
 	 */
-	addTarget(item) {
+	public addTarget(item: Item): void {
 
-		if (!(item instanceof Item)) {
-			throw new TypeError('Invalid target item value.')
+		if (typeof item.Index !== 'number') {
+			throw new TypeError('Invalid target item index value.')
 		}
 
-		this.Targets = this.Targets || []
+		let targets = this.Targets
+
+		if (!targets) {
+			targets = this.Targets = []
+		}
 
 		// Add a new item target link
-		if (this.Targets.indexOf(item.Index) === -1) {
-			this.Targets.push(item.Index)
+		if (!targets.includes(item.Index)) {
+			targets.push(item.Index)
 		}
 	}
 
 	/**
 	 * Remove existing item target link.
 	 *
-	 * @param {Item} item Target item to remove as a link.
+	 * @param item Target item to remove as a link.
 	 */
-	removeTarget(item) {
+	public removeTarget(item: Item): void {
 
-		if (!(item instanceof Item)) {
-			throw new TypeError('Invalid target item value.')
-		}
+		const targets = this.Targets
 
-		if (!this.Targets || !this.Targets.length) {
+		if (!targets || !targets.length || typeof item.Index !== 'number') {
 			return
 		}
 
-		const itemPos = this.Targets.indexOf(item.Index)
+		const itemTargetsIndex = targets.indexOf(item.Index)
 
 		// Remove existing item link
-		if (itemPos > -1) {
-			this.Targets.splice(itemPos, 1)
+		if (itemTargetsIndex !== -1) {
+			targets.splice(itemTargetsIndex, 1)
 		}
 	}
 
 	/**
 	 * Add a new item object link.
 	 *
-	 * @param {Item} item Target item object to link.
+	 * @param item Target item object to link.
 	 */
-	addObject(item) {
-
-		if (!(item instanceof Item)) {
-			throw new TypeError('Invalid object item value.')
-		}
+	public addObject(item: Item): void {
 
 		// Object links are always linked to entities
 		if (!item.entity) {
 			item.createEntity()
 		}
 
-		this.Objects = this.Objects || []
+		let objects = this.Objects
+
+		if (!objects) {
+			objects = this.Objects = []
+		}
 
 		// Add a new item object link
-		if (this.Objects.indexOf(item.entity.Index) === -1) {
-			this.Objects.push(item.entity.Index)
+		if (!objects.includes(item.entity.Index)) {
+			objects.push(item.entity.Index)
 		}
 	}
 
 	/**
 	 * Remove existing item object link.
 	 *
-	 * @param {Item} item Target item object to remove as a link.
+	 * @param item Target item object to remove as a link.
 	 */
-	removeObject(item) {
+	public removeObject(item: Item): void {
 
-		if (!(item instanceof Item)) {
-			throw new TypeError('Invalid object item value.')
-		}
+		const objects = this.Objects
 
-		if (!item.entity || !this.Objects || !this.Objects.length) {
+		if (!item.entity || !objects || !objects.length) {
 			return
 		}
 
-		const itemPos = this.Objects.indexOf(item.entity.Index)
+		const itemObjectsIndex = objects.indexOf(item.entity.Index)
 
 		// Remove existing item object link
-		if (itemPos > -1) {
-			this.Objects.splice(itemPos, 1)
+		if (itemObjectsIndex !== -1) {
+			objects.splice(itemObjectsIndex, 1)
 		}
 	}
 
 	/**
 	 * Create a linked item entity.
 	 *
-	 * @param {boolean} disabled Create entity in a disabled state.
-	 * @returns {Item} Linked item entity.
+	 * @param disabled Create entity in a disabled state.
+	 * @returns Linked item entity.
 	 */
-	createEntity(disabled) {
+	public createEntity(disabled = false): Item /* FIXME: Use MCU_TR_Entity */ {
 
 		if (this.entity) {
 			throw new Error('Item is already linked to an entity.')
@@ -457,18 +538,16 @@ export default class Item {
 	/**
 	 * Get string representation of the item.
 	 *
-	 * @param {number} indentLevel Indentation level.
-	 * @returns {string} String representation of the item.
+	 * @param indentLevel Indentation level.
+	 * @returns String representation of the item.
 	 */
-	toString(indentLevel) {
-
-		indentLevel = indentLevel || 0
+	public toString(indentLevel = 0): string {
 
 		const indent = new Array((2 * indentLevel) + 1).join(' ')
 		let value = indent + this.type + os.EOL + indent + '{'
 
 		// Build property and value textual representation
-		function propertyToString(propName, propValue) {
+		function propertyToString(propName: string, propValue: any) {
 
 			const propType = typeof propValue
 			let isArray = false
@@ -506,7 +585,7 @@ export default class Item {
 
 				value += os.EOL + indent + '  {'
 
-				propValue.forEach(itemValue => {
+				propValue.forEach((itemValue: string | string[]) => {
 
 					value += os.EOL + indent + '    '
 
@@ -540,7 +619,7 @@ export default class Item {
 
 		// Build item properties list
 		Object.keys(this).forEach(propName => {
-			propertyToString(propName, this[propName])
+			propertyToString(propName, (this as any)[propName])
 		})
 
 		// Serialize any child items
@@ -551,7 +630,7 @@ export default class Item {
 				value += os.EOL
 
 				// Don't add extra whitespace for generic items
-				if (Item[item.type]) {
+				if (item.type && item.type in Item) {
 					value += os.EOL
 				}
 
@@ -572,21 +651,17 @@ export default class Item {
 	/**
 	 * Get base binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @param {number} typeID Binary item type ID.
-	 * @returns {Buffer} Base binary representation of the item.
+	 * @param index Binary data index object.
+	 * @param typeId Binary item type ID.
+	 * @yields Base binary representation of the item.
 	 */
-	*toBinary(index, typeID) {
-
-		if (!typeID) {
-			throw new Error('Invalid binary item type ID.')
-		}
+	public *toBinary(index: any, typeId: number): IterableIterator<Buffer> {
 
 		// Write base item binary information
 		const buffer = Buffer.allocUnsafe(46)
 
 		// Item binary type ID
-		this.writeUInt32(buffer, typeID)
+		this.writeUInt32(buffer, typeId)
 
 		// Index
 		this.writeUInt32(buffer, this.Index || 0)
@@ -615,14 +690,12 @@ export default class Item {
 	/**
 	 * Write XPos/YPos/ZPos to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
+	 * @param buffer Target buffer object.
 	 */
-	writePosition(buffer) {
+	private writePosition(buffer: Buffer): void {
 
 		// NOTE: Position in binary file is represented as a 64 bit double-precision
 		// floating-point value.
-
-		// TODO: Validate position values (take into account mission map size)
 
 		this.writeDouble(buffer, this.XPos || 0)
 		this.writeDouble(buffer, this.YPos || 0)
@@ -632,109 +705,109 @@ export default class Item {
 	/**
 	 * Write XOri/YOri/ZOri to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
+	 * @param buffer Target buffer object.
 	 */
-	writeOrientation(buffer) {
+	private writeOrientation(buffer: Buffer): void {
 
 		// NOTE: Orientation in binary file is represented as a 16 bit unsigned integer
 		// number between 0 (equal to 0 degrees) and 60000 (equal to 360 degrees).
 		const degreeValue = 60000 / 360
 
-		this.writeUInt16(buffer, Math.round(degreeValue * (this.XOri ? this.XOri : 0)))
-		this.writeUInt16(buffer, Math.round(degreeValue * (this.YOri ? this.YOri : 0)))
-		this.writeUInt16(buffer, Math.round(degreeValue * (this.ZOri ? this.ZOri : 0)))
+		this.writeUInt16(buffer, Math.round(degreeValue * (this.XOri || 0)))
+		this.writeUInt16(buffer, Math.round(degreeValue * (this.YOri || 0)))
+		this.writeUInt16(buffer, Math.round(degreeValue * (this.ZOri || 0)))
 	}
 
 	/**
 	 * Write a string value to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
-	 * @param {number} stringLength String value length in bytes.
-	 * @param {string} stringValue String value to write.
+	 * @param buffer Target buffer object.
+	 * @param length String value length in bytes.
+	 * @param value String value to write.
 	 */
-	writeString(buffer, stringLength, stringValue) {
+	protected writeString(buffer: Buffer, length: number, value: string): void {
 
 		// NOTE: String values are represented in binary files as a length (32 bit
 		// unsigned integer) followed by an array of string byte characters.
 
 		// String length
-		this.writeUInt32(buffer, stringLength)
+		this.writeUInt32(buffer, length)
 
 		// String value
-		if (stringLength > 0) {
+		if (length > 0) {
 
-			buffer.write(stringValue, buffer._offset, stringLength)
-			buffer._offset += stringLength
+			buffer.write(value, buffer._offset, length)
+			buffer._offset += length
 		}
 	}
 
 	/**
 	 * Write a 32 bit unsigned integer value to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
-	 * @param {number} numberValue Number value to write.
+	 * @param buffer Target buffer object.
+	 * @param value Number value to write.
 	 */
-	writeUInt32(buffer, numberValue) {
+	protected writeUInt32(buffer: Buffer, value: number): void {
 
-		buffer.writeUInt32LE(numberValue, buffer._offset)
+		buffer.writeUInt32LE(value, buffer._offset)
 		buffer._offset += 4
 	}
 
 	/**
 	 * Write a 16 bit unsigned integer value to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
-	 * @param {number} numberValue Number value to write.
+	 * @param buffer Target buffer object.
+	 * @param value Number value to write.
 	 */
-	writeUInt16(buffer, numberValue) {
+	protected writeUInt16(buffer: Buffer, value: number): void {
 
-		buffer.writeUInt16LE(numberValue, buffer._offset)
+		buffer.writeUInt16LE(value, buffer._offset)
 		buffer._offset += 2
 	}
 
 	/**
 	 * Write a 8 bit unsigned integer value to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
-	 * @param {number} numberValue Number value to write.
+	 * @param buffer Target buffer object.
+	 * @param value Number value to write.
 	 */
-	writeUInt8(buffer, numberValue) {
+	protected writeUInt8(buffer: Buffer, value: number): void {
 
-		buffer.writeUInt8(numberValue, buffer._offset)
+		buffer.writeUInt8(value, buffer._offset)
 		buffer._offset += 1
 	}
 
 	/**
 	 * Write a double-precision floating-point value to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
-	 * @param {number} numberValue Number value to write.
+	 * @param buffer Target buffer object.
+	 * @param value Number value to write.
 	 */
-	writeDouble(buffer, numberValue) {
+	protected writeDouble(buffer: Buffer, value: number): void {
 
-		buffer.writeDoubleLE(numberValue, buffer._offset)
+		buffer.writeDoubleLE(value, buffer._offset)
 		buffer._offset += 8
 	}
 
 	/**
 	 * Write a single-precision floating-point value to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
-	 * @param {number} numberValue Number value to write.
+	 * @param buffer Target buffer object.
+	 * @param value Number value to write.
 	 */
-	writeFloat(buffer, numberValue) {
+	protected writeFloat(buffer: Buffer, value: number): void {
 
-		buffer.writeFloatLE(numberValue, buffer._offset)
+		buffer.writeFloatLE(value, buffer._offset)
 		buffer._offset += 4
 	}
 
 	/**
 	 * Write an array of 32 bit unsigned integer values to the given Buffer object.
 	 *
-	 * @param {Buffer} buffer Target buffer object.
-	 * @param {number} arrayValue Array value to write.
+	 * @param buffer Target buffer object.
+	 * @param arrayValue Array value to write.
 	 */
-	writeUInt32Array(buffer, arrayValue) {
+	protected writeUInt32Array(buffer: Buffer, arrayValue: number[]): void {
 
 		// Array length
 		this.writeUInt32(buffer, arrayValue.length)
@@ -752,103 +825,6 @@ export default class Item {
 			this.writeUInt32(buffer, value)
 		}
 	}
-
-	/**
-	 * Read a list of items from a text file.
-	 *
-	 * @param {string} file Item text file name/path.
-	 * @returns {array} List of items.
-	 */
-	static readTextFile(file) {
-
-		const fileContent = fs.readFileSync(file, {
-			encoding: 'ascii' // TODO
-		})
-
-		if (!fileContent.length) {
-			throw new Error('Could not read specified item file (no content).')
-		}
-
-		const lexer = new Lexer()
-		const items = []
-		const itemStack = []
-
-		// Rule for the start of item definition
-		lexer.addRule(/\s*(\w+)\s*{\s*/i, (matched, itemType) => {
-
-			let item
-
-			// Normal item
-			if (Item[itemType]) {
-				item = new Item[itemType]()
-			}
-			// Generic item
-			else {
-				item = new Item(itemType)
-			}
-
-			// Add new item to active items stack
-			itemStack.push(item)
-		})
-
-		// Rule for item property
-		lexer.addRule(/\s*(\w+)\s*=\s*(.+);\s*/i, (matched, propName, propValue) => {
-
-			const item = itemStack[itemStack.length - 1]
-
-			// Escape backslash (\) character for JavaScript strings
-			propValue = propValue.replace(/\\/g, '\\\\')
-
-			// TODO: Handle complex property types (like with the Options item)
-
-			// Add item property
-			item[propName] = JSON.parse(propValue)
-		})
-
-		// Rule for the end of item definition
-		lexer.addRule(/\s*}\s*/i, () => {
-
-			const item = itemStack.pop()
-
-			// Child item element
-			if (itemStack.length) {
-				itemStack[itemStack.length - 1].addItem(item)
-			}
-			// Root item element
-			else {
-				items.push(item)
-			}
-		})
-
-		lexer.setInput(fileContent)
-		lexer.lex()
-
-		// Make sure the stack is empty
-		if (itemStack.length) {
-			throw new Error()
-		}
-
-		return items
-	}
-}
-
-// Utility function used to convert Unicode text to ASCII charset
-function convertUnicodeToASCII(value) {
-
-	// HACK: The .Mission file parser does not seem to support UTF-8/unicode
-	// characters and will fail to load the mission when there are any. Also,
-	// in-game labels for planes/vehicles will not display UTF-8 characters as
-	// well. As a workaround we transliterate all non-localized strings to a safe
-	// ASCII character set.
-	return getSlug(value, {
-		lang: 'en',
-		separator: ' ',
-		symbols: false,
-		maintainCase: true,
-		titleCase: false,
-		uric: true,
-		mark: true
-	})
 }
 
 // Load all supported mission item types
@@ -887,8 +863,8 @@ function convertUnicodeToASCII(value) {
 	'Vehicle'
 ].forEach(type => {
 
-	const item = require('./item/' + type).default
+	const item = require('./' + type).default
 
 	Object.defineProperty(item.prototype, 'type', {value: type})
-	Item[type] = item
+	;(Item as any)[type] = item
 })

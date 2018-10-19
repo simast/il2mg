@@ -1,4 +1,5 @@
-import Item, {DEFAULT_COUNTRY} from '../item'
+import {Item} from './item'
+import {DEFAULT_COUNTRY} from './constants'
 
 // Flag item
 export default class Flag extends Item {

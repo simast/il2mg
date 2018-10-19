@@ -1,7 +1,9 @@
 import path from 'path'
 import numeral from 'numeral'
+
 import data, {ItemTag, ItemFlag} from '../../src/data'
 import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from '../../src/item'
+import {readTextFile} from '../../src/item/utils'
 import {PlaneSize, getPlaneSizeFromName} from '../../src/make/planes'
 
 module.exports = function(grunt) {
@@ -45,7 +47,7 @@ module.exports = function(grunt) {
 				}
 
 				// Read raw airfield Group text file
-				const items = Item.readTextFile(fileSource)
+				const items = readTextFile(fileSource)
 
 				// Group file should have a non-empty single Group item
 				if (!items || !items.length || items.length !== 1 ||

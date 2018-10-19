@@ -1,5 +1,5 @@
 import moment from 'moment'
-import Item from '../item'
+import {Item} from './item'
 
 // Options item
 export default class Options extends Item {

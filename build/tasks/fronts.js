@@ -1,6 +1,8 @@
 import numeral from 'numeral'
+
 import data from '../../src/data'
 import Item from '../../src/item'
+import {readTextFile} from '../../src/item/utils'
 import {FrontLine} from '../../src/make/fronts'
 
 // Map of front line point item names to types
@@ -38,7 +40,7 @@ module.exports = function(grunt) {
 				const fileDestination = frontsPath + frontFile + '.json'
 
 				// Read raw fronts Group text file
-				const items = Item.readTextFile(fileSource)
+				const items = readTextFile(fileSource)
 
 				// Group file should have a non-empty single Group item
 				if (!items || !items.length || items.length !== 1 ||

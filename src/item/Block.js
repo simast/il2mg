@@ -1,8 +1,5 @@
-import Item, {
-	DEFAULT_COUNTRY,
-	DEFAULT_DAMAGE_REPORT,
-	DEFAULT_DURABILITY
-} from '../item'
+import {Item} from './item'
+import {DEFAULT_COUNTRY, DEFAULT_DAMAGE_REPORT, DEFAULT_DURABILITY} from './constants'
 
 // Block item
 export default class Block extends Item {

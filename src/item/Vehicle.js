@@ -1,4 +1,5 @@
-import Item, {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from '../item'
+import {Item} from './item'
+import {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from './constants'
 
 // Vehicle AI level constants
 export const AI_PLAYER = 0

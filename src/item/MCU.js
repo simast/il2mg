@@ -1,4 +1,4 @@
-import Item from '../item'
+import {Item} from './item'
 
 // Event and report child item name constants
 const ITEM_ON_EVENTS = 'OnEvents'

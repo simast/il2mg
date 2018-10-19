@@ -1,7 +1,9 @@
 import path from 'path'
 import numeral from 'numeral'
+
 import data from '../../src/data'
 import Item, {PRECISION_POSITION, PRECISION_ORIENTATION} from '../../src/item'
+import {readTextFile} from '../../src/item/utils'
 
 module.exports = function(grunt) {
 
@@ -24,7 +26,7 @@ module.exports = function(grunt) {
 				const fileDestination = path.join(blocksPath, blockFile + '.json')
 
 				// Read raw blocks
-				const blocks = Item.readTextFile(fileSource)
+				const blocks = readTextFile(fileSource)
 
 				const json = []
 

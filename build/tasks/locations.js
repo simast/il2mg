@@ -1,7 +1,9 @@
 import numeral from 'numeral'
+
 import data from '../../src/data'
 import {LocationType} from '../../src/make/locations'
 import Item, {PRECISION_POSITION} from '../../src/item'
+import {readTextFile} from '../../src/item/utils'
 
 // Map of location item names to types
 const locationTypeMap = {
@@ -32,7 +34,7 @@ module.exports = function(grunt) {
 				const fileDestination = locationsPath + locationFile + '.json'
 
 				// Read raw locations
-				const items = Item.readTextFile(fileSource)
+				const items = readTextFile(fileSource)
 
 				// Group file should have a non-empty single Group item
 				if (!items || !items.length || items.length !== 1 ||

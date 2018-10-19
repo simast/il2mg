@@ -1,4 +1,4 @@
-import {DEFAULT_DAMAGE_REPORT} from '../item'
+import {DEFAULT_DAMAGE_REPORT} from './constants'
 import MCU from './MCU'
 
 // Complex Trigger event filters (with order representing bit number in binary file)

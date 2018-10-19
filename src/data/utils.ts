@@ -1,5 +1,7 @@
 import moment, {Moment} from 'moment'
 
+import {Immutable} from '../types'
+
 type MatchContext = {
 	from: Moment
 	to: Moment
@@ -23,10 +25,10 @@ export type DateValue = string | Date
  * @returns Matched from/to range or undefined for no match.
  */
 export function matchDateRange(
-	context: Readonly<MatchContext>,
+	context: Immutable<MatchContext>,
 	dateFrom?: DateValue,
 	dateTo?: DateValue
-): Readonly<MatchRange> | undefined {
+): Immutable<MatchRange> | undefined {
 
 	const range: MatchRange = {
 		from: context.from,
