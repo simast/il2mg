@@ -1,60 +1,43 @@
+import {Immutable} from '../types'
+import {Item} from './item'
 import Block from './Block'
+import {BinaryType} from './enums'
 
 // Airfield item
 export default class Airfield extends Block {
 
-	constructor() {
-		super()
-
-		this.Callsign = 0
-		this.Callnum = 0
-		this.ReturnPlanes = 0
-		this.Hydrodrome = 0
-		this.RepairFriendlies = 0
-		this.RearmFriendlies = 0
-		this.RefuelFriendlies = 0
-		this.RepairTime = 0
-		this.RearmTime = 0
-		this.RefuelTime = 0
-		this.MaintenanceRadius = 0
-	}
+	public Callsign = 0
+	public Callnum = 0
+	public ReturnPlanes = 0
+	public Hydrodrome = 0
+	public RepairFriendlies = 0
+	public RearmFriendlies = 0
+	public RefuelFriendlies = 0
+	public RepairTime = 0
+	public RearmTime = 0
+	public RefuelTime = 0
+	public MaintenanceRadius = 0
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 9)
+		yield* super.toBinary(index, BinaryType.Airfield)
 
 		let size = 31
-		const pointItems = []
+		const {items = []} = this
 
 		// Find Chart item
-		if (this.items && this.items.length) {
+		const chartItem = items.find(({type}) => type === 'Chart')
 
-			let chartItem
-			for (const item of this.items) {
-
-				if (item.type === 'Chart') {
-
-					chartItem = item
-					break
-				}
-			}
-
-			if (chartItem && chartItem.items) {
-
-				chartItem.items.forEach(item => {
-
-					if (item.type === 'Point') {
-						pointItems.push(item)
-					}
-				})
-			}
-		}
+		// Find Chart->Point items
+		const pointItems = chartItem && chartItem.items
+			? chartItem.items.filter((item): item is Immutable<Point> => item.type === 'Point')
+			: []
 
 		size += pointItems.length * 20
 
@@ -100,13 +83,33 @@ export default class Airfield extends Block {
 		this.writeUInt32(buffer, pointItems.length)
 
 		// List of Point items
-		pointItems.forEach(item => {
+		for (const item of pointItems) {
 
 			this.writeUInt32(buffer, item.Type) // Type
 			this.writeDouble(buffer, item.X) // X
 			this.writeDouble(buffer, item.Y) // Y
-		})
+		}
 
 		yield buffer
+	}
+}
+
+// Chart item
+export class Chart extends Item {
+
+	constructor() {
+		super('Chart')
+	}
+}
+
+// Chart->Point item
+export class Point extends Item {
+
+	constructor(
+		public Type: number,
+		public X: number,
+		public Y: number
+	) {
+		super('Point')
 	}
 }

@@ -1,45 +1,30 @@
 import {Item} from './item'
 import {DEFAULT_COUNTRY, DEFAULT_DAMAGE_REPORT, DEFAULT_DURABILITY} from './constants'
+import {BinaryType} from './enums'
 
 // Block item
 export default class Block extends Item {
 
-	constructor() {
-		super()
-
-		this.DeleteAfterDeath = 0
-		this.DamageThreshold = 1
-		this.Country = DEFAULT_COUNTRY
-		this.DamageReport = DEFAULT_DAMAGE_REPORT
-		this.Durability = DEFAULT_DURABILITY
-	}
+	public DeleteAfterDeath = 0
+	public DamageThreshold = 1
+	protected Country = DEFAULT_COUNTRY
+	public DamageReport = DEFAULT_DAMAGE_REPORT
+	public Durability = DEFAULT_DURABILITY
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @param {number} typeID Binary item type ID.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @param typeId Binary item type ID.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index, typeID) {
+	public *toBinary(index: any, typeId?: BinaryType): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, typeID ? typeID : 1)
+		yield* super.toBinary(index, typeId ? typeId : BinaryType.Block)
 
 		const buffer = Buffer.allocUnsafe(13)
-		let damageItem
-
-		// Find Damaged item
-		if (this.items && this.items.length) {
-
-			for (const item of this.items) {
-
-				if (item.type === 'Damaged') {
-
-					damageItem = item
-					break
-				}
-			}
-		}
+		const {items = []} = this
+		const damageItem = items.find(({type}) => type === 'Damaged')
 
 		// LinkTrId
 		this.writeUInt32(buffer, this.LinkTrId || 0)

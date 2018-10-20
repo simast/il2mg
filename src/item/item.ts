@@ -1,10 +1,11 @@
 import os from 'os'
 
-import {Immutable} from '../types'
+import {Immutable, Mutable} from '../types'
 import data from '../data'
 import {Country} from '../data/enums'
 import {PRECISION_ORIENTATION, PRECISION_POSITION} from './constants'
 import {convertUnicodeToASCII} from './utils'
+import {BinaryType} from './enums'
 
 declare global {
 	interface Buffer {
@@ -18,12 +19,12 @@ Buffer.prototype._offset = 0
 // Base mission item
 export class Item {
 
-	// Protected non-enumerable item properties
-	protected mission?: any
-	protected items?: Item[]
+	// Non-enumerable item properties
+	protected readonly mission?: any
+	public readonly items?: Immutable<Item[]>
 	protected parent?: Item
-	protected type?: string
-	protected entity?: any // FIXME: Use MCU_TR_Entity
+	public readonly type?: string
+	protected readonly entity?: any // FIXME: Use MCU_TR_Entity
 
 	// Common enumerable item properties
 	protected Model?: string
@@ -100,7 +101,7 @@ export class Item {
 		}
 
 		// Add child item
-		items.push(item)
+		(items as Mutable<typeof items>).push(item)
 
 		// Set child item parent reference
 		Object.defineProperty(item, 'parent', {
@@ -133,7 +134,7 @@ export class Item {
 		}
 
 		// Remove item from parent item hierarchy
-		items.splice(itemIndex, 1)
+		(items as Mutable<typeof items>).splice(itemIndex, 1)
 		delete this.parent
 	}
 
@@ -653,9 +654,9 @@ export class Item {
 	 *
 	 * @param index Binary data index object.
 	 * @param typeId Binary item type ID.
-	 * @yields Base binary representation of the item.
+	 * @yields Base item data buffer.
 	 */
-	public *toBinary(index: any, typeId: number): IterableIterator<Buffer> {
+	public *toBinary(index: any, typeId: BinaryType): IterableIterator<Buffer> {
 
 		// Write base item binary information
 		const buffer = Buffer.allocUnsafe(46)
