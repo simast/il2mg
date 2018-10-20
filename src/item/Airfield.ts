@@ -2,17 +2,18 @@ import {Immutable} from '../types'
 import {Item} from './item'
 import Block from './Block'
 import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Airfield item
 export default class Airfield extends Block {
 
 	public Callsign = 0
 	public Callnum = 0
-	public ReturnPlanes = 0
-	public Hydrodrome = 0
-	public RepairFriendlies = 0
-	public RearmFriendlies = 0
-	public RefuelFriendlies = 0
+	public ReturnPlanes: Bit = 0
+	public Hydrodrome: Bit = 0
+	public RepairFriendlies: Bit = 0
+	public RearmFriendlies: Bit = 0
+	public RefuelFriendlies: Bit = 0
 	public RepairTime = 0
 	public RearmTime = 0
 	public RefuelTime = 0

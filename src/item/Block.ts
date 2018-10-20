@@ -1,13 +1,15 @@
+import {Country} from '../data/enums'
 import {Item} from './item'
 import {DEFAULT_COUNTRY, DEFAULT_DAMAGE_REPORT, DEFAULT_DURABILITY} from './constants'
 import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Block item
 export default class Block extends Item {
 
-	public DeleteAfterDeath = 0
-	public DamageThreshold = 1
-	protected Country = DEFAULT_COUNTRY
+	public DeleteAfterDeath: Bit = 0
+	public DamageThreshold: Bit = 1
+	public readonly Country: Country = DEFAULT_COUNTRY
 	public DamageReport = DEFAULT_DAMAGE_REPORT
 	public Durability = DEFAULT_DURABILITY
 

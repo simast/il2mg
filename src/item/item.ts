@@ -24,28 +24,28 @@ export class Item {
 	public readonly items?: Immutable<Item[]>
 	protected parent?: Item
 	public readonly type?: string
-	protected readonly entity?: any // FIXME: Use MCU_TR_Entity
+	public readonly entity?: any // FIXME: Use MCU_TR_Entity
 
 	// Common enumerable item properties
-	protected Model?: string
-	protected Script?: string
-	protected Skin?: string
-	protected Durability?: number
-	protected LCName?: number
-	protected LCDesc?: number
-	protected Name?: string
-	protected Desc?: string
-	protected XPos?: number
-	protected YPos?: number
-	protected ZPos?: number
-	protected XOri?: number
-	protected YOri?: number
-	protected ZOri?: number
-	protected Country?: Country
-	protected Targets?: number[]
-	protected Objects?: number[]
-	protected Index?: number
-	protected LinkTrId?: number
+	public Model?: string
+	public Script?: string
+	public Skin?: string
+	public Durability?: number
+	public readonly LCName?: number
+	public readonly LCDesc?: number
+	public readonly Name?: string
+	public readonly Desc?: string
+	public readonly XPos?: number
+	public readonly YPos?: number
+	public readonly ZPos?: number
+	public readonly XOri?: number
+	public readonly YOri?: number
+	public readonly ZOri?: number
+	public readonly Country?: Country
+	public readonly Targets?: Immutable<number[]>
+	public readonly Objects?: Immutable<number[]>
+	public readonly Index?: number
+	public readonly LinkTrId?: number
 
 	/**
 	 * Create a new mission item.
@@ -143,7 +143,8 @@ export class Item {
 	 *
 	 * @param name Localized (number) or non-localized (string) name.
 	 */
-	public setName(name: string | number): void {
+	public setName(name: string | number): void
+	public setName(this: Mutable<this>, name: string | number): void {
 
 		if (typeof name === 'number') {
 			this.LCName = name
@@ -161,7 +162,8 @@ export class Item {
 	 *
 	 * @param desc Localized (number) or non-localized (string) description.
 	 */
-	public setDescription(desc: string | number): void {
+	public setDescription(desc: string | number): void
+	public setDescription(this: Mutable<this>, desc: string | number): void {
 
 		if (typeof desc === 'number') {
 			this.LCDesc = desc
@@ -198,7 +200,10 @@ export class Item {
 	 */
 	public setPosition(x: number, z: number): void
 
-	public setPosition(...args: [number | [number, number, number], number?, number?]): void {
+	public setPosition(
+		this: Mutable<this>,
+		...args: [number | [number, number, number], number?, number?]
+	): void {
 
 		let position: [number, number, number]
 
@@ -276,7 +281,10 @@ export class Item {
 	 */
 	public setOrientation(y: number): void
 
-	public setOrientation(...args: [number | [number, number, number], number?, number?]): void {
+	public setOrientation(
+		this: Mutable<this>,
+		...args: [number | [number, number, number], number?, number?]
+	): void {
 
 		let orientation: [number, number, number]
 
@@ -413,7 +421,8 @@ export class Item {
 	 *
 	 * @param countryId Country ID value.
 	 */
-	public setCountry(countryId: Country): void {
+	public setCountry(countryId: Country): void
+	public setCountry(this: Mutable<this>, countryId: Country): void {
 
 		// Support for "alias" (hidden) countries
 		this.Country = data.countries[countryId].alias || countryId
@@ -424,7 +433,8 @@ export class Item {
 	 *
 	 * @param item Target item object to link.
 	 */
-	public addTarget(item: Item): void {
+	public addTarget(item: Item): void
+	public addTarget(this: Mutable<this>, item: Item): void {
 
 		if (typeof item.Index !== 'number') {
 			throw new TypeError('Invalid target item index value.')
@@ -447,7 +457,8 @@ export class Item {
 	 *
 	 * @param item Target item to remove as a link.
 	 */
-	public removeTarget(item: Item): void {
+	public removeTarget(item: Item): void
+	public removeTarget(this: Mutable<this>, item: Item): void {
 
 		const targets = this.Targets
 
@@ -468,7 +479,8 @@ export class Item {
 	 *
 	 * @param item Target item object to link.
 	 */
-	public addObject(item: Item): void {
+	public addObject(item: Item): void
+	public addObject(this: Mutable<this>, item: Item): void {
 
 		// Object links are always linked to entities
 		if (!item.entity) {
@@ -492,7 +504,8 @@ export class Item {
 	 *
 	 * @param item Target item object to remove as a link.
 	 */
-	public removeObject(item: Item): void {
+	public removeObject(item: Item): void
+	public removeObject(this: Mutable<this>, item: Item): void {
 
 		const objects = this.Objects
 
@@ -523,7 +536,7 @@ export class Item {
 		const entity = this.mission.createItem('MCU_TR_Entity', false)
 
 		// Link the item with entity
-		this.LinkTrId = entity.Index
+		;(this as Mutable<this>).LinkTrId = entity.Index
 		entity.MisObjID = this.Index
 
 		Object.defineProperty(this, 'entity', {value: entity})
