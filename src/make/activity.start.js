@@ -1,4 +1,4 @@
-import * as MCU_Icon from '../item/MCU_Icon'
+import {IconType} from '../items/enums'
 import {FlightState} from './flight'
 
 // Initial plan activity used to start/initialize flights
@@ -41,14 +41,14 @@ export default class ActivityStart {
 
 				startIcon.setName(mission.getLC(iconName))
 				startIcon.Coalitions = [flight.coalition]
-				startIcon.IconId = MCU_Icon.ICON_ACTION_POINT
+				startIcon.IconId = IconType.ActionPoint
 			}
 			else {
 
 				startIcon.Coalitions = mission.coalitions
 
 				if (flight.virtual) {
-					startIcon.IconId = MCU_Icon.ICON_WAYPOINT
+					startIcon.IconId = IconType.Waypoint
 				}
 			}
 		}

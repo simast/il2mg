@@ -2,8 +2,9 @@ import numeral from 'numeral'
 
 import data from '../../src/data'
 import {LocationType} from '../../src/make/locations'
-import Item, {PRECISION_POSITION} from '../../src/item'
-import {readTextFile} from '../../src/item/utils'
+import {Item} from '../../src/items'
+import {PRECISION_POSITION} from '../../src/items/constants'
+import {readTextFile} from '../../src/items/utils'
 
 // Map of location item names to types
 const locationTypeMap = {

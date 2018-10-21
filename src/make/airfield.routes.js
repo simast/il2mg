@@ -1,6 +1,5 @@
 import {ItemTag, ItemFlag} from '../data'
-import * as MCU_CMD_Formation from '../item/MCU_CMD_Formation'
-import * as MCU_Waypoint from '../item/MCU_Waypoint'
+import {Priority, FormationType} from '../items/enums'
 import makeAirfieldVehicle from './airfield.vehicle'
 
 // Make airfield vehicle routes
@@ -125,7 +124,7 @@ export default function makeAirfieldRoutes(airfield, routes) {
 			area = Math.min(Math.max(area, 10), 20)
 
 			waypoint.Area = Math.round(area)
-			waypoint.Priority = MCU_Waypoint.PRIORITY_LOW
+			waypoint.Priority = Priority.Low
 
 			waypointLast = waypoint
 
@@ -147,13 +146,13 @@ export default function makeAirfieldRoutes(airfield, routes) {
 			// Road vehicle formation
 			if (isRoad && !isRoadFormation) {
 
-				formation = MCU_CMD_Formation.TYPE_VEHICLE_COLUMN_ROAD
+				formation = FormationType.VehicleColumnRoad
 				isRoadFormation = true
 			}
 			// Offroad vehicle formation
 			else if ((!isRoad && isRoadFormation) || (isRoad && !isRoadNext)) {
 
-				formation = MCU_CMD_Formation.TYPE_VEHICLE_COLUMN
+				formation = FormationType.VehicleColumn
 				isRoadFormation = false
 			}
 

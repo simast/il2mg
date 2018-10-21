@@ -1,5 +1,4 @@
-import * as Vehicle from '../item/Vehicle'
-import * as MCU_CMD_AttackArea from '../item/MCU_CMD_AttackArea'
+import {Priority, VehicleAILevel} from '../items/enums'
 import data, {ItemTag} from '../data'
 
 // Make airfield vehicle item
@@ -149,9 +148,9 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 
 			// TODO: Set vehicle AI level based on difficulty command-line param
 			vehicleItem.AILevel = rand.pick([
-				Vehicle.AI_LOW,
-				Vehicle.AI_NORMAL,
-				Vehicle.AI_HIGH
+				VehicleAILevel.Low,
+				VehicleAILevel.Normal,
+				VehicleAILevel.High
 			])
 
 			let onAttackArea = zone.onAttackArea
@@ -169,7 +168,7 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 				// area zone radius does not seem to matter at all and AA vehicles will
 				// automatically fire at their optimal range.
 				onAttackArea.AttackArea = 0
-				onAttackArea.Priority = MCU_CMD_AttackArea.PRIORITY_MEDIUM
+				onAttackArea.Priority = Priority.Medium
 
 				zone.onLoad.addTarget(onAttackArea)
 			}

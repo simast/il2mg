@@ -1,4 +1,5 @@
-import Item, {PRECISION_POSITION} from '../item'
+import {Item} from '../items'
+import {PRECISION_POSITION} from '../items/constants'
 import data, {ItemFlag} from '../data'
 
 // Make airfield taxi route

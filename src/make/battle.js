@@ -1,7 +1,7 @@
 import path from 'path'
 
 import log from '../log'
-import {DEFAULT_COALITION, DEFAULT_COUNTRY} from '../item'
+import {DEFAULT_COALITION, DEFAULT_COUNTRY} from '../items/constants'
 import data from '../data'
 import {APPLICATION_NAME, APPLICATION_VERSION} from '../constants'
 

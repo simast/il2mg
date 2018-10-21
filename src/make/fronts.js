@@ -1,6 +1,7 @@
 import path from 'path'
 import sylvester from 'sylvester'
-import * as MCU_Icon from '../item/MCU_Icon'
+
+import {IconType, IconLine} from '../items/enums'
 import data, {Coalition} from '../data'
 import {Location} from './locations'
 import {MapColor} from './map'
@@ -112,11 +113,11 @@ export default function makeFronts() {
 		// Front border line
 		if (pointType === FrontLine.Border) {
 
-			pointItem.LineType = MCU_Icon.LINE_POSITION_0
+			pointItem.LineType = IconLine.Position0
 
 			// Show icons on front border points in debug mode
 			if (debugFronts) {
-				pointItem.IconId = MCU_Icon.ICON_WAYPOINT
+				pointItem.IconId = IconType.Waypoint
 			}
 
 			// TODO: Follow bezier curves and generate more points for precision?
@@ -136,7 +137,7 @@ export default function makeFronts() {
 		// Attack arrow
 		else if (pointType === FrontLine.Attack) {
 
-			pointItem.LineType = MCU_Icon.LINE_ATTACK
+			pointItem.LineType = IconLine.Attack
 			pointItem.setColor(MapColor.Attack)
 		}
 
@@ -471,7 +472,7 @@ export default function makeFronts() {
 			lineItemFrom.setPosition(posFrom)
 			lineItemTo.setPosition(posTo)
 
-			lineItemFrom.LineType = lineItemTo.LineType = MCU_Icon.LINE_SECTOR_2
+			lineItemFrom.LineType = lineItemTo.LineType = IconLine.Sector2
 			lineItemFrom.Coalitions = lineItemTo.Coalitions = this.coalitions
 
 			lineItemFrom.setColor(color)

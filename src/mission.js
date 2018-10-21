@@ -6,7 +6,7 @@ import Random from 'random-js'
 import data, {Coalition} from './data'
 import {APPLICATION_NAME, APPLICATION_VERSION} from './constants'
 import log from './log'
-import Item from './item'
+import {Item} from './items'
 
 // Mission make parts
 import makeBattle from './make/battle'

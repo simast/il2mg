@@ -1,5 +1,5 @@
-import {PRECISION_POSITION} from '../item'
-import * as MCU_Icon from '../item/MCU_Icon'
+import {PRECISION_POSITION} from '../items/constants'
+import {IconLine} from '../items/enums'
 import {markMapArea} from './map'
 
 // NOTE: Most flights will end naturally with a "land" activity - this special
@@ -60,7 +60,7 @@ export default class ActivityEnd {
 				position: this.position,
 				perfect: true,
 				radius: playerEndRadius,
-				lineType: MCU_Icon.LINE_ZONE_2
+				lineType: IconLine.Zone2
 			})
 
 			const endCheckZone = flightGroup.createItem('MCU_CheckZone')

@@ -1,6 +1,7 @@
 import numeral from 'numeral'
 import sylvester from 'sylvester'
-import * as MCU_Icon from '../item/MCU_Icon'
+
+import {IconType, IconLine} from '../items/enums'
 import {AltitudeLevel} from '../data'
 import {MapColor} from './map'
 import makeFlightFuel from './flight.fuel'
@@ -121,7 +122,7 @@ export default class ActivityFly {
 				}
 
 				if (!spot.hidden && !spot.split && isNextSpotVisible && !drawAIRoute) {
-					spotIcon.IconId = MCU_Icon.ICON_WAYPOINT
+					spotIcon.IconId = IconType.Waypoint
 				}
 
 				if (!spot.hidden) {
@@ -131,11 +132,11 @@ export default class ActivityFly {
 
 					// Use normal lines for AI flight routes in debug mode
 					if (drawAIRoute) {
-						lastSpotIcon.LineType = MCU_Icon.LINE_NORMAL
+						lastSpotIcon.LineType = IconLine.Normal
 					}
 					// Use dashed line
 					else {
-						lastSpotIcon.LineType = MCU_Icon.LINE_POSITION_2
+						lastSpotIcon.LineType = IconLine.Position2
 					}
 				}
 

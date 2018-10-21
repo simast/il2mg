@@ -2,7 +2,8 @@ import path from 'path'
 import addLazyProperty from 'lazy-property'
 
 import log from '../log'
-import Item from '../item'
+import {Item} from '../items'
+import {IconLine} from '../items/enums'
 import {Location, LocationType} from './locations'
 import {isOffmap} from './map'
 import {FlightState} from './flight'
@@ -285,7 +286,7 @@ export default function makeAirfields() {
 				airfieldIcon1.setPosition(position)
 				airfieldIcon2.setPosition(position)
 
-				airfieldIcon1.LineType = Item.MCU_Icon.LINE_BOLD
+				airfieldIcon1.LineType = IconLine.Bold
 				airfieldIcon1.setName(mission.getLC(airfield.planes + '\u2708'))
 				airfieldIcon1.setColor(data.countries[airfield.country].color)
 

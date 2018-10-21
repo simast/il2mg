@@ -1,6 +1,7 @@
 import sylvester from 'sylvester'
+
 import {ActivityType} from './flight.plan'
-import * as MCU_CMD_Formation from '../item/MCU_CMD_Formation'
+import {FormationType} from '../items/enums'
 
 // Minimum and maximum pitch angle (for pose orientation)
 const MIN_PITCH_ANGLE = -15
@@ -152,15 +153,15 @@ export default function makeFlightPose(flight) {
 				let angle = 0
 
 				// Left edge formation
-				if (formation === MCU_CMD_Formation.TYPE_PLANE_EDGE_LEFT) {
+				if (formation === FormationType.PlaneEdgeLeft) {
 					angle = -FORMATION_ANGLE
 				}
 				// Right edge formation
-				else if (formation === MCU_CMD_Formation.TYPE_PLANE_EDGE_RIGHT) {
+				else if (formation === FormationType.PlaneEdgeRight) {
 					angle = FORMATION_ANGLE
 				}
 				// V formation
-				else if (formation === MCU_CMD_Formation.TYPE_PLANE_V) {
+				else if (formation === FormationType.PlaneV) {
 
 					const direction = (planeIndex % 2 === 1) ? -1 : 1
 

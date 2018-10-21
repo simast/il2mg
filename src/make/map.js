@@ -1,5 +1,5 @@
 import sylvester from 'sylvester'
-import * as MCU_Icon from '../item/MCU_Icon'
+import {IconLine} from '../items/enums'
 
 // Map colors as RGB array values
 export const MapColor = Object.freeze({
@@ -199,7 +199,7 @@ export function markMapArea(flight, {
 		zoneIcon.setPosition(pointVector.elements)
 		zoneIcon.setColor(color ? color : MapColor.Route)
 		zoneIcon.Coalitions = [flight.coalition]
-		zoneIcon.LineType = lineType ? lineType : MCU_Icon.LINE_SECTOR_2
+		zoneIcon.LineType = lineType ? lineType : IconLine.Sector2
 
 		if (!firstZoneIcon) {
 			firstZoneIcon = zoneIcon

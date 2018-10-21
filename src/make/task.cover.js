@@ -1,6 +1,6 @@
 import numeral from 'numeral'
-import * as MCU_Waypoint from '../item/MCU_Waypoint'
-import * as MCU_CMD_Cover from '../item/MCU_CMD_Cover'
+
+import {Priority} from '../items/enums'
 import {markMapArea} from './map'
 import {makeActivity} from './flight.plan'
 import makeBriefingLead from './briefing.lead'
@@ -91,7 +91,7 @@ function makeTaskCoverAction(element, input) {
 
 			coverCommand.Area = rand.integer(75, 125)
 			coverCommand.Speed = this.speed
-			coverCommand.Priority = MCU_Waypoint.PRIORITY_LOW
+			coverCommand.Priority = Priority.Low
 
 			// Set waypoint position above the airfield
 			coverCommand.setPosition(
@@ -122,7 +122,7 @@ function makeTaskCoverAction(element, input) {
 			coverCommand.setPositionNear(beacon)
 			coverCommand.addTarget(beacon.entity)
 
-			coverCommand.Priority = MCU_CMD_Cover.PRIORITY_LOW
+			coverCommand.Priority = Priority.Low
 			coverCommand.CoverGroup = 0
 		}
 

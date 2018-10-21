@@ -1,8 +1,8 @@
 import numeral from 'numeral'
 
 import data from '../../src/data'
-import Item from '../../src/item'
-import {readTextFile} from '../../src/item/utils'
+import {Item} from '../../src/items'
+import {readTextFile} from '../../src/items/utils'
 import {FrontLine} from '../../src/make/fronts'
 
 // Map of front line point item names to types

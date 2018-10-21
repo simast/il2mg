@@ -1,5 +1,5 @@
 import data from '../data'
-import * as Plane from '../item/Plane'
+import {PlaneAILevel} from '../items/enums'
 import people from './people'
 
 // Make mission flight pilots
@@ -197,10 +197,10 @@ export default function makeFlightPilots(flight) {
 				// TODO: Set pilot AI level based on leader/rank
 				// TODO: Use a separate enum for pilot level (not plane AI level constants)
 				pilot.level = rand.pick([
-					Plane.AI_LOW,
-					Plane.AI_NORMAL,
-					Plane.AI_HIGH,
-					Plane.AI_ACE
+					PlaneAILevel.Low,
+					PlaneAILevel.Normal,
+					PlaneAILevel.High,
+					PlaneAILevel.Ace
 				])
 			}
 
@@ -320,7 +320,7 @@ export default function makeFlightPilots(flight) {
 
 		// Force ace pilot level
 		if (pilotFound.rank < 0) {
-			pilot.level = Plane.AI_ACE
+			pilot.level = PlaneAILevel.Ace
 		}
 
 		return pilot

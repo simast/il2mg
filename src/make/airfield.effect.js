@@ -1,4 +1,4 @@
-import * as MCU_CMD_Effect from '../item/MCU_CMD_Effect'
+import {EffectAction} from '../items/enums'
 import data, {ItemTag, ItemFlag} from '../data'
 import {Precipitation} from './weather'
 
@@ -109,7 +109,7 @@ export default function makeAirfieldEffect(airfield, item) {
 			onEffectStart = zone.onEffectStart = zone.group.createItem('MCU_CMD_Effect')
 
 			onEffectStart.setPositionNear(zone.onLoad)
-			onEffectStart.ActionType = MCU_CMD_Effect.ACTION_START
+			onEffectStart.ActionType = EffectAction.Start
 
 			zone.onLoad.addTarget(onEffectStart)
 

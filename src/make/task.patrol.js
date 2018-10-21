@@ -1,6 +1,6 @@
 import sylvester from 'sylvester'
-import * as MCU_Icon from '../item/MCU_Icon'
-import * as MCU_Waypoint from '../item/MCU_Waypoint'
+
+import {Priority, IconLine} from '../items/enums'
 import {makeActivity, ActivityType} from './flight.plan'
 import {Location} from './locations'
 import {MapColor} from './map'
@@ -228,7 +228,7 @@ export default function makeTaskPatrol(flight) {
 		}
 		// Set patrol area route waypoints to low priority
 		else {
-			options.priority = MCU_Waypoint.PRIORITY_LOW
+			options.priority = Priority.Low
 		}
 
 		// Hide repeating patrol route points
@@ -355,7 +355,7 @@ export default function makeTaskPatrol(flight) {
 		zoneIcon.setPosition(vector.e(1), vector.e(2))
 		zoneIcon.setColor(MapColor.Route)
 		zoneIcon.Coalitions = [flight.coalition]
-		zoneIcon.LineType = MCU_Icon.LINE_SECTOR_2
+		zoneIcon.LineType = IconLine.Sector2
 
 		if (!firstZoneIcon) {
 			firstZoneIcon = zoneIcon

@@ -1,7 +1,8 @@
 import Quadtree from 'quadtree-lib'
 import addLazyProperty from 'lazy-property'
 import encloseCircles from 'circle-enclose'
-import {PRECISION_POSITION} from '../item'
+
+import {PRECISION_POSITION} from '../items/constants'
 
 // NOTE: The goal of a bubble system is to make sure that the least amount of
 // check zone triggers are active in a mission at a given time. A quad tree is

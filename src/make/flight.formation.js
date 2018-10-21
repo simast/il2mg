@@ -1,4 +1,4 @@
-import * as MCU_CMD_Formation from '../item/MCU_CMD_Formation'
+import {FormationType} from '../items/enums'
 
 // Make mission flight formation
 export default function makeFlightFormation(flight, isPlayer) {
@@ -210,14 +210,14 @@ export default function makeFlightFormation(flight, isPlayer) {
 		element.state = flight.state
 
 		// Set element formation
-		element.formation = MCU_CMD_Formation.TYPE_PLANE_V
+		element.formation = FormationType.PlaneV
 
 		// Use edge formation for two plane elements
 		if (element.length === 2) {
 
 			const edgeFormations = [
-				MCU_CMD_Formation.TYPE_PLANE_EDGE_LEFT,
-				MCU_CMD_Formation.TYPE_PLANE_EDGE_RIGHT
+				FormationType.PlaneEdgeLeft,
+				FormationType.PlaneEdgeRight
 			]
 
 			// Pick left/right edge formation direction based on element index

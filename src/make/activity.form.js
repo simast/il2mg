@@ -1,4 +1,4 @@
-import * as MCU_CMD_Formation from '../item/MCU_CMD_Formation'
+import {FormationDensity} from '../items/enums'
 import {FlightState} from './flight'
 
 // Plan activity used to form up (set formation and element cover)
@@ -45,7 +45,7 @@ export default class ActivityForm {
 				formationCommand = flightGroup.createItem('MCU_CMD_Formation')
 
 				formationCommand.FormationType = element.formation
-				formationCommand.FormationDensity = MCU_CMD_Formation.DENSITY_SAFE
+				formationCommand.FormationDensity = FormationDensity.Safe
 				formationCommand.setPositionNear(leaderPlaneItem)
 
 				element.formationCommand = formationCommand

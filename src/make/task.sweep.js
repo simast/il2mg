@@ -1,5 +1,6 @@
 import sylvester from 'sylvester'
-import * as MCU_Waypoint from '../item/MCU_Waypoint'
+
+import {Priority} from '../items/enums'
 import {makeActivity, ActivityType} from './flight.plan'
 import {Location} from './locations'
 import {Territory} from './fronts'
@@ -345,7 +346,7 @@ export default function makeTaskSweep(flight) {
 		}
 		// Set waypoints to low priority (for sweep route only)
 		else {
-			options.priority = MCU_Waypoint.PRIORITY_LOW
+			options.priority = Priority.Low
 		}
 
 		// Plan fighter sweep route for each point

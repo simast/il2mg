@@ -1,4 +1,4 @@
-import * as Plane from '../item/Plane'
+import {PlaneAILevel, PlaneStart} from '../items/enums'
 import {ItemFlag} from '../data'
 import {getPlaneSizeFromName} from './planes'
 import {FlightState} from './flight'
@@ -386,7 +386,7 @@ export default function makeFlightPlanes(flight) {
 
 			// Player plane item
 			if (plane === flight.player) {
-				planeItem.AILevel = Plane.AI_PLAYER
+				planeItem.AILevel = PlaneAILevel.Player
 			}
 			// AI plane item
 			else {
@@ -477,20 +477,20 @@ export default function makeFlightPlanes(flight) {
 			// Parking start, engine not running
 			if (element.state === FlightState.Start) {
 
-				planeItem.StartInAir = Plane.START_PARKING
+				planeItem.StartInAir = PlaneStart.Parking
 
 				// 50% chance to start with engine running for non-leader and non-player planes
 				if (!isPlayer && !isLeader && rand.bool(0.5)) {
-					planeItem.StartInAir = Plane.START_RUNWAY
+					planeItem.StartInAir = PlaneStart.Runway
 				}
 			}
 			// Ready, taxi or runway start with engine running
 			else if (typeof element.state === 'string') {
-				planeItem.StartInAir = Plane.START_RUNWAY
+				planeItem.StartInAir = PlaneStart.Runway
 			}
 			// Air start
 			else {
-				planeItem.StartInAir = Plane.START_AIR
+				planeItem.StartInAir = PlaneStart.Air
 			}
 		}
 	}

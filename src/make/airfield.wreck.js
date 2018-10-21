@@ -1,4 +1,4 @@
-import Item from '../item'
+import {Item} from '../items'
 import data from '../data'
 
 // Make airfield wreck item
