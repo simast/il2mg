@@ -37,7 +37,7 @@ import {
 const DATA_INDEX_FILE = 'index'
 
 type DataCache = {[itemPath: string]: any}
-type DataFormats = {[extension: string]: ((content: string) => any) | undefined}
+type DataFormats = {readonly [extension: string]: ((content: string) => any) | undefined}
 
 class Data {
 
@@ -45,7 +45,10 @@ class Data {
 	private dataCache: DataCache = Object.create(null)
 
 	// Map of supported data formats/extensions and their parse functions
-	private dataFormats: DataFormats = Object.create(null)
+	private readonly dataFormats: DataFormats = {
+		'.yaml': yaml.safeLoad,
+		'.json': JSON.parse
+	}
 
 	// Main data directory path
 	private dataPath = 'data'
@@ -63,15 +66,6 @@ class Data {
 	public readonly battles!: Immutable<DataBattles>
 
 	constructor() {
-
-		// NOTE: For performance reasons YAML files are only used in development mode
-		// (while in production build data files are loaded using native JSON support).
-		if (process.env.NODE_ENV !== 'production') {
-			this.dataFormats['.yaml'] = yaml.safeLoad
-		}
-
-		// Always enable JSON format
-		this.dataFormats['.json'] = JSON.parse
 
 		// Prepend app path when running as Electron application
 		if ('electron' in process.versions) {
