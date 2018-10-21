@@ -1,5 +1,6 @@
 import {Priority, VehicleAILevel} from '../items/enums'
-import data, {ItemTag} from '../data'
+import {data} from '../data'
+import {ItemTag} from '../data/enums'
 
 // Make airfield vehicle item
 export default function makeAirfieldVehicle(airfield, item, isLive) {

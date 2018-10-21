@@ -1,4 +1,4 @@
-import data from '../data'
+import {data} from '../data'
 
 // Make airfield windsock item
 export default function makeAirfieldWindsock(airfield, item) {

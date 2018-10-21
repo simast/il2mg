@@ -1,5 +1,7 @@
 import moment from 'moment'
-import data, {matchDateRange} from '../data'
+
+import {data} from '../data'
+import {matchDateRange} from '../data/utils'
 import log from '../log'
 import {isValidRebaseTask} from './task.rebase'
 

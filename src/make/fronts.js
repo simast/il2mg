@@ -2,7 +2,8 @@ import path from 'path'
 import sylvester from 'sylvester'
 
 import {IconType, IconLine} from '../items/enums'
-import data, {Coalition} from '../data'
+import {data} from '../data'
+import {Coalition} from '../data/enums'
 import {Location} from './locations'
 import {MapColor} from './map'
 

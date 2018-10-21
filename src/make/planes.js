@@ -1,4 +1,5 @@
-import data, {MapSeason} from '../data'
+import {data} from '../data'
+import {MapSeason} from '../data/enums'
 import {getEnumValues} from '../utils'
 
 // Plane size types

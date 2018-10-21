@@ -1,5 +1,5 @@
 import {FlightState} from './flight'
-import {ItemFlag} from '../data'
+import {ItemFlag} from '../data/enums'
 
 // Plan activity used to taxi (optionally) and take off from airfield
 export default class ActivityTakeOff {

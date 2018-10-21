@@ -1,4 +1,4 @@
-import data from '../data'
+import {data} from '../data'
 
 // Make airfield beacon item
 export default function makeAirfieldBeacon(airfield, item) {

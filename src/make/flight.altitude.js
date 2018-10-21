@@ -1,4 +1,4 @@
-import {AltitudeLevel} from '../data'
+import {AltitudeLevel} from '../data/enums'
 
 // Valid altitude ranges (in meters)
 const altitudeRange = {

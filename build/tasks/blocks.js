@@ -1,7 +1,7 @@
 import path from 'path'
 import numeral from 'numeral'
 
-import data from '../../src/data'
+import {data} from '../../src/data'
 import {Item} from '../../src/items'
 import {PRECISION_POSITION, PRECISION_ORIENTATION} from '../../src/items/constants'
 import {readTextFile} from '../../src/items/utils'

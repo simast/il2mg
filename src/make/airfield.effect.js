@@ -1,5 +1,6 @@
 import {EffectAction} from '../items/enums'
-import data, {ItemTag, ItemFlag} from '../data'
+import {data} from '../data'
+import {ItemTag, ItemFlag} from '../data/enums'
 import {Precipitation} from './weather'
 
 // Make airfield effect item

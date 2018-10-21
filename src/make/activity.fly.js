@@ -2,7 +2,7 @@ import numeral from 'numeral'
 import sylvester from 'sylvester'
 
 import {IconType, IconLine} from '../items/enums'
-import {AltitudeLevel} from '../data'
+import {AltitudeLevel} from '../data/enums'
 import {MapColor} from './map'
 import makeFlightFuel from './flight.fuel'
 import makeBriefingLead from './briefing.lead'

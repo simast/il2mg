@@ -2,7 +2,7 @@ import os from 'os'
 import {SmartBuffer} from 'smart-buffer'
 
 import {Immutable, Mutable} from '../types'
-import data from '../data'
+import {data} from '../data'
 import {Country} from '../data/enums'
 import {PRECISION_ORIENTATION, PRECISION_POSITION} from './constants'
 import {convertUnicodeToASCII, writeUInt32, writeDouble, writeUInt16} from './utils'

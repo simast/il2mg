@@ -1,5 +1,5 @@
 import {Item} from '../items'
-import data from '../data'
+import {data} from '../data'
 
 // Make airfield wreck item
 export default function makeAirfieldWreck(airfield, item) {

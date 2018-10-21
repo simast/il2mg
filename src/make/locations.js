@@ -2,7 +2,8 @@ import path from 'path'
 import rbush from 'rbush'
 import knn from 'rbush-knn'
 import sylvester from 'sylvester'
-import data from '../data'
+
+import {data} from '../data'
 import log from '../log'
 
 // Location item types

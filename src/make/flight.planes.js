@@ -1,5 +1,5 @@
 import {PlaneAILevel, PlaneStart} from '../items/enums'
-import {ItemFlag} from '../data'
+import {ItemFlag} from '../data/enums'
 import {getPlaneSizeFromName} from './planes'
 import {FlightState} from './flight'
 import makeAirfieldTaxi from './airfield.taxi'

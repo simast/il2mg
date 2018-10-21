@@ -1,4 +1,4 @@
-import data from '../data'
+import {data} from '../data'
 import {FlightState} from './flight'
 
 // List of unit data params used as combined record key

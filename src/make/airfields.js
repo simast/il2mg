@@ -8,7 +8,8 @@ import {Location, LocationType} from './locations'
 import {isOffmap} from './map'
 import {FlightState} from './flight'
 import {PlaneSize, getPlaneSizeFromName} from './planes'
-import data, {ItemTag} from '../data'
+import {data} from '../data'
+import {ItemTag} from '../data/enums'
 
 // Airfield make parts
 import makeAirfieldLimits from './airfield.limits'

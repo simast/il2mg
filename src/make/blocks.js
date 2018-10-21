@@ -1,7 +1,8 @@
 import path from 'path'
+
 import log from '../log'
 import {Bridge} from '../items'
-import data from '../data'
+import {data} from '../data'
 
 // Generate mission static blocks
 export default function makeBlocks() {

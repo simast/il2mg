@@ -1,3 +1,3 @@
-export * from './enums'
-export {default} from './data'
-export {matchDateRange} from './utils'
+import {Data} from './Data'
+
+export const data = new Data()

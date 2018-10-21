@@ -1,4 +1,4 @@
-import {ItemTag, ItemFlag} from '../data'
+import {ItemTag, ItemFlag} from '../data/enums'
 import {Priority, FormationType} from '../items/enums'
 import makeAirfieldVehicle from './airfield.vehicle'
 

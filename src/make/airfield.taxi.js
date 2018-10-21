@@ -1,6 +1,7 @@
 import {Item} from '../items'
 import {PRECISION_POSITION} from '../items/constants'
-import data, {ItemFlag} from '../data'
+import {data} from '../data'
+import {ItemFlag} from '../data/enums'
 
 // Make airfield taxi route
 export default function makeAirfieldTaxi(airfield, taxiRouteID) {

@@ -1,5 +1,6 @@
 import mustache from 'mustache'
-import data from '../data'
+
+import {data} from '../data'
 import people from './people'
 import makeBriefingTarget from './briefing.target'
 

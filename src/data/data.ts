@@ -39,7 +39,7 @@ const DATA_INDEX_FILE = 'index'
 type DataCache = {[itemPath: string]: any}
 type DataFormats = {readonly [extension: string]: ((content: string) => any) | undefined}
 
-class Data {
+export class Data {
 
 	// Internal cache for data.load() function
 	private dataCache: DataCache = Object.create(null)
@@ -310,5 +310,3 @@ class Data {
 		return this.load<DataItem>(path.join('items', itemTypeId))
 	}
 }
-
-export default new Data()

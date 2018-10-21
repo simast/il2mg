@@ -1,7 +1,7 @@
 import {SmartBuffer} from 'smart-buffer'
 
-import data from '../data'
 import {Mutable} from '../types'
+import {data} from '../data'
 import {Country} from '../data/enums'
 import {DEFAULT_DAMAGE_REPORT, DEFAULT_BUFFER_SIZE} from './constants'
 import {MCU} from './MCU'

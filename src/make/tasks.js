@@ -1,4 +1,4 @@
-import data from '../data'
+import {data} from '../data'
 
 // Generate available mission tasks
 export default function makeTasks() {

@@ -1,4 +1,5 @@
-import data, {ItemFlag} from '../data'
+import {data} from '../data'
+import {ItemFlag} from '../data/enums'
 
 // Make airfield static item
 export default function makeAirfieldStatic(airfield, item) {

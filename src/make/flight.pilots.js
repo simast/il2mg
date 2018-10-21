@@ -1,4 +1,4 @@
-import data from '../data'
+import {data} from '../data'
 import {PlaneAILevel} from '../items/enums'
 import people from './people'
 

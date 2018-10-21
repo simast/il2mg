@@ -1,4 +1,4 @@
-import data from '../data'
+import {data} from '../data'
 
 // Generate mission people
 export default function makePeople() {
