@@ -672,7 +672,7 @@ export class Item {
 		}
 
 		// Write base item binary information
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(46)
 
 		// Item binary type ID
 		writeUInt32(buffer, typeId)

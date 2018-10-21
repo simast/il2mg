@@ -24,7 +24,7 @@ export default class MCU_CMD_Land extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_CMD_Land)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(4)
 
 		// Priority
 		writeUInt32(buffer, this.Priority)

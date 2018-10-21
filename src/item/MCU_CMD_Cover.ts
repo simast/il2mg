@@ -26,7 +26,7 @@ export default class MCU_CMD_Cover extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_CMD_Cover)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(5)
 
 		// CoverGroup
 		writeUInt8(buffer, this.CoverGroup)

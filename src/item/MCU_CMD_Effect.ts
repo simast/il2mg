@@ -23,7 +23,7 @@ export default class MCU_CMD_Effect extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_CMD_Effect)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(4)
 
 		// ActionType
 		writeUInt32(buffer, this.ActionType)

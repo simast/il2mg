@@ -20,7 +20,7 @@ export default class MCU_Timer extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_Timer)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(9)
 
 		// Time
 		writeDouble(buffer, this.Time)

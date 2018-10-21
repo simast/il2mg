@@ -20,7 +20,7 @@ export default class MCU_Spawner extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_Spawner)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(1)
 
 		// SpawnAtMe
 		writeUInt8(buffer, this.SpawnAtMe)

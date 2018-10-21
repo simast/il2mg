@@ -40,7 +40,7 @@ export default class MCU_CMD_Formation extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_CMD_Formation)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(8)
 
 		// FormationType
 		writeUInt32(buffer, this.FormationType)

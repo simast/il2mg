@@ -20,7 +20,7 @@ export default class MCU_CMD_TakeOff extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_CMD_TakeOff)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(4)
 
 		// NoTaxiTakeoff
 		writeUInt32(buffer, this.NoTaxiTakeoff)

@@ -21,7 +21,7 @@ export default class MCU_Counter extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_Counter)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(5)
 
 		// Counter
 		writeUInt32(buffer, this.Counter)

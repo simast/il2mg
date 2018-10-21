@@ -22,7 +22,7 @@ export default class Ground extends Item {
 
 		yield* super.toBuffer(index, BinaryType.Ground)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(9)
 
 		// LinkTrId
 		writeUInt32(buffer, this.LinkTrId || 0)

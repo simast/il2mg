@@ -27,7 +27,7 @@ export default class Block extends Item {
 
 		yield* super.toBuffer(index, typeId || BinaryType.Block)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(13)
 		const {items = []} = this
 		const damageItem = items.find(({type}) => type === 'Damaged')
 

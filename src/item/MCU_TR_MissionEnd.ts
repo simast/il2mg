@@ -21,7 +21,7 @@ export default class MCU_TR_MissionEnd extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_TR_MissionEnd)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(1)
 
 		// Succeeded
 		writeUInt8(buffer, this.Succeeded)

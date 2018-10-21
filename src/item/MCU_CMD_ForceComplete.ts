@@ -26,7 +26,7 @@ export default class MCU_CMD_ForceComplete extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_CMD_ForceComplete)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(5)
 
 		// Priority
 		writeUInt32(buffer, this.Priority)

@@ -26,7 +26,7 @@ export default class MCU_Waypoint extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_Waypoint)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(20)
 
 		// Area (m)
 		writeDouble(buffer, this.Area)

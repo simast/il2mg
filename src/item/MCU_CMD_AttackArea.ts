@@ -30,7 +30,7 @@ export default class MCU_CMD_AttackArea extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_CMD_AttackArea)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(19)
 
 		// AttackArea
 		writeDouble(buffer, this.AttackArea)
