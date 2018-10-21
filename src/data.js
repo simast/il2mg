@@ -55,14 +55,9 @@ class Data {
 		// Map of supported data formats/extensions
 		this.dataFormats = Object.create(null)
 
-		// NOTE: For performance reasons YAML files are only used in development mode
-		// (while in production build data files are loaded using native JSON support).
-		if (process.env.NODE_ENV !== 'production') {
-			this.dataFormats['.yaml'] = require('js-yaml').safeLoad
-		}
-
-		// Always enable JSON format
+		// Enable JSON/YAML data formats
 		this.dataFormats['.json'] = JSON.parse
+		this.dataFormats['.yaml'] = require('js-yaml').safeLoad
 
 		// Main data directory path
 		this.dataPath = 'data'

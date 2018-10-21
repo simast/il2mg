@@ -1,5 +1,4 @@
 import path from 'path'
-import yaml from 'js-yaml'
 import CleanCSS from 'clean-css'
 import webpack from 'webpack'
 import electronPackager from 'electron-packager'
@@ -25,26 +24,9 @@ module.exports = function(grunt) {
 		// Build application data
 		const buildData = () => new Promise(resolve => {
 
-			// Process all application JSON/YAML data files
+			// Include all application JSON/YAML data files
 			grunt.file.expand('data/**/*.@(json|yaml)').forEach(file => {
-
-				let parseDataFile = JSON.parse
-
-				// NOTE: All YAML files are converted to JSON in production build
-				if (path.extname(file) === '.yaml') {
-					parseDataFile = yaml.safeLoad
-				}
-
-				// Rename file path to always use .json extension
-				const fileJSON = path.join(
-					path.dirname(file),
-					path.basename(file, path.extname(file)) + '.json'
-				)
-
-				// Write minified JSON files
-				grunt.file.write(path.join(buildDir, fileJSON), JSON.stringify(
-					parseDataFile(grunt.file.read(file))
-				))
+				grunt.file.copy(file, path.join(buildDir, file))
 			})
 
 			resolve()
