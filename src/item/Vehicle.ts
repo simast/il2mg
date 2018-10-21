@@ -1,3 +1,4 @@
+import {Country} from '../data/enums'
 import {Item} from './item'
 import {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from './constants'
 import {BinaryType} from './enums'
@@ -14,7 +15,7 @@ export default class Vehicle extends Item {
 
 	public DamageThreshold: Bit = 1
 	public DamageReport = DEFAULT_DAMAGE_REPORT
-	public Country = DEFAULT_COUNTRY
+	public readonly Country: Country = DEFAULT_COUNTRY
 	public AILevel = AI_NORMAL
 	public NumberInFormation? = 0
 	public Vulnerable: Bit = 1
