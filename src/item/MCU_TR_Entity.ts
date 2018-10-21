@@ -1,5 +1,6 @@
 import {SmartBuffer} from 'smart-buffer'
 
+import {DEFAULT_BUFFER_SIZE} from './constants'
 import MCU from './MCU'
 import {Bit} from './types'
 import {BinaryType} from './enums'
@@ -76,7 +77,7 @@ export default class MCU_TR_Entity extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_TR_Entity)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 
 		// Events list
 		this.writeEvents(buffer)

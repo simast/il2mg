@@ -1,5 +1,6 @@
 import {SmartBuffer} from 'smart-buffer'
 
+import {DEFAULT_BUFFER_SIZE} from './constants'
 import {Item} from './item'
 import {BinaryType} from './enums'
 import {Bit} from './types'
@@ -193,7 +194,7 @@ export default abstract class MCU extends Item {
 
 		yield* super.toBuffer(index, typeId)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 
 		// Enabled
 		writeUInt8(buffer, this.Enabled === undefined ? 1 : this.Enabled)

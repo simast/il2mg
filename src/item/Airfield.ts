@@ -1,5 +1,6 @@
 import {SmartBuffer} from 'smart-buffer'
 
+import {DEFAULT_BUFFER_SIZE} from './constants'
 import {Item} from './item'
 import Block from './Block'
 import {BinaryType} from './enums'
@@ -55,7 +56,7 @@ export default class Airfield extends Block {
 
 		yield* super.toBuffer(index, BinaryType.Airfield)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 		const {items = []} = this
 
 		// Find Chart item

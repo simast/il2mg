@@ -2,7 +2,7 @@ import {SmartBuffer} from 'smart-buffer'
 
 import {Country} from '../data/enums'
 import {Item} from './item'
-import {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from './constants'
+import {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY, DEFAULT_BUFFER_SIZE} from './constants'
 import {BinaryType} from './enums'
 import {Bit} from './types'
 import {writeUInt8, writeUInt32, writeString, writeFloat} from './utils'
@@ -52,7 +52,7 @@ export default class Plane extends Item {
 
 		yield* super.toBuffer(index, BinaryType.Plane)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 
 		// LinkTrId
 		writeUInt32(buffer, this.LinkTrId || 0)

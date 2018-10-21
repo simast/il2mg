@@ -3,7 +3,7 @@ import {SmartBuffer} from 'smart-buffer'
 import data from '../data'
 import {Mutable} from '../types'
 import {Country} from '../data/enums'
-import {DEFAULT_DAMAGE_REPORT} from './constants'
+import {DEFAULT_DAMAGE_REPORT, DEFAULT_BUFFER_SIZE} from './constants'
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
@@ -127,7 +127,7 @@ export default class MCU_TR_ComplexTrigger extends MCU {
 		const scripts: string[] = this.ObjectScript ? Array.from(this.ObjectScript) : []
 		const names: string[] = this.ObjectName ? Array.from(this.ObjectName) : []
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 
 		// Events list
 		this.writeEvents(buffer)

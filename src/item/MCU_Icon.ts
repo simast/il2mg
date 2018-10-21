@@ -1,6 +1,7 @@
 import {SmartBuffer} from 'smart-buffer'
 
 import {Coalition} from '../data/enums'
+import {DEFAULT_BUFFER_SIZE} from './constants'
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
@@ -105,7 +106,7 @@ export default class MCU_Icon extends MCU {
 
 		yield* super.toBuffer(index, BinaryType.MCU_Icon)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 
 		// IconId
 		writeUInt32(buffer, this.IconId)

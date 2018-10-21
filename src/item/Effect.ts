@@ -1,5 +1,6 @@
 import {SmartBuffer} from 'smart-buffer'
 
+import {DEFAULT_BUFFER_SIZE} from './constants'
 import {Item} from './item'
 import {BinaryType} from './enums'
 import {writeUInt32, writeString} from './utils'
@@ -17,7 +18,7 @@ export default class Effect extends Item {
 
 		yield* super.toBuffer(index, BinaryType.Effect)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 
 		// LinkTrId
 		writeUInt32(buffer, this.LinkTrId || 0)

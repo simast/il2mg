@@ -2,7 +2,7 @@ import {SmartBuffer} from 'smart-buffer'
 
 import {Country} from '../data/enums'
 import {Item} from './item'
-import {DEFAULT_COUNTRY} from './constants'
+import {DEFAULT_COUNTRY, DEFAULT_BUFFER_SIZE} from './constants'
 import {BinaryType} from './enums'
 import {Bit} from './types'
 import {writeUInt32, writeUInt8, writeFloat, writeDouble, writeString} from './utils'
@@ -29,7 +29,7 @@ export default class Flag extends Item {
 
 		yield* super.toBuffer(index, BinaryType.Flag)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 
 		// LinkTrId
 		writeUInt32(buffer, this.LinkTrId || 0)

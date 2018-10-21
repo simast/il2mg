@@ -1,5 +1,6 @@
 import {SmartBuffer} from 'smart-buffer'
 
+import {DEFAULT_BUFFER_SIZE} from './constants'
 import Vehicle from './Vehicle'
 import {BinaryType} from './enums'
 import {writeUInt32, writeString} from './utils'
@@ -27,7 +28,7 @@ export default class Train extends Vehicle {
 
 		yield* super.toBuffer(index, BinaryType.Train)
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 		const carriages = this.Carriages || []
 
 		// Number of Carriages items

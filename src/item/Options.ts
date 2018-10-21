@@ -2,6 +2,7 @@ import moment from 'moment'
 import {SmartBuffer} from 'smart-buffer'
 
 import {Coalition, Country} from '../data/enums'
+import {DEFAULT_BUFFER_SIZE} from './constants'
 import {Item} from './item'
 import {writeUInt32, writeString, writeDouble} from './utils'
 
@@ -44,7 +45,7 @@ export default class Options extends Item {
 	 */
 	protected *toBuffer(): IterableIterator<Buffer> {
 
-		const buffer = new SmartBuffer()
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 
 		const date = moment(this.Date, 'D.M.YYYY', true)
 		const time = moment(this.Time, 'H:m:s', true)
