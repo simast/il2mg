@@ -1,13 +1,12 @@
 import MCU from './MCU'
+import {Bit} from './types'
+import {BinaryType} from './enums'
 
 // Entity item
 export default class MCU_TR_Entity extends MCU {
 
-	constructor() {
-		super()
-
-		this.Enabled = 1
-	}
+	public Enabled: Bit = 1
+	public MisObjID?: number
 
 	// Valid Entity event type name and ID constants
 	get EVENTS() {
@@ -67,21 +66,22 @@ export default class MCU_TR_Entity extends MCU {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 30)
+		yield* super.toBinary(index, BinaryType.MCU_TR_Entity)
 
+		const {events, reports} = this
 		let size = 12
 
-		if (this.events) {
-			size += this.events.items.length * 8
+		if (events && events.items) {
+			size += events.items.length * 8
 		}
 
-		if (this.reports) {
-			size += this.reports.items.length * 12
+		if (reports && reports.items) {
+			size += reports.items.length * 12
 		}
 
 		const buffer = Buffer.allocUnsafe(size)

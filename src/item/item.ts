@@ -6,6 +6,7 @@ import {Country} from '../data/enums'
 import {PRECISION_ORIENTATION, PRECISION_POSITION} from './constants'
 import {convertUnicodeToASCII} from './utils'
 import {BinaryType} from './enums'
+import MCU_TR_Entity from './MCU_TR_Entity'
 
 declare global {
 	interface Buffer {
@@ -21,10 +22,10 @@ export class Item {
 
 	// Non-enumerable item properties
 	protected readonly mission?: any
-	public readonly items?: Immutable<Item[]>
+	public readonly items?: ReadonlyArray<Item>
 	protected parent?: Item
 	public readonly type?: string
-	public readonly entity?: any // FIXME: Use MCU_TR_Entity
+	public readonly entity?: MCU_TR_Entity
 
 	// Common enumerable item properties
 	public Model?: string
@@ -42,8 +43,8 @@ export class Item {
 	public readonly YOri?: number
 	public readonly ZOri?: number
 	public readonly Country?: Country
-	public readonly Targets?: Immutable<number[]>
-	public readonly Objects?: Immutable<number[]>
+	public readonly Targets?: ReadonlyArray<number>
+	public readonly Objects?: ReadonlyArray<number>
 	public readonly Index?: number
 	public readonly LinkTrId?: number
 
@@ -101,7 +102,7 @@ export class Item {
 		}
 
 		// Add child item
-		(items as Mutable<typeof items>).push(item)
+		(items as Array<Item>).push(item)
 
 		// Set child item parent reference
 		Object.defineProperty(item, 'parent', {
@@ -134,7 +135,7 @@ export class Item {
 		}
 
 		// Remove item from parent item hierarchy
-		(items as Mutable<typeof items>).splice(itemIndex, 1)
+		(items as Array<Item>).splice(itemIndex, 1)
 		delete this.parent
 	}
 
@@ -482,9 +483,11 @@ export class Item {
 	public addObject(item: Item): void
 	public addObject(this: Mutable<this>, item: Item): void {
 
+		let {entity} = item
+
 		// Object links are always linked to entities
-		if (!item.entity) {
-			item.createEntity()
+		if (!entity) {
+			entity = item.createEntity()
 		}
 
 		let objects = this.Objects
@@ -494,8 +497,8 @@ export class Item {
 		}
 
 		// Add a new item object link
-		if (!objects.includes(item.entity.Index)) {
-			objects.push(item.entity.Index)
+		if (!objects.includes(entity.Index!)) {
+			objects.push(entity.Index!)
 		}
 	}
 
@@ -508,12 +511,13 @@ export class Item {
 	public removeObject(this: Mutable<this>, item: Item): void {
 
 		const objects = this.Objects
+		const {entity} = item
 
-		if (!item.entity || !objects || !objects.length) {
+		if (!entity || !entity.Index || !objects || !objects.length) {
 			return
 		}
 
-		const itemObjectsIndex = objects.indexOf(item.entity.Index)
+		const itemObjectsIndex = objects.indexOf(entity.Index)
 
 		// Remove existing item object link
 		if (itemObjectsIndex !== -1) {
@@ -527,13 +531,13 @@ export class Item {
 	 * @param disabled Create entity in a disabled state.
 	 * @returns Linked item entity.
 	 */
-	public createEntity(disabled = false): Item /* FIXME: Use MCU_TR_Entity */ {
+	public createEntity(disabled = false): MCU_TR_Entity {
 
 		if (this.entity) {
 			throw new Error('Item is already linked to an entity.')
 		}
 
-		const entity = this.mission.createItem('MCU_TR_Entity', false)
+		const entity: MCU_TR_Entity = this.mission.createItem('MCU_TR_Entity', false)
 
 		// Link the item with entity
 		;(this as Mutable<this>).LinkTrId = entity.Index
@@ -821,7 +825,7 @@ export class Item {
 	 * @param buffer Target buffer object.
 	 * @param arrayValue Array value to write.
 	 */
-	protected writeUInt32Array(buffer: Buffer, arrayValue: number[]): void {
+	protected writeUInt32Array(buffer: Buffer, arrayValue: ReadonlyArray<number>): void {
 
 		// Array length
 		this.writeUInt32(buffer, arrayValue.length)

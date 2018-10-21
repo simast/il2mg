@@ -1,8 +1,29 @@
-import {Immutable} from '../types'
 import {Item} from './item'
 import Block from './Block'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+
+// Airfield -> Chart -> Point item
+class Point extends Item {
+
+	constructor(
+		public Type: number,
+		public X: number,
+		public Y: number
+	) {
+		super('Point')
+	}
+}
+
+// Airfield -> Chart item
+class Chart extends Item {
+
+	static Point = Point
+
+	constructor() {
+		super('Chart')
+	}
+}
 
 // Airfield item
 export default class Airfield extends Block {
@@ -18,6 +39,8 @@ export default class Airfield extends Block {
 	public RearmTime = 0
 	public RefuelTime = 0
 	public MaintenanceRadius = 0
+
+	static Chart = Chart
 
 	/**
 	 * Get binary representation of the item.
@@ -37,7 +60,7 @@ export default class Airfield extends Block {
 
 		// Find Chart->Point items
 		const pointItems = chartItem && chartItem.items
-			? chartItem.items.filter((item): item is Immutable<Point> => item.type === 'Point')
+			? chartItem.items.filter((item): item is Point => item.type === 'Point')
 			: []
 
 		size += pointItems.length * 20
@@ -92,25 +115,5 @@ export default class Airfield extends Block {
 		}
 
 		yield buffer
-	}
-}
-
-// Chart item
-export class Chart extends Item {
-
-	constructor() {
-		super('Chart')
-	}
-}
-
-// Chart->Point item
-export class Point extends Item {
-
-	constructor(
-		public Type: number,
-		public X: number,
-		public Y: number
-	) {
-		super('Point')
 	}
 }
