@@ -2,7 +2,7 @@ import moment from 'moment'
 import suncalc from 'suncalc'
 
 import {data} from '../data'
-import log from '../log'
+import {log} from '../log'
 
 // Main period time lengths
 const TIME_DAWN = data.time.dawn.period

@@ -1,4 +1,4 @@
-import log from '../log'
+import {log} from '../log'
 import makeFlight from './flight'
 import makePlayerForce from './forces.player'
 import makeAIForces from './forces.ai'

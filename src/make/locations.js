@@ -4,7 +4,7 @@ import knn from 'rbush-knn'
 import sylvester from 'sylvester'
 
 import {data} from '../data'
-import log from '../log'
+import {log} from '../log'
 
 // Location item types
 export const LocationType = Object.freeze({

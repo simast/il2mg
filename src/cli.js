@@ -4,7 +4,7 @@ import domain from 'domain'
 import moment from 'moment'
 import params from 'commander'
 
-import log from './log'
+import {log} from './log'
 import {getEnumValues, enumContainsValue} from './utils'
 import Mission from './mission'
 import {WeatherState} from './make/weather'

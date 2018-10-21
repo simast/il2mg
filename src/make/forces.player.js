@@ -1,4 +1,4 @@
-import log from '../log'
+import {log} from '../log'
 import {makeForce} from './forces'
 
 // Make player task force

@@ -1,7 +1,7 @@
 import path from 'path'
 import addLazyProperty from 'lazy-property'
 
-import log from '../log'
+import {log} from '../log'
 import {Item} from '../items'
 import {IconLine} from '../items/enums'
 import {Location, LocationType} from './locations'

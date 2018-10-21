@@ -2,7 +2,7 @@ import moment from 'moment'
 
 import {data} from '../data'
 import {matchDateRange} from '../data/utils'
-import log from '../log'
+import {log} from '../log'
 import {isValidRebaseTask} from './task.rebase'
 
 // Generate available mission units

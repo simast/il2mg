@@ -1,6 +1,6 @@
 import {data} from '../data'
 import {MapSeason} from '../data/enums'
-import log from '../log'
+import {log} from '../log'
 
 // Weather state/condition enum
 export const WeatherState = Object.freeze({

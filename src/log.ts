@@ -19,7 +19,7 @@ const levels = Object.keys(colors).reduce((result, level, index) => ({
 }), {})
 
 // Setup winston logger
-const log = new (winston.Logger)({
+export const log = new (winston.Logger)({
 	levels,
 	colors,
 	transports: [
@@ -33,5 +33,3 @@ const log = new (winston.Logger)({
 
 // HACK: Workaround for log.profile() using hardcoded "info" level
 log.info = log.I
-
-export default log

@@ -1,5 +1,6 @@
 import moment from 'moment'
-import log from '../log'
+
+import {log} from '../log'
 
 // Generate mission date
 export default function makeDate() {

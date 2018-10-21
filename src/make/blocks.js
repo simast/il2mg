@@ -1,6 +1,6 @@
 import path from 'path'
 
-import log from '../log'
+import {log} from '../log'
 import {Bridge} from '../items'
 import {data} from '../data'
 

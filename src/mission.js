@@ -6,7 +6,7 @@ import Random from 'random-js'
 import {data} from './data'
 import {Coalition} from './data/enums'
 import {APPLICATION_NAME, APPLICATION_VERSION} from './constants'
-import log from './log'
+import {log} from './log'
 import {Item} from './items'
 
 // Mission make parts
