@@ -1,33 +1,34 @@
+import {Country} from '../data/enums'
 import {Item} from './item'
 import {DEFAULT_COUNTRY} from './constants'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Flag item
 export default class Flag extends Item {
 
-	constructor() {
-		super()
-
-		this.StartHeight = 0
-		this.SpeedFactor = 1
-		this.BlockThreshold = 1
-		this.Radius = 1
-		this.Type = 0
-		this.CountPlanes = 0
-		this.CountVehicles = 0
-	}
+	public StartHeight = 0
+	public SpeedFactor = 1
+	public BlockThreshold = 1
+	public Radius = 1
+	public Type = 0
+	public CountPlanes: Bit = 0
+	public CountVehicles: Bit = 0
+	public readonly Country: Country = DEFAULT_COUNTRY
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 13)
+		yield* super.toBinary(index, BinaryType.Flag)
 
 		let size = 38
-		const scriptLength = Buffer.byteLength(this.Script)
+		const script = this.Script || ''
+		const scriptLength = Buffer.byteLength(script)
 
 		size += scriptLength
 
@@ -37,7 +38,7 @@ export default class Flag extends Item {
 		this.writeUInt32(buffer, this.LinkTrId || 0)
 
 		// Country
-		this.writeUInt32(buffer, this.Country || DEFAULT_COUNTRY)
+		this.writeUInt32(buffer, this.Country)
 
 		// StartHeight
 		this.writeFloat(buffer, this.StartHeight)
@@ -61,7 +62,7 @@ export default class Flag extends Item {
 		this.writeUInt8(buffer, this.CountVehicles)
 
 		// Script
-		this.writeString(buffer, scriptLength, this.Script)
+		this.writeString(buffer, scriptLength, script)
 
 		yield buffer
 	}

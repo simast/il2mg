@@ -1,25 +1,23 @@
 import {Item} from './item'
 import {DEFAULT_DAMAGE_REPORT} from './constants'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Ground item
 export default class Ground extends Item {
 
-	constructor() {
-		super()
-
-		this.DamageThreshold = 1
-		this.DamageReport = DEFAULT_DAMAGE_REPORT
-	}
+	public DamageThreshold: Bit = 1
+	public DamageReport = DEFAULT_DAMAGE_REPORT
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 7)
+		yield* super.toBinary(index, BinaryType.Ground)
 
 		const buffer = Buffer.allocUnsafe(9)
 
