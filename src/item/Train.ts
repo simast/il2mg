@@ -1,7 +1,10 @@
 import Vehicle from './Vehicle'
+import {BinaryType} from './enums'
 
 // Train item
 export default class Train extends Vehicle {
+
+	public Carriages?: string[]
 
 	constructor() {
 		super()
@@ -14,12 +17,12 @@ export default class Train extends Vehicle {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 8)
+		yield* super.toBinary(index, BinaryType.Train)
 
 		let size = 4
 		const carriages = []
@@ -27,9 +30,7 @@ export default class Train extends Vehicle {
 		// Build Carriages list
 		if (Array.isArray(this.Carriages)) {
 
-			for (let carriage of this.Carriages) {
-
-				carriage = carriage.toString()
+			for (const carriage of this.Carriages) {
 
 				carriages.push(carriage)
 				size += 4 + Buffer.byteLength(carriage)

@@ -42,7 +42,7 @@ export class Item {
 	public readonly XOri?: number
 	public readonly YOri?: number
 	public readonly ZOri?: number
-	public readonly Country?: Country
+	public readonly Country?: Country | ReadonlySet<Country>
 	public readonly Targets?: ReadonlyArray<number>
 	public readonly Objects?: ReadonlyArray<number>
 	public readonly Index?: number

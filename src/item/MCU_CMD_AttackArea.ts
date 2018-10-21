@@ -1,4 +1,6 @@
 import MCU from './MCU'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Attack area command priority constants
 export const PRIORITY_LOW = 0
@@ -8,26 +10,22 @@ export const PRIORITY_HIGH = 2
 // Attack area command item
 export default class MCU_CMD_AttackArea extends MCU {
 
-	constructor() {
-		super()
-
-		this.AttackGround = 0
-		this.AttackAir = 0
-		this.AttackGTargets = 0
-		this.AttackArea = 1000
-		this.Time = 600 // 10 minutes
-		this.Priority = PRIORITY_MEDIUM
-	}
+	public AttackGround: Bit = 0
+	public AttackAir: Bit = 0
+	public AttackGTargets: Bit = 0
+	public AttackArea = 1000
+	public Time = 600 // 10 minutes
+	public Priority = PRIORITY_MEDIUM
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 20)
+		yield* super.toBinary(index, BinaryType.MCU_CMD_AttackArea)
 
 		const buffer = Buffer.allocUnsafe(19)
 

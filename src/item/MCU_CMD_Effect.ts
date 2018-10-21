@@ -1,4 +1,5 @@
 import MCU from './MCU'
+import {BinaryType} from './enums'
 
 // Effect command action type constants
 export const ACTION_START = 0
@@ -7,21 +8,17 @@ export const ACTION_STOP = 1
 // Effect command item
 export default class MCU_CMD_Effect extends MCU {
 
-	constructor() {
-		super()
-
-		this.ActionType = ACTION_START
-	}
+	public ActionType = ACTION_START
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 26)
+		yield* super.toBinary(index, BinaryType.MCU_CMD_Effect)
 
 		const buffer = Buffer.allocUnsafe(4)
 

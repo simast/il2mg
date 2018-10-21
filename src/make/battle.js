@@ -30,7 +30,6 @@ export default function makeBattle() {
 
 	options.LCAuthor = this.getLC(APPLICATION_NAME + ' r' + APPLICATION_VERSION)
 	options.MissionType = 0 // Single-player mission
-	options.AqmId = 0 // TODO: ?
 
 	// Set country:coalition list
 	options.Countries = (() => {

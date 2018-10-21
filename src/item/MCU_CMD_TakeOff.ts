@@ -1,23 +1,21 @@
 import MCU from './MCU'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Take off command item
 export default class MCU_CMD_TakeOff extends MCU {
 
-	constructor() {
-		super()
-
-		this.NoTaxiTakeoff = 0
-	}
+	public NoTaxiTakeoff: Bit = 0
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 15)
+		yield* super.toBinary(index, BinaryType.MCU_CMD_TakeOff)
 
 		const buffer = Buffer.allocUnsafe(4)
 

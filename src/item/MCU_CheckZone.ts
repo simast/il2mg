@@ -1,25 +1,26 @@
+import {Coalition} from '../data/enums'
 import MCU from './MCU'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Check zone item
 export default class MCU_CheckZone extends MCU {
 
-	constructor() {
-		super()
-
-		this.Zone = 1000
-		this.Cylinder = 1
-		this.Closer = 1
-	}
+	public Zone = 1000
+	public Cylinder: Bit = 1
+	public Closer: Bit = 1
+	public PlaneCoalitions?: Coalition[]
+	public VehicleCoalitions?: Coalition[]
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 46)
+		yield* super.toBinary(index, BinaryType.MCU_CheckZone)
 
 		let size = 18
 

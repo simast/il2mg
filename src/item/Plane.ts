@@ -1,5 +1,7 @@
 import {Item} from './item'
 import {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from './constants'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Plane AI level constants
 export const AI_PLAYER = 0
@@ -16,42 +18,39 @@ export const START_PARKING = 2
 // Plane item
 export default class Plane extends Item {
 
-	constructor() {
-		super()
-
-		this.DamageThreshold = 1
-		this.DamageReport = DEFAULT_DAMAGE_REPORT
-		this.Country = DEFAULT_COUNTRY
-		this.AILevel = AI_NORMAL
-		this.CoopStart = 0
-		this.NumberInFormation = 0
-		this.StartInAir = START_AIR
-		this.Callsign = 0
-		this.Callnum = 0
-		this.Time = 60
-		this.Vulnerable = 1
-		this.Engageable = 1
-		this.LimitAmmo = 1
-		this.Spotter = -1
-		this.PayloadId = 0
-		this.WMMask = 1
-		this.AiRTBDecision = 1
-		this.DeleteAfterDeath = 1
-		this.Fuel = 1
-	}
+	public DamageThreshold: Bit = 1
+	public DamageReport = DEFAULT_DAMAGE_REPORT
+	public Country = DEFAULT_COUNTRY
+	public AILevel = AI_NORMAL
+	public CoopStart: Bit = 0
+	public NumberInFormation = 0
+	public StartInAir = START_AIR
+	public Callsign = 0
+	public Callnum = 0
+	public Time = 60
+	public Vulnerable: Bit = 1
+	public Engageable: Bit = 1
+	public LimitAmmo: Bit = 1
+	public Spotter = -1
+	public PayloadId = 0
+	public WMMask = 1
+	public AiRTBDecision: Bit = 1
+	public DeleteAfterDeath: Bit = 1
+	public Fuel = 1
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 3)
+		yield* super.toBinary(index, BinaryType.Plane)
 
+		const script = this.Script || ''
+		const scriptLength = Buffer.byteLength(script)
 		let size = 54
-		const scriptLength = Buffer.byteLength(this.Script)
 
 		size += scriptLength
 
@@ -67,7 +66,7 @@ export default class Plane extends Item {
 		this.writeUInt32(buffer, this.DamageReport)
 
 		// Script
-		this.writeString(buffer, scriptLength, this.Script)
+		this.writeString(buffer, scriptLength, script)
 
 		// Country
 		this.writeUInt32(buffer, this.Country)

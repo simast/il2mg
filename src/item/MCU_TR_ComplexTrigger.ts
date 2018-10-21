@@ -1,5 +1,10 @@
+import data from '../data'
+import {Mutable} from '../types'
+import {Country} from '../data/enums'
 import {DEFAULT_DAMAGE_REPORT} from './constants'
 import MCU from './MCU'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Complex Trigger event filters (with order representing bit number in binary file)
 const eventFilters = [
@@ -29,21 +34,38 @@ const eventFilters = [
 // Complex Trigger item
 export default class MCU_TR_ComplexTrigger extends MCU {
 
-	constructor() {
-		super()
+	public Enabled: Bit = 1
+	public Cylinder: Bit = 1
+	public Radius = 1000 // Meters
+	public DamageThreshold: Bit = 1
+	public DamageReport = DEFAULT_DAMAGE_REPORT
+	public CheckPlanes: Bit = 0
+	public CheckVehicles: Bit = 0
+	public readonly Country?: ReadonlySet<Country>
+	public ObjectScript?: Set<string>
+	public ObjectName?: Set<string>
 
-		this.Enabled = 1
-		this.Cylinder = 1
-		this.Radius = 1000
-		this.DamageThreshold = 1
-		this.DamageReport = DEFAULT_DAMAGE_REPORT
-		this.CheckPlanes = 0
-		this.CheckVehicles = 0
-
-		eventFilters.forEach(eventFilter => {
-			this[eventFilter] = 0
-		})
-	}
+	public EventsFilterSpawned: Bit = 0
+	public EventsFilterEnteredSimple: Bit = 0
+	public EventsFilterEnteredAlive: Bit = 0
+	public EventsFilterLeftSimple: Bit = 0
+	public EventsFilterLeftAlive: Bit = 0
+	public EventsFilterFinishedSimple: Bit = 0
+	public EventsFilterFinishedAlive: Bit = 0
+	public EventsFilterStationaryAndAlive: Bit = 0
+	public EventsFilterFinishedStationaryAndAlive: Bit = 0
+	public EventsFilterTookOff: Bit = 0
+	public EventsFilterDamaged: Bit = 0
+	public EventsFilterCriticallyDamaged: Bit = 0
+	public EventsFilterRepaired: Bit = 0
+	public EventsFilterKilled: Bit = 0
+	public EventsFilterDropedBombs: Bit = 0
+	public EventsFilterFiredFlare: Bit = 0
+	public EventsFilterFiredRockets: Bit = 0
+	public EventsFilterDroppedCargoContainers: Bit = 0
+	public EventsFilterDeliveredCargo: Bit = 0
+	public EventsFilterParatrooperJumped: Bit = 0
+	public EventsFilterParatrooperLandedAlive: Bit = 0
 
 	// Valid Complex Trigger event type name and ID constants
 	get EVENTS() {
@@ -73,31 +95,48 @@ export default class MCU_TR_ComplexTrigger extends MCU {
 	}
 
 	/**
-	 * Get binary representation of the item.
+	 * Add new item country.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param countryId Country ID value.
 	 */
-	*toBinary(index) {
+	public addCountry(countryId: Country): void
+	public addCountry(this: Mutable<this>, countryId: Country): void {
 
-		yield* super.toBinary(index, 40)
-
-		let size = 36
-
-		if (this.events) {
-			size += this.events.items.length * 8
+		if (!this.Country) {
+			this.Country = new Set()
 		}
 
-		const countries = []
-		const scripts = []
-		const names = []
+		// Support for "alias" (hidden) countries
+		this.Country.add(data.countries[countryId].alias || countryId)
+	}
+
+	/**
+	 * Get binary representation of the item.
+	 *
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
+	 */
+	public *toBinary(index: any): IterableIterator<Buffer> {
+
+		yield* super.toBinary(index, BinaryType.MCU_TR_ComplexTrigger)
+
+		const {events} = this
+		let size = 36
+
+		if (events && events.items) {
+			size += events.items.length * 8
+		}
+
+		const countries: Country[] = []
+		const scripts: string[] = []
+		const names: string[] = []
 
 		// Build countries list
 		if (this.Country instanceof Set) {
 
-			for (const countryID of this.Country) {
+			for (const countryId of this.Country) {
 
-				countries.push(countryID)
+				countries.push(countryId)
 				size += 4
 			}
 		}
@@ -152,7 +191,7 @@ export default class MCU_TR_ComplexTrigger extends MCU {
 
 			// NOTE: In binary file event filter properties are stored as individual
 			// bits (flags) in a 32-bit unsigned integer value.
-			if (this[eventFilterProp]) {
+			if ((this as any)[eventFilterProp]) {
 				eventsFilterValue |= 1 << eventFilterIndex
 			}
 		})

@@ -1,5 +1,7 @@
 import {Item} from './item'
 import {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from './constants'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Vehicle AI level constants
 export const AI_PLAYER = 0
@@ -10,48 +12,45 @@ export const AI_HIGH = 3
 // Vehicle item
 export default class Vehicle extends Item {
 
-	constructor() {
-		super()
-
-		this.DamageThreshold = 1
-		this.DamageReport = DEFAULT_DAMAGE_REPORT
-		this.Country = DEFAULT_COUNTRY
-		this.AILevel = AI_NORMAL
-		this.NumberInFormation = 0
-		this.Vulnerable = 1
-		this.Engageable = 1
-		this.LimitAmmo = 1
-		this.Spotter = -1
-		this.BeaconChannel = 0
-		this.Callsign = 0
-		this.Callnum = 0
-		this.DeleteAfterDeath = 1
-		this.CoopStart = 0
-		this.PayloadId = 0
-		this.WMMask = 1
-		this.Fuel = 1
-		this.RepairFriendlies = 0
-		this.RearmFriendlies = 0
-		this.RefuelFriendlies = 0
-		this.RepairTime = 0
-		this.RearmTime = 0
-		this.RefuelTime = 0
-		this.MaintenanceRadius = 0
-	}
+	public DamageThreshold: Bit = 1
+	public DamageReport = DEFAULT_DAMAGE_REPORT
+	public Country = DEFAULT_COUNTRY
+	public AILevel = AI_NORMAL
+	public NumberInFormation? = 0
+	public Vulnerable: Bit = 1
+	public Engageable: Bit = 1
+	public LimitAmmo: Bit = 1
+	public Spotter = -1
+	public BeaconChannel = 0
+	public Callsign = 0
+	public Callnum = 0
+	public DeleteAfterDeath: Bit = 1
+	public CoopStart?: Bit = 0
+	public PayloadId = 0
+	public WMMask = 1
+	public Fuel = 1
+	public RepairFriendlies: Bit = 0
+	public RearmFriendlies: Bit = 0
+	public RefuelFriendlies: Bit = 0
+	public RepairTime = 0
+	public RearmTime = 0
+	public RefuelTime = 0
+	public MaintenanceRadius = 0
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @param {number} typeID Binary item type ID.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @param typeId Binary item type ID.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index, typeID) {
+	public *toBinary(index: any, typeId?: number) {
 
-		yield* super.toBinary(index, typeID || 2)
+		yield* super.toBinary(index, typeId || BinaryType.Vehicle)
 
+		const script = this.Script || ''
+		const scriptLength = Buffer.byteLength(script)
 		let size = 71
-		const scriptLength = Buffer.byteLength(this.Script)
 
 		size += scriptLength
 
@@ -67,7 +66,7 @@ export default class Vehicle extends Item {
 		this.writeUInt32(buffer, this.DamageReport)
 
 		// Script
-		this.writeString(buffer, scriptLength, this.Script)
+		this.writeString(buffer, scriptLength, script)
 
 		// Country
 		this.writeUInt32(buffer, this.Country)

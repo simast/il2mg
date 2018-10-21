@@ -1,24 +1,22 @@
 import MCU from './MCU'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Counter item
 export default class MCU_Counter extends MCU {
 
-	constructor() {
-		super()
-
-		this.Counter = 1
-		this.Dropcount = 0
-	}
+	public Counter = 1
+	public Dropcount: Bit = 0
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 43)
+		yield* super.toBinary(index, BinaryType.MCU_Counter)
 
 		const buffer = Buffer.allocUnsafe(5)
 

@@ -1,4 +1,5 @@
 import MCU from './MCU'
+import {BinaryType} from './enums'
 
 // Formation command type constants
 export const TYPE_PLANE_NONE = 0 // Plane: None
@@ -23,22 +24,18 @@ export const DENSITY_LOOSE = 2
 // Formation command item
 export default class MCU_CMD_Formation extends MCU {
 
-	constructor() {
-		super()
-
-		this.FormationType = TYPE_PLANE_NONE
-		this.FormationDensity = DENSITY_SAFE
-	}
+	public FormationType = TYPE_PLANE_NONE
+	public FormationDensity = DENSITY_SAFE
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 19)
+		yield* super.toBinary(index, BinaryType.MCU_CMD_Formation)
 
 		const buffer = Buffer.allocUnsafe(8)
 

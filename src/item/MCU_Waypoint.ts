@@ -1,4 +1,5 @@
 import MCU from './MCU'
+import {BinaryType} from './enums'
 
 // Waypoint priority constants
 export const PRIORITY_LOW = 0
@@ -8,23 +9,19 @@ export const PRIORITY_HIGH = 2
 // Waypoint item
 export default class MCU_Waypoint extends MCU {
 
-	constructor() {
-		super()
-
-		this.Area = 0
-		this.Speed = 0
-		this.Priority = PRIORITY_MEDIUM
-	}
+	public Area = 0
+	public Speed = 0
+	public Priority = PRIORITY_MEDIUM
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 42)
+		yield* super.toBinary(index, BinaryType.MCU_Waypoint)
 
 		const buffer = Buffer.allocUnsafe(20)
 

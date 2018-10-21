@@ -1,17 +1,46 @@
 import moment from 'moment'
+
+import {Coalition, Country} from '../data/enums'
 import {Item} from './item'
 
 // Options item
 export default class Options extends Item {
+
+	public Date = ''
+	public Time = ''
+	public HMap = ''
+	public Textures = ''
+	public Forests = ''
+	public GuiMap = ''
+	public Layers = ''
+	public SeasonPrefix = ''
+	public PlayerConfig = ''
+	public CloudConfig = ''
+	public MissionType = 0
+	public AqmId = 0
+	public WindLayers: [number, number, number][] = []
+	public Countries: [Country, Coalition][] = []
+	public readonly LCName: number = 0
+	public LCAuthor: number = 0
+	public readonly LCDesc: number = 0
+	public CloudLevel = 0
+	public CloudHeight = 0
+	public PrecLevel = 0
+	public PrecType = 0
+	public Turbulence = 0
+	public TempPressLevel = 0
+	public Temperature = 0
+	public Pressure = 0
+	public SeaState = 0
 
 	get hasIndex() {return false}
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @returns {Buffer} Binary representation of the item.
+	 * @yields Item data buffer.
 	 */
-	*toBinary() {
+	public *toBinary(): IterableIterator<Buffer> {
 
 		const date = moment(this.Date, 'D.M.YYYY', true)
 		const time = moment(this.Time, 'H:m:s', true)
@@ -41,7 +70,7 @@ export default class Options extends Item {
 
 		const buffer = Buffer.allocUnsafe(size)
 
-		// File version
+		// File version?
 		this.writeUInt32(buffer, 28)
 
 		// MissionType
@@ -136,29 +165,29 @@ export default class Options extends Item {
 		this.writeUInt32(buffer, this.WindLayers.length)
 
 		// WindLayers
-		this.WindLayers.forEach(windLayer => {
+		this.WindLayers.forEach(([height, direction, speed]) => {
 
 			// WindLayer ground height
-			this.writeDouble(buffer, windLayer[0])
+			this.writeDouble(buffer, height)
 
 			// WindLayer direction
-			this.writeDouble(buffer, windLayer[1])
+			this.writeDouble(buffer, direction)
 
 			// WindLayer speed
-			this.writeDouble(buffer, windLayer[2])
+			this.writeDouble(buffer, speed)
 		})
 
 		// Countries length
 		this.writeUInt32(buffer, this.Countries.length)
 
 		// Countries
-		this.Countries.forEach(country => {
+		this.Countries.forEach(([countryId, coalitionId]) => {
 
 			// Country ID
-			this.writeUInt32(buffer, country[0])
+			this.writeUInt32(buffer, countryId)
 
 			// Coalition ID
-			this.writeUInt32(buffer, country[1])
+			this.writeUInt32(buffer, coalitionId)
 		})
 
 		yield buffer

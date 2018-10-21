@@ -1,24 +1,21 @@
 import MCU from './MCU'
+import {BinaryType} from './enums'
 
 // Timer item
 export default class MCU_Timer extends MCU {
 
-	constructor() {
-		super()
-
-		this.Time = 0
-		this.Random = 100
-	}
+	public Time = 0 // Seconds
+	public Random = 100
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 41)
+		yield* super.toBinary(index, BinaryType.MCU_Timer)
 
 		const buffer = Buffer.allocUnsafe(9)
 

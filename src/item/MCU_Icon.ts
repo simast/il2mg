@@ -1,4 +1,7 @@
+import {Coalition} from '../data/enums'
 import MCU from './MCU'
+import {BinaryType} from './enums'
+import {Bit} from './types'
 
 // Icon type constants
 export const ICON_NONE = 0
@@ -67,45 +70,37 @@ export const LINE_POSITION_9 = 22
 // Icon item
 export default class MCU_Icon extends MCU {
 
-	constructor() {
-		super()
-
-		this.Enabled = 1
-		this.LCName = 0
-		this.LCDesc = 0
-		this.IconId = ICON_NONE
-		this.RColor = 0
-		this.GColor = 0
-		this.BColor = 0
-		this.LineType = LINE_NORMAL
-	}
+	public Enabled: Bit = 1
+	public readonly LCName: number = 0
+	public readonly LCDesc: number = 0
+	public IconId = ICON_NONE
+	public RColor = 0
+	public GColor = 0
+	public BColor = 0
+	public LineType = LINE_NORMAL
+	public Coalitions?: Coalition[]
 
 	/**
 	 * Set icon item color value.
 	 *
-	 * @param {number[]} color Color value as RGB array.
+	 * @param color Color value as [R, G, B] array.
 	 */
-	setColor(color) {
+	public setColor([red, green, blue]: [number, number, number]): void {
 
-		// Validate color value
-		if (!Array.isArray(color) || color.length !== 3) {
-			throw new Error('Invalid icon item color value.')
-		}
-
-		this.RColor = color[0]
-		this.GColor = color[1]
-		this.BColor = color[2]
+		this.RColor = red
+		this.GColor = green
+		this.BColor = blue
 	}
 
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param {object} index Binary data index object.
-	 * @returns {Buffer} Binary representation of the item.
+	 * @param index Binary data index object.
+	 * @yields Item data buffer.
 	 */
-	*toBinary(index) {
+	public *toBinary(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, 35)
+		yield* super.toBinary(index, BinaryType.MCU_Icon)
 
 		let size = 32
 
