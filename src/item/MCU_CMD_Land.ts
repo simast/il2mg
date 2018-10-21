@@ -1,5 +1,8 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
+import {writeUInt32} from './utils'
 
 // Land command priority constants
 export const PRIORITY_LOW = 0
@@ -17,15 +20,15 @@ export default class MCU_CMD_Land extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_CMD_Land)
+		yield* super.toBuffer(index, BinaryType.MCU_CMD_Land)
 
-		const buffer = Buffer.allocUnsafe(4)
+		const buffer = new SmartBuffer()
 
 		// Priority
-		this.writeUInt32(buffer, this.Priority)
+		writeUInt32(buffer, this.Priority)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

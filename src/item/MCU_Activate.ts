@@ -10,7 +10,7 @@ export default class MCU_Activate extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
-		yield* super.toBinary(index, BinaryType.MCU_Activate)
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
+		yield* super.toBuffer(index, BinaryType.MCU_Activate)
 	}
 }

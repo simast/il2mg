@@ -1,7 +1,10 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Item} from './item'
 import Block from './Block'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt32, writeUInt8, writeDouble} from './utils'
 
 // Airfield -> Chart -> Point item
 class Point extends Item {
@@ -48,72 +51,68 @@ export default class Airfield extends Block {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.Airfield)
+		yield* super.toBuffer(index, BinaryType.Airfield)
 
-		let size = 31
+		const buffer = new SmartBuffer()
 		const {items = []} = this
 
 		// Find Chart item
-		const chartItem = items.find(({type}) => type === 'Chart')
+		const chartItem = items.find((item): item is Chart => item.type === 'Chart')
 
 		// Find Chart->Point items
 		const pointItems = chartItem && chartItem.items
 			? chartItem.items.filter((item): item is Point => item.type === 'Point')
 			: []
 
-		size += pointItems.length * 20
-
-		const buffer = Buffer.allocUnsafe(size)
-
 		// ReturnPlanes
-		this.writeUInt8(buffer, this.ReturnPlanes)
+		writeUInt8(buffer, this.ReturnPlanes)
 
 		// Hydrodrome
-		this.writeUInt8(buffer, this.Hydrodrome)
+		writeUInt8(buffer, this.Hydrodrome)
 
 		// Callsign
-		this.writeUInt8(buffer, this.Callsign)
+		writeUInt8(buffer, this.Callsign)
 
 		// Callnum
-		this.writeUInt8(buffer, this.Callnum)
+		writeUInt8(buffer, this.Callnum)
 
 		// RepairFriendlies
-		this.writeUInt8(buffer, this.RepairFriendlies)
+		writeUInt8(buffer, this.RepairFriendlies)
 
 		// RearmFriendlies
-		this.writeUInt8(buffer, this.RearmFriendlies)
+		writeUInt8(buffer, this.RearmFriendlies)
 
 		// RefuelFriendlies
-		this.writeUInt8(buffer, this.RefuelFriendlies)
+		writeUInt8(buffer, this.RefuelFriendlies)
 
 		// RepairTime
-		this.writeUInt32(buffer, this.RepairTime)
+		writeUInt32(buffer, this.RepairTime)
 
 		// RearmTime
-		this.writeUInt32(buffer, this.RearmTime)
+		writeUInt32(buffer, this.RearmTime)
 
 		// RefuelTime
-		this.writeUInt32(buffer, this.RefuelTime)
+		writeUInt32(buffer, this.RefuelTime)
 
 		// MaintenanceRadius
-		this.writeUInt32(buffer, this.MaintenanceRadius)
+		writeUInt32(buffer, this.MaintenanceRadius)
 
 		// Unknown data (number of OnReports table items?)
-		this.writeUInt32(buffer, 0)
+		writeUInt32(buffer, 0)
 
 		// Number of Chart->Point items
-		this.writeUInt32(buffer, pointItems.length)
+		writeUInt32(buffer, pointItems.length)
 
 		// List of Point items
 		for (const item of pointItems) {
 
-			this.writeUInt32(buffer, item.Type) // Type
-			this.writeDouble(buffer, item.X) // X
-			this.writeDouble(buffer, item.Y) // Y
+			writeUInt32(buffer, item.Type) // Type
+			writeDouble(buffer, item.X) // X
+			writeDouble(buffer, item.Y) // Y
 		}
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

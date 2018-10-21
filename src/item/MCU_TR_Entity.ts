@@ -1,6 +1,9 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {Bit} from './types'
 import {BinaryType} from './enums'
+import {writeUInt32} from './utils'
 
 // Entity item
 export default class MCU_TR_Entity extends MCU {
@@ -69,32 +72,21 @@ export default class MCU_TR_Entity extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_TR_Entity)
+		yield* super.toBuffer(index, BinaryType.MCU_TR_Entity)
 
-		const {events, reports} = this
-		let size = 12
-
-		if (events && events.items) {
-			size += events.items.length * 8
-		}
-
-		if (reports && reports.items) {
-			size += reports.items.length * 12
-		}
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
 
 		// Events list
 		this.writeEvents(buffer)
 
 		// MisObjID
-		this.writeUInt32(buffer, this.MisObjID || 0)
+		writeUInt32(buffer, this.MisObjID || 0)
 
 		// Reports list
 		this.writeReports(buffer)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

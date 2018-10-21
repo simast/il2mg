@@ -1,6 +1,9 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt8} from './utils'
 
 // Spawner item
 export default class MCU_Spawner extends MCU {
@@ -13,15 +16,15 @@ export default class MCU_Spawner extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_Spawner)
+		yield* super.toBuffer(index, BinaryType.MCU_Spawner)
 
-		const buffer = Buffer.allocUnsafe(1)
+		const buffer = new SmartBuffer()
 
 		// SpawnAtMe
-		this.writeUInt8(buffer, this.SpawnAtMe)
+		writeUInt8(buffer, this.SpawnAtMe)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

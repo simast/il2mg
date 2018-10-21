@@ -1,8 +1,11 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Country} from '../data/enums'
 import {Item} from './item'
 import {DEFAULT_COUNTRY, DEFAULT_DAMAGE_REPORT, DEFAULT_DURABILITY} from './constants'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt32, writeUInt8, writeUInt16} from './utils'
 
 // Block item
 export default class Block extends Item {
@@ -20,16 +23,16 @@ export default class Block extends Item {
 	 * @param typeId Binary item type ID.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any, typeId?: BinaryType): IterableIterator<Buffer> {
+	protected *toBuffer(index: any, typeId?: BinaryType): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, typeId ? typeId : BinaryType.Block)
+		yield* super.toBuffer(index, typeId || BinaryType.Block)
 
-		const buffer = Buffer.allocUnsafe(13)
+		const buffer = new SmartBuffer()
 		const {items = []} = this
 		const damageItem = items.find(({type}) => type === 'Damaged')
 
 		// LinkTrId
-		this.writeUInt32(buffer, this.LinkTrId || 0)
+		writeUInt32(buffer, this.LinkTrId || 0)
 
 		// Flags
 		let flags = 0
@@ -49,24 +52,24 @@ export default class Block extends Item {
 			flags |= 1 << 2
 		}
 
-		this.writeUInt8(buffer, flags)
+		writeUInt8(buffer, flags)
 
 		// Country
-		this.writeUInt16(buffer, this.Country)
+		writeUInt16(buffer, this.Country)
 
 		// DamageReport
-		this.writeUInt8(buffer, this.DamageReport)
+		writeUInt8(buffer, this.DamageReport)
 
 		// NOTE: Durability in binary file is represented as a 8 bit unsigned integer
 		// number where the value is 1 point for every 500 normal durability points.
-		this.writeUInt8(buffer, Math.round(this.Durability / 500))
+		writeUInt8(buffer, Math.round(this.Durability / 500))
 
 		// Script string table index
-		this.writeUInt16(buffer, index.script.value(this.Script))
+		writeUInt16(buffer, index.script.value(this.Script))
 
 		// Damage data table index
-		this.writeUInt16(buffer, damageItem ? index.damage.value(damageItem) : 0xFFFF)
+		writeUInt16(buffer, damageItem ? index.damage.value(damageItem) : 0xFFFF)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

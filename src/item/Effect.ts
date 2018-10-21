@@ -1,5 +1,8 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Item} from './item'
 import {BinaryType} from './enums'
+import {writeUInt32, writeString} from './utils'
 
 // Effect item
 export default class Effect extends Item {
@@ -10,24 +13,18 @@ export default class Effect extends Item {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.Effect)
+		yield* super.toBuffer(index, BinaryType.Effect)
 
-		let size = 8
-		const script = this.Script || ''
-		const scriptLength = Buffer.byteLength(script)
-
-		size += scriptLength
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
 
 		// LinkTrId
-		this.writeUInt32(buffer, this.LinkTrId || 0)
+		writeUInt32(buffer, this.LinkTrId || 0)
 
 		// Script
-		this.writeString(buffer, scriptLength, script)
+		writeString(buffer, this.Script || '')
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

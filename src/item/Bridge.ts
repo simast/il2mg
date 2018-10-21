@@ -10,7 +10,7 @@ export default class Bridge extends Block {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
-		yield* super.toBinary(index, BinaryType.Bridge)
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
+		yield* super.toBuffer(index, BinaryType.Bridge)
 	}
 }

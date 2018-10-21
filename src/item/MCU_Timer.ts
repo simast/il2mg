@@ -1,5 +1,8 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
+import {writeUInt8, writeDouble} from './utils'
 
 // Timer item
 export default class MCU_Timer extends MCU {
@@ -13,18 +16,18 @@ export default class MCU_Timer extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_Timer)
+		yield* super.toBuffer(index, BinaryType.MCU_Timer)
 
-		const buffer = Buffer.allocUnsafe(9)
+		const buffer = new SmartBuffer()
 
 		// Time
-		this.writeDouble(buffer, this.Time)
+		writeDouble(buffer, this.Time)
 
 		// Random
-		this.writeUInt8(buffer, this.Random)
+		writeUInt8(buffer, this.Random)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

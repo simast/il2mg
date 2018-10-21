@@ -1,8 +1,11 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Country} from '../data/enums'
 import {Item} from './item'
 import {DEFAULT_COUNTRY} from './constants'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt32, writeUInt8, writeFloat, writeDouble, writeString} from './utils'
 
 // Flag item
 export default class Flag extends Item {
@@ -22,48 +25,42 @@ export default class Flag extends Item {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.Flag)
+		yield* super.toBuffer(index, BinaryType.Flag)
 
-		let size = 38
-		const script = this.Script || ''
-		const scriptLength = Buffer.byteLength(script)
-
-		size += scriptLength
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
 
 		// LinkTrId
-		this.writeUInt32(buffer, this.LinkTrId || 0)
+		writeUInt32(buffer, this.LinkTrId || 0)
 
 		// Country
-		this.writeUInt32(buffer, this.Country)
+		writeUInt32(buffer, this.Country)
 
 		// StartHeight
-		this.writeFloat(buffer, this.StartHeight)
+		writeFloat(buffer, this.StartHeight)
 
 		// SpeedFactor
-		this.writeFloat(buffer, this.SpeedFactor)
+		writeFloat(buffer, this.SpeedFactor)
 
 		// BlockThreshold
-		this.writeFloat(buffer, this.BlockThreshold)
+		writeFloat(buffer, this.BlockThreshold)
 
 		// Radius
-		this.writeDouble(buffer, this.Radius)
+		writeDouble(buffer, this.Radius)
 
 		// Type
-		this.writeUInt32(buffer, this.Type)
+		writeUInt32(buffer, this.Type)
 
 		// CountPlanes
-		this.writeUInt8(buffer, this.CountPlanes)
+		writeUInt8(buffer, this.CountPlanes)
 
 		// CountVehicles
-		this.writeUInt8(buffer, this.CountVehicles)
+		writeUInt8(buffer, this.CountVehicles)
 
 		// Script
-		this.writeString(buffer, scriptLength, script)
+		writeString(buffer, this.Script || '')
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

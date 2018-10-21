@@ -1,7 +1,10 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Coalition} from '../data/enums'
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt8, writeUInt32, writeUInt32Array} from './utils'
 
 // Proximity item
 export default class MCU_Proximity extends MCU {
@@ -17,34 +20,24 @@ export default class MCU_Proximity extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_Proximity)
+		yield* super.toBuffer(index, BinaryType.MCU_Proximity)
 
-		let size = 13
-
-		if (Array.isArray(this.PlaneCoalitions)) {
-			size += this.PlaneCoalitions.length * 4
-		}
-
-		if (Array.isArray(this.VehicleCoalitions)) {
-			size += this.VehicleCoalitions.length * 4
-		}
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
 
 		// Distance
-		this.writeUInt32(buffer, this.Distance)
+		writeUInt32(buffer, this.Distance)
 
 		// Closer
-		this.writeUInt8(buffer, this.Closer)
+		writeUInt8(buffer, this.Closer)
 
 		// PlaneCoalitions
-		this.writeUInt32Array(buffer, this.PlaneCoalitions || [])
+		writeUInt32Array(buffer, this.PlaneCoalitions || [])
 
 		// VehicleCoalitions
-		this.writeUInt32Array(buffer, this.VehicleCoalitions || [])
+		writeUInt32Array(buffer, this.VehicleCoalitions || [])
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

@@ -1,6 +1,9 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt8, writeUInt32, writeDouble} from './utils'
 
 // Attack area command priority constants
 export const PRIORITY_LOW = 0
@@ -23,30 +26,30 @@ export default class MCU_CMD_AttackArea extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_CMD_AttackArea)
+		yield* super.toBuffer(index, BinaryType.MCU_CMD_AttackArea)
 
-		const buffer = Buffer.allocUnsafe(19)
+		const buffer = new SmartBuffer()
 
 		// AttackArea
-		this.writeDouble(buffer, this.AttackArea)
+		writeDouble(buffer, this.AttackArea)
 
 		// AttackGround
-		this.writeUInt8(buffer, this.AttackGround)
+		writeUInt8(buffer, this.AttackGround)
 
 		// AttackAir
-		this.writeUInt8(buffer, this.AttackAir)
+		writeUInt8(buffer, this.AttackAir)
 
 		// AttackGTargets
-		this.writeUInt8(buffer, this.AttackGTargets)
+		writeUInt8(buffer, this.AttackGTargets)
 
 		// Time
-		this.writeUInt32(buffer, this.Time)
+		writeUInt32(buffer, this.Time)
 
 		// Priority
-		this.writeUInt32(buffer, this.Priority)
+		writeUInt32(buffer, this.Priority)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

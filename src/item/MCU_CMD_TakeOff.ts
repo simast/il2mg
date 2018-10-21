@@ -1,6 +1,9 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt32} from './utils'
 
 // Take off command item
 export default class MCU_CMD_TakeOff extends MCU {
@@ -13,15 +16,15 @@ export default class MCU_CMD_TakeOff extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_CMD_TakeOff)
+		yield* super.toBuffer(index, BinaryType.MCU_CMD_TakeOff)
 
-		const buffer = Buffer.allocUnsafe(4)
+		const buffer = new SmartBuffer()
 
 		// NoTaxiTakeoff
-		this.writeUInt32(buffer, this.NoTaxiTakeoff)
+		writeUInt32(buffer, this.NoTaxiTakeoff)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

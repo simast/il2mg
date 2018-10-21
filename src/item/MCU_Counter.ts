@@ -1,6 +1,9 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt32, writeUInt8} from './utils'
 
 // Counter item
 export default class MCU_Counter extends MCU {
@@ -14,18 +17,18 @@ export default class MCU_Counter extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_Counter)
+		yield* super.toBuffer(index, BinaryType.MCU_Counter)
 
-		const buffer = Buffer.allocUnsafe(5)
+		const buffer = new SmartBuffer()
 
 		// Counter
-		this.writeUInt32(buffer, this.Counter)
+		writeUInt32(buffer, this.Counter)
 
 		// Dropcount
-		this.writeUInt8(buffer, this.Dropcount)
+		writeUInt8(buffer, this.Dropcount)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

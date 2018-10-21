@@ -541,7 +541,7 @@ export default class Mission {
 					// Get item binary representation (data buffers)
 					else {
 
-						for (const buffer of item.toBinary(indexTables)) {
+						for (const buffer of item.toBuffer(indexTables)) {
 
 							// Collect Options item buffers
 							if (item instanceof Item.Options) {
@@ -556,7 +556,7 @@ export default class Mission {
 						// Process linked item entity
 						if (item.entity) {
 
-							for (const buffer of item.entity.toBinary(indexTables)) {
+							for (const buffer of item.entity.toBuffer(indexTables)) {
 								itemBuffers.push(buffer)
 							}
 

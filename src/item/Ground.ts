@@ -1,7 +1,10 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Item} from './item'
 import {DEFAULT_DAMAGE_REPORT} from './constants'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt32, writeUInt8} from './utils'
 
 // Ground item
 export default class Ground extends Item {
@@ -15,21 +18,21 @@ export default class Ground extends Item {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.Ground)
+		yield* super.toBuffer(index, BinaryType.Ground)
 
-		const buffer = Buffer.allocUnsafe(9)
+		const buffer = new SmartBuffer()
 
 		// LinkTrId
-		this.writeUInt32(buffer, this.LinkTrId || 0)
+		writeUInt32(buffer, this.LinkTrId || 0)
 
 		// DamageThreshold
-		this.writeUInt8(buffer, this.DamageThreshold)
+		writeUInt8(buffer, this.DamageThreshold)
 
 		// DamageReport
-		this.writeUInt32(buffer, this.DamageReport)
+		writeUInt32(buffer, this.DamageReport)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

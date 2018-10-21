@@ -1,5 +1,8 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
+import {writeUInt32} from './utils'
 
 // Effect command action type constants
 export const ACTION_START = 0
@@ -16,15 +19,15 @@ export default class MCU_CMD_Effect extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_CMD_Effect)
+		yield* super.toBuffer(index, BinaryType.MCU_CMD_Effect)
 
-		const buffer = Buffer.allocUnsafe(4)
+		const buffer = new SmartBuffer()
 
 		// ActionType
-		this.writeUInt32(buffer, this.ActionType)
+		writeUInt32(buffer, this.ActionType)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

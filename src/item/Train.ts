@@ -1,5 +1,8 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import Vehicle from './Vehicle'
 import {BinaryType} from './enums'
+import {writeUInt32, writeString} from './utils'
 
 // Train item
 export default class Train extends Vehicle {
@@ -20,33 +23,21 @@ export default class Train extends Vehicle {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.Train)
+		yield* super.toBuffer(index, BinaryType.Train)
 
-		let size = 4
-		const carriages = []
-
-		// Build Carriages list
-		if (Array.isArray(this.Carriages)) {
-
-			for (const carriage of this.Carriages) {
-
-				carriages.push(carriage)
-				size += 4 + Buffer.byteLength(carriage)
-			}
-		}
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
+		const carriages = this.Carriages || []
 
 		// Number of Carriages items
-		this.writeUInt32(buffer, carriages.length)
+		writeUInt32(buffer, carriages.length)
 
 		// Carriages list items
 		carriages.forEach(carriage => {
-			this.writeString(buffer, Buffer.byteLength(carriage), carriage)
+			writeString(buffer, carriage)
 		})
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

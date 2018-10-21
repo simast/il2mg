@@ -1,6 +1,9 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt8} from './utils'
 
 // Mission End item
 export default class MCU_TR_MissionEnd extends MCU {
@@ -14,15 +17,15 @@ export default class MCU_TR_MissionEnd extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_TR_MissionEnd)
+		yield* super.toBuffer(index, BinaryType.MCU_TR_MissionEnd)
 
-		const buffer = Buffer.allocUnsafe(1)
+		const buffer = new SmartBuffer()
 
 		// Succeeded
-		this.writeUInt8(buffer, this.Succeeded)
+		writeUInt8(buffer, this.Succeeded)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

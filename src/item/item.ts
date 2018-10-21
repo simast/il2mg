@@ -1,21 +1,13 @@
 import os from 'os'
+import {SmartBuffer} from 'smart-buffer'
 
 import {Immutable, Mutable} from '../types'
 import data from '../data'
 import {Country} from '../data/enums'
 import {PRECISION_ORIENTATION, PRECISION_POSITION} from './constants'
-import {convertUnicodeToASCII} from './utils'
+import {convertUnicodeToASCII, writeUInt32, writeDouble, writeUInt16} from './utils'
 import {BinaryType} from './enums'
 import MCU_TR_Entity from './MCU_TR_Entity'
-
-declare global {
-	interface Buffer {
-		_offset: number
-	}
-}
-
-// FIXME: Used to automatically track buffer write cursor
-Buffer.prototype._offset = 0
 
 // Base mission item
 export class Item {
@@ -673,175 +665,51 @@ export class Item {
 	 * @param typeId Binary item type ID.
 	 * @yields Base item data buffer.
 	 */
-	public *toBinary(index: any, typeId: BinaryType): IterableIterator<Buffer> {
+	protected *toBuffer(index: any, typeId?: BinaryType): IterableIterator<Buffer> {
+
+		if (!typeId) {
+			throw new TypeError('Invalid item binary type ID.')
+		}
 
 		// Write base item binary information
-		const buffer = Buffer.allocUnsafe(46)
+		const buffer = new SmartBuffer()
 
 		// Item binary type ID
-		this.writeUInt32(buffer, typeId)
+		writeUInt32(buffer, typeId)
 
 		// Index
-		this.writeUInt32(buffer, this.Index || 0)
+		writeUInt32(buffer, this.Index || 0)
 
 		// Position
-		this.writePosition(buffer)
-
-		// Orientation
-		this.writeOrientation(buffer)
-
-		// Name string table index
-		this.writeUInt16(buffer, index.name.value(this.Name))
-
-		// Desc string table index
-		this.writeUInt16(buffer, index.desc.value(this.Desc))
-
-		// Model string table index
-		this.writeUInt16(buffer, index.model.value(this.Model))
-
-		// Skin string table index
-		this.writeUInt16(buffer, index.skin.value(this.Skin))
-
-		yield buffer
-	}
-
-	/**
-	 * Write XPos/YPos/ZPos to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 */
-	private writePosition(buffer: Buffer): void {
-
 		// NOTE: Position in binary file is represented as a 64 bit double-precision
 		// floating-point value.
 
-		this.writeDouble(buffer, this.XPos || 0)
-		this.writeDouble(buffer, this.YPos || 0)
-		this.writeDouble(buffer, this.ZPos || 0)
-	}
+		writeDouble(buffer, this.XPos || 0)
+		writeDouble(buffer, this.YPos || 0)
+		writeDouble(buffer, this.ZPos || 0)
 
-	/**
-	 * Write XOri/YOri/ZOri to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 */
-	private writeOrientation(buffer: Buffer): void {
-
+		// Orientation
 		// NOTE: Orientation in binary file is represented as a 16 bit unsigned integer
 		// number between 0 (equal to 0 degrees) and 60000 (equal to 360 degrees).
 		const degreeValue = 60000 / 360
 
-		this.writeUInt16(buffer, Math.round(degreeValue * (this.XOri || 0)))
-		this.writeUInt16(buffer, Math.round(degreeValue * (this.YOri || 0)))
-		this.writeUInt16(buffer, Math.round(degreeValue * (this.ZOri || 0)))
-	}
+		writeUInt16(buffer, Math.round(degreeValue * (this.XOri || 0)))
+		writeUInt16(buffer, Math.round(degreeValue * (this.YOri || 0)))
+		writeUInt16(buffer, Math.round(degreeValue * (this.ZOri || 0)))
 
-	/**
-	 * Write a string value to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 * @param length String value length in bytes.
-	 * @param value String value to write.
-	 */
-	protected writeString(buffer: Buffer, length: number, value: string): void {
+		// Name string table index
+		writeUInt16(buffer, index.name.value(this.Name))
 
-		// NOTE: String values are represented in binary files as a length (32 bit
-		// unsigned integer) followed by an array of string byte characters.
+		// Desc string table index
+		writeUInt16(buffer, index.desc.value(this.Desc))
 
-		// String length
-		this.writeUInt32(buffer, length)
+		// Model string table index
+		writeUInt16(buffer, index.model.value(this.Model))
 
-		// String value
-		if (length > 0) {
+		// Skin string table index
+		writeUInt16(buffer, index.skin.value(this.Skin))
 
-			buffer.write(value, buffer._offset, length)
-			buffer._offset += length
-		}
-	}
-
-	/**
-	 * Write a 32 bit unsigned integer value to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 * @param value Number value to write.
-	 */
-	protected writeUInt32(buffer: Buffer, value: number): void {
-
-		buffer.writeUInt32LE(value, buffer._offset)
-		buffer._offset += 4
-	}
-
-	/**
-	 * Write a 16 bit unsigned integer value to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 * @param value Number value to write.
-	 */
-	protected writeUInt16(buffer: Buffer, value: number): void {
-
-		buffer.writeUInt16LE(value, buffer._offset)
-		buffer._offset += 2
-	}
-
-	/**
-	 * Write a 8 bit unsigned integer value to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 * @param value Number value to write.
-	 */
-	protected writeUInt8(buffer: Buffer, value: number): void {
-
-		buffer.writeUInt8(value, buffer._offset)
-		buffer._offset += 1
-	}
-
-	/**
-	 * Write a double-precision floating-point value to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 * @param value Number value to write.
-	 */
-	protected writeDouble(buffer: Buffer, value: number): void {
-
-		buffer.writeDoubleLE(value, buffer._offset)
-		buffer._offset += 8
-	}
-
-	/**
-	 * Write a single-precision floating-point value to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 * @param value Number value to write.
-	 */
-	protected writeFloat(buffer: Buffer, value: number): void {
-
-		buffer.writeFloatLE(value, buffer._offset)
-		buffer._offset += 4
-	}
-
-	/**
-	 * Write an array of 32 bit unsigned integer values to the given Buffer object.
-	 *
-	 * @param buffer Target buffer object.
-	 * @param arrayValue Array value to write.
-	 */
-	protected writeUInt32Array(buffer: Buffer, arrayValue: ReadonlyArray<number>): void {
-
-		// Array length
-		this.writeUInt32(buffer, arrayValue.length)
-
-		// Array values
-		for (let i = 0; i < arrayValue.length; i++) {
-
-			const value = arrayValue[i]
-
-			// Check for valid integer value
-			if (!Number.isInteger(value)) {
-				throw new Error('Invalid item array value.')
-			}
-
-			this.writeUInt32(buffer, value)
-		}
+		yield buffer.toBuffer()
 	}
 }
 

@@ -1,3 +1,5 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import data from '../data'
 import {Mutable} from '../types'
 import {Country} from '../data/enums'
@@ -5,6 +7,7 @@ import {DEFAULT_DAMAGE_REPORT} from './constants'
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt8, writeUInt32, writeUInt32Array, writeDouble, writeString} from './utils'
 
 // Complex Trigger event filters (with order representing bit number in binary file)
 const eventFilters = [
@@ -116,73 +119,36 @@ export default class MCU_TR_ComplexTrigger extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_TR_ComplexTrigger)
+		yield* super.toBuffer(index, BinaryType.MCU_TR_ComplexTrigger)
 
-		const {events} = this
-		let size = 36
+		const countries: Country[] = this.Country ? Array.from(this.Country) : []
+		const scripts: string[] = this.ObjectScript ? Array.from(this.ObjectScript) : []
+		const names: string[] = this.ObjectName ? Array.from(this.ObjectName) : []
 
-		if (events && events.items) {
-			size += events.items.length * 8
-		}
-
-		const countries: Country[] = []
-		const scripts: string[] = []
-		const names: string[] = []
-
-		// Build countries list
-		if (this.Country instanceof Set) {
-
-			for (const countryId of this.Country) {
-
-				countries.push(countryId)
-				size += 4
-			}
-		}
-
-		// Build scripts list
-		if (this.ObjectScript instanceof Set) {
-
-			for (const script of this.ObjectScript) {
-
-				scripts.push(script)
-				size += 4 + Buffer.byteLength(script)
-			}
-		}
-
-		// Build names list
-		if (this.ObjectName instanceof Set) {
-
-			for (const name of this.ObjectName) {
-
-				names.push(name)
-				size += 4 + Buffer.byteLength(name)
-			}
-		}
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
 
 		// Events list
 		this.writeEvents(buffer)
 
 		// Cylinder
-		this.writeUInt8(buffer, this.Cylinder)
+		writeUInt8(buffer, this.Cylinder)
 
 		// Radius
-		this.writeDouble(buffer, this.Radius)
+		writeDouble(buffer, this.Radius)
 
 		// DamageReport
-		this.writeUInt32(buffer, this.DamageReport)
+		writeUInt32(buffer, this.DamageReport)
 
 		// DamageThreshold
-		this.writeUInt8(buffer, this.DamageThreshold)
+		writeUInt8(buffer, this.DamageThreshold)
 
 		// CheckPlanes
-		this.writeUInt8(buffer, this.CheckPlanes)
+		writeUInt8(buffer, this.CheckPlanes)
 
 		// CheckVehicles
-		this.writeUInt8(buffer, this.CheckVehicles)
+		writeUInt8(buffer, this.CheckVehicles)
 
 		// EventsFilter* properties
 		let eventsFilterValue = 0
@@ -196,27 +162,27 @@ export default class MCU_TR_ComplexTrigger extends MCU {
 			}
 		})
 
-		this.writeUInt32(buffer, eventsFilterValue)
+		writeUInt32(buffer, eventsFilterValue)
 
 		// Country filter list
-		this.writeUInt32Array(buffer, countries)
+		writeUInt32Array(buffer, countries)
 
 		// ObjectScript filter list size
-		this.writeUInt32(buffer, scripts.length)
+		writeUInt32(buffer, scripts.length)
 
 		// ObjectScript filter list items
 		scripts.forEach(script => {
-			this.writeString(buffer, Buffer.byteLength(script), script)
+			writeString(buffer, script)
 		})
 
 		// ObjectName filter list size
-		this.writeUInt32(buffer, names.length)
+		writeUInt32(buffer, names.length)
 
 		// ObjectName filter list items
 		names.forEach(name => {
-			this.writeString(buffer, Buffer.byteLength(name), name)
+			writeString(buffer, name)
 		})
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

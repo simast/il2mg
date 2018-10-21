@@ -1,7 +1,10 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Coalition} from '../data/enums'
 import MCU from './MCU'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt32, writeUInt32Array} from './utils'
 
 // Icon type constants
 export const ICON_NONE = 0
@@ -98,42 +101,36 @@ export default class MCU_Icon extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_Icon)
+		yield* super.toBuffer(index, BinaryType.MCU_Icon)
 
-		let size = 32
-
-		if (Array.isArray(this.Coalitions)) {
-			size += this.Coalitions.length * 4
-		}
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
 
 		// IconId
-		this.writeUInt32(buffer, this.IconId)
+		writeUInt32(buffer, this.IconId)
 
 		// RColor
-		this.writeUInt32(buffer, this.RColor)
+		writeUInt32(buffer, this.RColor)
 
 		// GColor
-		this.writeUInt32(buffer, this.GColor)
+		writeUInt32(buffer, this.GColor)
 
 		// BColor
-		this.writeUInt32(buffer, this.BColor)
+		writeUInt32(buffer, this.BColor)
 
 		// LineType
-		this.writeUInt32(buffer, this.LineType)
+		writeUInt32(buffer, this.LineType)
 
 		// LCName
-		this.writeUInt32(buffer, this.LCName)
+		writeUInt32(buffer, this.LCName)
 
 		// LCDesc
-		this.writeUInt32(buffer, this.LCDesc)
+		writeUInt32(buffer, this.LCDesc)
 
 		// Coalitions
-		this.writeUInt32Array(buffer, this.Coalitions || [])
+		writeUInt32Array(buffer, this.Coalitions || [])
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

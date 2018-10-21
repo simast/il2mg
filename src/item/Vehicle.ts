@@ -1,8 +1,11 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Country} from '../data/enums'
 import {Item} from './item'
 import {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY} from './constants'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt8, writeUInt32, writeString, writeFloat} from './utils'
 
 // Vehicle AI level constants
 export const AI_PLAYER = 0
@@ -45,96 +48,90 @@ export default class Vehicle extends Item {
 	 * @param typeId Binary item type ID.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any, typeId?: number) {
+	protected *toBuffer(index: any, typeId?: number) {
 
-		yield* super.toBinary(index, typeId || BinaryType.Vehicle)
+		yield* super.toBuffer(index, typeId || BinaryType.Vehicle)
 
-		const script = this.Script || ''
-		const scriptLength = Buffer.byteLength(script)
-		let size = 71
-
-		size += scriptLength
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
 
 		// LinkTrId
-		this.writeUInt32(buffer, this.LinkTrId || 0)
+		writeUInt32(buffer, this.LinkTrId || 0)
 
 		// DamageThreshold
-		this.writeUInt8(buffer, this.DamageThreshold)
+		writeUInt8(buffer, this.DamageThreshold)
 
 		// DamageReport
-		this.writeUInt32(buffer, this.DamageReport)
+		writeUInt32(buffer, this.DamageReport)
 
 		// Script
-		this.writeString(buffer, scriptLength, script)
+		writeString(buffer, this.Script || '')
 
 		// Country
-		this.writeUInt32(buffer, this.Country)
+		writeUInt32(buffer, this.Country)
 
 		// AILevel
-		this.writeUInt32(buffer, this.AILevel)
+		writeUInt32(buffer, this.AILevel)
 
 		// NumberInFormation
-		this.writeUInt32(buffer, this.NumberInFormation || 0)
+		writeUInt32(buffer, this.NumberInFormation || 0)
 
 		// Vulnerable
-		this.writeUInt8(buffer, this.Vulnerable)
+		writeUInt8(buffer, this.Vulnerable)
 
 		// Engageable
-		this.writeUInt8(buffer, this.Engageable)
+		writeUInt8(buffer, this.Engageable)
 
 		// LimitAmmo
-		this.writeUInt8(buffer, this.LimitAmmo)
+		writeUInt8(buffer, this.LimitAmmo)
 
 		// Spotter
-		this.writeUInt32(buffer, this.Spotter >= 0 ? this.Spotter : 0xFFFFFFFF)
+		writeUInt32(buffer, this.Spotter >= 0 ? this.Spotter : 0xFFFFFFFF)
 
 		// BeaconChannel
-		this.writeUInt32(buffer, this.BeaconChannel)
+		writeUInt32(buffer, this.BeaconChannel)
 
 		// Callsign
-		this.writeUInt8(buffer, this.Callsign)
+		writeUInt8(buffer, this.Callsign)
 
 		// DeleteAfterDeath
-		this.writeUInt8(buffer, this.DeleteAfterDeath)
+		writeUInt8(buffer, this.DeleteAfterDeath)
 
 		// CoopStart
-		this.writeUInt8(buffer, this.CoopStart || 0)
+		writeUInt8(buffer, this.CoopStart || 0)
 
 		// PayloadId
-		this.writeUInt32(buffer, this.PayloadId)
+		writeUInt32(buffer, this.PayloadId)
 
 		// WMMask
-		this.writeUInt32(buffer, this.WMMask)
+		writeUInt32(buffer, this.WMMask)
 
 		// Fuel
-		this.writeFloat(buffer, this.Fuel)
+		writeFloat(buffer, this.Fuel)
 
 		// Callnum
-		this.writeUInt8(buffer, this.Callnum)
+		writeUInt8(buffer, this.Callnum)
 
 		// RepairFriendlies
-		this.writeUInt8(buffer, this.RepairFriendlies)
+		writeUInt8(buffer, this.RepairFriendlies)
 
 		// RearmFriendlies
-		this.writeUInt8(buffer, this.RearmFriendlies)
+		writeUInt8(buffer, this.RearmFriendlies)
 
 		// RefuelFriendlies
-		this.writeUInt8(buffer, this.RefuelFriendlies)
+		writeUInt8(buffer, this.RefuelFriendlies)
 
 		// RepairTime
-		this.writeUInt32(buffer, this.RepairTime)
+		writeUInt32(buffer, this.RepairTime)
 
 		// RearmTime
-		this.writeUInt32(buffer, this.RearmTime)
+		writeUInt32(buffer, this.RearmTime)
 
 		// RefuelTime
-		this.writeUInt32(buffer, this.RefuelTime)
+		writeUInt32(buffer, this.RefuelTime)
 
 		// MaintenanceRadius
-		this.writeUInt32(buffer, this.MaintenanceRadius)
+		writeUInt32(buffer, this.MaintenanceRadius)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

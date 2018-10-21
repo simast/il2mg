@@ -1,5 +1,8 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
+import {writeUInt32} from './utils'
 
 // Formation command type constants
 export const TYPE_PLANE_NONE = 0 // Plane: None
@@ -33,18 +36,18 @@ export default class MCU_CMD_Formation extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_CMD_Formation)
+		yield* super.toBuffer(index, BinaryType.MCU_CMD_Formation)
 
-		const buffer = Buffer.allocUnsafe(8)
+		const buffer = new SmartBuffer()
 
 		// FormationType
-		this.writeUInt32(buffer, this.FormationType)
+		writeUInt32(buffer, this.FormationType)
 
 		// FormationDensity
-		this.writeUInt32(buffer, this.FormationDensity)
+		writeUInt32(buffer, this.FormationDensity)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

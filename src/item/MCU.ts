@@ -1,6 +1,9 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import {Item} from './item'
 import {BinaryType} from './enums'
 import {Bit} from './types'
+import {writeUInt8, writeUInt32, writeUInt32Array} from './utils'
 
 // MCU -> OnEvents -> OnEvent item
 class OnEvent extends Item {
@@ -131,11 +134,11 @@ export default abstract class MCU extends Item {
 	}
 
 	/**
-	 * Write events list to the given Buffer object.
+	 * Write events list to the given buffer object.
 	 *
-	 * @param buffer Target buffer object.
+	 * @param buffer Target SmartBuffer object.
 	 */
-	protected writeEvents(buffer: Buffer): void {
+	protected writeEvents(buffer: SmartBuffer): void {
 
 		const {events} = this
 		const eventItems = events
@@ -144,22 +147,22 @@ export default abstract class MCU extends Item {
 			|| []
 
 		// Number of event items
-		this.writeUInt32(buffer, eventItems.length)
+		writeUInt32(buffer, eventItems.length)
 
 		// List of OnEvent items
 		eventItems.forEach(event => {
 
-			this.writeUInt32(buffer, event.Type) // Event type
-			this.writeUInt32(buffer, event.TarId) // Target command item ID
+			writeUInt32(buffer, event.Type) // Event type
+			writeUInt32(buffer, event.TarId) // Target command item ID
 		})
 	}
 
 	/**
-	 * Write reports list to the given Buffer object.
+	 * Write reports list to the given buffer object.
 	 *
-	 * @param buffer Target buffer object.
+	 * @param buffer Target SmartBuffer object.
 	 */
-	protected writeReports(buffer: Buffer): void {
+	protected writeReports(buffer: SmartBuffer): void {
 
 		const {reports} = this
 		const reportItems = reports
@@ -168,14 +171,14 @@ export default abstract class MCU extends Item {
 			|| []
 
 		// Number of report items
-		this.writeUInt32(buffer, reportItems.length)
+		writeUInt32(buffer, reportItems.length)
 
 		// List of OnReport items
 		reportItems.forEach(report => {
 
-			this.writeUInt32(buffer, report.Type) // Report type
-			this.writeUInt32(buffer, report.TarId) // Target command item ID
-			this.writeUInt32(buffer, report.CmdId) // Source command item ID
+			writeUInt32(buffer, report.Type) // Report type
+			writeUInt32(buffer, report.TarId) // Target command item ID
+			writeUInt32(buffer, report.CmdId) // Source command item ID
 		})
 	}
 
@@ -186,31 +189,21 @@ export default abstract class MCU extends Item {
 	 * @param typeId Binary item type ID.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any, typeId: BinaryType): IterableIterator<Buffer> {
+	protected *toBuffer(index: any, typeId?: BinaryType): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, typeId)
+		yield* super.toBuffer(index, typeId)
 
-		let size = 9
-
-		if (Array.isArray(this.Targets)) {
-			size += this.Targets.length * 4
-		}
-
-		if (Array.isArray(this.Objects)) {
-			size += this.Objects.length * 4
-		}
-
-		const buffer = Buffer.allocUnsafe(size)
+		const buffer = new SmartBuffer()
 
 		// Enabled
-		this.writeUInt8(buffer, this.Enabled === undefined ? 1 : this.Enabled)
+		writeUInt8(buffer, this.Enabled === undefined ? 1 : this.Enabled)
 
 		// Targets list
-		this.writeUInt32Array(buffer, this.Targets)
+		writeUInt32Array(buffer, this.Targets)
 
 		// Objects list
-		this.writeUInt32Array(buffer, this.Objects)
+		writeUInt32Array(buffer, this.Objects)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

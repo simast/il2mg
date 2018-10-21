@@ -1,5 +1,8 @@
+import {SmartBuffer} from 'smart-buffer'
+
 import MCU from './MCU'
 import {BinaryType} from './enums'
+import {writeUInt32, writeDouble} from './utils'
 
 // Waypoint priority constants
 export const PRIORITY_LOW = 0
@@ -19,21 +22,21 @@ export default class MCU_Waypoint extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
 
-		yield* super.toBinary(index, BinaryType.MCU_Waypoint)
+		yield* super.toBuffer(index, BinaryType.MCU_Waypoint)
 
-		const buffer = Buffer.allocUnsafe(20)
+		const buffer = new SmartBuffer()
 
 		// Area (m)
-		this.writeDouble(buffer, this.Area)
+		writeDouble(buffer, this.Area)
 
 		// Speed (km/h)
-		this.writeDouble(buffer, this.Speed)
+		writeDouble(buffer, this.Speed)
 
 		// Priority
-		this.writeUInt32(buffer, this.Priority)
+		writeUInt32(buffer, this.Priority)
 
-		yield buffer
+		yield buffer.toBuffer()
 	}
 }

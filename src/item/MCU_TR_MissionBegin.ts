@@ -13,7 +13,7 @@ export default class MCU_TR_MissionBegin extends MCU {
 	 * @param index Binary data index object.
 	 * @yields Item data buffer.
 	 */
-	public *toBinary(index: any): IterableIterator<Buffer> {
-		yield* super.toBinary(index, BinaryType.MCU_TR_MissionBegin)
+	protected *toBuffer(index: any): IterableIterator<Buffer> {
+		yield* super.toBuffer(index, BinaryType.MCU_TR_MissionBegin)
 	}
 }
