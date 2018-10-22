@@ -3,32 +3,32 @@ import os from 'os'
 import path from 'path'
 import Random from 'random-js'
 
-import {data} from './data'
-import {Coalition} from './data/enums'
-import {APPLICATION_NAME, APPLICATION_VERSION} from './constants'
-import {log} from './log'
-import {Item} from './items'
+import {data} from '../data'
+import {Coalition} from '../data/enums'
+import {APPLICATION_NAME, APPLICATION_VERSION} from '../constants'
+import {log} from '../log'
+import {Item} from '../items'
 
 // Mission make parts
-import makeBattle from './make/battle'
-import makeChoice from './make/choice'
-import makeDate from './make/date'
-import makeMap from './make/map'
-import makeBubble from './make/bubble'
-import makeTime from './make/time'
-import makePeople from './make/people'
-import makePlanes from './make/planes'
-import makeUnits from './make/units'
-import makeVehicles from './make/vehicles'
-import makeWeather from './make/weather'
-import makeLocations from './make/locations'
-import makeAirfields from './make/airfields'
-import makeTasks from './make/tasks'
-import makeFronts from './make/fronts'
-import makeBlocks from './make/blocks'
-import makeFormations from './make/formations'
-import makeForces from './make/forces'
-import makeBriefing from './make/briefing'
+import makeBattle from './battle'
+import makeChoice from './choice'
+import makeDate from './date'
+import makeMap from './map'
+import makeBubble from './bubble'
+import makeTime from './time'
+import makePeople from './people'
+import makePlanes from './planes'
+import makeUnits from './units'
+import makeVehicles from './vehicles'
+import makeWeather from './weather'
+import makeLocations from './locations'
+import makeAirfields from './airfields'
+import makeTasks from './tasks'
+import makeFronts from './fronts'
+import makeBlocks from './blocks'
+import makeFormations from './formations'
+import makeForces from './forces'
+import makeBriefing from './briefing'
 
 // Mission file extensions
 const FILE_EXT_TEXT = 'Mission'
@@ -54,7 +54,7 @@ const COMPLEX_SEED_PARAMS = [
 	'unit'
 ]
 
-export default class Mission {
+export class Mission {
 
 	/**
 	 * Mission constructor.

@@ -3,7 +3,7 @@ import numeral from 'numeral'
 import {data} from '../../src/data'
 import {Item} from '../../src/items'
 import {readTextFile} from '../../src/items/utils'
-import {FrontLine} from '../../src/make/fronts'
+import {FrontLine} from '../../src/mission/fronts'
 
 // Map of front line point item names to types
 const frontLineTypeMap = {

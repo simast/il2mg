@@ -1,7 +1,7 @@
 import numeral from 'numeral'
 
 import {data} from '../../src/data'
-import {LocationType} from '../../src/make/locations'
+import {LocationType} from '../../src/mission/locations'
 import {Item} from '../../src/items'
 import {PRECISION_POSITION} from '../../src/items/constants'
 import {readTextFile} from '../../src/items/utils'

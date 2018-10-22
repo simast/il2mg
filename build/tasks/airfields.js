@@ -6,7 +6,7 @@ import {ItemTag, ItemFlag} from '../../src/data/enums'
 import {Item} from '../../src/items'
 import {PRECISION_POSITION, PRECISION_ORIENTATION} from '../../src/items/constants'
 import {readTextFile} from '../../src/items/utils'
-import {PlaneSize, getPlaneSizeFromName} from '../../src/make/planes'
+import {PlaneSize, getPlaneSizeFromName} from '../../src/mission/planes'
 
 module.exports = function(grunt) {
 

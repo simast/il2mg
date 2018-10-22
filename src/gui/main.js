@@ -3,7 +3,7 @@ import path from 'path'
 import {app, screen, BrowserWindow, ipcMain, dialog, Menu} from 'electron'
 import electronDebug from 'electron-debug'
 
-import Mission from '../mission'
+import {Mission} from '../mission'
 import {APPLICATION_TITLE} from '../constants'
 
 // Disable built-in Electron security warnings

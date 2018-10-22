@@ -6,9 +6,9 @@ import params from 'commander'
 
 import {log} from './log'
 import {getEnumValues, enumContainsValue} from './utils'
-import Mission from './mission'
-import {WeatherState} from './make/weather'
-import {FlightState} from './make/flight'
+import {Mission} from './mission'
+import {WeatherState} from './mission/weather'
+import {FlightState} from './mission/flight'
 import {data} from './data'
 import {Coalition, MapSeason} from './data/enums'
 

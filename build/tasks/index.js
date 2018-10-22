@@ -3,8 +3,8 @@ import moment from 'moment'
 
 import {data} from '../../src/data'
 import {matchDateRange} from '../../src/data/utils'
-import {isValidRebaseTask} from '../../src/make/task.rebase'
-import {isOffmap} from '../../src/make/map'
+import {isValidRebaseTask} from '../../src/mission/task.rebase'
+import {isOffmap} from '../../src/mission/map'
 
 module.exports = function(grunt) {
 
