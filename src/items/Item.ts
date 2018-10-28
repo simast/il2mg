@@ -49,16 +49,9 @@ export class Item {
 	 */
 	constructor(type?: string) {
 
-		// The explicit type value is only required for generic items
-		if (Object.getPrototypeOf(this) !== Item.prototype) {
-			return
+		if (type) {
+			Object.defineProperty(this, 'type', {value: type})
 		}
-
-		if (typeof type !== 'string' || !type.length) {
-			throw new TypeError('Invalid item type value.')
-		}
-
-		Object.defineProperty(this, 'type', {value: type})
 	}
 
 	// By default all items have "Index" field

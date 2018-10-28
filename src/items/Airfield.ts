@@ -8,28 +8,6 @@ import {BinaryType} from './enums'
 import {Bit} from './types'
 import {writeUInt32, writeUInt8, writeDouble} from './utils'
 
-// Airfield -> Chart -> Point item
-class Point extends Item {
-
-	constructor(
-		public Type: number,
-		public X: number,
-		public Y: number
-	) {
-		super('Point')
-	}
-}
-
-// Airfield -> Chart item
-class Chart extends Item {
-
-	static Point = Point
-
-	constructor() {
-		super('Chart')
-	}
-}
-
 // Airfield item
 export class Airfield extends Block {
 
@@ -45,8 +23,6 @@ export class Airfield extends Block {
 	public RefuelTime = 0
 	public MaintenanceRadius = 0
 
-	static Chart = Chart
-
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -61,11 +37,15 @@ export class Airfield extends Block {
 		const {items = []} = this
 
 		// Find Chart item
-		const chartItem = items.find((item): item is Chart => item.type === 'Chart')
+		const chartItem = items.find(
+			(item): item is Airfield.Chart => item instanceof Airfield.Chart
+		)
 
 		// Find Chart->Point items
 		const pointItems = chartItem && chartItem.items
-			? chartItem.items.filter((item): item is Point => item.type === 'Point')
+			? chartItem.items.filter(
+				(item): item is Airfield.Chart.Point => item instanceof Airfield.Chart.Point
+			)
 			: []
 
 		// ReturnPlanes
@@ -116,5 +96,31 @@ export class Airfield extends Block {
 		}
 
 		yield buffer.toBuffer()
+	}
+}
+
+export namespace Airfield {
+
+	// Airfield -> Chart item
+	export class Chart extends Item {
+
+		constructor() {
+			super('Chart')
+		}
+	}
+}
+
+export namespace Airfield.Chart {
+
+	// Airfield -> Chart -> Point item
+	export class Point extends Item {
+
+		constructor(
+			public Type: number,
+			public X: number,
+			public Y: number
+		) {
+			super('Point')
+		}
 	}
 }

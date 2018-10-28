@@ -7,49 +7,6 @@ import {BinaryType} from './enums'
 import {Bit} from './types'
 import {writeUInt8, writeUInt32, writeUInt32Array} from './utils'
 
-// MCU -> OnEvents -> OnEvent item
-class OnEvent extends Item {
-
-	constructor(
-		public Type: number,
-		public TarId: number
-	) {
-		super('OnEvent')
-	}
-}
-
-// MCU -> OnEvents item
-class OnEvents extends Item {
-
-	static OnEvent = OnEvent
-
-	constructor() {
-		super('OnEvents')
-	}
-}
-
-// MCU -> OnReports -> OnReport item
-class OnReport extends Item {
-
-	constructor(
-		public Type: number,
-		public CmdId: number,
-		public TarId: number
-	) {
-		super('OnReport')
-	}
-}
-
-// MCU -> OnReports item
-class OnReports extends Item {
-
-	static OnReport = OnReport
-
-	constructor() {
-		super('OnReports')
-	}
-}
-
 // Base MCU item
 export abstract class MCU extends Item {
 
@@ -58,11 +15,8 @@ export abstract class MCU extends Item {
 	public readonly Objects: ReadonlyArray<number> = []
 	protected readonly EVENTS?: {[type: string]: number | undefined}
 	protected readonly REPORTS?: {[type: string]: number | undefined}
-	protected events?: OnEvents | null
+	protected events?: MCU.OnEvents | null
 	protected reports?: Item | null
-
-	static OnEvents = OnEvents
-	static OnReports = OnReports
 
 	constructor() {
 		super()
@@ -94,12 +48,12 @@ export abstract class MCU extends Item {
 		// Create a new events container child item
 		if (!this.events) {
 
-			this.events = new OnEvents()
+			this.events = new MCU.OnEvents()
 			this.addItem(this.events)
 		}
 
 		// Add a new event item
-		const eventItem = new OnEvent(this.EVENTS[type]!, target.Index!)
+		const eventItem = new MCU.OnEvents.OnEvent(this.EVENTS[type]!, target.Index!)
 
 		// TODO: Ignore duplicate/existing events
 
@@ -123,12 +77,12 @@ export abstract class MCU extends Item {
 		// Create a new reports container child item
 		if (!this.reports) {
 
-			this.reports = new OnReports()
+			this.reports = new MCU.OnReports()
 			this.addItem(this.reports)
 		}
 
 		// Add a new report item
-		const reportItem = new OnReport(this.REPORTS[type]!, command.Index!, target.Index!)
+		const reportItem = new MCU.OnReports.OnReport(this.REPORTS[type]!, command.Index!, target.Index!)
 
 		// TODO: Ignore duplicate/existing reports
 
@@ -145,7 +99,9 @@ export abstract class MCU extends Item {
 		const {events} = this
 		const eventItems = events
 			&& events.items
-			&& events.items.filter((event): event is OnEvent => event instanceof OnEvent)
+			&& events.items.filter(
+				(event): event is MCU.OnEvents.OnEvent => event instanceof MCU.OnEvents.OnEvent
+			)
 			|| []
 
 		// Number of event items
@@ -169,7 +125,9 @@ export abstract class MCU extends Item {
 		const {reports} = this
 		const reportItems = reports
 			&& reports.items
-			&& reports.items.filter((report): report is OnReport => report instanceof OnReport)
+			&& reports.items.filter(
+				(report): report is MCU.OnReports.OnReport => report instanceof MCU.OnReports.OnReport
+			)
 			|| []
 
 		// Number of report items
@@ -207,5 +165,53 @@ export abstract class MCU extends Item {
 		writeUInt32Array(buffer, this.Objects)
 
 		yield buffer.toBuffer()
+	}
+}
+
+export namespace MCU {
+
+	// MCU -> OnEvents item
+	export class OnEvents extends Item {
+
+		constructor() {
+			super('OnEvents')
+		}
+	}
+
+	// MCU -> OnReports item
+	export class OnReports extends Item {
+
+		constructor() {
+			super('OnReports')
+		}
+	}
+}
+
+export namespace MCU.OnEvents {
+
+	// MCU -> OnEvents -> OnEvent item
+	export class OnEvent extends Item {
+
+		constructor(
+			public Type: number,
+			public TarId: number
+		) {
+			super('OnEvent')
+		}
+	}
+}
+
+export namespace MCU.OnReports {
+
+	// MCU -> OnReports -> OnReport item
+	export class OnReport extends Item {
+
+		constructor(
+			public Type: number,
+			public CmdId: number,
+			public TarId: number
+		) {
+			super('OnReport')
+		}
 	}
 }

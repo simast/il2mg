@@ -1,13 +1,13 @@
 import {SmartBuffer} from 'smart-buffer'
 
 import {Immutable} from '../types'
-import {Item} from '../items'
+import {Block} from '../items'
 import {writeUInt32, writeUInt16, writeUInt8} from '../items/utils'
 
 // Binary damage data index table (used while saving .msnbin file)
 export class BinaryDamageTable {
 
-	private readonly items: Immutable<Item>[] = []
+	private readonly items: Immutable<Block.Damaged>[] = []
 	private readonly valueIndex: {[key: string]: number | undefined} = Object.create(null)
 	private maxDamageValues = 0
 
@@ -17,16 +17,11 @@ export class BinaryDamageTable {
 	 * @param item "Damaged" item to set in the index table.
 	 * @returns Index table address/index (16 bit unsigned integer).
 	 */
-	public registerItem(item?: Immutable<Item>): number {
+	public registerItem(item?: Immutable<Block.Damaged>): number {
 
 		// No index
-		if (typeof item !== 'object') {
+		if (!item) {
 			return 0xFFFF
-		}
-
-		// Invalid item type
-		if (item.type !== 'Damaged') {
-			throw new TypeError('Invalid damage item value.')
 		}
 
 		const {valueIndex, items} = this
@@ -91,7 +86,7 @@ export class BinaryDamageTable {
 					if (nextDamageKey !== undefined) {
 
 						damageKey = Number(nextDamageKey)
-						damageValue = (damageItem as any)[nextDamageKey]
+						damageValue = damageItem[damageKey]!
 					}
 
 					if (damageValue >= 0 && damageValue <= 1) {

@@ -1,4 +1,4 @@
-import {Item} from '../items'
+import {Airfield} from '../items'
 import {PRECISION_POSITION} from '../items/constants'
 import {data} from '../data'
 import {ItemFlag, CallsignGroup} from '../data/enums'
@@ -104,7 +104,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 		}
 	}
 
-	const chartItem = new Item('Chart')
+	const chartItem = new Airfield.Chart()
 	const firstPoint = taxiPoints[0]
 	const lastPoint = taxiPoints[taxiPoints.length - 1]
 
@@ -112,7 +112,6 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 	for (let i = 0; i < taxiPoints.length; i++) {
 
 		const point = taxiPoints[i]
-		const pointItem = new Item('Point')
 		let pointType = 1 // Taxi point type
 
 		// Parking point type
@@ -141,11 +140,11 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 		const pointX = (pointXDiff * Math.cos(pointTheta)) - (pointYDiff * Math.sin(pointTheta))
 		const pointY = (pointXDiff * Math.sin(pointTheta)) + (pointYDiff * Math.cos(pointTheta))
 
-		pointItem.Type = pointType
-		pointItem.X = Number(pointX.toFixed(PRECISION_POSITION))
-		pointItem.Y = Number(pointY.toFixed(PRECISION_POSITION))
-
-		chartItem.addItem(pointItem)
+		chartItem.addItem(new Airfield.Chart.Point(
+			pointType,
+			Number(pointX.toFixed(PRECISION_POSITION)),
+			Number(pointY.toFixed(PRECISION_POSITION))
+		))
 	}
 
 	airfieldItem.addItem(chartItem)

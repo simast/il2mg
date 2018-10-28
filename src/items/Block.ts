@@ -30,7 +30,7 @@ export class Block extends Item {
 
 		const buffer = SmartBuffer.fromSize(13)
 		const {items = []} = this
-		const damageItem = items.find(({type}) => type === 'Damaged')
+		const damageItem = items.find((item): item is Block.Damaged => item instanceof Block.Damaged)
 
 		// LinkTrId
 		writeUInt32(buffer, this.LinkTrId || 0)
@@ -72,5 +72,18 @@ export class Block extends Item {
 		writeUInt16(buffer, index.damage.registerItem(damageItem))
 
 		yield buffer.toBuffer()
+	}
+}
+
+export namespace Block {
+
+	// Block -> Damaged item
+	export class Damaged extends Item {
+
+		[damageIndex: number]: number | undefined
+
+		constructor() {
+			super('Damaged')
+		}
 	}
 }
