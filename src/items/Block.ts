@@ -1,6 +1,7 @@
 import {SmartBuffer} from 'smart-buffer'
 
 import {Country} from '../data/enums'
+import {BinaryIndexTables} from '../mission/types'
 import {Item} from './Item'
 import {DEFAULT_COUNTRY, DEFAULT_DAMAGE_REPORT, DEFAULT_DURABILITY} from './constants'
 import {BinaryType} from './enums'
@@ -19,11 +20,11 @@ export class Block extends Item {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param index Binary data index object.
+	 * @param index Binary data index tables.
 	 * @param typeId Binary item type ID.
 	 * @yields Item data buffer.
 	 */
-	protected *toBuffer(index: any, typeId?: BinaryType): IterableIterator<Buffer> {
+	public *toBuffer(index: BinaryIndexTables, typeId?: BinaryType): IterableIterator<Buffer> {
 
 		yield* super.toBuffer(index, typeId || BinaryType.Block)
 

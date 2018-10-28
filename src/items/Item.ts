@@ -4,6 +4,8 @@ import {SmartBuffer} from 'smart-buffer'
 import {Immutable, Mutable} from '../types'
 import {data} from '../data'
 import {Country} from '../data/enums'
+import {Mission} from '../mission'
+import {BinaryIndexTables} from '../mission/types'
 import {PRECISION_ORIENTATION, PRECISION_POSITION} from './constants'
 import {convertUnicodeToASCII, writeUInt32, writeDouble, writeUInt16} from './utils'
 import {BinaryType} from './enums'
@@ -13,7 +15,7 @@ import {MCU_TR_Entity} from './MCU_TR_Entity'
 export class Item {
 
 	// Non-enumerable item properties
-	protected readonly mission?: any
+	protected readonly mission?: Mission
 	public readonly items?: ReadonlyArray<Item>
 	protected parent?: Item
 	public readonly type?: string
@@ -70,11 +72,13 @@ export class Item {
 	 */
 	public createItem(type: string) {
 
-		if (!this.mission) {
-			throw new TypeError('Item is not part of a mission.')
+		const {mission} = this
+
+		if (!mission) {
+			throw new Error('Item is not part of a mission.')
 		}
 
-		return this.mission.createItem(type, this)
+		return mission.createItem(type, this)
 	}
 
 	/**
@@ -94,7 +98,7 @@ export class Item {
 		}
 
 		// Add child item
-		(items as Array<Item>).push(item)
+		(items as Item[]).push(item)
 
 		// Set child item parent reference
 		Object.defineProperty(item, 'parent', {
@@ -236,9 +240,15 @@ export class Item {
 	 */
 	public setPositionNear(item: Item): void {
 
+		const {mission} = this
+
+		if (!mission) {
+			throw new Error('Item is not part of a mission.')
+		}
+
 		// TODO: Improve nearby item positioning algorithm
 
-		const {rand} = item.mission
+		const {rand} = mission
 		const orientation = rand.real(0, 360) * (Math.PI / 180)
 		const magnitude = rand.integer(30, 60)
 		const itemPosX = item.XPos || 0
@@ -529,7 +539,13 @@ export class Item {
 			throw new Error('Item is already linked to an entity.')
 		}
 
-		const entity: MCU_TR_Entity = this.mission.createItem('MCU_TR_Entity', false)
+		const {mission} = this
+
+		if (!mission) {
+			throw new Error('Item is not part of a mission.')
+		}
+
+		const entity: MCU_TR_Entity = mission.createItem('MCU_TR_Entity', false)
 
 		// Link the item with entity
 		;(this as Mutable<this>).LinkTrId = entity.Index
@@ -661,11 +677,11 @@ export class Item {
 	/**
 	 * Get base binary representation of the item.
 	 *
-	 * @param index Binary data index object.
+	 * @param index Binary data index tables.
 	 * @param typeId Binary item type ID.
 	 * @yields Base item data buffer.
 	 */
-	protected *toBuffer(index: any, typeId?: BinaryType): IterableIterator<Buffer> {
+	public *toBuffer(index: BinaryIndexTables, typeId?: BinaryType): IterableIterator<Buffer> {
 
 		if (!typeId) {
 			throw new TypeError('Invalid item binary type ID.')

@@ -1,6 +1,7 @@
 import sylvester from 'sylvester'
 
 import {Priority, IconLine} from '../items/enums'
+import {getEnemyCoalition} from './utils'
 import {makeActivity, ActivityType} from './flight.plan'
 import {Location} from './locations'
 import {MapColor} from './map'
@@ -631,7 +632,7 @@ export function findBasePoints(flight, params) {
 	// Option 2: Find points on friendly territory within max allowed range
 	if (!pointA || !pointB) {
 
-		const enemyCoalition = this.getEnemyCoalition(flight.coalition)
+		const enemyCoalition = getEnemyCoalition(flight.coalition)
 		const enemyOffmapSpots = this.offmapSpotsByCoalition[enemyCoalition]
 		let directions
 

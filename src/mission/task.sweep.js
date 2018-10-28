@@ -1,6 +1,7 @@
 import sylvester from 'sylvester'
 
 import {Priority} from '../items/enums'
+import {getEnemyCoalition} from './utils'
 import {makeActivity, ActivityType} from './flight.plan'
 import {Location} from './locations'
 import {Territory} from './fronts'
@@ -237,7 +238,7 @@ export default function makeTaskSweep(flight) {
 	// Step 3: Make the fourth (side) point
 	{
 		const middlePoint = sweepPoints[0]
-		const enemyCoalition = this.getEnemyCoalition(flight.coalition)
+		const enemyCoalition = getEnemyCoalition(flight.coalition)
 		const results = {
 			weighted: []
 		}

@@ -1,5 +1,6 @@
 import {SmartBuffer} from 'smart-buffer'
 
+import {BinaryIndexTables} from '../mission/types'
 import {DEFAULT_BUFFER_SIZE} from './constants'
 import {Vehicle} from './Vehicle'
 import {BinaryType} from './enums'
@@ -21,10 +22,10 @@ export class Train extends Vehicle {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param index Binary data index object.
+	 * @param index Binary data index tables.
 	 * @yields Item data buffer.
 	 */
-	protected *toBuffer(index: any): IterableIterator<Buffer> {
+	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
 
 		yield* super.toBuffer(index, BinaryType.Train)
 

@@ -1,5 +1,6 @@
 import {SmartBuffer} from 'smart-buffer'
 
+import {BinaryIndexTables} from '../mission/types'
 import {MCU} from './MCU'
 import {BinaryType} from './enums'
 import {writeUInt8, writeDouble} from './utils'
@@ -13,10 +14,10 @@ export class MCU_Timer extends MCU {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param index Binary data index object.
+	 * @param index Binary data index tables.
 	 * @yields Item data buffer.
 	 */
-	protected *toBuffer(index: any): IterableIterator<Buffer> {
+	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
 
 		yield* super.toBuffer(index, BinaryType.MCU_Timer)
 

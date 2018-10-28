@@ -1,4 +1,6 @@
 export {Item} from './Item'
+export {Group} from './Group'
+export {Options} from './Options'
 export {Block} from './Block'
 export {Vehicle} from './Vehicle'
 export {Plane} from './Plane'

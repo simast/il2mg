@@ -1,6 +1,7 @@
 import mustache from 'mustache'
 
 import {data} from '../data'
+import {getEnemyCoalition} from './utils'
 import people from './people'
 import makeBriefingTarget from './briefing.target'
 
@@ -78,7 +79,7 @@ export default function makeBriefingText(template, view) {
 		const enemyDemonym = enemyTag.demonym = Object.create(null)
 		enemyDemonym.toString = () => {
 
-			const enemyCoalition = this.getEnemyCoalition(flight.coalition)
+			const enemyCoalition = getEnemyCoalition(flight.coalition)
 			let enemyCountry
 
 			for (const countryID in data.countries) {

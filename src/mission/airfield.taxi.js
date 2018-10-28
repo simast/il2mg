@@ -1,7 +1,7 @@
 import {Item} from '../items'
 import {PRECISION_POSITION} from '../items/constants'
 import {data} from '../data'
-import {ItemFlag} from '../data/enums'
+import {ItemFlag, CallsignGroup} from '../data/enums'
 
 // Make airfield taxi route
 export default function makeAirfieldTaxi(airfield, taxiRouteID) {
@@ -33,7 +33,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 	// Set unique airfield callsign
 	if (!airfield.callsign) {
 
-		airfield.callsign = this.getCallsign('airfield')
+		airfield.callsign = this.getCallsign(CallsignGroup.Airfield)
 
 		// Make sure the callsign used for player home airfield is unique
 		if (this.player && this.player.flight) {
@@ -43,7 +43,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 			if (airfield.id !== playerAirfield.id && playerAirfield.callsign) {
 
 				while (airfield.callsign.id === playerAirfield.callsign.id) {
-					airfield.callsign = this.getCallsign('airfield')
+					airfield.callsign = this.getCallsign(CallsignGroup.Airfield)
 				}
 			}
 		}

@@ -46,6 +46,7 @@
 	"devDependencies": {
 		"@types/js-yaml": "3.11.2",
 		"@types/node": "10.12.0",
+		"@types/random-js": "1.0.31",
 		"@types/speakingurl": "13.0.2",
 		"clean-css": "4.2.1",
 		"electron-debug": "2.0.0",

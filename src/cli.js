@@ -7,6 +7,7 @@ import params from 'commander'
 import {log} from './log'
 import {getEnumValues, enumContainsValue} from './utils'
 import {Mission} from './mission'
+import {FileFormat} from './mission/enums'
 import {WeatherState} from './mission/weather'
 import {FlightState} from './mission/flight'
 import {data} from './data'
@@ -80,8 +81,8 @@ params.option('-f, --format <format>', (() => {
 
 	let desc = 'set mission file format' + EOL + EOL
 
-	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_BINARY, 'Binary format (default).')
-	desc += util.format('\t"%s" - %s' + EOL, Mission.FORMAT_TEXT, 'Text format.')
+	desc += util.format('\t"%s" - %s' + EOL, FileFormat.Binary, 'Binary format (default).')
+	desc += util.format('\t"%s" - %s' + EOL, FileFormat.Text, 'Text format.')
 
 	return desc
 })())
@@ -387,7 +388,7 @@ export default argv => {
 			// --format
 			if (params.format !== undefined) {
 
-				if ([Mission.FORMAT_TEXT, Mission.FORMAT_BINARY].indexOf(params.format) < 0) {
+				if (![FileFormat.Text, FileFormat.Binary].includes(params.format)) {
 					throw ['Unknown mission file format!', {format: params.format}]
 				}
 			}

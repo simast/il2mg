@@ -43,7 +43,7 @@ export class Options extends Item {
 	 *
 	 * @yields Item data buffer.
 	 */
-	protected *toBuffer(): IterableIterator<Buffer> {
+	public *toBuffer(): IterableIterator<Buffer> {
 
 		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
 

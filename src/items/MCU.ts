@@ -1,5 +1,6 @@
 import {SmartBuffer} from 'smart-buffer'
 
+import {BinaryIndexTables} from '../mission/types'
 import {DEFAULT_BUFFER_SIZE} from './constants'
 import {Item} from './Item'
 import {BinaryType} from './enums'
@@ -186,11 +187,11 @@ export abstract class MCU extends Item {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param index Binary data index object.
+	 * @param index Binary data index tables.
 	 * @param typeId Binary item type ID.
 	 * @yields Item data buffer.
 	 */
-	protected *toBuffer(index: any, typeId?: BinaryType): IterableIterator<Buffer> {
+	public *toBuffer(index: BinaryIndexTables, typeId?: BinaryType): IterableIterator<Buffer> {
 
 		yield* super.toBuffer(index, typeId)
 

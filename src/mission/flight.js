@@ -1,3 +1,5 @@
+import {CallsignGroup} from '../data/enums'
+
 import makeFlightFormation from './flight.formation'
 import makeFlightPilots from './flight.pilots'
 import makeFlightPlanes from './flight.planes'
@@ -246,7 +248,7 @@ export default function makeFlight(params) {
 	flight.group.setName(task.id + ' (' + unit.name + ')')
 
 	// Set unique flight callsign
-	flight.callsign = this.getCallsign('plane')
+	flight.callsign = this.getCallsign(CallsignGroup.Plane)
 
 	// Make sure the callsign used for player flight is unique
 	if (!isPlayer && this.player.flight) {
@@ -256,7 +258,7 @@ export default function makeFlight(params) {
 		if (playerCallsign) {
 
 			while (flight.callsign.id === playerCallsign.id) {
-				flight.callsign = this.getCallsign('plane')
+				flight.callsign = this.getCallsign(CallsignGroup.Plane)
 			}
 		}
 	}

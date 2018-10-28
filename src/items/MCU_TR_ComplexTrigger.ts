@@ -1,6 +1,7 @@
 import {SmartBuffer} from 'smart-buffer'
 
 import {Mutable} from '../types'
+import {BinaryIndexTables} from '../mission/types'
 import {data} from '../data'
 import {Country} from '../data/enums'
 import {DEFAULT_DAMAGE_REPORT, DEFAULT_BUFFER_SIZE} from './constants'
@@ -116,10 +117,10 @@ export class MCU_TR_ComplexTrigger extends MCU {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param index Binary data index object.
+	 * @param index Binary data index tables.
 	 * @yields Item data buffer.
 	 */
-	protected *toBuffer(index: any): IterableIterator<Buffer> {
+	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
 
 		yield* super.toBuffer(index, BinaryType.MCU_TR_ComplexTrigger)
 

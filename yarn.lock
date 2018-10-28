@@ -17,6 +17,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.36.tgz#eac05d576fbcd0b4ea3c912dc58c20475c08d9e4"
   integrity sha512-SL6KhfM7PTqiFmbCW3eVNwVBZ+88Mrzbuvn9olPsfv43mbiWaFY+nRcz/TGGku0/lc2FepdMbImdMY1JrQ+zbw==
 
+"@types/random-js@1.0.31":
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/@types/random-js/-/random-js-1.0.31.tgz#18a8bcc075afa504421e638fcbe021f27e802941"
+  integrity sha512-EAM56DrKw3VhcE4HV0/YlVKeJI07We4Mz1ra6TNtZpaMoiBVMA2bkLEcoFpYOyxoDXfVZWojxkR617LTqtRI0A==
+
 "@types/speakingurl@13.0.2":
   version "13.0.2"
   resolved "https://registry.yarnpkg.com/@types/speakingurl/-/speakingurl-13.0.2.tgz#865dc309b4d61ea333ade3171e916e341aa26137"

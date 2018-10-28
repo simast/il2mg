@@ -1,6 +1,7 @@
 import {SmartBuffer} from 'smart-buffer'
 
 import {Country} from '../data/enums'
+import {BinaryIndexTables} from '../mission/types'
 import {Item} from './Item'
 import {DEFAULT_DAMAGE_REPORT, DEFAULT_COUNTRY, DEFAULT_BUFFER_SIZE} from './constants'
 import {BinaryType} from './enums'
@@ -49,10 +50,10 @@ export class Plane extends Item {
 	/**
 	 * Get binary representation of the item.
 	 *
-	 * @param index Binary data index object.
+	 * @param index Binary data index tables.
 	 * @yields Item data buffer.
 	 */
-	protected *toBuffer(index: any): IterableIterator<Buffer> {
+	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
 
 		yield* super.toBuffer(index, BinaryType.Plane)
 
