@@ -648,12 +648,12 @@ export class Mission {
 				fileStream.write(itlhBuffer)
 
 				// Write index tables
-				fileStream.write(indexTables.name.toBinary())
-				fileStream.write(indexTables.desc.toBinary())
-				fileStream.write(indexTables.model.toBinary())
-				fileStream.write(indexTables.skin.toBinary())
-				fileStream.write(indexTables.script.toBinary())
-				fileStream.write(indexTables.damage.toBinary())
+				fileStream.write(indexTables.name.toBuffer())
+				fileStream.write(indexTables.desc.toBuffer())
+				fileStream.write(indexTables.model.toBuffer())
+				fileStream.write(indexTables.skin.toBuffer())
+				fileStream.write(indexTables.script.toBuffer())
+				fileStream.write(indexTables.damage.toBuffer())
 
 				// Write items size buffer
 				bsBuffer.writeUInt32LE(numItems, 0)

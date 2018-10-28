@@ -714,16 +714,16 @@ export class Item {
 		writeUInt16(buffer, Math.round(degreeValue * (this.ZOri || 0)))
 
 		// Name string table index
-		writeUInt16(buffer, index.name.value(this.Name))
+		writeUInt16(buffer, index.name.registerValue(this.Name))
 
 		// Desc string table index
-		writeUInt16(buffer, index.desc.value(this.Desc))
+		writeUInt16(buffer, index.desc.registerValue(this.Desc))
 
 		// Model string table index
-		writeUInt16(buffer, index.model.value(this.Model))
+		writeUInt16(buffer, index.model.registerValue(this.Model))
 
 		// Skin string table index
-		writeUInt16(buffer, index.skin.value(this.Skin))
+		writeUInt16(buffer, index.skin.registerValue(this.Skin))
 
 		yield buffer.toBuffer()
 	}

@@ -169,6 +169,7 @@ app.on('ready', () => {
 		autoHideMenuBar: true,
 		backgroundColor: '#FAEABD',
 		webPreferences: {
+			preload: isDevMode ? require.resolve('ts-node/register') : undefined,
 			devTools: isDevMode,
 			webgl: false,
 			webaudio: false,

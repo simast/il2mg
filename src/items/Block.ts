@@ -66,10 +66,10 @@ export class Block extends Item {
 		writeUInt8(buffer, Math.round(this.Durability / 500))
 
 		// Script string table index
-		writeUInt16(buffer, index.script.value(this.Script))
+		writeUInt16(buffer, index.script.registerValue(this.Script))
 
 		// Damage data table index
-		writeUInt16(buffer, damageItem ? index.damage.value(damageItem) : 0xFFFF)
+		writeUInt16(buffer, index.damage.registerItem(damageItem))
 
 		yield buffer.toBuffer()
 	}

@@ -1,4 +1,6 @@
 import {FileFormat} from './enums'
+import {BinaryStringTable} from './BinaryStringTable'
+import {BinaryDamageTable} from './BinaryDamageTable'
 
 export type Callsign = {
 	id: number
@@ -21,10 +23,10 @@ export type Params = {
 
 // Binary data index tables
 export type BinaryIndexTables = {
-	name: any
-	desc: any
-	model: any
-	skin: any
-	script: any
-	damage: any
+	name: BinaryStringTable
+	desc: BinaryStringTable
+	model: BinaryStringTable
+	skin: BinaryStringTable
+	script: BinaryStringTable
+	damage: BinaryDamageTable
 }
