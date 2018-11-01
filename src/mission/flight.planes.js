@@ -56,7 +56,7 @@ export default function makeFlightPlanes(flight) {
 			let foundSpawnPoint = false
 			let foundStaticPlane = false
 			const pilot = plane.pilot
-			const planeItem = plane.item = flight.group.createItem('Plane')
+			const planeItem = plane.item = this.createItem('Plane', flight.group)
 			let positionX
 			let positionY
 			let positionZ

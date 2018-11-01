@@ -43,7 +43,7 @@ export default class ActivityLand {
 
 			if (!landCommand) {
 
-				landCommand = flightGroup.createItem('MCU_CMD_Land')
+				landCommand = mission.createItem('MCU_CMD_Land', flightGroup)
 
 				// Landing point position and orientation is the same as takeoff
 				landCommand.setPosition(taxiRoute.takeoffStart)
@@ -73,7 +73,7 @@ export default class ActivityLand {
 				if (!landWaitTimer) {
 
 					// Short timer used to delay land command
-					landWaitTimer = flightGroup.createItem('MCU_Timer')
+					landWaitTimer = mission.createItem('MCU_Timer', flightGroup)
 
 					landWaitTimer.Time = Number(rand.real(10, 15).toFixed(3))
 					landWaitTimer.setPositionNear(leaderPlaneItem)

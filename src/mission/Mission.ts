@@ -10,6 +10,7 @@ import {DataItem, DataCallsigns} from '../data/types'
 import {APPLICATION_NAME, APPLICATION_VERSION} from '../constants'
 import {log} from '../log'
 import {Item, Group, Options} from '../items'
+import {ItemType, ItemInstanceByType, getItemClassByType} from '../items/mappings'
 import {FileFormat, FileExtension} from './enums'
 import {Callsign, Params, DebugFeatures, BinaryIndexTables} from './types'
 import {BinaryStringTable} from './BinaryStringTable'
@@ -314,9 +315,12 @@ export class Mission {
 	 * @param parent Add to the mission (true) or parent item (object).
 	 * @returns New item instance.
 	 */
-	public createItem(itemType: string | DataItem, parent?: boolean | Item | this): any {
+	public createItem<T extends ItemType>(
+		itemType: T | DataItem<T>,
+		parent?: boolean | Item | this
+	): ItemInstanceByType[T] {
 
-		let itemData: DataItem | undefined
+		let itemData: DataItem<T> | undefined
 
 		// Item type as an object with meta data
 		if (typeof itemType === 'object') {
@@ -325,18 +329,12 @@ export class Mission {
 			itemType = itemData.type
 		}
 
-		const ItemClass: typeof Item = (Item as any)[itemType]
-
-		if (!ItemClass) {
-			throw new TypeError('Invalid item type value.')
-		}
-
 		// Add item to mission if parent is not specified
 		if (parent !== false && !(parent instanceof Item)) {
 			parent = this
 		}
 
-		const item: Item = new ItemClass()
+		const item = new (getItemClassByType(itemType))()
 
 		if (item.hasIndex) {
 

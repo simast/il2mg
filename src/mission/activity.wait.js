@@ -6,7 +6,7 @@ export default class ActivityWait {
 	// Make wait activity action
 	makeAction(element, input) {
 
-		const {flight} = this
+		const {flight, mission} = this
 
 		if (!input) {
 			return
@@ -22,7 +22,7 @@ export default class ActivityWait {
 		const leaderPlaneItem = element[0].item
 
 		// Wait using timer command
-		const waitTimer = flight.group.createItem('MCU_Timer')
+		const waitTimer = mission.createItem('MCU_Timer', flight.group)
 
 		waitTimer.Time = Number(this.time.toFixed(3))
 		waitTimer.setPositionNear(leaderPlaneItem)

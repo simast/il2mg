@@ -45,7 +45,7 @@ export default function makeAirfieldRoutes(airfield, routes) {
 		}
 
 		const route = routes.shift()
-		const routeGroup = airfield.group.createItem('Group')
+		const routeGroup = this.createItem('Group', airfield.group)
 		let waypointVehicle = rand.integer(0, route.length - 1)
 		let waypointFirst = null
 		let waypointLast = null
@@ -70,7 +70,7 @@ export default function makeAirfieldRoutes(airfield, routes) {
 			const isRoadPrev = (itemPrev[2] === ItemFlag.RouteRoad)
 
 			// Create waypoint MCU item
-			const waypoint = routeGroup.createItem('MCU_Waypoint')
+			const waypoint = this.createItem('MCU_Waypoint', routeGroup)
 
 			if (waypointLast) {
 				waypointLast.addTarget(waypoint)
@@ -131,7 +131,7 @@ export default function makeAirfieldRoutes(airfield, routes) {
 			// Create a random stop waypoint timer
 			if (isStop) {
 
-				const stopTimer = routeGroup.createItem('MCU_Timer')
+				const stopTimer = this.createItem('MCU_Timer', routeGroup)
 
 				stopTimer.Time = Number(rand.real(20, 60).toFixed(3))
 				stopTimer.setPositionNear(waypoint)
@@ -159,7 +159,7 @@ export default function makeAirfieldRoutes(airfield, routes) {
 			// Create formation command item
 			if (formation !== null) {
 
-				const formationCommand = routeGroup.createItem('MCU_CMD_Formation')
+				const formationCommand = this.createItem('MCU_CMD_Formation', routeGroup)
 
 				formationCommand.FormationType = formation
 				formationCommand.addObject(vehicle)

@@ -102,12 +102,7 @@ export class Airfield extends Block {
 export namespace Airfield {
 
 	// Airfield -> Chart item
-	export class Chart extends Item {
-
-		constructor() {
-			super('Chart')
-		}
-	}
+	export class Chart extends Item {}
 }
 
 export namespace Airfield.Chart {
@@ -120,7 +115,7 @@ export namespace Airfield.Chart {
 			public X: number,
 			public Y: number
 		) {
-			super('Point')
+			super()
 		}
 	}
 }

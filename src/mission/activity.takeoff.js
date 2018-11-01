@@ -25,7 +25,7 @@ export default class ActivityTakeOff {
 		// NOTE: Flight will use a single take off command for all elements
 		if (!takeoffCommand && taxiRoute && !isAirStart) {
 
-			takeoffCommand = flightGroup.createItem('MCU_CMD_TakeOff')
+			takeoffCommand = mission.createItem('MCU_CMD_TakeOff', flightGroup)
 
 			// Set takeoff command position and orientation
 			takeoffCommand.setPosition(taxiRoute.takeoffStart)
@@ -37,7 +37,7 @@ export default class ActivityTakeOff {
 		// Add a short timer before takeoff from runway start
 		if (element.state === FlightState.Runway) {
 
-			const waitTimerBefore = flightGroup.createItem('MCU_Timer')
+			const waitTimerBefore = mission.createItem('MCU_Timer', flightGroup)
 			let waitTimerMin = 8
 			let waitTimerMax = 12
 
@@ -65,7 +65,7 @@ export default class ActivityTakeOff {
 		}
 
 		// Short timer used to delay next command after takeoff is reported
-		const waitTimerAfter = flightGroup.createItem('MCU_Timer')
+		const waitTimerAfter = mission.createItem('MCU_Timer', flightGroup)
 
 		waitTimerAfter.Time = Number(rand.real(12, 18).toFixed(3))
 
@@ -80,7 +80,7 @@ export default class ActivityTakeOff {
 		// are not repeated after the second take off (for player flight only)
 		if (element.player && !isAirStart) {
 
-			const deactivateAfter = flightGroup.createItem('MCU_Deactivate')
+			const deactivateAfter = mission.createItem('MCU_Deactivate', flightGroup)
 
 			deactivateAfter.setPositionNear(waitTimerAfter)
 			deactivateAfter.addTarget(waitTimerAfter)

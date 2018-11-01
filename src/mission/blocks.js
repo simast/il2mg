@@ -7,7 +7,8 @@ import {data} from '../data'
 // Generate mission static blocks
 export default function makeBlocks() {
 
-	const blocksGroup = this.createItem('Group')
+	const mission = this
+	const blocksGroup = mission.createItem('Group')
 
 	blocksGroup.setName('BLOCK')
 
@@ -15,15 +16,15 @@ export default function makeBlocks() {
 	let totalBlocks = 0
 	let totalBridges = 0
 
-	this.battle.blocks.forEach(blocksFile => {
+	mission.battle.blocks.forEach(blocksFile => {
 
-		const blocks = data.load(path.join(this.battlePath, 'blocks', blocksFile))
+		const blocks = data.load(path.join(mission.battlePath, 'blocks', blocksFile))
 
 		// Add all blocks to a group
 		for (let i = 0; i < blocks.length; i++) {
 
 			const blockItem = blocks[i]
-			const block = blocksGroup.createItem(data.getItemType(blockItem[0]))
+			const block = mission.createItem(data.getItemType(blockItem[0]), blocksGroup)
 
 			block.setPosition(blockItem[1], blockItem[2], blockItem[3])
 			block.setOrientation(blockItem[4])

@@ -159,7 +159,7 @@ export default function makeAirfieldVehicle(airfield, item, isLive) {
 			// Create a shared attack area command (activated when airfield is loaded)
 			if (!onAttackArea) {
 
-				onAttackArea = zone.onAttackArea = zone.group.createItem('MCU_CMD_AttackArea')
+				onAttackArea = zone.onAttackArea = this.createItem('MCU_CMD_AttackArea', zone.group)
 
 				onAttackArea.setPositionNear(zone.onLoad)
 				onAttackArea.AttackAir = 1 // Attack air targets

@@ -171,20 +171,10 @@ export abstract class MCU extends Item {
 export namespace MCU {
 
 	// MCU -> OnEvents item
-	export class OnEvents extends Item {
-
-		constructor() {
-			super('OnEvents')
-		}
-	}
+	export class OnEvents extends Item {}
 
 	// MCU -> OnReports item
-	export class OnReports extends Item {
-
-		constructor() {
-			super('OnReports')
-		}
-	}
+	export class OnReports extends Item {}
 }
 
 export namespace MCU.OnEvents {
@@ -196,7 +186,7 @@ export namespace MCU.OnEvents {
 			public Type: number,
 			public TarId: number
 		) {
-			super('OnEvent')
+			super()
 		}
 	}
 }
@@ -211,7 +201,7 @@ export namespace MCU.OnReports {
 			public CmdId: number,
 			public TarId: number
 		) {
-			super('OnReport')
+			super()
 		}
 	}
 }

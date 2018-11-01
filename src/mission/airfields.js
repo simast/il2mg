@@ -280,8 +280,8 @@ export default function makeAirfields() {
 
 				// NOTE: Icon text can only have a custom color if it is linked to another
 				// icon. As a workaround - we are creating two icons at the same location.
-				const airfieldIcon1 = airfield.group.createItem('MCU_Icon')
-				const airfieldIcon2 = airfield.group.createItem('MCU_Icon')
+				const airfieldIcon1 = mission.createItem('MCU_Icon', airfield.group)
+				const airfieldIcon2 = mission.createItem('MCU_Icon', airfield.group)
 
 				// TODO: Show icon at the edge of the map for off-map airfields
 				airfieldIcon1.setPosition(position)

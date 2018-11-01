@@ -36,7 +36,7 @@ export class Options extends Item {
 	public Pressure = 0
 	public SeaState = 0
 
-	get hasIndex() {return false}
+	get hasIndex(): boolean {return false}
 
 	/**
 	 * Get binary representation of the item.

@@ -87,7 +87,7 @@ function makeTaskCoverAction(element, input) {
 		// Use climb waypoint above the airfield as a cover command
 		if (this.altitude) {
 
-			coverCommand = flight.group.createItem('MCU_Waypoint')
+			coverCommand = mission.createItem('MCU_Waypoint', flight.group)
 
 			coverCommand.Area = rand.integer(75, 125)
 			coverCommand.Speed = this.speed
@@ -104,7 +104,7 @@ function makeTaskCoverAction(element, input) {
 			// actually reach required waypoint altitude and not to abort on first pass
 			// below the waypoint - we use a trick with a timer that keeps activating
 			// the same low priority waypoint over and over again.
-			const altitudeTimer = flight.group.createItem('MCU_Timer')
+			const altitudeTimer = mission.createItem('MCU_Timer', flight.group)
 
 			// TODO: Disable this altitude timer at some point?
 
@@ -117,7 +117,7 @@ function makeTaskCoverAction(element, input) {
 		// Use cover command with airfield beacon
 		else if (beacon) {
 
-			coverCommand = flight.group.createItem('MCU_CMD_Cover')
+			coverCommand = mission.createItem('MCU_CMD_Cover', flight.group)
 
 			coverCommand.setPositionNear(beacon)
 			coverCommand.addTarget(beacon.entity)

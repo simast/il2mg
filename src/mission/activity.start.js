@@ -17,7 +17,7 @@ export default class ActivityStart {
 		if ((!flight.startIcon || (flight.virtual && debugFlights)) &&
 			(flight.player || debugFlights)) {
 
-			const startIcon = flight.startIcon = flightGroup.createItem('MCU_Icon')
+			const startIcon = flight.startIcon = mission.createItem('MCU_Icon', flightGroup)
 
 			startIcon.setPosition(this.position)
 
@@ -61,7 +61,7 @@ export default class ActivityStart {
 		// Create flight onBegin event command
 		if (!flight.onBegin) {
 
-			let onBegin = flightGroup.createItem('MCU_TR_MissionBegin')
+			let onBegin = mission.createItem('MCU_TR_MissionBegin', flightGroup)
 
 			onBegin.setPositionNear(flight.leader.item)
 
@@ -76,7 +76,7 @@ export default class ActivityStart {
 
 			if (beginDelay) {
 
-				const onBeginTimer = flightGroup.createItem('MCU_Timer')
+				const onBeginTimer = mission.createItem('MCU_Timer', flightGroup)
 
 				onBeginTimer.Time = Number(beginDelay.toFixed(3))
 				onBeginTimer.setPositionNear(onBegin)
@@ -97,7 +97,7 @@ export default class ActivityStart {
 			// after being activated.
 			if (flight.virtual) {
 
-				onStart = flightGroup.createItem('MCU_Timer')
+				onStart = mission.createItem('MCU_Timer', flightGroup)
 
 				// Short delay used to wait for virtual flight plane activation
 				onStart.Time = 1

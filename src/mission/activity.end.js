@@ -28,7 +28,7 @@ export default class ActivityEnd {
 
 			if (!onEnd && input) {
 
-				onEnd = flight.onEnd = flightGroup.createItem('MCU_Delete')
+				onEnd = flight.onEnd = mission.createItem('MCU_Delete', flightGroup)
 
 				onEnd.setPosition(this.position)
 				input(onEnd)
@@ -63,8 +63,8 @@ export default class ActivityEnd {
 				lineType: IconLine.Zone2
 			})
 
-			const endCheckZone = flightGroup.createItem('MCU_CheckZone')
-			const endMissionItem = flightGroup.createItem('MCU_TR_MissionEnd')
+			const endCheckZone = mission.createItem('MCU_CheckZone', flightGroup)
+			const endMissionItem = mission.createItem('MCU_TR_MissionEnd', flightGroup)
 
 			endCheckZone.Zone = playerEndRadius
 			endCheckZone.setPosition(this.position)
@@ -81,10 +81,10 @@ export default class ActivityEnd {
 			// exit offmap route points might be inside the check zone area.
 			if (airfield.offmap) {
 
-				const endGuardTimer = flightGroup.createItem('MCU_Timer')
-				const endGuardCheckZone = flightGroup.createItem('MCU_CheckZone')
-				const endGuardActivate = flightGroup.createItem('MCU_Activate')
-				const endGuardDeactivate = flightGroup.createItem('MCU_Deactivate')
+				const endGuardTimer = mission.createItem('MCU_Timer', flightGroup)
+				const endGuardCheckZone = mission.createItem('MCU_CheckZone', flightGroup)
+				const endGuardActivate = mission.createItem('MCU_Activate', flightGroup)
+				const endGuardDeactivate = mission.createItem('MCU_Deactivate', flightGroup)
 
 				// Further (guard) activation check zone is +50% larger
 				let endGuardZone = Number(playerEndRadius * 1.5)

@@ -11,14 +11,13 @@ import {convertUnicodeToASCII, writeUInt32, writeDouble, writeUInt16} from './ut
 import {BinaryType} from './enums'
 import {MCU_TR_Entity} from './MCU_TR_Entity'
 
-// Base mission item
-export class Item {
+// Base abstract mission item
+export abstract class Item {
 
 	// Non-enumerable item properties
 	protected readonly mission?: Mission
 	public readonly items?: ReadonlyArray<Item>
 	protected parent?: Item
-	public readonly type?: string
 	public readonly entity?: MCU_TR_Entity
 
 	// Common enumerable item properties
@@ -42,44 +41,18 @@ export class Item {
 	public readonly Index?: number
 	public readonly LinkTrId?: number
 
-	/**
-	 * Create a new mission item.
-	 *
-	 * @param type Item type name.
-	 */
-	constructor(type?: string) {
-
-		if (type) {
-			Object.defineProperty(this, 'type', {value: type})
-		}
-	}
-
 	// By default all items have "Index" field
-	get hasIndex() {return true}
+	get hasIndex(): boolean {return true}
 
-	/**
-	 * Create a new child item (linked to current item mission).
-	 *
-	 * @param type Item type name.
-	 * @returns New item.
-	 */
-	public createItem(type: string) {
-
-		const {mission} = this
-
-		if (!mission) {
-			throw new Error('Item is not part of a mission.')
-		}
-
-		return mission.createItem(type, this)
-	}
+	// NOTE: Generic items will not have mission assigned!
+	get isGeneric(): boolean {return !this.mission}
 
 	/**
 	 * Add a new child item.
 	 *
 	 * @param item Child item object.
 	 */
-	public addItem(item: Item) {
+	public addItem(item: Item): void {
 
 		let {items} = this
 
@@ -538,7 +511,7 @@ export class Item {
 			throw new Error('Item is not part of a mission.')
 		}
 
-		const entity: MCU_TR_Entity = mission.createItem('MCU_TR_Entity', false)
+		const entity = mission.createItem('MCU_TR_Entity', false)
 
 		// Link the item with entity
 		;(this as Mutable<this>).LinkTrId = entity.Index
@@ -563,7 +536,7 @@ export class Item {
 	public toString(indentLevel = 0): string {
 
 		const indent = new Array((2 * indentLevel) + 1).join(' ')
-		let value = indent + this.type + os.EOL + indent + '{'
+		let value = indent + this.constructor.name + os.EOL + indent + '{'
 
 		// Build property and value textual representation
 		function propertyToString(propName: string, propValue: any) {
@@ -649,7 +622,7 @@ export class Item {
 				value += os.EOL
 
 				// Don't add extra whitespace for generic items
-				if (item.type && item.type in Item) {
+				if (!item.isGeneric) {
 					value += os.EOL
 				}
 
@@ -721,45 +694,3 @@ export class Item {
 		yield buffer.toBuffer()
 	}
 }
-
-// Load all supported mission item types
-[
-	'Airfield',
-	'Block',
-	'Bridge',
-	'Effect',
-	'Flag',
-	'Ground',
-	'Group',
-	'MCU_Activate',
-	'MCU_CheckZone',
-	'MCU_CMD_AttackArea',
-	'MCU_CMD_Cover',
-	'MCU_CMD_Effect',
-	'MCU_CMD_ForceComplete',
-	'MCU_CMD_Formation',
-	'MCU_CMD_Land',
-	'MCU_CMD_TakeOff',
-	'MCU_Counter',
-	'MCU_Deactivate',
-	'MCU_Delete',
-	'MCU_Icon',
-	'MCU_Proximity',
-	'MCU_Spawner',
-	'MCU_Timer',
-	'MCU_TR_ComplexTrigger',
-	'MCU_TR_Entity',
-	'MCU_TR_MissionBegin',
-	'MCU_TR_MissionEnd',
-	'MCU_Waypoint',
-	'Options',
-	'Plane',
-	'Train',
-	'Vehicle'
-].forEach(type => {
-
-	const item = require('./' + type)[type]
-
-	Object.defineProperty(item.prototype, 'type', {value: type})
-	;(Item as any)[type] = item
-})

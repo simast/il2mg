@@ -79,11 +79,6 @@ export namespace Block {
 
 	// Block -> Damaged item
 	export class Damaged extends Item {
-
 		[damageIndex: number]: number | undefined
-
-		constructor() {
-			super('Damaged')
-		}
 	}
 }

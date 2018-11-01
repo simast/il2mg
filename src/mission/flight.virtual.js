@@ -125,7 +125,7 @@ function makeVirtualFlightPlanes(flight) {
 			const leaderPlane = element[0]
 			const isElementLeader = (leaderPlane === plane)
 			const oldItem = plane.item
-			const newItem = this.createItem(oldItem.type, oldItem.parent)
+			const newItem = this.createItem('Plane', oldItem.parent)
 
 			// Copy over old properties/data
 			for (const prop in oldItem) {
@@ -162,18 +162,18 @@ function makeVirtualFlightZone(flight, virtualZones, waitTime) {
 	const flightDelay = flight.plan.start.delay
 
 	const onBegin = flight.onBegin
-	const zoneGroup = flightGroup.createItem('Group')
-	const checkZone = zoneGroup.createItem('MCU_CheckZone')
-	const onActivate = zoneGroup.createItem('MCU_Activate')
-	const onNextBegin = zoneGroup.createItem('MCU_Timer')
-	const onDelete = zoneGroup.createItem('MCU_Delete')
-	const beginDeactivate = zoneGroup.createItem('MCU_Deactivate')
-	const onUnload = zoneGroup.createItem('MCU_Timer')
-	const onProximityPlayer = zoneGroup.createItem('MCU_Proximity')
-	const onProximityEnemy = zoneGroup.createItem('MCU_Proximity')
-	const proximityCheck = zoneGroup.createItem('MCU_Timer')
-	const proximityActivate = zoneGroup.createItem('MCU_Activate')
-	const proximityDeactivate = zoneGroup.createItem('MCU_Deactivate')
+	const zoneGroup = this.createItem('Group', flightGroup)
+	const checkZone = this.createItem('MCU_CheckZone', zoneGroup)
+	const onActivate = this.createItem('MCU_Activate', zoneGroup)
+	const onNextBegin = this.createItem('MCU_Timer', zoneGroup)
+	const onDelete = this.createItem('MCU_Delete', zoneGroup)
+	const beginDeactivate = this.createItem('MCU_Deactivate', zoneGroup)
+	const onUnload = this.createItem('MCU_Timer', zoneGroup)
+	const onProximityPlayer = this.createItem('MCU_Proximity', zoneGroup)
+	const onProximityEnemy = this.createItem('MCU_Proximity', zoneGroup)
+	const proximityCheck = this.createItem('MCU_Timer', zoneGroup)
+	const proximityActivate = this.createItem('MCU_Activate', zoneGroup)
+	const proximityDeactivate = this.createItem('MCU_Deactivate', zoneGroup)
 
 	checkZone.Zone = ZONE_RADIUS_BASE
 	checkZone.PlaneCoalitions = this.coalitions
@@ -194,16 +194,16 @@ function makeVirtualFlightZone(flight, virtualZones, waitTime) {
 	// virtual flights that move around do not activate on top of other flights.
 	if (flightDelay || (!isFirstPoint && !task.local)) {
 
-		const checkZoneOuter = zoneGroup.createItem('MCU_CheckZone')
-		const checkZoneOuterCheck = zoneGroup.createItem('MCU_Timer')
-		const checkZoneOuterActivate = zoneGroup.createItem('MCU_Activate')
-		const checkZoneOuterDeactivate = zoneGroup.createItem('MCU_Deactivate')
-		const checkZoneActivate = zoneGroup.createItem('MCU_Activate')
-		const checkZoneDeactivate = zoneGroup.createItem('MCU_Deactivate')
-		const activateTimer = zoneGroup.createItem('MCU_Timer')
-		const activateTimerDelay = zoneGroup.createItem('MCU_Timer')
-		const activateTimerActivate = zoneGroup.createItem('MCU_Activate')
-		const recheckTimer = zoneGroup.createItem('MCU_Timer')
+		const checkZoneOuter = this.createItem('MCU_CheckZone', zoneGroup)
+		const checkZoneOuterCheck = this.createItem('MCU_Timer', zoneGroup)
+		const checkZoneOuterActivate = this.createItem('MCU_Activate', zoneGroup)
+		const checkZoneOuterDeactivate = this.createItem('MCU_Deactivate', zoneGroup)
+		const checkZoneActivate = this.createItem('MCU_Activate', zoneGroup)
+		const checkZoneDeactivate = this.createItem('MCU_Deactivate', zoneGroup)
+		const activateTimer = this.createItem('MCU_Timer', zoneGroup)
+		const activateTimerDelay = this.createItem('MCU_Timer', zoneGroup)
+		const activateTimerActivate = this.createItem('MCU_Activate', zoneGroup)
+		const recheckTimer = this.createItem('MCU_Timer', zoneGroup)
 
 		checkZone.Zone = ZONE_RADIUS_INNER
 		checkZone.addTarget(checkZoneDeactivate)
@@ -313,7 +313,7 @@ function makeVirtualFlightZone(flight, virtualZones, waitTime) {
 	// Lazy getter/event used to delete all further zone plane items
 	addLazyProperty(zone, 'onDeleteNext', () => {
 
-		const onDeleteNext = zoneGroup.createItem('MCU_Delete')
+		const onDeleteNext = this.createItem('MCU_Delete', zoneGroup)
 
 		onDeleteNext.setPositionNear(onCheckActivate)
 		onCheckActivate.addTarget(onDeleteNext)

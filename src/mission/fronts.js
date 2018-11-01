@@ -106,7 +106,7 @@ export default function makeFronts() {
 		const pointX = point[1]
 		const pointZ = point[2]
 		const pointTargets = point[3]
-		const pointItem = frontsGroup.createItem('MCU_Icon')
+		const pointItem = this.createItem('MCU_Icon', frontsGroup)
 
 		pointItem.setPosition(pointX, pointZ)
 		pointItem.Coalitions = this.coalitions
@@ -467,8 +467,8 @@ export default function makeFronts() {
 		// Draw a territory line in the debug mode output
 		const drawDebugLine = (posFrom, posTo, color) => {
 
-			const lineItemFrom = frontsGroup.createItem('MCU_Icon')
-			const lineItemTo = frontsGroup.createItem('MCU_Icon')
+			const lineItemFrom = this.createItem('MCU_Icon', frontsGroup)
+			const lineItemTo = this.createItem('MCU_Icon', frontsGroup)
 
 			lineItemFrom.setPosition(posFrom)
 			lineItemTo.setPosition(posTo)

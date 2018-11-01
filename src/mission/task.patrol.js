@@ -351,7 +351,7 @@ export default function makeTaskPatrol(flight) {
 		// Translate 0,0 origin vector back to original position
 		vector = zoneCenter.add(vector)
 
-		const zoneIcon = flight.group.createItem('MCU_Icon')
+		const zoneIcon = this.createItem('MCU_Icon', flight.group)
 
 		zoneIcon.setPosition(vector.e(1), vector.e(2))
 		zoneIcon.setColor(MapColor.Route)

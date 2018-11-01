@@ -194,7 +194,7 @@ export function markMapArea(flight, {
 		// Build zone point vector
 		pointVector = centerVector.add(pointVector.rotate(rotateRad, rotateAxisLine))
 
-		const zoneIcon = flight.group.createItem('MCU_Icon')
+		const zoneIcon = this.createItem('MCU_Icon', flight.group)
 
 		zoneIcon.setPosition(pointVector.elements)
 		zoneIcon.setColor(color ? color : MapColor.Route)

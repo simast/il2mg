@@ -23,7 +23,7 @@ export default class ActivityForm {
 
 			if (!coverCommand) {
 
-				coverCommand = flightGroup.createItem('MCU_CMD_Cover')
+				coverCommand = mission.createItem('MCU_CMD_Cover', flightGroup)
 				coverCommand.setPositionNear(leaderPlaneItem)
 
 				element.coverCommand = coverCommand
@@ -42,7 +42,7 @@ export default class ActivityForm {
 
 			if (!formationCommand) {
 
-				formationCommand = flightGroup.createItem('MCU_CMD_Formation')
+				formationCommand = mission.createItem('MCU_CMD_Formation', flightGroup)
 
 				formationCommand.FormationType = element.formation
 				formationCommand.FormationDensity = FormationDensity.Safe
@@ -97,7 +97,7 @@ export default class ActivityForm {
 
 					// Add a small timer so that other elements can link up with the rest
 					// of the flight after take off (just before proceeding with the task).
-					const waitTimerLink = flightGroup.createItem('MCU_Timer')
+					const waitTimerLink = mission.createItem('MCU_Timer', flightGroup)
 
 					waitTimerLink.Time = Number(rand.real(40, 60).toFixed(3))
 					waitTimerLink.setPositionNear(flight.takeoffCommand)

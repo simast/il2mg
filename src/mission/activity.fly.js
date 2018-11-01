@@ -55,7 +55,7 @@ export default class ActivityFly {
 
 				if (!waypoint) {
 
-					waypoint = flightGroup.createItem('MCU_Waypoint')
+					waypoint = mission.createItem('MCU_Waypoint', flightGroup)
 
 					if (spot.priority !== undefined) {
 						waypoint.Priority = spot.priority
@@ -95,7 +95,7 @@ export default class ActivityFly {
 			if (drawIcons && (!spot.hidden || isNextSpotVisible)) {
 
 				const lastSpotIcon = flight.lastSpotIcon || flight.startIcon
-				const spotIcon = flightGroup.createItem('MCU_Icon')
+				const spotIcon = mission.createItem('MCU_Icon', flightGroup)
 				let routeColor = MapColor.Route
 
 				if (drawAIRoute) {

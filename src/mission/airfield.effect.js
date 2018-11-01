@@ -107,7 +107,7 @@ export default function makeAirfieldEffect(airfield, item) {
 		// Create a shared effect start command (activated when airfield is loaded)
 		if (!onEffectStart) {
 
-			onEffectStart = zone.onEffectStart = zone.group.createItem('MCU_CMD_Effect')
+			onEffectStart = zone.onEffectStart = this.createItem('MCU_CMD_Effect', zone.group)
 
 			onEffectStart.setPositionNear(zone.onLoad)
 			onEffectStart.ActionType = EffectAction.Start

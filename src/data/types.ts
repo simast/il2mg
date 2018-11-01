@@ -15,8 +15,8 @@ import {
 import {DateValue} from './utils'
 
 // data/items/item files
-export type DataItem = {
-	type: string // Item type
+export type DataItem<T extends string = string> = {
+	type: T // Item type
 	script: string // Script path
 	model: string // Model path
 	durability?: number // Durability value

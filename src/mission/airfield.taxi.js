@@ -55,7 +55,7 @@ export default function makeAirfieldTaxi(airfield, taxiRouteID) {
 	}
 
 	// Create airfield item
-	const airfieldItem = airfield.group.createItem(data.getItemType(taxiRoute[0]))
+	const airfieldItem = this.createItem(data.getItemType(taxiRoute[0]), airfield.group)
 
 	airfieldItem.setPosition(basePoint[0], airfield.position[1], basePoint[1])
 	airfieldItem.setOrientation(basePoint[2])
