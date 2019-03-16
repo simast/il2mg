@@ -15,7 +15,7 @@
 		"yarn": ">=1.10.1"
 	},
 	"dependencies": {
-		"binary-search": "1.3.4",
+		"binary-search": "1.3.5",
 		"circle-enclose": "1.0.0",
 		"classnames": "2.2.6",
 		"commander": "2.19.0",
@@ -23,10 +23,10 @@
 		"glob": "7.1.3",
 		"lazy-property": "1.0.0",
 		"lex": "1.7.9",
-		"mobx": "5.5.2",
-		"mobx-react": "5.3.6",
-		"moment": "2.22.2",
-		"mustache": "3.0.0",
+		"mobx": "5.9.0",
+		"mobx-react": "5.4.3",
+		"moment": "2.24.0",
+		"mustache": "3.0.1",
 		"numeral": "2.0.6",
 		"quadtree-lib": "1.0.9",
 		"random-js": "1.0.8",
@@ -34,9 +34,9 @@
 		"rbush-knn": "2.1.0",
 		"react": "16.6.0",
 		"react-dom": "16.6.0",
-		"react-router-dom": "4.3.1",
+		"react-router-dom": "4.4.0",
 		"react-transition-group": "2.5.0",
-		"smart-buffer": "4.0.1",
+		"smart-buffer": "4.0.2",
 		"speakingurl": "14.0.1",
 		"suncalc": "1.8.0",
 		"sylvester": "0.0.21",
@@ -44,8 +44,8 @@
 		"winston": "2.4.4"
 	},
 	"devDependencies": {
-		"@types/js-yaml": "3.11.2",
-		"@types/node": "10.12.1",
+		"@types/js-yaml": "3.12.0",
+		"@types/node": "11.11.3",
 		"@types/random-js": "1.0.31",
 		"@types/speakingurl": "13.0.2",
 		"clean-css": "4.2.1",
@@ -53,11 +53,11 @@
 		"electron-packager": "12.2.0",
 		"grunt": "1.0.3",
 		"grunt-contrib-clean": "2.0.0",
-		"js-yaml": "3.12.0",
-		"sloc": "0.2.0",
-		"terser-webpack-plugin": "1.1.0",
-		"ts-node": "7.0.1",
-		"typescript": "3.1.5",
-		"webpack": "4.23.1"
+		"js-yaml": "3.12.2",
+		"sloc": "0.2.1",
+		"terser-webpack-plugin": "1.2.3",
+		"ts-node": "8.0.3",
+		"typescript": "3.3.3333",
+		"webpack": "4.29.6"
 	}
 }
