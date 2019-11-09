@@ -13,13 +13,18 @@ export const enum FormationType {
 	PlaneEdgeRight = 3, // Plane: Right Edge Form
 	VehicleColumnRoad = 4, // Vehicle: On Road Column
 	VehicleColumn = 5, // Vehicle: Off Road Column
-	VehicleColumnCustom = 6, // Vehicle: Off Road User Formation
+	VehicleUser = 6, // Vehicle: Off Road User Formation
 	VehicleForward = 7, // Vehicle: Forward
 	VehicleBackward = 8, // Vehicle: Backward
 	VehicleStop = 9, // Vehicle: Stop
 	VehicleStopPanic = 10, // Vehicle: Panic Stop
+	VehicleContinue = 11, // Vehicle: Continue Moving
 	VehicleStopDirection = 12, // Vehicle: Set Direction and Stop
-	VehicleContinue = 11 // Vehicle: Continue Moving
+	VehicleUserReset = 13, // Vehicle: Reset Off Road User Formation
+	VehicleUserLineLeft = 14, // Vehicle: User Formation Line Left
+	VehicleUserLineRight = 15, // Vehicle: User Formation Line Right
+	VehicleUserLineCenter = 16, // Vehicle: User Formation Line Center
+	VehicleUserLineBack = 17 // Vehicle: User Formation Line Back
 }
 
 // Formation density
