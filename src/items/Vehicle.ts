@@ -16,6 +16,22 @@ export const enum VehicleAILevel {
 	High = 3
 }
 
+const DEFAULT_NUMBER_IN_FORMATION = 0
+const DEFAULT_CALLNUM = 0
+const DEFAULT_COOP_START = 0
+const DEFAULT_PAYLOAD_ID = 0
+const DEFAULT_WMMASK = 1
+const DEFAULT_FUEL = 1
+const DEFAULT_REPAIR_FRIENDLIES = 0
+const DEFAULT_REHEAL_FRIENDLIES = 0
+const DEFAULT_REARM_FRIENDLIES = 0
+const DEFAULT_REFUEL_FRIENDLIES = 0
+const DEFAULT_REPAIR_TIME = 0
+const DEFAULT_REHEAL_TIME = 0
+const DEFAULT_REARM_TIME = 0
+const DEFAULT_REFUEL_TIME = 0
+const DEFAULT_MAINTENANCE_RADIUS = 0
+
 // Vehicle item
 export class Vehicle extends Item {
 
@@ -23,26 +39,28 @@ export class Vehicle extends Item {
 	public DamageReport = DEFAULT_DAMAGE_REPORT
 	public readonly Country: Country = DEFAULT_COUNTRY
 	public AILevel = VehicleAILevel.Normal
-	public NumberInFormation? = 0
+	public NumberInFormation? = DEFAULT_NUMBER_IN_FORMATION
 	public Vulnerable: Bit = 1
 	public Engageable: Bit = 1
 	public LimitAmmo: Bit = 1
 	public Spotter = -1
 	public BeaconChannel = 0
 	public Callsign = 0
-	public Callnum = 0
+	public Callnum? = DEFAULT_CALLNUM
 	public DeleteAfterDeath: Bit = 1
-	public CoopStart?: Bit = 0
-	public PayloadId = 0
-	public WMMask = 1
-	public Fuel = 1
-	public RepairFriendlies: Bit = 0
-	public RearmFriendlies: Bit = 0
-	public RefuelFriendlies: Bit = 0
-	public RepairTime = 0
-	public RearmTime = 0
-	public RefuelTime = 0
-	public MaintenanceRadius = 0
+	public CoopStart?: Bit = DEFAULT_COOP_START
+	public PayloadId? = DEFAULT_PAYLOAD_ID
+	public WMMask? = DEFAULT_WMMASK
+	public Fuel? = DEFAULT_FUEL
+	public RepairFriendlies?: Bit = DEFAULT_REPAIR_FRIENDLIES
+	public RehealFriendlies?: Bit = DEFAULT_REHEAL_FRIENDLIES
+	public RearmFriendlies?: Bit = DEFAULT_REARM_FRIENDLIES
+	public RefuelFriendlies?: Bit = DEFAULT_REFUEL_FRIENDLIES
+	public RepairTime? = DEFAULT_REPAIR_TIME
+	public RehealTime? = DEFAULT_REHEAL_TIME
+	public RearmTime? = DEFAULT_REARM_TIME
+	public RefuelTime? = DEFAULT_REFUEL_TIME
+	public MaintenanceRadius? = DEFAULT_MAINTENANCE_RADIUS
 
 	/**
 	 * Get binary representation of the item.
@@ -76,7 +94,7 @@ export class Vehicle extends Item {
 		writeUInt32(buffer, this.AILevel)
 
 		// NumberInFormation
-		writeUInt32(buffer, this.NumberInFormation || 0)
+		writeUInt32(buffer, this.NumberInFormation || DEFAULT_NUMBER_IN_FORMATION)
 
 		// Vulnerable
 		writeUInt8(buffer, this.Vulnerable)
@@ -100,40 +118,46 @@ export class Vehicle extends Item {
 		writeUInt8(buffer, this.DeleteAfterDeath)
 
 		// CoopStart
-		writeUInt8(buffer, this.CoopStart || 0)
+		writeUInt8(buffer, this.CoopStart || DEFAULT_COOP_START)
 
 		// PayloadId
-		writeUInt32(buffer, this.PayloadId)
+		writeUInt32(buffer, this.PayloadId || DEFAULT_PAYLOAD_ID)
 
 		// WMMask
-		writeUInt32(buffer, this.WMMask)
+		writeUInt32(buffer, this.WMMask || DEFAULT_WMMASK)
 
 		// Fuel
-		writeFloat(buffer, this.Fuel)
+		writeFloat(buffer, this.Fuel || DEFAULT_FUEL)
 
 		// Callnum
-		writeUInt8(buffer, this.Callnum)
+		writeUInt8(buffer, this.Callnum || DEFAULT_CALLNUM)
 
 		// RepairFriendlies
-		writeUInt8(buffer, this.RepairFriendlies)
+		writeUInt8(buffer, this.RepairFriendlies || DEFAULT_REPAIR_FRIENDLIES)
+
+		// RehealFriendlies
+		writeUInt8(buffer, this.RehealFriendlies || DEFAULT_REHEAL_FRIENDLIES)
 
 		// RearmFriendlies
-		writeUInt8(buffer, this.RearmFriendlies)
+		writeUInt8(buffer, this.RearmFriendlies || DEFAULT_REARM_FRIENDLIES)
 
 		// RefuelFriendlies
-		writeUInt8(buffer, this.RefuelFriendlies)
+		writeUInt8(buffer, this.RefuelFriendlies || DEFAULT_REFUEL_FRIENDLIES)
 
 		// RepairTime
-		writeUInt32(buffer, this.RepairTime)
+		writeFloat(buffer, this.RepairTime || DEFAULT_REPAIR_TIME)
+
+		// RehealTime
+		writeFloat(buffer, this.RehealTime || DEFAULT_REHEAL_TIME)
 
 		// RearmTime
-		writeUInt32(buffer, this.RearmTime)
+		writeFloat(buffer, this.RearmTime || DEFAULT_REARM_TIME)
 
 		// RefuelTime
-		writeUInt32(buffer, this.RefuelTime)
+		writeFloat(buffer, this.RefuelTime || DEFAULT_REFUEL_TIME)
 
 		// MaintenanceRadius
-		writeUInt32(buffer, this.MaintenanceRadius)
+		writeUInt32(buffer, this.MaintenanceRadius || DEFAULT_MAINTENANCE_RADIUS)
 
 		yield buffer.toBuffer()
 	}

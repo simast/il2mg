@@ -14,9 +14,22 @@ export class Train extends Vehicle {
 	constructor() {
 		super()
 
-		// NOTE: Used in binary mission file but is missing from text file!
+		// NOTE: Used in binary mission file but is missing from text file and editor UI!
 		delete this.NumberInFormation
 		delete this.CoopStart
+		delete this.PayloadId
+		delete this.WMMask
+		delete this.Fuel
+		delete this.Callnum
+		delete this.RepairFriendlies
+		delete this.RehealFriendlies
+		delete this.RearmFriendlies
+		delete this.RefuelFriendlies
+		delete this.RepairTime
+		delete this.RehealTime
+		delete this.RearmTime
+		delete this.RefuelTime
+		delete this.MaintenanceRadius
 	}
 
 	/**

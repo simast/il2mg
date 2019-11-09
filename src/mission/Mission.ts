@@ -574,7 +574,7 @@ export class Mission {
 			const indexTables: BinaryIndexTables = {
 				name: new BinaryStringTable(32, 100),
 				desc: new BinaryStringTable(32, 100),
-				model: new BinaryStringTable(64, 100),
+				model: new BinaryStringTable(128, 100),
 				skin: new BinaryStringTable(128, 100),
 				script: new BinaryStringTable(128, 100),
 				damage: new BinaryDamageTable()
