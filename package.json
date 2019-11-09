@@ -34,7 +34,7 @@
 		"rbush-knn": "2.1.0",
 		"react": "16.8.4",
 		"react-dom": "16.8.4",
-		"react-router-dom": "4.4.0",
+		"react-router-dom": "5.1.2",
 		"react-transition-group": "2.6.1",
 		"smart-buffer": "4.0.2",
 		"speakingurl": "14.0.1",
