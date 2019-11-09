@@ -6,7 +6,7 @@ import {Item} from './Item'
 import {Block} from './Block'
 import {BinaryType} from './enums'
 import {Bit} from './types'
-import {writeUInt32, writeUInt8, writeDouble} from './utils'
+import {writeUInt32, writeUInt8, writeDouble, writeFloat} from './utils'
 
 // Airfield item
 export class Airfield extends Block {
@@ -16,9 +16,11 @@ export class Airfield extends Block {
 	public ReturnPlanes: Bit = 0
 	public Hydrodrome: Bit = 0
 	public RepairFriendlies: Bit = 0
+	public RehealFriendlies: Bit = 0
 	public RearmFriendlies: Bit = 0
 	public RefuelFriendlies: Bit = 0
 	public RepairTime = 0
+	public RehealTime = 0
 	public RearmTime = 0
 	public RefuelTime = 0
 	public MaintenanceRadius = 0
@@ -63,6 +65,9 @@ export class Airfield extends Block {
 		// RepairFriendlies
 		writeUInt8(buffer, this.RepairFriendlies)
 
+		// RehealFriendlies
+		writeUInt8(buffer, this.RehealFriendlies)
+
 		// RearmFriendlies
 		writeUInt8(buffer, this.RearmFriendlies)
 
@@ -70,13 +75,16 @@ export class Airfield extends Block {
 		writeUInt8(buffer, this.RefuelFriendlies)
 
 		// RepairTime
-		writeUInt32(buffer, this.RepairTime)
+		writeFloat(buffer, this.RepairTime)
+
+		// RehealTime
+		writeFloat(buffer, this.RehealTime)
 
 		// RearmTime
-		writeUInt32(buffer, this.RearmTime)
+		writeFloat(buffer, this.RearmTime)
 
 		// RefuelTime
-		writeUInt32(buffer, this.RefuelTime)
+		writeFloat(buffer, this.RefuelTime)
 
 		// MaintenanceRadius
 		writeUInt32(buffer, this.MaintenanceRadius)
