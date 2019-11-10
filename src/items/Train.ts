@@ -38,7 +38,7 @@ export class Train extends Vehicle {
 	 * @param index Binary data index tables.
 	 * @yields Item data buffer.
 	 */
-	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
+	public *toBuffer(index: BinaryIndexTables) {
 
 		yield* super.toBuffer(index, BinaryType.Train)
 

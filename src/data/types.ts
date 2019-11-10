@@ -13,6 +13,7 @@ import {
 } from './enums'
 
 import {DateValue} from './utils'
+import {Immutable} from '../types';
 
 // data/items/item files
 export type DataItem<T extends string = string> = {
@@ -71,7 +72,7 @@ export type DataCallsigns = {
 	[callsignGroup in CallsignGroup]: DataCallsign[]
 }
 
-type DataCallsign = [number, string]
+type DataCallsign = readonly [number, string]
 
 // data/tasks files
 export type DataTasks = {
@@ -292,6 +293,6 @@ export type DataBattleUnitsTransformed = {
 	[unitId: string]: DataBattleUnitTransformed | undefined
 }
 
-type DataBattleUnitTransformed = DataBattleUnit & {
+type DataBattleUnitTransformed = Immutable<DataBattleUnit & {
 	country: Country
-}
+}>

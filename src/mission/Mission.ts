@@ -371,6 +371,7 @@ export class Mission {
 			parent.addItem(item)
 		}
 
+		// @ts-ignore FIXME
 		return item
 	}
 

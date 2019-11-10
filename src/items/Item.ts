@@ -165,25 +165,25 @@ export abstract class Item {
 
 	public setPosition(
 		this: Mutable<this>,
-		...args: [number | [number, number, number], number?, number?]
+		...args: [number | Immutable<[number, number, number]>, number?, number?]
 	): void {
 
-		let position: [number, number, number]
+		let position: Immutable<[number, number, number]>
 
 		if (!Array.isArray(args[0])) {
 
 			// Short X/Z position version: setPosition(X, Z)
 			if (args.length === 2) {
-				position = [args[0], 0, args[1]!]
+				position = [args[0] as number, 0, args[1]!]
 			}
 			// Full X/Y/Z position version: setPosition(X, Y, Z)
 			else {
-				position = [args[0], args[1]!, args[2]!]
+				position = [args[0] as number, args[1]!, args[2]!]
 			}
 		}
 		// Array position version: setPosition([X, Y, Z])
 		else {
-			position = args[0]
+			position = args[0] as Immutable<[number, number, number]>
 		}
 
 		if (position[0] || this.XPos) {
@@ -252,25 +252,25 @@ export abstract class Item {
 
 	public setOrientation(
 		this: Mutable<this>,
-		...args: [number | [number, number, number], number?, number?]
+		...args: [number | Immutable<[number, number, number]>, number?, number?]
 	): void {
 
-		let orientation: [number, number, number]
+		let orientation: Immutable<[number, number, number]>
 
 		if (!Array.isArray(args[0])) {
 
 			// Short Y orientation version: setOrientation(Y)
 			if (args.length === 1) {
-				orientation = [0, args[0], 0]
+				orientation = [0, args[0] as number, 0]
 			}
 			// Full X/Y/Z position version: setOrientation(X, Y, Z)
 			else {
-				orientation = [args[0], args[1]!, args[2]!]
+				orientation = [args[0] as number, args[1]!, args[2]!]
 			}
 		}
 		// Array orientation version: setOrientation([X, Y, Z])
 		else {
-			orientation = args[0]
+			orientation = args[0] as Immutable<[number, number, number]>
 		}
 
 		if (orientation[0] || this.XOri) {
@@ -324,7 +324,7 @@ export abstract class Item {
 	 */
 	public setOrientationTo(x: number, y: number, z: number): void
 
-	public setOrientationTo(...args: [Item | number | [number, number, number?], number?, number?]): void {
+	public setOrientationTo(...args: [Item | number | Immutable<[number, number, number?]>, number?, number?]): void {
 
 		let targetX: number | undefined
 		let targetZ: number | undefined
@@ -340,7 +340,7 @@ export abstract class Item {
 		// Arguments as array of target position components: setOrientationTo([X, Y, Z] or [X, Z])
 		else if (Array.isArray(args[0])) {
 
-			const targetPosition = args[0]
+			const targetPosition = args[0] as Immutable<[number, number, number?]>
 
 			targetX = targetPosition[0]
 
@@ -354,7 +354,7 @@ export abstract class Item {
 		// Arguments as separate target position components: setOrientationTo(X, Y, Z)
 		else {
 
-			targetX = args[0]
+			targetX = args[0] as number
 
 			if (args.length > 2) {
 				targetZ = args[2]
