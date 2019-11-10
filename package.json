@@ -9,7 +9,7 @@
 		"start": "electron .",
 		"build": "grunt",
 		"build:release": "grunt release",
-		"lint": "grunt eslint"
+		"lint": "eslint . --ext .js,.jsx,.ts,.tsx"
 	},
 	"engines": {
 		"yarn": ">=1.10.1"
@@ -48,12 +48,19 @@
 		"@types/node": "11.11.3",
 		"@types/random-js": "1.0.31",
 		"@types/speakingurl": "13.0.2",
+		"@typescript-eslint/eslint-plugin": "2.6.1",
+		"@typescript-eslint/parser": "2.6.1",
 		"clean-css": "4.2.1",
 		"electron-debug": "2.1.0",
 		"electron-packager": "13.1.1",
+		"eslint": "6.6.0",
+		"eslint-config-prettier": "6.5.0",
+		"eslint-plugin-prettier": "3.1.1",
+		"eslint-plugin-react": "7.16.0",
 		"grunt": "1.0.3",
 		"grunt-contrib-clean": "2.0.0",
 		"js-yaml": "3.12.2",
+		"prettier": "1.19.1",
 		"sloc": "0.2.1",
 		"terser-webpack-plugin": "1.2.3",
 		"ts-node": "8.0.3",
