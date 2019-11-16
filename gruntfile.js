@@ -21,9 +21,6 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 
-		// Source code report task
-		sloc: sourceFiles,
-
 		// Clean task
 		clean: {
 			release: [
@@ -51,7 +48,6 @@ module.exports = function(grunt) {
 	// Default task used for building the project
 	grunt.registerTask('default', [
 		'clean:data',
-		'build:sloc',
 		'build:blocks',
 		'build:locations',
 		'build:airfields',
