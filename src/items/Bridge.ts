@@ -1,10 +1,9 @@
-import {BinaryIndexTables} from '../mission/types'
-import {Block} from './Block'
-import {BinaryType} from './enums'
+import { BinaryIndexTables } from '../mission/types';
+import { Block } from './Block';
+import { BinaryType } from './enums';
 
 // Bridge item
 export class Bridge extends Block {
-
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -12,6 +11,6 @@ export class Bridge extends Block {
 	 * @yields Item data buffer.
 	 */
 	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
-		yield* super.toBuffer(index, BinaryType.Bridge)
+		yield* super.toBuffer(index, BinaryType.Bridge);
 	}
 }

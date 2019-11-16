@@ -29,18 +29,18 @@ export const enum BinaryType {
 	MCU_CheckZone = 46,
 	MCU_Spawner = 48,
 	MCU_Proximity = 49,
-	MCU_Delete = 50
+	MCU_Delete = 50,
 }
 
 // Priority type
 export const enum Priority {
 	Low = 0,
 	Medium = 1,
-	High = 2
+	High = 2,
 }
 
-export {EffectAction} from './MCU_CMD_Effect'
-export {FormationType, FormationDensity} from './MCU_CMD_Formation'
-export {IconType, IconLine} from './MCU_Icon'
-export {PlaneAILevel, PlaneStart} from './Plane'
-export {VehicleAILevel} from './Vehicle'
+export { EffectAction } from './MCU_CMD_Effect';
+export { FormationType, FormationDensity } from './MCU_CMD_Formation';
+export { IconType, IconLine } from './MCU_Icon';
+export { PlaneAILevel, PlaneStart } from './Plane';
+export { VehicleAILevel } from './Vehicle';

@@ -1,12 +1,12 @@
-import {SmartBuffer} from 'smart-buffer'
+import { SmartBuffer } from 'smart-buffer';
 
-import {Coalition} from '../data/enums'
-import {BinaryIndexTables} from '../mission/types'
-import {DEFAULT_BUFFER_SIZE} from './constants'
-import {MCU} from './MCU'
-import {BinaryType} from './enums'
-import {Bit} from './types'
-import {writeUInt32, writeUInt32Array} from './utils'
+import { Coalition } from '../data/enums';
+import { BinaryIndexTables } from '../mission/types';
+import { DEFAULT_BUFFER_SIZE } from './constants';
+import { MCU } from './MCU';
+import { BinaryType } from './enums';
+import { Bit } from './types';
+import { writeUInt32, writeUInt32Array } from './utils';
 
 // Icon type
 export const enum IconType {
@@ -46,7 +46,7 @@ export const enum IconType {
 	ActionPoint = 902,
 	TakeOff = 903,
 	Land = 904,
-	Airfield = 905
+	Airfield = 905,
 }
 
 // Icon line type
@@ -73,21 +73,20 @@ export const enum IconLine {
 	Position6 = 19,
 	Position7 = 20,
 	Position8 = 21,
-	Position9 = 22
+	Position9 = 22,
 }
 
 // Icon item
 export class MCU_Icon extends MCU {
-
-	public Enabled: Bit = 1
-	public readonly LCName: number = 0
-	public readonly LCDesc: number = 0
-	public IconId = IconType.None
-	public RColor = 0
-	public GColor = 0
-	public BColor = 0
-	public LineType = IconLine.Normal
-	public Coalitions?: Coalition[]
+	public Enabled: Bit = 1;
+	public readonly LCName: number = 0;
+	public readonly LCDesc: number = 0;
+	public IconId = IconType.None;
+	public RColor = 0;
+	public GColor = 0;
+	public BColor = 0;
+	public LineType = IconLine.Normal;
+	public Coalitions?: Coalition[];
 
 	/**
 	 * Set icon item color value.
@@ -95,10 +94,9 @@ export class MCU_Icon extends MCU {
 	 * @param color Color value as [R, G, B] array.
 	 */
 	public setColor([red, green, blue]: [number, number, number]): void {
-
-		this.RColor = red
-		this.GColor = green
-		this.BColor = blue
+		this.RColor = red;
+		this.GColor = green;
+		this.BColor = blue;
 	}
 
 	/**
@@ -108,35 +106,34 @@ export class MCU_Icon extends MCU {
 	 * @yields Item data buffer.
 	 */
 	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
+		yield* super.toBuffer(index, BinaryType.MCU_Icon);
 
-		yield* super.toBuffer(index, BinaryType.MCU_Icon)
-
-		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE);
 
 		// IconId
-		writeUInt32(buffer, this.IconId)
+		writeUInt32(buffer, this.IconId);
 
 		// RColor
-		writeUInt32(buffer, this.RColor)
+		writeUInt32(buffer, this.RColor);
 
 		// GColor
-		writeUInt32(buffer, this.GColor)
+		writeUInt32(buffer, this.GColor);
 
 		// BColor
-		writeUInt32(buffer, this.BColor)
+		writeUInt32(buffer, this.BColor);
 
 		// LineType
-		writeUInt32(buffer, this.LineType)
+		writeUInt32(buffer, this.LineType);
 
 		// LCName
-		writeUInt32(buffer, this.LCName)
+		writeUInt32(buffer, this.LCName);
 
 		// LCDesc
-		writeUInt32(buffer, this.LCDesc)
+		writeUInt32(buffer, this.LCDesc);
 
 		// Coalitions
-		writeUInt32Array(buffer, this.Coalitions || [])
+		writeUInt32Array(buffer, this.Coalitions ?? []);
 
-		yield buffer.toBuffer()
+		yield buffer.toBuffer();
 	}
 }

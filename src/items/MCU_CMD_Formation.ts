@@ -1,9 +1,9 @@
-import {SmartBuffer} from 'smart-buffer'
+import { SmartBuffer } from 'smart-buffer';
 
-import {BinaryIndexTables} from '../mission/types'
-import {MCU} from './MCU'
-import {BinaryType} from './enums'
-import {writeUInt32} from './utils'
+import { BinaryIndexTables } from '../mission/types';
+import { MCU } from './MCU';
+import { BinaryType } from './enums';
+import { writeUInt32 } from './utils';
 
 // Formation type
 export const enum FormationType {
@@ -24,21 +24,20 @@ export const enum FormationType {
 	VehicleUserLineLeft = 14, // Vehicle: User Formation Line Left
 	VehicleUserLineRight = 15, // Vehicle: User Formation Line Right
 	VehicleUserLineCenter = 16, // Vehicle: User Formation Line Center
-	VehicleUserLineBack = 17 // Vehicle: User Formation Line Back
+	VehicleUserLineBack = 17, // Vehicle: User Formation Line Back
 }
 
 // Formation density
 export const enum FormationDensity {
 	Dense = 0,
 	Safe = 1,
-	Loose = 2
+	Loose = 2,
 }
 
 // Formation command item
 export class MCU_CMD_Formation extends MCU {
-
-	public FormationType = FormationType.PlaneNone
-	public FormationDensity = FormationDensity.Safe
+	public FormationType = FormationType.PlaneNone;
+	public FormationDensity = FormationDensity.Safe;
 
 	/**
 	 * Get binary representation of the item.
@@ -47,17 +46,16 @@ export class MCU_CMD_Formation extends MCU {
 	 * @yields Item data buffer.
 	 */
 	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
+		yield* super.toBuffer(index, BinaryType.MCU_CMD_Formation);
 
-		yield* super.toBuffer(index, BinaryType.MCU_CMD_Formation)
-
-		const buffer = SmartBuffer.fromSize(8)
+		const buffer = SmartBuffer.fromSize(8);
 
 		// FormationType
-		writeUInt32(buffer, this.FormationType)
+		writeUInt32(buffer, this.FormationType);
 
 		// FormationDensity
-		writeUInt32(buffer, this.FormationDensity)
+		writeUInt32(buffer, this.FormationDensity);
 
-		yield buffer.toBuffer()
+		yield buffer.toBuffer();
 	}
 }

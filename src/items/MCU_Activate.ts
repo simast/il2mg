@@ -1,10 +1,9 @@
-import {BinaryIndexTables} from '../mission/types'
-import {MCU} from './MCU'
-import {BinaryType} from './enums'
+import { BinaryIndexTables } from '../mission/types';
+import { MCU } from './MCU';
+import { BinaryType } from './enums';
 
 // Activate item
 export class MCU_Activate extends MCU {
-
 	/**
 	 * Get binary representation of the item.
 	 *
@@ -12,6 +11,6 @@ export class MCU_Activate extends MCU {
 	 * @yields Item data buffer.
 	 */
 	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
-		yield* super.toBuffer(index, BinaryType.MCU_Activate)
+		yield* super.toBuffer(index, BinaryType.MCU_Activate);
 	}
 }

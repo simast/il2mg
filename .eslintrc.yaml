@@ -29,3 +29,6 @@ settings:
 
 rules:
   prettier/prettier: warn
+  '@typescript-eslint/no-namespace': off
+  '@typescript-eslint/camelcase': off
+  '@typescript-eslint/class-name-casing': off

@@ -1,14 +1,20 @@
-import {SmartBuffer} from 'smart-buffer'
+import { SmartBuffer } from 'smart-buffer';
 
-import {Mutable} from '../types'
-import {BinaryIndexTables} from '../mission/types'
-import {data} from '../data'
-import {Country} from '../data/enums'
-import {DEFAULT_DAMAGE_REPORT, DEFAULT_BUFFER_SIZE} from './constants'
-import {MCU} from './MCU'
-import {BinaryType} from './enums'
-import {Bit} from './types'
-import {writeUInt8, writeUInt32, writeUInt32Array, writeDouble, writeString} from './utils'
+import { Mutable } from '../types';
+import { BinaryIndexTables } from '../mission/types';
+import { data } from '../data';
+import { Country } from '../data/enums';
+import { DEFAULT_DAMAGE_REPORT, DEFAULT_BUFFER_SIZE } from './constants';
+import { MCU } from './MCU';
+import { BinaryType } from './enums';
+import { Bit } from './types';
+import {
+	writeUInt8,
+	writeUInt32,
+	writeUInt32Array,
+	writeDouble,
+	writeString,
+} from './utils';
 
 // Complex Trigger event filters (with order representing bit number in binary file)
 const eventFilters = [
@@ -32,44 +38,43 @@ const eventFilters = [
 	'EventsFilterDroppedCargoContainers',
 	'EventsFilterDeliveredCargo',
 	'EventsFilterParatrooperJumped',
-	'EventsFilterParatrooperLandedAlive'
-]
+	'EventsFilterParatrooperLandedAlive',
+];
 
 // Complex Trigger item
 export class MCU_TR_ComplexTrigger extends MCU {
+	public Enabled: Bit = 1;
+	public Cylinder: Bit = 1;
+	public Radius = 1000; // Meters
+	public DamageThreshold: Bit = 1;
+	public DamageReport = DEFAULT_DAMAGE_REPORT;
+	public CheckPlanes: Bit = 0;
+	public CheckVehicles: Bit = 0;
+	public readonly Country?: ReadonlySet<Country>;
+	public ObjectScript?: Set<string>;
+	public ObjectName?: Set<string>;
 
-	public Enabled: Bit = 1
-	public Cylinder: Bit = 1
-	public Radius = 1000 // Meters
-	public DamageThreshold: Bit = 1
-	public DamageReport = DEFAULT_DAMAGE_REPORT
-	public CheckPlanes: Bit = 0
-	public CheckVehicles: Bit = 0
-	public readonly Country?: ReadonlySet<Country>
-	public ObjectScript?: Set<string>
-	public ObjectName?: Set<string>
-
-	public EventsFilterSpawned: Bit = 0
-	public EventsFilterEnteredSimple: Bit = 0
-	public EventsFilterEnteredAlive: Bit = 0
-	public EventsFilterLeftSimple: Bit = 0
-	public EventsFilterLeftAlive: Bit = 0
-	public EventsFilterFinishedSimple: Bit = 0
-	public EventsFilterFinishedAlive: Bit = 0
-	public EventsFilterStationaryAndAlive: Bit = 0
-	public EventsFilterFinishedStationaryAndAlive: Bit = 0
-	public EventsFilterTookOff: Bit = 0
-	public EventsFilterDamaged: Bit = 0
-	public EventsFilterCriticallyDamaged: Bit = 0
-	public EventsFilterRepaired: Bit = 0
-	public EventsFilterKilled: Bit = 0
-	public EventsFilterDropedBombs: Bit = 0
-	public EventsFilterFiredFlare: Bit = 0
-	public EventsFilterFiredRockets: Bit = 0
-	public EventsFilterDroppedCargoContainers: Bit = 0
-	public EventsFilterDeliveredCargo: Bit = 0
-	public EventsFilterParatrooperJumped: Bit = 0
-	public EventsFilterParatrooperLandedAlive: Bit = 0
+	public EventsFilterSpawned: Bit = 0;
+	public EventsFilterEnteredSimple: Bit = 0;
+	public EventsFilterEnteredAlive: Bit = 0;
+	public EventsFilterLeftSimple: Bit = 0;
+	public EventsFilterLeftAlive: Bit = 0;
+	public EventsFilterFinishedSimple: Bit = 0;
+	public EventsFilterFinishedAlive: Bit = 0;
+	public EventsFilterStationaryAndAlive: Bit = 0;
+	public EventsFilterFinishedStationaryAndAlive: Bit = 0;
+	public EventsFilterTookOff: Bit = 0;
+	public EventsFilterDamaged: Bit = 0;
+	public EventsFilterCriticallyDamaged: Bit = 0;
+	public EventsFilterRepaired: Bit = 0;
+	public EventsFilterKilled: Bit = 0;
+	public EventsFilterDropedBombs: Bit = 0;
+	public EventsFilterFiredFlare: Bit = 0;
+	public EventsFilterFiredRockets: Bit = 0;
+	public EventsFilterDroppedCargoContainers: Bit = 0;
+	public EventsFilterDeliveredCargo: Bit = 0;
+	public EventsFilterParatrooperJumped: Bit = 0;
+	public EventsFilterParatrooperLandedAlive: Bit = 0;
 
 	// Valid Complex Trigger event type name and ID constants
 	get EVENTS() {
@@ -94,8 +99,8 @@ export class MCU_TR_ComplexTrigger extends MCU {
 			OnObjectDroppedCargoContainers: 75,
 			OnObjectDeliveredCargo: 76,
 			OnObjectParatrooperJumped: 77,
-			OnObjectParatrooperLandedAlive: 78
-		}
+			OnObjectParatrooperLandedAlive: 78,
+		};
 	}
 
 	/**
@@ -103,15 +108,14 @@ export class MCU_TR_ComplexTrigger extends MCU {
 	 *
 	 * @param countryId Country ID value.
 	 */
-	public addCountry(countryId: Country): void
+	public addCountry(countryId: Country): void;
 	public addCountry(this: Mutable<this>, countryId: Country): void {
-
 		if (!this.Country) {
-			this.Country = new Set()
+			this.Country = new Set();
 		}
 
 		// Support for "alias" (hidden) countries
-		this.Country.add(data.countries[countryId].alias || countryId)
+		this.Country.add(data.countries[countryId].alias || countryId);
 	}
 
 	/**
@@ -121,69 +125,69 @@ export class MCU_TR_ComplexTrigger extends MCU {
 	 * @yields Item data buffer.
 	 */
 	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
+		yield* super.toBuffer(index, BinaryType.MCU_TR_ComplexTrigger);
 
-		yield* super.toBuffer(index, BinaryType.MCU_TR_ComplexTrigger)
+		const countries: Country[] = this.Country ? Array.from(this.Country) : [];
+		const scripts: string[] = this.ObjectScript
+			? Array.from(this.ObjectScript)
+			: [];
+		const names: string[] = this.ObjectName ? Array.from(this.ObjectName) : [];
 
-		const countries: Country[] = this.Country ? Array.from(this.Country) : []
-		const scripts: string[] = this.ObjectScript ? Array.from(this.ObjectScript) : []
-		const names: string[] = this.ObjectName ? Array.from(this.ObjectName) : []
-
-		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE);
 
 		// Events list
-		this.writeEvents(buffer)
+		this.writeEvents(buffer);
 
 		// Cylinder
-		writeUInt8(buffer, this.Cylinder)
+		writeUInt8(buffer, this.Cylinder);
 
 		// Radius
-		writeDouble(buffer, this.Radius)
+		writeDouble(buffer, this.Radius);
 
 		// DamageReport
-		writeUInt32(buffer, this.DamageReport)
+		writeUInt32(buffer, this.DamageReport);
 
 		// DamageThreshold
-		writeUInt8(buffer, this.DamageThreshold)
+		writeUInt8(buffer, this.DamageThreshold);
 
 		// CheckPlanes
-		writeUInt8(buffer, this.CheckPlanes)
+		writeUInt8(buffer, this.CheckPlanes);
 
 		// CheckVehicles
-		writeUInt8(buffer, this.CheckVehicles)
+		writeUInt8(buffer, this.CheckVehicles);
 
 		// EventsFilter* properties
-		let eventsFilterValue = 0
+		let eventsFilterValue = 0;
 
 		eventFilters.forEach((eventFilterProp, eventFilterIndex) => {
-
 			// NOTE: In binary file event filter properties are stored as individual
 			// bits (flags) in a 32-bit unsigned integer value.
 			if ((this as any)[eventFilterProp]) {
-				eventsFilterValue |= 1 << eventFilterIndex
+				eventsFilterValue |= 1 << eventFilterIndex;
 			}
-		})
+		});
 
-		writeUInt32(buffer, eventsFilterValue)
+		writeUInt32(buffer, eventsFilterValue);
 
 		// Country filter list
-		writeUInt32Array(buffer, countries)
+		writeUInt32Array(buffer, countries);
 
 		// ObjectScript filter list size
-		writeUInt32(buffer, scripts.length)
+		writeUInt32(buffer, scripts.length);
 
 		// ObjectScript filter list items
 		scripts.forEach(script => {
-			writeString(buffer, script)
-		})
+			writeString(buffer, script);
+		});
 
 		// ObjectName filter list size
-		writeUInt32(buffer, names.length)
+		writeUInt32(buffer, names.length);
 
 		// ObjectName filter list items
 		names.forEach(name => {
-			writeString(buffer, name)
-		})
+			writeString(buffer, name);
+		});
 
-		yield buffer.toBuffer()
+		yield buffer.toBuffer();
 	}
 }

@@ -1,4 +1,4 @@
-import {Coalition} from '../data/enums'
+import { Coalition } from '../data/enums';
 
 /**
  * Get opposing (enemy) coalition.
@@ -7,14 +7,13 @@ import {Coalition} from '../data/enums'
  * @returns Enemy coalition ID.
  */
 export function getEnemyCoalition(friendlyCoalition: Coalition): Coalition {
-
 	if (friendlyCoalition === Coalition.Allies) {
-		return Coalition.Axis
+		return Coalition.Axis;
 	}
 
 	if (friendlyCoalition === Coalition.Axis) {
-		return Coalition.Allies
+		return Coalition.Allies;
 	}
 
-	return Coalition.Neutral // Unknown/neutral
+	return Coalition.Neutral; // Unknown/neutral
 }
