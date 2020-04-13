@@ -2,14 +2,14 @@
 export enum Coalition {
 	Neutral = 0,
 	Allies = 1,
-	Axis = 2
+	Axis = 2,
 }
 
 // Countries
 export enum Country {
 	SovietUnion = 101,
 	Germany = 201,
-	Romania = 202
+	Romania = 202,
 }
 
 // Data tags for special airfield items
@@ -26,7 +26,7 @@ export enum ItemTag {
 	Beacon = -10, // Beacon
 	Windsock = -11, // Windsock
 	Effect = -12, // Effect
-	Wreck = -13 // Wreckage
+	Wreck = -13, // Wreckage
 }
 
 // Data flags for airfield items
@@ -41,7 +41,7 @@ export enum ItemFlag {
 	TaxiInvertible = 1, // Invertible taxi route
 	TaxiRunway = 1, // Taxi runway point
 	RouteStop = 1, // Route stop point
-	RouteRoad = 2 // Route road formation
+	RouteRoad = 2, // Route road formation
 }
 
 // Vehicle types
@@ -72,7 +72,7 @@ export const enum VehicleType {
 	LandingLight = 'landing_light',
 	SearchLight = 'search_light',
 	Train = 'train',
-	TrainAntiAir = 'train_aa'
+	TrainAntiAir = 'train_aa',
 }
 
 // Named time periods
@@ -87,14 +87,14 @@ export const enum TimePeriod {
 	Sunset = 'sunset',
 	Dusk = 'dusk',
 	Night = 'night',
-	Midnight = 'midnight'
+	Midnight = 'midnight',
 }
 
 // Callsign groups
 export const enum CallsignGroup {
 	Plane = 'plane',
 	Airfield = 'airfield',
-	Vehicle = 'vehicle'
+	Vehicle = 'vehicle',
 }
 
 // Task types
@@ -103,14 +103,14 @@ export const enum TaskType {
 	Free = 'free',
 	Patrol = 'patrol',
 	Rebase = 'rebase',
-	Sweep = 'sweep'
+	Sweep = 'sweep',
 }
 
 // Altitude level types
 export const enum AltitudeLevel {
 	Low = 'low',
 	Medium = 'medium',
-	High = 'high'
+	High = 'high',
 }
 
 // Plane types
@@ -121,7 +121,7 @@ export const enum PlaneType {
 	GroundAttack = 'ground_attack',
 	DiveBomber = 'dive_bomber',
 	LevelBomber = 'level_bomber',
-	Transport = 'transport'
+	Transport = 'transport',
 }
 
 // Plane sizes
@@ -129,7 +129,7 @@ export const enum PlaneSize {
 	Small = 'small',
 	Medium = 'medium',
 	Large = 'large',
-	Huge = 'huge'
+	Huge = 'huge',
 }
 
 // Rank types
@@ -139,7 +139,7 @@ export const enum RankType {
 	Liaison = 'liaison',
 	Commander = 'commander',
 	AntiAir = 'aa',
-	Brass = 'brass'
+	Brass = 'brass',
 }
 
 // Map season types
@@ -149,5 +149,5 @@ export enum MapSeason {
 	Summer = 'summer',
 	Autumn = 'autumn',
 	Winter = 'winter',
-	Desert = 'desert'
+	Desert = 'desert',
 }

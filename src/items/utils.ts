@@ -1,5 +1,5 @@
-import getSlug from 'speakingurl'
-import {SmartBuffer} from 'smart-buffer'
+import getSlug from 'speakingurl';
+import { SmartBuffer } from 'smart-buffer';
 
 /**
  * Convert Unicode text to ASCII character set.
@@ -8,7 +8,6 @@ import {SmartBuffer} from 'smart-buffer'
  * @returns Converted text.
  */
 export function convertUnicodeToASCII(value: string): string {
-
 	// NOTE: The .Mission file parser does not seem to support UTF-8/unicode
 	// characters and will fail to load the mission when there are any. Also,
 	// in-game labels for planes/vehicles will not display UTF-8 characters as
@@ -21,30 +20,8 @@ export function convertUnicodeToASCII(value: string): string {
 		maintainCase: true,
 		titleCase: false,
 		uric: true,
-		mark: true
-	})
-}
-
-/**
- * Write a string value to the given buffer object.
- *
- * @param buffer Target SmartBuffer object.
- * @param value String value to write.
- */
-export function writeString(buffer: SmartBuffer, value: string): void {
-
-	const length = Buffer.byteLength(value)
-
-	// NOTE: String values are represented in binary files as a length (32 bit
-	// unsigned integer) followed by an array of string byte characters.
-
-	// String length
-	writeUInt32(buffer, length)
-
-	// String value
-	if (length > 0) {
-		buffer.writeString(value)
-	}
+		mark: true,
+	});
 }
 
 /**
@@ -54,7 +31,28 @@ export function writeString(buffer: SmartBuffer, value: string): void {
  * @param value Number value to write.
  */
 export function writeUInt32(buffer: SmartBuffer, value: number): void {
-	buffer.writeUInt32LE(value)
+	buffer.writeUInt32LE(value);
+}
+
+/**
+ * Write a string value to the given buffer object.
+ *
+ * @param buffer Target SmartBuffer object.
+ * @param value String value to write.
+ */
+export function writeString(buffer: SmartBuffer, value: string): void {
+	const length = Buffer.byteLength(value);
+
+	// NOTE: String values are represented in binary files as a length (32 bit
+	// unsigned integer) followed by an array of string byte characters.
+
+	// String length
+	writeUInt32(buffer, length);
+
+	// String value
+	if (length > 0) {
+		buffer.writeString(value);
+	}
 }
 
 /**
@@ -64,7 +62,7 @@ export function writeUInt32(buffer: SmartBuffer, value: number): void {
  * @param value Number value to write.
  */
 export function writeUInt16(buffer: SmartBuffer, value: number): void {
-	buffer.writeUInt16LE(value)
+	buffer.writeUInt16LE(value);
 }
 
 /**
@@ -74,7 +72,7 @@ export function writeUInt16(buffer: SmartBuffer, value: number): void {
  * @param value Number value to write.
  */
 export function writeUInt8(buffer: SmartBuffer, value: number): void {
-	buffer.writeUInt8(value)
+	buffer.writeUInt8(value);
 }
 
 /**
@@ -84,7 +82,7 @@ export function writeUInt8(buffer: SmartBuffer, value: number): void {
  * @param value Number value to write.
  */
 export function writeDouble(buffer: SmartBuffer, value: number): void {
-	buffer.writeDoubleLE(value)
+	buffer.writeDoubleLE(value);
 }
 
 /**
@@ -94,7 +92,7 @@ export function writeDouble(buffer: SmartBuffer, value: number): void {
  * @param value Number value to write.
  */
 export function writeFloat(buffer: SmartBuffer, value: number): void {
-	buffer.writeFloatLE(value)
+	buffer.writeFloatLE(value);
 }
 
 /**
@@ -103,13 +101,15 @@ export function writeFloat(buffer: SmartBuffer, value: number): void {
  * @param buffer Target SmartBuffer object.
  * @param values List of integer values to write.
  */
-export function writeUInt32Array(buffer: SmartBuffer, values: ReadonlyArray<number>): void {
-
+export function writeUInt32Array(
+	buffer: SmartBuffer,
+	values: ReadonlyArray<number>,
+): void {
 	// Array length
-	writeUInt32(buffer, values.length)
+	writeUInt32(buffer, values.length);
 
 	// Array values
 	for (const value of values) {
-		writeUInt32(buffer, value)
+		writeUInt32(buffer, value);
 	}
 }

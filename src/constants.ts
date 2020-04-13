@@ -2,7 +2,7 @@
 export const APPLICATION_NAME = 'il2mg';
 export const APPLICATION_TITLE = 'il2mg - Mission Generator';
 export const APPLICATION_VERSION = 14;
-export const APPLICATION_COPYRIGHT = '(C) Simas Toleikis, 2014-2019';
+export const APPLICATION_COPYRIGHT = '(C) Simas Toleikis, 2014-2020';
 
 // Minimum generated mission version the application is compatible with. This is used
 // when upgrading to a new application version and loading missions generated with

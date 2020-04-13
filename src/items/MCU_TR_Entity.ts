@@ -1,17 +1,16 @@
-import {SmartBuffer} from 'smart-buffer'
+import { SmartBuffer } from 'smart-buffer';
 
-import {BinaryIndexTables} from '../mission/types'
-import {DEFAULT_BUFFER_SIZE} from './constants'
-import {MCU} from './MCU'
-import {Bit} from './types'
-import {BinaryType} from './enums'
-import {writeUInt32} from './utils'
+import { BinaryIndexTables } from '../mission/types';
+import { DEFAULT_BUFFER_SIZE } from './constants';
+import { MCU } from './MCU';
+import { Bit } from './types';
+import { BinaryType } from './enums';
+import { writeUInt32 } from './utils';
 
 // Entity item
 export class MCU_TR_Entity extends MCU {
-
-	public Enabled: Bit = 1
-	public MisObjID?: number
+	public Enabled: Bit = 1;
+	public MisObjID?: number;
 
 	// Valid Entity event type name and ID constants
 	get EVENTS() {
@@ -53,8 +52,8 @@ export class MCU_TR_Entity extends MCU {
 			OnFlagCapturedBy14: 39,
 			OnFlagCapturedBy15: 40,
 			OnFlagCapturedBy16: 41,
-			OnSpottingStarted: 74
-		}
+			OnSpottingStarted: 74,
+		};
 	}
 
 	// Valid Entity report type name and ID constants
@@ -64,8 +63,8 @@ export class MCU_TR_Entity extends MCU {
 			OnTargetAttacked: 1,
 			OnAreaAttacked: 2,
 			OnTookOff: 3,
-			OnLanded: 4
-		}
+			OnLanded: 4,
+		};
 	}
 
 	/**
@@ -75,20 +74,19 @@ export class MCU_TR_Entity extends MCU {
 	 * @yields Item data buffer.
 	 */
 	public *toBuffer(index: BinaryIndexTables): IterableIterator<Buffer> {
+		yield* super.toBuffer(index, BinaryType.MCU_TR_Entity);
 
-		yield* super.toBuffer(index, BinaryType.MCU_TR_Entity)
-
-		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE)
+		const buffer = SmartBuffer.fromSize(DEFAULT_BUFFER_SIZE);
 
 		// Events list
-		this.writeEvents(buffer)
+		this.writeEvents(buffer);
 
 		// MisObjID
-		writeUInt32(buffer, this.MisObjID || 0)
+		writeUInt32(buffer, this.MisObjID || 0);
 
 		// Reports list
-		this.writeReports(buffer)
+		this.writeReports(buffer);
 
-		yield buffer.toBuffer()
+		yield buffer.toBuffer();
 	}
 }

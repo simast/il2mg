@@ -1,3 +1,3 @@
-import {Data} from './Data'
+import { Data } from './Data';
 
-export const data = new Data()
+export const data = new Data();
