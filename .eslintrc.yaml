@@ -28,6 +28,8 @@ settings:
     version: detect
 
 rules:
+  no-dupe-class-members: off
+  no-redeclare: off
   prettier/prettier: warn
   '@typescript-eslint/no-namespace': off
   '@typescript-eslint/camelcase': off
