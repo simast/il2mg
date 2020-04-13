@@ -31,7 +31,7 @@ export class Block extends Item {
 		index: BinaryIndexTables,
 		typeId?: BinaryType,
 	): IterableIterator<Buffer> {
-		yield* super.toBuffer(index, typeId || BinaryType.Block);
+		yield* super.toBuffer(index, typeId ?? BinaryType.Block);
 
 		const buffer = SmartBuffer.fromSize(13);
 		const { items = [] } = this;
