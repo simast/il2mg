@@ -274,7 +274,7 @@ export default function makeTime() {
 	}
 
 	// Set mission options time
-	this.items.Options.Time = new String(date.format('H:m:s'))
+	this.options.Time = new String(date.format('H:m:s'))
 
 	// Log mission time info
 	let logData = []

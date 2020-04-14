@@ -173,7 +173,7 @@ export type DataBattles = {
 	[battleId: string]: DataBattle | undefined;
 };
 
-type DataBattle = {
+export type DataBattle = {
 	name: string;
 	from: DateValue;
 	to: DateValue;

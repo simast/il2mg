@@ -5,8 +5,8 @@ import Random from 'random-js';
 
 import { Immutable } from '../types';
 import { data } from '../data';
-import { CallsignGroup } from '../data/enums';
-import { DataItem, DataCallsigns } from '../data/types';
+import { CallsignGroup, Coalition } from '../data/enums';
+import { DataItem, DataCallsigns, DataBattle } from '../data/types';
 import { APPLICATION_NAME, APPLICATION_VERSION } from '../constants';
 import { log } from '../log';
 import { Item, Group, Options } from '../items';
@@ -92,6 +92,12 @@ export class Mission {
 	protected player: any;
 	protected briefing: any;
 
+	public readonly battle: Immutable<DataBattle>;
+	public readonly battlePath: string;
+	public readonly coalitions: Immutable<Coalition[]>;
+	public readonly index: any;
+	public readonly options: Options;
+
 	/**
 	 * Create a new mission.
 	 *
@@ -115,7 +121,16 @@ export class Mission {
 
 		// Make mission parts
 		// NOTE: Order is very important!
-		makeBattle.call(this);
+
+		const { battle, battlePath, coalitions, index, options } = makeBattle.call(
+			this,
+		);
+		this.battle = battle;
+		this.battlePath = battlePath;
+		this.coalitions = coalitions;
+		this.index = index;
+		this.options = options;
+
 		makeChoice.call(this);
 		makeDate.call(this);
 		makeMap.call(this);

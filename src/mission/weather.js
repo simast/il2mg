@@ -76,7 +76,7 @@ for (const state in weatherLimits) {
 export default function makeWeather() {
 
 	const rand = this.rand
-	const options = this.items.Options
+	const options = this.options
 	const weather = this.battle.weather[this.date.format('YYYY-MM-DD')]
 	let state
 
@@ -199,7 +199,7 @@ function makeMist() {
 function makeClouds() {
 
 	const rand = this.rand
-	const options = this.items.Options
+	const options = this.options
 	const points = this.weather.points.clouds
 	const maxCover = weatherLimits[this.weather.state].clouds
 	const requiredCover = maxCover * (points / weatherPoints.CLOUDS)
@@ -257,7 +257,7 @@ function makeClouds() {
 function makePrecipitation() {
 
 	const rand = this.rand
-	const options = this.items.Options
+	const options = this.options
 
 	const precData = {
 		type: Precipitation.None,
@@ -299,7 +299,7 @@ function makePrecipitation() {
 function makeSea() {
 
 	// TODO: Not supported/implemented yet
-	this.items.Options.SeaState = 0
+	this.options.SeaState = 0
 	this.weather.sea = 0
 }
 
@@ -307,7 +307,7 @@ function makeSea() {
 function makeTemperature(weather) {
 
 	const rand = this.rand
-	const options = this.items.Options
+	const options = this.options
 	const date = this.date
 	const sunrise = this.sunrise
 	const noon = this.noon
@@ -425,7 +425,7 @@ function makePressure() {
 	pressure = Math.round(pressure)
 
 	// Set pressure data
-	this.items.Options.Pressure = pressure
+	this.options.Pressure = pressure
 	this.weather.pressure = pressure
 }
 
@@ -433,7 +433,7 @@ function makePressure() {
 function makeTurbulence() {
 
 	const rand = this.rand
-	const options = this.items.Options
+	const options = this.options
 	const windSpeed = this.weather.wind[0].speed // At ground level
 
 	// FIXME: Turbulence is not linear - find a better way to compute this
@@ -458,7 +458,7 @@ function makeTurbulence() {
 function makeWind() {
 
 	const rand = this.rand
-	const options = this.items.Options
+	const options = this.options
 	const points = this.weather.points.winds
 	const wind = this.weather.wind = []
 	let groundSpeed = MAX_WIND_SPEED * (points / weatherPoints.WINDS)

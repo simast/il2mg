@@ -17,7 +17,7 @@ export const RESTRICTED_BORDER = 20000 + 1 // 20 Km
 // Generate mission map data
 export default function makeMap() {
 
-	const options = this.items.Options
+	const options = this.options
 	const map = {}
 
 	Object.assign(map, this.battle.map)

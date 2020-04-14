@@ -6,7 +6,7 @@ import {log} from '../log'
 export default function makeDate() {
 
 	const {params, index} = this
-	const options = this.items.Options
+	const options = this.options
 
 	// Parse date as moment object
 	const date = this.date = moment(params.date)

@@ -11,7 +11,7 @@ export const BriefingColor = Object.freeze({
 export default function makeBriefing() {
 
 	const {rand} = this
-	const options = this.items.Options
+	const options = this.options
 	const flight = this.player.flight
 	const task = flight.task
 	let briefing = []

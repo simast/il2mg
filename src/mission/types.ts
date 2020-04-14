@@ -19,6 +19,7 @@ export type Params = {
 	format?: FileFormat;
 	meta?: boolean;
 	lang?: boolean | ReadonlyArray<string>;
+	battle?: string;
 };
 
 // Binary data index tables
